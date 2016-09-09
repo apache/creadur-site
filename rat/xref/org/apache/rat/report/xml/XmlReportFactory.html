@@ -26,21 +26,21 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_comment"> */</em> 
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">package</strong> org.apache.rat.report.xml;
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.analysis.DefaultAnalyserFactory;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.IDocumentAnalyser;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.impl.util.DocumentAnalyserMultiplexer;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.policy.DefaultPolicy;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.RatReport;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.ClaimStatistic;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.impl.ClaimAggregator;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.impl.xml.SimpleXmlClaimReporter;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.util.ClaimReporterMultiplexer;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.util.LicenseAddingReport;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.xml.writer.IXmlWriter;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.analysis.DefaultAnalyserFactory;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.IDocumentAnalyser;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.impl.util.DocumentAnalyserMultiplexer;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.policy.DefaultPolicy;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.RatReport;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.ClaimStatistic;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.impl.ClaimAggregator;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.impl.xml.SimpleXmlClaimReporter;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.util.ClaimReporterMultiplexer;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.util.LicenseAddingReport;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.xml.writer.IXmlWriter;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> * Creates reports.</em>
@@ -57,16 +57,18 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>              reporters.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/rat/report/claim/util/LicenseAddingReport.html">LicenseAddingReport</a>(pConfiguration.getCopyrightMessage(), pConfiguration.isAddingLicensesForced()));
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          }
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          reporters.add(<strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/rat/report/claim/impl/xml/SimpleXmlClaimReporter.html">SimpleXmlClaimReporter</a>(writer));
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../org/apache/rat/document/IDocumentAnalyser.html">IDocumentAnalyser</a> analyser = 
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>              DefaultAnalyserFactory.createDefaultAnalyser(pConfiguration.getHeaderMatcher());
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../org/apache/rat/policy/DefaultPolicy.html">DefaultPolicy</a> policy = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/rat/policy/DefaultPolicy.html">DefaultPolicy</a>(pConfiguration.getApprovedLicenseNames());
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../org/apache/rat/document/IDocumentAnalyser.html">IDocumentAnalyser</a>[] analysers = {analyser, policy};
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          <a href="../../../../../org/apache/rat/document/impl/util/DocumentAnalyserMultiplexer.html">DocumentAnalyserMultiplexer</a> analysisMultiplexer = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/rat/document/impl/util/DocumentAnalyserMultiplexer.html">DocumentAnalyserMultiplexer</a>(analysers);
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/rat/report/claim/util/ClaimReporterMultiplexer.html">ClaimReporterMultiplexer</a>(analysisMultiplexer, reporters);
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      }
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  }
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../org/apache/rat/document/IDocumentAnalyser.html">IDocumentAnalyser</a> analyser =
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>              DefaultAnalyserFactory.createDefaultAnalyser(pConfiguration.getHeaderMatcher());
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../org/apache/rat/policy/DefaultPolicy.html">DefaultPolicy</a> policy = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/rat/policy/DefaultPolicy.html">DefaultPolicy</a>(pConfiguration.getApprovedLicenseNames(), pConfiguration.isApproveDefaultLicenses());
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <strong class="jxr_keyword">final</strong> <a href="../../../../../org/apache/rat/document/IDocumentAnalyser.html">IDocumentAnalyser</a>[] analysers = {analyser, policy};
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          <a href="../../../../../org/apache/rat/document/impl/util/DocumentAnalyserMultiplexer.html">DocumentAnalyserMultiplexer</a> analysisMultiplexer = <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/rat/document/impl/util/DocumentAnalyserMultiplexer.html">DocumentAnalyserMultiplexer</a>(analysers);
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../org/apache/rat/report/claim/util/ClaimReporterMultiplexer.html">ClaimReporterMultiplexer</a>(analysisMultiplexer, reporters);
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      }
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2014 <a href="http://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
 </body>
 </html>
