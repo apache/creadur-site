@@ -453,7 +453,7 @@
 <a class="jxr_linenumber" name="L445" href="#L445">445</a>         <strong class="jxr_keyword">if</strong> (elementsWritten &amp;&amp; elementNames.isEmpty()) {
 <a class="jxr_linenumber" name="L446" href="#L446">446</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../../../org/apache/rat/report/xml/writer/OperationNotAllowedException.html">OperationNotAllowedException</a>(<span class="jxr_string">"Root element already closed. Cannot open new element."</span>);
 <a class="jxr_linenumber" name="L447" href="#L447">447</a>         }
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>         <strong class="jxr_keyword">if</strong> (!isValidName(elementName)) {
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>         <strong class="jxr_keyword">if</strong> (isInvalidName(elementName)) {
 <a class="jxr_linenumber" name="L449" href="#L449">449</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../../../org/apache/rat/report/xml/writer/InvalidXmlException.html">InvalidXmlException</a>(<span class="jxr_string">"'"</span> + elementName + <span class="jxr_string">"' is not a valid element name"</span>);
 <a class="jxr_linenumber" name="L450" href="#L450">450</a>         }
 <a class="jxr_linenumber" name="L451" href="#L451">451</a>         elementsWritten = <strong class="jxr_keyword">true</strong>;
@@ -489,7 +489,7 @@
 <a class="jxr_linenumber" name="L481" href="#L481">481</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../../../org/apache/rat/report/xml/writer/OperationNotAllowedException.html">OperationNotAllowedException</a>(<span class="jxr_string">"Close called before an element has been opened."</span>);
 <a class="jxr_linenumber" name="L482" href="#L482">482</a>             }
 <a class="jxr_linenumber" name="L483" href="#L483">483</a>         }
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>         <strong class="jxr_keyword">if</strong> (!isValidName(name)) {
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>         <strong class="jxr_keyword">if</strong> (isInvalidName(name)) {
 <a class="jxr_linenumber" name="L485" href="#L485">485</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../../../../../org/apache/rat/report/xml/writer/InvalidXmlException.html">InvalidXmlException</a>(<span class="jxr_string">"'"</span> + name + <span class="jxr_string">"' is not a valid attribute name."</span>);
 <a class="jxr_linenumber" name="L486" href="#L486">486</a>         }
 <a class="jxr_linenumber" name="L487" href="#L487">487</a>         <strong class="jxr_keyword">if</strong> (!inElement) {
@@ -626,7 +626,7 @@
 <a class="jxr_linenumber" name="L618" href="#L618">618</a>         }
 <a class="jxr_linenumber" name="L619" href="#L619">619</a>     }
 <a class="jxr_linenumber" name="L620" href="#L620">620</a> 
-<a class="jxr_linenumber" name="L621" href="#L621">621</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> isValidName(<strong class="jxr_keyword">final</strong> CharSequence sequence) {
+<a class="jxr_linenumber" name="L621" href="#L621">621</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> isInvalidName(<strong class="jxr_keyword">final</strong> CharSequence sequence) {
 <a class="jxr_linenumber" name="L622" href="#L622">622</a>         <strong class="jxr_keyword">boolean</strong> result = <strong class="jxr_keyword">true</strong>;
 <a class="jxr_linenumber" name="L623" href="#L623">623</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> length = sequence.length();
 <a class="jxr_linenumber" name="L624" href="#L624">624</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; length; i++) {
@@ -643,7 +643,7 @@
 <a class="jxr_linenumber" name="L635" href="#L635">635</a>                 }
 <a class="jxr_linenumber" name="L636" href="#L636">636</a>             }
 <a class="jxr_linenumber" name="L637" href="#L637">637</a>         }
-<a class="jxr_linenumber" name="L638" href="#L638">638</a>         <strong class="jxr_keyword">return</strong> result;
+<a class="jxr_linenumber" name="L638" href="#L638">638</a>         <strong class="jxr_keyword">return</strong> !result;
 <a class="jxr_linenumber" name="L639" href="#L639">639</a>     }
 <a class="jxr_linenumber" name="L640" href="#L640">640</a> 
 <a class="jxr_linenumber" name="L641" href="#L641">641</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> isValidNameStart(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">char</strong> character) {
@@ -658,6 +658,6 @@
 <a class="jxr_linenumber" name="L650" href="#L650">650</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
 </body>
 </html>

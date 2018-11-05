@@ -413,154 +413,155 @@
 <a class="jxr_linenumber" name="L405" href="#L405">405</a>         <strong class="jxr_keyword">if</strong> (excludes == <strong class="jxr_keyword">null</strong> || excludes.length == 0) {
 <a class="jxr_linenumber" name="L406" href="#L406">406</a>             getLog().info(<span class="jxr_string">"No excludes explicitly specified."</span>);
 <a class="jxr_linenumber" name="L407" href="#L407">407</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L408" href="#L408">408</a>         	<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String exclude : excludes) {
-<a class="jxr_linenumber" name="L409" href="#L409">409</a>                 getLog().info(<span class="jxr_string">"Exclude: "</span> + exclude);
-<a class="jxr_linenumber" name="L410" href="#L410">410</a>             }
-<a class="jxr_linenumber" name="L411" href="#L411">411</a>         }
-<a class="jxr_linenumber" name="L412" href="#L412">412</a>         <strong class="jxr_keyword">if</strong> (excludes != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L413" href="#L413">413</a>             Collections.addAll(excludeList, excludes);
-<a class="jxr_linenumber" name="L414" href="#L414">414</a>         }
-<a class="jxr_linenumber" name="L415" href="#L415">415</a>         <strong class="jxr_keyword">if</strong> (!excludeList.isEmpty()) {
-<a class="jxr_linenumber" name="L416" href="#L416">416</a>             <strong class="jxr_keyword">final</strong> String[] allExcludes = excludeList.toArray(<strong class="jxr_keyword">new</strong> String[excludeList
-<a class="jxr_linenumber" name="L417" href="#L417">417</a>                     .size()]);
-<a class="jxr_linenumber" name="L418" href="#L418">418</a>             ds.setExcludes(allExcludes);
-<a class="jxr_linenumber" name="L419" href="#L419">419</a>         }
-<a class="jxr_linenumber" name="L420" href="#L420">420</a>     }
-<a class="jxr_linenumber" name="L421" href="#L421">421</a> 
-<a class="jxr_linenumber" name="L422" href="#L422">422</a>     <strong class="jxr_keyword">private</strong> List&lt;String&gt; mergeDefaultExclusions() <strong class="jxr_keyword">throws</strong> MojoExecutionException {
-<a class="jxr_linenumber" name="L423" href="#L423">423</a>         <strong class="jxr_keyword">final</strong> Set&lt;String&gt; results = <strong class="jxr_keyword">new</strong> HashSet&lt;String&gt;();
-<a class="jxr_linenumber" name="L424" href="#L424">424</a> 
-<a class="jxr_linenumber" name="L425" href="#L425">425</a>         addPlexusAndScmDefaults(getLog(), useDefaultExcludes, results);
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>         addMavenDefaults(getLog(), useMavenDefaultExcludes, results);
-<a class="jxr_linenumber" name="L427" href="#L427">427</a>         addEclipseDefaults(getLog(), useEclipseDefaultExcludes, results);
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>         addIdeaDefaults(getLog(), useIdeaDefaultExcludes, results);
-<a class="jxr_linenumber" name="L429" href="#L429">429</a> 
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>         <strong class="jxr_keyword">if</strong> (parseSCMIgnoresAsExcludes) {
-<a class="jxr_linenumber" name="L431" href="#L431">431</a>             getLog().info(<span class="jxr_string">"Will parse SCM ignores for exclusions..."</span>);
-<a class="jxr_linenumber" name="L432" href="#L432">432</a>             results.addAll(ScmIgnoreParser.getExclusionsFromSCM(getLog(), project.getBasedir()));
-<a class="jxr_linenumber" name="L433" href="#L433">433</a>             getLog().info(<span class="jxr_string">"Finished adding exclusions from SCM ignore files."</span>);
-<a class="jxr_linenumber" name="L434" href="#L434">434</a>         }
-<a class="jxr_linenumber" name="L435" href="#L435">435</a> 
-<a class="jxr_linenumber" name="L436" href="#L436">436</a>         <strong class="jxr_keyword">if</strong> (excludeSubProjects &amp;&amp; project != <strong class="jxr_keyword">null</strong>
-<a class="jxr_linenumber" name="L437" href="#L437">437</a>                 &amp;&amp; project.getModules() != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L438" href="#L438">438</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Object o : project.getModules()) {
-<a class="jxr_linenumber" name="L439" href="#L439">439</a>                 <strong class="jxr_keyword">final</strong> String moduleSubPath = (String) o;
-<a class="jxr_linenumber" name="L440" href="#L440">440</a>                 results.add(moduleSubPath + <span class="jxr_string">"/**/*"</span>);
-<a class="jxr_linenumber" name="L441" href="#L441">441</a>             }
-<a class="jxr_linenumber" name="L442" href="#L442">442</a>         }
-<a class="jxr_linenumber" name="L443" href="#L443">443</a> 
-<a class="jxr_linenumber" name="L444" href="#L444">444</a>         getLog().debug(<span class="jxr_string">"Finished creating list of implicit excludes."</span>);
-<a class="jxr_linenumber" name="L445" href="#L445">445</a>         <strong class="jxr_keyword">if</strong> (results.isEmpty()) {
-<a class="jxr_linenumber" name="L446" href="#L446">446</a>             getLog().info(<span class="jxr_string">"No excludes implicitly specified."</span>);
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>             getLog().info(
-<a class="jxr_linenumber" name="L449" href="#L449">449</a>                     results.size()
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>                             + <span class="jxr_string">" implicit excludes (use -debug for more details)."</span>);
-<a class="jxr_linenumber" name="L451" href="#L451">451</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String exclude : results) {
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>                 getLog().debug(<span class="jxr_string">"Implicit exclude: "</span> + exclude);
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>             }
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>         }
-<a class="jxr_linenumber" name="L455" href="#L455">455</a>         <strong class="jxr_keyword">if</strong> (excludesFile != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>         	<strong class="jxr_keyword">final</strong> File f = <strong class="jxr_keyword">new</strong> File(excludesFile);
-<a class="jxr_linenumber" name="L457" href="#L457">457</a>         	<strong class="jxr_keyword">if</strong> (!f.isFile()) {
-<a class="jxr_linenumber" name="L458" href="#L458">458</a>         		getLog().error(<span class="jxr_string">"Excludes file not found: "</span> + f.getAbsolutePath());
-<a class="jxr_linenumber" name="L459" href="#L459">459</a>         	}
-<a class="jxr_linenumber" name="L460" href="#L460">460</a>         	<strong class="jxr_keyword">if</strong> (!f.canRead()) {
-<a class="jxr_linenumber" name="L461" href="#L461">461</a>         		getLog().error(<span class="jxr_string">"Excludes file not readable: "</span> + f.getAbsolutePath());
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>         	}
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>         	<strong class="jxr_keyword">final</strong> String charset = excludesFileCharset == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">"UTF8"</span> : excludesFileCharset;
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>         	getLog().info(<span class="jxr_string">"Loading excludes from file "</span> + f + <span class="jxr_string">", using character set "</span> + charset);
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>         	results.addAll(getPatternsFromFile(f, charset));
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>         }
-<a class="jxr_linenumber" name="L467" href="#L467">467</a> 
-<a class="jxr_linenumber" name="L468" href="#L468">468</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(results);
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>     }
-<a class="jxr_linenumber" name="L470" href="#L470">470</a> 
-<a class="jxr_linenumber" name="L471" href="#L471">471</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L472" href="#L472">472</a> <em class="jxr_javadoccomment">     * Creates the report as a string.</em>
-<a class="jxr_linenumber" name="L473" href="#L473">473</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L474" href="#L474">474</a> <em class="jxr_javadoccomment">     * @param styleSheet The style sheet to use when formatting the report</em>
-<a class="jxr_linenumber" name="L475" href="#L475">475</a> <em class="jxr_javadoccomment">     * @return Report contents</em>
-<a class="jxr_linenumber" name="L476" href="#L476">476</a> <em class="jxr_javadoccomment">     * @throws MojoFailureException   An error in the plugin configuration was detected.</em>
-<a class="jxr_linenumber" name="L477" href="#L477">477</a> <em class="jxr_javadoccomment">     * @throws MojoExecutionException An error occurred while creating the report.</em>
-<a class="jxr_linenumber" name="L478" href="#L478">478</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>     <strong class="jxr_keyword">protected</strong> String createReport(InputStream styleSheet)
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>             <strong class="jxr_keyword">throws</strong> MojoExecutionException, MojoFailureException {
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>         StringWriter sw = <strong class="jxr_keyword">new</strong> StringWriter();
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>         PrintWriter pw = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L483" href="#L483">483</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>             pw = <strong class="jxr_keyword">new</strong> PrintWriter(sw);
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>             createReport(<strong class="jxr_keyword">new</strong> PrintWriter(sw), styleSheet);
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>             <strong class="jxr_keyword">final</strong> String result = sw.toString();
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>             pw.close();
-<a class="jxr_linenumber" name="L488" href="#L488">488</a>             pw = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>             sw.close();
-<a class="jxr_linenumber" name="L490" href="#L490">490</a>             sw = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L491" href="#L491">491</a>             <strong class="jxr_keyword">return</strong> result;
-<a class="jxr_linenumber" name="L492" href="#L492">492</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="L493" href="#L493">493</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>         } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>             IOUtils.closeQuietly(pw);
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>             IOUtils.closeQuietly(sw);
-<a class="jxr_linenumber" name="L497" href="#L497">497</a>         }
-<a class="jxr_linenumber" name="L498" href="#L498">498</a>     }
-<a class="jxr_linenumber" name="L499" href="#L499">499</a> 
-<a class="jxr_linenumber" name="L500" href="#L500">500</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L501" href="#L501">501</a> <em class="jxr_javadoccomment">     * Writes the report to the given stream.</em>
-<a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L503" href="#L503">503</a> <em class="jxr_javadoccomment">     * @param out   The target writer, to which the report is being written.</em>
-<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     * @param style The stylesheet to use, or &lt;code&gt;null&lt;/code&gt; for raw XML</em>
-<a class="jxr_linenumber" name="L505" href="#L505">505</a> <em class="jxr_javadoccomment">     * @return the current statistic.</em>
-<a class="jxr_linenumber" name="L506" href="#L506">506</a> <em class="jxr_javadoccomment">     * @throws MojoFailureException   An error in the plugin configuration was detected.</em>
-<a class="jxr_linenumber" name="L507" href="#L507">507</a> <em class="jxr_javadoccomment">     * @throws MojoExecutionException Another error occurred while creating the report.</em>
-<a class="jxr_linenumber" name="L508" href="#L508">508</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L509" href="#L509">509</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../../org/apache/rat/report/claim/ClaimStatistic.html">ClaimStatistic</a> createReport(Writer out, InputStream style)
-<a class="jxr_linenumber" name="L510" href="#L510">510</a>             <strong class="jxr_keyword">throws</strong> MojoExecutionException, MojoFailureException {
-<a class="jxr_linenumber" name="L511" href="#L511">511</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/rat/ReportConfiguration.html">ReportConfiguration</a> configuration = getConfiguration();
-<a class="jxr_linenumber" name="L512" href="#L512">512</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L513" href="#L513">513</a>             <strong class="jxr_keyword">if</strong> (style != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L514" href="#L514">514</a>                 <strong class="jxr_keyword">return</strong> Report.report(out, getResources(), style, configuration);
-<a class="jxr_linenumber" name="L515" href="#L515">515</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L516" href="#L516">516</a>                 <strong class="jxr_keyword">return</strong> Report.report(getResources(), out, configuration);
-<a class="jxr_linenumber" name="L517" href="#L517">517</a>             }
-<a class="jxr_linenumber" name="L518" href="#L518">518</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> TransformerConfigurationException e) {
-<a class="jxr_linenumber" name="L519" href="#L519">519</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException e) {
-<a class="jxr_linenumber" name="L521" href="#L521">521</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
-<a class="jxr_linenumber" name="L522" href="#L522">522</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> InterruptedException e) {
-<a class="jxr_linenumber" name="L523" href="#L523">523</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
-<a class="jxr_linenumber" name="L524" href="#L524">524</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> RatException e) {
-<a class="jxr_linenumber" name="L525" href="#L525">525</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
-<a class="jxr_linenumber" name="L526" href="#L526">526</a>         }
-<a class="jxr_linenumber" name="L527" href="#L527">527</a>     }
-<a class="jxr_linenumber" name="L528" href="#L528">528</a> 
-<a class="jxr_linenumber" name="L529" href="#L529">529</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../../org/apache/rat/ReportConfiguration.html">ReportConfiguration</a> getConfiguration()
-<a class="jxr_linenumber" name="L530" href="#L530">530</a>             <strong class="jxr_keyword">throws</strong> MojoFailureException, MojoExecutionException {
-<a class="jxr_linenumber" name="L531" href="#L531">531</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/rat/ReportConfiguration.html">ReportConfiguration</a> configuration = <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/rat/ReportConfiguration.html">ReportConfiguration</a>();
-<a class="jxr_linenumber" name="L532" href="#L532">532</a>         configuration.setHeaderMatcher(<strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/rat/analysis/util/HeaderMatcherMultiplexer.html">HeaderMatcherMultiplexer</a>(
-<a class="jxr_linenumber" name="L533" href="#L533">533</a>                 mergeLicenseMatchers()));
-<a class="jxr_linenumber" name="L534" href="#L534">534</a>         configuration.setApprovedLicenseNames(mergeApprovedLicenseNames());
-<a class="jxr_linenumber" name="L535" href="#L535">535</a>         configuration.setApproveDefaultLicenses(addDefaultLicenseMatchers);
-<a class="jxr_linenumber" name="L536" href="#L536">536</a>         <strong class="jxr_keyword">return</strong> configuration;
-<a class="jxr_linenumber" name="L537" href="#L537">537</a>     }
-<a class="jxr_linenumber" name="L538" href="#L538">538</a> 
-<a class="jxr_linenumber" name="L539" href="#L539">539</a>     <strong class="jxr_keyword">private</strong> List&lt;ILicenseFamily&gt; mergeApprovedLicenseNames()
-<a class="jxr_linenumber" name="L540" href="#L540">540</a>             <strong class="jxr_keyword">throws</strong> MojoExecutionException, MojoFailureException {
-<a class="jxr_linenumber" name="L541" href="#L541">541</a>         <strong class="jxr_keyword">final</strong> List&lt;ILicenseFamily&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;ILicenseFamily&gt;();
-<a class="jxr_linenumber" name="L542" href="#L542">542</a>         <strong class="jxr_keyword">if</strong> (licenseFamilies != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L543" href="#L543">543</a>             getLog().info(<span class="jxr_string">"Added "</span> + licenseFamilies.length + <span class="jxr_string">" custom approved licenses."</span>);
-<a class="jxr_linenumber" name="L544" href="#L544">544</a>             list.addAll(Arrays.asList(licenseFamilies));
-<a class="jxr_linenumber" name="L545" href="#L545">545</a>         }
-<a class="jxr_linenumber" name="L546" href="#L546">546</a>         <strong class="jxr_keyword">if</strong> (licenseFamilyNames != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L547" href="#L547">547</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> LicenseFamilySpecification spec : licenseFamilyNames) {
-<a class="jxr_linenumber" name="L548" href="#L548">548</a>                 list.add(newInstance(ILicenseFamily.<strong class="jxr_keyword">class</strong>, spec.getClassName()));
-<a class="jxr_linenumber" name="L549" href="#L549">549</a>             }
-<a class="jxr_linenumber" name="L550" href="#L550">550</a>         }
-<a class="jxr_linenumber" name="L551" href="#L551">551</a>         <strong class="jxr_keyword">return</strong> list;
-<a class="jxr_linenumber" name="L552" href="#L552">552</a>     }
-<a class="jxr_linenumber" name="L553" href="#L553">553</a> }
+<a class="jxr_linenumber" name="L408" href="#L408">408</a>             getLog().info(excludes.length + <span class="jxr_string">" explicit excludes (use -debug for more details)."</span>);
+<a class="jxr_linenumber" name="L409" href="#L409">409</a>         	<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String exclude : excludes) {
+<a class="jxr_linenumber" name="L410" href="#L410">410</a>                 getLog().debug(<span class="jxr_string">"Exclude: "</span> + exclude);
+<a class="jxr_linenumber" name="L411" href="#L411">411</a>             }
+<a class="jxr_linenumber" name="L412" href="#L412">412</a>         }
+<a class="jxr_linenumber" name="L413" href="#L413">413</a>         <strong class="jxr_keyword">if</strong> (excludes != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L414" href="#L414">414</a>             Collections.addAll(excludeList, excludes);
+<a class="jxr_linenumber" name="L415" href="#L415">415</a>         }
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>         <strong class="jxr_keyword">if</strong> (!excludeList.isEmpty()) {
+<a class="jxr_linenumber" name="L417" href="#L417">417</a>             <strong class="jxr_keyword">final</strong> String[] allExcludes = excludeList.toArray(<strong class="jxr_keyword">new</strong> String[excludeList
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>                     .size()]);
+<a class="jxr_linenumber" name="L419" href="#L419">419</a>             ds.setExcludes(allExcludes);
+<a class="jxr_linenumber" name="L420" href="#L420">420</a>         }
+<a class="jxr_linenumber" name="L421" href="#L421">421</a>     }
+<a class="jxr_linenumber" name="L422" href="#L422">422</a> 
+<a class="jxr_linenumber" name="L423" href="#L423">423</a>     <strong class="jxr_keyword">private</strong> List&lt;String&gt; mergeDefaultExclusions() <strong class="jxr_keyword">throws</strong> MojoExecutionException {
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>         <strong class="jxr_keyword">final</strong> Set&lt;String&gt; results = <strong class="jxr_keyword">new</strong> HashSet&lt;String&gt;();
+<a class="jxr_linenumber" name="L425" href="#L425">425</a> 
+<a class="jxr_linenumber" name="L426" href="#L426">426</a>         addPlexusAndScmDefaults(getLog(), useDefaultExcludes, results);
+<a class="jxr_linenumber" name="L427" href="#L427">427</a>         addMavenDefaults(getLog(), useMavenDefaultExcludes, results);
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>         addEclipseDefaults(getLog(), useEclipseDefaultExcludes, results);
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>         addIdeaDefaults(getLog(), useIdeaDefaultExcludes, results);
+<a class="jxr_linenumber" name="L430" href="#L430">430</a> 
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>         <strong class="jxr_keyword">if</strong> (parseSCMIgnoresAsExcludes) {
+<a class="jxr_linenumber" name="L432" href="#L432">432</a>             getLog().info(<span class="jxr_string">"Will parse SCM ignores for exclusions..."</span>);
+<a class="jxr_linenumber" name="L433" href="#L433">433</a>             results.addAll(ScmIgnoreParser.getExclusionsFromSCM(getLog(), project.getBasedir()));
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>             getLog().info(<span class="jxr_string">"Finished adding exclusions from SCM ignore files."</span>);
+<a class="jxr_linenumber" name="L435" href="#L435">435</a>         }
+<a class="jxr_linenumber" name="L436" href="#L436">436</a> 
+<a class="jxr_linenumber" name="L437" href="#L437">437</a>         <strong class="jxr_keyword">if</strong> (excludeSubProjects &amp;&amp; project != <strong class="jxr_keyword">null</strong>
+<a class="jxr_linenumber" name="L438" href="#L438">438</a>                 &amp;&amp; project.getModules() != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L439" href="#L439">439</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Object o : project.getModules()) {
+<a class="jxr_linenumber" name="L440" href="#L440">440</a>                 <strong class="jxr_keyword">final</strong> String moduleSubPath = (String) o;
+<a class="jxr_linenumber" name="L441" href="#L441">441</a>                 results.add(moduleSubPath + <span class="jxr_string">"/**/*"</span>);
+<a class="jxr_linenumber" name="L442" href="#L442">442</a>             }
+<a class="jxr_linenumber" name="L443" href="#L443">443</a>         }
+<a class="jxr_linenumber" name="L444" href="#L444">444</a> 
+<a class="jxr_linenumber" name="L445" href="#L445">445</a>         getLog().debug(<span class="jxr_string">"Finished creating list of implicit excludes."</span>);
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>         <strong class="jxr_keyword">if</strong> (results.isEmpty()) {
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>             getLog().info(<span class="jxr_string">"No excludes implicitly specified."</span>);
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>             getLog().info(
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>                     results.size()
+<a class="jxr_linenumber" name="L451" href="#L451">451</a>                             + <span class="jxr_string">" implicit excludes (use -debug for more details)."</span>);
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> String exclude : results) {
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>                 getLog().debug(<span class="jxr_string">"Implicit exclude: "</span> + exclude);
+<a class="jxr_linenumber" name="L454" href="#L454">454</a>             }
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>         }
+<a class="jxr_linenumber" name="L456" href="#L456">456</a>         <strong class="jxr_keyword">if</strong> (excludesFile != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L457" href="#L457">457</a>         	<strong class="jxr_keyword">final</strong> File f = <strong class="jxr_keyword">new</strong> File(excludesFile);
+<a class="jxr_linenumber" name="L458" href="#L458">458</a>         	<strong class="jxr_keyword">if</strong> (!f.isFile()) {
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>         		getLog().error(<span class="jxr_string">"Excludes file not found: "</span> + f.getAbsolutePath());
+<a class="jxr_linenumber" name="L460" href="#L460">460</a>         	}
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>         	<strong class="jxr_keyword">if</strong> (!f.canRead()) {
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>         		getLog().error(<span class="jxr_string">"Excludes file not readable: "</span> + f.getAbsolutePath());
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>         	}
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>         	<strong class="jxr_keyword">final</strong> String charset = excludesFileCharset == <strong class="jxr_keyword">null</strong> ? <span class="jxr_string">"UTF8"</span> : excludesFileCharset;
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>         	getLog().info(<span class="jxr_string">"Loading excludes from file "</span> + f + <span class="jxr_string">", using character set "</span> + charset);
+<a class="jxr_linenumber" name="L466" href="#L466">466</a>         	results.addAll(getPatternsFromFile(f, charset));
+<a class="jxr_linenumber" name="L467" href="#L467">467</a>         }
+<a class="jxr_linenumber" name="L468" href="#L468">468</a> 
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(results);
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>     }
+<a class="jxr_linenumber" name="L471" href="#L471">471</a> 
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L473" href="#L473">473</a> <em class="jxr_javadoccomment">     * Creates the report as a string.</em>
+<a class="jxr_linenumber" name="L474" href="#L474">474</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L475" href="#L475">475</a> <em class="jxr_javadoccomment">     * @param styleSheet The style sheet to use when formatting the report</em>
+<a class="jxr_linenumber" name="L476" href="#L476">476</a> <em class="jxr_javadoccomment">     * @return Report contents</em>
+<a class="jxr_linenumber" name="L477" href="#L477">477</a> <em class="jxr_javadoccomment">     * @throws MojoFailureException   An error in the plugin configuration was detected.</em>
+<a class="jxr_linenumber" name="L478" href="#L478">478</a> <em class="jxr_javadoccomment">     * @throws MojoExecutionException An error occurred while creating the report.</em>
+<a class="jxr_linenumber" name="L479" href="#L479">479</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>     <strong class="jxr_keyword">protected</strong> String createReport(InputStream styleSheet)
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>             <strong class="jxr_keyword">throws</strong> MojoExecutionException, MojoFailureException {
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>         StringWriter sw = <strong class="jxr_keyword">new</strong> StringWriter();
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>         PrintWriter pw = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>             pw = <strong class="jxr_keyword">new</strong> PrintWriter(sw);
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>             createReport(<strong class="jxr_keyword">new</strong> PrintWriter(sw), styleSheet);
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>             <strong class="jxr_keyword">final</strong> String result = sw.toString();
+<a class="jxr_linenumber" name="L488" href="#L488">488</a>             pw.close();
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>             pw = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>             sw.close();
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>             sw = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>             <strong class="jxr_keyword">return</strong> result;
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>         } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L496" href="#L496">496</a>             IOUtils.closeQuietly(pw);
+<a class="jxr_linenumber" name="L497" href="#L497">497</a>             IOUtils.closeQuietly(sw);
+<a class="jxr_linenumber" name="L498" href="#L498">498</a>         }
+<a class="jxr_linenumber" name="L499" href="#L499">499</a>     }
+<a class="jxr_linenumber" name="L500" href="#L500">500</a> 
+<a class="jxr_linenumber" name="L501" href="#L501">501</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     * Writes the report to the given stream.</em>
+<a class="jxr_linenumber" name="L503" href="#L503">503</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L504" href="#L504">504</a> <em class="jxr_javadoccomment">     * @param out   The target writer, to which the report is being written.</em>
+<a class="jxr_linenumber" name="L505" href="#L505">505</a> <em class="jxr_javadoccomment">     * @param style The stylesheet to use, or &lt;code&gt;null&lt;/code&gt; for raw XML</em>
+<a class="jxr_linenumber" name="L506" href="#L506">506</a> <em class="jxr_javadoccomment">     * @return the current statistic.</em>
+<a class="jxr_linenumber" name="L507" href="#L507">507</a> <em class="jxr_javadoccomment">     * @throws MojoFailureException   An error in the plugin configuration was detected.</em>
+<a class="jxr_linenumber" name="L508" href="#L508">508</a> <em class="jxr_javadoccomment">     * @throws MojoExecutionException Another error occurred while creating the report.</em>
+<a class="jxr_linenumber" name="L509" href="#L509">509</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L510" href="#L510">510</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../../org/apache/rat/report/claim/ClaimStatistic.html">ClaimStatistic</a> createReport(Writer out, InputStream style)
+<a class="jxr_linenumber" name="L511" href="#L511">511</a>             <strong class="jxr_keyword">throws</strong> MojoExecutionException, MojoFailureException {
+<a class="jxr_linenumber" name="L512" href="#L512">512</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/rat/ReportConfiguration.html">ReportConfiguration</a> configuration = getConfiguration();
+<a class="jxr_linenumber" name="L513" href="#L513">513</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L514" href="#L514">514</a>             <strong class="jxr_keyword">if</strong> (style != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L515" href="#L515">515</a>                 <strong class="jxr_keyword">return</strong> Report.report(out, getResources(), style, configuration);
+<a class="jxr_linenumber" name="L516" href="#L516">516</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L517" href="#L517">517</a>                 <strong class="jxr_keyword">return</strong> Report.report(getResources(), out, configuration);
+<a class="jxr_linenumber" name="L518" href="#L518">518</a>             }
+<a class="jxr_linenumber" name="L519" href="#L519">519</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> TransformerConfigurationException e) {
+<a class="jxr_linenumber" name="L520" href="#L520">520</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> IOException e) {
+<a class="jxr_linenumber" name="L522" href="#L522">522</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
+<a class="jxr_linenumber" name="L523" href="#L523">523</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> InterruptedException e) {
+<a class="jxr_linenumber" name="L524" href="#L524">524</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>         } <strong class="jxr_keyword">catch</strong> (<strong class="jxr_keyword">final</strong> RatException e) {
+<a class="jxr_linenumber" name="L526" href="#L526">526</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(e.getMessage(), e);
+<a class="jxr_linenumber" name="L527" href="#L527">527</a>         }
+<a class="jxr_linenumber" name="L528" href="#L528">528</a>     }
+<a class="jxr_linenumber" name="L529" href="#L529">529</a> 
+<a class="jxr_linenumber" name="L530" href="#L530">530</a>     <strong class="jxr_keyword">protected</strong> <a href="../../../../org/apache/rat/ReportConfiguration.html">ReportConfiguration</a> getConfiguration()
+<a class="jxr_linenumber" name="L531" href="#L531">531</a>             <strong class="jxr_keyword">throws</strong> MojoFailureException, MojoExecutionException {
+<a class="jxr_linenumber" name="L532" href="#L532">532</a>         <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/rat/ReportConfiguration.html">ReportConfiguration</a> configuration = <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/rat/ReportConfiguration.html">ReportConfiguration</a>();
+<a class="jxr_linenumber" name="L533" href="#L533">533</a>         configuration.setHeaderMatcher(<strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/rat/analysis/util/HeaderMatcherMultiplexer.html">HeaderMatcherMultiplexer</a>(
+<a class="jxr_linenumber" name="L534" href="#L534">534</a>                 mergeLicenseMatchers()));
+<a class="jxr_linenumber" name="L535" href="#L535">535</a>         configuration.setApprovedLicenseNames(mergeApprovedLicenseNames());
+<a class="jxr_linenumber" name="L536" href="#L536">536</a>         configuration.setApproveDefaultLicenses(addDefaultLicenseMatchers);
+<a class="jxr_linenumber" name="L537" href="#L537">537</a>         <strong class="jxr_keyword">return</strong> configuration;
+<a class="jxr_linenumber" name="L538" href="#L538">538</a>     }
+<a class="jxr_linenumber" name="L539" href="#L539">539</a> 
+<a class="jxr_linenumber" name="L540" href="#L540">540</a>     <strong class="jxr_keyword">private</strong> List&lt;ILicenseFamily&gt; mergeApprovedLicenseNames()
+<a class="jxr_linenumber" name="L541" href="#L541">541</a>             <strong class="jxr_keyword">throws</strong> MojoExecutionException, MojoFailureException {
+<a class="jxr_linenumber" name="L542" href="#L542">542</a>         <strong class="jxr_keyword">final</strong> List&lt;ILicenseFamily&gt; list = <strong class="jxr_keyword">new</strong> ArrayList&lt;ILicenseFamily&gt;();
+<a class="jxr_linenumber" name="L543" href="#L543">543</a>         <strong class="jxr_keyword">if</strong> (licenseFamilies != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L544" href="#L544">544</a>             getLog().info(<span class="jxr_string">"Added "</span> + licenseFamilies.length + <span class="jxr_string">" custom approved licenses."</span>);
+<a class="jxr_linenumber" name="L545" href="#L545">545</a>             list.addAll(Arrays.asList(licenseFamilies));
+<a class="jxr_linenumber" name="L546" href="#L546">546</a>         }
+<a class="jxr_linenumber" name="L547" href="#L547">547</a>         <strong class="jxr_keyword">if</strong> (licenseFamilyNames != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L548" href="#L548">548</a>             <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> LicenseFamilySpecification spec : licenseFamilyNames) {
+<a class="jxr_linenumber" name="L549" href="#L549">549</a>                 list.add(newInstance(ILicenseFamily.<strong class="jxr_keyword">class</strong>, spec.getClassName()));
+<a class="jxr_linenumber" name="L550" href="#L550">550</a>             }
+<a class="jxr_linenumber" name="L551" href="#L551">551</a>         }
+<a class="jxr_linenumber" name="L552" href="#L552">552</a>         <strong class="jxr_keyword">return</strong> list;
+<a class="jxr_linenumber" name="L553" href="#L553">553</a>     }
+<a class="jxr_linenumber" name="L554" href="#L554">554</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
 </body>
 </html>

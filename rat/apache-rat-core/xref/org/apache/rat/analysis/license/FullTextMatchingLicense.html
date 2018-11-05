@@ -105,7 +105,7 @@
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>                  <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>; <em class="jxr_comment">// we found a match</em>
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>              } <strong class="jxr_keyword">else</strong> { <em class="jxr_comment">// buffer contains first line but does not contain full text</em>
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>                  <em class="jxr_comment">// It's possible that the buffer contains the first line again</em>
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>                 <strong class="jxr_keyword">int</strong> offset = buffer.substring(1).toString().indexOf(firstLine);
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>                 <strong class="jxr_keyword">int</strong> offset = buffer.substring(1).indexOf(firstLine);
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>                 <strong class="jxr_keyword">if</strong> (offset &gt;= 0) { <em class="jxr_comment">// first line found again</em>
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>                     buffer.delete(0,offset); <em class="jxr_comment">// reset buffer to the new start</em>
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>                 } <strong class="jxr_keyword">else</strong> { <em class="jxr_comment">// buffer does not even contain first line, so cannot be used to match full text</em>
@@ -128,6 +128,6 @@
 <a class="jxr_linenumber" name="L120" href="#L120">120</a> }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2016 <a href="http://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
+<div id="footer">Copyright &#169; 2006&#x2013;2018 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
 </body>
 </html>
