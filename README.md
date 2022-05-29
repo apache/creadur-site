@@ -16,6 +16,8 @@ $ mvn clean site:site site:stage
 $ cd ../creadur-site
 $ cp -rvf ../creadur-rat/target/staging/* ./rat/
 
+Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
+$ git commit -am "Update site build for RAT"
 ```
 
 *WARNING!* This will sync the current master branch/SNAPSHOT version of the homepage if not run on the release branch
@@ -34,6 +36,10 @@ Verify contents under target/staging
 $ cd ../creadur-site
 $ mkdir rat014
 $ cp -rvf ../creadur-rat/target/staging/* ./rat014/
+
+Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
+
+$ git commit -am "Push new preview version of RAT 0.14"
 ```
 
 This will allow a preview of the release site build at [rat014](./rat014)
