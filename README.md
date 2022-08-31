@@ -43,3 +43,12 @@ $ git commit -am "Push new preview version of RAT 0.14"
 ```
 
 This will allow a preview of the release site build at [rat014](./rat014)
+
+### Release Notes / RAT-306
+
+Make sure that https://creadur.apache.org/rat/RELEASE_NOTES.txt does not yield a 404.
+RAT's changelog consists of 2 versions:
+* [generated changelog of the current release](https://github.com/apache/creadur-rat/blob/master/RELEASE-NOTES.txt)
+* [complete/historical changelog](https://github.com/apache/creadur-rat/blob/master/RELEASE_NOTES.txt)
+
+Usually it helps to copy over the release-generated version into the subfolder /rat of this project
