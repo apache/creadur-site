@@ -52,3 +52,7 @@ RAT's changelog consists of 2 versions:
 * [complete/historical changelog](https://github.com/apache/creadur-rat/blob/master/RELEASE_NOTES.txt)
 
 Usually it helps to copy over the release-generated version into the subfolder /rat of this project
+
+### Combined release notes
+
+Make sure to generate a combined changelog that includes the most current release, available under [relase-notes/rat.txt](/release-notes/rat.txt)
