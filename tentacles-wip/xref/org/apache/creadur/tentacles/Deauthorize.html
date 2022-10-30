@@ -14,7 +14,7 @@
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> * (the "License"); you may not use this file except in compliance with</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> * the License.  You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *     <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *     <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *  Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> *  distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -40,7 +40,7 @@
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * </em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * If the resulting comment block is effectively empty, it will be yanked too.</em>
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/apache/creadur/tentacles/Deauthorize.html">Deauthorize</a> {
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="Deauthorize" href="../../../../org/apache/creadur/tentacles/Deauthorize.html#Deauthorize">Deauthorize</a> {
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  	<em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">	 * All input must be valid directories.</em>
@@ -106,12 +106,12 @@
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>  <em class="jxr_javadoccomment">	 * @throws IOException</em>
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment">	 */</em>
 <a class="jxr_linenumber" name="L100" href="#L100">100</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> deauthorize(<strong class="jxr_keyword">final</strong> File dir) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L101" href="#L101">101</a> 		deauthorize(dir, <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/creadur/tentacles/IOSystem.html">IOSystem</a>());
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> 		deauthorize(dir, <strong class="jxr_keyword">new</strong> <a name="IOSystem" href="../../../../org/apache/creadur/tentacles/IOSystem.html#IOSystem">IOSystem</a>());
 <a class="jxr_linenumber" name="L102" href="#L102">102</a> 	}
 <a class="jxr_linenumber" name="L103" href="#L103">103</a> 
-<a class="jxr_linenumber" name="L104" href="#L104">104</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> deauthorize(<strong class="jxr_keyword">final</strong> File dir, <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/creadur/tentacles/IOSystem.html">IOSystem</a> io)
+<a class="jxr_linenumber" name="L104" href="#L104">104</a> 	<strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> deauthorize(<strong class="jxr_keyword">final</strong> File dir, <strong class="jxr_keyword">final</strong> <a name="IOSystem" href="../../../../org/apache/creadur/tentacles/IOSystem.html#IOSystem">IOSystem</a> io)
 <a class="jxr_linenumber" name="L105" href="#L105">105</a> 			<strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L106" href="#L106">106</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> File file : <strong class="jxr_keyword">new</strong> FileSystem().collect(dir, <span class="jxr_string">".*&#92;&#92;.java"</span>)) {
+<a class="jxr_linenumber" name="L106" href="#L106">106</a> 		<strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> File file : <strong class="jxr_keyword">new</strong> <a name="FileSystem" href="../../../../org/apache/creadur/tentacles/FileSystem.html#FileSystem">FileSystem</a>().collect(dir, <span class="jxr_string">".*&#92;&#92;.java"</span>)) {
 <a class="jxr_linenumber" name="L107" href="#L107">107</a> 
 <a class="jxr_linenumber" name="L108" href="#L108">108</a> 			<strong class="jxr_keyword">if</strong> (not(file.canRead(), <span class="jxr_string">"File not readable: %s"</span>,
 <a class="jxr_linenumber" name="L109" href="#L109">109</a> 					file.getAbsolutePath())) {

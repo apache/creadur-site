@@ -15,7 +15,7 @@
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> * "License"); you may not use this file except in compliance</em>
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> *  with the License.  You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *   <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *   <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> * Unless required by applicable law or agreed to in writing,</em>
 <a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * software distributed under the License is distributed on an</em>
@@ -31,24 +31,24 @@
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.util.Collections;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/apache/creadur/tentacles/Licenses.html">Licenses</a> {
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="Licenses" href="../../../../org/apache/creadur/tentacles/Licenses.html#Licenses">Licenses</a> {
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/creadur/tentacles/IOSystem.html">IOSystem</a> ioSystem;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a name="IOSystem" href="../../../../org/apache/creadur/tentacles/IOSystem.html#IOSystem">IOSystem</a> ioSystem;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Map&lt;String, String&gt; licenses;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/apache/creadur/tentacles/Licenses.html">Licenses</a>(<strong class="jxr_keyword">final</strong> Map&lt;String, String&gt; licenses, <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/creadur/tentacles/Platform.html">Platform</a> platform) {
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>      <strong class="jxr_keyword">public</strong> <a name="Licenses" href="../../../../org/apache/creadur/tentacles/Licenses.html#Licenses">Licenses</a>(<strong class="jxr_keyword">final</strong> Map&lt;String, String&gt; licenses, <strong class="jxr_keyword">final</strong> <a name="Platform" href="../../../../org/apache/creadur/tentacles/Platform.html#Platform">Platform</a> platform) {
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>          <strong class="jxr_keyword">super</strong>();
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">this</strong>.ioSystem = platform.getIoSystem();
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>          <strong class="jxr_keyword">this</strong>.licenses = Collections.unmodifiableMap(licenses);
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      }
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/apache/creadur/tentacles/License.html">License</a> from(<strong class="jxr_keyword">final</strong> File document) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">public</strong> <a name="License" href="../../../../org/apache/creadur/tentacles/License.html#License">License</a> from(<strong class="jxr_keyword">final</strong> File document) <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>          <strong class="jxr_keyword">return</strong> license(<strong class="jxr_keyword">this</strong>.ioSystem.slurp(document));
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      }
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">private</strong> <a href="../../../../org/apache/creadur/tentacles/License.html">License</a> license(<strong class="jxr_keyword">final</strong> String text) {
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">private</strong> <a name="License" href="../../../../org/apache/creadur/tentacles/License.html#License">License</a> license(<strong class="jxr_keyword">final</strong> String text) {
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>          <strong class="jxr_keyword">final</strong> String key = toKey(text);
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/creadur/tentacles/License.html">License</a>(key, normalize(text));
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="License" href="../../../../org/apache/creadur/tentacles/License.html#License">License</a>(key, normalize(text));
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      }
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">private</strong> String toKey(<strong class="jxr_keyword">final</strong> String text) {

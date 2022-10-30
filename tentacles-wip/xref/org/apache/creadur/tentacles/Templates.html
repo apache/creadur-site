@@ -14,7 +14,7 @@
 <a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_comment"> * (the "License"); you may not use this file except in compliance with</em>
 <a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_comment"> * the License.  You may obtain a copy of the License at</em>
 <a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_comment"> *</em>
-<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *     <a href="http://www.apache.org/licenses/LICENSE-2." target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.</a>0</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_comment"> *     <a href="http://www.apache.org/licenses/LICENSE-2.0" target="alexandria_uri">http://www.apache.org/licenses/LICENSE-2.0</a></em>
 <a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_comment"> *</em>
 <a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_comment"> *  Unless required by applicable law or agreed to in writing, software</em>
 <a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_comment"> *  distributed under the License is distributed on an "AS IS" BASIS,</em>
@@ -29,13 +29,13 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> org.apache.velocity.app.VelocityEngine;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> org.apache.velocity.runtime.log.CommonsLogLogChute;
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a href="../../../../org/apache/creadur/tentacles/Templates.html">Templates</a> {
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="Templates" href="../../../../org/apache/creadur/tentacles/Templates.html#Templates">Templates</a> {
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/creadur/tentacles/IOSystem.html">IOSystem</a> ioSystem;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a name="IOSystem" href="../../../../org/apache/creadur/tentacles/IOSystem.html#IOSystem">IOSystem</a> ioSystem;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> VelocityEngine engine;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/creadur/tentacles/TentaclesResources.html">TentaclesResources</a> tentaclesResources;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a name="TentaclesResources" href="../../../../org/apache/creadur/tentacles/TentaclesResources.html#TentaclesResources">TentaclesResources</a> tentaclesResources;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/apache/creadur/tentacles/Templates.html">Templates</a>(<strong class="jxr_keyword">final</strong> <a href="../../../../org/apache/creadur/tentacles/Platform.html">Platform</a> platform) {
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>      <strong class="jxr_keyword">public</strong> <a name="Templates" href="../../../../org/apache/creadur/tentacles/Templates.html#Templates">Templates</a>(<strong class="jxr_keyword">final</strong> <a name="Platform" href="../../../../org/apache/creadur/tentacles/Platform.html#Platform">Platform</a> platform) {
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>          <strong class="jxr_keyword">this</strong>.ioSystem = platform.getIoSystem();
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>          <strong class="jxr_keyword">this</strong>.tentaclesResources = platform.getTentaclesResources();
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">final</strong> Properties properties = <strong class="jxr_keyword">new</strong> Properties();
@@ -55,8 +55,8 @@
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">this</strong>.engine.init(properties);
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">public</strong> <a href="../../../../org/apache/creadur/tentacles/TemplateBuilder.html">TemplateBuilder</a> template(<strong class="jxr_keyword">final</strong> String name) {
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a href="../../../../org/apache/creadur/tentacles/TemplateBuilder.html">TemplateBuilder</a>(name, <strong class="jxr_keyword">this</strong>.ioSystem, <strong class="jxr_keyword">this</strong>.engine,
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">public</strong> <a name="TemplateBuilder" href="../../../../org/apache/creadur/tentacles/TemplateBuilder.html#TemplateBuilder">TemplateBuilder</a> template(<strong class="jxr_keyword">final</strong> String name) {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="TemplateBuilder" href="../../../../org/apache/creadur/tentacles/TemplateBuilder.html#TemplateBuilder">TemplateBuilder</a>(name, <strong class="jxr_keyword">this</strong>.ioSystem, <strong class="jxr_keyword">this</strong>.engine,
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>                  <strong class="jxr_keyword">this</strong>.tentaclesResources);
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      }
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  }
