@@ -8,6 +8,8 @@ Its deployment is done via [asf.yaml](./.asf.yaml). Every commit is directly pus
 
 ## SNAPSHOT
 
+
+### RAT
 In order to sync the current webpage (taken from current SNAPSHOT) you need to run the following commands:
 
 ```
@@ -21,6 +23,19 @@ $ git commit -am "Update site build for RAT"
 ```
 
 *WARNING!* This will sync the current master branch/SNAPSHOT version of the homepage if not run on the release branch
+
+### Tentacles
+
+Same, but:
+```
+$ cd creadur-tentacles
+$ mvn clean site:site site:stage
+$ cd ../creadur-site
+$ cp -rvf ../creadur-tentacles/target/staging/* ./tentacles/
+
+Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
+$ git commit -am "Update site build for TENTACLES"
+```
 
 ## Releases
 
