@@ -43,18 +43,18 @@ Due to problems when generating Javadoc do only use JDK16! Newer versions run in
 
 ```
 $ cd creadur-rat
-$ git checkout apache-rat-project-0.14
+$ git checkout apache-rat-project-0.16
 $ mvn clean site:site site:stage
 
 Verify contents under target/staging
 
 $ cd ../creadur-site
-$ mkdir rat014
-$ cp -rvf ../creadur-rat/target/staging/* ./rat014/
+$ mkdir rat016
+$ cp -rvf ../creadur-rat/target/staging/* ./rat016/
 
 Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
 
-$ git commit -am "Push new preview version of RAT 0.14"
+$ git commit -am "Push new preview version of RAT 0.16"
 ```
 
 This will allow a preview of the release site build at [rat014](./rat014)
