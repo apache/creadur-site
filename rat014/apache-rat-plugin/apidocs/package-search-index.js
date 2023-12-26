@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apache.rat.mp"},{"l":"org.apache.rat.mp.util"}];updateSearchResults();
