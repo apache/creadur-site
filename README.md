@@ -57,7 +57,7 @@ Make sure to manually adapt download pages as they need to reference the current
 $ git commit -am "Push new preview version of RAT 0.16"
 ```
 
-This will allow a preview of the release site build at [rat014](./rat014)
+This will allow a preview of the release site build at [rat016](./rat016)
 
 ### Release Notes / RAT-306
 
