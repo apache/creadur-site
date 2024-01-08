@@ -41,6 +41,12 @@ $ git commit -am "Update site build for TENTACLES"
 
 Due to problems when generating Javadoc do only use JDK16! Newer versions run into NPE during path traversal.
 
+It may happen that you need access to the original release candidate JARs in order to have all of the necessary test JARs to perform a site build,
+see [RAT-341](https://issues.apache.org/jira/browse/RAT-341) for details. As a workaround copy these files into your local .m2 repository and run a site build:
+```
+$ mvn site:site site:stage
+```
+
 ```
 $ cd creadur-rat
 $ git checkout apache-rat-project-0.16
