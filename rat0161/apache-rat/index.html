@@ -25,7 +25,7 @@
     <div id="breadcrumbs">
       <div class="xleft">
         <span id="publishDate">Last Published: 2024-01-11</span>
-           | <span id="projectVersion">Version: 0.17-SNAPSHOT</span>
+           | <span id="projectVersion">Version: 0.16.1-SNAPSHOT</span>
           | <a href="https://www.apache.org/" class="externalLink" title="Apache">Apache</a> &gt;
 <a href="https://creadur.apache.org/" class="externalLink" title="Creadur">Creadur</a> &gt;
 <a href="https://creadur.apache.org/rat/" class="externalLink" title="Rat">Rat</a> &gt;
@@ -107,25 +107,25 @@ Command Line Support
 <h3><a name="Running_from_the_Command_Line"></a>Running from the Command Line</h3>
 <p>Run from the command line with:</p>
 <div class="source">
-<pre>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar --help</pre></div>
+<pre>java -jar apache-rat/target/apache-rat-0.16.1-SNAPSHOT.jar --help</pre></div>
 <p>This will output a help message detailing the command line options available to you.</p></section><section>
 <h3><a name="Adding_license_headers"></a>Adding license headers</h3>
 <p>Rat can be used to automatically add license headers to files that do not currently have them. Only files that are not excluded by the Rat configurations will be affected.</p>
 <p>To add license headers use a command such as:</p>
 <div class="source">
-<pre>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar --addlicense
+<pre>java -jar apache-rat/target/apache-rat-0.16.1-SNAPSHOT.jar --addlicense
   --copyright &quot;Copyright 2008 Foo&quot; --force
   /path/to/project</pre></div>
 <p>This command will add the license header directly to the source files. If you prefer to see which files will be changed and how then remove the &quot;--force&quot; option.</p></section><section>
 <h3><a name="Using_multiple_excludes_from_a_file"></a>Using multiple excludes from a file</h3>
 <p>It is common to use the Rat with the Maven or Ant plugins and specify a series of files to exclude (such as a README or version control files). If you are using the Rat application instead of a plugin you can specify a series of regex excludes in a file and specify that with the -E option.</p>
 <div class="source">
-<pre>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar
+<pre>java -jar apache-rat/target/apache-rat-0.16.1-SNAPSHOT.jar
  -E /path/to/project/.rat-excludes
  -d /path/to/project</pre></div></section><section>
 <h3><a name="Command_Line_Options"></a>Command Line Options</h3>
 <div class="source">
-<pre>usage: java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar
+<pre>usage: java -jar apache-rat/target/apache-rat-0.16.1-SNAPSHOT.jar
             [options] [DIR|TARBALL]
 
 Available options
