@@ -117,9 +117,10 @@ Custom License Matchers
       <div id="contentBox">
 <section>
 <h2><a name="Custom_License_Matchers"></a>Custom License Matchers</h2>
-<p>Rat comes with a set of predefined license matchers, that can be used some typical licenses. However, they will not always be sufficient. In such cases, you may use a custom license matcher.</p>
-<p>The simplest way to create a license check is to create an XML file describing the new license and add it to the processing with the additionalLicenseFiles option. </p>
-<p>The second option is to define the custom license directly in the POM. Unlike earlier version no custom implementations are required to define custom licenses.</p>
+<p>Rat comes with a set of predefined license matchers, that can be used on typical licenses. However, they will not always be sufficient. In such cases, you may configure a custom license matcher.</p>
+<p>The simplest way to create a license check is to create an XML file describing the new license and add it to the processing with the additionalLicenseFiles option.</p>
+<p>The second option is to define the custom license directly in the POM. Unlike earlier version (before 0.16) no custom implementations are required to define custom licenses.</p>
+<p>There is a file that defines all of the standard licenses: <a class="externalLink" href="https://github.com/apache/creadur-rat/blob/master/apache-rat-core/src/main/resources/org/apache/rat/default.xml">default.xml</a></p>
 <div>
 <pre>  /**
    * Yet Another Software License, 1.0
@@ -187,7 +188,25 @@ Custom License Matchers
       &lt;/plugin&gt;
       ...
     &lt;/plugins&gt;
-  &lt;/build&gt;</pre></div></section>
+  &lt;/build&gt;</pre></div></section><section>
+<h2><a name="Overview_of_configuration_options"></a>Overview of configuration options</h2>
+<p>When defining custom licenses, remember the following architecture constraints:</p>
+<ul>
+<li>Each license is associated with a family. Multiple licenses can be associated with a family.</li>
+<li>Each license may have a notes element.</li>
+<li>Each license has one matcher.</li></ul><section>
+<h3><a name="Matcher_details"></a>Matcher details</h3>
+<p><b>all</b> - A collection of matchers in which all enclosed matchers have to be true for the matcher to report true.</p>
+<p><b>any</b> - A collection of matchers that will report true if any enclosed matcher is true.</p>
+<p><b>copyright</b> - A matcher that matches Copyright text. This uses regular expressions and so should only be used when looking for copyrights with specific patterns that are not caught by a standard text matcher. This matcher will match <code>&quot;(C)&quot;</code>, <code>&quot;copyright&quot;</code>, or <code>&quot;&#xa9;&quot;</code>. (text is not case sensitive). It will also match things like <code>Copyright (c) joe 1995</code> as well as <code>Copyright (C) 1995 joe</code>. Copyright has 3 child elements:</p>
+<ul>
+<li><b>start</b> - the starting date of the copyright or the only date.</li>
+<li><b>end</b> - the ending date of the copyright. Only valid if the starting date is provided.</li>
+<li><b>owner</b> - the copyright owner.</li></ul>
+<p><b>not</b> - A matcher that wraps one matcher and negates its value. Not matchers require that the entire header be read before it can report true or false. This may significantly slow processing.</p>
+<p><b>regex</b> - A matcher that matches a regex string.</p>
+<p><b>spdx</b> - A matcher that matches SPDX tags. SPDX tags have the form: <code>SPDX-License-Identifier: short-name</code>, where short-name matches the regex pattern <code>&quot;[A-Za-z0-9\.-]+&quot;.</code> spdx takes the short name as an argument.</p>
+<p>If you define families and do not define <code>approvedFamilies</code> in your pom all the families are assumed to be approved.</p></section></section>
       </div>
     </div>
     <div class="clear">
