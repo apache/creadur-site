@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -168,13 +168,19 @@ extends <a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleM
 <div class="block">Performs the actual match test.</div>
 </td>
 </tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/analysis/matchers/SPDXMatcherFactory.Match.html#reset--">reset</a></span>()</code>
+<div class="block">Resets this state <code>State.i</code>.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.apache.rat.analysis.matchers.AbstractSimpleMatcher">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.apache.rat.analysis.matchers.<a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html" title="class in org.apache.rat.analysis.matchers">AbstractSimpleMatcher</a></h3>
-<code><a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html#currentState--">currentState</a>, <a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html#finalizeState--">finalizeState</a>, <a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html#matches-java.lang.String-">matches</a>, <a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html#reset--">reset</a></code></li>
+<code><a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html#currentState--">currentState</a>, <a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html#finalizeState--">finalizeState</a>, <a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html#matches-java.lang.String-">matches</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.apache.rat.analysis.matchers.AbstractHeaderMatcher">
@@ -207,7 +213,7 @@ extends <a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleM
 <a name="doMatch-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>doMatch</h4>
 <pre>protected&nbsp;boolean&nbsp;doMatch(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;line)</pre>
@@ -220,6 +226,24 @@ extends <a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleM
 <dd><code>line</code> - the line to check.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>true</code> if the line matches, <code>false</code> otherwise.</dd>
+</dl>
+</li>
+</ul>
+<a name="reset--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>reset</h4>
+<pre>public&nbsp;void&nbsp;reset()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../org/apache/rat/analysis/IHeaderMatcher.html#reset--">IHeaderMatcher</a></code></span></div>
+<div class="block">Resets this state <code>State.i</code>. 
+ If text is being cached this method should clear that cache.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../org/apache/rat/analysis/IHeaderMatcher.html#reset--">reset</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../org/apache/rat/analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></code></dd>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html#reset--">reset</a></code>&nbsp;in class&nbsp;<code><a href="../../../../../org/apache/rat/analysis/matchers/AbstractSimpleMatcher.html" title="class in org.apache.rat.analysis.matchers">AbstractSimpleMatcher</a></code></dd>
 </dl>
 </li>
 </ul>

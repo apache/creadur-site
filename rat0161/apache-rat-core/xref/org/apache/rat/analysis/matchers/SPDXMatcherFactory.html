@@ -104,7 +104,7 @@
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>          <em class="jxr_comment">// if the line has not been seen yet see if we can extract the SPDX id from the line.</em>
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>          <em class="jxr_comment">// if so then see if that name has been registered.  If so then we have a match and set </em>
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>          <em class="jxr_comment">// lastMatch.</em>
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>          <strong class="jxr_keyword">if</strong> (lastLine == <strong class="jxr_keyword">null</strong> || !lastLine.equals(line)) {
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          <strong class="jxr_keyword">if</strong> ((lastLine == <strong class="jxr_keyword">null</strong> || !lastLine.equals(line)) &amp;&amp; line.contains(<span class="jxr_string">"SPDX-License-Identifier"</span>)) {
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>             Matcher matcher = groupSelector.matcher(line);
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>             <strong class="jxr_keyword">if</strong> (matcher.find()) {
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>                 lastMatch = matchers.get(matcher.group(1));
@@ -135,8 +135,15 @@
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>         <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">boolean</strong> doMatch(String line) {
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>             <strong class="jxr_keyword">return</strong> SPDXMatcherFactory.<strong class="jxr_keyword">this</strong>.check(line, <strong class="jxr_keyword">this</strong>);
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>         }
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>     }
-<a class="jxr_linenumber" name="L131" href="#L131">131</a> }
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>         
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         @Override
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> reset() {
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>             <strong class="jxr_keyword">super</strong>.reset();
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>             SPDXMatcherFactory.<strong class="jxr_keyword">this</strong>.lastMatch = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>             
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         }
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>     }
+<a class="jxr_linenumber" name="L138" href="#L138">138</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
