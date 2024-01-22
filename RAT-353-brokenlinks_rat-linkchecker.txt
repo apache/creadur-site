@@ -11,6 +11,10 @@ Beginne Prüfen am 2024-01-16 22:43:59+002
 Helper:
 $ find . -type f | grep site | xargs fgrep "source-re"
 
+
+https://issues.apache.org/jira/browse/MPLUGIN-507
+a NPE during the build prevents us from using the v3.11.0 that introduces the
+generation of these files into a separate plugin:
 URL             `plugin-info.html'
 Name            `Goals'
 Vater URL       https://creadur.apache.org/rat/apache-rat-plugin/index.html, Zeile 49, Spalte 23
@@ -34,6 +38,12 @@ Tats. URL       https://creadur.apache.org/rat/apache-rat-plugin/rat-mojo.html
 Prüfzeit        4.353 Sekunden
 Größe           173B
 Ergebnis        Fehler: 404 Not Found
+
+Missing dejavu font:
+https://github.com/marchof/the-missing-javadoc-fonts
+
+Seems to be a wellknown problem with JDK's javadoc tool:
+https://bugs.openjdk.org/browse/JDK-8227487
 
 URL             `resources/fonts/dejavu.css'
 Vater URL       https://creadur.apache.org/rat/apidocs/stylesheet.css, Zeile 4, Spalte 12
