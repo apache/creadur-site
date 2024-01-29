@@ -38,6 +38,7 @@ $ cp -rvf ../creadur-tentacles/target/staging/* ./tentacles/
 Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
 $ git commit -am "Update site build for TENTACLES"
 ```
+Have a look in [TENTACLES-buildtools folder](https://github.com/apache/creadur-tentacles/tree/master/.buildtools) if you want to generate a preview webpage.
 
 ## Releases
 
