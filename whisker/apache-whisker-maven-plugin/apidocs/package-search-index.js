@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apache.creadur.whisker.plugin.maven"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apache.creadur.whisker.apache_whisker_maven_plugin"},{"l":"org.apache.creadur.whisker.plugin.maven"}];updateSearchResults();
