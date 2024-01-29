@@ -40,6 +40,20 @@ $ git commit -am "Update site build for TENTACLES"
 ```
 Have a look in [TENTACLES-buildtools folder](https://github.com/apache/creadur-tentacles/tree/master/.buildtools) if you want to generate a preview webpage.
 
+### Whisker
+
+Same, but:
+```
+$ cd creadur-whisker
+$ mvn clean site:site site:stage
+$ cd ../creadur-site
+$ cp -rvf ../creadur-whisker/target/staging/* ./whisker/
+
+Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
+$ git commit -am "Update site build for WHISKER"
+```
+Have a look in [WHISKER-buildtools folder](https://github.com/apache/creadur-whisker/tree/master/.buildtools) if you want to generate a preview webpage.
+
 ## Releases
 
 Due to problems when generating Javadoc do only use JDK16! Newer versions run into NPE during path traversal.
@@ -52,21 +66,20 @@ $ mvn site:site site:stage
 
 ```
 $ cd creadur-rat
-$ git checkout apache-rat-project-0.16
+$ git checkout apache-rat-project-0.16.1
 $ mvn clean site:site site:stage
 
 Verify contents under target/staging
 
 $ cd ../creadur-site
 $ mkdir rat016
-$ cp -rvf ../creadur-rat/target/staging/* ./rat016/
+$ cp -rvf ../creadur-rat/target/staging/* ./rat0161/
 
 Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
 
-$ git commit -am "Push new preview version of RAT 0.16"
+$ git commit -am "Push new preview version of RAT 0.16.1"
 ```
-
-This will allow a preview of the release site build at [rat016](./rat016)
+This will allow a preview of the release site build at [rat0161](./rat0161)
 
 ### Release Notes / RAT-306
 
