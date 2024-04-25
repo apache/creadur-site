@@ -52,7 +52,7 @@ $ cp -rvf ../creadur-whisker/target/staging/* ./whisker/
 Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
 $ git commit -am "Update site build for WHISKER"
 ```
-Have a look in [WHISKER-buildtools folder](https://github.com/apache/creadur-whisker/tree/master/.buildtools) if you want to generate a preview webpage.
+Have a look in [WHISKER's buildtools folder](https://github.com/apache/creadur-whisker/tree/master/.buildtools) if you want to generate a preview webpage.
 
 ## Releases
 
