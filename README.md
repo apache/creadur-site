@@ -24,7 +24,7 @@ $ git commit -am "Update site build for RAT"
 
 *WARNING!* This will sync the current master branch/SNAPSHOT version of the homepage if not run on the release branch
 
-Have a look in [RAT-buildtools folder](https://github.com/apache/creadur-rat/tree/master/.buildtools) if you want to generate a preview webpage.
+Have a look in [RAT's buildtools folder](https://github.com/apache/creadur-rat/tree/master/.buildtools) if you want to generate a preview webpage.
 
 ### Tentacles
 
