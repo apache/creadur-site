@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","u":"allclasses-index.html"},{"p":"org.apache.rat","l":"Documentation"}];updateSearchResults();

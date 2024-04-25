@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"org.apache.rat","c":"Documentation","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"org.apache.rat","c":"Documentation","l":"output(ReportConfiguration, Writer)","u":"output(org.apache.rat.ReportConfiguration,java.io.Writer)"}];updateSearchResults();
