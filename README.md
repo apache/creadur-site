@@ -8,6 +8,7 @@ Its deployment is done via [asf.yaml](./.asf.yaml). Every commit is directly pus
 
 ## SNAPSHOT
 
+The current SNAPSHOT version of RAT can be found in [rat017](https://creadur.apache.org/rat017/) and is generated manually.
 
 ### RAT
 In order to sync the current webpage (taken from current SNAPSHOT) you need to run the following commands:
