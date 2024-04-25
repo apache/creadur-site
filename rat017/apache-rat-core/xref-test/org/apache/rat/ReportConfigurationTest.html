@@ -59,7 +59,7 @@
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration.NoCloseOutputStream;
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.analysis.IHeaderMatcher;
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.config.AddLicenseHeaders;
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.configuration.ConfigurationReaderTest;
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.configuration.XMLConfigurationReaderTest;
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.ILicense;
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.ILicenseFamily;
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.LicenseSetFactory.LicenseFilter;
@@ -97,9 +97,9 @@
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          expected.add(<span class="jxr_string">"TheCa"</span>);
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>          SortedSet&lt;String&gt; result = underTest.getApprovedLicenseCategories();
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          assertThat(expected).hasSize(result.size()).containsAll(result);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>          SortedSet&lt;ILicenseFamily&gt; families = underTest.getLicenseFamilies(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          SortedSet&lt;ILicenseFamily&gt; families = underTest.getLicenseFamilies(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          assertThat(expected).hasSize(families.size());
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          SortedSet&lt;ILicense&gt; licenses = underTest.getLicenses(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          SortedSet&lt;ILicense&gt; licenses = underTest.getLicenses(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          assertThat(expected).hasSize(licenses.size());
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>          underTest.addLicense(<strong class="jxr_keyword">new</strong> <a name="TestingLicense" href="../../../org/apache/rat/testhelpers/TestingLicense.html#TestingLicense">TestingLicense</a>(<span class="jxr_string">"ACat"</span>));
@@ -107,9 +107,9 @@
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>          expected.add(<span class="jxr_string">"ACat "</span>);
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>         result = underTest.getApprovedLicenseCategories();
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>         assertThat(expected).hasSize(result.size()).containsAll(result);
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>         families = underTest.getLicenseFamilies(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         families = underTest.getLicenseFamilies(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>         assertThat(expected).hasSize(families.size());
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         licenses = underTest.getLicenses(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         licenses = underTest.getLicenses(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>         assertThat(expected).hasSize(licenses.size());
 <a class="jxr_linenumber" name="L106" href="#L106">106</a> 
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>         String[] cats = { <span class="jxr_string">"Spot "</span>, <span class="jxr_string">"Felix"</span> };
@@ -119,18 +119,18 @@
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>         expected.addAll(Arrays.asList(cats));
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         result = underTest.getApprovedLicenseCategories();
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>         assertThat(expected).hasSize(result.size()).containsAll(result);
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>         families = underTest.getLicenseFamilies(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>         families = underTest.getLicenseFamilies(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>         assertThat(expected).hasSize(families.size());
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>         licenses = underTest.getLicenses(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         licenses = underTest.getLicenses(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L117" href="#L117">117</a>         assertThat(expected).hasSize(licenses.size());
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>         
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>         underTest.removeApprovedLicenseCategory(<span class="jxr_string">"Spot "</span>);
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>         expected.remove(<span class="jxr_string">"Spot "</span>);
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>         result = underTest.getApprovedLicenseCategories();
 <a class="jxr_linenumber" name="L122" href="#L122">122</a>         assertThat(expected).hasSize(result.size()).containsAll(result);
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>         families = underTest.getLicenseFamilies(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>         families = underTest.getLicenseFamilies(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L124" href="#L124">124</a>         assertThat(expected).hasSize(families.size());
-<a class="jxr_linenumber" name="L125" href="#L125">125</a>         licenses = underTest.getLicenses(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>         licenses = underTest.getLicenses(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>         assertThat(expected).hasSize(licenses.size());
 <a class="jxr_linenumber" name="L127" href="#L127">127</a> 
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>         cats[0] = <span class="jxr_string">"TheCa"</span>;
@@ -138,27 +138,27 @@
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>         expected.removeAll(Arrays.asList(cats));
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>         result = underTest.getApprovedLicenseCategories();
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>         assertThat(expected).hasSize(result.size()).containsAll(result);
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>         families = underTest.getLicenseFamilies(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>         families = underTest.getLicenseFamilies(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>         assertThat(expected).hasSize(families.size());
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>         licenses = underTest.getLicenses(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>         licenses = underTest.getLicenses(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>         assertThat(expected).hasSize(licenses.size());    }
 <a class="jxr_linenumber" name="L137" href="#L137">137</a> 
 <a class="jxr_linenumber" name="L138" href="#L138">138</a>     @Test
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testRemoveBeforeAddApproveLicenseCategories() {
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         underTest.addLicense( <strong class="jxr_keyword">new</strong> <a name="TestingLicense" href="../../../org/apache/rat/testhelpers/TestingLicense.html#TestingLicense">TestingLicense</a>(<span class="jxr_string">"TheCat"</span>));
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>         assertThat(underTest.getApprovedLicenseCategories()).isEmpty();
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.approved)).isEmpty();
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>         assertThat(underTest.getLicenses(LicenseFilter.approved)).isEmpty();
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.APPROVED)).isEmpty();
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         assertThat(underTest.getLicenses(LicenseFilter.APPROVED)).isEmpty();
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>         
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         underTest.removeApprovedLicenseCategory(<span class="jxr_string">"TheCat"</span>);
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>         assertThat(underTest.getApprovedLicenseCategories()).isEmpty();
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.approved)).isEmpty();
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>         assertThat(underTest.getLicenses(LicenseFilter.approved)).isEmpty();
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.APPROVED)).isEmpty();
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>         assertThat(underTest.getLicenses(LicenseFilter.APPROVED)).isEmpty();
 <a class="jxr_linenumber" name="L149" href="#L149">149</a> 
 <a class="jxr_linenumber" name="L150" href="#L150">150</a>         underTest.addApprovedLicenseCategory(<span class="jxr_string">"TheCat"</span>);
 <a class="jxr_linenumber" name="L151" href="#L151">151</a>         assertThat(underTest.getApprovedLicenseCategories()).isEmpty();
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.approved)).isEmpty();
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>         assertThat(underTest.getLicenses(LicenseFilter.approved)).isEmpty();
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.APPROVED)).isEmpty();
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         assertThat(underTest.getLicenses(LicenseFilter.APPROVED)).isEmpty();
 <a class="jxr_linenumber" name="L154" href="#L154">154</a>     }
 <a class="jxr_linenumber" name="L155" href="#L155">155</a> 
 <a class="jxr_linenumber" name="L156" href="#L156">156</a>     <strong class="jxr_keyword">private</strong> ILicense testingLicense(String category, String name) {
@@ -171,18 +171,18 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testAddLicense() {
 <a class="jxr_linenumber" name="L164" href="#L164">164</a> 
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>         List&lt;ILicense&gt; expected = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>         assertThat(underTest.getLicenses(LicenseFilter.all)).isEmpty();
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>         assertThat(underTest.getLicenses(LicenseFilter.ALL)).isEmpty();
 <a class="jxr_linenumber" name="L167" href="#L167">167</a> 
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         ILicense lic1 = testingLicense(<span class="jxr_string">"TheCat"</span>, <span class="jxr_string">"TheName"</span>);
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>         expected.add(lic1);
 <a class="jxr_linenumber" name="L170" href="#L170">170</a>         underTest.addLicense(lic1);
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>         SortedSet&lt;ILicense&gt; result = underTest.getLicenses(LicenseFilter.all);
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>         SortedSet&lt;ILicense&gt; result = underTest.getLicenses(LicenseFilter.ALL);
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>         assertThat(expected).hasSize(result.size()).containsAll(result);
 <a class="jxr_linenumber" name="L173" href="#L173">173</a> 
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>         ILicense[] lics = { testingLicense(<span class="jxr_string">"Spot"</span>, <span class="jxr_string">"Data's cat"</span>), testingLicense(<span class="jxr_string">"Felix"</span>, <span class="jxr_string">"Cartoon cat"</span>) };
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>         expected.addAll(Arrays.asList(lics));
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         underTest.addLicenses(Arrays.asList(lics));
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>         result = underTest.getLicenses(LicenseFilter.all);
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>         result = underTest.getLicenses(LicenseFilter.ALL);
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>         assertThat(expected).hasSize(result.size()).containsAll(result);
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>     }
 <a class="jxr_linenumber" name="L180" href="#L180">180</a> 
@@ -216,46 +216,46 @@
 <a class="jxr_linenumber" name="L208" href="#L208">208</a> 
 <a class="jxr_linenumber" name="L209" href="#L209">209</a>     @Test
 <a class="jxr_linenumber" name="L210" href="#L210">210</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> licenseFamiliesTest() {
-<a class="jxr_linenumber" name="L211" href="#L211">211</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.all)).isEmpty();
-<a class="jxr_linenumber" name="L212" href="#L212">212</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.approved)).isEmpty();
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.none)).isEmpty();
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.ALL)).isEmpty();
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.APPROVED)).isEmpty();
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.NONE)).isEmpty();
 <a class="jxr_linenumber" name="L214" href="#L214">214</a> 
 <a class="jxr_linenumber" name="L215" href="#L215">215</a>         ILicense[] lics = { testingLicense(<span class="jxr_string">"TheCat"</span>, <span class="jxr_string">"TheName"</span>), testingLicense(<span class="jxr_string">"Spot"</span>, <span class="jxr_string">"Data's cat"</span>),
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>                 testingLicense(<span class="jxr_string">"Felix"</span>, <span class="jxr_string">"Cartoon cat"</span>) };
 <a class="jxr_linenumber" name="L217" href="#L217">217</a>         underTest.addLicenses(Arrays.asList(lics));
 <a class="jxr_linenumber" name="L218" href="#L218">218</a> 
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.all)).hasSize(lics.length);
-<a class="jxr_linenumber" name="L220" href="#L220">220</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.approved)).isEmpty();
-<a class="jxr_linenumber" name="L221" href="#L221">221</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.none)).isEmpty();
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.ALL)).hasSize(lics.length);
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.APPROVED)).isEmpty();
+<a class="jxr_linenumber" name="L221" href="#L221">221</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.NONE)).isEmpty();
 <a class="jxr_linenumber" name="L222" href="#L222">222</a> 
 <a class="jxr_linenumber" name="L223" href="#L223">223</a>         underTest.addApprovedLicenseCategory(lics[1].getLicenseFamily());
-<a class="jxr_linenumber" name="L224" href="#L224">224</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.all)).hasSize(lics.length);
-<a class="jxr_linenumber" name="L225" href="#L225">225</a>         SortedSet&lt;ILicenseFamily&gt; result = underTest.getLicenseFamilies(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L224" href="#L224">224</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.ALL)).hasSize(lics.length);
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>         SortedSet&lt;ILicenseFamily&gt; result = underTest.getLicenseFamilies(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L226" href="#L226">226</a>         assertThat(result).hasSize(1);
 <a class="jxr_linenumber" name="L227" href="#L227">227</a>         assertThat(result.first()).isEqualTo(lics[1].getLicenseFamily());
-<a class="jxr_linenumber" name="L228" href="#L228">228</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.none)).isEmpty();
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.NONE)).isEmpty();
 <a class="jxr_linenumber" name="L229" href="#L229">229</a>     }
 <a class="jxr_linenumber" name="L230" href="#L230">230</a> 
 <a class="jxr_linenumber" name="L231" href="#L231">231</a>     @Test
 <a class="jxr_linenumber" name="L232" href="#L232">232</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> licensesTest() {
-<a class="jxr_linenumber" name="L233" href="#L233">233</a>         assertThat(underTest.getLicenses(LicenseFilter.all)).isEmpty();
-<a class="jxr_linenumber" name="L234" href="#L234">234</a>         assertThat(underTest.getLicenses(LicenseFilter.approved)).isEmpty();
-<a class="jxr_linenumber" name="L235" href="#L235">235</a>         assertThat(underTest.getLicenses(LicenseFilter.none)).isEmpty();
+<a class="jxr_linenumber" name="L233" href="#L233">233</a>         assertThat(underTest.getLicenses(LicenseFilter.ALL)).isEmpty();
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>         assertThat(underTest.getLicenses(LicenseFilter.APPROVED)).isEmpty();
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>         assertThat(underTest.getLicenses(LicenseFilter.NONE)).isEmpty();
 <a class="jxr_linenumber" name="L236" href="#L236">236</a> 
 <a class="jxr_linenumber" name="L237" href="#L237">237</a>         ILicense[] lics = { testingLicense(<span class="jxr_string">"TheCat"</span>, <span class="jxr_string">"TheName"</span>), testingLicense(<span class="jxr_string">"Spot"</span>, <span class="jxr_string">"Data's cat"</span>),
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>                 testingLicense(<span class="jxr_string">"Felix"</span>, <span class="jxr_string">"Cartoon cat"</span>) };
 <a class="jxr_linenumber" name="L239" href="#L239">239</a>         underTest.addLicenses(Arrays.asList(lics));
 <a class="jxr_linenumber" name="L240" href="#L240">240</a> 
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>         assertThat(underTest.getLicenses(LicenseFilter.all)).hasSize(lics.length);
-<a class="jxr_linenumber" name="L242" href="#L242">242</a>         assertThat(underTest.getLicenses(LicenseFilter.approved)).isEmpty();
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>         assertThat(underTest.getLicenses(LicenseFilter.none)).isEmpty();
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>         assertThat(underTest.getLicenses(LicenseFilter.ALL)).hasSize(lics.length);
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>         assertThat(underTest.getLicenses(LicenseFilter.APPROVED)).isEmpty();
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>         assertThat(underTest.getLicenses(LicenseFilter.NONE)).isEmpty();
 <a class="jxr_linenumber" name="L244" href="#L244">244</a> 
 <a class="jxr_linenumber" name="L245" href="#L245">245</a>         underTest.addApprovedLicenseCategory(lics[1].getLicenseFamily());
-<a class="jxr_linenumber" name="L246" href="#L246">246</a>         assertThat(underTest.getLicenses(LicenseFilter.all)).hasSize(lics.length);
-<a class="jxr_linenumber" name="L247" href="#L247">247</a>         SortedSet&lt;ILicense&gt; result = underTest.getLicenses(LicenseFilter.approved);
+<a class="jxr_linenumber" name="L246" href="#L246">246</a>         assertThat(underTest.getLicenses(LicenseFilter.ALL)).hasSize(lics.length);
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         SortedSet&lt;ILicense&gt; result = underTest.getLicenses(LicenseFilter.APPROVED);
 <a class="jxr_linenumber" name="L248" href="#L248">248</a>         assertThat(result).hasSize(1);
 <a class="jxr_linenumber" name="L249" href="#L249">249</a>         assertThat(result.first()).isEqualTo(lics[1]);
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.none)).isEmpty();
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>         assertThat(underTest.getLicenseFamilies(LicenseFilter.NONE)).isEmpty();
 <a class="jxr_linenumber" name="L251" href="#L251">251</a>     }
 <a class="jxr_linenumber" name="L252" href="#L252">252</a> 
 <a class="jxr_linenumber" name="L253" href="#L253">253</a>     @Test
@@ -423,14 +423,14 @@
 <a class="jxr_linenumber" name="L415" href="#L415">415</a>         <em class="jxr_comment">// verify default second setting ignores change</em>
 <a class="jxr_linenumber" name="L416" href="#L416">416</a>         underTest.addFamily(ILicenseFamily.builder().setLicenseFamilyCategory(<span class="jxr_string">"CAT"</span>).setLicenseFamilyName(<span class="jxr_string">"name2"</span>));
 <a class="jxr_linenumber" name="L417" href="#L417">417</a>         assertTrue(log.captured.toString().contains(<span class="jxr_string">"CAT"</span>));
-<a class="jxr_linenumber" name="L418" href="#L418">418</a>         assertEquals(<span class="jxr_string">"name"</span>, underTest.getLicenseFamilies(LicenseFilter.all).stream()
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>         assertEquals(<span class="jxr_string">"name"</span>, underTest.getLicenseFamilies(LicenseFilter.ALL).stream()
 <a class="jxr_linenumber" name="L419" href="#L419">419</a>                 .filter(s -&gt; s.getFamilyCategory().equals(<span class="jxr_string">"CAT  "</span>)).map(s -&gt; s.getFamilyName()).findFirst().get());
 <a class="jxr_linenumber" name="L420" href="#L420">420</a>         
 <a class="jxr_linenumber" name="L421" href="#L421">421</a>         underTest.familyDuplicateOption(Options.OVERWRITE);
 <a class="jxr_linenumber" name="L422" href="#L422">422</a>         <em class="jxr_comment">// verify second setting ignores change</em>
 <a class="jxr_linenumber" name="L423" href="#L423">423</a>         underTest.addFamily(ILicenseFamily.builder().setLicenseFamilyCategory(<span class="jxr_string">"CAT"</span>).setLicenseFamilyName(<span class="jxr_string">"name2"</span>));
 <a class="jxr_linenumber" name="L424" href="#L424">424</a>         assertTrue(log.captured.toString().contains(<span class="jxr_string">"CAT"</span>));
-<a class="jxr_linenumber" name="L425" href="#L425">425</a>         assertEquals(<span class="jxr_string">"name2"</span>, underTest.getLicenseFamilies(LicenseFilter.all).stream()
+<a class="jxr_linenumber" name="L425" href="#L425">425</a>         assertEquals(<span class="jxr_string">"name2"</span>, underTest.getLicenseFamilies(LicenseFilter.ALL).stream()
 <a class="jxr_linenumber" name="L426" href="#L426">426</a>                 .filter(s -&gt; s.getFamilyCategory().equals(<span class="jxr_string">"CAT  "</span>)).map(s -&gt; s.getFamilyName()).findFirst().get());
 <a class="jxr_linenumber" name="L427" href="#L427">427</a> 
 <a class="jxr_linenumber" name="L428" href="#L428">428</a>         <em class="jxr_comment">// verify fail throws exception</em>
@@ -448,151 +448,156 @@
 <a class="jxr_linenumber" name="L440" href="#L440">440</a>         IHeaderMatcher matcher = Mockito.mock(IHeaderMatcher.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L441" href="#L441">441</a>         when(matcher.getId()).thenReturn(<span class="jxr_string">"Macher ID"</span>);
 <a class="jxr_linenumber" name="L442" href="#L442">442</a>         underTest.addFamily(family);
-<a class="jxr_linenumber" name="L443" href="#L443">443</a>         underTest.addLicense(ILicense.builder().setId(<span class="jxr_string">"ID"</span>).setName(<span class="jxr_string">"license name"</span>).setLicenseFamilyCategory(family.getFamilyCategory())
-<a class="jxr_linenumber" name="L444" href="#L444">444</a>                 .setMatcher( matcher ).build(underTest.getLicenseFamilies(LicenseFilter.all)));
-<a class="jxr_linenumber" name="L445" href="#L445">445</a>         
-<a class="jxr_linenumber" name="L446" href="#L446">446</a>         <em class="jxr_comment">// verify default collistion logs WARN</em>
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>         underTest.addLicense(ILicense.builder().setId(<span class="jxr_string">"ID"</span>).setName(<span class="jxr_string">"license name2"</span>).setLicenseFamilyCategory(family.getFamilyCategory())
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>                 .setMatcher( matcher ).build(underTest.getLicenseFamilies(LicenseFilter.all)));
-<a class="jxr_linenumber" name="L449" href="#L449">449</a>         assertTrue(log.captured.toString().contains(<span class="jxr_string">"WARN"</span>));
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>         
-<a class="jxr_linenumber" name="L451" href="#L451">451</a>         log.clear();
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>         underTest.logLicenseCollisions(Level.ERROR);
+<a class="jxr_linenumber" name="L443" href="#L443">443</a>         underTest.addLicense(ILicense.builder().setId(<span class="jxr_string">"ID"</span>).setName(<span class="jxr_string">"license name"</span>).setFamily(family.getFamilyCategory())
+<a class="jxr_linenumber" name="L444" href="#L444">444</a>                 .setMatcher( matcher )
+<a class="jxr_linenumber" name="L445" href="#L445">445</a>                 .setLicenseFamilies(underTest.getLicenseFamilies(LicenseFilter.ALL))
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>                 .build());
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>         
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>         <em class="jxr_comment">// verify default collistion logs WARN</em>
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>         underTest.addLicense(ILicense.builder().setId(<span class="jxr_string">"ID"</span>).setName(<span class="jxr_string">"license name2"</span>).setFamily(family.getFamilyCategory())
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>                 .setMatcher( matcher ).setLicenseFamilies(underTest.getLicenseFamilies(LicenseFilter.ALL))
+<a class="jxr_linenumber" name="L451" href="#L451">451</a>                 .build());
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>         assertTrue(log.captured.toString().contains(<span class="jxr_string">"WARN"</span>));
 <a class="jxr_linenumber" name="L453" href="#L453">453</a>         
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>         <em class="jxr_comment">// verify second setting changes logs issue</em>
-<a class="jxr_linenumber" name="L455" href="#L455">455</a>         underTest.addLicense(ILicense.builder().setId(<span class="jxr_string">"ID"</span>).setName(<span class="jxr_string">"license name2"</span>).setLicenseFamilyCategory(family.getFamilyCategory())
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>                 .setMatcher( matcher ).build(underTest.getLicenseFamilies(LicenseFilter.all)));
-<a class="jxr_linenumber" name="L457" href="#L457">457</a>         assertTrue(log.captured.toString().contains(<span class="jxr_string">"ERROR"</span>));
-<a class="jxr_linenumber" name="L458" href="#L458">458</a> 
-<a class="jxr_linenumber" name="L459" href="#L459">459</a>     }
-<a class="jxr_linenumber" name="L460" href="#L460">460</a>     
-<a class="jxr_linenumber" name="L461" href="#L461">461</a>     @Test
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> licenseDuplicateOptionsTest() {
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>         <em class="jxr_comment">// setup</em>
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>         ILicenseFamily family = ILicenseFamily.builder().setLicenseFamilyCategory(<span class="jxr_string">"CAT"</span>).setLicenseFamilyName(<span class="jxr_string">"family name"</span>).build();
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>         IHeaderMatcher matcher = Mockito.mock(IHeaderMatcher.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>         when(matcher.getId()).thenReturn(<span class="jxr_string">"Macher ID"</span>);
-<a class="jxr_linenumber" name="L467" href="#L467">467</a>         underTest.addFamily(family);
-<a class="jxr_linenumber" name="L468" href="#L468">468</a>         Function&lt;String,ILicense&gt; makeLicense = s -&gt; ILicense.builder().setId(<span class="jxr_string">"ID"</span>).setName(s).setLicenseFamilyCategory(family.getFamilyCategory())
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>                 .setMatcher( matcher ).build(underTest.getLicenseFamilies(LicenseFilter.all));
-<a class="jxr_linenumber" name="L470" href="#L470">470</a>                 
-<a class="jxr_linenumber" name="L471" href="#L471">471</a>         underTest.addLicense(makeLicense.apply(<span class="jxr_string">"license name"</span>));
-<a class="jxr_linenumber" name="L472" href="#L472">472</a>         
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>         <em class="jxr_comment">// verify default second setting ignores change</em>
-<a class="jxr_linenumber" name="L474" href="#L474">474</a>         underTest.addLicense(makeLicense.apply(<span class="jxr_string">"license name2"</span>));
-<a class="jxr_linenumber" name="L475" href="#L475">475</a>         assertTrue(log.captured.toString().contains(<span class="jxr_string">"WARN"</span>));
-<a class="jxr_linenumber" name="L476" href="#L476">476</a>         assertEquals(<span class="jxr_string">"license name"</span>,
-<a class="jxr_linenumber" name="L477" href="#L477">477</a>                 underTest.getLicenses(LicenseFilter.all).stream().map(ILicense::getName).findFirst().get());
-<a class="jxr_linenumber" name="L478" href="#L478">478</a>         
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>         underTest.licenseDuplicateOption(Options.OVERWRITE);
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>         underTest.addLicense(makeLicense.apply(<span class="jxr_string">"license name2"</span>));
-<a class="jxr_linenumber" name="L481" href="#L481">481</a>         assertEquals(<span class="jxr_string">"license name2"</span>,
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>                 underTest.getLicenses(LicenseFilter.all).stream().map(ILicense::getName).findFirst().get());
+<a class="jxr_linenumber" name="L454" href="#L454">454</a>         log.clear();
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>         underTest.logLicenseCollisions(Level.ERROR);
+<a class="jxr_linenumber" name="L456" href="#L456">456</a>         
+<a class="jxr_linenumber" name="L457" href="#L457">457</a>         <em class="jxr_comment">// verify second setting changes logs issue</em>
+<a class="jxr_linenumber" name="L458" href="#L458">458</a>         underTest.addLicense(ILicense.builder().setId(<span class="jxr_string">"ID"</span>).setName(<span class="jxr_string">"license name2"</span>).setFamily(family.getFamilyCategory())
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>                 .setMatcher( matcher ).setLicenseFamilies(underTest.getLicenseFamilies(LicenseFilter.ALL))
+<a class="jxr_linenumber" name="L460" href="#L460">460</a>                 .build());
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>         assertTrue(log.captured.toString().contains(<span class="jxr_string">"ERROR"</span>));
+<a class="jxr_linenumber" name="L462" href="#L462">462</a> 
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>     }
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>     
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>     @Test
+<a class="jxr_linenumber" name="L466" href="#L466">466</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> licenseDuplicateOptionsTest() {
+<a class="jxr_linenumber" name="L467" href="#L467">467</a>         <em class="jxr_comment">// setup</em>
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>         ILicenseFamily family = ILicenseFamily.builder().setLicenseFamilyCategory(<span class="jxr_string">"CAT"</span>).setLicenseFamilyName(<span class="jxr_string">"family name"</span>).build();
+<a class="jxr_linenumber" name="L469" href="#L469">469</a>         IHeaderMatcher matcher = Mockito.mock(IHeaderMatcher.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L470" href="#L470">470</a>         when(matcher.getId()).thenReturn(<span class="jxr_string">"Macher ID"</span>);
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>         underTest.addFamily(family);
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>         Function&lt;String,ILicense&gt; makeLicense = s -&gt; ILicense.builder().setId(<span class="jxr_string">"ID"</span>).setName(s).setFamily(family.getFamilyCategory())
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>                 .setMatcher( matcher ).setLicenseFamilies(underTest.getLicenseFamilies(LicenseFilter.ALL))
+<a class="jxr_linenumber" name="L474" href="#L474">474</a>                 .build();
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>                 
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>         underTest.addLicense(makeLicense.apply(<span class="jxr_string">"license name"</span>));
+<a class="jxr_linenumber" name="L477" href="#L477">477</a>         
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>         <em class="jxr_comment">// verify default second setting ignores change</em>
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>         underTest.addLicense(makeLicense.apply(<span class="jxr_string">"license name2"</span>));
+<a class="jxr_linenumber" name="L480" href="#L480">480</a>         assertTrue(log.captured.toString().contains(<span class="jxr_string">"WARN"</span>));
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>         assertEquals(<span class="jxr_string">"license name"</span>,
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>                 underTest.getLicenses(LicenseFilter.ALL).stream().map(ILicense::getName).findFirst().get());
 <a class="jxr_linenumber" name="L483" href="#L483">483</a>         
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>          
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>         <em class="jxr_comment">// verify fail throws exception</em>
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>         underTest.licenseDuplicateOption(Options.FAIL);
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>         assertThrows( IllegalArgumentException.<strong class="jxr_keyword">class</strong>, ()-&gt; underTest.addLicense(makeLicense.apply(<span class="jxr_string">"another name"</span>)));
-<a class="jxr_linenumber" name="L488" href="#L488">488</a> 
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>     }
-<a class="jxr_linenumber" name="L490" href="#L490">490</a>     
-<a class="jxr_linenumber" name="L491" href="#L491">491</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L492" href="#L492">492</a> <em class="jxr_javadoccomment">     * Validates that the configuration contains the default approved licenses.</em>
-<a class="jxr_linenumber" name="L493" href="#L493">493</a> <em class="jxr_javadoccomment">     * @param config The configuration to test.</em>
-<a class="jxr_linenumber" name="L494" href="#L494">494</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefaultApprovedLicenses(ReportConfiguration config) {
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>         validateDefaultApprovedLicenses(config, 0);
-<a class="jxr_linenumber" name="L497" href="#L497">497</a>     }
-<a class="jxr_linenumber" name="L498" href="#L498">498</a>     
-<a class="jxr_linenumber" name="L499" href="#L499">499</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L500" href="#L500">500</a> <em class="jxr_javadoccomment">     * Validates that the configuration contains the default approved licenses.</em>
-<a class="jxr_linenumber" name="L501" href="#L501">501</a> <em class="jxr_javadoccomment">     * @param config The configuration to test.</em>
-<a class="jxr_linenumber" name="L502" href="#L502">502</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L503" href="#L503">503</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefaultApprovedLicenses(ReportConfiguration config, <strong class="jxr_keyword">int</strong> additionalIdCount) {
-<a class="jxr_linenumber" name="L504" href="#L504">504</a>         assertThat(config.getApprovedLicenseCategories()).hasSize(ConfigurationReaderTest.EXPECTED_IDS.length + additionalIdCount);
-<a class="jxr_linenumber" name="L505" href="#L505">505</a>         <strong class="jxr_keyword">for</strong> (String s : ConfigurationReaderTest.EXPECTED_IDS) {
-<a class="jxr_linenumber" name="L506" href="#L506">506</a>             assertThat(config.getApprovedLicenseCategories()).contains(ILicenseFamily.makeCategory(s));
-<a class="jxr_linenumber" name="L507" href="#L507">507</a>         }
-<a class="jxr_linenumber" name="L508" href="#L508">508</a>     }
-<a class="jxr_linenumber" name="L509" href="#L509">509</a>     
-<a class="jxr_linenumber" name="L510" href="#L510">510</a> 
-<a class="jxr_linenumber" name="L511" href="#L511">511</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L512" href="#L512">512</a> <em class="jxr_javadoccomment">     * Validates that the configruation contains the default license families.</em>
-<a class="jxr_linenumber" name="L513" href="#L513">513</a> <em class="jxr_javadoccomment">     * @param config the configuration to test.</em>
-<a class="jxr_linenumber" name="L514" href="#L514">514</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L515" href="#L515">515</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefaultLicenseFamilies(ReportConfiguration config, String...additionalIds) {
-<a class="jxr_linenumber" name="L516" href="#L516">516</a>         assertThat(config.getLicenseFamilies(LicenseFilter.all)).hasSize(ConfigurationReaderTest.EXPECTED_IDS.length + additionalIds.length);
-<a class="jxr_linenumber" name="L517" href="#L517">517</a>         List&lt;String&gt; expected = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L518" href="#L518">518</a>         expected.addAll(Arrays.asList(ConfigurationReaderTest.EXPECTED_IDS));
-<a class="jxr_linenumber" name="L519" href="#L519">519</a>         expected.addAll(Arrays.asList(additionalIds));
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>         <strong class="jxr_keyword">for</strong> (ILicenseFamily family : config.getLicenseFamilies(LicenseFilter.all)) {
-<a class="jxr_linenumber" name="L521" href="#L521">521</a>             assertThat(expected).contains(family.getFamilyCategory().trim());
-<a class="jxr_linenumber" name="L522" href="#L522">522</a>         }
-<a class="jxr_linenumber" name="L523" href="#L523">523</a>     }
-<a class="jxr_linenumber" name="L524" href="#L524">524</a> 
-<a class="jxr_linenumber" name="L525" href="#L525">525</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L526" href="#L526">526</a> <em class="jxr_javadoccomment">     * Validates that the configuration contains the default licenses.</em>
-<a class="jxr_linenumber" name="L527" href="#L527">527</a> <em class="jxr_javadoccomment">     * @param config the configuration to test.</em>
-<a class="jxr_linenumber" name="L528" href="#L528">528</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L529" href="#L529">529</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefaultLicenses(ReportConfiguration config, String...additionalLicenses) {
-<a class="jxr_linenumber" name="L530" href="#L530">530</a>         assertThat(config.getLicenses(LicenseFilter.all)).hasSize(ConfigurationReaderTest.EXPECTED_LICENSES.length + additionalLicenses.length);
-<a class="jxr_linenumber" name="L531" href="#L531">531</a>         List&lt;String&gt; expected = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L532" href="#L532">532</a>         expected.addAll(Arrays.asList(ConfigurationReaderTest.EXPECTED_LICENSES));
-<a class="jxr_linenumber" name="L533" href="#L533">533</a>         expected.addAll(Arrays.asList(additionalLicenses));
-<a class="jxr_linenumber" name="L534" href="#L534">534</a>         <strong class="jxr_keyword">for</strong> (ILicense license : config.getLicenses(LicenseFilter.all)) {
-<a class="jxr_linenumber" name="L535" href="#L535">535</a>             assertThat(expected).contains(license.getId());
-<a class="jxr_linenumber" name="L536" href="#L536">536</a>         }
-<a class="jxr_linenumber" name="L537" href="#L537">537</a>     }
-<a class="jxr_linenumber" name="L538" href="#L538">538</a>     
-<a class="jxr_linenumber" name="L539" href="#L539">539</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L540" href="#L540">540</a> <em class="jxr_javadoccomment">     * Validates that the configuration matches the default.</em>
-<a class="jxr_linenumber" name="L541" href="#L541">541</a> <em class="jxr_javadoccomment">     * @param config The configuration to test.</em>
-<a class="jxr_linenumber" name="L542" href="#L542">542</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L543" href="#L543">543</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefault(ReportConfiguration config) {
-<a class="jxr_linenumber" name="L544" href="#L544">544</a>         assertThat(config.isAddingLicenses()).isFalse();
-<a class="jxr_linenumber" name="L545" href="#L545">545</a>         assertThat(config.isAddingLicensesForced()).isFalse();
-<a class="jxr_linenumber" name="L546" href="#L546">546</a>         assertThat(config.getCopyrightMessage()).isNull();
-<a class="jxr_linenumber" name="L547" href="#L547">547</a>         assertThat(config.getInputFileFilter()).isNull();
-<a class="jxr_linenumber" name="L548" href="#L548">548</a>         assertThat(config.isStyleReport()).isTrue();
-<a class="jxr_linenumber" name="L549" href="#L549">549</a>         assertThat(config.getStyleSheet()).isNotNull().withFailMessage(<span class="jxr_string">"Stylesheet should not be null"</span>);
-<a class="jxr_linenumber" name="L550" href="#L550">550</a>         assertThat(config.getDirectoryFilter()).isNotNull().withFailMessage(<span class="jxr_string">"Directory filter should not be null"</span>);
-<a class="jxr_linenumber" name="L551" href="#L551">551</a>         assertThat(config.getDirectoryFilter()).isExactlyInstanceOf(NameBasedHiddenFileFilter.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L552" href="#L552">552</a>         
-<a class="jxr_linenumber" name="L553" href="#L553">553</a>         validateDefaultApprovedLicenses(config);
-<a class="jxr_linenumber" name="L554" href="#L554">554</a>         validateDefaultLicenseFamilies(config);
-<a class="jxr_linenumber" name="L555" href="#L555">555</a>         validateDefaultLicenses(config);
-<a class="jxr_linenumber" name="L556" href="#L556">556</a>     }
-<a class="jxr_linenumber" name="L557" href="#L557">557</a>     
-<a class="jxr_linenumber" name="L558" href="#L558">558</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">class</strong> LoggingCapture <strong class="jxr_keyword">implements</strong> Log {
-<a class="jxr_linenumber" name="L559" href="#L559">559</a> 
-<a class="jxr_linenumber" name="L560" href="#L560">560</a>         StringBuilder captured = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L561" href="#L561">561</a>         
-<a class="jxr_linenumber" name="L562" href="#L562">562</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> clear() {
-<a class="jxr_linenumber" name="L563" href="#L563">563</a>             captured = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L564" href="#L564">564</a>         }
-<a class="jxr_linenumber" name="L565" href="#L565">565</a>         
-<a class="jxr_linenumber" name="L566" href="#L566">566</a>         @Override
-<a class="jxr_linenumber" name="L567" href="#L567">567</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> log(Level level, String msg) {
-<a class="jxr_linenumber" name="L568" href="#L568">568</a>             captured.append( String.format(<span class="jxr_string">"%s: %s%n"</span>, level, msg));
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>         underTest.licenseDuplicateOption(Options.OVERWRITE);
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>         underTest.addLicense(makeLicense.apply(<span class="jxr_string">"license name2"</span>));
+<a class="jxr_linenumber" name="L486" href="#L486">486</a>         assertEquals(<span class="jxr_string">"license name2"</span>,
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>                 underTest.getLicenses(LicenseFilter.ALL).stream().map(ILicense::getName).findFirst().get());
+<a class="jxr_linenumber" name="L488" href="#L488">488</a>         
+<a class="jxr_linenumber" name="L489" href="#L489">489</a>          
+<a class="jxr_linenumber" name="L490" href="#L490">490</a>         <em class="jxr_comment">// verify fail throws exception</em>
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>         underTest.licenseDuplicateOption(Options.FAIL);
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>         assertThrows( IllegalArgumentException.<strong class="jxr_keyword">class</strong>, ()-&gt; underTest.addLicense(makeLicense.apply(<span class="jxr_string">"another name"</span>)));
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>     }
+<a class="jxr_linenumber" name="L494" href="#L494">494</a> 
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>     
+<a class="jxr_linenumber" name="L496" href="#L496">496</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L497" href="#L497">497</a> <em class="jxr_javadoccomment">     * Validates that the configuration contains the default approved licenses.</em>
+<a class="jxr_linenumber" name="L498" href="#L498">498</a> <em class="jxr_javadoccomment">     * @param config The configuration to test.</em>
+<a class="jxr_linenumber" name="L499" href="#L499">499</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L500" href="#L500">500</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefaultApprovedLicenses(ReportConfiguration config) {
+<a class="jxr_linenumber" name="L501" href="#L501">501</a>         validateDefaultApprovedLicenses(config, 0);
+<a class="jxr_linenumber" name="L502" href="#L502">502</a>     }
+<a class="jxr_linenumber" name="L503" href="#L503">503</a>     
+<a class="jxr_linenumber" name="L504" href="#L504">504</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L505" href="#L505">505</a> <em class="jxr_javadoccomment">     * Validates that the configuration contains the default approved licenses.</em>
+<a class="jxr_linenumber" name="L506" href="#L506">506</a> <em class="jxr_javadoccomment">     * @param config The configuration to test.</em>
+<a class="jxr_linenumber" name="L507" href="#L507">507</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L508" href="#L508">508</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefaultApprovedLicenses(ReportConfiguration config, <strong class="jxr_keyword">int</strong> additionalIdCount) {
+<a class="jxr_linenumber" name="L509" href="#L509">509</a>         assertThat(config.getApprovedLicenseCategories()).hasSize(XMLConfigurationReaderTest.EXPECTED_IDS.length + additionalIdCount);
+<a class="jxr_linenumber" name="L510" href="#L510">510</a>         <strong class="jxr_keyword">for</strong> (String s : XMLConfigurationReaderTest.EXPECTED_IDS) {
+<a class="jxr_linenumber" name="L511" href="#L511">511</a>             assertThat(config.getApprovedLicenseCategories()).contains(ILicenseFamily.makeCategory(s));
+<a class="jxr_linenumber" name="L512" href="#L512">512</a>         }
+<a class="jxr_linenumber" name="L513" href="#L513">513</a>     }
+<a class="jxr_linenumber" name="L514" href="#L514">514</a>     
+<a class="jxr_linenumber" name="L515" href="#L515">515</a> 
+<a class="jxr_linenumber" name="L516" href="#L516">516</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L517" href="#L517">517</a> <em class="jxr_javadoccomment">     * Validates that the configruation contains the default license families.</em>
+<a class="jxr_linenumber" name="L518" href="#L518">518</a> <em class="jxr_javadoccomment">     * @param config the configuration to test.</em>
+<a class="jxr_linenumber" name="L519" href="#L519">519</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L520" href="#L520">520</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefaultLicenseFamilies(ReportConfiguration config, String...additionalIds) {
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>         assertThat(config.getLicenseFamilies(LicenseFilter.ALL)).hasSize(XMLConfigurationReaderTest.EXPECTED_IDS.length + additionalIds.length);
+<a class="jxr_linenumber" name="L522" href="#L522">522</a>         List&lt;String&gt; expected = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L523" href="#L523">523</a>         expected.addAll(Arrays.asList(XMLConfigurationReaderTest.EXPECTED_IDS));
+<a class="jxr_linenumber" name="L524" href="#L524">524</a>         expected.addAll(Arrays.asList(additionalIds));
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>         <strong class="jxr_keyword">for</strong> (ILicenseFamily family : config.getLicenseFamilies(LicenseFilter.ALL)) {
+<a class="jxr_linenumber" name="L526" href="#L526">526</a>             assertThat(expected).contains(family.getFamilyCategory().trim());
+<a class="jxr_linenumber" name="L527" href="#L527">527</a>         }
+<a class="jxr_linenumber" name="L528" href="#L528">528</a>     }
+<a class="jxr_linenumber" name="L529" href="#L529">529</a> 
+<a class="jxr_linenumber" name="L530" href="#L530">530</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L531" href="#L531">531</a> <em class="jxr_javadoccomment">     * Validates that the configuration contains the default licenses.</em>
+<a class="jxr_linenumber" name="L532" href="#L532">532</a> <em class="jxr_javadoccomment">     * @param config the configuration to test.</em>
+<a class="jxr_linenumber" name="L533" href="#L533">533</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L534" href="#L534">534</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefaultLicenses(ReportConfiguration config, String...additionalLicenses) {
+<a class="jxr_linenumber" name="L535" href="#L535">535</a>         assertThat(config.getLicenses(LicenseFilter.ALL)).hasSize(XMLConfigurationReaderTest.EXPECTED_LICENSES.length + additionalLicenses.length);
+<a class="jxr_linenumber" name="L536" href="#L536">536</a>         List&lt;String&gt; expected = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L537" href="#L537">537</a>         expected.addAll(Arrays.asList(XMLConfigurationReaderTest.EXPECTED_LICENSES));
+<a class="jxr_linenumber" name="L538" href="#L538">538</a>         expected.addAll(Arrays.asList(additionalLicenses));
+<a class="jxr_linenumber" name="L539" href="#L539">539</a>         <strong class="jxr_keyword">for</strong> (ILicense license : config.getLicenses(LicenseFilter.ALL)) {
+<a class="jxr_linenumber" name="L540" href="#L540">540</a>             assertThat(expected).contains(license.getId());
+<a class="jxr_linenumber" name="L541" href="#L541">541</a>         }
+<a class="jxr_linenumber" name="L542" href="#L542">542</a>     }
+<a class="jxr_linenumber" name="L543" href="#L543">543</a>     
+<a class="jxr_linenumber" name="L544" href="#L544">544</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L545" href="#L545">545</a> <em class="jxr_javadoccomment">     * Validates that the configuration matches the default.</em>
+<a class="jxr_linenumber" name="L546" href="#L546">546</a> <em class="jxr_javadoccomment">     * @param config The configuration to test.</em>
+<a class="jxr_linenumber" name="L547" href="#L547">547</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L548" href="#L548">548</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> validateDefault(ReportConfiguration config) {
+<a class="jxr_linenumber" name="L549" href="#L549">549</a>         assertThat(config.isAddingLicenses()).isFalse();
+<a class="jxr_linenumber" name="L550" href="#L550">550</a>         assertThat(config.isAddingLicensesForced()).isFalse();
+<a class="jxr_linenumber" name="L551" href="#L551">551</a>         assertThat(config.getCopyrightMessage()).isNull();
+<a class="jxr_linenumber" name="L552" href="#L552">552</a>         assertThat(config.getInputFileFilter()).isNull();
+<a class="jxr_linenumber" name="L553" href="#L553">553</a>         assertThat(config.isStyleReport()).isTrue();
+<a class="jxr_linenumber" name="L554" href="#L554">554</a>         assertThat(config.getStyleSheet()).isNotNull().withFailMessage(<span class="jxr_string">"Stylesheet should not be null"</span>);
+<a class="jxr_linenumber" name="L555" href="#L555">555</a>         assertThat(config.getDirectoryFilter()).isNotNull().withFailMessage(<span class="jxr_string">"Directory filter should not be null"</span>);
+<a class="jxr_linenumber" name="L556" href="#L556">556</a>         assertThat(config.getDirectoryFilter()).isExactlyInstanceOf(NameBasedHiddenFileFilter.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L557" href="#L557">557</a>         
+<a class="jxr_linenumber" name="L558" href="#L558">558</a>         validateDefaultApprovedLicenses(config);
+<a class="jxr_linenumber" name="L559" href="#L559">559</a>         validateDefaultLicenseFamilies(config);
+<a class="jxr_linenumber" name="L560" href="#L560">560</a>         validateDefaultLicenses(config);
+<a class="jxr_linenumber" name="L561" href="#L561">561</a>     }
+<a class="jxr_linenumber" name="L562" href="#L562">562</a>     
+<a class="jxr_linenumber" name="L563" href="#L563">563</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">class</strong> LoggingCapture <strong class="jxr_keyword">implements</strong> Log {
+<a class="jxr_linenumber" name="L564" href="#L564">564</a> 
+<a class="jxr_linenumber" name="L565" href="#L565">565</a>         StringBuilder captured = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L566" href="#L566">566</a>         
+<a class="jxr_linenumber" name="L567" href="#L567">567</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> clear() {
+<a class="jxr_linenumber" name="L568" href="#L568">568</a>             captured = <strong class="jxr_keyword">new</strong> StringBuilder();
 <a class="jxr_linenumber" name="L569" href="#L569">569</a>         }
 <a class="jxr_linenumber" name="L570" href="#L570">570</a>         
-<a class="jxr_linenumber" name="L571" href="#L571">571</a>     }
-<a class="jxr_linenumber" name="L572" href="#L572">572</a>     
-<a class="jxr_linenumber" name="L573" href="#L573">573</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> OutputStreamIntercepter <strong class="jxr_keyword">extends</strong> OutputStream {
-<a class="jxr_linenumber" name="L574" href="#L574">574</a>         
-<a class="jxr_linenumber" name="L575" href="#L575">575</a>         <strong class="jxr_keyword">int</strong> closeCount = 0;
-<a class="jxr_linenumber" name="L576" href="#L576">576</a> 
-<a class="jxr_linenumber" name="L577" href="#L577">577</a>         @Override
-<a class="jxr_linenumber" name="L578" href="#L578">578</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> write(<strong class="jxr_keyword">int</strong> arg0) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L579" href="#L579">579</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> UnsupportedOperationException();
-<a class="jxr_linenumber" name="L580" href="#L580">580</a>         }
-<a class="jxr_linenumber" name="L581" href="#L581">581</a>         
+<a class="jxr_linenumber" name="L571" href="#L571">571</a>         @Override
+<a class="jxr_linenumber" name="L572" href="#L572">572</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> log(Level level, String msg) {
+<a class="jxr_linenumber" name="L573" href="#L573">573</a>             captured.append( String.format(<span class="jxr_string">"%s: %s%n"</span>, level, msg));
+<a class="jxr_linenumber" name="L574" href="#L574">574</a>         }
+<a class="jxr_linenumber" name="L575" href="#L575">575</a>         
+<a class="jxr_linenumber" name="L576" href="#L576">576</a>     }
+<a class="jxr_linenumber" name="L577" href="#L577">577</a>     
+<a class="jxr_linenumber" name="L578" href="#L578">578</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> OutputStreamIntercepter <strong class="jxr_keyword">extends</strong> OutputStream {
+<a class="jxr_linenumber" name="L579" href="#L579">579</a>         
+<a class="jxr_linenumber" name="L580" href="#L580">580</a>         <strong class="jxr_keyword">int</strong> closeCount = 0;
+<a class="jxr_linenumber" name="L581" href="#L581">581</a> 
 <a class="jxr_linenumber" name="L582" href="#L582">582</a>         @Override
-<a class="jxr_linenumber" name="L583" href="#L583">583</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> close() {
-<a class="jxr_linenumber" name="L584" href="#L584">584</a>             ++closeCount;
+<a class="jxr_linenumber" name="L583" href="#L583">583</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> write(<strong class="jxr_keyword">int</strong> arg0) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L584" href="#L584">584</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> UnsupportedOperationException();
 <a class="jxr_linenumber" name="L585" href="#L585">585</a>         }
-<a class="jxr_linenumber" name="L586" href="#L586">586</a>     }
-<a class="jxr_linenumber" name="L587" href="#L587">587</a> }
+<a class="jxr_linenumber" name="L586" href="#L586">586</a>         
+<a class="jxr_linenumber" name="L587" href="#L587">587</a>         @Override
+<a class="jxr_linenumber" name="L588" href="#L588">588</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> close() {
+<a class="jxr_linenumber" name="L589" href="#L589">589</a>             ++closeCount;
+<a class="jxr_linenumber" name="L590" href="#L590">590</a>         }
+<a class="jxr_linenumber" name="L591" href="#L591">591</a>     }
+<a class="jxr_linenumber" name="L592" href="#L592">592</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>

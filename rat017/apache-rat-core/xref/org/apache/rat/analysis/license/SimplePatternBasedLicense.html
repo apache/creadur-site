@@ -58,10 +58,10 @@
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">private</strong> <a name="AbstractBuilder" href="../../../../../org/apache/rat/configuration/builders/AbstractBuilder.html#AbstractBuilder">AbstractBuilder</a> getMatcher() {
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">if</strong> (patterns.length == 1) {
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="TextBuilder" href="../../../../../org/apache/rat/configuration/builders/TextBuilder.html#TextBuilder">TextBuilder</a>().setText(patterns[0]);
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="TextBuilder" href="../../../../../org/apache/rat/configuration/builders/TextBuilder.html#TextBuilder">TextBuilder</a>().setSimpleText(patterns[0]);
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>              <a name="AnyBuilder" href="../../../../../org/apache/rat/configuration/builders/AnyBuilder.html#AnyBuilder">AnyBuilder</a> any = <strong class="jxr_keyword">new</strong> <a name="AnyBuilder" href="../../../../../org/apache/rat/configuration/builders/AnyBuilder.html#AnyBuilder">AnyBuilder</a>();
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>              Arrays.stream(patterns).map(s -&gt; <strong class="jxr_keyword">new</strong> <a name="TextBuilder" href="../../../../../org/apache/rat/configuration/builders/TextBuilder.html#TextBuilder">TextBuilder</a>().setText(s)).forEach(b-&gt; any.add(b));
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>              Arrays.stream(patterns).map(s -&gt; <strong class="jxr_keyword">new</strong> <a name="TextBuilder" href="../../../../../org/apache/rat/configuration/builders/TextBuilder.html#TextBuilder">TextBuilder</a>().setSimpleText(s)).forEach(b-&gt; any.addEnclosed(b));
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>              <strong class="jxr_keyword">return</strong> any;
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          }
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>      }
@@ -69,10 +69,10 @@
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      @Override
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">public</strong> ILicense.Builder getLicense() {
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">return</strong> ILicense.builder()
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          .setLicenseFamilyCategory(getLicenseFamilyCategory())
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          .setFamily(getLicenseFamilyCategory())
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          .setName(getLicenseFamilyName())
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          .setMatcher( getMatcher() )
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          .setNotes(getNotes());
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          .setNote(getNotes());
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  }
 </pre>

@@ -27,30 +27,26 @@
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.rat.analysis;
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertTrue;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertFalse;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.io.StringReader;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.io.StringReader;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.api.Document;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.ILicense;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingLicense;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingLocation;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.api.Document;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.ILicense;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingLicense;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingLocation;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="HeaderCheckWorkerTest" href="../../../../org/apache/rat/analysis/HeaderCheckWorkerTest.html#HeaderCheckWorkerTest">HeaderCheckWorkerTest</a> {
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="HeaderCheckWorkerTest" href="../../../../org/apache/rat/analysis/HeaderCheckWorkerTest.html#HeaderCheckWorkerTest">HeaderCheckWorkerTest</a> {
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      @Test
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> isFinished() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>          <strong class="jxr_keyword">final</strong> Document subject = <strong class="jxr_keyword">new</strong> <a name="TestingLocation" href="../../../../org/apache/rat/testhelpers/TestingLocation.html#TestingLocation">TestingLocation</a>(<span class="jxr_string">"subject"</span>);
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          ILicense matcher = <strong class="jxr_keyword">new</strong> <a name="TestingLicense" href="../../../../org/apache/rat/testhelpers/TestingLicense.html#TestingLicense">TestingLicense</a>();
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>          HeaderCheckWorker worker = <strong class="jxr_keyword">new</strong> HeaderCheckWorker(<strong class="jxr_keyword">new</strong> StringReader(<span class="jxr_string">""</span>), matcher, subject);
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          assertFalse(worker.isFinished());
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>          worker.read();
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          assertTrue(worker.isFinished());
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>      }
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  }
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      @Test
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> isFinished() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>          <strong class="jxr_keyword">final</strong> Document subject = <strong class="jxr_keyword">new</strong> <a name="TestingLocation" href="../../../../org/apache/rat/testhelpers/TestingLocation.html#TestingLocation">TestingLocation</a>(<span class="jxr_string">"subject"</span>);
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          ILicense matcher = <strong class="jxr_keyword">new</strong> <a name="TestingLicense" href="../../../../org/apache/rat/testhelpers/TestingLicense.html#TestingLicense">TestingLicense</a>();
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>          HeaderCheckWorker worker = <strong class="jxr_keyword">new</strong> HeaderCheckWorker(<strong class="jxr_keyword">new</strong> StringReader(<span class="jxr_string">""</span>), Arrays.asList(matcher), subject);
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          worker.read();
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      }
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
