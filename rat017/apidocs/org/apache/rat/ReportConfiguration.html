@@ -193,7 +193,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#addDirectoryFilter-org.apache.commons.io.filefilter.IOFileFilter-">addDirectoryFilter</a></span>(org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoryFilter)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#addDirectoryToIgnore-org.apache.commons.io.filefilter.IOFileFilter-">addDirectoryToIgnore</a></span>(org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoryToIgnore)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -257,11 +257,11 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>org.apache.commons.io.filefilter.IOFileFilter</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#getDirectoryFilter--">getDirectoryFilter</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#getDirectoriesToIgnore--">getDirectoriesToIgnore</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#getInputFileFilter--">getInputFileFilter</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#getFilesToIgnore--">getFilesToIgnore</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../org/apache/rat/license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;</code></td>
@@ -389,7 +389,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#setDirectoryFilter-org.apache.commons.io.filefilter.IOFileFilter-">setDirectoryFilter</a></span>(org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoryFilter)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#setDirectoriesToIgnore-org.apache.commons.io.filefilter.IOFileFilter-">setDirectoriesToIgnore</a></span>(org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoriesToIgnore)</code>&nbsp;</td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -399,14 +399,14 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#setFilesToIgnore-java.io.FilenameFilter-">setFilesToIgnore</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore)</code>&nbsp;</td>
+</tr>
+<tr id="i41" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#setFrom-org.apache.rat.Defaults-">setFrom</a></span>(<a href="../../../org/apache/rat/Defaults.html" title="class in org.apache.rat">Defaults</a>&nbsp;defaults)</code>
 <div class="block">Adds the licenses and approved licenses from the defaults object to the
  configuration.</div>
 </td>
-</tr>
-<tr id="i41" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/ReportConfiguration.html#setInputFileFilter-java.io.FilenameFilter-">setInputFileFilter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;inputFileFilter)</code>&nbsp;</td>
 </tr>
 <tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -645,57 +645,57 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </dl>
 </li>
 </ul>
-<a name="getInputFileFilter--">
+<a name="getFilesToIgnore--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getInputFileFilter</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;getInputFileFilter()</pre>
+<h4>getFilesToIgnore</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;getFilesToIgnore()</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The filename filter for the potential input files.</dd>
 </dl>
 </li>
 </ul>
-<a name="setInputFileFilter-java.io.FilenameFilter-">
+<a name="setFilesToIgnore-java.io.FilenameFilter-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setInputFileFilter</h4>
-<pre>public&nbsp;void&nbsp;setInputFileFilter(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;inputFileFilter)</pre>
+<h4>setFilesToIgnore</h4>
+<pre>public&nbsp;void&nbsp;setFilesToIgnore(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore)</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>inputFileFilter</code> - the filename filter to filter the input files.</dd>
+<dd><code>filesToIgnore</code> - the filename filter to filter the input files.</dd>
 </dl>
 </li>
 </ul>
-<a name="getDirectoryFilter--">
+<a name="getDirectoriesToIgnore--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDirectoryFilter</h4>
-<pre>public&nbsp;org.apache.commons.io.filefilter.IOFileFilter&nbsp;getDirectoryFilter()</pre>
+<h4>getDirectoriesToIgnore</h4>
+<pre>public&nbsp;org.apache.commons.io.filefilter.IOFileFilter&nbsp;getDirectoriesToIgnore()</pre>
 </li>
 </ul>
-<a name="setDirectoryFilter-org.apache.commons.io.filefilter.IOFileFilter-">
+<a name="setDirectoriesToIgnore-org.apache.commons.io.filefilter.IOFileFilter-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setDirectoryFilter</h4>
-<pre>public&nbsp;void&nbsp;setDirectoryFilter(org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoryFilter)</pre>
+<h4>setDirectoriesToIgnore</h4>
+<pre>public&nbsp;void&nbsp;setDirectoriesToIgnore(org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoriesToIgnore)</pre>
 </li>
 </ul>
-<a name="addDirectoryFilter-org.apache.commons.io.filefilter.IOFileFilter-">
+<a name="addDirectoryToIgnore-org.apache.commons.io.filefilter.IOFileFilter-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>addDirectoryFilter</h4>
-<pre>public&nbsp;void&nbsp;addDirectoryFilter(org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoryFilter)</pre>
+<h4>addDirectoryToIgnore</h4>
+<pre>public&nbsp;void&nbsp;addDirectoryToIgnore(org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoryToIgnore)</pre>
 </li>
 </ul>
 <a name="getReportable--">

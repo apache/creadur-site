@@ -83,16 +83,20 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><a href="#org.apache.rat.analysis">org.apache.rat.analysis</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.apache.rat.api">org.apache.rat.api</a></td>
 <td class="colLast">
 <div class="block">Key abstractions.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.apache.rat.report.claim.impl">org.apache.rat.report.claim.impl</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -101,6 +105,25 @@
 </li>
 <li class="blockList">
 <ul class="blockList">
+<li class="blockList"><a name="org.apache.rat.analysis">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a> in <a href="../../../../../org/apache/rat/analysis/package-summary.html">org.apache.rat.analysis</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../../org/apache/rat/analysis/package-summary.html">org.apache.rat.analysis</a> that return <a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a></code></td>
+<td class="colLast"><span class="typeNameLabel">TikaProcessor.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/analysis/TikaProcessor.html#fromMediaType-org.apache.tika.mime.MediaType-org.apache.rat.utils.Log-">fromMediaType</a></span>(org.apache.tika.mime.MediaType&nbsp;mediaType,
+             <a href="../../../../../org/apache/rat/utils/Log.html" title="interface in org.apache.rat.utils">Log</a>&nbsp;log)</code>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</li>
 <li class="blockList"><a name="org.apache.rat.api">
 <!--   -->
 </a>
@@ -154,15 +177,24 @@ the order they are declared.</div>
 </a>
 <h3>Uses of <a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a> in <a href="../../../../../org/apache/rat/report/claim/package-summary.html">org.apache.rat.report.claim</a></h3>
 <table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
-<caption><span>Methods in <a href="../../../../../org/apache/rat/report/claim/package-summary.html">org.apache.rat.report.claim</a> that return types with arguments of type <a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a></span><span class="tabEnd">&nbsp;</span></caption>
+<caption><span>Methods in <a href="../../../../../org/apache/rat/report/claim/package-summary.html">org.apache.rat.report.claim</a> with parameters of type <a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>,int[]&gt;</code></td>
-<td class="colLast"><span class="typeNameLabel">ClaimStatistic.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getDocumentCategoryMap--">getDocumentCategoryMap</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><span class="typeNameLabel">ClaimStatistic.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getCounter-org.apache.rat.api.Document.Type-">getCounter</a></span>(<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>&nbsp;documentType)</code>
+<div class="block">Gets the counts for the Document.Type.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">ClaimStatistic.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#incCounter-org.apache.rat.api.Document.Type-int-">incCounter</a></span>(<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>&nbsp;documentType,
+          int&nbsp;value)</code>
+<div class="block">Increments the number of times the Document.Type was seen.</div>
+</td>
 </tr>
 </tbody>
 </table>

@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -176,20 +176,62 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>,int[]&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getCounterMap--">getCounterMap</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getCounter-org.apache.rat.api.Document.Type-">getCounter</a></span>(<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>&nbsp;documentType)</code>
+<div class="block">Gets the counts for the Document.Type.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>,int[]&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getDocumentCategoryMap--">getDocumentCategoryMap</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getLicenseCategoryCount-java.lang.String-">getLicenseCategoryCount</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamilyCategory)</code>
+<div class="block">Gets the counts for hte license category.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,int[]&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getLicenseFamilyCodeMap--">getLicenseFamilyCodeMap</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getLicenseFamilyCategories--">getLicenseFamilyCategories</a></span>()</code>
+<div class="block">Gets the set of license family categories that were seen.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,int[]&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getLicenseFileNameMap--">getLicenseFileNameMap</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getLicenseFamilyNameCount-java.lang.String-">getLicenseFamilyNameCount</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFilename)</code>
+<div class="block">Retrieves the number of times a license family name was seen.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#getLicenseFamilyNames--">getLicenseFamilyNames</a></span>()</code>
+<div class="block">Gets the set of license family names that were seen.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#incCounter-org.apache.rat.report.claim.ClaimStatistic.Counter-int-">incCounter</a></span>(<a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
+          int&nbsp;value)</code>
+<div class="block">Increments the counts for hte counter.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#incCounter-org.apache.rat.api.Document.Type-int-">incCounter</a></span>(<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>&nbsp;documentType,
+          int&nbsp;value)</code>
+<div class="block">Increments the number of times the Document.Type was seen.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#incLicenseCategoryCount-java.lang.String-int-">incLicenseCategoryCount</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamilyCategory,
+                       int&nbsp;value)</code>
+<div class="block">Increments the number of times a license family category was seen.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#incLicenseFamilyNameCount-java.lang.String-int-">incLicenseFamilyNameCount</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamilyName,
+                         int&nbsp;value)</code>
+<div class="block">Increments the license family name count.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -242,71 +284,147 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>counter</code> - the counter to get the value for.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns the number of files with approved licenses.</dd>
+<dd>Returns the number times the Counter type was seen.</dd>
 </dl>
 </li>
 </ul>
-<a name="getCounterMap--">
+<a name="incCounter-org.apache.rat.report.claim.ClaimStatistic.Counter-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getCounterMap</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>,int[]&gt;&nbsp;getCounterMap()</pre>
+<h4>incCounter</h4>
+<pre>public&nbsp;void&nbsp;incCounter(<a href="../../../../../org/apache/rat/report/claim/ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
+                       int&nbsp;value)</pre>
+<div class="block">Increments the counts for hte counter.</div>
 <dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns a map with the file types. The map keys
- are file type names and the map values
- are integers with the number of resources matching
- the file type.</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>counter</code> - the counter to increment.</dd>
+<dd><code>value</code> - the value to increment the counter by.</dd>
 </dl>
 </li>
 </ul>
-<a name="getDocumentCategoryMap--">
+<a name="getCounter-org.apache.rat.api.Document.Type-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDocumentCategoryMap</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>,int[]&gt;&nbsp;getDocumentCategoryMap()</pre>
+<h4>getCounter</h4>
+<pre>public&nbsp;int&nbsp;getCounter(<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>&nbsp;documentType)</pre>
+<div class="block">Gets the counts for the Document.Type.</div>
 <dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>documentType</code> - the Document.Type to get the counter for.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns a map with the file types. The map keys
- are file type names and the map values
- are integers with the number of resources matching
- the file type.</dd>
+<dd>Returns the number times the Document.Type was seen</dd>
 </dl>
 </li>
 </ul>
-<a name="getLicenseFamilyCodeMap--">
+<a name="incCounter-org.apache.rat.api.Document.Type-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getLicenseFamilyCodeMap</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,int[]&gt;&nbsp;getLicenseFamilyCodeMap()</pre>
+<h4>incCounter</h4>
+<pre>public&nbsp;void&nbsp;incCounter(<a href="../../../../../org/apache/rat/api/Document.Type.html" title="enum in org.apache.rat.api">Document.Type</a>&nbsp;documentType,
+                       int&nbsp;value)</pre>
+<div class="block">Increments the number of times the Document.Type was seen.</div>
 <dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns a map with the license family codes. The map
- keys are license family category names,
- the map values are integers with the number of resources
- matching the license family code.</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>documentType</code> - the Document.Type to increment.</dd>
+<dd><code>value</code> - the vlaue to increment the counter by.</dd>
 </dl>
 </li>
 </ul>
-<a name="getLicenseFileNameMap--">
+<a name="getLicenseCategoryCount-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLicenseCategoryCount</h4>
+<pre>public&nbsp;int&nbsp;getLicenseCategoryCount(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamilyCategory)</pre>
+<div class="block">Gets the counts for hte license category.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licenseFamilyCategory</code> - the license family category to get the count for.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the number of times the license family category was seen.</dd>
+</dl>
+</li>
+</ul>
+<a name="incLicenseCategoryCount-java.lang.String-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>incLicenseCategoryCount</h4>
+<pre>public&nbsp;void&nbsp;incLicenseCategoryCount(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamilyCategory,
+                                    int&nbsp;value)</pre>
+<div class="block">Increments the number of times a license family category was seen.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licenseFamilyCategory</code> - the License family category to incmrement.</dd>
+<dd><code>value</code> - the value to increment the count by.</dd>
+</dl>
+</li>
+</ul>
+<a name="getLicenseFamilyCategories--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLicenseFamilyCategories</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getLicenseFamilyCategories()</pre>
+<div class="block">Gets the set of license family categories that were seen.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A set of license family categories.</dd>
+</dl>
+</li>
+</ul>
+<a name="getLicenseFamilyNames--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLicenseFamilyNames</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html?is-external=true" title="class or interface in java.util">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;getLicenseFamilyNames()</pre>
+<div class="block">Gets the set of license family names that were seen.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a Set of license family names that were seen.</dd>
+</dl>
+</li>
+</ul>
+<a name="getLicenseFamilyNameCount-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLicenseFamilyNameCount</h4>
+<pre>public&nbsp;int&nbsp;getLicenseFamilyNameCount(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFilename)</pre>
+<div class="block">Retrieves the number of times a license family name was seen.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licenseFilename</code> - the license family name to look for.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the number of times the license family name was seen.</dd>
+</dl>
+</li>
+</ul>
+<a name="incLicenseFamilyNameCount-java.lang.String-int-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getLicenseFileNameMap</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,int[]&gt;&nbsp;getLicenseFileNameMap()</pre>
+<h4>incLicenseFamilyNameCount</h4>
+<pre>public&nbsp;void&nbsp;incLicenseFamilyNameCount(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamilyName,
+                                      int&nbsp;value)</pre>
+<div class="block">Increments the license family name count.</div>
 <dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns a map with the license family codes. The map
- keys are the names of the license families and
- the map values are integers with the number of resources
- matching the license family name.</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licenseFamilyName</code> - the license family name to increment.</dd>
+<dd><code>value</code> - the value to increment the count by.</dd>
 </dl>
 </li>
 </ul>

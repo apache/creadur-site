@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":10,"i1":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -75,13 +75,13 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -127,33 +127,6 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- =========== FIELD SUMMARY =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Field and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#file">file</a></span></code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#filter">filter</a></span></code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#name">name</a></span></code>&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.summary">
@@ -163,19 +136,11 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colFirst" scope="col">Modifier</th>
-<th class="colLast" scope="col">Constructor and Description</th>
+<th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#Walker-java.io.File-java.io.FilenameFilter-">Walker</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filter)</code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected </code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#Walker-java.lang.String-java.io.File-java.io.FilenameFilter-">Walker</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filter)</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#Walker-java.io.File-java.io.FilenameFilter-">Walker</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
+      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -187,18 +152,22 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#isNotIgnored-java.io.File-">isNotIgnored</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#getBaseFile--">getBaseFile</a></span>()</code>
+<div class="block">Retrieve the file from the constructor.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected static <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#regexFilter-java.util.regex.Pattern-">regexFilter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">Pattern</a>&nbsp;pattern)</code>&nbsp;</td>
+<td class="colFirst"><code>protected boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#isNotIgnored-java.io.File-">isNotIgnored</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</code>
+<div class="block">Test if the specified file should be ignored.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -223,41 +192,6 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<ul class="blockList">
-<li class="blockList"><a name="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a name="file">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>file</h4>
-<pre>protected final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a> file</pre>
-</li>
-</ul>
-<a name="name">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>name</h4>
-<pre>protected final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a> name</pre>
-</li>
-</ul>
-<a name="filter">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>filter</h4>
-<pre>protected final&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a> filter</pre>
-</li>
-</ul>
-</li>
-</ul>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.detail">
@@ -267,22 +201,11 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <a name="Walker-java.io.File-java.io.FilenameFilter-">
 <!--   -->
 </a>
-<ul class="blockList">
-<li class="blockList">
-<h4>Walker</h4>
-<pre>public&nbsp;Walker(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-              <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filter)</pre>
-</li>
-</ul>
-<a name="Walker-java.lang.String-java.io.File-java.io.FilenameFilter-">
-<!--   -->
-</a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Walker</h4>
-<pre>protected&nbsp;Walker(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;name,
-                 <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-                 <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filter)</pre>
+<pre>public&nbsp;Walker(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
+              <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore)</pre>
 </li>
 </ul>
 </li>
@@ -293,13 +216,18 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="regexFilter-java.util.regex.Pattern-">
+<a name="getBaseFile--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>regexFilter</h4>
-<pre>protected static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;regexFilter(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html?is-external=true" title="class or interface in java.util.regex">Pattern</a>&nbsp;pattern)</pre>
+<h4>getBaseFile</h4>
+<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;getBaseFile()</pre>
+<div class="block">Retrieve the file from the constructor.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the file from the constructor.</dd>
+</dl>
 </li>
 </ul>
 <a name="isNotIgnored-java.io.File-">
@@ -309,6 +237,13 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <li class="blockList">
 <h4>isNotIgnored</h4>
 <pre>protected final&nbsp;boolean&nbsp;isNotIgnored(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</pre>
+<div class="block">Test if the specified file should be ignored.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>file</code> - the file to test.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>true</code> if the file should be ignored.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -365,13 +300,13 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

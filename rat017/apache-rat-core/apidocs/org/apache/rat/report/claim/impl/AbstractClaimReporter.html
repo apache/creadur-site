@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -176,18 +176,12 @@ extends <a href="../../../../../../org/apache/rat/report/AbstractReport.html" ti
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/apache/rat/report/claim/impl/AbstractClaimReporter.html#handleHeaderCategoryClaim-org.apache.rat.license.ILicense-">handleHeaderCategoryClaim</a></span>(<a href="../../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code>
-<div class="block">Increment the license category count.</div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/apache/rat/report/claim/impl/AbstractClaimReporter.html#handleLicenseFamilyNameClaim-java.lang.String-">handleLicenseFamilyNameClaim</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamilyName)</code>
-<div class="block">Increment the license family counter
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/apache/rat/report/claim/impl/AbstractClaimReporter.html#handleLicenseClaim-org.apache.rat.license.ILicense-">handleLicenseClaim</a></span>(<a href="../../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code>
+<div class="block">Increment the counts associated with the license
  The default implementation does nothing.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../org/apache/rat/report/claim/impl/AbstractClaimReporter.html#report-org.apache.rat.api.Document-">report</a></span>(<a href="../../../../../../org/apache/rat/api/Document.html" title="interface in org.apache.rat.api">Document</a>&nbsp;subject)</code>
 <div class="block">Empty default implementation.</div>
@@ -269,29 +263,14 @@ extends <a href="../../../../../../org/apache/rat/report/AbstractReport.html" ti
 </dl>
 </li>
 </ul>
-<a name="handleLicenseFamilyNameClaim-java.lang.String-">
+<a name="handleLicenseClaim-org.apache.rat.license.ILicense-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>handleLicenseFamilyNameClaim</h4>
-<pre>protected&nbsp;void&nbsp;handleLicenseFamilyNameClaim(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamilyName)</pre>
-<div class="block">Increment the license family counter
- The default implementation does nothing.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licenseFamilyName</code> - name of the license family</dd>
-</dl>
-</li>
-</ul>
-<a name="handleHeaderCategoryClaim-org.apache.rat.license.ILicense-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>handleHeaderCategoryClaim</h4>
-<pre>protected&nbsp;void&nbsp;handleHeaderCategoryClaim(<a href="../../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</pre>
-<div class="block">Increment the license category count.
+<h4>handleLicenseClaim</h4>
+<pre>protected&nbsp;void&nbsp;handleLicenseClaim(<a href="../../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</pre>
+<div class="block">Increment the counts associated with the license
  The default implementation does nothing.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

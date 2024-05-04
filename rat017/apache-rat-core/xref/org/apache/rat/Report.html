@@ -246,7 +246,7 @@
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>         }
 <a class="jxr_linenumber" name="L239" href="#L239">239</a> 
 <a class="jxr_linenumber" name="L240" href="#L240">240</a>         <strong class="jxr_keyword">if</strong> (cl.hasOption(SCAN_HIDDEN_DIRECTORIES)) {
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>             configuration.setDirectoryFilter(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>             configuration.setDirectoriesToIgnore(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L242" href="#L242">242</a>         }
 <a class="jxr_linenumber" name="L243" href="#L243">243</a> 
 <a class="jxr_linenumber" name="L244" href="#L244">244</a>         <strong class="jxr_keyword">if</strong> (cl.hasOption('a') || cl.hasOption('A')) {
@@ -258,14 +258,14 @@
 <a class="jxr_linenumber" name="L250" href="#L250">250</a>             String[] excludes = cl.getOptionValues(EXCLUDE_CLI);
 <a class="jxr_linenumber" name="L251" href="#L251">251</a>             <strong class="jxr_keyword">if</strong> (excludes != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L252" href="#L252">252</a>                 <strong class="jxr_keyword">final</strong> FilenameFilter filter = parseExclusions(Arrays.asList(excludes));
-<a class="jxr_linenumber" name="L253" href="#L253">253</a>                 configuration.setInputFileFilter(filter);
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>                 configuration.setFilesToIgnore(filter);
 <a class="jxr_linenumber" name="L254" href="#L254">254</a>             }
 <a class="jxr_linenumber" name="L255" href="#L255">255</a>         } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (cl.hasOption(EXCLUDE_FILE_CLI)) {
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>             String excludeFileName = cl.getOptionValue(EXCLUDE_FILE_CLI);
 <a class="jxr_linenumber" name="L257" href="#L257">257</a>             <strong class="jxr_keyword">if</strong> (excludeFileName != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L258" href="#L258">258</a>                 <strong class="jxr_keyword">final</strong> FilenameFilter filter = parseExclusions(
 <a class="jxr_linenumber" name="L259" href="#L259">259</a>                         FileUtils.readLines(<strong class="jxr_keyword">new</strong> File(excludeFileName), StandardCharsets.UTF_8));
-<a class="jxr_linenumber" name="L260" href="#L260">260</a>                 configuration.setInputFileFilter(filter);
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>                 configuration.setFilesToIgnore(filter);
 <a class="jxr_linenumber" name="L261" href="#L261">261</a>             }
 <a class="jxr_linenumber" name="L262" href="#L262">262</a>         }
 <a class="jxr_linenumber" name="L263" href="#L263">263</a> 
@@ -460,11 +460,11 @@
 <a class="jxr_linenumber" name="L452" href="#L452">452</a>             }
 <a class="jxr_linenumber" name="L453" href="#L453">453</a> 
 <a class="jxr_linenumber" name="L454" href="#L454">454</a>             <strong class="jxr_keyword">if</strong> (base.isDirectory()) {
-<a class="jxr_linenumber" name="L455" href="#L455">455</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="DirectoryWalker" href="../../../org/apache/rat/walker/DirectoryWalker.html#DirectoryWalker">DirectoryWalker</a>(base, config.getInputFileFilter(), config.getDirectoryFilter());
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="DirectoryWalker" href="../../../org/apache/rat/walker/DirectoryWalker.html#DirectoryWalker">DirectoryWalker</a>(base, config.getFilesToIgnore(), config.getDirectoriesToIgnore());
 <a class="jxr_linenumber" name="L456" href="#L456">456</a>             }
 <a class="jxr_linenumber" name="L457" href="#L457">457</a> 
 <a class="jxr_linenumber" name="L458" href="#L458">458</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L459" href="#L459">459</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ArchiveWalker" href="../../../org/apache/rat/walker/ArchiveWalker.html#ArchiveWalker">ArchiveWalker</a>(base, config.getInputFileFilter());
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ArchiveWalker" href="../../../org/apache/rat/walker/ArchiveWalker.html#ArchiveWalker">ArchiveWalker</a>(base, config.getFilesToIgnore());
 <a class="jxr_linenumber" name="L460" href="#L460">460</a>             } <strong class="jxr_keyword">catch</strong> (IOException ex) {
 <a class="jxr_linenumber" name="L461" href="#L461">461</a>                 config.getLog().log(Level.ERROR, <span class="jxr_string">"file '"</span>+baseDirectory+<span class="jxr_string">"' is not valid gzip data."</span>);
 <a class="jxr_linenumber" name="L462" href="#L462">462</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
