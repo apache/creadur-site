@@ -285,7 +285,7 @@
 <a class="jxr_linenumber" name="L277" href="#L277">277</a>                 <strong class="jxr_keyword">if</strong> (url == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L278" href="#L278">278</a>                     ioSupplier = () -&gt; Files.newInputStream(Paths.get(style[0]));
 <a class="jxr_linenumber" name="L279" href="#L279">279</a>                 } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L280" href="#L280">280</a>                     ioSupplier = () -&gt; url.openStream();
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>                     ioSupplier = url::openStream;
 <a class="jxr_linenumber" name="L281" href="#L281">281</a>                 }
 <a class="jxr_linenumber" name="L282" href="#L282">282</a>                 configuration.setStyleSheet(ioSupplier);
 <a class="jxr_linenumber" name="L283" href="#L283">283</a>             }
@@ -340,169 +340,168 @@
 <a class="jxr_linenumber" name="L332" href="#L332">332</a>     }
 <a class="jxr_linenumber" name="L333" href="#L333">333</a> 
 <a class="jxr_linenumber" name="L334" href="#L334">334</a>     <strong class="jxr_keyword">static</strong> Options buildOptions() {
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>         String licFilterValues = String.join(<span class="jxr_string">", "</span>, 
-<a class="jxr_linenumber" name="L336" href="#L336">336</a>                 Arrays.stream(LicenseFilter.values()).map(LicenseFilter::name).collect(Collectors.toList()));
-<a class="jxr_linenumber" name="L337" href="#L337">337</a> 
-<a class="jxr_linenumber" name="L338" href="#L338">338</a>         Options opts = <strong class="jxr_keyword">new</strong> Options()
-<a class="jxr_linenumber" name="L339" href="#L339">339</a>         .addOption(Option.builder().longOpt(DRY_RUN)
-<a class="jxr_linenumber" name="L340" href="#L340">340</a>                 .desc(<span class="jxr_string">"If set do not update the files but generate the reports."</span>)
-<a class="jxr_linenumber" name="L341" href="#L341">341</a>                 .build())
-<a class="jxr_linenumber" name="L342" href="#L342">342</a>         .addOption(
-<a class="jxr_linenumber" name="L343" href="#L343">343</a>                 Option.builder().hasArg(<strong class="jxr_keyword">true</strong>).longOpt(LIST_FAMILIES)
-<a class="jxr_linenumber" name="L344" href="#L344">344</a>                 .desc(<span class="jxr_string">"List the defined license families (default is none). Valid options are: "</span>+licFilterValues+<span class="jxr_string">"."</span>)
-<a class="jxr_linenumber" name="L345" href="#L345">345</a>                 .build())
-<a class="jxr_linenumber" name="L346" href="#L346">346</a>         .addOption(
-<a class="jxr_linenumber" name="L347" href="#L347">347</a>                 Option.builder().hasArg(<strong class="jxr_keyword">true</strong>).longOpt(LIST_LICENSES)
-<a class="jxr_linenumber" name="L348" href="#L348">348</a>                 .desc(<span class="jxr_string">"List the defined licenses (default is none). Valid options are: "</span>+licFilterValues+<span class="jxr_string">"."</span>)
-<a class="jxr_linenumber" name="L349" href="#L349">349</a>                 .build())
-<a class="jxr_linenumber" name="L350" href="#L350">350</a> 
-<a class="jxr_linenumber" name="L351" href="#L351">351</a>         .addOption(<strong class="jxr_keyword">new</strong> Option(HELP, <span class="jxr_string">"help"</span>, false, <span class="jxr_string">"Print help for the RAT command line interface and exit."</span>));
-<a class="jxr_linenumber" name="L352" href="#L352">352</a> 
-<a class="jxr_linenumber" name="L353" href="#L353">353</a>         Option out = <strong class="jxr_keyword">new</strong> Option(<span class="jxr_string">"o"</span>, <span class="jxr_string">"out"</span>, <strong class="jxr_keyword">true</strong>,
-<a class="jxr_linenumber" name="L354" href="#L354">354</a>                 <span class="jxr_string">"Define the output file where to write a report to (default is System.out)."</span>);
-<a class="jxr_linenumber" name="L355" href="#L355">355</a>         opts.addOption(out);
-<a class="jxr_linenumber" name="L356" href="#L356">356</a> 
-<a class="jxr_linenumber" name="L357" href="#L357">357</a>         String defaultHandlingText = <span class="jxr_string">" By default all approved default licenses are used"</span>;
-<a class="jxr_linenumber" name="L358" href="#L358">358</a>         Option noDefaults = <strong class="jxr_keyword">new</strong> Option(<strong class="jxr_keyword">null</strong>, NO_DEFAULTS, false, <span class="jxr_string">"Ignore default configuration."</span> + defaultHandlingText);
-<a class="jxr_linenumber" name="L359" href="#L359">359</a>         opts.addOption(noDefaults);
-<a class="jxr_linenumber" name="L360" href="#L360">360</a> 
-<a class="jxr_linenumber" name="L361" href="#L361">361</a>         opts.addOption(<strong class="jxr_keyword">null</strong>, LICENSES, <strong class="jxr_keyword">true</strong>, <span class="jxr_string">"File names or URLs for license definitions"</span>);
-<a class="jxr_linenumber" name="L362" href="#L362">362</a>         opts.addOption(<strong class="jxr_keyword">null</strong>, SCAN_HIDDEN_DIRECTORIES, false, <span class="jxr_string">"Scan hidden directories"</span>);
-<a class="jxr_linenumber" name="L363" href="#L363">363</a> 
-<a class="jxr_linenumber" name="L364" href="#L364">364</a>         OptionGroup addLicenseGroup = <strong class="jxr_keyword">new</strong> OptionGroup();
-<a class="jxr_linenumber" name="L365" href="#L365">365</a>         <em class="jxr_comment">// RAT-85/RAT-203: Deprecated! added only for convenience and for backwards</em>
-<a class="jxr_linenumber" name="L366" href="#L366">366</a>         <em class="jxr_comment">// compatibility</em>
-<a class="jxr_linenumber" name="L367" href="#L367">367</a>         Option addLicence = <strong class="jxr_keyword">new</strong> Option(ADD_OLD, false, <span class="jxr_string">"(deprecated) Add the default license header to any file with an unknown license.  Use '-A' or ---addLicense instead."</span>);
-<a class="jxr_linenumber" name="L368" href="#L368">368</a>         addLicenseGroup.addOption(addLicence);
-<a class="jxr_linenumber" name="L369" href="#L369">369</a>         Option addLicense = <strong class="jxr_keyword">new</strong> Option(ADD, <span class="jxr_string">"addLicense"</span>, false, <span class="jxr_string">"Add the default license header to any file with an unknown license that is not in the exclusion list. "</span>
-<a class="jxr_linenumber" name="L370" href="#L370">370</a>                 + <span class="jxr_string">"By default new files will be created with the license header, "</span>
-<a class="jxr_linenumber" name="L371" href="#L371">371</a>                 + <span class="jxr_string">"to force the modification of existing files use the --force option."</span>);
-<a class="jxr_linenumber" name="L372" href="#L372">372</a>         addLicenseGroup.addOption(addLicense);
-<a class="jxr_linenumber" name="L373" href="#L373">373</a>         opts.addOptionGroup(addLicenseGroup);
-<a class="jxr_linenumber" name="L374" href="#L374">374</a> 
-<a class="jxr_linenumber" name="L375" href="#L375">375</a>         Option write = <strong class="jxr_keyword">new</strong> Option(FORCE, <span class="jxr_string">"force"</span>, false,
-<a class="jxr_linenumber" name="L376" href="#L376">376</a>                 <span class="jxr_string">"Forces any changes in files to be written directly to the source files (i.e. new files are not created)."</span>);
-<a class="jxr_linenumber" name="L377" href="#L377">377</a>         opts.addOption(write);
-<a class="jxr_linenumber" name="L378" href="#L378">378</a> 
-<a class="jxr_linenumber" name="L379" href="#L379">379</a>         Option copyright = <strong class="jxr_keyword">new</strong> Option(COPYRIGHT, <span class="jxr_string">"copyright"</span>, <strong class="jxr_keyword">true</strong>,
-<a class="jxr_linenumber" name="L380" href="#L380">380</a>                 <span class="jxr_string">"The copyright message to use in the license headers, usually in the form of \&quot;Copyright 2008 Foo\&quot;"</span>);
-<a class="jxr_linenumber" name="L381" href="#L381">381</a>         opts.addOption(copyright);
-<a class="jxr_linenumber" name="L382" href="#L382">382</a> 
-<a class="jxr_linenumber" name="L383" href="#L383">383</a>         <strong class="jxr_keyword">final</strong> Option exclude = Option.builder(EXCLUDE_CLI).argName(<span class="jxr_string">"expression"</span>).longOpt(<span class="jxr_string">"exclude"</span>).hasArgs()
-<a class="jxr_linenumber" name="L384" href="#L384">384</a>                 .desc(<span class="jxr_string">"Excludes files matching wildcard &lt;expression&gt;. "</span>
-<a class="jxr_linenumber" name="L385" href="#L385">385</a>                         + <span class="jxr_string">"Note that --dir is required when using this parameter. "</span> + <span class="jxr_string">"Allows multiple arguments."</span>)
-<a class="jxr_linenumber" name="L386" href="#L386">386</a>                 .build();
-<a class="jxr_linenumber" name="L387" href="#L387">387</a>         opts.addOption(exclude);
-<a class="jxr_linenumber" name="L388" href="#L388">388</a> 
-<a class="jxr_linenumber" name="L389" href="#L389">389</a>         <strong class="jxr_keyword">final</strong> Option excludeFile = Option.builder(EXCLUDE_FILE_CLI).argName(<span class="jxr_string">"fileName"</span>).longOpt(<span class="jxr_string">"exclude-file"</span>)
-<a class="jxr_linenumber" name="L390" href="#L390">390</a>                 .hasArgs().desc(<span class="jxr_string">"Excludes files matching regular expression in &lt;file&gt; "</span>
-<a class="jxr_linenumber" name="L391" href="#L391">391</a>                         + <span class="jxr_string">"Note that --dir is required when using this parameter. "</span>)
-<a class="jxr_linenumber" name="L392" href="#L392">392</a>                 .build();
-<a class="jxr_linenumber" name="L393" href="#L393">393</a>         opts.addOption(excludeFile);
-<a class="jxr_linenumber" name="L394" href="#L394">394</a> 
-<a class="jxr_linenumber" name="L395" href="#L395">395</a>         Option dir = <strong class="jxr_keyword">new</strong> Option(<span class="jxr_string">"d"</span>, <span class="jxr_string">"dir"</span>, false, <span class="jxr_string">"Used to indicate source when using --exclude"</span>);
-<a class="jxr_linenumber" name="L396" href="#L396">396</a>         opts.addOption(dir);
-<a class="jxr_linenumber" name="L397" href="#L397">397</a> 
-<a class="jxr_linenumber" name="L398" href="#L398">398</a>         opts.addOption( Option.builder().argName(<span class="jxr_string">"level"</span>).longOpt(LOG_LEVEL)
-<a class="jxr_linenumber" name="L399" href="#L399">399</a>                 .hasArgs().desc(<span class="jxr_string">"sets the log level.  Valid options are: DEBUG, INFO, WARN, ERROR, OFF"</span>)
-<a class="jxr_linenumber" name="L400" href="#L400">400</a>                 .build() );
-<a class="jxr_linenumber" name="L401" href="#L401">401</a>         
-<a class="jxr_linenumber" name="L402" href="#L402">402</a>         OptionGroup outputType = <strong class="jxr_keyword">new</strong> OptionGroup();
-<a class="jxr_linenumber" name="L403" href="#L403">403</a> 
-<a class="jxr_linenumber" name="L404" href="#L404">404</a>         Option xml = <strong class="jxr_keyword">new</strong> Option(XML, <span class="jxr_string">"xml"</span>, false, <span class="jxr_string">"Output the report in raw XML format.  Not compatible with -s"</span>);
-<a class="jxr_linenumber" name="L405" href="#L405">405</a>         outputType.addOption(xml);
-<a class="jxr_linenumber" name="L406" href="#L406">406</a> 
-<a class="jxr_linenumber" name="L407" href="#L407">407</a>         Option xslt = <strong class="jxr_keyword">new</strong> Option(STYLESHEET_CLI, <span class="jxr_string">"stylesheet"</span>, <strong class="jxr_keyword">true</strong>,
-<a class="jxr_linenumber" name="L408" href="#L408">408</a>                 <span class="jxr_string">"XSLT stylesheet to use when creating the report.  Not compatible with -x.  Either an external xsl file may be specified or one of the internal named sheets: plain-rat (default), missing-headers, or unapproved-licenses"</span>);
-<a class="jxr_linenumber" name="L409" href="#L409">409</a>         outputType.addOption(xslt);
-<a class="jxr_linenumber" name="L410" href="#L410">410</a>         opts.addOptionGroup(outputType);
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>         String licFilterValues = Arrays.stream(LicenseFilter.values()).map(LicenseFilter::name).collect(Collectors.joining(<span class="jxr_string">", "</span>));
+<a class="jxr_linenumber" name="L336" href="#L336">336</a> 
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>         Options opts = <strong class="jxr_keyword">new</strong> Options()
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>         .addOption(Option.builder().longOpt(DRY_RUN)
+<a class="jxr_linenumber" name="L339" href="#L339">339</a>                 .desc(<span class="jxr_string">"If set do not update the files but generate the reports."</span>)
+<a class="jxr_linenumber" name="L340" href="#L340">340</a>                 .build())
+<a class="jxr_linenumber" name="L341" href="#L341">341</a>         .addOption(
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>                 Option.builder().hasArg(<strong class="jxr_keyword">true</strong>).longOpt(LIST_FAMILIES)
+<a class="jxr_linenumber" name="L343" href="#L343">343</a>                 .desc(<span class="jxr_string">"List the defined license families (default is none). Valid options are: "</span>+licFilterValues+<span class="jxr_string">"."</span>)
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>                 .build())
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>         .addOption(
+<a class="jxr_linenumber" name="L346" href="#L346">346</a>                 Option.builder().hasArg(<strong class="jxr_keyword">true</strong>).longOpt(LIST_LICENSES)
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>                 .desc(<span class="jxr_string">"List the defined licenses (default is none). Valid options are: "</span>+licFilterValues+<span class="jxr_string">"."</span>)
+<a class="jxr_linenumber" name="L348" href="#L348">348</a>                 .build())
+<a class="jxr_linenumber" name="L349" href="#L349">349</a> 
+<a class="jxr_linenumber" name="L350" href="#L350">350</a>         .addOption(<strong class="jxr_keyword">new</strong> Option(HELP, <span class="jxr_string">"help"</span>, false, <span class="jxr_string">"Print help for the RAT command line interface and exit."</span>));
+<a class="jxr_linenumber" name="L351" href="#L351">351</a> 
+<a class="jxr_linenumber" name="L352" href="#L352">352</a>         Option out = <strong class="jxr_keyword">new</strong> Option(<span class="jxr_string">"o"</span>, <span class="jxr_string">"out"</span>, <strong class="jxr_keyword">true</strong>,
+<a class="jxr_linenumber" name="L353" href="#L353">353</a>                 <span class="jxr_string">"Define the output file where to write a report to (default is System.out)."</span>);
+<a class="jxr_linenumber" name="L354" href="#L354">354</a>         opts.addOption(out);
+<a class="jxr_linenumber" name="L355" href="#L355">355</a> 
+<a class="jxr_linenumber" name="L356" href="#L356">356</a>         String defaultHandlingText = <span class="jxr_string">" By default all approved default licenses are used"</span>;
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>         Option noDefaults = <strong class="jxr_keyword">new</strong> Option(<strong class="jxr_keyword">null</strong>, NO_DEFAULTS, false, <span class="jxr_string">"Ignore default configuration."</span> + defaultHandlingText);
+<a class="jxr_linenumber" name="L358" href="#L358">358</a>         opts.addOption(noDefaults);
+<a class="jxr_linenumber" name="L359" href="#L359">359</a> 
+<a class="jxr_linenumber" name="L360" href="#L360">360</a>         opts.addOption(<strong class="jxr_keyword">null</strong>, LICENSES, <strong class="jxr_keyword">true</strong>, <span class="jxr_string">"File names or URLs for license definitions"</span>);
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>         opts.addOption(<strong class="jxr_keyword">null</strong>, SCAN_HIDDEN_DIRECTORIES, false, <span class="jxr_string">"Scan hidden directories"</span>);
+<a class="jxr_linenumber" name="L362" href="#L362">362</a> 
+<a class="jxr_linenumber" name="L363" href="#L363">363</a>         OptionGroup addLicenseGroup = <strong class="jxr_keyword">new</strong> OptionGroup();
+<a class="jxr_linenumber" name="L364" href="#L364">364</a>         <em class="jxr_comment">// RAT-85/RAT-203: Deprecated! added only for convenience and for backwards</em>
+<a class="jxr_linenumber" name="L365" href="#L365">365</a>         <em class="jxr_comment">// compatibility</em>
+<a class="jxr_linenumber" name="L366" href="#L366">366</a>         Option addLicence = <strong class="jxr_keyword">new</strong> Option(ADD_OLD, false, <span class="jxr_string">"(deprecated) Add the default license header to any file with an unknown license.  Use '-A' or ---addLicense instead."</span>);
+<a class="jxr_linenumber" name="L367" href="#L367">367</a>         addLicenseGroup.addOption(addLicence);
+<a class="jxr_linenumber" name="L368" href="#L368">368</a>         Option addLicense = <strong class="jxr_keyword">new</strong> Option(ADD, <span class="jxr_string">"addLicense"</span>, false, <span class="jxr_string">"Add the default license header to any file with an unknown license that is not in the exclusion list. "</span>
+<a class="jxr_linenumber" name="L369" href="#L369">369</a>                 + <span class="jxr_string">"By default new files will be created with the license header, "</span>
+<a class="jxr_linenumber" name="L370" href="#L370">370</a>                 + <span class="jxr_string">"to force the modification of existing files use the --force option."</span>);
+<a class="jxr_linenumber" name="L371" href="#L371">371</a>         addLicenseGroup.addOption(addLicense);
+<a class="jxr_linenumber" name="L372" href="#L372">372</a>         opts.addOptionGroup(addLicenseGroup);
+<a class="jxr_linenumber" name="L373" href="#L373">373</a> 
+<a class="jxr_linenumber" name="L374" href="#L374">374</a>         Option write = <strong class="jxr_keyword">new</strong> Option(FORCE, <span class="jxr_string">"force"</span>, false,
+<a class="jxr_linenumber" name="L375" href="#L375">375</a>                 <span class="jxr_string">"Forces any changes in files to be written directly to the source files (i.e. new files are not created)."</span>);
+<a class="jxr_linenumber" name="L376" href="#L376">376</a>         opts.addOption(write);
+<a class="jxr_linenumber" name="L377" href="#L377">377</a> 
+<a class="jxr_linenumber" name="L378" href="#L378">378</a>         Option copyright = <strong class="jxr_keyword">new</strong> Option(COPYRIGHT, <span class="jxr_string">"copyright"</span>, <strong class="jxr_keyword">true</strong>,
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>                 <span class="jxr_string">"The copyright message to use in the license headers, usually in the form of \&quot;Copyright 2008 Foo\&quot;"</span>);
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>         opts.addOption(copyright);
+<a class="jxr_linenumber" name="L381" href="#L381">381</a> 
+<a class="jxr_linenumber" name="L382" href="#L382">382</a>         <strong class="jxr_keyword">final</strong> Option exclude = Option.builder(EXCLUDE_CLI).argName(<span class="jxr_string">"expression"</span>).longOpt(<span class="jxr_string">"exclude"</span>).hasArgs()
+<a class="jxr_linenumber" name="L383" href="#L383">383</a>                 .desc(<span class="jxr_string">"Excludes files matching wildcard &lt;expression&gt;. "</span>
+<a class="jxr_linenumber" name="L384" href="#L384">384</a>                         + <span class="jxr_string">"Note that --dir is required when using this parameter. "</span> + <span class="jxr_string">"Allows multiple arguments."</span>)
+<a class="jxr_linenumber" name="L385" href="#L385">385</a>                 .build();
+<a class="jxr_linenumber" name="L386" href="#L386">386</a>         opts.addOption(exclude);
+<a class="jxr_linenumber" name="L387" href="#L387">387</a> 
+<a class="jxr_linenumber" name="L388" href="#L388">388</a>         <strong class="jxr_keyword">final</strong> Option excludeFile = Option.builder(EXCLUDE_FILE_CLI).argName(<span class="jxr_string">"fileName"</span>).longOpt(<span class="jxr_string">"exclude-file"</span>)
+<a class="jxr_linenumber" name="L389" href="#L389">389</a>                 .hasArgs().desc(<span class="jxr_string">"Excludes files matching regular expression in &lt;file&gt; "</span>
+<a class="jxr_linenumber" name="L390" href="#L390">390</a>                         + <span class="jxr_string">"Note that --dir is required when using this parameter. "</span>)
+<a class="jxr_linenumber" name="L391" href="#L391">391</a>                 .build();
+<a class="jxr_linenumber" name="L392" href="#L392">392</a>         opts.addOption(excludeFile);
+<a class="jxr_linenumber" name="L393" href="#L393">393</a> 
+<a class="jxr_linenumber" name="L394" href="#L394">394</a>         Option dir = <strong class="jxr_keyword">new</strong> Option(<span class="jxr_string">"d"</span>, <span class="jxr_string">"dir"</span>, false, <span class="jxr_string">"Used to indicate source when using --exclude"</span>);
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>         opts.addOption(dir);
+<a class="jxr_linenumber" name="L396" href="#L396">396</a> 
+<a class="jxr_linenumber" name="L397" href="#L397">397</a>         opts.addOption( Option.builder().argName(<span class="jxr_string">"level"</span>).longOpt(LOG_LEVEL)
+<a class="jxr_linenumber" name="L398" href="#L398">398</a>                 .hasArgs().desc(<span class="jxr_string">"sets the log level.  Valid options are: DEBUG, INFO, WARN, ERROR, OFF"</span>)
+<a class="jxr_linenumber" name="L399" href="#L399">399</a>                 .build() );
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>         
+<a class="jxr_linenumber" name="L401" href="#L401">401</a>         OptionGroup outputType = <strong class="jxr_keyword">new</strong> OptionGroup();
+<a class="jxr_linenumber" name="L402" href="#L402">402</a> 
+<a class="jxr_linenumber" name="L403" href="#L403">403</a>         Option xml = <strong class="jxr_keyword">new</strong> Option(XML, <span class="jxr_string">"xml"</span>, false, <span class="jxr_string">"Output the report in raw XML format.  Not compatible with -s"</span>);
+<a class="jxr_linenumber" name="L404" href="#L404">404</a>         outputType.addOption(xml);
+<a class="jxr_linenumber" name="L405" href="#L405">405</a> 
+<a class="jxr_linenumber" name="L406" href="#L406">406</a>         Option xslt = <strong class="jxr_keyword">new</strong> Option(STYLESHEET_CLI, <span class="jxr_string">"stylesheet"</span>, <strong class="jxr_keyword">true</strong>,
+<a class="jxr_linenumber" name="L407" href="#L407">407</a>                 <span class="jxr_string">"XSLT stylesheet to use when creating the report.  Not compatible with -x.  Either an external xsl file may be specified or one of the internal named sheets: plain-rat (default), missing-headers, or unapproved-licenses"</span>);
+<a class="jxr_linenumber" name="L408" href="#L408">408</a>         outputType.addOption(xslt);
+<a class="jxr_linenumber" name="L409" href="#L409">409</a>         opts.addOptionGroup(outputType);
+<a class="jxr_linenumber" name="L410" href="#L410">410</a>         
 <a class="jxr_linenumber" name="L411" href="#L411">411</a>         
-<a class="jxr_linenumber" name="L412" href="#L412">412</a>         
-<a class="jxr_linenumber" name="L413" href="#L413">413</a> 
-<a class="jxr_linenumber" name="L414" href="#L414">414</a>         <strong class="jxr_keyword">return</strong> opts;
-<a class="jxr_linenumber" name="L415" href="#L415">415</a>     }
-<a class="jxr_linenumber" name="L416" href="#L416">416</a> 
-<a class="jxr_linenumber" name="L417" href="#L417">417</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> printUsage(Options opts) {
-<a class="jxr_linenumber" name="L418" href="#L418">418</a>         HelpFormatter f = <strong class="jxr_keyword">new</strong> HelpFormatter();
-<a class="jxr_linenumber" name="L419" href="#L419">419</a>         f.setOptionComparator(<strong class="jxr_keyword">new</strong> OptionComparator());
-<a class="jxr_linenumber" name="L420" href="#L420">420</a>         String header = System.lineSeparator()+<span class="jxr_string">"Available options"</span>;
-<a class="jxr_linenumber" name="L421" href="#L421">421</a> 
-<a class="jxr_linenumber" name="L422" href="#L422">422</a>         String footer = String.format(<span class="jxr_string">"%nNOTE:%nRat is really little more than a grep ATM%n"</span>
-<a class="jxr_linenumber" name="L423" href="#L423">423</a>                 + <span class="jxr_string">"Rat is also rather memory hungry ATM%n"</span> + <span class="jxr_string">"Rat is very basic ATM%n"</span>
-<a class="jxr_linenumber" name="L424" href="#L424">424</a>                 + <span class="jxr_string">"Rat highlights possible issues%n"</span> + <span class="jxr_string">"Rat reports require interpretation%n"</span>
-<a class="jxr_linenumber" name="L425" href="#L425">425</a>                 + <span class="jxr_string">"Rat often requires some tuning before it runs well against a project%n"</span>
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>                 + <span class="jxr_string">"Rat relies on heuristics: it may miss issues%n"</span>);
-<a class="jxr_linenumber" name="L427" href="#L427">427</a> 
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>         f.printHelp(<span class="jxr_string">"java -jar apache-rat/target/apache-rat-CURRENT-VERSION.jar [options] [DIR|TARBALL]"</span>, header, opts,
-<a class="jxr_linenumber" name="L429" href="#L429">429</a>                 footer, false);
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>         System.exit(0);
-<a class="jxr_linenumber" name="L431" href="#L431">431</a>     }
-<a class="jxr_linenumber" name="L432" href="#L432">432</a> 
-<a class="jxr_linenumber" name="L433" href="#L433">433</a>     <strong class="jxr_keyword">private</strong> <a name="Report" href="../../../org/apache/rat/Report.html#Report">Report</a>() {
-<a class="jxr_linenumber" name="L434" href="#L434">434</a>         <em class="jxr_comment">// do not instantiate</em>
-<a class="jxr_linenumber" name="L435" href="#L435">435</a>     }
-<a class="jxr_linenumber" name="L436" href="#L436">436</a> 
-<a class="jxr_linenumber" name="L437" href="#L437">437</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L438" href="#L438">438</a> <em class="jxr_javadoccomment">     * Creates an IReportable object from the directory name and ReportConfiguration</em>
-<a class="jxr_linenumber" name="L439" href="#L439">439</a> <em class="jxr_javadoccomment">     * object.</em>
-<a class="jxr_linenumber" name="L440" href="#L440">440</a> <em class="jxr_javadoccomment">     * </em>
-<a class="jxr_linenumber" name="L441" href="#L441">441</a> <em class="jxr_javadoccomment">     * @param baseDirectory the directory that contains the files to report on.</em>
-<a class="jxr_linenumber" name="L442" href="#L442">442</a> <em class="jxr_javadoccomment">     * @param config the ReportConfiguration.</em>
-<a class="jxr_linenumber" name="L443" href="#L443">443</a> <em class="jxr_javadoccomment">     * @return the IReportable instance containing the files.</em>
-<a class="jxr_linenumber" name="L444" href="#L444">444</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L445" href="#L445">445</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="IReportable" href="../../../org/apache/rat/report/IReportable.html#IReportable">IReportable</a> getDirectory(String baseDirectory, <a name="ReportConfiguration" href="../../../org/apache/rat/ReportConfiguration.html#ReportConfiguration">ReportConfiguration</a> config) {
-<a class="jxr_linenumber" name="L446" href="#L446">446</a>         <strong class="jxr_keyword">try</strong> (PrintStream out = <strong class="jxr_keyword">new</strong> PrintStream(config.getOutput().get())) {
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>             File base = <strong class="jxr_keyword">new</strong> File(baseDirectory);
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>             
-<a class="jxr_linenumber" name="L449" href="#L449">449</a>             <strong class="jxr_keyword">if</strong> (!base.exists()) {
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>                 config.getLog().log(Level.ERROR, <span class="jxr_string">"Directory '"</span>+baseDirectory+<span class="jxr_string">"' does not exist"</span>);
-<a class="jxr_linenumber" name="L451" href="#L451">451</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>             }
-<a class="jxr_linenumber" name="L453" href="#L453">453</a> 
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>             <strong class="jxr_keyword">if</strong> (base.isDirectory()) {
-<a class="jxr_linenumber" name="L455" href="#L455">455</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="DirectoryWalker" href="../../../org/apache/rat/walker/DirectoryWalker.html#DirectoryWalker">DirectoryWalker</a>(base, config.getFilesToIgnore(), config.getDirectoriesToIgnore());
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>             }
-<a class="jxr_linenumber" name="L457" href="#L457">457</a> 
-<a class="jxr_linenumber" name="L458" href="#L458">458</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L459" href="#L459">459</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ArchiveWalker" href="../../../org/apache/rat/walker/ArchiveWalker.html#ArchiveWalker">ArchiveWalker</a>(base, config.getFilesToIgnore());
-<a class="jxr_linenumber" name="L460" href="#L460">460</a>             } <strong class="jxr_keyword">catch</strong> (IOException ex) {
-<a class="jxr_linenumber" name="L461" href="#L461">461</a>                 config.getLog().log(Level.ERROR, <span class="jxr_string">"file '"</span>+baseDirectory+<span class="jxr_string">"' is not valid gzip data."</span>);
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>             }
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="L465" href="#L465">465</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(<span class="jxr_string">"Error opening output"</span>, e);
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>         }
-<a class="jxr_linenumber" name="L467" href="#L467">467</a>     }
-<a class="jxr_linenumber" name="L468" href="#L468">468</a> 
-<a class="jxr_linenumber" name="L469" href="#L469">469</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L470" href="#L470">470</a> <em class="jxr_javadoccomment">     * This class implements the {@code Comparator} interface for comparing Options.</em>
-<a class="jxr_linenumber" name="L471" href="#L471">471</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L472" href="#L472">472</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> OptionComparator <strong class="jxr_keyword">implements</strong> Comparator&lt;Option&gt;, Serializable {
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>         <em class="jxr_javadoccomment">/** The serial version UID. */</em>
-<a class="jxr_linenumber" name="L474" href="#L474">474</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 5305467873966684014L;
-<a class="jxr_linenumber" name="L475" href="#L475">475</a> 
-<a class="jxr_linenumber" name="L476" href="#L476">476</a>         <strong class="jxr_keyword">private</strong> String getKey(Option opt) {
-<a class="jxr_linenumber" name="L477" href="#L477">477</a>             String key = opt.getOpt();
-<a class="jxr_linenumber" name="L478" href="#L478">478</a>             key = key == <strong class="jxr_keyword">null</strong> ? opt.getLongOpt() : key;
-<a class="jxr_linenumber" name="L479" href="#L479">479</a>             <strong class="jxr_keyword">return</strong> key;
-<a class="jxr_linenumber" name="L480" href="#L480">480</a>         }
-<a class="jxr_linenumber" name="L481" href="#L481">481</a> 
-<a class="jxr_linenumber" name="L482" href="#L482">482</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L483" href="#L483">483</a> <em class="jxr_javadoccomment">         * Compares its two arguments for order. Returns a negative integer, zero, or a</em>
-<a class="jxr_linenumber" name="L484" href="#L484">484</a> <em class="jxr_javadoccomment">         * positive integer as the first argument is less than, equal to, or greater</em>
-<a class="jxr_linenumber" name="L485" href="#L485">485</a> <em class="jxr_javadoccomment">         * than the second.</em>
-<a class="jxr_linenumber" name="L486" href="#L486">486</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="L487" href="#L487">487</a> <em class="jxr_javadoccomment">         * @param opt1 The first Option to be compared.</em>
-<a class="jxr_linenumber" name="L488" href="#L488">488</a> <em class="jxr_javadoccomment">         * @param opt2 The second Option to be compared.</em>
-<a class="jxr_linenumber" name="L489" href="#L489">489</a> <em class="jxr_javadoccomment">         * @return a negative integer, zero, or a positive integer as the first argument</em>
-<a class="jxr_linenumber" name="L490" href="#L490">490</a> <em class="jxr_javadoccomment">         * is less than, equal to, or greater than the second.</em>
-<a class="jxr_linenumber" name="L491" href="#L491">491</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L492" href="#L492">492</a>         @Override
-<a class="jxr_linenumber" name="L493" href="#L493">493</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compare(<strong class="jxr_keyword">final</strong> Option opt1, <strong class="jxr_keyword">final</strong> Option opt2) {
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>             <strong class="jxr_keyword">return</strong> getKey(opt1).compareToIgnoreCase(getKey(opt2));
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>         }
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>     }
-<a class="jxr_linenumber" name="L497" href="#L497">497</a> }
+<a class="jxr_linenumber" name="L412" href="#L412">412</a> 
+<a class="jxr_linenumber" name="L413" href="#L413">413</a>         <strong class="jxr_keyword">return</strong> opts;
+<a class="jxr_linenumber" name="L414" href="#L414">414</a>     }
+<a class="jxr_linenumber" name="L415" href="#L415">415</a> 
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> printUsage(Options opts) {
+<a class="jxr_linenumber" name="L417" href="#L417">417</a>         HelpFormatter f = <strong class="jxr_keyword">new</strong> HelpFormatter();
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>         f.setOptionComparator(<strong class="jxr_keyword">new</strong> OptionComparator());
+<a class="jxr_linenumber" name="L419" href="#L419">419</a>         String header = System.lineSeparator()+<span class="jxr_string">"Available options"</span>;
+<a class="jxr_linenumber" name="L420" href="#L420">420</a> 
+<a class="jxr_linenumber" name="L421" href="#L421">421</a>         String footer = String.format(<span class="jxr_string">"%nNOTE:%nRat is really little more than a grep ATM%n"</span>
+<a class="jxr_linenumber" name="L422" href="#L422">422</a>                 + <span class="jxr_string">"Rat is also rather memory hungry ATM%n"</span> + <span class="jxr_string">"Rat is very basic ATM%n"</span>
+<a class="jxr_linenumber" name="L423" href="#L423">423</a>                 + <span class="jxr_string">"Rat highlights possible issues%n"</span> + <span class="jxr_string">"Rat reports require interpretation%n"</span>
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>                 + <span class="jxr_string">"Rat often requires some tuning before it runs well against a project%n"</span>
+<a class="jxr_linenumber" name="L425" href="#L425">425</a>                 + <span class="jxr_string">"Rat relies on heuristics: it may miss issues%n"</span>);
+<a class="jxr_linenumber" name="L426" href="#L426">426</a> 
+<a class="jxr_linenumber" name="L427" href="#L427">427</a>         f.printHelp(<span class="jxr_string">"java -jar apache-rat/target/apache-rat-CURRENT-VERSION.jar [options] [DIR|TARBALL]"</span>, header, opts,
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>                 footer, false);
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>         System.exit(0);
+<a class="jxr_linenumber" name="L430" href="#L430">430</a>     }
+<a class="jxr_linenumber" name="L431" href="#L431">431</a> 
+<a class="jxr_linenumber" name="L432" href="#L432">432</a>     <strong class="jxr_keyword">private</strong> <a name="Report" href="../../../org/apache/rat/Report.html#Report">Report</a>() {
+<a class="jxr_linenumber" name="L433" href="#L433">433</a>         <em class="jxr_comment">// do not instantiate</em>
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>     }
+<a class="jxr_linenumber" name="L435" href="#L435">435</a> 
+<a class="jxr_linenumber" name="L436" href="#L436">436</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L437" href="#L437">437</a> <em class="jxr_javadoccomment">     * Creates an IReportable object from the directory name and ReportConfiguration</em>
+<a class="jxr_linenumber" name="L438" href="#L438">438</a> <em class="jxr_javadoccomment">     * object.</em>
+<a class="jxr_linenumber" name="L439" href="#L439">439</a> <em class="jxr_javadoccomment">     * </em>
+<a class="jxr_linenumber" name="L440" href="#L440">440</a> <em class="jxr_javadoccomment">     * @param baseDirectory the directory that contains the files to report on.</em>
+<a class="jxr_linenumber" name="L441" href="#L441">441</a> <em class="jxr_javadoccomment">     * @param config the ReportConfiguration.</em>
+<a class="jxr_linenumber" name="L442" href="#L442">442</a> <em class="jxr_javadoccomment">     * @return the IReportable instance containing the files.</em>
+<a class="jxr_linenumber" name="L443" href="#L443">443</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L444" href="#L444">444</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <a name="IReportable" href="../../../org/apache/rat/report/IReportable.html#IReportable">IReportable</a> getDirectory(String baseDirectory, <a name="ReportConfiguration" href="../../../org/apache/rat/ReportConfiguration.html#ReportConfiguration">ReportConfiguration</a> config) {
+<a class="jxr_linenumber" name="L445" href="#L445">445</a>         <strong class="jxr_keyword">try</strong> (PrintStream out = <strong class="jxr_keyword">new</strong> PrintStream(config.getOutput().get())) {
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>             File base = <strong class="jxr_keyword">new</strong> File(baseDirectory);
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>             
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>             <strong class="jxr_keyword">if</strong> (!base.exists()) {
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>                 config.getLog().log(Level.ERROR, <span class="jxr_string">"Directory '"</span>+baseDirectory+<span class="jxr_string">"' does not exist"</span>);
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L451" href="#L451">451</a>             }
+<a class="jxr_linenumber" name="L452" href="#L452">452</a> 
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>             <strong class="jxr_keyword">if</strong> (base.isDirectory()) {
+<a class="jxr_linenumber" name="L454" href="#L454">454</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="DirectoryWalker" href="../../../org/apache/rat/walker/DirectoryWalker.html#DirectoryWalker">DirectoryWalker</a>(base, config.getFilesToIgnore(), config.getDirectoriesToIgnore());
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>             }
+<a class="jxr_linenumber" name="L456" href="#L456">456</a> 
+<a class="jxr_linenumber" name="L457" href="#L457">457</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L458" href="#L458">458</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="ArchiveWalker" href="../../../org/apache/rat/walker/ArchiveWalker.html#ArchiveWalker">ArchiveWalker</a>(base, config.getFilesToIgnore());
+<a class="jxr_linenumber" name="L459" href="#L459">459</a>             } <strong class="jxr_keyword">catch</strong> (IOException ex) {
+<a class="jxr_linenumber" name="L460" href="#L460">460</a>                 config.getLog().log(Level.ERROR, <span class="jxr_string">"file '"</span>+baseDirectory+<span class="jxr_string">"' is not valid gzip data."</span>);
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>             }
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="L464" href="#L464">464</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(<span class="jxr_string">"Error opening output"</span>, e);
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>         }
+<a class="jxr_linenumber" name="L466" href="#L466">466</a>     }
+<a class="jxr_linenumber" name="L467" href="#L467">467</a> 
+<a class="jxr_linenumber" name="L468" href="#L468">468</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L469" href="#L469">469</a> <em class="jxr_javadoccomment">     * This class implements the {@code Comparator} interface for comparing Options.</em>
+<a class="jxr_linenumber" name="L470" href="#L470">470</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> OptionComparator <strong class="jxr_keyword">implements</strong> Comparator&lt;Option&gt;, Serializable {
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>         <em class="jxr_javadoccomment">/** The serial version UID. */</em>
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 5305467873966684014L;
+<a class="jxr_linenumber" name="L474" href="#L474">474</a> 
+<a class="jxr_linenumber" name="L475" href="#L475">475</a>         <strong class="jxr_keyword">private</strong> String getKey(Option opt) {
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>             String key = opt.getOpt();
+<a class="jxr_linenumber" name="L477" href="#L477">477</a>             key = key == <strong class="jxr_keyword">null</strong> ? opt.getLongOpt() : key;
+<a class="jxr_linenumber" name="L478" href="#L478">478</a>             <strong class="jxr_keyword">return</strong> key;
+<a class="jxr_linenumber" name="L479" href="#L479">479</a>         }
+<a class="jxr_linenumber" name="L480" href="#L480">480</a> 
+<a class="jxr_linenumber" name="L481" href="#L481">481</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L482" href="#L482">482</a> <em class="jxr_javadoccomment">         * Compares its two arguments for order. Returns a negative integer, zero, or a</em>
+<a class="jxr_linenumber" name="L483" href="#L483">483</a> <em class="jxr_javadoccomment">         * positive integer as the first argument is less than, equal to, or greater</em>
+<a class="jxr_linenumber" name="L484" href="#L484">484</a> <em class="jxr_javadoccomment">         * than the second.</em>
+<a class="jxr_linenumber" name="L485" href="#L485">485</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="L486" href="#L486">486</a> <em class="jxr_javadoccomment">         * @param opt1 The first Option to be compared.</em>
+<a class="jxr_linenumber" name="L487" href="#L487">487</a> <em class="jxr_javadoccomment">         * @param opt2 The second Option to be compared.</em>
+<a class="jxr_linenumber" name="L488" href="#L488">488</a> <em class="jxr_javadoccomment">         * @return a negative integer, zero, or a positive integer as the first argument</em>
+<a class="jxr_linenumber" name="L489" href="#L489">489</a> <em class="jxr_javadoccomment">         * is less than, equal to, or greater than the second.</em>
+<a class="jxr_linenumber" name="L490" href="#L490">490</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L491" href="#L491">491</a>         @Override
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> compare(<strong class="jxr_keyword">final</strong> Option opt1, <strong class="jxr_keyword">final</strong> Option opt2) {
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>             <strong class="jxr_keyword">return</strong> getKey(opt1).compareToIgnoreCase(getKey(opt2));
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>         }
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>     }
+<a class="jxr_linenumber" name="L496" href="#L496">496</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>

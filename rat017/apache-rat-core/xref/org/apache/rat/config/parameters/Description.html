@@ -88,7 +88,7 @@
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>          <strong class="jxr_keyword">this</strong>.desc = desc;
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>          <strong class="jxr_keyword">this</strong>.isCollection = isCollection;
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          <strong class="jxr_keyword">this</strong>.required = required;
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">if</strong> (type == ComponentType.BULID_PARAMETER) {
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <strong class="jxr_keyword">if</strong> (type == ComponentType.BUILD_PARAMETER) {
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>              Method m;
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>              <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>                  m = BuilderParams.<strong class="jxr_keyword">class</strong>.getMethod(name);
@@ -283,7 +283,7 @@
 <a class="jxr_linenumber" name="L275" href="#L275">275</a>         <strong class="jxr_keyword">case</strong> PARAMETER:
 <a class="jxr_linenumber" name="L276" href="#L276">276</a>             <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName,
 <a class="jxr_linenumber" name="L277" href="#L277">277</a>                     IHeaderMatcher.<strong class="jxr_keyword">class</strong>.isAssignableFrom(childClass) ? IHeaderMatcher.Builder.<strong class="jxr_keyword">class</strong> : childClass);
-<a class="jxr_linenumber" name="L278" href="#L278">278</a>         <strong class="jxr_keyword">case</strong> BULID_PARAMETER:
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>         <strong class="jxr_keyword">case</strong> BUILD_PARAMETER:
 <a class="jxr_linenumber" name="L279" href="#L279">279</a>             <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName, childClass);
 <a class="jxr_linenumber" name="L280" href="#L280">280</a>         }
 <a class="jxr_linenumber" name="L281" href="#L281">281</a>         <em class="jxr_comment">// should not happen</em>
