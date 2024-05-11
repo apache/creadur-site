@@ -87,26 +87,34 @@
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a href="#org.apache.rat.anttasks">org.apache.rat.anttasks</a></td>
+<td class="colFirst"><a href="#org.apache.rat.analysis">org.apache.rat.analysis</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a href="#org.apache.rat.configuration">org.apache.rat.configuration</a></td>
+<td class="colFirst"><a href="#org.apache.rat.anttasks">org.apache.rat.anttasks</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.rat.configuration">org.apache.rat.configuration</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><a href="#org.apache.rat.mp">org.apache.rat.mp</a></td>
 <td class="colLast">
 <div class="block">This package contains the Rat plugins for
 <a href="https://maven.apache.org">Maven</a>.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><a href="#org.apache.rat.report">org.apache.rat.report</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></td>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a href="#org.apache.rat.walker">org.apache.rat.walker</a></td>
 <td class="colLast">&nbsp;</td>
 </tr>
 </tbody>
@@ -181,6 +189,26 @@
 <tr class="altColor">
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/Reporter.html#Reporter-org.apache.rat.ReportConfiguration-">Reporter</a></span>(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code>
 <div class="block">Create the reporter.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.apache.rat.analysis">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a> in <a href="../../../../org/apache/rat/analysis/package-summary.html">org.apache.rat.analysis</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing methods, and an explanation">
+<caption><span>Methods in <a href="../../../../org/apache/rat/analysis/package-summary.html">org.apache.rat.analysis</a> with parameters of type <a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Method and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colFirst"><code>static <a href="../../../../org/apache/rat/document/IDocumentAnalyser.html" title="interface in org.apache.rat.document">IDocumentAnalyser</a></code></td>
+<td class="colLast"><span class="typeNameLabel">DefaultAnalyserFactory.</span><code><span class="memberNameLink"><a href="../../../../org/apache/rat/analysis/DefaultAnalyserFactory.html#createDefaultAnalyser-org.apache.rat.ReportConfiguration-">createDefaultAnalyser</a></span>(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code>
+<div class="block">Creates a DocumentAnalyser from a collection of ILicenses.</div>
 </td>
 </tr>
 </tbody>
@@ -280,6 +308,31 @@
                     <a href="../../../../org/apache/rat/report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
                     <a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code>
 <div class="block">Creates a RatReport from the arguments.</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li class="blockList"><a name="org.apache.rat.walker">
+<!--   -->
+</a>
+<h3>Uses of <a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a> in <a href="../../../../org/apache/rat/walker/package-summary.html">org.apache.rat.walker</a></h3>
+<table class="useSummary" border="0" cellpadding="3" cellspacing="0" summary="Use table, listing constructors, and an explanation">
+<caption><span>Constructors in <a href="../../../../org/apache/rat/walker/package-summary.html">org.apache.rat.walker</a> with parameters of type <a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colOne" scope="col">Constructor and Description</th>
+</tr>
+<tbody>
+<tr class="altColor">
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/ArchiveWalker.html#ArchiveWalker-org.apache.rat.ReportConfiguration-org.apache.rat.api.Document-">ArchiveWalker</a></span>(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config,
+             <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code>
+<div class="block">Constructs a walker.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/DirectoryWalker.html#DirectoryWalker-org.apache.rat.ReportConfiguration-org.apache.rat.api.Document-">DirectoryWalker</a></span>(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config,
+               <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code>
+<div class="block">Constructs a directory walker.</div>
 </td>
 </tr>
 </tbody>

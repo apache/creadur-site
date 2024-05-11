@@ -136,11 +136,15 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Constructor Summary table, listing constructors, and an explanation">
 <caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
-<th class="colOne" scope="col">Constructor and Description</th>
+<th class="colFirst" scope="col">Modifier</th>
+<th class="colLast" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#Walker-java.io.File-java.io.FilenameFilter-">Walker</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore)</code>&nbsp;</td>
+<td class="colFirst"><code>protected </code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#Walker-org.apache.rat.api.Document-java.io.FilenameFilter-">Walker</a></span>(<a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document,
+      <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore)</code>
+<div class="block">Creates  the walker</div>
+</td>
 </tr>
 </table>
 </li>
@@ -158,15 +162,15 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#getBaseFile--">getBaseFile</a></span>()</code>
-<div class="block">Retrieve the file from the constructor.</div>
+<td class="colFirst"><code>protected <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#getDocument--">getDocument</a></span>()</code>
+<div class="block">Retrieves the document from the constructor.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#isNotIgnored-java.io.File-">isNotIgnored</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</code>
-<div class="block">Test if the specified file should be ignored.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/Walker.html#isNotIgnored-java.nio.file.Path-">isNotIgnored</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html?is-external=true" title="class or interface in java.nio.file">Path</a>&nbsp;path)</code>
+<div class="block">Tests if the specified path should be ignored.</div>
 </td>
 </tr>
 </table>
@@ -198,14 +202,20 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="Walker-java.io.File-java.io.FilenameFilter-">
+<a name="Walker-org.apache.rat.api.Document-java.io.FilenameFilter-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Walker</h4>
-<pre>public&nbsp;Walker(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-              <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore)</pre>
+<pre>protected&nbsp;Walker(<a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document,
+                 <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore)</pre>
+<div class="block">Creates  the walker</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>document</code> - The document the walker is walking.</dd>
+<dd><code>filesToIgnore</code> - the Files to ignore.  If <code>null</code> no files are ignored.</dd>
+</dl>
 </li>
 </ul>
 </li>
@@ -216,33 +226,33 @@ implements <a href="../../../../org/apache/rat/report/IReportable.html" title="i
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getBaseFile--">
+<a name="getDocument--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getBaseFile</h4>
-<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;getBaseFile()</pre>
-<div class="block">Retrieve the file from the constructor.</div>
+<h4>getDocument</h4>
+<pre>protected&nbsp;<a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;getDocument()</pre>
+<div class="block">Retrieves the document from the constructor.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the file from the constructor.</dd>
+<dd>the document from the constructor.</dd>
 </dl>
 </li>
 </ul>
-<a name="isNotIgnored-java.io.File-">
+<a name="isNotIgnored-java.nio.file.Path-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>isNotIgnored</h4>
-<pre>protected final&nbsp;boolean&nbsp;isNotIgnored(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</pre>
-<div class="block">Test if the specified file should be ignored.</div>
+<pre>protected final&nbsp;boolean&nbsp;isNotIgnored(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html?is-external=true" title="class or interface in java.nio.file">Path</a>&nbsp;path)</pre>
+<div class="block">Tests if the specified path should be ignored.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>file</code> - the file to test.</dd>
+<dd><code>path</code> - the Path to test</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>true</code> if the file should be ignored.</dd>
+<dd><code>true</code> if the file should not be ignored.</dd>
 </dl>
 </li>
 </ul>

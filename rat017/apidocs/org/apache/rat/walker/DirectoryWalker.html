@@ -139,10 +139,9 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/DirectoryWalker.html#DirectoryWalker-java.io.File-java.io.FilenameFilter-org.apache.commons.io.filefilter.IOFileFilter-">DirectoryWalker</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-               <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore,
-               org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoriesToIgnore)</code>
-<div class="block">Constructs a walker.</div>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/DirectoryWalker.html#DirectoryWalker-org.apache.rat.ReportConfiguration-org.apache.rat.api.Document-">DirectoryWalker</a></span>(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config,
+               <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code>
+<div class="block">Constructs a directory walker.</div>
 </td>
 </tr>
 </table>
@@ -162,8 +161,8 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/DirectoryWalker.html#process-org.apache.rat.report.RatReport-java.io.File-">process</a></span>(<a href="../../../../org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report,
-       <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/DirectoryWalker.html#process-org.apache.rat.report.RatReport-org.apache.rat.api.Document-">process</a></span>(<a href="../../../../org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report,
+       <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code>
 <div class="block">Process a directory, ignoring any files/directories set to be ignored.</div>
 </td>
 </tr>
@@ -180,7 +179,7 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.apache.rat.walker.<a href="../../../../org/apache/rat/walker/Walker.html" title="class in org.apache.rat.walker">Walker</a></h3>
-<code><a href="../../../../org/apache/rat/walker/Walker.html#getBaseFile--">getBaseFile</a>, <a href="../../../../org/apache/rat/walker/Walker.html#isNotIgnored-java.io.File-">isNotIgnored</a></code></li>
+<code><a href="../../../../org/apache/rat/walker/Walker.html#getDocument--">getDocument</a>, <a href="../../../../org/apache/rat/walker/Walker.html#isNotIgnored-java.nio.file.Path-">isNotIgnored</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -203,22 +202,19 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="DirectoryWalker-java.io.File-java.io.FilenameFilter-org.apache.commons.io.filefilter.IOFileFilter-">
+<a name="DirectoryWalker-org.apache.rat.ReportConfiguration-org.apache.rat.api.Document-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>DirectoryWalker</h4>
-<pre>public&nbsp;DirectoryWalker(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-                       <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filesToIgnore,
-                       org.apache.commons.io.filefilter.IOFileFilter&nbsp;directoriesToIgnore)</pre>
-<div class="block">Constructs a walker.</div>
+<pre>public&nbsp;DirectoryWalker(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config,
+                       <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</pre>
+<div class="block">Constructs a directory walker.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>file</code> - the directory to walk (not null).</dd>
-<dd><code>filesToIgnore</code> - filters input files (optional),
-               or null when no filtering should be performed</dd>
-<dd><code>directoriesToIgnore</code> - filters directories (optional), or null when no filtering should be performed.</dd>
+<dd><code>config</code> - the report configuration for this run.</dd>
+<dd><code>document</code> - the document to process.</dd>
 </dl>
 </li>
 </ul>
@@ -248,20 +244,20 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 </dl>
 </li>
 </ul>
-<a name="process-org.apache.rat.report.RatReport-java.io.File-">
+<a name="process-org.apache.rat.report.RatReport-org.apache.rat.api.Document-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>process</h4>
 <pre>protected&nbsp;void&nbsp;process(<a href="../../../../org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report,
-                       <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file)
+                       <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)
                 throws <a href="../../../../org/apache/rat/api/RatException.html" title="class in org.apache.rat.api">RatException</a></pre>
 <div class="block">Process a directory, ignoring any files/directories set to be ignored.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>report</code> - the report to use in processing</dd>
-<dd><code>file</code> - the run the report against</dd>
+<dd><code>document</code> - the document to run the report against</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../org/apache/rat/api/RatException.html" title="class in org.apache.rat.api">RatException</a></code> - on error</dd>
 </dl>

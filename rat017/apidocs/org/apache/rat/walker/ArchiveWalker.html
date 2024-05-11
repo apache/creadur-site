@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10};
+var methods = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -139,8 +139,8 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/ArchiveWalker.html#ArchiveWalker-java.io.File-java.io.FilenameFilter-">ArchiveWalker</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-             <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filter)</code>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/ArchiveWalker.html#ArchiveWalker-org.apache.rat.ReportConfiguration-org.apache.rat.api.Document-">ArchiveWalker</a></span>(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config,
+             <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code>
 <div class="block">Constructs a walker.</div>
 </td>
 </tr>
@@ -160,6 +160,12 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/ArchiveWalker.html#getDocuments-org.apache.rat.utils.Log-">getDocuments</a></span>(<a href="../../../../org/apache/rat/utils/Log.html" title="interface in org.apache.rat.utils">Log</a>&nbsp;log)</code>
+<div class="block">Retrieves the documents from the archive.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/walker/ArchiveWalker.html#run-org.apache.rat.report.RatReport-">run</a></span>(<a href="../../../../org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code>
 <div class="block">Run a report over all files and directories in this GZIPWalker,
@@ -172,7 +178,7 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.apache.rat.walker.<a href="../../../../org/apache/rat/walker/Walker.html" title="class in org.apache.rat.walker">Walker</a></h3>
-<code><a href="../../../../org/apache/rat/walker/Walker.html#getBaseFile--">getBaseFile</a>, <a href="../../../../org/apache/rat/walker/Walker.html#isNotIgnored-java.io.File-">isNotIgnored</a></code></li>
+<code><a href="../../../../org/apache/rat/walker/Walker.html#getDocument--">getDocument</a>, <a href="../../../../org/apache/rat/walker/Walker.html#isNotIgnored-java.nio.file.Path-">isNotIgnored</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -195,22 +201,19 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ArchiveWalker-java.io.File-java.io.FilenameFilter-">
+<a name="ArchiveWalker-org.apache.rat.ReportConfiguration-org.apache.rat.api.Document-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ArchiveWalker</h4>
-<pre>public&nbsp;ArchiveWalker(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;file,
-                     <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;filter)
-              throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileNotFoundException.html?is-external=true" title="class or interface in java.io">FileNotFoundException</a></pre>
+<pre>public&nbsp;ArchiveWalker(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config,
+                     <a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</pre>
 <div class="block">Constructs a walker.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>file</code> - not null</dd>
-<dd><code>filter</code> - filters input files (optional) null when no filtering should be performed</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileNotFoundException.html?is-external=true" title="class or interface in java.io">FileNotFoundException</a></code> - in case of I/O errors.</dd>
+<dd><code>config</code> - the report configuration for this run.</dd>
+<dd><code>document</code> - the document to process.</dd>
 </dl>
 </li>
 </ul>
@@ -225,7 +228,7 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <a name="run-org.apache.rat.report.RatReport-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>run</h4>
 <pre>public&nbsp;void&nbsp;run(<a href="../../../../org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)
@@ -237,6 +240,25 @@ extends <a href="../../../../org/apache/rat/walker/Walker.html" title="class in 
 <dd><code>report</code> - the defined RatReport to run on this GZIP walker.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../../org/apache/rat/api/RatException.html" title="class in org.apache.rat.api">RatException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="getDocuments-org.apache.rat.utils.Log-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getDocuments</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a>&gt;&nbsp;getDocuments(<a href="../../../../org/apache/rat/utils/Log.html" title="interface in org.apache.rat.utils">Log</a>&nbsp;log)
+                                  throws <a href="../../../../org/apache/rat/api/RatException.html" title="class in org.apache.rat.api">RatException</a></pre>
+<div class="block">Retrieves the documents from the archive.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>log</code> - The log to write messages to.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>A collection of documents that pass the file filter.</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../org/apache/rat/api/RatException.html" title="class in org.apache.rat.api">RatException</a></code> - on error.</dd>
 </dl>
 </li>
 </ul>

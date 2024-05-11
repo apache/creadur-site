@@ -38,7 +38,7 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.LicenseFamilySetFactory;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.LicenseSetFactory.LicenseFilter;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingLicense;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingLocation;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingDocument;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.DefaultLog;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.BeforeEach;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
@@ -70,7 +70,7 @@
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setUp() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          defaults = Defaults.builder().build(DefaultLog.INSTANCE);
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          policy = <strong class="jxr_keyword">new</strong> DefaultPolicy(defaults.getLicenseFamilies(LicenseFilter.APPROVED));
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          document = <strong class="jxr_keyword">new</strong> <a name="TestingLocation" href="../../../../org/apache/rat/testhelpers/TestingLocation.html#TestingLocation">TestingLocation</a>(<span class="jxr_string">"subject"</span>);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          document = <strong class="jxr_keyword">new</strong> <a name="TestingDocument" href="../../../../org/apache/rat/testhelpers/TestingDocument.html#TestingDocument">TestingDocument</a>(<span class="jxr_string">"subject"</span>);
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> assertApproval(<strong class="jxr_keyword">boolean</strong> pApproved) {
@@ -161,7 +161,7 @@
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>         Document.Type[] nonStandardDocuments = { Document.Type.NOTICE, Document.Type.ARCHIVE, Document.Type.BINARY };
 <a class="jxr_linenumber" name="L154" href="#L154">154</a> 
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>         <strong class="jxr_keyword">for</strong> (Document.Type d : nonStandardDocuments) {
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>             document = <strong class="jxr_keyword">new</strong> <a name="TestingLocation" href="../../../../org/apache/rat/testhelpers/TestingLocation.html#TestingLocation">TestingLocation</a>(<span class="jxr_string">"subject"</span>);
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>             document = <strong class="jxr_keyword">new</strong> <a name="TestingDocument" href="../../../../org/apache/rat/testhelpers/TestingDocument.html#TestingDocument">TestingDocument</a>(<span class="jxr_string">"subject"</span>);
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>             document.getMetaData().setDocumentType(d);
 <a class="jxr_linenumber" name="L158" href="#L158">158</a>             policy.analyse(document);
 <a class="jxr_linenumber" name="L159" href="#L159">159</a>             assertEquals(0, document.getMetaData().licenses().count(), <span class="jxr_string">"failed on "</span> + d);
