@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":17,"i1":17,"i2":18,"i3":6,"i4":6,"i5":6,"i6":6};
+var methods = {"i0":17,"i1":18,"i2":17,"i3":18,"i4":6,"i5":6,"i6":6,"i7":6,"i8":17};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -158,39 +158,50 @@ extends <a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html" title=
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#getComparator--">getComparator</a></span>()</code>
-<div class="block">Gets the comparator for comparing licenses.</div>
-</td>
+<td class="colFirst"><code>default int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#compareTo-org.apache.rat.license.ILicense-">compareTo</a></span>(<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;other)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#equals-org.apache.rat.license.ILicense-java.lang.Object-">equals</a></span>(<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license1,
+      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
+<div class="block">A default implementation of equals.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#getFamilyName--">getFamilyName</a></span>()</code>
 <div class="block">Gets the name of the family that this license if part of.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/apache/rat/license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#getLicenseFamily--">getLicenseFamily</a></span>()</code>
 <div class="block">Gets the license family.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#getMatcher--">getMatcher</a></span>()</code>
 <div class="block">Get the header matcher for this license.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#getName--">getName</a></span>()</code>
 <div class="block">Returns the name of this license.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#getNote--">getNote</a></span>()</code>
 <div class="block">Gets the note associated with the license.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/license/ILicense.html#hash-org.apache.rat.license.ILicense-">hash</a></span>(<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code>
+<div class="block">A default implementatin of a License hash</div>
 </td>
 </tr>
 </table>
@@ -200,13 +211,6 @@ extends <a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html" title=
 </a>
 <h3>Methods inherited from interface&nbsp;org.apache.rat.analysis.<a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></h3>
 <code><a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html#getDescription--">getDescription</a>, <a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html#getId--">getId</a>, <a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html#matches-org.apache.rat.analysis.IHeaders-">matches</a>, <a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html#reset--">reset</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Comparable">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a></h3>
-<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true#compareTo-T-" title="class or interface in java.lang">compareTo</a></code></li>
 </ul>
 </li>
 </ul>
@@ -293,10 +297,57 @@ extends <a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html" title=
 </dl>
 </li>
 </ul>
-<a name="builder--">
+<a name="compareTo-org.apache.rat.license.ILicense-">
 <!--   -->
 </a>
 <ul class="blockList">
+<li class="blockList">
+<h4>compareTo</h4>
+<pre>default&nbsp;int&nbsp;compareTo(<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;other)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true#compareTo-T-" title="class or interface in java.lang">compareTo</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html?is-external=true" title="class or interface in java.lang">Comparable</a>&lt;<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a name="hash-org.apache.rat.license.ILicense-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>hash</h4>
+<pre>static&nbsp;int&nbsp;hash(<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</pre>
+<div class="block">A default implementatin of a License hash</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>license</code> - the license to hash</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the license hash value</dd>
+</dl>
+</li>
+</ul>
+<a name="equals-org.apache.rat.license.ILicense-java.lang.Object-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>equals</h4>
+<pre>static&nbsp;boolean&nbsp;equals(<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license1,
+                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</pre>
+<div class="block">A default implementation of equals.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>license1</code> - The license to check for equality.</dd>
+<dd><code>o</code> - the object to check for equality to.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the object is equal to the license1.</dd>
+</dl>
+</li>
+</ul>
+<a name="builder--">
+<!--   -->
+</a>
+<ul class="blockListLast">
 <li class="blockList">
 <h4>builder</h4>
 <pre>static&nbsp;<a href="../../../../org/apache/rat/license/ILicense.Builder.html" title="interface in org.apache.rat.license">ILicense.Builder</a>&nbsp;builder()</pre>
@@ -304,20 +355,6 @@ extends <a href="../../../../org/apache/rat/analysis/IHeaderMatcher.html" title=
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>An ILicense.Builder instance.</dd>
-</dl>
-</li>
-</ul>
-<a name="getComparator--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getComparator</h4>
-<pre>static&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Comparator.html?is-external=true" title="class or interface in java.util">Comparator</a>&lt;<a href="../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;getComparator()</pre>
-<div class="block">Gets the comparator for comparing licenses.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The comparator for used for sorting Licenses.</dd>
 </dl>
 </li>
 </ul>

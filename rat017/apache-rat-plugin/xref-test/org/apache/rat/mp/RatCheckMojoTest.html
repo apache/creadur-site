@@ -208,7 +208,7 @@
 <a class="jxr_linenumber" name="L200" href="#L200">200</a>         assertNotNull(LicenseFamilySetFactory.search(<span class="jxr_string">"YAL"</span>, config.getLicenseFamilies(LicenseFilter.ALL)));
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>         ReportConfigurationTest.validateDefaultLicenses(config, <span class="jxr_string">"MyLicense"</span>, <span class="jxr_string">"CpyrT"</span>, <span class="jxr_string">"RegxT"</span>, <span class="jxr_string">"SpdxT"</span>, <span class="jxr_string">"TextT"</span>, 
 <a class="jxr_linenumber" name="L202" href="#L202">202</a>                 <span class="jxr_string">"Not"</span>, <span class="jxr_string">"All"</span>, <span class="jxr_string">"Any"</span>);
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>         assertNotNull(LicenseSetFactory.search(<span class="jxr_string">"MyLicense"</span>, config.getLicenses(LicenseFilter.ALL)));
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>         assertTrue(LicenseSetFactory.search(<span class="jxr_string">"YAL"</span>, <span class="jxr_string">"MyLicense"</span>, config.getLicenses(LicenseFilter.ALL)).isPresent());
 <a class="jxr_linenumber" name="L204" href="#L204">204</a>         assertNotNull(<span class="jxr_string">"Should have filesToIgnore"</span>, config.getFilesToIgnore());
 <a class="jxr_linenumber" name="L205" href="#L205">205</a>         assertThat(config.getFilesToIgnore()).isExactlyInstanceOf(FalseFileFilter.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L206" href="#L206">206</a>         assertNotNull(<span class="jxr_string">"Should have directoriesToIgnore"</span>, config.getDirectoriesToIgnore());

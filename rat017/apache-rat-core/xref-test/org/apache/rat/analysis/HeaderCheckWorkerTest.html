@@ -42,7 +42,7 @@
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>      @Test
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> isFinished() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>          <strong class="jxr_keyword">final</strong> Document subject = <strong class="jxr_keyword">new</strong> <a name="TestingDocument" href="../../../../org/apache/rat/testhelpers/TestingDocument.html#TestingDocument">TestingDocument</a>(<span class="jxr_string">"subject"</span>);
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>          ILicense matcher = <strong class="jxr_keyword">new</strong> <a name="TestingLicense" href="../../../../org/apache/rat/testhelpers/TestingLicense.html#TestingLicense">TestingLicense</a>();
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>          ILicense matcher = <strong class="jxr_keyword">new</strong> <a name="TestingLicense" href="../../../../org/apache/rat/testhelpers/TestingLicense.html#TestingLicense">TestingLicense</a>(<span class="jxr_string">"test"</span>, <span class="jxr_string">"test"</span>);
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>          HeaderCheckWorker worker = <strong class="jxr_keyword">new</strong> HeaderCheckWorker(<strong class="jxr_keyword">new</strong> StringReader(<span class="jxr_string">""</span>), Arrays.asList(matcher), subject);
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>          worker.read();
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      }
