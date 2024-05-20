@@ -56,11 +56,11 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>          Map&lt;String, Description&gt; children = underTest.getChildren();
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>          assertEquals(6, children.size());
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          assertTrue(children.containsKey(<span class="jxr_string">"id"</span>));
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          assertEquals(<span class="jxr_string">"TestingId"</span>, children.get(<span class="jxr_string">"id"</span>).getParamValue(DefaultLog.INSTANCE, lic));
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          assertEquals(<span class="jxr_string">"TestingId"</span>, children.get(<span class="jxr_string">"id"</span>).getParamValue(DefaultLog.getInstance(), lic));
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          assertTrue(children.containsKey(<span class="jxr_string">"name"</span>));
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>          assertEquals(<span class="jxr_string">"My testing license"</span>, children.get(<span class="jxr_string">"name"</span>).getParamValue(DefaultLog.INSTANCE, lic));
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          assertEquals(<span class="jxr_string">"My testing license"</span>, children.get(<span class="jxr_string">"name"</span>).getParamValue(DefaultLog.getInstance(), lic));
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          assertTrue(children.containsKey(<span class="jxr_string">"note"</span>));
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          assertEquals(<span class="jxr_string">"These are the notes"</span>, children.get(<span class="jxr_string">"note"</span>).getParamValue(DefaultLog.INSTANCE, lic));
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          assertEquals(<span class="jxr_string">"These are the notes"</span>, children.get(<span class="jxr_string">"note"</span>).getParamValue(DefaultLog.getInstance(), lic));
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          assertTrue(children.containsKey(<span class="jxr_string">"matcher"</span>));
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          assertEquals(ComponentType.PARAMETER, children.get(<span class="jxr_string">"matcher"</span>).getType());

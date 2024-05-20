@@ -530,15 +530,6 @@
 <dd>
 <div class="block">Types of components</div>
 </dd>
-<dt><a href="org/apache/rat/document/CompositeDocumentException.html" title="class in org.apache.rat.document"><span class="typeNameLink">CompositeDocumentException</span></a> - Exception in <a href="org/apache/rat/document/package-summary.html">org.apache.rat.document</a></dt>
-<dd>
-<div class="block">Indicates that the document is a composite archive 
- and cannot be read.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/document/CompositeDocumentException.html#CompositeDocumentException--">CompositeDocumentException()</a></span> - Constructor for exception org.apache.rat.document.<a href="org/apache/rat/document/CompositeDocumentException.html" title="class in org.apache.rat.document">CompositeDocumentException</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/document/CompositeDocumentException.html#CompositeDocumentException-java.lang.String-">CompositeDocumentException(String)</a></span> - Constructor for exception org.apache.rat.document.<a href="org/apache/rat/document/CompositeDocumentException.html" title="class in org.apache.rat.document">CompositeDocumentException</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/config/parameters/ConfigComponent.html" title="annotation in org.apache.rat.config.parameters"><span class="typeNameLink">ConfigComponent</span></a> - Annotation Type in <a href="org/apache/rat/config/parameters/package-summary.html">org.apache.rat.config.parameters</a></dt>
 <dd>
 <div class="block">An annotation that marks a configuration component.</div>
@@ -612,8 +603,6 @@
 <dd>
 <div class="block">Creates a DocumentAnalyser from a collection of ILicenses.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/Report.html#createPadding-int-">createPadding(int)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/Report.html" title="class in org.apache.rat">Report</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/report/xml/XmlReportFactory.html#createStandardReport-org.apache.rat.report.xml.writer.IXmlWriter-org.apache.rat.report.claim.ClaimStatistic-org.apache.rat.ReportConfiguration-">createStandardReport(IXmlWriter, ClaimStatistic, ReportConfiguration)</a></span> - Static method in class org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlReportFactory.html" title="class in org.apache.rat.report.xml">XmlReportFactory</a></dt>
 <dd>
 <div class="block">Creates a RatReport from the arguments.</div>
@@ -667,6 +656,14 @@
 <dt><a href="org/apache/rat/analysis/license/DeprecatedConfig.html" title="interface in org.apache.rat.analysis.license"><span class="typeNameLink">DeprecatedConfig</span></a> - Interface in <a href="org/apache/rat/analysis/license/package-summary.html">org.apache.rat.analysis.license</a></dt>
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
+</dd>
+<dt><a href="org/apache/rat/DeprecationReporter.html" title="class in org.apache.rat"><span class="typeNameLink">DeprecationReporter</span></a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
+<dd>
+<div class="block">Reporting methods for deprecated objects.</div>
+</dd>
+<dt><a href="org/apache/rat/DeprecationReporter.Info.html" title="annotation in org.apache.rat"><span class="typeNameLink">DeprecationReporter.Info</span></a> - Annotation Type in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
+<dd>
+<div class="block">Annotation to provide deprecation information for Java8.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.Processing.html#desc--">desc()</a></span> - Method in enum org.apache.rat.<a href="org/apache/rat/ReportConfiguration.Processing.html" title="enum in org.apache.rat">ReportConfiguration.Processing</a></dt>
 <dd>&nbsp;</dd>
@@ -801,6 +798,10 @@
 <dt><span class="memberNameLink"><a href="org/apache/rat/config/parameters/Description.html#filterChildren-java.util.function.Predicate-">filterChildren(Predicate&lt;Description&gt;)</a></span> - Method in class org.apache.rat.config.parameters.<a href="org/apache/rat/config/parameters/Description.html" title="class in org.apache.rat.config.parameters">Description</a></dt>
 <dd>
 <div class="block">Get a filtered collection of the child descriptions.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/license/LicenseFamilySetFactory.html#findFamily-java.lang.String-java.util.SortedSet-">findFamily(String, SortedSet&lt;ILicenseFamily&gt;)</a></span> - Static method in class org.apache.rat.license.<a href="org/apache/rat/license/LicenseFamilySetFactory.html" title="class in org.apache.rat.license">LicenseFamilySetFactory</a></dt>
+<dd>
+<div class="block">Search a SortedSet of ILicenseFamily instances looking for a matching instance.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#first--">first()</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
@@ -1040,6 +1041,10 @@
 <dd>
 <div class="block">Maybe <code>null</code>, check before with</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/DefaultLog.html#getInstance--">getInstance()</a></span> - Static method in class org.apache.rat.utils.<a href="org/apache/rat/utils/DefaultLog.html" title="class in org.apache.rat.utils">DefaultLog</a></dt>
+<dd>
+<div class="block">Retrieves teh DefaultLog instance.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/annotation/AbstractLicenseAppender.html#getLastLine-int-">getLastLine(int)</a></span> - Method in class org.apache.rat.annotation.<a href="org/apache/rat/annotation/AbstractLicenseAppender.html" title="class in org.apache.rat.annotation">AbstractLicenseAppender</a></dt>
 <dd>
 <div class="block">Get the last line of the license header formatted
@@ -1150,10 +1155,16 @@
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/configuration/XMLConfigurationReader.html#getLog--">getLog()</a></span> - Method in class org.apache.rat.configuration.<a href="org/apache/rat/configuration/XMLConfigurationReader.html" title="class in org.apache.rat.configuration">XMLConfigurationReader</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the log the reader.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#getLog--">getLog()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Retrieves the Log that was provided in the constructor.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/DeprecationReporter.html#getLogReporter-org.apache.rat.utils.Log-">getLogReporter(Log)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/DeprecationReporter.html" title="class in org.apache.rat">DeprecationReporter</a></dt>
+<dd>
+<div class="block">Deprecated Command line option consumer.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/analysis/UnknownLicense.html#getMatcher--">getMatcher()</a></span> - Method in class org.apache.rat.analysis.<a href="org/apache/rat/analysis/UnknownLicense.html" title="class in org.apache.rat.analysis">UnknownLicense</a></dt>
 <dd>&nbsp;</dd>
@@ -1323,6 +1334,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/report/claim/impl/ClaimAggregator.html#handleLicenseClaim-org.apache.rat.license.ILicense-">handleLicenseClaim(ILicense)</a></span> - Method in class org.apache.rat.report.claim.impl.<a href="org/apache/rat/report/claim/impl/ClaimAggregator.html" title="class in org.apache.rat.report.claim.impl">ClaimAggregator</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/license/LicenseFamilySetFactory.html#hasFamily-java.lang.String-java.util.SortedSet-">hasFamily(String, SortedSet&lt;ILicenseFamily&gt;)</a></span> - Static method in class org.apache.rat.license.<a href="org/apache/rat/license/LicenseFamilySetFactory.html" title="class in org.apache.rat.license">LicenseFamilySetFactory</a></dt>
+<dd>
+<div class="block">Search a SortedSet of ILicenseFamily instances looking for a matching instance.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/license/ILicense.html#hash-org.apache.rat.license.ILicense-">hash(ILicense)</a></span> - Static method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a></dt>
 <dd>
 <div class="block">A default implementatin of a License hash</div>
@@ -1489,10 +1504,6 @@
 <dt><span class="memberNameLink"><a href="org/apache/rat/configuration/MatcherBuilderTracker.html#INSTANCE">INSTANCE</a></span> - Static variable in class org.apache.rat.configuration.<a href="org/apache/rat/configuration/MatcherBuilderTracker.html" title="class in org.apache.rat.configuration">MatcherBuilderTracker</a></dt>
 <dd>
 <div class="block">The instance of the BuildTracker.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/utils/DefaultLog.html#INSTANCE">INSTANCE</a></span> - Static variable in class org.apache.rat.utils.<a href="org/apache/rat/utils/DefaultLog.html" title="class in org.apache.rat.utils">DefaultLog</a></dt>
-<dd>
-<div class="block">The instance of the default log.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/writer/InvalidXmlException.html" title="class in org.apache.rat.report.xml.writer"><span class="typeNameLink">InvalidXmlException</span></a> - Exception in <a href="org/apache/rat/report/xml/writer/package-summary.html">org.apache.rat.report.xml.writer</a></dt>
 <dd>
@@ -1702,6 +1713,14 @@
 <dt><a href="org/apache/rat/utils/Log.Level.html" title="enum in org.apache.rat.utils"><span class="typeNameLink">Log.Level</span></a> - Enum in <a href="org/apache/rat/utils/package-summary.html">org.apache.rat.utils</a></dt>
 <dd>
 <div class="block">The log levels supported by logging.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/DeprecationReporter.html#logDeprecated-java.lang.Class-">logDeprecated(Class&lt;?&gt;)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/DeprecationReporter.html" title="class in org.apache.rat">DeprecationReporter</a></dt>
+<dd>
+<div class="block">Log Deprecated class use.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/DeprecationReporter.html#logDeprecated-org.apache.rat.utils.Log-org.apache.commons.cli.Option-">logDeprecated(Log, Option)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/DeprecationReporter.html" title="class in org.apache.rat">DeprecationReporter</a></dt>
+<dd>
+<div class="block">Log deprecated options</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#logFamilyCollisions-org.apache.rat.utils.Log.Level-">logFamilyCollisions(Log.Level)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
@@ -1971,7 +1990,7 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Report.html#parseCommands-java.lang.String:A-java.util.function.Consumer-">parseCommands(String[], Consumer&lt;Options&gt;)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/Report.html" title="class in org.apache.rat">Report</a></dt>
 <dd>
-<div class="block">Parses the standard options to create a ReportConfiguraton.</div>
+<div class="block">Parses the standard options to create a ReportConfiguration.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Report.html#parseCommands-java.lang.String:A-java.util.function.Consumer-boolean-">parseCommands(String[], Consumer&lt;Options&gt;, boolean)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/Report.html" title="class in org.apache.rat">Report</a></dt>
 <dd>
@@ -2365,6 +2384,10 @@
 <dt><span class="memberNameLink"><a href="org/apache/rat/license/SimpleLicense.Builder.html#setId-java.lang.String-">setId(String)</a></span> - Method in class org.apache.rat.license.<a href="org/apache/rat/license/SimpleLicense.Builder.html" title="class in org.apache.rat.license">SimpleLicense.Builder</a></dt>
 <dd>
 <div class="block">Sets the ID of the license.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/DefaultLog.html#setInstance-org.apache.rat.utils.Log-">setInstance(Log)</a></span> - Static method in class org.apache.rat.utils.<a href="org/apache/rat/utils/DefaultLog.html" title="class in org.apache.rat.utils">DefaultLog</a></dt>
+<dd>
+<div class="block">Sets the default log instance.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/DefaultLog.html#setLevel-org.apache.rat.utils.Log.Level-">setLevel(Log.Level)</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/DefaultLog.html" title="class in org.apache.rat.utils">DefaultLog</a></dt>
 <dd>&nbsp;</dd>

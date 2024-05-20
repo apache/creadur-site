@@ -54,8 +54,8 @@
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      @Test
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> roundTrip() <strong class="jxr_keyword">throws</strong> RatException {
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          ReportConfiguration config = <strong class="jxr_keyword">new</strong> ReportConfiguration(DefaultLog.INSTANCE);
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          config.setFrom(Defaults.builder().build(DefaultLog.INSTANCE));
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          ReportConfiguration config = <strong class="jxr_keyword">new</strong> ReportConfiguration(DefaultLog.getInstance());
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          config.setFrom(Defaults.builder().build(DefaultLog.getInstance()));
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          config.listFamilies(LicenseFilter.ALL);
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          config.listLicenses(LicenseFilter.ALL);
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          XMLConfigurationWriter underTest = <strong class="jxr_keyword">new</strong> XMLConfigurationWriter(config);
@@ -71,8 +71,8 @@
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      @Test
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testGen() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          ReportConfiguration config = <strong class="jxr_keyword">new</strong> ReportConfiguration(DefaultLog.INSTANCE);
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          config.setFrom(Defaults.builder().build(DefaultLog.INSTANCE));
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          ReportConfiguration config = <strong class="jxr_keyword">new</strong> ReportConfiguration(DefaultLog.getInstance());
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          config.setFrom(Defaults.builder().build(DefaultLog.getInstance()));
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          config.listFamilies(LicenseFilter.ALL);
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          config.listLicenses(LicenseFilter.ALL);
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          XMLConfigurationWriter underTest = <strong class="jxr_keyword">new</strong> XMLConfigurationWriter(config);

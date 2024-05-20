@@ -113,7 +113,7 @@ var activeTableTab = "activeTableTab";
 </dl>
 <hr>
 <br>
-<pre>public class <span class="typeNameLabel">XMLConfigurationReader</span>
+<pre>public final class <span class="typeNameLabel">XMLConfigurationReader</span>
 extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>
 implements <a href="../../../../org/apache/rat/configuration/LicenseReader.html" title="interface in org.apache.rat.configuration">LicenseReader</a>, <a href="../../../../org/apache/rat/configuration/MatcherReader.html" title="interface in org.apache.rat.configuration">MatcherReader</a></pre>
 <div class="block">A class that reads the XML configuration file format.</div>
@@ -180,7 +180,9 @@ implements <a href="../../../../org/apache/rat/configuration/LicenseReader.html"
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="../../../../org/apache/rat/utils/Log.html" title="interface in org.apache.rat.utils">Log</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/configuration/XMLConfigurationReader.html#getLog--">getLog</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/configuration/XMLConfigurationReader.html#getLog--">getLog</a></span>()</code>
+<div class="block">Returns the log the reader.</div>
+</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -282,6 +284,11 @@ implements <a href="../../../../org/apache/rat/configuration/LicenseReader.html"
 <li class="blockList">
 <h4>getLog</h4>
 <pre>public&nbsp;<a href="../../../../org/apache/rat/utils/Log.html" title="interface in org.apache.rat.utils">Log</a>&nbsp;getLog()</pre>
+<div class="block">Returns the log the reader.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the log if set, if not set <code>DefaultLog.getInstance()</code> is returned.</dd>
+</dl>
 </li>
 </ul>
 <a name="addLicenses-java.net.URL-">
