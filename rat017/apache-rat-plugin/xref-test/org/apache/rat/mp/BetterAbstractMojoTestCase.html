@@ -96,42 +96,41 @@
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>              repoSession.setLocalRepositoryManager(<strong class="jxr_keyword">new</strong> SimpleLocalRepositoryManagerFactory().newInstance(repoSession,
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>                      <strong class="jxr_keyword">new</strong> LocalRepository(request.getLocalRepository().getBasedir())));
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>              MavenSession session = <strong class="jxr_keyword">new</strong> MavenSession(getContainer(), repoSession, request, result);
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>              <strong class="jxr_keyword">return</strong> session;
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>          } <strong class="jxr_keyword">catch</strong> (Exception e) {
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(e);
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>          }
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      }
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>  
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment">     * Extends the super to use the new {@link #newMavenSession()} introduced here</em>
-<a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">     * which sets the defaults one expects from maven; the standard test case leaves</em>
-<a class="jxr_linenumber" name="L101" href="#L101">101</a> <em class="jxr_javadoccomment">     * a lot of things blank</em>
-<a class="jxr_linenumber" name="L102" href="#L102">102</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>     @Override
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>     <strong class="jxr_keyword">protected</strong> MavenSession newMavenSession(MavenProject project) {
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>         MavenSession session = newMavenSession();
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         session.setCurrentProject(project);
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         session.setProjects(Arrays.asList(project));
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">return</strong> session;
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>     }
-<a class="jxr_linenumber" name="L110" href="#L110">110</a> 
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">     * As {@link #lookupConfiguredMojo(MavenProject, String)} but taking the pom</em>
-<a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     * file and creating the {@link MavenProject}.</em>
-<a class="jxr_linenumber" name="L114" href="#L114">114</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>     <strong class="jxr_keyword">protected</strong> Mojo lookupConfiguredMojo(File pom, String goal) <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>         assertNotNull(pom);
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>         assertTrue(pom.exists());
-<a class="jxr_linenumber" name="L118" href="#L118">118</a> 
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         ProjectBuildingRequest buildingRequest = newMavenSession().getProjectBuildingRequest();
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>         ProjectBuilder projectBuilder = lookup(ProjectBuilder.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>         MavenProject project = projectBuilder.build(pom, buildingRequest).getProject();
-<a class="jxr_linenumber" name="L122" href="#L122">122</a> 
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>         <strong class="jxr_keyword">return</strong> lookupConfiguredMojo(project, goal);
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>     }
-<a class="jxr_linenumber" name="L125" href="#L125">125</a> 
-<a class="jxr_linenumber" name="L126" href="#L126">126</a> }
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> MavenSession(getContainer(), repoSession, request, result);
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>          } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(e);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>          }
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      }
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>  <em class="jxr_javadoccomment">     * Extends the super to use the new {@link #newMavenSession()} introduced here</em>
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment">     * which sets the defaults one expects from maven; the standard test case leaves</em>
+<a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">     * a lot of things blank</em>
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>     @Override
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>     <strong class="jxr_keyword">protected</strong> MavenSession newMavenSession(MavenProject project) {
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         MavenSession session = newMavenSession();
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>         session.setCurrentProject(project);
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         session.setProjects(Arrays.asList(project));
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>         <strong class="jxr_keyword">return</strong> session;
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>     }
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> 
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">     * As {@link #lookupConfiguredMojo(MavenProject, String)} but taking the pom</em>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">     * file and creating the {@link MavenProject}.</em>
+<a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>     <strong class="jxr_keyword">protected</strong> Mojo lookupConfiguredMojo(File pom, String goal) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         assertNotNull(pom);
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>         assertTrue(pom.exists());
+<a class="jxr_linenumber" name="L117" href="#L117">117</a> 
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>         ProjectBuildingRequest buildingRequest = newMavenSession().getProjectBuildingRequest();
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>         ProjectBuilder projectBuilder = lookup(ProjectBuilder.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>         MavenProject project = projectBuilder.build(pom, buildingRequest).getProject();
+<a class="jxr_linenumber" name="L121" href="#L121">121</a> 
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         <strong class="jxr_keyword">return</strong> lookupConfiguredMojo(project, goal);
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>     }
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> 
+<a class="jxr_linenumber" name="L125" href="#L125">125</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2007&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>

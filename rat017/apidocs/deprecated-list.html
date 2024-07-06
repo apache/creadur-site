@@ -125,6 +125,16 @@
 <td class="colOne"><a href="org/apache/rat/header/LineNumberReader.html" title="class in org.apache.rat.header">org.apache.rat.header.LineNumberReader</a></td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.AddLicenseHeaders.html" title="class in org.apache.rat.anttasks">org.apache.rat.anttasks.Report.AddLicenseHeaders</a>
+<div class="block"><span class="deprecationComment">No longer required=, use stylesheet or xml attributes.</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.ApprovalFilter.html" title="class in org.apache.rat.anttasks">org.apache.rat.anttasks.Report.ApprovalFilter</a>
+<div class="block"><span class="deprecationComment">use listLicenses or listFamilies attributes.</span></div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><a href="org/apache/rat/license/SimpleLicenseFamily.html" title="class in org.apache.rat.license">org.apache.rat.license.SimpleLicenseFamily</a></td>
 </tr>
 <tr class="altColor">
@@ -149,22 +159,115 @@
 <tbody>
 <tr class="altColor">
 <td class="colOne"><a href="org/apache/rat/anttasks/Report.html#addStylesheet-org.apache.tools.ant.types.Resource-">org.apache.rat.anttasks.Report.addStylesheet(Resource)</a>
-<div class="block"><span class="deprecationComment">use <a href="org/apache/rat/anttasks/Report.html#addStyleSheet-org.apache.tools.ant.types.Resource-"><code>Report.addStyleSheet(Resource)</code></a></span></div>
+<div class="block"><span class="deprecationComment">use <a href="org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a></span></div>
 </td>
 </tr>
 <tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#addStyleSheet-org.apache.tools.ant.types.Resource-">org.apache.rat.anttasks.Report.addStyleSheet(Resource)</a>
+<div class="block"><span class="deprecationComment">use <a href="org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a></span></div>
+</td>
+</tr>
+<tr class="altColor">
 <td class="colOne"><a href="org/apache/rat/mp/RatReportMojo.html#generate-org.codehaus.doxia.sink.Sink-java.util.Locale-">org.apache.rat.mp.RatReportMojo.generate(Sink, Locale)</a>
 <div class="block"><span class="deprecationComment">use <a href="org/apache/rat/mp/RatReportMojo.html#generate-org.apache.maven.doxia.sink.Sink-org.apache.maven.doxia.sink.SinkFactory-java.util.Locale-"><code>RatReportMojo.generate(Sink, SinkFactory, Locale)</code></a> instead.</span></div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colOne"><a href="org/apache/rat/mp/RatReportMojo.html#generate-org.apache.maven.doxia.sink.Sink-java.util.Locale-">org.apache.rat.mp.RatReportMojo.generate(Sink, Locale)</a>
 <div class="block"><span class="deprecationComment">use <a href="org/apache/rat/mp/RatReportMojo.html#generate-org.apache.maven.doxia.sink.Sink-org.apache.maven.doxia.sink.SinkFactory-java.util.Locale-"><code>RatReportMojo.generate(Sink, SinkFactory, Locale)</code></a> instead.</span></div>
 </td>
 </tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setAddApprovedLicense-java.lang.String-">org.apache.rat.anttasks.Report.setAddApprovedLicense(String)</a>
+<div class="block"><span class="deprecationComment">use addApprovedLicense child element.</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setAddDefaultDefinitions-java.io.File-">org.apache.rat.anttasks.Report.setAddDefaultDefinitions(File)</a>
+<div class="block"><span class="deprecationComment">Use <a href="org/apache/rat/anttasks/Report.html#addLicense-org.apache.rat.anttasks.License-"><code>Report.addLicense(org.apache.rat.anttasks.License)</code></a></span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/mp/AbstractRatMojo.html#setAddDefaultLicenses-boolean-">org.apache.rat.mp.AbstractRatMojo.setAddDefaultLicenses(boolean)</a>
+<div class="block"><span class="deprecationComment">use noDefaultLicenses (note the change of state)</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setAddLicenseHeaders-org.apache.rat.anttasks.Report.AddLicenseHeaders-">org.apache.rat.anttasks.Report.setAddLicenseHeaders(Report.AddLicenseHeaders)</a>
+<div class="block"><span class="deprecationComment">use addLicense and force attributes</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/mp/RatCheckMojo.html#setAddLicenseHeaders-java.lang.String-">org.apache.rat.mp.RatCheckMojo.setAddLicenseHeaders(String)</a>
+<div class="block"><span class="deprecationComment">use addLicense and forced</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/mp/RatCheckMojo.html#setCopyrightMessage-java.lang.String-">org.apache.rat.mp.RatCheckMojo.setCopyrightMessage(String)</a>
+<div class="block"><span class="deprecationComment">use copyright</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setCopyrightMessage-java.lang.String-">org.apache.rat.anttasks.Report.setCopyrightMessage(String)</a>
+<div class="block"><span class="deprecationComment">use copyright attribute</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/mp/AbstractRatMojo.html#setExcludes-java.lang.String:A-">org.apache.rat.mp.AbstractRatMojo.setExcludes(String[])</a>
+<div class="block"><span class="deprecationComment">use exclude</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/mp/AbstractRatMojo.html#setExcludesFile-java.lang.String-">org.apache.rat.mp.AbstractRatMojo.setExcludesFile(String)</a>
+<div class="block"><span class="deprecationComment">use excludeFile</span></div>
+</td>
+</tr>
 <tr class="rowColor">
 <td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setFormat-java.lang.String-">org.apache.rat.anttasks.Report.setFormat(String)</a>
-<div class="block"><span class="deprecationComment">use #setStyleReport</span></div>
+<div class="block"><span class="deprecationComment">use <a href="org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a> or <a href="org/apache/rat/anttasks/BaseAntTask.html#setXml-boolean-"><code>BaseAntTask.setXml(boolean)</code></a></span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setInputFileFilter-org.apache.commons.io.filefilter.IOFileFilter-">org.apache.rat.anttasks.Report.setInputFileFilter(IOFileFilter)</a></td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setLicenses-java.io.File-">org.apache.rat.anttasks.Report.setLicenses(File)</a>
+<div class="block"><span class="deprecationComment">use licenses child element.</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setRemoveApprovedLicense-java.lang.String-">org.apache.rat.anttasks.Report.setRemoveApprovedLicense(String)</a>
+<div class="block"><span class="deprecationComment">use removeApprovedLicense child element}</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setRemoveApprovedLicense-java.lang.String:A-">org.apache.rat.anttasks.Report.setRemoveApprovedLicense(String[])</a>
+<div class="block"><span class="deprecationComment">use removeApprovedLicense element</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/mp/RatCheckMojo.html#setReportFile-java.io.File-">org.apache.rat.mp.RatCheckMojo.setReportFile(File)</a>
+<div class="block"><span class="deprecationComment">use 'out' property.</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setReportFile-java.io.File-">org.apache.rat.anttasks.Report.setReportFile(File)</a>
+<div class="block"><span class="deprecationComment">use <a href="org/apache/rat/anttasks/BaseAntTask.html#setOut-java.lang.String-"><code>BaseAntTask.setOut(String)</code></a></span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/mp/RatCheckMojo.html#setReportStyle-java.lang.String-">org.apache.rat.mp.RatCheckMojo.setReportStyle(String)</a>
+<div class="block"><span class="deprecationComment">use setStyleSheet or xml</span></div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setStyleReport-boolean-">org.apache.rat.anttasks.Report.setStyleReport(boolean)</a>
+<div class="block"><span class="deprecationComment">use <a href="org/apache/rat/anttasks/BaseAntTask.html#setXml-boolean-"><code>BaseAntTask.setXml(boolean)</code></a>.  Note reversal of boolean value</span></div>
+</td>
+</tr>
+<tr class="altColor">
+<td class="colOne"><a href="org/apache/rat/anttasks/Report.html#setUseDefaultLicenses-boolean-">org.apache.rat.anttasks.Report.setUseDefaultLicenses(boolean)</a>
+<div class="block"><span class="deprecationComment">use noDefaultLicenses attribute</span></div>
 </td>
 </tr>
 </tbody>

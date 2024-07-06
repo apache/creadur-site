@@ -67,8 +67,8 @@
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>      @Test
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testOutputOption() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          File output = <strong class="jxr_keyword">new</strong> File(tempDirectory, <span class="jxr_string">"test"</span>);
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(Report.buildOptions(), <strong class="jxr_keyword">new</strong> String[] { <span class="jxr_string">"-o"</span>, output.getCanonicalPath()});
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          ReportConfiguration config = Report.createConfiguration(DefaultLog.getInstance(), <span class="jxr_string">"target/test-classes/elements"</span>, cl);
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(OptionCollection.buildOptions(), <strong class="jxr_keyword">new</strong> String[] { <span class="jxr_string">"-o"</span>, output.getCanonicalPath()});
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          ReportConfiguration config = OptionCollection.createConfiguration(DefaultLog.getInstance(), <span class="jxr_string">"target/test-classes/elements"</span>, cl);
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">new</strong> Reporter(config).output();
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          assertTrue(output.exists());
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          String content = FileUtils.readFileToString(output, StandardCharsets.UTF_8);
@@ -84,8 +84,8 @@
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          PrintStream origin = System.out;
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">try</strong> (PrintStream out = <strong class="jxr_keyword">new</strong> PrintStream(output)){
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>              System.setOut(out);
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>              CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(Report.buildOptions(), <strong class="jxr_keyword">new</strong> String[] {});
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>              ReportConfiguration config = Report.createConfiguration(DefaultLog.getInstance(), <span class="jxr_string">"target/test-classes/elements"</span>, cl);
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>              CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(OptionCollection.buildOptions(), <strong class="jxr_keyword">new</strong> String[] {});
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>              ReportConfiguration config = OptionCollection.createConfiguration(DefaultLog.getInstance(), <span class="jxr_string">"target/test-classes/elements"</span>, cl);
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">new</strong> Reporter(config).output();
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>              System.setOut(origin);
@@ -121,8 +121,8 @@
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>         PrintStream origin = System.out;
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>         <strong class="jxr_keyword">try</strong> (PrintStream out = <strong class="jxr_keyword">new</strong> PrintStream(output)){
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>             System.setOut(out);
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>             CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(Report.buildOptions(), <strong class="jxr_keyword">new</strong> String[] { <span class="jxr_string">"-x"</span> });
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>             ReportConfiguration config = Report.createConfiguration(DefaultLog.getInstance(), <span class="jxr_string">"target/test-classes/elements"</span>, cl);
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>             CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(OptionCollection.buildOptions(), <strong class="jxr_keyword">new</strong> String[] { <span class="jxr_string">"-x"</span> });
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>             ReportConfiguration config = OptionCollection.createConfiguration(DefaultLog.getInstance(), <span class="jxr_string">"target/test-classes/elements"</span>, cl);
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>             <strong class="jxr_keyword">new</strong> Reporter(config).output();
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>         } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>             System.setOut(origin);

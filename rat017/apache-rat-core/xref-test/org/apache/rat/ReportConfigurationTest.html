@@ -38,22 +38,22 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.io.BufferedReader;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> java.io.ByteArrayOutputStream;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> java.io.FilenameFilter;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> java.io.InputStreamReader;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> java.io.OutputStream;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> java.io.PrintWriter;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> java.net.URISyntaxException;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> java.net.URL;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> java.util.SortedSet;
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> java.util.function.Function;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.filefilter.DirectoryFileFilter;
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.filefilter.FalseFileFilter;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> java.io.InputStreamReader;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> java.io.OutputStream;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> java.io.PrintWriter;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> java.net.URISyntaxException;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> java.net.URL;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> java.util.Arrays;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> java.util.SortedSet;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> java.util.function.Function;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.filefilter.DirectoryFileFilter;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.filefilter.FalseFileFilter;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.filefilter.IOFileFilter;
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.filefilter.OrFileFilter;
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.function.IOSupplier;
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration.NoCloseOutputStream;
@@ -203,7 +203,7 @@
 <a class="jxr_linenumber" name="L195" href="#L195">195</a>         underTest.setFrom(Defaults.builder().build(DefaultLog.getInstance()));
 <a class="jxr_linenumber" name="L196" href="#L196">196</a>         assertThat(underTest.getFilesToIgnore()).isExactlyInstanceOf(FalseFileFilter.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L197" href="#L197">197</a> 
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>         FilenameFilter filter = mock(FilenameFilter.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>         IOFileFilter filter = mock(IOFileFilter.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L199" href="#L199">199</a>         underTest.setFilesToIgnore(filter);
 <a class="jxr_linenumber" name="L200" href="#L200">200</a>         assertThat(underTest.getFilesToIgnore()).isEqualTo(filter);
 <a class="jxr_linenumber" name="L201" href="#L201">201</a>     }
@@ -405,18 +405,18 @@
 <a class="jxr_linenumber" name="L397" href="#L397">397</a>     @Test
 <a class="jxr_linenumber" name="L398" href="#L398">398</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testSetOut() <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L399" href="#L399">399</a>         ReportConfiguration config = <strong class="jxr_keyword">new</strong> ReportConfiguration(log);
-<a class="jxr_linenumber" name="L400" href="#L400">400</a>         <strong class="jxr_keyword">try</strong> (OutputStreamIntercepter osi = <strong class="jxr_keyword">new</strong> OutputStreamIntercepter()) {
-<a class="jxr_linenumber" name="L401" href="#L401">401</a> 			config.setOut(() -&gt; osi);
-<a class="jxr_linenumber" name="L402" href="#L402">402</a> 			assertThat(osi.closeCount).isEqualTo(0);
-<a class="jxr_linenumber" name="L403" href="#L403">403</a> 			<strong class="jxr_keyword">try</strong> (OutputStream os = config.getOutput().get()) {
-<a class="jxr_linenumber" name="L404" href="#L404">404</a> 			    assertThat(osi.closeCount).isEqualTo(0);
-<a class="jxr_linenumber" name="L405" href="#L405">405</a> 			}
-<a class="jxr_linenumber" name="L406" href="#L406">406</a> 			assertThat(osi.closeCount).isEqualTo(1);
-<a class="jxr_linenumber" name="L407" href="#L407">407</a> 			<strong class="jxr_keyword">try</strong> (OutputStream os = config.getOutput().get()) {
-<a class="jxr_linenumber" name="L408" href="#L408">408</a> 			    assertThat(osi.closeCount).isEqualTo(1);
-<a class="jxr_linenumber" name="L409" href="#L409">409</a> 			}
-<a class="jxr_linenumber" name="L410" href="#L410">410</a> 			assertThat(osi.closeCount).isEqualTo(2);
-<a class="jxr_linenumber" name="L411" href="#L411">411</a> 		}
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>         <strong class="jxr_keyword">try</strong> (OutputStreamInterceptor osi = <strong class="jxr_keyword">new</strong> OutputStreamInterceptor()) {
+<a class="jxr_linenumber" name="L401" href="#L401">401</a>             config.setOut(() -&gt; osi);
+<a class="jxr_linenumber" name="L402" href="#L402">402</a>             assertThat(osi.closeCount).isEqualTo(0);
+<a class="jxr_linenumber" name="L403" href="#L403">403</a>             <strong class="jxr_keyword">try</strong> (OutputStream os = config.getOutput().get()) {
+<a class="jxr_linenumber" name="L404" href="#L404">404</a>                 assertThat(osi.closeCount).isEqualTo(0);
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>             }
+<a class="jxr_linenumber" name="L406" href="#L406">406</a>             assertThat(osi.closeCount).isEqualTo(1);
+<a class="jxr_linenumber" name="L407" href="#L407">407</a>             <strong class="jxr_keyword">try</strong> (OutputStream os = config.getOutput().get()) {
+<a class="jxr_linenumber" name="L408" href="#L408">408</a>                 assertThat(osi.closeCount).isEqualTo(1);
+<a class="jxr_linenumber" name="L409" href="#L409">409</a>             }
+<a class="jxr_linenumber" name="L410" href="#L410">410</a>             assertThat(osi.closeCount).isEqualTo(2);
+<a class="jxr_linenumber" name="L411" href="#L411">411</a>         }
 <a class="jxr_linenumber" name="L412" href="#L412">412</a>     }
 <a class="jxr_linenumber" name="L413" href="#L413">413</a>     
 <a class="jxr_linenumber" name="L414" href="#L414">414</a>     @Test
@@ -594,21 +594,24 @@
 <a class="jxr_linenumber" name="L586" href="#L586">586</a>         validateDefaultLicenses(config);
 <a class="jxr_linenumber" name="L587" href="#L587">587</a>     }
 <a class="jxr_linenumber" name="L588" href="#L588">588</a> 
-<a class="jxr_linenumber" name="L589" href="#L589">589</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> OutputStreamIntercepter <strong class="jxr_keyword">extends</strong> OutputStream {
-<a class="jxr_linenumber" name="L590" href="#L590">590</a>         
-<a class="jxr_linenumber" name="L591" href="#L591">591</a>         <strong class="jxr_keyword">int</strong> closeCount = 0;
-<a class="jxr_linenumber" name="L592" href="#L592">592</a> 
-<a class="jxr_linenumber" name="L593" href="#L593">593</a>         @Override
-<a class="jxr_linenumber" name="L594" href="#L594">594</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> write(<strong class="jxr_keyword">int</strong> arg0) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L595" href="#L595">595</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> UnsupportedOperationException();
-<a class="jxr_linenumber" name="L596" href="#L596">596</a>         }
-<a class="jxr_linenumber" name="L597" href="#L597">597</a>         
-<a class="jxr_linenumber" name="L598" href="#L598">598</a>         @Override
-<a class="jxr_linenumber" name="L599" href="#L599">599</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> close() {
-<a class="jxr_linenumber" name="L600" href="#L600">600</a>             ++closeCount;
-<a class="jxr_linenumber" name="L601" href="#L601">601</a>         }
-<a class="jxr_linenumber" name="L602" href="#L602">602</a>     }
-<a class="jxr_linenumber" name="L603" href="#L603">603</a> }
+<a class="jxr_linenumber" name="L589" href="#L589">589</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L590" href="#L590">590</a> <em class="jxr_javadoccomment">     * A class to act as an output stream an count the number of close operations.</em>
+<a class="jxr_linenumber" name="L591" href="#L591">591</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L592" href="#L592">592</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> OutputStreamInterceptor <strong class="jxr_keyword">extends</strong> OutputStream {
+<a class="jxr_linenumber" name="L593" href="#L593">593</a>         
+<a class="jxr_linenumber" name="L594" href="#L594">594</a>         <strong class="jxr_keyword">int</strong> closeCount = 0;
+<a class="jxr_linenumber" name="L595" href="#L595">595</a> 
+<a class="jxr_linenumber" name="L596" href="#L596">596</a>         @Override
+<a class="jxr_linenumber" name="L597" href="#L597">597</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> write(<strong class="jxr_keyword">int</strong> arg0) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L598" href="#L598">598</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> UnsupportedOperationException();
+<a class="jxr_linenumber" name="L599" href="#L599">599</a>         }
+<a class="jxr_linenumber" name="L600" href="#L600">600</a>         
+<a class="jxr_linenumber" name="L601" href="#L601">601</a>         @Override
+<a class="jxr_linenumber" name="L602" href="#L602">602</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> close() {
+<a class="jxr_linenumber" name="L603" href="#L603">603</a>             ++closeCount;
+<a class="jxr_linenumber" name="L604" href="#L604">604</a>         }
+<a class="jxr_linenumber" name="L605" href="#L605">605</a>     }
+<a class="jxr_linenumber" name="L606" href="#L606">606</a> }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>

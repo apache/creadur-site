@@ -131,7 +131,7 @@
 <dd>
 <div class="block">Merge the new document into the document that this reader processes.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.Builder.html#add-java.net.URL-">add(URL)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/Defaults.Builder.html" title="class in org.apache.rat">Defaults.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.Builder.html#add-java.net.URI-">add(URI)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/Defaults.Builder.html" title="class in org.apache.rat">Defaults.Builder</a></dt>
 <dd>
 <div class="block">Adds a URL to a configuration file to be read.</div>
 </dd>
@@ -149,6 +149,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#add-T-">add(T)</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#ADD_LICENSE">ADD_LICENSE</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Adds license headers to files missing headers.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#addAll-java.util.Collection-">addAll(Collection&lt;? extends T&gt;)</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#addAllIfNotPresent-java.util.Collection-">addAllIfNotPresent(Collection&lt;? extends T&gt;)</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
@@ -297,8 +301,14 @@
 <dd>
 <div class="block">Gets the stream of approved licenses that have been matched.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#ARCHIVE">ARCHIVE</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Specify the processing of ARCHIVE files.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.html#ARCHIVE_PROCESSING">ARCHIVE_PROCESSING</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/Defaults.html" title="class in org.apache.rat">Defaults</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The default ARCHIVE processing style.</div>
+</dd>
 <dt><a href="org/apache/rat/document/impl/ArchiveEntryDocument.html" title="class in org.apache.rat.document.impl"><span class="typeNameLink">ArchiveEntryDocument</span></a> - Class in <a href="org/apache/rat/document/impl/package-summary.html">org.apache.rat.document.impl</a></dt>
 <dd>
 <div class="block">A Document that wraps an Archive entry.</div>
@@ -317,6 +327,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/api/RatException.html#asRatException-java.lang.Exception-">asRatException(Exception)</a></span> - Static method in exception org.apache.rat.api.<a href="org/apache/rat/api/RatException.html" title="class in org.apache.rat.api">RatException</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/CasedString.StringCase.html#assemble-java.lang.String:A-">assemble(String[])</a></span> - Method in enum org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.StringCase.html" title="enum in org.apache.rat.utils">CasedString.StringCase</a></dt>
+<dd>
+<div class="block">Creates a cased string from a collection of segments.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/configuration/XMLConfig.html#ATT_CLASS_NAME">ATT_CLASS_NAME</a></span> - Static variable in class org.apache.rat.configuration.<a href="org/apache/rat/configuration/XMLConfig.html" title="class in org.apache.rat.configuration">XMLConfig</a></dt>
 <dd>
 <div class="block">class name attribute name</div>
@@ -425,6 +439,10 @@
 <dd>
 <div class="block">Create a description for a class.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#buildOptions--">buildOptions()</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Create an <code>Options</code> object from the list of defined Options.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/analysis/IHeaderMatcher.Builder.html#builtClass--">builtClass()</a></span> - Method in interface org.apache.rat.analysis.<a href="org/apache/rat/analysis/IHeaderMatcher.Builder.html" title="interface in org.apache.rat.analysis">IHeaderMatcher.Builder</a></dt>
 <dd>
 <div class="block">Gets the class that is build by this builder.</div>
@@ -437,6 +455,18 @@
 </a>
 <h2 class="title">C</h2>
 <dl>
+<dt><a href="org/apache/rat/utils/CasedString.html" title="class in org.apache.rat.utils"><span class="typeNameLink">CasedString</span></a> - Class in <a href="org/apache/rat/utils/package-summary.html">org.apache.rat.utils</a></dt>
+<dd>
+<div class="block">Handles converting from one string case to another (e.g. camel case to snake case).</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/CasedString.html#CasedString-org.apache.rat.utils.CasedString.StringCase-java.lang.String-">CasedString(CasedString.StringCase, String)</a></span> - Constructor for class org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.html" title="class in org.apache.rat.utils">CasedString</a></dt>
+<dd>
+<div class="block">A representation of a cased string and the identified case of that string.</div>
+</dd>
+<dt><a href="org/apache/rat/utils/CasedString.StringCase.html" title="enum in org.apache.rat.utils"><span class="typeNameLink">CasedString.StringCase</span></a> - Enum in <a href="org/apache/rat/utils/package-summary.html">org.apache.rat.utils</a></dt>
+<dd>
+<div class="block">An enumeration of supported string cases.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#cdata-java.lang.CharSequence-">cdata(CharSequence)</a></span> - Method in class org.apache.rat.report.xml.writer.impl.base.<a href="org/apache/rat/report/xml/writer/impl/base/XmlWriter.html" title="class in org.apache.rat.report.xml.writer.impl.base">XmlWriter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/report/xml/writer/IXmlWriter.html#cdata-java.lang.CharSequence-">cdata(CharSequence)</a></span> - Method in interface org.apache.rat.report.xml.writer.<a href="org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></dt>
@@ -491,7 +521,9 @@
 <dt><span class="memberNameLink"><a href="org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#close--">close()</a></span> - Method in class org.apache.rat.report.xml.writer.impl.base.<a href="org/apache/rat/report/xml/writer/impl/base/XmlWriter.html" title="class in org.apache.rat.report.xml.writer.impl.base">XmlWriter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html#close--">close()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html" title="class in org.apache.rat">ReportConfiguration.NoCloseOutputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Does not actually close the delegate.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#closeDocument--">closeDocument()</a></span> - Method in class org.apache.rat.report.xml.writer.impl.base.<a href="org/apache/rat/report/xml/writer/impl/base/XmlWriter.html" title="class in org.apache.rat.report.xml.writer.impl.base">XmlWriter</a></dt>
 <dd>
 <div class="block">Closes all pending elements.</div>
@@ -516,7 +548,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#comparator--">comparator()</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/Report.OptionComparator.html#compare-org.apache.commons.cli.Option-org.apache.commons.cli.Option-">compare(Option, Option)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/Report.OptionComparator.html" title="class in org.apache.rat">Report.OptionComparator</a></dt>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.OptionComparator.html#compare-org.apache.commons.cli.Option-org.apache.commons.cli.Option-">compare(Option, Option)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/OptionCollection.OptionComparator.html" title="class in org.apache.rat">OptionCollection.OptionComparator</a></dt>
 <dd>
 <div class="block">Compares its two arguments for order.</div>
 </dd>
@@ -573,6 +605,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/analysis/IHeaderMatcher.Builder.html#copyright--">copyright()</a></span> - Static method in interface org.apache.rat.analysis.<a href="org/apache/rat/analysis/IHeaderMatcher.Builder.html" title="interface in org.apache.rat.analysis">IHeaderMatcher.Builder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#COPYRIGHT">COPYRIGHT</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Defines the copyright header to add to the file.</div>
+</dd>
 <dt><a href="org/apache/rat/configuration/builders/CopyrightBuilder.html" title="class in org.apache.rat.configuration.builders"><span class="typeNameLink">CopyrightBuilder</span></a> - Class in <a href="org/apache/rat/configuration/builders/package-summary.html">org.apache.rat.configuration.builders</a></dt>
 <dd>
 <div class="block">A copyright builder.</div>
@@ -666,7 +702,9 @@
 <div class="block">Annotation to provide deprecation information for Java8.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.Processing.html#desc--">desc()</a></span> - Method in enum org.apache.rat.<a href="org/apache/rat/ReportConfiguration.Processing.html" title="enum in org.apache.rat">ReportConfiguration.Processing</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the description of the processing type.</div>
+</dd>
 <dt><a href="org/apache/rat/config/parameters/Description.html" title="class in org.apache.rat.config.parameters"><span class="typeNameLink">Description</span></a> - Class in <a href="org/apache/rat/config/parameters/package-summary.html">org.apache.rat.config.parameters</a></dt>
 <dd>
 <div class="block">A description of a component.</div>
@@ -687,8 +725,14 @@
 <dd>
 <div class="block">Determines if a matching license has been detected.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#DIR">DIR</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Ths option to signal the end of an argument list and the start of the directory/archive arguments.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.html#DIRECTORIES_TO_IGNORE">DIRECTORIES_TO_IGNORE</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/Defaults.html" title="class in org.apache.rat">Defaults</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The default directories to ignore if none are specified.</div>
+</dd>
 <dt><a href="org/apache/rat/walker/DirectoryWalker.html" title="class in org.apache.rat.walker"><span class="typeNameLink">DirectoryWalker</span></a> - Class in <a href="org/apache/rat/walker/package-summary.html">org.apache.rat.walker</a></dt>
 <dd>
 <div class="block">Walks directories.</div>
@@ -713,6 +757,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/document/impl/util/DocumentAnalyserMultiplexer.html#DocumentAnalyserMultiplexer-org.apache.rat.document.IDocumentAnalyser:A-">DocumentAnalyserMultiplexer(IDocumentAnalyser[])</a></span> - Constructor for class org.apache.rat.document.impl.util.<a href="org/apache/rat/document/impl/util/DocumentAnalyserMultiplexer.html" title="class in org.apache.rat.document.impl.util">DocumentAnalyserMultiplexer</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#DRY_RUN">DRY_RUN</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Do not update files.</div>
+</dd>
 </dl>
 <a name="I:E">
 <!--   -->
@@ -767,6 +815,15 @@
 <dd>
 <div class="block">Write an error message and report throwable stack trace.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#EXCLUDE_CLI">EXCLUDE_CLI</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Name of File to exclude from report consideration.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#EXCLUDE_FILE_CLI">EXCLUDE_FILE_CLI</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Name of file that contains a list of files to exclude from report
+ consideration.</div>
+</dd>
 </dl>
 <a name="I:F">
 <!--   -->
@@ -794,7 +851,9 @@
 <div class="block">Creates a File document.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.html#FILES_TO_IGNORE">FILES_TO_IGNORE</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/Defaults.html" title="class in org.apache.rat">Defaults</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The default files to ignore if none are specified.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/config/parameters/Description.html#filterChildren-java.util.function.Predicate-">filterChildren(Predicate&lt;Description&gt;)</a></span> - Method in class org.apache.rat.config.parameters.<a href="org/apache/rat/config/parameters/Description.html" title="class in org.apache.rat.config.parameters">Description</a></dt>
 <dd>
 <div class="block">Get a filtered collection of the child descriptions.</div>
@@ -807,6 +866,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html#flush--">flush()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html" title="class in org.apache.rat">ReportConfiguration.NoCloseOutputStream</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#FORCE">FORCE</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Forces changes to be written to new files.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#forEach-java.util.function.Consumer-">forEach(Consumer&lt;? super T&gt;)</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/configuration/Format.html" title="enum in org.apache.rat.configuration"><span class="typeNameLink">Format</span></a> - Enum in <a href="org/apache/rat/configuration/package-summary.html">org.apache.rat.configuration</a></dt>
@@ -884,6 +947,10 @@
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#getArchiveProcessing--">getArchiveProcessing()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Retrieves the archive processing type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#getArgumentTypes--">getArgumentTypes()</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Gets the mapping of <code>argName(value)</code> values to a description of those values.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/license/ILicenseFamily.Builder.html#getCategory--">getCategory()</a></span> - Method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicenseFamily.Builder.html" title="interface in org.apache.rat.license">ILicenseFamily.Builder</a></dt>
 <dd>
@@ -1259,7 +1326,9 @@
 <div class="block">Get the reference ID that this proxy is using.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#getReportable--">getReportable()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the reportable object.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/analysis/matchers/AbstractMatcherContainer.html#getResource--">getResource()</a></span> - Method in class org.apache.rat.analysis.matchers.<a href="org/apache/rat/analysis/matchers/AbstractMatcherContainer.html" title="class in org.apache.rat.analysis.matchers">AbstractMatcherContainer</a></dt>
 <dd>
 <div class="block">Get the resource that was provided in the constructor.</div>
@@ -1267,6 +1336,14 @@
 <dt><span class="memberNameLink"><a href="org/apache/rat/api/MetaData.html#getSampleHeader--">getSampleHeader()</a></span> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/MetaData.html" title="class in org.apache.rat.api">MetaData</a></dt>
 <dd>
 <div class="block">Gets the sample header.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/CasedString.html#getSegments--">getSegments()</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.html" title="class in org.apache.rat.utils">CasedString</a></dt>
+<dd>
+<div class="block">Returns an array of each of the segments in this CasedString.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/CasedString.StringCase.html#getSegments-java.lang.String-">getSegments(String)</a></span> - Method in enum org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.StringCase.html" title="enum in org.apache.rat.utils">CasedString.StringCase</a></dt>
+<dd>
+<div class="block">Returns an array of each of the segments in this CasedString.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/analysis/matchers/SimpleTextMatcher.html#getSimpleText--">getSimpleText()</a></span> - Method in class org.apache.rat.analysis.matchers.<a href="org/apache/rat/analysis/matchers/SimpleTextMatcher.html" title="class in org.apache.rat.analysis.matchers">SimpleTextMatcher</a></dt>
 <dd>&nbsp;</dd>
@@ -1291,7 +1368,9 @@
 <div class="block">Gets the start date of the copyright.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#getStyleSheet--">getStyleSheet()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the IOSupplier with the style sheet.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/api/ContentType.html#getSubType--">getSubType()</a></span> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/ContentType.html" title="class in org.apache.rat.api">ContentType</a></dt>
 <dd>
 <div class="block">Gets the media sub type
@@ -1328,7 +1407,9 @@
 <div class="block">Gets the implementation version of the package.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#getWriter--">getWriter()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets a PrintWriter that wraps the output stream.</div>
+</dd>
 <dt><a href="org/apache/rat/document/impl/guesser/GuessUtils.html" title="class in org.apache.rat.document.impl.guesser"><span class="typeNameLink">GuessUtils</span></a> - Class in <a href="org/apache/rat/document/impl/guesser/package-summary.html">org.apache.rat.document.impl.guesser</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/document/impl/guesser/GuessUtils.html#GuessUtils--">GuessUtils()</a></span> - Constructor for class org.apache.rat.document.impl.guesser.<a href="org/apache/rat/document/impl/guesser/GuessUtils.html" title="class in org.apache.rat.document.impl.guesser">GuessUtils</a></dt>
@@ -1421,6 +1502,10 @@
 &nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#headSet-T-">headSet(T)</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#HELP">HELP</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Produce help</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/walker/NameBasedHiddenFileFilter.html#HIDDEN">HIDDEN</a></span> - Static variable in class org.apache.rat.walker.<a href="org/apache/rat/walker/NameBasedHiddenFileFilter.html" title="class in org.apache.rat.walker">NameBasedHiddenFileFilter</a></dt>
 <dd>
 <div class="block">Singleton instance of <i>hidden</i> filter.</div>
@@ -1525,9 +1610,9 @@
 <dd>
 <div class="block">The single instance of this class.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/configuration/MatcherBuilderTracker.html#INSTANCE">INSTANCE</a></span> - Static variable in class org.apache.rat.configuration.<a href="org/apache/rat/configuration/MatcherBuilderTracker.html" title="class in org.apache.rat.configuration">MatcherBuilderTracker</a></dt>
+<dt><span class="memberNameLink"><a href="org/apache/rat/configuration/MatcherBuilderTracker.html#instance--">instance()</a></span> - Static method in class org.apache.rat.configuration.<a href="org/apache/rat/configuration/MatcherBuilderTracker.html" title="class in org.apache.rat.configuration">MatcherBuilderTracker</a></dt>
 <dd>
-<div class="block">The instance of the BuildTracker.</div>
+<div class="block">Gets the instance of the MatcherBuilderTracker.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/writer/InvalidXmlException.html" title="class in org.apache.rat.report.xml.writer"><span class="typeNameLink">InvalidXmlException</span></a> - Exception in <a href="org/apache/rat/report/xml/writer/package-summary.html">org.apache.rat.report.xml.writer</a></dt>
 <dd>
@@ -1600,7 +1685,9 @@
 <div class="block">Get the canBeChild flag.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#isStyleReport--">isStyleReport()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns <code>true</code> if the XML report should be styled.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#iterator--">iterator()</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer"><span class="typeNameLink">IXmlWriter</span></a> - Interface in <a href="org/apache/rat/report/xml/writer/package-summary.html">org.apache.rat.report.xml.writer</a></dt>
@@ -1653,6 +1740,10 @@
 <dd>
 <div class="block">licenses element name</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#LICENSES">LICENSES</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Flag to identify a file with license definitions.</div>
+</dd>
 <dt><a href="org/apache/rat/license/LicenseSetFactory.html" title="class in org.apache.rat.license"><span class="typeNameLink">LicenseSetFactory</span></a> - Class in <a href="org/apache/rat/license/package-summary.html">org.apache.rat.license</a></dt>
 <dd>
 <div class="block">Class to take a set of ILicenses and collection of approved license
@@ -1681,9 +1772,21 @@
 <div class="block">Number of lines read.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.html#LIST_FAMILIES">LIST_FAMILIES</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/Defaults.html" title="class in org.apache.rat">Defaults</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The default license families to list.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#LIST_FAMILIES">LIST_FAMILIES</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">List the all families for the run.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.html#LIST_LICENSES">LIST_LICENSES</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/Defaults.html" title="class in org.apache.rat">Defaults</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The default licenses to list.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#LIST_LICENSES">LIST_LICENSES</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">List the licenses that were used for the run.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/api/Document.html#listChildren--">listChildren()</a></span> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a></dt>
 <dd>
 <div class="block">Gets a sorted set of Documents that are children of this document.</div>
@@ -1707,7 +1810,9 @@
 <div class="block">Set the level of licenses that should be output in the XML document.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#listLicenses--">listLicenses()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the selected license filter.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Reporter.html#listLicenses-org.apache.rat.ReportConfiguration-org.apache.rat.license.LicenseSetFactory.LicenseFilter-">listLicenses(ReportConfiguration, LicenseSetFactory.LicenseFilter)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/Reporter.html" title="class in org.apache.rat">Reporter</a></dt>
 <dd>
 <div class="block">lists the licenses on the configured output stream.</div>
@@ -1737,6 +1842,10 @@
 <dt><a href="org/apache/rat/utils/Log.Level.html" title="enum in org.apache.rat.utils"><span class="typeNameLink">Log.Level</span></a> - Enum in <a href="org/apache/rat/utils/package-summary.html">org.apache.rat.utils</a></dt>
 <dd>
 <div class="block">The log levels supported by logging.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#LOG_LEVEL">LOG_LEVEL</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Specify the log level for output</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/DeprecationReporter.html#logDeprecated-java.lang.Class-">logDeprecated(Class&lt;?&gt;)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/DeprecationReporter.html" title="class in org.apache.rat">DeprecationReporter</a></dt>
 <dd>
@@ -1869,8 +1978,14 @@
 <dd>
 <div class="block">Restrictive constructor.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#NO_DEFAULTS">NO_DEFAULTS</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Do not use the default files.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html#NoCloseOutputStream-java.io.OutputStream-">NoCloseOutputStream(OutputStream)</a></span> - Constructor for class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html" title="class in org.apache.rat">ReportConfiguration.NoCloseOutputStream</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructor.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.Builder.html#noDefault--">noDefault()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/Defaults.Builder.html" title="class in org.apache.rat">Defaults.Builder</a></dt>
 <dd>
 <div class="block">Removes the default definitions from the list of files to process.</div>
@@ -1928,7 +2043,16 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/report/xml/writer/OperationNotAllowedException.html#OperationNotAllowedException-java.lang.String-">OperationNotAllowedException(String)</a></span> - Constructor for exception org.apache.rat.report.xml.writer.<a href="org/apache/rat/report/xml/writer/OperationNotAllowedException.html" title="class in org.apache.rat.report.xml.writer">OperationNotAllowedException</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/Report.OptionComparator.html#OptionComparator--">OptionComparator()</a></span> - Constructor for class org.apache.rat.<a href="org/apache/rat/Report.OptionComparator.html" title="class in org.apache.rat">Report.OptionComparator</a></dt>
+<dt><a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat"><span class="typeNameLink">OptionCollection</span></a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
+<dd>
+<div class="block">The collection of standard options for the CLI as well as utility methods to manage them and methods to create the
+ ReportConfiguration from the options and an array of arguments.</div>
+</dd>
+<dt><a href="org/apache/rat/OptionCollection.OptionComparator.html" title="class in org.apache.rat"><span class="typeNameLink">OptionCollection.OptionComparator</span></a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
+<dd>
+<div class="block">This class implements the <code>Comparator</code> interface for comparing Options.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.OptionComparator.html#OptionComparator--">OptionComparator()</a></span> - Constructor for class org.apache.rat.<a href="org/apache/rat/OptionCollection.OptionComparator.html" title="class in org.apache.rat">OptionCollection.OptionComparator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/package-summary.html">org.apache.rat</a> - package org.apache.rat</dt>
 <dd>&nbsp;</dd>
@@ -2000,6 +2124,10 @@
 <dd>
 <div class="block">Constructs the matcher with the specified id from the enclosed matchers.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#OUT">OUT</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Defines the output for the file.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Reporter.html#output--">output()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/Reporter.html" title="class in org.apache.rat">Reporter</a></dt>
 <dd>
 <div class="block">Outputs the report using the stylesheet and output specified in the configuraiton.</div>
@@ -2016,13 +2144,13 @@
 <dl>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#parallelStream--">parallelStream()</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/Report.html#parseCommands-java.lang.String:A-java.util.function.Consumer-">parseCommands(String[], Consumer&lt;Options&gt;)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/Report.html" title="class in org.apache.rat">Report</a></dt>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#parseCommands-java.lang.String:A-java.util.function.Consumer-">parseCommands(String[], Consumer&lt;Options&gt;)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
 <dd>
 <div class="block">Parses the standard options to create a ReportConfiguration.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/Report.html#parseCommands-java.lang.String:A-java.util.function.Consumer-boolean-">parseCommands(String[], Consumer&lt;Options&gt;, boolean)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/Report.html" title="class in org.apache.rat">Report</a></dt>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#parseCommands-java.lang.String:A-java.util.function.Consumer-boolean-">parseCommands(String[], Consumer&lt;Options&gt;, boolean)</a></span> - Static method in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
 <dd>
-<div class="block">Parses the standard options to create a ReportConfiguraton.</div>
+<div class="block">Parses the standard options to create a ReportConfiguration.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.html#PLAIN_STYLESHEET">PLAIN_STYLESHEET</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/Defaults.html" title="class in org.apache.rat">Defaults</a></dt>
 <dd>
@@ -2148,7 +2276,7 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/configuration/builders/RegexBuilder.html#RegexBuilder--">RegexBuilder()</a></span> - Constructor for class org.apache.rat.configuration.builders.<a href="org/apache/rat/configuration/builders/RegexBuilder.html" title="class in org.apache.rat.configuration.builders">RegexBuilder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.Builder.html#remove-java.net.URL-">remove(URL)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/Defaults.Builder.html" title="class in org.apache.rat">Defaults.Builder</a></dt>
+<dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.Builder.html#remove-java.net.URI-">remove(URI)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/Defaults.Builder.html" title="class in org.apache.rat">Defaults.Builder</a></dt>
 <dd>
 <div class="block">Removes a file from the list of configuration files to process.</div>
 </dd>
@@ -2196,10 +2324,6 @@
 <dd>
 <div class="block">Performs the actual reporting on the given document.</div>
 </dd>
-<dt><a href="org/apache/rat/Report.OptionComparator.html" title="class in org.apache.rat"><span class="typeNameLink">Report.OptionComparator</span></a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
-<dd>
-<div class="block">This class implements the <code>Comparator</code> interface for comparing Options.</div>
-</dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat"><span class="typeNameLink">ReportConfiguration</span></a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
 <dd>
 <div class="block">A configuration object is used by the front end to invoke the
@@ -2214,7 +2338,9 @@
 <div class="block">A wrapper around an output stream that does not close the output stream.</div>
 </dd>
 <dt><a href="org/apache/rat/ReportConfiguration.Processing.html" title="enum in org.apache.rat"><span class="typeNameLink">ReportConfiguration.Processing</span></a> - Enum in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The styles of processing for various categories of documents.</div>
+</dd>
 <dt><a href="org/apache/rat/Reporter.html" title="class in org.apache.rat"><span class="typeNameLink">Reporter</span></a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
 <dd>
 <div class="block">Class that executes the report as defined in a ReportConfiguration and stores
@@ -2289,6 +2415,10 @@
 </a>
 <h2 class="title">S</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#SCAN_HIDDEN_DIRECTORIES">SCAN_HIDDEN_DIRECTORIES</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Scan hidden directories.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/license/LicenseFamilySetFactory.html#search-java.lang.String-java.util.SortedSet-">search(String, SortedSet&lt;ILicenseFamily&gt;)</a></span> - Static method in class org.apache.rat.license.<a href="org/apache/rat/license/LicenseFamilySetFactory.html" title="class in org.apache.rat.license">LicenseFamilySetFactory</a></dt>
 <dd>
 <div class="block">Search a SortedSet of ILicenseFamily instances looking for a matching instance.</div>
@@ -2374,7 +2504,7 @@
 <dd>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 &nbsp;</dd>
-<dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#setFilesToIgnore-java.io.FilenameFilter-">setFilesToIgnore(FilenameFilter)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
+<dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#setFilesToIgnore-org.apache.commons.io.filefilter.IOFileFilter-">setFilesToIgnore(IOFileFilter)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Sets the files name filter for files to ignore.</div>
 </dd>
@@ -2536,7 +2666,9 @@
 <div class="block">Constructs the MatcherReferenceBuilder using the provided reference id.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#setReportable-org.apache.rat.report.IReportable-">setReportable(IReportable)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the reportable object.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/configuration/builders/ChildContainerBuilder.html#setResource-java.lang.String-">setResource(String)</a></span> - Method in class org.apache.rat.configuration.builders.<a href="org/apache/rat/configuration/builders/ChildContainerBuilder.html" title="class in org.apache.rat.configuration.builders">ChildContainerBuilder</a></dt>
 <dd>
 <div class="block">Reads a text file.</div>
@@ -2558,13 +2690,17 @@
 <div class="block">Sets the start date.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#setStyleReport-boolean-">setStyleReport(boolean)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Specifies that the XML report should or should not be styled.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#setStyleSheet-org.apache.commons.io.function.IOSupplier-">setStyleSheet(IOSupplier&lt;InputStream&gt;)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Sets the style sheet for custom processing.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#setStyleSheet-java.io.File-">setStyleSheet(File)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Sets the style sheet.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.html#setStyleSheet-java.net.URI-">setStyleSheet(URI)</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Sets the style sheet for custom processing.</div>
@@ -2646,8 +2782,14 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#spliterator--">spliterator()</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#STANDARD">STANDARD</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Specify the processing of STANDARD files.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/Defaults.html#STANDARD_PROCESSING">STANDARD_PROCESSING</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/Defaults.html" title="class in org.apache.rat">Defaults</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">The default STANDARD processing style.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#startDocument--">startDocument()</a></span> - Method in class org.apache.rat.report.xml.writer.impl.base.<a href="org/apache/rat/report/xml/writer/impl/base/XmlWriter.html" title="class in org.apache.rat.report.xml.writer.impl.base">XmlWriter</a></dt>
 <dd>
 <div class="block">Starts a document by writing a prolog.</div>
@@ -2676,6 +2818,10 @@
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#stream--">stream()</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#STYLESHEET_CLI">STYLESHEET_CLI</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">The stylesheet to use to style the XML output.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#subSet-T-T-">subSet(T, T)</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -2704,6 +2850,10 @@
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/ReportingSet.html#toArray-T:A-">toArray(T[])</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/CasedString.html#toCase-org.apache.rat.utils.CasedString.StringCase-">toCase(CasedString.StringCase)</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.html" title="class in org.apache.rat.utils">CasedString</a></dt>
+<dd>
+<div class="block">Converts this cased string into a <code>String</code> of another format.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/analysis/matchers/AbstractHeaderMatcher.html#toString--">toString()</a></span> - Method in class org.apache.rat.analysis.matchers.<a href="org/apache/rat/analysis/matchers/AbstractHeaderMatcher.html" title="class in org.apache.rat.analysis.matchers">AbstractHeaderMatcher</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/api/Document.html#toString--">toString()</a></span> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a></dt>
@@ -2742,6 +2892,10 @@
 &nbsp;</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html#toString--">toString()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html" title="class in org.apache.rat">ReportConfiguration.NoCloseOutputStream</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/CasedString.html#toString--">toString()</a></span> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.html" title="class in org.apache.rat.utils">CasedString</a></dt>
+<dd>
+<div class="block">Returns the string representation provided in the constructor.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/VersionInfo.html#toString--">toString()</a></span> - Method in class org.apache.rat.<a href="org/apache/rat/VersionInfo.html" title="class in org.apache.rat">VersionInfo</a></dt>
 <dd>
 <div class="block">Default string representation of the implementation information from the package.</div>
@@ -2816,6 +2970,10 @@
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/CasedString.StringCase.html#valueOf-java.lang.String-">valueOf(String)</a></span> - Static method in enum org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.StringCase.html" title="enum in org.apache.rat.utils">CasedString.StringCase</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this type with the specified name.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/utils/Log.Level.html#valueOf-java.lang.String-">valueOf(String)</a></span> - Static method in enum org.apache.rat.utils.<a href="org/apache/rat/utils/Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
@@ -2865,6 +3023,11 @@ the order they are declared.</div>
 the order they are declared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="org/apache/rat/ReportConfiguration.Processing.html#values--">values()</a></span> - Static method in enum org.apache.rat.<a href="org/apache/rat/ReportConfiguration.Processing.html" title="enum in org.apache.rat">ReportConfiguration.Processing</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum type, in
+the order they are declared.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="org/apache/rat/utils/CasedString.StringCase.html#values--">values()</a></span> - Static method in enum org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.StringCase.html" title="enum in org.apache.rat.utils">CasedString.StringCase</a></dt>
 <dd>
 <div class="block">Returns an array containing the constants of this enum type, in
 the order they are declared.</div>
@@ -2933,6 +3096,10 @@ the order they are declared.</div>
 </a>
 <h2 class="title">X</h2>
 <dl>
+<dt><span class="memberNameLink"><a href="org/apache/rat/OptionCollection.html#XML">XML</a></span> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Set unstyled XML output</div>
+</dd>
 <dt><a href="org/apache/rat/configuration/XMLConfig.html" title="class in org.apache.rat.configuration"><span class="typeNameLink">XMLConfig</span></a> - Class in <a href="org/apache/rat/configuration/package-summary.html">org.apache.rat.configuration</a></dt>
 <dd>
 <div class="block">Configuration definitions for XMLConfiguration reader and writer.</div>

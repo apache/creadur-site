@@ -18,8 +18,8 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var methods = {"i0":10,"i1":10,"i2":42,"i3":42,"i4":42,"i5":42};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -103,10 +103,15 @@ var activeTableTab = "activeTableTab";
 <li>org.apache.maven.plugin.AbstractMojo</li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">org.apache.rat.plugin.BaseRatMojo</a></li>
+<li>
+<ul class="inheritance">
 <li><a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="class in org.apache.rat.mp">org.apache.rat.mp.AbstractRatMojo</a></li>
 <li>
 <ul class="inheritance">
 <li>org.apache.rat.mp.RatCheckMojo</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -149,6 +154,13 @@ extends <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="clas
 <code><a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#project">project</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#skip">skip</a></code></li>
 </ul>
 <ul class="blockList">
+<li class="blockList"><a name="fields.inherited.from.class.org.apache.rat.plugin.BaseRatMojo">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;org.apache.rat.plugin.<a href="../../../../org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></h3>
+<code><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#args">args</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a name="fields.inherited.from.class.org.apache.maven.plugin.Mojo">
 <!--   -->
 </a>
@@ -181,7 +193,7 @@ extends <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="clas
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Method Summary table, listing methods, and an explanation">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colLast" scope="col">Method and Description</th>
@@ -197,8 +209,36 @@ extends <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="clas
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>protected <a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/mp/RatCheckMojo.html#getConfiguration--">getConfiguration</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/mp/RatCheckMojo.html#setAddLicenseHeaders-java.lang.String-">setAddLicenseHeaders</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;addLicenseHeaders)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use addLicense and forced</span></div>
+</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/mp/RatCheckMojo.html#setCopyrightMessage-java.lang.String-">setCopyrightMessage</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;copyrightMessage)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use copyright</span></div>
+</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/mp/RatCheckMojo.html#setReportFile-java.io.File-">setReportFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;reportFile)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use 'out' property.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/mp/RatCheckMojo.html#setReportStyle-java.lang.String-">setReportStyle</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use setStyleSheet or xml</span></div>
+</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -206,7 +246,14 @@ extends <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="clas
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;org.apache.rat.mp.<a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="class in org.apache.rat.mp">AbstractRatMojo</a></h3>
-<code><a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#getDefaultsBuilder--">getDefaultsBuilder</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#getProject--">getProject</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#logLicenses-java.util.Collection-">logLicenses</a></code></li>
+<code><a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#getConfiguration--">getConfiguration</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#getDefaultsBuilder--">getDefaultsBuilder</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#getProject--">getProject</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#logLicenses-java.util.Collection-">logLicenses</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#setAddDefaultLicenses-boolean-">setAddDefaultLicenses</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#setExclude-java.lang.String-">setExclude</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#setExcludeFile-java.lang.String-">setExcludeFile</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#setExcludes-java.lang.String:A-">setExcludes</a>, <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#setExcludesFile-java.lang.String-">setExcludesFile</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.org.apache.rat.plugin.BaseRatMojo">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;org.apache.rat.plugin.<a href="../../../../org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></h3>
+<code><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#addArg-java.lang.String-java.lang.String-">addArg</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#args--">args</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#createName-java.lang.String-">createName</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#getArg-java.lang.String-">getArg</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#removeArg-java.lang.String-">removeArg</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setAddLicense-boolean-">setAddLicense</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setArchive-java.lang.String-">setArchive</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setArg-java.lang.String-java.lang.String-">setArg</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setConfig-java.lang.String-">setConfig</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setCopyright-java.lang.String-">setCopyright</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setDryRun-boolean-">setDryRun</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setForce-boolean-">setForce</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setListFamilies-java.lang.String-">setListFamilies</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setListLicenses-java.lang.String-">setListLicenses</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLogLevel-java.lang.String-">setLogLevel</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setNoDefaultLicenses-boolean-">setNoDefaultLicenses</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setOut-java.lang.String-">setOut</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setScanHiddenDirectories-boolean-">setScanHiddenDirectories</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setStandard-java.lang.String-">setStandard</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setStylesheet-java.lang.String-">setStylesheet</a>, <a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setXml-boolean-">setXml</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.apache.maven.plugin.AbstractMojo">
@@ -253,6 +300,63 @@ extends <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="clas
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="setReportFile-java.io.File-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setReportFile</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+ @Parameter(property="rat.outputFile")
+public&nbsp;void&nbsp;setReportFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;reportFile)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use 'out' property.</span></div>
+<div class="block">Where to store the report.</div>
+</li>
+</ul>
+<a name="setReportStyle-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setReportStyle</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+ @Parameter(property="rat.outputStyle")
+public&nbsp;void&nbsp;setReportStyle(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use setStyleSheet or xml</span></div>
+<div class="block">Output style of the report. Use "plain" (the default) for a plain text report
+ or "xml" for the raw XML report. Alternatively you can give the path of an
+ XSL transformation that will be applied on the raw XML to produce the report
+ written to the output file.</div>
+</li>
+</ul>
+<a name="setAddLicenseHeaders-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setAddLicenseHeaders</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+ @Parameter(property="rat.addLicenseHeaders")
+public&nbsp;void&nbsp;setAddLicenseHeaders(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;addLicenseHeaders)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use addLicense and forced</span></div>
+<div class="block">Whether to add license headers; possible values are <code>forced</code>,
+ <code>true</code>, and <code>false</code> (default).</div>
+</li>
+</ul>
+<a name="setCopyrightMessage-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setCopyrightMessage</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+ @Parameter(property="rat.copyrightMessage")
+public&nbsp;void&nbsp;setCopyrightMessage(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;copyrightMessage)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use copyright</span></div>
+<div class="block">Copyright message to add to license headers. This option is ignored, unless
+ <code>addLicenseHeaders</code> is set to <code>true</code>, or <code>forced</code>.</div>
+</li>
+</ul>
 <a name="execute--">
 <!--   -->
 </a>
@@ -275,7 +379,7 @@ extends <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="clas
 <a name="check--">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>check</h4>
 <pre>protected&nbsp;void&nbsp;check()
@@ -283,22 +387,6 @@ extends <a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="clas
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>org.apache.maven.plugin.MojoFailureException</code></dd>
-</dl>
-</li>
-</ul>
-<a name="getConfiguration--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getConfiguration</h4>
-<pre>protected&nbsp;<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;getConfiguration()
-                                        throws org.apache.maven.plugin.MojoExecutionException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../../../../org/apache/rat/mp/AbstractRatMojo.html#getConfiguration--">getConfiguration</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/apache/rat/mp/AbstractRatMojo.html" title="class in org.apache.rat.mp">AbstractRatMojo</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>org.apache.maven.plugin.MojoExecutionException</code></dd>
 </dl>
 </li>
 </ul>

@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9};
+var methods = {"i0":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -49,8 +49,8 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../org/apache/rat/ImplementationException.html" title="class in org.apache.rat"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../org/apache/rat/Report.OptionComparator.html" title="class in org.apache.rat"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../org/apache/rat/OptionCollection.OptionComparator.html" title="class in org.apache.rat"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?org/apache/rat/Report.html" target="_top">Frames</a></li>
@@ -74,7 +74,7 @@ var activeTableTab = "activeTableTab";
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -118,27 +118,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
-<ul class="blockList">
-<li class="blockList"><a name="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Nested Class Summary table, listing nested classes, and an explanation">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colLast" scope="col">Class and Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/Report.OptionComparator.html" title="class in org.apache.rat">Report.OptionComparator</a></span></code>
-<div class="block">This class implements the <code>Comparator</code> interface for comparing Options.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -156,21 +135,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/Report.html#main-java.lang.String:A-">main</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args)</code>
 <div class="block">Processes the command line and builds a configuration and executes the
  report.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/Report.html#parseCommands-java.lang.String:A-java.util.function.Consumer-">parseCommands</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
-             <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd)</code>
-<div class="block">Parses the standard options to create a ReportConfiguration.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../org/apache/rat/Report.html#parseCommands-java.lang.String:A-java.util.function.Consumer-boolean-">parseCommands</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
-             <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd,
-             boolean&nbsp;noArgs)</code>
-<div class="block">Parses the standard options to create a ReportConfiguraton.</div>
 </td>
 </tr>
 </table>
@@ -198,7 +162,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <a name="main-java.lang.String:A-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>main</h4>
 <pre>public static&nbsp;void&nbsp;main(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args)
@@ -210,50 +174,6 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <dd><code>args</code> - the arguments.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a></code> - on error.</dd>
-</dl>
-</li>
-</ul>
-<a name="parseCommands-java.lang.String:A-java.util.function.Consumer-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>parseCommands</h4>
-<pre>public static&nbsp;<a href="../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;parseCommands(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
-                                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd)
-                                         throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Parses the standard options to create a ReportConfiguration.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>args</code> - the arguments to parse</dd>
-<dd><code>helpCmd</code> - the help command to run when necessary.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a ReportConfiguration or null if Help was printed.</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - on error.</dd>
-</dl>
-</li>
-</ul>
-<a name="parseCommands-java.lang.String:A-java.util.function.Consumer-boolean-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>parseCommands</h4>
-<pre>public static&nbsp;<a href="../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;parseCommands(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;args,
-                                                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html?is-external=true" title="class or interface in java.util.function">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd,
-                                                boolean&nbsp;noArgs)
-                                         throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Parses the standard options to create a ReportConfiguraton.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>args</code> - the arguments to parse</dd>
-<dd><code>helpCmd</code> - the help command to run when necessary.</dd>
-<dd><code>noArgs</code> - If true then the commands do not need extra arguments</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>a ReportConfiguration or null if Help was printed.</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - on error.</dd>
 </dl>
 </li>
 </ul>
@@ -285,8 +205,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../org/apache/rat/ImplementationException.html" title="class in org.apache.rat"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../org/apache/rat/Report.OptionComparator.html" title="class in org.apache.rat"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../org/apache/rat/OptionCollection.OptionComparator.html" title="class in org.apache.rat"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?org/apache/rat/Report.html" target="_top">Frames</a></li>
@@ -310,7 +230,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

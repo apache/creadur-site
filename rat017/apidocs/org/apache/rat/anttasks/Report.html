@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":42,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":42,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":42,"i7":42,"i8":10,"i9":10,"i10":42,"i11":42,"i12":42,"i13":42,"i14":42,"i15":42,"i16":42,"i17":42,"i18":42,"i19":42,"i20":42,"i21":42,"i22":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -75,7 +75,7 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.apache.tools.ant.Task">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.org.apache.rat.anttasks.BaseAntTask">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -106,7 +106,12 @@ var activeTableTab = "activeTableTab";
 <li>org.apache.tools.ant.Task</li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../../org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">org.apache.rat.anttasks.BaseAntTask</a></li>
+<li>
+<ul class="inheritance">
 <li>org.apache.rat.anttasks.Report</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -124,7 +129,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">Report</span>
-extends org.apache.tools.ant.Task</pre>
+extends <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></pre>
 <div class="block">A basic Ant task that generates a report on all files specified by the nested
  resource collection(s).
 
@@ -163,16 +168,27 @@ extends org.apache.tools.ant.Task</pre>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.AddLicenseHeaders.html" title="class in org.apache.rat.anttasks">Report.AddLicenseHeaders</a></span></code>
-<div class="block">Type for the addLicenseHeaders attribute.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">No longer required=, use stylesheet or xml attributes.</span></div>
+</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.ApprovalFilter.html" title="class in org.apache.rat.anttasks">Report.ApprovalFilter</a></span></code>
-<div class="block">Type for the addLicenseHeaders attribute.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use listLicenses or listFamilies attributes.</span></div>
+</div>
 </td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="nested.classes.inherited.from.class.org.apache.rat.anttasks.BaseAntTask">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;org.apache.rat.anttasks.<a href="../../../../org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></h3>
+<code><a href="../../../../org/apache/rat/anttasks/BaseAntTask.Child.html" title="class in org.apache.rat.anttasks">BaseAntTask.Child</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.Exclude.html" title="class in org.apache.rat.anttasks">BaseAntTask.Exclude</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.Licenses.html" title="class in org.apache.rat.anttasks">BaseAntTask.Licenses</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.Out.html" title="class in org.apache.rat.anttasks">BaseAntTask.Out</a></code></li>
+</ul>
 </li>
 </ul>
 <!-- =========== FIELD SUMMARY =========== -->
@@ -181,6 +197,13 @@ extends org.apache.tools.ant.Task</pre>
 <!--   -->
 </a>
 <h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields.inherited.from.class.org.apache.rat.anttasks.BaseAntTask">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;org.apache.rat.anttasks.<a href="../../../../org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></h3>
+<code><a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#args">args</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="fields.inherited.from.class.org.apache.tools.ant.Task">
 <!--   -->
@@ -209,7 +232,9 @@ extends org.apache.tools.ant.Task</pre>
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#Report--">Report</a></span>()</code>&nbsp;</td>
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#Report--">Report</a></span>()</code>
+<div class="block">Constructor.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -234,93 +259,170 @@ extends org.apache.tools.ant.Task</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addAddApprovedLicense-java.lang.String-">addAddApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addAddApprovedLicense-java.lang.String-">addAddApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</code>
+<div class="block">Adds a family category to the list of approved licenses.</div>
+</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addFamily-org.apache.rat.anttasks.Family-">addFamily</a></span>(<a href="../../../../org/apache/rat/anttasks/Family.html" title="class in org.apache.rat.anttasks">Family</a>&nbsp;family)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addFamily-org.apache.rat.anttasks.Family-">addFamily</a></span>(<a href="../../../../org/apache/rat/anttasks/Family.html" title="class in org.apache.rat.anttasks">Family</a>&nbsp;family)</code>
+<div class="block">Add an inline license family definition to the system.</div>
+</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addLicense-org.apache.rat.anttasks.License-">addLicense</a></span>(<a href="../../../../org/apache/rat/anttasks/License.html" title="class in org.apache.rat.anttasks">License</a>&nbsp;lic)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addLicense-org.apache.rat.anttasks.License-">addLicense</a></span>(<a href="../../../../org/apache/rat/anttasks/License.html" title="class in org.apache.rat.anttasks">License</a>&nbsp;license)</code>
+<div class="block">Adds an inline License definition to the system.</div>
+</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addStylesheet-org.apache.tools.ant.types.Resource-">addStylesheet</a></span>(org.apache.tools.ant.types.Resource&nbsp;styleSheet)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/Report.html#addStyleSheet-org.apache.tools.ant.types.Resource-"><code>addStyleSheet(Resource)</code></a></span></div>
-</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addRemoveApprovedLicense-java.lang.String-">addRemoveApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</code>
+<div class="block">Removes a family category to the list of approved licenses.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addStyleSheet-org.apache.tools.ant.types.Resource-">addStyleSheet</a></span>(org.apache.tools.ant.types.Resource&nbsp;styleSheet)</code>
-<div class="block">Adds a given style sheet to the report.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addRemoveApprovedLicense-java.lang.String:A-">addRemoveApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;familyCategory)</code>
+<div class="block">Removes a family category to the list of approved licenses.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addStylesheet-org.apache.tools.ant.types.Resource-">addStylesheet</a></span>(org.apache.tools.ant.types.Resource&nbsp;styleSheet)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a></span></div>
+</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#addStyleSheet-org.apache.tools.ant.types.Resource-">addStyleSheet</a></span>(org.apache.tools.ant.types.Resource&nbsp;styleSheet)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a></span></div>
+</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#execute--">execute</a></span>()</code>
 <div class="block">Generates the report.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#getConfiguration--">getConfiguration</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setAddApprovedLicense-java.lang.String-">setAddApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</code>&nbsp;</td>
-</tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setAddDefaultDefinitions-java.io.File-">setAddDefaultDefinitions</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;fileName)</code>&nbsp;</td>
+<td class="colFirst"><code><a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#getConfiguration--">getConfiguration</a></span>()</code>
+<div class="block">Creates the ReportConfiguration from the ant options.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setAddLicenseHeaders-org.apache.rat.anttasks.Report.AddLicenseHeaders-">setAddLicenseHeaders</a></span>(<a href="../../../../org/apache/rat/anttasks/Report.AddLicenseHeaders.html" title="class in org.apache.rat.anttasks">Report.AddLicenseHeaders</a>&nbsp;setting)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setAddApprovedLicense-java.lang.String-">setAddApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use addApprovedLicense child element.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setCopyrightMessage-java.lang.String-">setCopyrightMessage</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;copyrightMessage)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setAddDefaultDefinitions-java.io.File-">setAddDefaultDefinitions</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;fileName)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Use <a href="../../../../org/apache/rat/anttasks/Report.html#addLicense-org.apache.rat.anttasks.License-"><code>addLicense(org.apache.rat.anttasks.License)</code></a></span></div>
+</div>
+</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setFormat-java.lang.String-">setFormat</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;style)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setAddLicenseHeaders-org.apache.rat.anttasks.Report.AddLicenseHeaders-">setAddLicenseHeaders</a></span>(<a href="../../../../org/apache/rat/anttasks/Report.AddLicenseHeaders.html" title="class in org.apache.rat.anttasks">Report.AddLicenseHeaders</a>&nbsp;setting)</code>
 <div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
-<div class="block"><span class="deprecationComment">use #setStyleReport</span></div>
+<div class="block"><span class="deprecationComment">use addLicense and force attributes</span></div>
 </div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setInputFileFilter-java.io.FilenameFilter-">setInputFileFilter</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;inputFileFilter)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setCopyrightMessage-java.lang.String-">setCopyrightMessage</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;copyrightMessage)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use copyright attribute</span></div>
+</div>
+</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setLicenses-java.io.File-">setLicenses</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;fileName)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setFormat-java.lang.String-">setFormat</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;style)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a> or <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setXml-boolean-"><code>BaseAntTask.setXml(boolean)</code></a></span></div>
+</div>
+</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setRemoveApprovedLicense-java.lang.String-">setRemoveApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setInputFileFilter-org.apache.commons.io.filefilter.IOFileFilter-">setInputFileFilter</a></span>(org.apache.commons.io.filefilter.IOFileFilter&nbsp;inputFileFilter)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setRemoveApprovedLicense-java.lang.String:A-">setRemoveApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;familyCategory)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setLicenses-java.io.File-">setLicenses</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;fileName)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use licenses child element.</span></div>
+</div>
+</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setReportFile-java.io.File-">setReportFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;reportFile)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setRemoveApprovedLicense-java.lang.String-">setRemoveApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use removeApprovedLicense child element}</span></div>
+</div>
+</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setStyleReport-boolean-">setStyleReport</a></span>(boolean&nbsp;styleReport)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setRemoveApprovedLicense-java.lang.String:A-">setRemoveApprovedLicense</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;familyCategory)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use removeApprovedLicense element</span></div>
+</div>
+</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setUseDefaultLicenses-boolean-">setUseDefaultLicenses</a></span>(boolean&nbsp;useDefaultLicenses)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setReportFile-java.io.File-">setReportFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;reportFile)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setOut-java.lang.String-"><code>BaseAntTask.setOut(String)</code></a></span></div>
+</div>
+</td>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setStyleReport-boolean-">setStyleReport</a></span>(boolean&nbsp;styleReport)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setXml-boolean-"><code>BaseAntTask.setXml(boolean)</code></a>.  Note reversal of boolean value</span></div>
+</div>
+</td>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#setUseDefaultLicenses-boolean-">setUseDefaultLicenses</a></span>(boolean&nbsp;useDefaultLicenses)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">use noDefaultLicenses attribute</span></div>
+</div>
+</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>protected <a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/Report.html#validate-org.apache.rat.ReportConfiguration-">validate</a></span>(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;cfg)</code>
+<div class="block">validates the task's configuration.</div>
+</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.org.apache.rat.anttasks.BaseAntTask">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;org.apache.rat.anttasks.<a href="../../../../org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></h3>
+<code><a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#addArg-java.lang.String-java.lang.String-">addArg</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#args--">args</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#asKey-org.apache.commons.cli.Option-">asKey</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#createExclude--">createExclude</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#createLicenses--">createLicenses</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#createOut--">createOut</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#removeArg-java.lang.String-">removeArg</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setAddLicense-boolean-">setAddLicense</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setArchive-java.lang.String-">setArchive</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setArg-java.lang.String-java.lang.String-">setArg</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setCopyright-java.lang.String-">setCopyright</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setDryRun-boolean-">setDryRun</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setExcludeFile-java.lang.String-">setExcludeFile</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setForce-boolean-">setForce</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setListFamilies-java.lang.String-">setListFamilies</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setListLicenses-java.lang.String-">setListLicenses</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setNoDefaultLicenses-boolean-">setNoDefaultLicenses</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setOut-java.lang.String-">setOut</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setScanHiddenDirectories-boolean-">setScanHiddenDirectories</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setStandard-java.lang.String-">setStandard</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-">setStylesheet</a>, <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setXml-boolean-">setXml</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.org.apache.tools.ant.Task">
 <!--   -->
@@ -363,6 +465,7 @@ extends org.apache.tools.ant.Task</pre>
 <li class="blockList">
 <h4>Report</h4>
 <pre>public&nbsp;Report()</pre>
+<div class="block">Constructor.</div>
 </li>
 </ul>
 </li>
@@ -387,13 +490,20 @@ extends org.apache.tools.ant.Task</pre>
 </dl>
 </li>
 </ul>
-<a name="setInputFileFilter-java.io.FilenameFilter-">
+<a name="setInputFileFilter-org.apache.commons.io.filefilter.IOFileFilter-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setInputFileFilter</h4>
-<pre>public&nbsp;void&nbsp;setInputFileFilter(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FilenameFilter.html?is-external=true" title="class or interface in java.io">FilenameFilter</a>&nbsp;inputFileFilter)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setInputFileFilter(org.apache.commons.io.filefilter.IOFileFilter&nbsp;inputFileFilter)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block">Adds an input file filter.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>inputFileFilter</code> - The input file filter to add.</dd>
+</dl>
 </li>
 </ul>
 <a name="setReportFile-java.io.File-">
@@ -402,7 +512,14 @@ extends org.apache.tools.ant.Task</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setReportFile</h4>
-<pre>public&nbsp;void&nbsp;setReportFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;reportFile)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setReportFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;reportFile)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setOut-java.lang.String-"><code>BaseAntTask.setOut(String)</code></a></span></div>
+<div class="block">Sets the report file.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>reportFile</code> - the report file.</dd>
+</dl>
 </li>
 </ul>
 <a name="addLicense-org.apache.rat.anttasks.License-">
@@ -411,7 +528,12 @@ extends org.apache.tools.ant.Task</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>addLicense</h4>
-<pre>public&nbsp;void&nbsp;addLicense(<a href="../../../../org/apache/rat/anttasks/License.html" title="class in org.apache.rat.anttasks">License</a>&nbsp;lic)</pre>
+<pre>public&nbsp;void&nbsp;addLicense(<a href="../../../../org/apache/rat/anttasks/License.html" title="class in org.apache.rat.anttasks">License</a>&nbsp;license)</pre>
+<div class="block">Adds an inline License definition to the system.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>license</code> - the license to add.</dd>
+</dl>
 </li>
 </ul>
 <a name="addFamily-org.apache.rat.anttasks.Family-">
@@ -421,6 +543,11 @@ extends org.apache.tools.ant.Task</pre>
 <li class="blockList">
 <h4>addFamily</h4>
 <pre>public&nbsp;void&nbsp;addFamily(<a href="../../../../org/apache/rat/anttasks/Family.html" title="class in org.apache.rat.anttasks">Family</a>&nbsp;family)</pre>
+<div class="block">Add an inline license family definition to the system.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>family</code> - the license family to add.</dd>
+</dl>
 </li>
 </ul>
 <a name="addStylesheet-org.apache.tools.ant.types.Resource-">
@@ -431,7 +558,8 @@ extends org.apache.tools.ant.Task</pre>
 <h4>addStylesheet</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 public&nbsp;void&nbsp;addStylesheet(org.apache.tools.ant.types.Resource&nbsp;styleSheet)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/Report.html#addStyleSheet-org.apache.tools.ant.types.Resource-"><code>addStyleSheet(Resource)</code></a></span></div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a></span></div>
+<div class="block">Adds a style sheet to the system.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>styleSheet</code> - </dd>
@@ -444,7 +572,9 @@ public&nbsp;void&nbsp;addStylesheet(org.apache.tools.ant.types.Resource&nbsp;sty
 <ul class="blockList">
 <li class="blockList">
 <h4>addStyleSheet</h4>
-<pre>public&nbsp;void&nbsp;addStyleSheet(org.apache.tools.ant.types.Resource&nbsp;styleSheet)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;addStyleSheet(org.apache.tools.ant.types.Resource&nbsp;styleSheet)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a></span></div>
 <div class="block">Adds a given style sheet to the report.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -458,7 +588,14 @@ public&nbsp;void&nbsp;addStylesheet(org.apache.tools.ant.types.Resource&nbsp;sty
 <ul class="blockList">
 <li class="blockList">
 <h4>setStyleReport</h4>
-<pre>public&nbsp;void&nbsp;setStyleReport(boolean&nbsp;styleReport)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setStyleReport(boolean&nbsp;styleReport)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setXml-boolean-"><code>BaseAntTask.setXml(boolean)</code></a>.  Note reversal of boolean value</span></div>
+<div class="block">Sets a stylesheet for the report.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>styleReport</code> - </dd>
+</dl>
 </li>
 </ul>
 <a name="setFormat-java.lang.String-">
@@ -469,7 +606,8 @@ public&nbsp;void&nbsp;addStylesheet(org.apache.tools.ant.types.Resource&nbsp;sty
 <h4>setFormat</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
 public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;style)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use #setStyleReport</span></div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setStylesheet-java.lang.String-"><code>BaseAntTask.setStylesheet(String)</code></a> or <a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#setXml-boolean-"><code>BaseAntTask.setXml(boolean)</code></a></span></div>
+<div class="block">Determines if the output should be styled.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>style</code> - </dd>
@@ -483,6 +621,12 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <li class="blockList">
 <h4>setLicenses</h4>
 <pre>public&nbsp;void&nbsp;setLicenses(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;fileName)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use licenses child element.</span></div>
+<div class="block">Adds as a file containing the definitions of licenses to the system.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>fileName</code> - the file to add.</dd>
+</dl>
 </li>
 </ul>
 <a name="setUseDefaultLicenses-boolean-">
@@ -491,11 +635,13 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <ul class="blockList">
 <li class="blockList">
 <h4>setUseDefaultLicenses</h4>
-<pre>public&nbsp;void&nbsp;setUseDefaultLicenses(boolean&nbsp;useDefaultLicenses)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setUseDefaultLicenses(boolean&nbsp;useDefaultLicenses)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use noDefaultLicenses attribute</span></div>
+<div class="block">Specifies whether to add the default list of license matchers.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>useDefaultLicenses</code> - Whether to add the default list of license
- matchers.</dd>
+<dd><code>useDefaultLicenses</code> - if <code>true</code> use the default licenses.</dd>
 </dl>
 </li>
 </ul>
@@ -505,7 +651,14 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <ul class="blockList">
 <li class="blockList">
 <h4>setAddApprovedLicense</h4>
-<pre>public&nbsp;void&nbsp;setAddApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setAddApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use addApprovedLicense child element.</span></div>
+<div class="block">Adds a family category to the list of approved licenses.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>familyCategory</code> - the category to add.</dd>
+</dl>
 </li>
 </ul>
 <a name="addAddApprovedLicense-java.lang.String-">
@@ -515,6 +668,11 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <li class="blockList">
 <h4>addAddApprovedLicense</h4>
 <pre>public&nbsp;void&nbsp;addAddApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</pre>
+<div class="block">Adds a family category to the list of approved licenses.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>familyCategory</code> - the category to add</dd>
+</dl>
 </li>
 </ul>
 <a name="setRemoveApprovedLicense-java.lang.String-">
@@ -523,7 +681,28 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <ul class="blockList">
 <li class="blockList">
 <h4>setRemoveApprovedLicense</h4>
-<pre>public&nbsp;void&nbsp;setRemoveApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setRemoveApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use removeApprovedLicense child element}</span></div>
+<div class="block">Removes a family category to the list of approved licenses.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>familyCategory</code> - the category to add.</dd>
+</dl>
+</li>
+</ul>
+<a name="addRemoveApprovedLicense-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addRemoveApprovedLicense</h4>
+<pre>public&nbsp;void&nbsp;addRemoveApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyCategory)</pre>
+<div class="block">Removes a family category to the list of approved licenses.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>familyCategory</code> - the category to add.</dd>
+</dl>
 </li>
 </ul>
 <a name="setRemoveApprovedLicense-java.lang.String:A-">
@@ -532,7 +711,28 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <ul class="blockList">
 <li class="blockList">
 <h4>setRemoveApprovedLicense</h4>
-<pre>public&nbsp;void&nbsp;setRemoveApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;familyCategory)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setRemoveApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;familyCategory)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use removeApprovedLicense element</span></div>
+<div class="block">Removes a family category to the list of approved licenses.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>familyCategory</code> - the category to add.</dd>
+</dl>
+</li>
+</ul>
+<a name="addRemoveApprovedLicense-java.lang.String:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addRemoveApprovedLicense</h4>
+<pre>public&nbsp;void&nbsp;addRemoveApprovedLicense(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;familyCategory)</pre>
+<div class="block">Removes a family category to the list of approved licenses.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>familyCategory</code> - the category to add.</dd>
+</dl>
 </li>
 </ul>
 <a name="setCopyrightMessage-java.lang.String-">
@@ -541,7 +741,14 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <ul class="blockList">
 <li class="blockList">
 <h4>setCopyrightMessage</h4>
-<pre>public&nbsp;void&nbsp;setCopyrightMessage(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;copyrightMessage)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setCopyrightMessage(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;copyrightMessage)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use copyright attribute</span></div>
+<div class="block">Sets the copyright message</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>copyrightMessage</code> - the copyright message</dd>
+</dl>
 </li>
 </ul>
 <a name="setAddLicenseHeaders-org.apache.rat.anttasks.Report.AddLicenseHeaders-">
@@ -550,7 +757,14 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <ul class="blockList">
 <li class="blockList">
 <h4>setAddLicenseHeaders</h4>
-<pre>public&nbsp;void&nbsp;setAddLicenseHeaders(<a href="../../../../org/apache/rat/anttasks/Report.AddLicenseHeaders.html" title="class in org.apache.rat.anttasks">Report.AddLicenseHeaders</a>&nbsp;setting)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setAddLicenseHeaders(<a href="../../../../org/apache/rat/anttasks/Report.AddLicenseHeaders.html" title="class in org.apache.rat.anttasks">Report.AddLicenseHeaders</a>&nbsp;setting)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">use addLicense and force attributes</span></div>
+<div class="block">Determines if license headers should be added.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>setting</code> - the setting.</dd>
+</dl>
 </li>
 </ul>
 <a name="setAddDefaultDefinitions-java.io.File-">
@@ -559,7 +773,14 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <ul class="blockList">
 <li class="blockList">
 <h4>setAddDefaultDefinitions</h4>
-<pre>public&nbsp;void&nbsp;setAddDefaultDefinitions(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;fileName)</pre>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+public&nbsp;void&nbsp;setAddDefaultDefinitions(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</a>&nbsp;fileName)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Use <a href="../../../../org/apache/rat/anttasks/Report.html#addLicense-org.apache.rat.anttasks.License-"><code>addLicense(org.apache.rat.anttasks.License)</code></a></span></div>
+<div class="block">Adds definition information</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>fileName</code> - the file to add</dd>
+</dl>
 </li>
 </ul>
 <a name="getConfiguration--">
@@ -569,12 +790,17 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <li class="blockList">
 <h4>getConfiguration</h4>
 <pre>public&nbsp;<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;getConfiguration()</pre>
+<div class="block">Creates the ReportConfiguration from the ant options.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the ReportConfiguration.</dd>
+</dl>
 </li>
 </ul>
 <a name="execute--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>execute</h4>
 <pre>public&nbsp;void&nbsp;execute()</pre>
@@ -583,6 +809,16 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code>execute</code>&nbsp;in class&nbsp;<code>org.apache.tools.ant.Task</code></dd>
 </dl>
+</li>
+</ul>
+<a name="validate-org.apache.rat.ReportConfiguration-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>validate</h4>
+<pre>protected&nbsp;<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;validate(<a href="../../../../org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;cfg)</pre>
+<div class="block">validates the task's configuration.</div>
 </li>
 </ul>
 </li>
@@ -639,7 +875,7 @@ public&nbsp;void&nbsp;setFormat(<a href="https://docs.oracle.com/javase/8/docs/a
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.org.apache.tools.ant.Task">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.org.apache.rat.anttasks.BaseAntTask">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>

@@ -134,7 +134,7 @@
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>                 writer.closeElement(); <em class="jxr_comment">// APPROVED</em>
 <a class="jxr_linenumber" name="L127" href="#L127">127</a> 
 <a class="jxr_linenumber" name="L128" href="#L128">128</a>                 <em class="jxr_comment">// write matchers section</em>
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>                 <a name="MatcherBuilderTracker" href="../../../../org/apache/rat/configuration/MatcherBuilderTracker.html#MatcherBuilderTracker">MatcherBuilderTracker</a> tracker = MatcherBuilderTracker.INSTANCE;
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>                 <a name="MatcherBuilderTracker" href="../../../../org/apache/rat/configuration/MatcherBuilderTracker.html#MatcherBuilderTracker">MatcherBuilderTracker</a> tracker = MatcherBuilderTracker.instance();
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>                 writer.openElement(XMLConfig.MATCHERS);
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>                 <strong class="jxr_keyword">for</strong> (Class&lt;?&gt; clazz : tracker.getClasses()) {
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>                     writer.openElement(XMLConfig.MATCHER).attribute(XMLConfig.ATT_CLASS_NAME, clazz.getCanonicalName())
