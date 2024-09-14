@@ -29,66 +29,32 @@
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertTrue;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.io.PrintWriter;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.io.StringWriter;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.StandardCharsets;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.cli.CommandLine;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.cli.DefaultParser;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.cli.Options;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.FileUtils;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TextUtils;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.DefaultLog;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.io.TempDir;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.StandardCharsets;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.cli.CommandLine;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.cli.DefaultParser;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.FileUtils;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.DefaultLog;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.io.TempDir;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ReportTest" href="../../../org/apache/rat/ReportTest.html#ReportTest">ReportTest</a> {
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      @TempDir
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <strong class="jxr_keyword">static</strong> File tempDirectory;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ReportTest" href="../../../org/apache/rat/ReportTest.html#ReportTest">ReportTest</a> {
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      @TempDir
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">static</strong> File tempDirectory;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>      @Test
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testOutputOption() <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          File output = <strong class="jxr_keyword">new</strong> File(tempDirectory, <span class="jxr_string">"test"</span>);
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(OptionCollection.buildOptions(), <strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"-o"</span>, output.getCanonicalPath()});
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          ReportConfiguration config = OptionCollection.createConfiguration(DefaultLog.getInstance(), <span class="jxr_string">"target/test-classes/elements"</span>, cl);
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          <strong class="jxr_keyword">new</strong> Reporter(config).output();
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          assertTrue(output.exists());
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          String content = FileUtils.readFileToString(output, StandardCharsets.UTF_8);
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          assertTrue(content.contains(<span class="jxr_string">"2 Unknown Licenses"</span>));
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          assertTrue(content.contains(<span class="jxr_string">"target/test-classes/elements/Source.java"</span>));
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          assertTrue(content.contains(<span class="jxr_string">"target/test-classes/elements/sub/Empty.txt"</span>));
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      }
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      @Test
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> helpTest() {
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          Options opts = OptionCollection.buildOptions();
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          StringWriter out = <strong class="jxr_keyword">new</strong> StringWriter();
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          Report.printUsage(<strong class="jxr_keyword">new</strong> PrintWriter(out), opts);
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          String result = out.toString();
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>          System.out.println(result);
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          TextUtils.assertContains(<span class="jxr_string">"-a "</span>, result);
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          TextUtils.assertContains(<span class="jxr_string">"-A,--addLicense "</span>, result);
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          TextUtils.assertContains(<span class="jxr_string">"--archive &lt;ProcessingType&gt; "</span>, result);
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          TextUtils.assertContains(<span class="jxr_string">"-c,--copyright &lt;arg&gt; "</span>, result);
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          TextUtils.assertContains(<span class="jxr_string">"-d,--dir &lt;DirOrArchive&gt; "</span>, result);
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          TextUtils.assertContains(<span class="jxr_string">"--dry-run "</span>, result);
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          TextUtils.assertContains(<span class="jxr_string">"-e,--exclude &lt;Expression&gt; "</span>, result);
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          TextUtils.assertContains(<span class="jxr_string">"-E,--exclude-file &lt;FileOrURI&gt; "</span>, result);
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          TextUtils.assertContains(<span class="jxr_string">"-f,--force "</span>, result);
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>          TextUtils.assertContains(<span class="jxr_string">"-h,--help "</span>, result);
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>          TextUtils.assertContains(<span class="jxr_string">"--licenses &lt;FileOrURI&gt; "</span>, result);
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          TextUtils.assertContains(<span class="jxr_string">"--list-families &lt;LicenseFilter&gt; "</span>, result);
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          TextUtils.assertContains(<span class="jxr_string">"--list-licenses &lt;LicenseFilter&gt; "</span>, result);
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          TextUtils.assertContains(<span class="jxr_string">"--log-level &lt;LogLevel&gt; "</span>, result);
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>          TextUtils.assertContains(<span class="jxr_string">"--no-default-licenses "</span>, result);
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>          TextUtils.assertContains(<span class="jxr_string">"-o,--out &lt;arg&gt; "</span>, result);
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          TextUtils.assertContains(<span class="jxr_string">"-s,--stylesheet &lt;StyleSheet&gt; "</span>, result);
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>          TextUtils.assertContains(<span class="jxr_string">"--scan-hidden-directories "</span>, result);
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>          TextUtils.assertContains(<span class="jxr_string">"-x,--xml "</span>, result);
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>      }
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>  }
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      @Test
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testOutputOption() <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>          File output = <strong class="jxr_keyword">new</strong> File(tempDirectory, <span class="jxr_string">"test"</span>);
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(OptionCollection.buildOptions(), <strong class="jxr_keyword">new</strong> String[]{<span class="jxr_string">"-o"</span>, output.getCanonicalPath()});
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>          ReportConfiguration config = OptionCollection.createConfiguration(<span class="jxr_string">"target/test-classes/elements"</span>, cl);
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          <strong class="jxr_keyword">new</strong> Reporter(config).output();
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>          assertTrue(output.exists());
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          String content = FileUtils.readFileToString(output, StandardCharsets.UTF_8);
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          assertTrue(content.contains(<span class="jxr_string">"2 Unknown Licenses"</span>));
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          assertTrue(content.contains(<span class="jxr_string">"target/test-classes/elements/Source.java"</span>));
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          assertTrue(content.contains(<span class="jxr_string">"target/test-classes/elements/sub/Empty.txt"</span>));
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>

@@ -62,34 +62,34 @@
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> enum StringCase {
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">         * Camel case tags strings like 'CamelCase' or 'camelCase'. This conversion forces the first character to</em>
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment">         * lower case. If specific capitalization rules are required use {@code WordUtils.capitalize()} to set the first</em>
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>  <em class="jxr_javadoccomment">         * lower case. If specific capitalization rules are required use {@link WordUtils#capitalize(String)} to set the first</em>
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <em class="jxr_javadoccomment">         * character of the string.</em>
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>  <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          CAMEL(Character::isUpperCase, <strong class="jxr_keyword">true</strong>, CAMEL_JOINER),
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">         * Snake case tags strings like 'Snake_Case'.  This conversion does not change the capitalization of any characters</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">         * in the string.  If specific capitalization is required use {@code String.toUpperCase()}, {@code String.toLowerCase()},</em>
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">         * or the commons-text methods {@code WordUtils.capitalize()}, or {@code WordUtils.uncapitalize()} as required.</em>
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">         * in the string.  If specific capitalization is required use {@link String#toUpperCase()}, {@link String#toLowerCase()},</em>
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">         * or the commons-text methods {@link WordUtils#capitalize(String)}, or {@link WordUtils#uncapitalize(String)} as required.</em>
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>          SNAKE(c -&gt; c == '_', false, a -&gt; String.join(<span class="jxr_string">"_"</span>, a)),
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>          <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">         * Kebab case tags strings like 'kebab-case'.  This conversion does not change the capitalization of any characters</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">         * in the string.  If specific capitalization is required use {@code String.toUpperCase()}, {@code String.toLowerCase()},</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">         * or the commons-text methods {@code WordUtils.capitalize()}, or {@code WordUtils.uncapitalize()} as required.</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">         * in the string.  If specific capitalization is required use {@link String#toUpperCase()}, {@link String#toLowerCase()},</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">         *          * or the commons-text methods {@link WordUtils#capitalize(String)}, or {@link WordUtils#uncapitalize(String)} as required.</em>
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          KEBAB(c -&gt; c == '-', false, a -&gt; String.join(<span class="jxr_string">"-"</span>, a)),
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>  <em class="jxr_javadoccomment">         * Phrase case tags phrases of words like 'phrase case'. This conversion does not change the capitalization of any characters</em>
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment">         * in the string.  If specific capitalization is required use {@code String.toUpperCase()}, {@code String.toLowerCase()},</em>
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">         * or the commons-text methods {@code WordUtils.capitalize()}, or {@code WordUtils.uncapitalize()} as required.</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment">         * in the string.  If specific capitalization is required use {@link String#toUpperCase()}, {@link String#toLowerCase()},</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">         *          * or the commons-text methods {@link WordUtils#capitalize(String)}, or {@link WordUtils#uncapitalize(String)} as required.</em>
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>          PHRASE(Character::isWhitespace, false, a -&gt; String.join(<span class="jxr_string">" "</span>, a)),
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>          <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">         * Dot case tags phrases of words like 'phrase.case'. This conversion does not change the capitalization of any characters</em>
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">         * in the string.  If specific capitalization is required use {@code String.toUpperCase()}, {@code String.toLowerCase()},</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">         * or the commons-text methods {@code WordUtils.capitalize()}, or {@code WordUtils.uncapitalize()} as required.</em>
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">         * in the string.  If specific capitalization is required use {@link String#toUpperCase()}, {@link String#toLowerCase()},</em>
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">         *          * or the commons-text methods {@link WordUtils#capitalize(String)}, or {@link WordUtils#uncapitalize(String)} as required.</em>
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          DOT(c -&gt; c == '.', false, a -&gt; String.join(<span class="jxr_string">"."</span>, a));
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>  

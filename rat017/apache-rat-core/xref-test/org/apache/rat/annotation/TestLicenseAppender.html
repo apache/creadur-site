@@ -80,7 +80,7 @@
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          createTestFile(name, creator);
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender(DefaultLog.getInstance());
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender();
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          appender.append(<strong class="jxr_keyword">new</strong> File(name));
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          <strong class="jxr_keyword">try</strong> (BufferedReader r = <strong class="jxr_keyword">new</strong> BufferedReader(<strong class="jxr_keyword">new</strong> FileReader(name + <span class="jxr_string">".new"</span>))) {
@@ -114,7 +114,7 @@
 <a class="jxr_linenumber" name="L106" href="#L106">106</a> 
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>         File file = <strong class="jxr_keyword">new</strong> File(filename);
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         file.deleteOnExit();
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>         ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender(DefaultLog.getInstance());
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>         ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender();
 <a class="jxr_linenumber" name="L110" href="#L110">110</a>         appender.append(file);
 <a class="jxr_linenumber" name="L111" href="#L111">111</a> 
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         File newFile = <strong class="jxr_keyword">new</strong> File(filename + <span class="jxr_string">".new"</span>);
@@ -478,7 +478,7 @@
 <a class="jxr_linenumber" name="L470" href="#L470">470</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> fileWithBOM() <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L471" href="#L471">471</a>         File f = Resources.getResourceFile(<span class="jxr_string">"violations/FilterTest.cs"</span>);
 <a class="jxr_linenumber" name="L472" href="#L472">472</a> 
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>         ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender(DefaultLog.getInstance());
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>         ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender();
 <a class="jxr_linenumber" name="L474" href="#L474">474</a>         appender.append(f);
 <a class="jxr_linenumber" name="L475" href="#L475">475</a> 
 <a class="jxr_linenumber" name="L476" href="#L476">476</a>         <strong class="jxr_keyword">try</strong> (BufferedReader r = <strong class="jxr_keyword">new</strong> BufferedReader(<strong class="jxr_keyword">new</strong> FileReader(f.getAbsolutePath() + <span class="jxr_string">".new"</span>))) {
@@ -645,7 +645,7 @@
 <a class="jxr_linenumber" name="L637" href="#L637">637</a>     }
 <a class="jxr_linenumber" name="L638" href="#L638">638</a> 
 <a class="jxr_linenumber" name="L639" href="#L639">639</a>     @Test
-<a class="jxr_linenumber" name="L640" href="#L640">640</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testForced() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L640" href="#L640">640</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testOverwrite() <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L641" href="#L641">641</a>         String filename = <span class="jxr_string">"tmp.php"</span>;
 <a class="jxr_linenumber" name="L642" href="#L642">642</a>         <strong class="jxr_keyword">final</strong> String firstLine = <span class="jxr_string">"&lt;?php"</span>;
 <a class="jxr_linenumber" name="L643" href="#L643">643</a> 
@@ -659,8 +659,8 @@
 <a class="jxr_linenumber" name="L651" href="#L651">651</a>         <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L652" href="#L652">652</a>             createTestFile(name, phpCreator);
 <a class="jxr_linenumber" name="L653" href="#L653">653</a> 
-<a class="jxr_linenumber" name="L654" href="#L654">654</a>             ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender(DefaultLog.getInstance());
-<a class="jxr_linenumber" name="L655" href="#L655">655</a>             appender.setForce(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L654" href="#L654">654</a>             ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender();
+<a class="jxr_linenumber" name="L655" href="#L655">655</a>             appender.setOverwrite(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L656" href="#L656">656</a>             appender.append(<strong class="jxr_keyword">new</strong> File(name));
 <a class="jxr_linenumber" name="L657" href="#L657">657</a> 
 <a class="jxr_linenumber" name="L658" href="#L658">658</a>             assertFalse(<strong class="jxr_keyword">new</strong> File(name + <span class="jxr_string">".new"</span>).exists());
@@ -692,8 +692,8 @@
 <a class="jxr_linenumber" name="L684" href="#L684">684</a>             createTestFile(name, phpCreator);
 <a class="jxr_linenumber" name="L685" href="#L685">685</a>             assertTrue(<strong class="jxr_keyword">new</strong> File(name).setExecutable(<strong class="jxr_keyword">true</strong>), <span class="jxr_string">"Unable to set executable flag"</span>);
 <a class="jxr_linenumber" name="L686" href="#L686">686</a> 
-<a class="jxr_linenumber" name="L687" href="#L687">687</a>             ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender(DefaultLog.getInstance());
-<a class="jxr_linenumber" name="L688" href="#L688">688</a>             appender.setForce(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L687" href="#L687">687</a>             ApacheV2LicenseAppender appender = <strong class="jxr_keyword">new</strong> ApacheV2LicenseAppender();
+<a class="jxr_linenumber" name="L688" href="#L688">688</a>             appender.setOverwrite(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L689" href="#L689">689</a>             appender.append(<strong class="jxr_keyword">new</strong> File(name));
 <a class="jxr_linenumber" name="L690" href="#L690">690</a> 
 <a class="jxr_linenumber" name="L691" href="#L691">691</a>             assertFalse(<strong class="jxr_keyword">new</strong> File(name + <span class="jxr_string">".new"</span>).exists());

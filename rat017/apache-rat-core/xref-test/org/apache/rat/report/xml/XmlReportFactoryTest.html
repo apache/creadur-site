@@ -79,9 +79,9 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      @Test
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> standardReport() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          <strong class="jxr_keyword">final</strong> String elementsPath = Resources.getResourceDirectory(<span class="jxr_string">"elements/Source.java"</span>);
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">final</strong> ReportConfiguration configuration = <strong class="jxr_keyword">new</strong> ReportConfiguration(DefaultLog.getInstance());
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">final</strong> ReportConfiguration configuration = <strong class="jxr_keyword">new</strong> ReportConfiguration();
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>          <strong class="jxr_keyword">final</strong> <a name="TestingLicense" href="../../../../../org/apache/rat/testhelpers/TestingLicense.html#TestingLicense">TestingLicense</a> testingLicense = <strong class="jxr_keyword">new</strong> <a name="TestingLicense" href="../../../../../org/apache/rat/testhelpers/TestingLicense.html#TestingLicense">TestingLicense</a>(<span class="jxr_string">"TEST"</span>, <strong class="jxr_keyword">new</strong> <a name="TestingMatcher" href="../../../../../org/apache/rat/testhelpers/TestingMatcher.html#TestingMatcher">TestingMatcher</a>(<strong class="jxr_keyword">true</strong>), family);
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          configuration.setFrom(Defaults.builder().build(DefaultLog.getInstance()));
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          configuration.setFrom(Defaults.builder().build());
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          configuration.setDirectoriesToIgnore(HiddenFileFilter.HIDDEN);
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          DirectoryWalker directory = <strong class="jxr_keyword">new</strong> DirectoryWalker(configuration, <strong class="jxr_keyword">new</strong> FileDocument(<strong class="jxr_keyword">new</strong> File(elementsPath)));
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>          <strong class="jxr_keyword">final</strong> ClaimStatistic statistic = <strong class="jxr_keyword">new</strong> ClaimStatistic();
@@ -111,7 +111,7 @@
 <a class="jxr_linenumber" name="L103" href="#L103">103</a>         when(mockLicense.getLicenseFamily()).thenReturn(family);
 <a class="jxr_linenumber" name="L104" href="#L104">104</a> 
 <a class="jxr_linenumber" name="L105" href="#L105">105</a>         <strong class="jxr_keyword">final</strong> ClaimStatistic statistic = <strong class="jxr_keyword">new</strong> ClaimStatistic();
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         <strong class="jxr_keyword">final</strong> ReportConfiguration configuration = <strong class="jxr_keyword">new</strong> ReportConfiguration(DefaultLog.getInstance());
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         <strong class="jxr_keyword">final</strong> ReportConfiguration configuration = <strong class="jxr_keyword">new</strong> ReportConfiguration();
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>         <em class="jxr_comment">// configuration.addLicense(mockLicense);</em>
 <a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>             XmlReportFactory.createStandardReport(writer, statistic, configuration);
