@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -193,23 +193,29 @@ implements <a href="../../../../../../../../org/apache/rat/report/xml/writer/IXm
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../../org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#closeElement-java.lang.CharSequence-">closeElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;name)</code>
+<div class="block">Closes back to and including the last instance of the specified element name.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../../org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#comment-java.lang.CharSequence-">comment</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;text)</code>
 <div class="block">Writes a comment</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../../org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#content-java.lang.CharSequence-">content</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;content)</code>
 <div class="block">Writes content.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../../org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#openElement-java.lang.CharSequence-">openElement</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;elementName)</code>
 <div class="block">Writes the start of an element.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../../../../org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#startDocument--">startDocument</a></span>()</code>
 <div class="block">Starts a document by writing a prolog.</div>
@@ -393,8 +399,8 @@ implements <a href="../../../../../../../../org/apache/rat/report/xml/writer/IXm
                  throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html#cdata-java.lang.CharSequence-">IXmlWriter</a></code></span></div>
 <div class="block">Writes CDATA content.
- This method DOES NOT automatically escapes characters.
- It will removed enclosed CDATA closing strings (e.g. <code>]]&gt;</code></div>
+ This method DOES NOT automatically escape characters.
+ It will remove enclosed CDATA closing strings (e.g. <code>]]&gt;</code></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html#cdata-java.lang.CharSequence-">cdata</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></dd>
@@ -421,6 +427,29 @@ implements <a href="../../../../../../../../org/apache/rat/report/xml/writer/IXm
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html#closeElement--">closeElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>this object</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/OperationNotAllowedException.html" title="class in org.apache.rat.report.xml.writer">OperationNotAllowedException</a></code> - if called before any call to
+ <a href="../../../../../../../../org/apache/rat/report/xml/writer/impl/base/XmlWriter.html#openElement-java.lang.CharSequence-"><code>openElement(java.lang.CharSequence)</code></a> or after the first element has been closed</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="closeElement-java.lang.CharSequence-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>closeElement</h4>
+<pre>public&nbsp;<a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;closeElement(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html?is-external=true" title="class or interface in java.lang">CharSequence</a>&nbsp;name)
+                        throws <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
+<div class="block">Closes back to and including the last instance of the specified element name.</div>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html#closeElement-java.lang.CharSequence-">closeElement</a></code>&nbsp;in interface&nbsp;<code><a href="../../../../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - The name of the element to close.  Must not be <code>null</code>.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>this object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

@@ -90,7 +90,9 @@
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><a href="#org.apache.rat.analysis">org.apache.rat.analysis</a></td>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Classes that perform analyses of files.</div>
+</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><a href="#org.apache.rat.api">org.apache.rat.api</a></td>
@@ -182,12 +184,6 @@
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">ReportConfiguration.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/ReportConfiguration.html#addLicenses-java.util.Collection-">addLicenses</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code>
-<div class="block">Adds multiple licenses to the list of licenses.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><span class="typeNameLabel">ReportConfiguration.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/ReportConfiguration.html#addLicensesIfNotPresent-java.util.Collection-">addLicensesIfNotPresent</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code>
 <div class="block">Adds multiple licenses to the list of licenses.</div>
 </td>
 </tr>
@@ -356,6 +352,12 @@
 <tbody>
 <tr class="altColor">
 <td class="colFirst"><code><a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a></code></td>
+<td class="colLast"><span class="typeNameLabel">LicenseSetFactory.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/LicenseSetFactory.html#addLicense-org.apache.rat.license.ILicense.Builder-">addLicense</a></span>(<a href="../../../../../org/apache/rat/license/ILicense.Builder.html" title="interface in org.apache.rat.license">ILicense.Builder</a>&nbsp;builder)</code>
+<div class="block">Adds a license to the list of licenses.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code><a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a></code></td>
 <td class="colLast"><span class="typeNameLabel">ILicense.Builder.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/ILicense.Builder.html#build--">build</a></span>()</code>
 <div class="block">Builds the license.</div>
 </td>
@@ -400,23 +402,29 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">LicenseSetFactory.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/LicenseSetFactory.html#addLicense-org.apache.rat.license.ILicense-">addLicense</a></span>(<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code>
+<div class="block">Adds a license to the list of licenses.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>default int</code></td>
 <td class="colLast"><span class="typeNameLabel">ILicense.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/ILicense.html#compareTo-org.apache.rat.license.ILicense-">compareTo</a></span>(<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;other)</code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <td class="colLast"><span class="typeNameLabel">ILicense.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/ILicense.html#equals-org.apache.rat.license.ILicense-java.lang.Object-">equals</a></span>(<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license1,
       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;o)</code>
 <div class="block">A default implementation of equals.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><span class="typeNameLabel">ILicense.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/ILicense.html#hash-org.apache.rat.license.ILicense-">hash</a></span>(<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code>
 <div class="block">A default implementatin of a License hash</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">LicenseSetFactory.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/LicenseSetFactory.html#search-org.apache.rat.license.ILicense-java.util.SortedSet-">search</a></span>(<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;target,
       <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code>
@@ -433,13 +441,19 @@
 </tr>
 <tbody>
 <tr class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><span class="typeNameLabel">LicenseSetFactory.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/LicenseSetFactory.html#addLicenses-java.util.Collection-">addLicenses</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code>
+<div class="block">Adds multiple licenses to the list of licenses.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">LicenseSetFactory.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/LicenseSetFactory.html#search-org.apache.rat.license.ILicense-java.util.SortedSet-">search</a></span>(<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;target,
       <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code>
 <div class="block">Search a SortedSet of licenses for the matching license.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html?is-external=true" title="class or interface in java.util">Optional</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">LicenseSetFactory.</span><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/LicenseSetFactory.html#search-java.lang.String-java.lang.String-java.util.SortedSet-">search</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;familyId,
       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseId,
@@ -457,13 +471,6 @@
 <tbody>
 <tr class="altColor">
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/LicenseSetFactory.html#LicenseSetFactory-java.util.SortedSet-">LicenseSetFactory</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code>
-<div class="block">Constructs a factory with the specified set of Licenses and the approved
- license collection.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../../org/apache/rat/license/LicenseSetFactory.html#LicenseSetFactory-java.util.SortedSet-java.util.SortedSet-">LicenseSetFactory</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../../../org/apache/rat/license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;&nbsp;families,
-                 <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html?is-external=true" title="class or interface in java.util">SortedSet</a>&lt;<a href="../../../../../org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code>
 <div class="block">Constructs a factory with the specified set of Licenses and the approved
  license collection.</div>
 </td>

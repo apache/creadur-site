@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":42,"i7":10,"i8":10,"i9":10,"i10":10,"i11":42,"i12":10,"i13":10,"i14":10,"i15":10,"i16":42,"i17":42,"i18":42,"i19":42,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":42,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":42,"i38":42,"i39":42,"i40":42,"i41":42,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":42,"i50":42,"i51":9};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":42,"i7":10,"i8":10,"i9":10,"i10":10,"i11":42,"i12":10,"i13":10,"i14":10,"i15":10,"i16":42,"i17":42,"i18":42,"i19":42,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":42,"i31":42,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":42,"i39":42,"i40":42,"i41":42,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":42,"i50":42,"i51":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -201,7 +201,7 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#addArg-java.lang.String-java.lang.String:A-">addArg</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value)</code>
-<div class="block">Add a value to the key in the argument list.</div>
+<div class="block">Add values to the key in the argument list.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -229,7 +229,9 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setAddLicense-boolean-">setAddLicense</a></span>(boolean&nbsp;addLicense)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;editLicense&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
@@ -247,7 +249,9 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setConfigs-java.lang.String:A-">setConfigs</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;config)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setConfigs-java.lang.String:A-">setConfigs</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;config)</code>
+<div class="block">File names for system configuration.</div>
+</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -258,7 +262,9 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setCopyright-java.lang.String-">setCopyright</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;copyright)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;editCopyright&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
@@ -288,25 +294,33 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setExclude-java.lang.String-">setExclude</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;exclude)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;inputExclude&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setExcludeFile-java.lang.String-">setExcludeFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;excludeFile)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;inputExcludeFile&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setExcludes-java.lang.String:A-">setExcludes</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;exclude)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;inputExclude&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setForce-boolean-">setForce</a></span>(boolean&nbsp;force)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;editOverwrite&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
@@ -329,7 +343,9 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setInputExcludes-java.lang.String:A-">setInputExcludes</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;inputExclude)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setInputExcludes-java.lang.String:A-">setInputExcludes</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;inputExclude)</code>
+<div class="block">Excludes files matching wildcard &lt;Expression&gt;.</div>
+</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -339,13 +355,15 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesApprovedFile-java.lang.String-">setLicenseFamiliesApprovedFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamiliesApprovedFile)</code>
-<div class="block">Name of file containing the approved family IDs.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesApproved-java.lang.String:A-">setLicenseFamiliesApproved</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenseFamiliesApproved)</code>
+<div class="block">The approved License Family IDs.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesApproveds-java.lang.String:A-">setLicenseFamiliesApproveds</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenseFamiliesApproved)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesApprovedFile-java.lang.String-">setLicenseFamiliesApprovedFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamiliesApprovedFile)</code>
+<div class="block">Name of file containing the approved family IDs.</div>
+</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
@@ -355,80 +373,98 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesDeniedFile-java.lang.String-">setLicenseFamiliesDeniedFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamiliesDeniedFile)</code>
-<div class="block">Name of file containing the denied license IDs.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesDenied-java.lang.String:A-">setLicenseFamiliesDenied</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenseFamiliesDenied)</code>
+<div class="block">The denied License family IDs.</div>
 </td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesDenieds-java.lang.String:A-">setLicenseFamiliesDenieds</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenseFamiliesDenied)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesDeniedFile-java.lang.String-">setLicenseFamiliesDeniedFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamiliesDeniedFile)</code>
+<div class="block">Name of file containing the denied license IDs.</div>
+</td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenses-java.lang.String-">setLicenses</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenses)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;config&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i31" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicenses-java.lang.String:A-">setLicenses</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenses)</code>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;config&gt; instead.</span></div>
+</div>
+</td>
+</tr>
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensesApproved-java.lang.String-">setLicensesApproved</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licensesApproved)</code>
 <div class="block">The approved License IDs.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensesApproved-java.lang.String:A-">setLicensesApproved</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licensesApproved)</code>
+<div class="block">The approved License IDs.</div>
+</td>
+</tr>
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensesApprovedFile-java.lang.String-">setLicensesApprovedFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licensesApprovedFile)</code>
 <div class="block">Name of file containing the approved license IDs.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensesApproveds-java.lang.String:A-">setLicensesApproveds</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licensesApproved)</code>&nbsp;</td>
-</tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensesDenied-java.lang.String-">setLicensesDenied</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licensesDenied)</code>
 <div class="block">The denied License IDs.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i36" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensesDenied-java.lang.String:A-">setLicensesDenied</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licensesDenied)</code>
+<div class="block">The denied License IDs.</div>
+</td>
+</tr>
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensesDeniedFile-java.lang.String-">setLicensesDeniedFile</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licensesDeniedFile)</code>
 <div class="block">Name of File containing the approved license IDs.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensesDenieds-java.lang.String:A-">setLicensesDenieds</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licensesDenied)</code>&nbsp;</td>
-</tr>
-<tr id="i37" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setLicensess-java.lang.String:A-">setLicensess</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenses)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-</td>
-</tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setListFamilies-java.lang.String-">setListFamilies</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;listFamilies)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputFamilies&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setListLicenses-java.lang.String-">setListLicenses</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;listLicenses)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputLicenses&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setNoDefaultLicenses-boolean-">setNoDefaultLicenses</a></span>(boolean&nbsp;noDefaultLicenses)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;configurationNoDefaults&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setOut-java.lang.String-">setOut</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;out)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputFile&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i42" class="altColor">
@@ -476,13 +512,17 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setStylesheet-java.lang.String-">setStylesheet</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;stylesheet)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputStyle&gt; instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/plugin/BaseRatMojo.html#setXml-boolean-">setXml</a></span>(boolean&nbsp;xml)</code>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;
+<div class="block"><span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputStyle&gt; with the 'xml' argument instead.</span></div>
+</div>
 </td>
 </tr>
 <tr id="i51" class="rowColor">
@@ -625,23 +665,6 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 </dl>
 </li>
 </ul>
-<a name="addArg-java.lang.String-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addArg</h4>
-<pre>protected&nbsp;void&nbsp;addArg(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
-                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
-<div class="block">Add a value to the key in the argument list.
- If the key does not exist, adds it.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - the key for the map.</dd>
-<dd><code>value</code> - the value to set.</dd>
-</dl>
-</li>
-</ul>
 <a name="addArg-java.lang.String-java.lang.String:A-">
 <!--   -->
 </a>
@@ -650,6 +673,23 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 <h4>addArg</h4>
 <pre>protected&nbsp;void&nbsp;addArg(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
                       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value)</pre>
+<div class="block">Add values to the key in the argument list.
+ If the key does not exist, adds it.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>key</code> - the key for the map.</dd>
+<dd><code>value</code> - the value to set.</dd>
+</dl>
+</li>
+</ul>
+<a name="addArg-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addArg</h4>
+<pre>protected&nbsp;void&nbsp;addArg(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
+                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
 <div class="block">Add a value to the key in the argument list.
  If the key does not exist, adds it.</div>
 <dl>
@@ -680,14 +720,13 @@ extends org.apache.maven.plugin.AbstractMojo</pre>
 <li class="blockList">
 <h4>setCopyright</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.copyright")
+ @Parameter(property="rat.Copyright")
 public&nbsp;void&nbsp;setCopyright(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;copyright)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;editCopyright&gt; instead.</span></div>
 <div class="block">The copyright message to use in the license headers.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>copyright</code> - the argument.
- Deprecated for removal since 0.17: Use --edit-copyright instead.</dd>
+<dd><code>copyright</code> - copyright message to use in the license headers.</dd>
 </dl>
 </li>
 </ul>
@@ -697,12 +736,12 @@ public&nbsp;void&nbsp;setCopyright(<a href="https://docs.oracle.com/javase/8/doc
 <ul class="blockList">
 <li class="blockList">
 <h4>setEditCopyright</h4>
-<pre>@Parameter(property="rat.editCopyright")
+<pre>@Parameter(property="rat.EditCopyright")
 public&nbsp;void&nbsp;setEditCopyright(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;editCopyright)</pre>
-<div class="block">The copyright message to use in the license headers. Usually in the form of "Copyright 2008 Foo".  Only valid with --edit-license</div>
+<div class="block">The copyright message to use in the license headers. Usually in the form of &quot;Copyright 2008 Foo&quot;.  Only valid with &lt;editLicense&gt;</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>editCopyright</code> - the argument.</dd>
+<dd><code>editCopyright</code> - copyright message to use in the license headers.</dd>
 </dl>
 </li>
 </ul>
@@ -713,14 +752,13 @@ public&nbsp;void&nbsp;setEditCopyright(<a href="https://docs.oracle.com/javase/8
 <li class="blockList">
 <h4>setForce</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.force")
+ @Parameter(property="rat.Force")
 public&nbsp;void&nbsp;setForce(boolean&nbsp;force)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;editOverwrite&gt; instead.</span></div>
 <div class="block">Forces any changes in files to be written directly to the source files (i.e. new files are not created).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>force</code> - the argument.
- Deprecated for removal since 0.17: Use --edit-overwrite instead.</dd>
+<dd><code>force</code> - the state</dd>
 </dl>
 </li>
 </ul>
@@ -730,12 +768,12 @@ public&nbsp;void&nbsp;setForce(boolean&nbsp;force)</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setEditOverwrite</h4>
-<pre>@Parameter(property="rat.editOverwrite")
+<pre>@Parameter(property="rat.EditOverwrite")
 public&nbsp;void&nbsp;setEditOverwrite(boolean&nbsp;editOverwrite)</pre>
-<div class="block">Forces any changes in files to be written directly to the source files (i.e. new files are not created). Only valid with --edit-license</div>
+<div class="block">Forces any changes in files to be written directly to the source files (i.e. new files are not created). Only valid with &lt;editLicense&gt;</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>editOverwrite</code> - the argument.</dd>
+<dd><code>editOverwrite</code> - the state</dd>
 </dl>
 </li>
 </ul>
@@ -746,14 +784,13 @@ public&nbsp;void&nbsp;setEditOverwrite(boolean&nbsp;editOverwrite)</pre>
 <li class="blockList">
 <h4>setAddLicense</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.addLicense")
+ @Parameter(property="rat.AddLicense")
 public&nbsp;void&nbsp;setAddLicense(boolean&nbsp;addLicense)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;editLicense&gt; instead.</span></div>
 <div class="block">Add the default license header to any file with an unknown license that is not in the exclusion list.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>addLicense</code> - the argument.
- Deprecated for removal since 0.17: Use --edit-license instead.</dd>
+<dd><code>addLicense</code> - the state</dd>
 </dl>
 </li>
 </ul>
@@ -763,27 +800,12 @@ public&nbsp;void&nbsp;setAddLicense(boolean&nbsp;addLicense)</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setEditLicense</h4>
-<pre>@Parameter(property="rat.editLicense")
+<pre>@Parameter(property="rat.EditLicense")
 public&nbsp;void&nbsp;setEditLicense(boolean&nbsp;editLicense)</pre>
-<div class="block">Add the default license header to any file with an unknown license that is not in the exclusion list. By default new files will be created with the license header, to force the modification of existing files use the --edit-overwrite option.</div>
+<div class="block">Add the default license header to any file with an unknown license that is not in the exclusion list. By default new files will be created with the license header, to force the modification of existing files use the &lt;editOverwrite&gt; option.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>editLicense</code> - the argument.</dd>
-</dl>
-</li>
-</ul>
-<a name="setConfig-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setConfig</h4>
-<pre>@Parameter(property="rat.config")
-public&nbsp;void&nbsp;setConfig(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;config)</pre>
-<div class="block">File names for system configuration.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>config</code> - the argument.</dd>
+<dd><code>editLicense</code> - the state</dd>
 </dl>
 </li>
 </ul>
@@ -795,6 +817,43 @@ public&nbsp;void&nbsp;setConfig(<a href="https://docs.oracle.com/javase/8/docs/a
 <h4>setConfigs</h4>
 <pre>@Parameter
 public&nbsp;void&nbsp;setConfigs(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;config)</pre>
+<div class="block">File names for system configuration. Arguments should be File. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>config</code> - names for system configuration.</dd>
+</dl>
+</li>
+</ul>
+<a name="setConfig-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setConfig</h4>
+<pre>@Parameter
+public&nbsp;void&nbsp;setConfig(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;config)</pre>
+<div class="block">File names for system configuration. Arguments should be File. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>config</code> - names for system configuration.</dd>
+</dl>
+</li>
+</ul>
+<a name="setLicenses-java.lang.String:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLicenses</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+ @Parameter
+public&nbsp;void&nbsp;setLicenses(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenses)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;config&gt; instead.</span></div>
+<div class="block">File names for system configuration. Arguments should be File. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licenses</code> - names for system configuration.</dd>
+</dl>
 </li>
 </ul>
 <a name="setLicenses-java.lang.String-">
@@ -804,27 +863,14 @@ public&nbsp;void&nbsp;setConfigs(<a href="https://docs.oracle.com/javase/8/docs/
 <li class="blockList">
 <h4>setLicenses</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.licenses")
+ @Parameter
 public&nbsp;void&nbsp;setLicenses(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenses)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">File names for system configuration.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;config&gt; instead.</span></div>
+<div class="block">File names for system configuration. Arguments should be File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licenses</code> - the argument.
- Deprecated for removal since 0.17: Use --config instead.</dd>
+<dd><code>licenses</code> - names for system configuration.</dd>
 </dl>
-</li>
-</ul>
-<a name="setLicensess-java.lang.String:A-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setLicensess</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter
-public&nbsp;void&nbsp;setLicensess(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenses)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
 </li>
 </ul>
 <a name="setConfigurationNoDefaults-boolean-">
@@ -833,12 +879,12 @@ public&nbsp;void&nbsp;setLicensess(<a href="https://docs.oracle.com/javase/8/doc
 <ul class="blockList">
 <li class="blockList">
 <h4>setConfigurationNoDefaults</h4>
-<pre>@Parameter(property="rat.configurationNoDefaults")
+<pre>@Parameter(property="rat.ConfigurationNoDefaults")
 public&nbsp;void&nbsp;setConfigurationNoDefaults(boolean&nbsp;configurationNoDefaults)</pre>
 <div class="block">Ignore default configuration.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>configurationNoDefaults</code> - the argument.</dd>
+<dd><code>configurationNoDefaults</code> - the state</dd>
 </dl>
 </li>
 </ul>
@@ -849,14 +895,28 @@ public&nbsp;void&nbsp;setConfigurationNoDefaults(boolean&nbsp;configurationNoDef
 <li class="blockList">
 <h4>setNoDefaultLicenses</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.noDefaultLicenses")
+ @Parameter(property="rat.NoDefaultLicenses")
 public&nbsp;void&nbsp;setNoDefaultLicenses(boolean&nbsp;noDefaultLicenses)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;configurationNoDefaults&gt; instead.</span></div>
 <div class="block">Ignore default configuration.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>noDefaultLicenses</code> - the argument.
- Deprecated for removal since 0.17: Use --configuration-no-defaults instead.</dd>
+<dd><code>noDefaultLicenses</code> - the state</dd>
+</dl>
+</li>
+</ul>
+<a name="setLicensesApproved-java.lang.String:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLicensesApproved</h4>
+<pre>@Parameter
+public&nbsp;void&nbsp;setLicensesApproved(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licensesApproved)</pre>
+<div class="block">The approved License IDs. These licenses will be added to the list of approved licenses. Arguments should be LicenseID. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licensesApproved</code> - approved License IDs.</dd>
 </dl>
 </li>
 </ul>
@@ -866,23 +926,13 @@ public&nbsp;void&nbsp;setNoDefaultLicenses(boolean&nbsp;noDefaultLicenses)</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setLicensesApproved</h4>
-<pre>@Parameter(property="rat.licensesApproved")
+<pre>@Parameter
 public&nbsp;void&nbsp;setLicensesApproved(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licensesApproved)</pre>
-<div class="block">The approved License IDs. These licenses will be added to the list of approved licenses.</div>
+<div class="block">The approved License IDs. These licenses will be added to the list of approved licenses. Arguments should be LicenseID. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licensesApproved</code> - the argument.</dd>
+<dd><code>licensesApproved</code> - approved License IDs.</dd>
 </dl>
-</li>
-</ul>
-<a name="setLicensesApproveds-java.lang.String:A-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setLicensesApproveds</h4>
-<pre>@Parameter
-public&nbsp;void&nbsp;setLicensesApproveds(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licensesApproved)</pre>
 </li>
 </ul>
 <a name="setLicensesApprovedFile-java.lang.String-">
@@ -891,12 +941,27 @@ public&nbsp;void&nbsp;setLicensesApproveds(<a href="https://docs.oracle.com/java
 <ul class="blockList">
 <li class="blockList">
 <h4>setLicensesApprovedFile</h4>
-<pre>@Parameter(property="rat.licensesApprovedFile")
+<pre>@Parameter(property="rat.LicensesApprovedFile")
 public&nbsp;void&nbsp;setLicensesApprovedFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licensesApprovedFile)</pre>
-<div class="block">Name of file containing the approved license IDs.</div>
+<div class="block">Name of file containing the approved license IDs. Argument should be a File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licensesApprovedFile</code> - the argument.</dd>
+<dd><code>licensesApprovedFile</code> - of file containing the approved license IDs.</dd>
+</dl>
+</li>
+</ul>
+<a name="setLicenseFamiliesApproved-java.lang.String:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLicenseFamiliesApproved</h4>
+<pre>@Parameter
+public&nbsp;void&nbsp;setLicenseFamiliesApproved(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenseFamiliesApproved)</pre>
+<div class="block">The approved License Family IDs. These licenses families will be added to the list of approved licenses families. Arguments should be FamilyID. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licenseFamiliesApproved</code> - approved License Family IDs.</dd>
 </dl>
 </li>
 </ul>
@@ -906,23 +971,13 @@ public&nbsp;void&nbsp;setLicensesApprovedFile(<a href="https://docs.oracle.com/j
 <ul class="blockList">
 <li class="blockList">
 <h4>setLicenseFamiliesApproved</h4>
-<pre>@Parameter(property="rat.licenseFamiliesApproved")
+<pre>@Parameter
 public&nbsp;void&nbsp;setLicenseFamiliesApproved(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamiliesApproved)</pre>
-<div class="block">The approved License Family IDs. These licenses families will be added to the list of approved licenses families.</div>
+<div class="block">The approved License Family IDs. These licenses families will be added to the list of approved licenses families. Arguments should be FamilyID. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licenseFamiliesApproved</code> - the argument.</dd>
+<dd><code>licenseFamiliesApproved</code> - approved License Family IDs.</dd>
 </dl>
-</li>
-</ul>
-<a name="setLicenseFamiliesApproveds-java.lang.String:A-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setLicenseFamiliesApproveds</h4>
-<pre>@Parameter
-public&nbsp;void&nbsp;setLicenseFamiliesApproveds(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenseFamiliesApproved)</pre>
 </li>
 </ul>
 <a name="setLicenseFamiliesApprovedFile-java.lang.String-">
@@ -931,12 +986,27 @@ public&nbsp;void&nbsp;setLicenseFamiliesApproveds(<a href="https://docs.oracle.c
 <ul class="blockList">
 <li class="blockList">
 <h4>setLicenseFamiliesApprovedFile</h4>
-<pre>@Parameter(property="rat.licenseFamiliesApprovedFile")
+<pre>@Parameter(property="rat.LicenseFamiliesApprovedFile")
 public&nbsp;void&nbsp;setLicenseFamiliesApprovedFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamiliesApprovedFile)</pre>
-<div class="block">Name of file containing the approved family IDs.</div>
+<div class="block">Name of file containing the approved family IDs. Argument should be a File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licenseFamiliesApprovedFile</code> - the argument.</dd>
+<dd><code>licenseFamiliesApprovedFile</code> - of file containing the approved family IDs.</dd>
+</dl>
+</li>
+</ul>
+<a name="setLicensesDenied-java.lang.String:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLicensesDenied</h4>
+<pre>@Parameter
+public&nbsp;void&nbsp;setLicensesDenied(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licensesDenied)</pre>
+<div class="block">The denied License IDs. These licenses will be removed to the list of approved licenses. Once licenses are removed they can not be added back. Arguments should be LicenseID. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licensesDenied</code> - denied License IDs.</dd>
 </dl>
 </li>
 </ul>
@@ -946,23 +1016,13 @@ public&nbsp;void&nbsp;setLicenseFamiliesApprovedFile(<a href="https://docs.oracl
 <ul class="blockList">
 <li class="blockList">
 <h4>setLicensesDenied</h4>
-<pre>@Parameter(property="rat.licensesDenied")
+<pre>@Parameter
 public&nbsp;void&nbsp;setLicensesDenied(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licensesDenied)</pre>
-<div class="block">The denied License IDs. These licenses will be removed to the list of approved licenses. Once licenses are removed they can not be added back.</div>
+<div class="block">The denied License IDs. These licenses will be removed to the list of approved licenses. Once licenses are removed they can not be added back. Arguments should be LicenseID. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licensesDenied</code> - the argument.</dd>
+<dd><code>licensesDenied</code> - denied License IDs.</dd>
 </dl>
-</li>
-</ul>
-<a name="setLicensesDenieds-java.lang.String:A-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setLicensesDenieds</h4>
-<pre>@Parameter
-public&nbsp;void&nbsp;setLicensesDenieds(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licensesDenied)</pre>
 </li>
 </ul>
 <a name="setLicensesDeniedFile-java.lang.String-">
@@ -971,12 +1031,27 @@ public&nbsp;void&nbsp;setLicensesDenieds(<a href="https://docs.oracle.com/javase
 <ul class="blockList">
 <li class="blockList">
 <h4>setLicensesDeniedFile</h4>
-<pre>@Parameter(property="rat.licensesDeniedFile")
+<pre>@Parameter(property="rat.LicensesDeniedFile")
 public&nbsp;void&nbsp;setLicensesDeniedFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licensesDeniedFile)</pre>
-<div class="block">Name of File containing the approved license IDs.</div>
+<div class="block">Name of File containing the approved license IDs. Argument should be a File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licensesDeniedFile</code> - the argument.</dd>
+<dd><code>licensesDeniedFile</code> - of File containing the approved license IDs.</dd>
+</dl>
+</li>
+</ul>
+<a name="setLicenseFamiliesDenied-java.lang.String:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLicenseFamiliesDenied</h4>
+<pre>@Parameter
+public&nbsp;void&nbsp;setLicenseFamiliesDenied(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenseFamiliesDenied)</pre>
+<div class="block">The denied License family IDs. These license families will be removed from the list of approved licenses. Arguments should be FamilyID. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>licenseFamiliesDenied</code> - denied License family IDs.</dd>
 </dl>
 </li>
 </ul>
@@ -986,23 +1061,13 @@ public&nbsp;void&nbsp;setLicensesDeniedFile(<a href="https://docs.oracle.com/jav
 <ul class="blockList">
 <li class="blockList">
 <h4>setLicenseFamiliesDenied</h4>
-<pre>@Parameter(property="rat.licenseFamiliesDenied")
+<pre>@Parameter
 public&nbsp;void&nbsp;setLicenseFamiliesDenied(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamiliesDenied)</pre>
-<div class="block">The denied License family IDs. These license families will be removed from the list of approved licenses.</div>
+<div class="block">The denied License family IDs. These license families will be removed from the list of approved licenses. Arguments should be FamilyID. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licenseFamiliesDenied</code> - the argument.</dd>
+<dd><code>licenseFamiliesDenied</code> - denied License family IDs.</dd>
 </dl>
-</li>
-</ul>
-<a name="setLicenseFamiliesDenieds-java.lang.String:A-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setLicenseFamiliesDenieds</h4>
-<pre>@Parameter
-public&nbsp;void&nbsp;setLicenseFamiliesDenieds(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;licenseFamiliesDenied)</pre>
 </li>
 </ul>
 <a name="setLicenseFamiliesDeniedFile-java.lang.String-">
@@ -1011,30 +1076,12 @@ public&nbsp;void&nbsp;setLicenseFamiliesDenieds(<a href="https://docs.oracle.com
 <ul class="blockList">
 <li class="blockList">
 <h4>setLicenseFamiliesDeniedFile</h4>
-<pre>@Parameter(property="rat.licenseFamiliesDeniedFile")
+<pre>@Parameter(property="rat.LicenseFamiliesDeniedFile")
 public&nbsp;void&nbsp;setLicenseFamiliesDeniedFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;licenseFamiliesDeniedFile)</pre>
-<div class="block">Name of file containing the denied license IDs.</div>
+<div class="block">Name of file containing the denied license IDs. Argument should be a File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>licenseFamiliesDeniedFile</code> - the argument.</dd>
-</dl>
-</li>
-</ul>
-<a name="setExclude-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setExclude</h4>
-<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.exclude")
-public&nbsp;void&nbsp;setExclude(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;exclude)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Excludes files matching wildcard &lt;Expression&gt;.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>exclude</code> - the argument.
- Deprecated for removal since 0.17: Use --input-exclude instead.</dd>
+<dd><code>licenseFamiliesDeniedFile</code> - of file containing the denied license IDs.</dd>
 </dl>
 </li>
 </ul>
@@ -1047,21 +1094,28 @@ public&nbsp;void&nbsp;setExclude(<a href="https://docs.oracle.com/javase/8/docs/
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
  @Parameter
 public&nbsp;void&nbsp;setExcludes(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;exclude)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;inputExclude&gt; instead.</span></div>
+<div class="block">Excludes files matching wildcard &lt;Expression&gt;. Arguments should be Expression. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>exclude</code> - files matching wildcard &lt;Expression&gt;.</dd>
+</dl>
 </li>
 </ul>
-<a name="setInputExclude-java.lang.String-">
+<a name="setExclude-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setInputExclude</h4>
-<pre>@Parameter(property="rat.inputExclude")
-public&nbsp;void&nbsp;setInputExclude(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;inputExclude)</pre>
-<div class="block">Excludes files matching wildcard &lt;Expression&gt;.</div>
+<h4>setExclude</h4>
+<pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
+ @Parameter
+public&nbsp;void&nbsp;setExclude(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;exclude)</pre>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;inputExclude&gt; instead.</span></div>
+<div class="block">Excludes files matching wildcard &lt;Expression&gt;. Arguments should be Expression. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>inputExclude</code> - the argument.</dd>
+<dd><code>exclude</code> - files matching wildcard &lt;Expression&gt;.</dd>
 </dl>
 </li>
 </ul>
@@ -1073,6 +1127,26 @@ public&nbsp;void&nbsp;setInputExclude(<a href="https://docs.oracle.com/javase/8/
 <h4>setInputExcludes</h4>
 <pre>@Parameter
 public&nbsp;void&nbsp;setInputExcludes(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;inputExclude)</pre>
+<div class="block">Excludes files matching wildcard &lt;Expression&gt;. Arguments should be Expression. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>inputExclude</code> - files matching wildcard &lt;Expression&gt;.</dd>
+</dl>
+</li>
+</ul>
+<a name="setInputExclude-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setInputExclude</h4>
+<pre>@Parameter
+public&nbsp;void&nbsp;setInputExclude(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;inputExclude)</pre>
+<div class="block">Excludes files matching wildcard &lt;Expression&gt;. Arguments should be Expression. (See Argument Types for clarification)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>inputExclude</code> - files matching wildcard &lt;Expression&gt;.</dd>
+</dl>
 </li>
 </ul>
 <a name="setExcludeFile-java.lang.String-">
@@ -1082,14 +1156,13 @@ public&nbsp;void&nbsp;setInputExcludes(<a href="https://docs.oracle.com/javase/8
 <li class="blockList">
 <h4>setExcludeFile</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.excludeFile")
+ @Parameter(property="rat.ExcludeFile")
 public&nbsp;void&nbsp;setExcludeFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;excludeFile)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Excludes files matching regular expression in the input file.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;inputExcludeFile&gt; instead.</span></div>
+<div class="block">Excludes files matching regular expression in the input file. Argument should be a File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>excludeFile</code> - the argument.
- Deprecated for removal since 0.17: Use --input-exclude-file instead.</dd>
+<dd><code>excludeFile</code> - files matching regular expression in the input file.</dd>
 </dl>
 </li>
 </ul>
@@ -1099,12 +1172,12 @@ public&nbsp;void&nbsp;setExcludeFile(<a href="https://docs.oracle.com/javase/8/d
 <ul class="blockList">
 <li class="blockList">
 <h4>setInputExcludeFile</h4>
-<pre>@Parameter(property="rat.inputExcludeFile")
+<pre>@Parameter(property="rat.InputExcludeFile")
 public&nbsp;void&nbsp;setInputExcludeFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;inputExcludeFile)</pre>
-<div class="block">Excludes files matching regular expression in the input file.</div>
+<div class="block">Excludes files matching regular expression in the input file. Argument should be a File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>inputExcludeFile</code> - the argument.</dd>
+<dd><code>inputExcludeFile</code> - files matching regular expression in the input file.</dd>
 </dl>
 </li>
 </ul>
@@ -1114,12 +1187,12 @@ public&nbsp;void&nbsp;setInputExcludeFile(<a href="https://docs.oracle.com/javas
 <ul class="blockList">
 <li class="blockList">
 <h4>setScanHiddenDirectories</h4>
-<pre>@Parameter(property="rat.scanHiddenDirectories")
+<pre>@Parameter(property="rat.ScanHiddenDirectories")
 public&nbsp;void&nbsp;setScanHiddenDirectories(boolean&nbsp;scanHiddenDirectories)</pre>
 <div class="block">Scans hidden directories.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>scanHiddenDirectories</code> - the argument.</dd>
+<dd><code>scanHiddenDirectories</code> - the state</dd>
 </dl>
 </li>
 </ul>
@@ -1129,12 +1202,12 @@ public&nbsp;void&nbsp;setScanHiddenDirectories(boolean&nbsp;scanHiddenDirectorie
 <ul class="blockList">
 <li class="blockList">
 <h4>setOutputStyle</h4>
-<pre>@Parameter(property="rat.outputStyle")
+<pre>@Parameter(property="rat.OutputStyle")
 public&nbsp;void&nbsp;setOutputStyle(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outputStyle)</pre>
-<div class="block">XSLT stylesheet to use when creating the report. Either an external xsl file may be specified or one of the internal named sheets.</div>
+<div class="block">XSLT stylesheet to use when creating the report. Either an external xsl file may be specified or one of the internal named sheets. Argument should be a StyleSheet. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>outputStyle</code> - the argument.</dd>
+<dd><code>outputStyle</code> - stylesheet to use when creating the report.</dd>
 </dl>
 </li>
 </ul>
@@ -1145,14 +1218,13 @@ public&nbsp;void&nbsp;setOutputStyle(<a href="https://docs.oracle.com/javase/8/d
 <li class="blockList">
 <h4>setStylesheet</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.stylesheet")
+ @Parameter(property="rat.Stylesheet")
 public&nbsp;void&nbsp;setStylesheet(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;stylesheet)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">XSLT stylesheet to use when creating the report.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputStyle&gt; instead.</span></div>
+<div class="block">XSLT stylesheet to use when creating the report. Argument should be a StyleSheet. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>stylesheet</code> - the argument.
- Deprecated for removal since 0.17: Use --output-style instead.</dd>
+<dd><code>stylesheet</code> - stylesheet to use when creating the report.</dd>
 </dl>
 </li>
 </ul>
@@ -1163,14 +1235,13 @@ public&nbsp;void&nbsp;setStylesheet(<a href="https://docs.oracle.com/javase/8/do
 <li class="blockList">
 <h4>setXml</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.xml")
+ @Parameter(property="rat.Xml")
 public&nbsp;void&nbsp;setXml(boolean&nbsp;xml)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputStyle&gt; with the 'xml' argument instead.</span></div>
 <div class="block">forces XML output rather than the report.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>xml</code> - the argument.
- Deprecated for removal since 0.17: Use --output-style with the 'xml' argument instead.</dd>
+<dd><code>xml</code> - the state</dd>
 </dl>
 </li>
 </ul>
@@ -1180,12 +1251,13 @@ public&nbsp;void&nbsp;setXml(boolean&nbsp;xml)</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setOutputLicenses</h4>
-<pre>@Parameter(property="rat.outputLicenses")
+<pre>@Parameter(property="rat.OutputLicenses",
+           defaultValue="NONE")
 public&nbsp;void&nbsp;setOutputLicenses(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outputLicenses)</pre>
-<div class="block">List the defined licenses.</div>
+<div class="block">List the defined licenses. Argument should be a LicenseFilter. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>outputLicenses</code> - the argument.</dd>
+<dd><code>outputLicenses</code> - the defined licenses.</dd>
 </dl>
 </li>
 </ul>
@@ -1196,14 +1268,13 @@ public&nbsp;void&nbsp;setOutputLicenses(<a href="https://docs.oracle.com/javase/
 <li class="blockList">
 <h4>setListLicenses</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.listLicenses")
+ @Parameter(property="rat.ListLicenses")
 public&nbsp;void&nbsp;setListLicenses(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;listLicenses)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">List the defined licenses.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputLicenses&gt; instead.</span></div>
+<div class="block">List the defined licenses. Argument should be a LicenseFilter. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>listLicenses</code> - the argument.
- Deprecated for removal since 0.17: Use --output-licenses instead.</dd>
+<dd><code>listLicenses</code> - the defined licenses.</dd>
 </dl>
 </li>
 </ul>
@@ -1213,12 +1284,13 @@ public&nbsp;void&nbsp;setListLicenses(<a href="https://docs.oracle.com/javase/8/
 <ul class="blockList">
 <li class="blockList">
 <h4>setOutputFamilies</h4>
-<pre>@Parameter(property="rat.outputFamilies")
+<pre>@Parameter(property="rat.OutputFamilies",
+           defaultValue="NONE")
 public&nbsp;void&nbsp;setOutputFamilies(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outputFamilies)</pre>
-<div class="block">List the defined license families.</div>
+<div class="block">List the defined license families. Argument should be a LicenseFilter. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>outputFamilies</code> - the argument.</dd>
+<dd><code>outputFamilies</code> - the defined license families.</dd>
 </dl>
 </li>
 </ul>
@@ -1229,14 +1301,13 @@ public&nbsp;void&nbsp;setOutputFamilies(<a href="https://docs.oracle.com/javase/
 <li class="blockList">
 <h4>setListFamilies</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.listFamilies")
+ @Parameter(property="rat.ListFamilies")
 public&nbsp;void&nbsp;setListFamilies(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;listFamilies)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">List the defined license families.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputFamilies&gt; instead.</span></div>
+<div class="block">List the defined license families. Argument should be a LicenseFilter. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>listFamilies</code> - the argument.
- Deprecated for removal since 0.17: Use --output-families instead.</dd>
+<dd><code>listFamilies</code> - the defined license families.</dd>
 </dl>
 </li>
 </ul>
@@ -1246,12 +1317,12 @@ public&nbsp;void&nbsp;setListFamilies(<a href="https://docs.oracle.com/javase/8/
 <ul class="blockList">
 <li class="blockList">
 <h4>setDryRun</h4>
-<pre>@Parameter(property="rat.dryRun")
+<pre>@Parameter(property="rat.DryRun")
 public&nbsp;void&nbsp;setDryRun(boolean&nbsp;dryRun)</pre>
 <div class="block">If set do not update the files but generate the reports.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>dryRun</code> - the argument.</dd>
+<dd><code>dryRun</code> - the state</dd>
 </dl>
 </li>
 </ul>
@@ -1262,14 +1333,13 @@ public&nbsp;void&nbsp;setDryRun(boolean&nbsp;dryRun)</pre>
 <li class="blockList">
 <h4>setOut</h4>
 <pre><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Deprecated.html?is-external=true" title="class or interface in java.lang">@Deprecated</a>
- @Parameter(property="rat.out")
+ @Parameter(property="rat.Out")
 public&nbsp;void&nbsp;setOut(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;out)</pre>
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;</div>
-<div class="block">Define the output file where to write a report to.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span>&nbsp;<span class="deprecationComment">Deprecated for removal since 0.17: Use &lt;outputFile&gt; instead.</span></div>
+<div class="block">Define the output file where to write a report to. Argument should be a File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>out</code> - the argument.
- Deprecated for removal since 0.17: Use --output-file instead.</dd>
+<dd><code>out</code> - the output file where to write a report to.</dd>
 </dl>
 </li>
 </ul>
@@ -1279,12 +1349,13 @@ public&nbsp;void&nbsp;setOut(<a href="https://docs.oracle.com/javase/8/docs/api/
 <ul class="blockList">
 <li class="blockList">
 <h4>setOutputFile</h4>
-<pre>@Parameter(property="rat.outputFile")
+<pre>@Parameter(property="rat.OutputFile",
+           defaultValue="${project.build.directory}/rat.txt")
 public&nbsp;void&nbsp;setOutputFile(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outputFile)</pre>
-<div class="block">Define the output file where to write a report to.</div>
+<div class="block">Define the output file where to write a report to. Argument should be a File. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>outputFile</code> - the argument.</dd>
+<dd><code>outputFile</code> - the output file where to write a report to.</dd>
 </dl>
 </li>
 </ul>
@@ -1294,12 +1365,13 @@ public&nbsp;void&nbsp;setOutputFile(<a href="https://docs.oracle.com/javase/8/do
 <ul class="blockList">
 <li class="blockList">
 <h4>setOutputArchive</h4>
-<pre>@Parameter(property="rat.outputArchive")
+<pre>@Parameter(property="rat.OutputArchive",
+           defaultValue="NOTIFICATION")
 public&nbsp;void&nbsp;setOutputArchive(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outputArchive)</pre>
-<div class="block">Specifies the level of detail in ARCHIVE file reporting.</div>
+<div class="block">Specifies the level of detail in ARCHIVE file reporting. Argument should be a ProcessingType. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>outputArchive</code> - the argument.</dd>
+<dd><code>outputArchive</code> - the level of detail in ARCHIVE file reporting.</dd>
 </dl>
 </li>
 </ul>
@@ -1309,12 +1381,13 @@ public&nbsp;void&nbsp;setOutputArchive(<a href="https://docs.oracle.com/javase/8
 <ul class="blockList">
 <li class="blockList">
 <h4>setOutputStandard</h4>
-<pre>@Parameter(property="rat.outputStandard")
+<pre>@Parameter(property="rat.OutputStandard",
+           defaultValue="ABSENCE")
 public&nbsp;void&nbsp;setOutputStandard(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outputStandard)</pre>
-<div class="block">Specifies the level of detail in STANDARD file reporting.</div>
+<div class="block">Specifies the level of detail in STANDARD file reporting. Argument should be a ProcessingType. (See Argument Types for clarification)</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>outputStandard</code> - the argument.</dd>
+<dd><code>outputStandard</code> - the level of detail in STANDARD file reporting.</dd>
 </dl>
 </li>
 </ul>
@@ -1324,12 +1397,12 @@ public&nbsp;void&nbsp;setOutputStandard(<a href="https://docs.oracle.com/javase/
 <ul class="blockListLast">
 <li class="blockList">
 <h4>setHelpLicenses</h4>
-<pre>@Parameter(property="rat.helpLicenses")
+<pre>@Parameter(property="rat.HelpLicenses")
 public&nbsp;void&nbsp;setHelpLicenses(boolean&nbsp;helpLicenses)</pre>
 <div class="block">Print information about registered licenses.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>helpLicenses</code> - the argument.</dd>
+<dd><code>helpLicenses</code> - the state</dd>
 </dl>
 </li>
 </ul>

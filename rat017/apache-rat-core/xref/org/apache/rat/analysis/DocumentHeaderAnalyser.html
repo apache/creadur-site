@@ -50,13 +50,13 @@
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     * Constructs the HeaderAnalyser for the specific license.</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * @param licenses The licenses to analyse</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">public</strong> <a name="DocumentHeaderAnalyser" href="../../../../org/apache/rat/analysis/DocumentHeaderAnalyser.html#DocumentHeaderAnalyser">DocumentHeaderAnalyser</a>(<strong class="jxr_keyword">final</strong> Collection&lt;ILicense&gt; licenses) {
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <a name="DocumentHeaderAnalyser" href="../../../../org/apache/rat/analysis/DocumentHeaderAnalyser.html#DocumentHeaderAnalyser">DocumentHeaderAnalyser</a>(<strong class="jxr_keyword">final</strong> Collection&lt;ILicense&gt; licenses) {
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>          <strong class="jxr_keyword">super</strong>();
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">this</strong>.licenses = licenses;
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      @Override
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> analyse(<a name="Document" href="../../../../org/apache/rat/api/Document.html#Document">Document</a> document) {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> analyse(<strong class="jxr_keyword">final</strong> <a name="Document" href="../../../../org/apache/rat/api/Document.html#Document">Document</a> document) {
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">try</strong> (Reader reader = document.reader()) {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>              DefaultLog.getInstance().debug(format(<span class="jxr_string">"Processing: %s"</span>, document));
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>              <a name="HeaderCheckWorker" href="../../../../org/apache/rat/analysis/HeaderCheckWorker.html#HeaderCheckWorker">HeaderCheckWorker</a> worker = <strong class="jxr_keyword">new</strong> <a name="HeaderCheckWorker" href="../../../../org/apache/rat/analysis/HeaderCheckWorker.html#HeaderCheckWorker">HeaderCheckWorker</a>(reader, licenses, document);
@@ -69,8 +69,7 @@
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>              document.getMetaData().setDocumentType(Document.Type.UNKNOWN);
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          }
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>  }
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>

@@ -292,7 +292,7 @@ extends org.apache.tools.ant.Task</pre>
 <td class="colFirst"><code>protected void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/anttasks/BaseAntTask.html#addArg-java.lang.String-java.lang.String:A-">addArg</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value)</code>
-<div class="block">Add a value to the key in the argument list.</div>
+<div class="block">Add values to the key in the argument list.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -716,23 +716,6 @@ extends org.apache.tools.ant.Task</pre>
 </dl>
 </li>
 </ul>
-<a name="addArg-java.lang.String-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addArg</h4>
-<pre>protected&nbsp;void&nbsp;addArg(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
-                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
-<div class="block">Add a value to the key in the argument list.
- If the key does not exist, adds it.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - the key for the map.</dd>
-<dd><code>value</code> - the value to set.</dd>
-</dl>
-</li>
-</ul>
 <a name="addArg-java.lang.String-java.lang.String:A-">
 <!--   -->
 </a>
@@ -741,6 +724,23 @@ extends org.apache.tools.ant.Task</pre>
 <h4>addArg</h4>
 <pre>protected&nbsp;void&nbsp;addArg(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
                       <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>[]&nbsp;value)</pre>
+<div class="block">Add values to the key in the argument list.
+ If the key does not exist, adds it.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>key</code> - the key for the map.</dd>
+<dd><code>value</code> - the value to set.</dd>
+</dl>
+</li>
+</ul>
+<a name="addArg-java.lang.String-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>addArg</h4>
+<pre>protected&nbsp;void&nbsp;addArg(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;key,
+                      <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
 <div class="block">Add a value to the key in the argument list.
  If the key does not exist, adds it.</div>
 <dl>
@@ -787,7 +787,7 @@ extends org.apache.tools.ant.Task</pre>
 <li class="blockList">
 <h4>setEditCopyright</h4>
 <pre>public&nbsp;void&nbsp;setEditCopyright(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;editCopyright)</pre>
-<div class="block">The copyright message to use in the license headers. Usually in the form of "Copyright 2008 Foo".  Only valid with --edit-license</div>
+<div class="block">The copyright message to use in the license headers. Usually in the form of &quot;Copyright 2008 Foo&quot;.  Only valid with editLicense attribute</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>editCopyright</code> - The value to set</dd>
@@ -813,7 +813,7 @@ extends org.apache.tools.ant.Task</pre>
 <li class="blockList">
 <h4>setEditOverwrite</h4>
 <pre>public&nbsp;void&nbsp;setEditOverwrite(boolean&nbsp;editOverwrite)</pre>
-<div class="block">Forces any changes in files to be written directly to the source files (i.e. new files are not created). Only valid with --edit-license</div>
+<div class="block">Forces any changes in files to be written directly to the source files (i.e. new files are not created). Only valid with editLicense attribute</div>
 </li>
 </ul>
 <a name="setAddLicense-boolean-">
@@ -835,7 +835,7 @@ extends org.apache.tools.ant.Task</pre>
 <li class="blockList">
 <h4>setEditLicense</h4>
 <pre>public&nbsp;void&nbsp;setEditLicense(boolean&nbsp;editLicense)</pre>
-<div class="block">Add the default license header to any file with an unknown license that is not in the exclusion list. By default new files will be created with the license header, to force the modification of existing files use the --edit-overwrite option.</div>
+<div class="block">Add the default license header to any file with an unknown license that is not in the exclusion list. By default new files will be created with the license header, to force the modification of existing files use the editOverwrite attribute option.</div>
 </li>
 </ul>
 <a name="setConfigurationNoDefaults-boolean-">

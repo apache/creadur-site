@@ -18,7 +18,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -75,7 +75,7 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.org.apache.rat.tools.AbstractOption">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -100,7 +100,12 @@ var activeTableTab = "activeTableTab";
 <li><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="../../../../org/apache/rat/tools/AbstractOption.html" title="class in org.apache.rat.tools">org.apache.rat.tools.AbstractOption</a></li>
+<li>
+<ul class="inheritance">
 <li>org.apache.rat.tools.MavenOption</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -110,7 +115,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">MavenOption</span>
-extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
+extends <a href="../../../../org/apache/rat/tools/AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></pre>
 <div class="block">A representation of a CLI option as a Maven option</div>
 </li>
 </ul>
@@ -118,6 +123,21 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a name="fields.inherited.from.class.org.apache.rat.tools.AbstractOption">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;org.apache.rat.tools.<a href="../../../../org/apache/rat/tools/AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></h3>
+<code><a href="../../../../org/apache/rat/tools/AbstractOption.html#name">name</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#option">option</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#pattern">pattern</a></code></li>
+</ul>
+</li>
+</ul>
 <!-- ========== METHOD SUMMARY =========== -->
 <ul class="blockList">
 <li class="blockList"><a name="method.summary">
@@ -131,13 +151,13 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#getDeprecated--">getDeprecated</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#cleanupName-org.apache.commons.cli.Option-">cleanupName</a></span>(org.apache.commons.cli.Option&nbsp;option)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#getDescription--">getDescription</a></span>()</code>
-<div class="block">Get the description escaped for XML format.</div>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#getDefaultValue--">getDefaultValue</a></span>()</code>
+<div class="block">Return default value.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -147,45 +167,16 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#getName--">getName</a></span>()</code>
-<div class="block">Gets the Maven name for the CLI option.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#getType--">getType</a></span>()</code>
-<div class="block">Gets the simple class name for the data type for this option.</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#hasArg--">hasArg</a></span>()</code>
-<div class="block">Determine if true if the enclosed option expects an argument.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#hasArgs--">hasArgs</a></span>()</code>
-<div class="block">Returns <code>true</code> if the option has multiple arguments.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#isDeprecated--">isDeprecated</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#keyValue--">keyValue</a></span>()</code>
-<div class="block">the key value for the option.</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#xmlNode-java.lang.String-">xmlNode</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</code>
-<div class="block">Returns the value as an POM xml node.</div>
-</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../../org/apache/rat/tools/MavenOption.html#getPropertyAnnotation-java.lang.String-">getPropertyAnnotation</a></span>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fname)</code>&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a name="methods.inherited.from.class.org.apache.rat.tools.AbstractOption">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;org.apache.rat.tools.<a href="../../../../org/apache/rat/tools/AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></h3>
+<code><a href="../../../../org/apache/rat/tools/AbstractOption.html#cleanup-java.lang.String-">cleanup</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#getArgName--">getArgName</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#getDeprecated--">getDeprecated</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#getDescription--">getDescription</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#getName--">getName</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#getType--">getType</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#hasArg--">hasArg</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#hasArgs--">hasArgs</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#isDeprecated--">isDeprecated</a>, <a href="../../../../org/apache/rat/tools/AbstractOption.html#keyValue--">keyValue</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -207,133 +198,53 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getName--">
+<a name="cleanupName-org.apache.commons.cli.Option-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getName</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getName()</pre>
-<div class="block">Gets the Maven name for the CLI option.</div>
+<h4>cleanupName</h4>
+<pre>protected&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;cleanupName(org.apache.commons.cli.Option&nbsp;option)</pre>
 <dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The Maven name for the CLI option.</dd>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../../org/apache/rat/tools/AbstractOption.html#cleanupName-org.apache.commons.cli.Option-">cleanupName</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/apache/rat/tools/AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></code></dd>
 </dl>
 </li>
 </ul>
-<a name="getDescription--">
+<a name="getDefaultValue--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDescription</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getDescription()</pre>
-<div class="block">Get the description escaped for XML format.</div>
+<h4>getDefaultValue</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getDefaultValue()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../../org/apache/rat/tools/AbstractOption.html#getDefaultValue--">AbstractOption</a></code></span></div>
+<div class="block">Return default value.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../../../../org/apache/rat/tools/AbstractOption.html#getDefaultValue--">getDefaultValue</a></code>&nbsp;in class&nbsp;<code><a href="../../../../org/apache/rat/tools/AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the description or an empty string.</dd>
+<dd>default value or <code>null</code> if no argument given.</dd>
 </dl>
 </li>
 </ul>
-<a name="xmlNode-java.lang.String-">
+<a name="getPropertyAnnotation-java.lang.String-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>xmlNode</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;xmlNode(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;value)</pre>
-<div class="block">Returns the value as an POM xml node.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>value</code> - the value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the pom xml node.</dd>
-</dl>
-</li>
-</ul>
-<a name="getType--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getType</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html?is-external=true" title="class or interface in java.lang">Class</a>&lt;?&gt;&nbsp;getType()</pre>
-<div class="block">Gets the simple class name for the data type for this option.
- Normally "String".</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the simple class name for the type.</dd>
-</dl>
-</li>
-</ul>
-<a name="isDeprecated--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isDeprecated</h4>
-<pre>public&nbsp;boolean&nbsp;isDeprecated()</pre>
-</li>
-</ul>
-<a name="hasArg--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hasArg</h4>
-<pre>public&nbsp;boolean&nbsp;hasArg()</pre>
-<div class="block">Determine if true if the enclosed option expects an argument.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>true</code> if the enclosed option expects at least one argument.</dd>
-</dl>
-</li>
-</ul>
-<a name="keyValue--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>keyValue</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;keyValue()</pre>
-<div class="block">the key value for the option.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the key value for the CLI argument map.</dd>
-</dl>
-</li>
-</ul>
-<a name="getDeprecated--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDeprecated</h4>
-<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getDeprecated()</pre>
+<h4>getPropertyAnnotation</h4>
+<pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getPropertyAnnotation(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;fname)</pre>
 </li>
 </ul>
 <a name="getMethodSignature-java.lang.String-boolean-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>getMethodSignature</h4>
 <pre>public&nbsp;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getMethodSignature(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;indent,
                                  boolean&nbsp;multiple)</pre>
-</li>
-</ul>
-<a name="hasArgs--">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>hasArgs</h4>
-<pre>public&nbsp;boolean&nbsp;hasArgs()</pre>
-<div class="block">Returns <code>true</code> if the option has multiple arguments.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>true</code> if the option has multiple arguments.</dd>
-</dl>
 </li>
 </ul>
 </li>
@@ -390,7 +301,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#fields.inherited.from.class.org.apache.rat.tools.AbstractOption">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
