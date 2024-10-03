@@ -91,14 +91,14 @@
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>          ARGUMENT_TYPES.put(<span class="jxr_string">"LicenseFilter"</span>, () -&gt; format(<span class="jxr_string">"A defined filter for the licenses to include. Valid values: %s."</span>,
 <a class="jxr_linenumber" name="L84" href="#L84">84</a>                  asString(LicenseSetFactory.LicenseFilter.values())));
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          ARGUMENT_TYPES.put(<span class="jxr_string">"LogLevel"</span>, () -&gt; format(<span class="jxr_string">"The log level to use. Valid values %s."</span>, asString(Level.values())));
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>          ARGUMENT_TYPES.put(<span class="jxr_string">"ProcessingType"</span>, () -&gt; format(<span class="jxr_string">"Specifies how to process file types. Valid values are: %s"</span>,
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>          ARGUMENT_TYPES.put(<span class="jxr_string">"ProcessingType"</span>, () -&gt; format(<span class="jxr_string">"Specifies how to process file types. Valid values are: %s%n"</span>,
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>                  Arrays.stream(ReportConfiguration.Processing.values())
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>                          .map(v -&gt; format(<span class="jxr_string">"\t%s: %s"</span>, v.name(), v.desc()))
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>                          .collect(Collectors.joining(<span class="jxr_string">""</span>))));
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          ARGUMENT_TYPES.put(<span class="jxr_string">"StyleSheet"</span>, () -&gt; format(<span class="jxr_string">"Either an external xsl file or maybe one of the internal named sheets. Internal sheets are: %s."</span>,
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>                          .collect(Collectors.joining(System.lineSeparator()))));
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>          ARGUMENT_TYPES.put(<span class="jxr_string">"StyleSheet"</span>, () -&gt; format(<span class="jxr_string">"Either an external xsl file or one of the internal named sheets. Internal sheets are: %s."</span>,
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>                  Arrays.stream(StyleSheets.values())
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>                          .map(v -&gt; format(<span class="jxr_string">"\t%s: %s"</span>, v.arg(), v.desc()))
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>                          .collect(Collectors.joining(<span class="jxr_string">""</span>))));
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>                          .collect(Collectors.joining(System.lineSeparator()))));
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          ARGUMENT_TYPES.put(<span class="jxr_string">"LicenseID"</span>, () -&gt; <span class="jxr_string">"The ID for a license."</span>);
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>          ARGUMENT_TYPES.put(<span class="jxr_string">"FamilyID"</span>, () -&gt; <span class="jxr_string">"The ID for a license family."</span>);
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>      }

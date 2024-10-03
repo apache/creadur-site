@@ -65,17 +65,16 @@
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          Set&lt;String&gt; argTypes = OptionCollection.getArgumentTypes().keySet();
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          StringWriter out = <strong class="jxr_keyword">new</strong> StringWriter();
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          <strong class="jxr_keyword">new</strong> Help(out).printUsage(opts);
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>  
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>          String result = out.toString();
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">for</strong> (Option option : opts.getOptions()) {
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>              <strong class="jxr_keyword">if</strong> (option.getArgName() != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>                  assertTrue(argTypes.contains(option.getArgName()), () -&gt; format(<span class="jxr_string">"Argument 's' is missing from list"</span>, option.getArgName()));
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>                  TextUtils.assertPatternInTarget(format(<span class="jxr_string">"^&lt;%s&gt;"</span>, option.getArgName()), result);
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>              }
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          }
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  }
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          String result = out.toString();
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">for</strong> (Option option : opts.getOptions()) {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>              <strong class="jxr_keyword">if</strong> (option.getArgName() != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>                  assertTrue(argTypes.contains(option.getArgName()), () -&gt; format(<span class="jxr_string">"Argument 's' is missing from list"</span>, option.getArgName()));
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>                  TextUtils.assertPatternInTarget(format(<span class="jxr_string">"^&lt;%s&gt;"</span>, option.getArgName()), result);
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>              }
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          }
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  }
 </pre>
 <hr/>
 <div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
