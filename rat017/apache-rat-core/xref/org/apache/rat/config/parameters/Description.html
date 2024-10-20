@@ -108,253 +108,250 @@
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>         }
 <a class="jxr_linenumber" name="L101" href="#L101">101</a>         <strong class="jxr_keyword">this</strong>.children = <strong class="jxr_keyword">new</strong> TreeMap&lt;&gt;();
 <a class="jxr_linenumber" name="L102" href="#L102">102</a>         <strong class="jxr_keyword">if</strong> (children != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>             children.forEach(d -&gt; {
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>                 <strong class="jxr_keyword">this</strong>.children.put(d.name, d);
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>             });
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>         }
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>     }
-<a class="jxr_linenumber" name="L108" href="#L108">108</a> 
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment">     * Constructor</em>
-<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">     * @param configComponent the configuration component</em>
-<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">     * @param isCollection the collection flag.</em>
-<a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     * @param childClass the type of object that the method getter/setter expects.</em>
-<a class="jxr_linenumber" name="L114" href="#L114">114</a> <em class="jxr_javadoccomment">     * @param children the collection of descriptions for all the components that</em>
-<a class="jxr_linenumber" name="L115" href="#L115">115</a> <em class="jxr_javadoccomment">     * are children the described component.</em>
-<a class="jxr_linenumber" name="L116" href="#L116">116</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>     <strong class="jxr_keyword">public</strong> <a name="Description" href="../../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a>(<strong class="jxr_keyword">final</strong> ConfigComponent configComponent, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> isCollection, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; childClass,
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>                        <strong class="jxr_keyword">final</strong> Collection&lt;Description&gt; children) {
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         <strong class="jxr_keyword">this</strong>(configComponent.type(), configComponent.name(), configComponent.desc(), isCollection, childClass, children,
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>                 configComponent.required());
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>     }
-<a class="jxr_linenumber" name="L122" href="#L122">122</a> 
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L124" href="#L124">124</a> <em class="jxr_javadoccomment">     * Get the canBeChild flag.</em>
-<a class="jxr_linenumber" name="L125" href="#L125">125</a> <em class="jxr_javadoccomment">     * @return {@code true} if this item can be a child of the containing item.</em>
-<a class="jxr_linenumber" name="L126" href="#L126">126</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isRequired() {
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>         <strong class="jxr_keyword">return</strong> required;
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>     }
-<a class="jxr_linenumber" name="L130" href="#L130">130</a> 
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L132" href="#L132">132</a> <em class="jxr_javadoccomment">     * Gets the type of the component.</em>
-<a class="jxr_linenumber" name="L133" href="#L133">133</a> <em class="jxr_javadoccomment">     * @return the component type.</em>
-<a class="jxr_linenumber" name="L134" href="#L134">134</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>     <strong class="jxr_keyword">public</strong> <a name="ComponentType" href="../../../../../org/apache/rat/config/parameters/ComponentType.html#ComponentType">ComponentType</a> getType() {
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>         <strong class="jxr_keyword">return</strong> type;
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>     }
-<a class="jxr_linenumber" name="L138" href="#L138">138</a> 
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L140" href="#L140">140</a> <em class="jxr_javadoccomment">     * Get the isCollection flag.</em>
-<a class="jxr_linenumber" name="L141" href="#L141">141</a> <em class="jxr_javadoccomment">     * @return true if this is a collection.</em>
-<a class="jxr_linenumber" name="L142" href="#L142">142</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isCollection() {
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">return</strong> isCollection;
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>     }
-<a class="jxr_linenumber" name="L146" href="#L146">146</a> 
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_javadoccomment">     * Get the class of the objects for the getter/setter methods.</em>
-<a class="jxr_linenumber" name="L149" href="#L149">149</a> <em class="jxr_javadoccomment">     * @return the getter/setter param class.</em>
-<a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>     <strong class="jxr_keyword">public</strong> Class&lt;?&gt; getChildType() {
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>         <strong class="jxr_keyword">return</strong> childClass;
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>     }
-<a class="jxr_linenumber" name="L154" href="#L154">154</a> 
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L156" href="#L156">156</a> <em class="jxr_javadoccomment">     * Gets the common name for the matcher. (e.g. 'text', 'spdx', etc.) May not be</em>
-<a class="jxr_linenumber" name="L157" href="#L157">157</a> <em class="jxr_javadoccomment">     * null.</em>
-<a class="jxr_linenumber" name="L158" href="#L158">158</a> <em class="jxr_javadoccomment">     * @return The common name for the item being inspected.</em>
-<a class="jxr_linenumber" name="L159" href="#L159">159</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>     <strong class="jxr_keyword">public</strong> String getCommonName() {
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>         <strong class="jxr_keyword">return</strong> name;
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>     }
-<a class="jxr_linenumber" name="L163" href="#L163">163</a> 
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * Gets the description of descriptive text for the component. May be an empty</em>
-<a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     * string or null.</em>
-<a class="jxr_linenumber" name="L167" href="#L167">167</a> <em class="jxr_javadoccomment">     * @return the descriptive text;</em>
-<a class="jxr_linenumber" name="L168" href="#L168">168</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>     <strong class="jxr_keyword">public</strong> String getDescription() {
-<a class="jxr_linenumber" name="L170" href="#L170">170</a>         <strong class="jxr_keyword">return</strong> desc;
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>     }
-<a class="jxr_linenumber" name="L172" href="#L172">172</a> 
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     * Retrieve the value of a the described parameter from the specified object.</em>
-<a class="jxr_linenumber" name="L175" href="#L175">175</a> <em class="jxr_javadoccomment">     * If the parameter is a collection return {@code null}.</em>
-<a class="jxr_linenumber" name="L176" href="#L176">176</a> <em class="jxr_javadoccomment">     * @param object the object that contains the value.</em>
-<a class="jxr_linenumber" name="L177" href="#L177">177</a> <em class="jxr_javadoccomment">     * @return the string value.</em>
-<a class="jxr_linenumber" name="L178" href="#L178">178</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>     <strong class="jxr_keyword">public</strong> String getParamValue(<strong class="jxr_keyword">final</strong> Object object) {
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>         <strong class="jxr_keyword">if</strong> (isCollection) {
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>         }
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>             Object val = getter(object.getClass()).invoke(object);
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>             <strong class="jxr_keyword">return</strong> val == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : val.toString();
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>         } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>                 | SecurityException e) {
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>             DefaultLog.getInstance().error(format(<span class="jxr_string">"Can not retrieve value for '%s' from %s%n"</span>, name, object.getClass().getName()),
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>                     e);
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         }
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>     }
-<a class="jxr_linenumber" name="L193" href="#L193">193</a> 
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L195" href="#L195">195</a> <em class="jxr_javadoccomment">     * Gets a map of the parameters that the object contains. For example Copyright</em>
-<a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">     * has 'start', 'stop', and 'owner' parameters. Some IHeaderMatchers have simple</em>
-<a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     * text values (e.g. 'regex' or 'text' types) these should list an unnamed</em>
-<a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">     * parameter (empty string) with the text value.</em>
-<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     * @return the map of parameters to the objects that represent them.</em>
-<a class="jxr_linenumber" name="L200" href="#L200">200</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>     <strong class="jxr_keyword">public</strong> Map&lt;String, Description&gt; getChildren() {
-<a class="jxr_linenumber" name="L202" href="#L202">202</a>         <strong class="jxr_keyword">return</strong> children;
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>     }
-<a class="jxr_linenumber" name="L204" href="#L204">204</a> 
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L206" href="#L206">206</a> <em class="jxr_javadoccomment">     * Get all the children of a specific type</em>
-<a class="jxr_linenumber" name="L207" href="#L207">207</a> <em class="jxr_javadoccomment">     * @param type the type to return</em>
-<a class="jxr_linenumber" name="L208" href="#L208">208</a> <em class="jxr_javadoccomment">     * @return the collection of children of the specified type.</em>
-<a class="jxr_linenumber" name="L209" href="#L209">209</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>     <strong class="jxr_keyword">public</strong> Collection&lt;Description&gt; childrenOfType(<strong class="jxr_keyword">final</strong> <a name="ComponentType" href="../../../../../org/apache/rat/config/parameters/ComponentType.html#ComponentType">ComponentType</a> type) {
-<a class="jxr_linenumber" name="L211" href="#L211">211</a>         <strong class="jxr_keyword">return</strong> filterChildren(d -&gt; d.getType() == type);
-<a class="jxr_linenumber" name="L212" href="#L212">212</a>     }
-<a class="jxr_linenumber" name="L213" href="#L213">213</a> 
-<a class="jxr_linenumber" name="L214" href="#L214">214</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L215" href="#L215">215</a> <em class="jxr_javadoccomment">     * Get a filtered collection of the child descriptions.</em>
-<a class="jxr_linenumber" name="L216" href="#L216">216</a> <em class="jxr_javadoccomment">     * @param filter the filter to apply to the child descriptions.</em>
-<a class="jxr_linenumber" name="L217" href="#L217">217</a> <em class="jxr_javadoccomment">     * @return the collection of children that matche the filter..</em>
-<a class="jxr_linenumber" name="L218" href="#L218">218</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>     <strong class="jxr_keyword">public</strong> Collection&lt;Description&gt; filterChildren(<strong class="jxr_keyword">final</strong> Predicate&lt;Description&gt; filter) {
-<a class="jxr_linenumber" name="L220" href="#L220">220</a>         <strong class="jxr_keyword">return</strong> children.values().stream().filter(filter).collect(Collectors.toList());
-<a class="jxr_linenumber" name="L221" href="#L221">221</a>     }
-<a class="jxr_linenumber" name="L222" href="#L222">222</a> 
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L224" href="#L224">224</a> <em class="jxr_javadoccomment">     * Generate a method name for this description.</em>
-<a class="jxr_linenumber" name="L225" href="#L225">225</a> <em class="jxr_javadoccomment">     * @param prefix the start of the method name (e.g. "set", "get" )</em>
-<a class="jxr_linenumber" name="L226" href="#L226">226</a> <em class="jxr_javadoccomment">     * @return the method name.</em>
-<a class="jxr_linenumber" name="L227" href="#L227">227</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L228" href="#L228">228</a>     <strong class="jxr_keyword">public</strong> String methodName(<strong class="jxr_keyword">final</strong> String prefix) {
-<a class="jxr_linenumber" name="L229" href="#L229">229</a>         <strong class="jxr_keyword">return</strong> prefix + StringUtils.capitalize(name);
-<a class="jxr_linenumber" name="L230" href="#L230">230</a>     }
-<a class="jxr_linenumber" name="L231" href="#L231">231</a> 
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L233" href="#L233">233</a> <em class="jxr_javadoccomment">     * Returns the getter for the component in the specified class.</em>
-<a class="jxr_linenumber" name="L234" href="#L234">234</a> <em class="jxr_javadoccomment">     * @param clazz the Class to get the getter from.</em>
-<a class="jxr_linenumber" name="L235" href="#L235">235</a> <em class="jxr_javadoccomment">     * @return the getter Method.</em>
-<a class="jxr_linenumber" name="L236" href="#L236">236</a> <em class="jxr_javadoccomment">     * @throws NoSuchMethodException if the class does not have the getter.</em>
-<a class="jxr_linenumber" name="L237" href="#L237">237</a> <em class="jxr_javadoccomment">     * @throws SecurityException if the getter can not be accessed.</em>
-<a class="jxr_linenumber" name="L238" href="#L238">238</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L239" href="#L239">239</a>     <strong class="jxr_keyword">public</strong> Method getter(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) <strong class="jxr_keyword">throws</strong> NoSuchMethodException, SecurityException {
-<a class="jxr_linenumber" name="L240" href="#L240">240</a>         <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName(<span class="jxr_string">"get"</span>));
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>     }
-<a class="jxr_linenumber" name="L242" href="#L242">242</a> 
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L244" href="#L244">244</a> <em class="jxr_javadoccomment">     * Returns the setter for the component in the specified class. Notes:</em>
-<a class="jxr_linenumber" name="L245" href="#L245">245</a> <em class="jxr_javadoccomment">     * &lt;ul&gt;</em>
-<a class="jxr_linenumber" name="L246" href="#L246">246</a> <em class="jxr_javadoccomment">     * &lt;li&gt;License can not be set in components. They are top level components.&lt;/li&gt;</em>
-<a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">     * &lt;li&gt;Matcher expects an "add" method that accepts an</em>
-<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">     * IHeaderMatcher.Builder.&lt;/li&gt;</em>
-<a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">     * &lt;li&gt;Parameter expects a {@code set(String)} method.&lt;/li&gt;</em>
-<a class="jxr_linenumber" name="L250" href="#L250">250</a> <em class="jxr_javadoccomment">     * &lt;li&gt;Unlabeled expects a {@code set(String)} method.&lt;/li&gt;</em>
-<a class="jxr_linenumber" name="L251" href="#L251">251</a> <em class="jxr_javadoccomment">     * &lt;li&gt;BuilderParam expects a {@code set} method that takes a</em>
-<a class="jxr_linenumber" name="L252" href="#L252">252</a> <em class="jxr_javadoccomment">     * {@code childeClass} argument.&lt;/li&gt;</em>
-<a class="jxr_linenumber" name="L253" href="#L253">253</a> <em class="jxr_javadoccomment">     * &lt;/ul&gt;</em>
-<a class="jxr_linenumber" name="L254" href="#L254">254</a> <em class="jxr_javadoccomment">     * @param clazz the Class to get the getter from, generally a Builder class..</em>
-<a class="jxr_linenumber" name="L255" href="#L255">255</a> <em class="jxr_javadoccomment">     * @return the getter Method.</em>
-<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">     * @throws NoSuchMethodException if the class does not have the getter.</em>
-<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">     * @throws SecurityException if the getter can not be accessed.</em>
-<a class="jxr_linenumber" name="L258" href="#L258">258</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L259" href="#L259">259</a>     <strong class="jxr_keyword">public</strong> Method setter(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) <strong class="jxr_keyword">throws</strong> NoSuchMethodException, SecurityException {
-<a class="jxr_linenumber" name="L260" href="#L260">260</a>         String methodName = methodName(isCollection ? <span class="jxr_string">"add"</span> : <span class="jxr_string">"set"</span>);
-<a class="jxr_linenumber" name="L261" href="#L261">261</a>         <strong class="jxr_keyword">switch</strong> (type) {
-<a class="jxr_linenumber" name="L262" href="#L262">262</a>         <strong class="jxr_keyword">case</strong> LICENSE:
-<a class="jxr_linenumber" name="L263" href="#L263">263</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> NoSuchMethodException(<span class="jxr_string">"Can not set a License as a child"</span>);
-<a class="jxr_linenumber" name="L264" href="#L264">264</a>         <strong class="jxr_keyword">case</strong> MATCHER:
-<a class="jxr_linenumber" name="L265" href="#L265">265</a>             <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName, IHeaderMatcher.Builder.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L266" href="#L266">266</a>         <strong class="jxr_keyword">case</strong> PARAMETER:
-<a class="jxr_linenumber" name="L267" href="#L267">267</a>             <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName,
-<a class="jxr_linenumber" name="L268" href="#L268">268</a>                     IHeaderMatcher.<strong class="jxr_keyword">class</strong>.isAssignableFrom(childClass) ? IHeaderMatcher.Builder.<strong class="jxr_keyword">class</strong> : childClass);
-<a class="jxr_linenumber" name="L269" href="#L269">269</a>         <strong class="jxr_keyword">case</strong> BUILD_PARAMETER:
-<a class="jxr_linenumber" name="L270" href="#L270">270</a>             <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName, childClass);
-<a class="jxr_linenumber" name="L271" href="#L271">271</a>         }
-<a class="jxr_linenumber" name="L272" href="#L272">272</a>         <em class="jxr_comment">// should not happen</em>
-<a class="jxr_linenumber" name="L273" href="#L273">273</a>         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Type "</span> + type + <span class="jxr_string">" not valid."</span>);
-<a class="jxr_linenumber" name="L274" href="#L274">274</a>     }
-<a class="jxr_linenumber" name="L275" href="#L275">275</a> 
-<a class="jxr_linenumber" name="L276" href="#L276">276</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> callSetter(<strong class="jxr_keyword">final</strong> <a name="Description" href="../../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> description, <strong class="jxr_keyword">final</strong> IHeaderMatcher.Builder builder, <strong class="jxr_keyword">final</strong> String value) {
-<a class="jxr_linenumber" name="L277" href="#L277">277</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L278" href="#L278">278</a>             description.setter(builder.getClass()).invoke(builder, value);
-<a class="jxr_linenumber" name="L279" href="#L279">279</a>         } <strong class="jxr_keyword">catch</strong> (NoSuchMethodException e) {
-<a class="jxr_linenumber" name="L280" href="#L280">280</a>             String msg = format(<span class="jxr_string">"No setter for '%s' on %s"</span>, description.getCommonName(),
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>                     builder.getClass().getCanonicalName());
-<a class="jxr_linenumber" name="L282" href="#L282">282</a>             DefaultLog.getInstance().error(msg);
-<a class="jxr_linenumber" name="L283" href="#L283">283</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(msg);
-<a class="jxr_linenumber" name="L284" href="#L284">284</a>         } <strong class="jxr_keyword">catch</strong> (IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
-<a class="jxr_linenumber" name="L285" href="#L285">285</a>             String msg = format(<span class="jxr_string">"Unable to call setter for '%s' on %s"</span>, description.getCommonName(),
-<a class="jxr_linenumber" name="L286" href="#L286">286</a>                     builder.getClass().getCanonicalName());
-<a class="jxr_linenumber" name="L287" href="#L287">287</a>             DefaultLog.getInstance().error(msg, e);
-<a class="jxr_linenumber" name="L288" href="#L288">288</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(msg, e);
-<a class="jxr_linenumber" name="L289" href="#L289">289</a>         }
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>     }
-<a class="jxr_linenumber" name="L291" href="#L291">291</a> 
-<a class="jxr_linenumber" name="L292" href="#L292">292</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L293" href="#L293">293</a> <em class="jxr_javadoccomment">     * Sets the children of values in the builder. Sets the parameters to the values</em>
-<a class="jxr_linenumber" name="L294" href="#L294">294</a> <em class="jxr_javadoccomment">     * specified in the map. Only children that accept string arguments should be</em>
-<a class="jxr_linenumber" name="L295" href="#L295">295</a> <em class="jxr_javadoccomment">     * specified.</em>
-<a class="jxr_linenumber" name="L296" href="#L296">296</a> <em class="jxr_javadoccomment">     * @param builder The Matcher builder to set the values in.</em>
-<a class="jxr_linenumber" name="L297" href="#L297">297</a> <em class="jxr_javadoccomment">     * @param attributes a Map of parameter names to values.</em>
-<a class="jxr_linenumber" name="L298" href="#L298">298</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L299" href="#L299">299</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setChildren(<strong class="jxr_keyword">final</strong> IHeaderMatcher.Builder builder, <strong class="jxr_keyword">final</strong> Map&lt;String, String&gt; attributes) {
-<a class="jxr_linenumber" name="L300" href="#L300">300</a>         attributes.entrySet().forEach(entry -&gt; setChild(builder, entry.getKey(), entry.getValue()));
-<a class="jxr_linenumber" name="L301" href="#L301">301</a>     }
-<a class="jxr_linenumber" name="L302" href="#L302">302</a> 
-<a class="jxr_linenumber" name="L303" href="#L303">303</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L304" href="#L304">304</a> <em class="jxr_javadoccomment">     * Sets the child value in the builder.</em>
-<a class="jxr_linenumber" name="L305" href="#L305">305</a> <em class="jxr_javadoccomment">     * @param builder The Matcher builder to set the values in.</em>
-<a class="jxr_linenumber" name="L306" href="#L306">306</a> <em class="jxr_javadoccomment">     * @param name the name of the child to set</em>
-<a class="jxr_linenumber" name="L307" href="#L307">307</a> <em class="jxr_javadoccomment">     * @param value the value of the parameter.</em>
-<a class="jxr_linenumber" name="L308" href="#L308">308</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L309" href="#L309">309</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setChild(<strong class="jxr_keyword">final</strong> IHeaderMatcher.Builder builder, <strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> String value) {
-<a class="jxr_linenumber" name="L310" href="#L310">310</a>         <a name="Description" href="../../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> d = getChildren().get(name);
-<a class="jxr_linenumber" name="L311" href="#L311">311</a>         <strong class="jxr_keyword">if</strong> (d == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L312" href="#L312">312</a>             DefaultLog.getInstance().error(format(<span class="jxr_string">"%s does not define a ConfigComponent for a member %s."</span>,
-<a class="jxr_linenumber" name="L313" href="#L313">313</a>                     builder.getClass().getCanonicalName(), name));
-<a class="jxr_linenumber" name="L314" href="#L314">314</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L315" href="#L315">315</a>             callSetter(d, builder, value);
-<a class="jxr_linenumber" name="L316" href="#L316">316</a>         }
-<a class="jxr_linenumber" name="L317" href="#L317">317</a>     }
-<a class="jxr_linenumber" name="L318" href="#L318">318</a> 
-<a class="jxr_linenumber" name="L319" href="#L319">319</a>     @Override
-<a class="jxr_linenumber" name="L320" href="#L320">320</a>     <strong class="jxr_keyword">public</strong> String toString() {
-<a class="jxr_linenumber" name="L321" href="#L321">321</a>         String childList = children.isEmpty() ? <span class="jxr_string">""</span>
-<a class="jxr_linenumber" name="L322" href="#L322">322</a>                 : String.join(<span class="jxr_string">", "</span>,
-<a class="jxr_linenumber" name="L323" href="#L323">323</a>                         children.values().stream().map(Description::getCommonName).collect(Collectors.toList()));
-<a class="jxr_linenumber" name="L324" href="#L324">324</a> 
-<a class="jxr_linenumber" name="L325" href="#L325">325</a>         <strong class="jxr_keyword">return</strong> format(<span class="jxr_string">"Description[%s t:%s c:%s %s children: [%s]] "</span>, name, type, isCollection, childClass,
-<a class="jxr_linenumber" name="L326" href="#L326">326</a>                 childList);
-<a class="jxr_linenumber" name="L327" href="#L327">327</a>     }
-<a class="jxr_linenumber" name="L328" href="#L328">328</a> 
-<a class="jxr_linenumber" name="L329" href="#L329">329</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L330" href="#L330">330</a> <em class="jxr_javadoccomment">     * Write a description with indentation.</em>
-<a class="jxr_linenumber" name="L331" href="#L331">331</a> <em class="jxr_javadoccomment">     * @param indent the number of spaces to indent.</em>
-<a class="jxr_linenumber" name="L332" href="#L332">332</a> <em class="jxr_javadoccomment">     * @return the string with the formatted data.</em>
-<a class="jxr_linenumber" name="L333" href="#L333">333</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L334" href="#L334">334</a>     <strong class="jxr_keyword">public</strong> String toString(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> indent) {
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>         <strong class="jxr_keyword">char</strong>[] spaces = <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">char</strong>[indent];
-<a class="jxr_linenumber" name="L336" href="#L336">336</a>         Arrays.fill(spaces, ' ');
-<a class="jxr_linenumber" name="L337" href="#L337">337</a>         String padding = String.copyValueOf(spaces);
-<a class="jxr_linenumber" name="L338" href="#L338">338</a>         String top = format(<span class="jxr_string">"%sDescription[ t:%s n:%s c:%s %s%n%s   %s] "</span>, padding, type, name, isCollection,
-<a class="jxr_linenumber" name="L339" href="#L339">339</a>                 childClass, padding, desc);
-<a class="jxr_linenumber" name="L340" href="#L340">340</a>         <strong class="jxr_keyword">if</strong> (children.isEmpty()) {
-<a class="jxr_linenumber" name="L341" href="#L341">341</a>             <strong class="jxr_keyword">return</strong> top;
-<a class="jxr_linenumber" name="L342" href="#L342">342</a>         }
-<a class="jxr_linenumber" name="L343" href="#L343">343</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder(top);
-<a class="jxr_linenumber" name="L344" href="#L344">344</a>         <strong class="jxr_keyword">for</strong> (<a name="Description" href="../../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> child : children.values()) {
-<a class="jxr_linenumber" name="L345" href="#L345">345</a>             sb.append(System.lineSeparator()).append(child.toString(indent + 2));
-<a class="jxr_linenumber" name="L346" href="#L346">346</a>         }
-<a class="jxr_linenumber" name="L347" href="#L347">347</a>         <strong class="jxr_keyword">return</strong> sb.toString();
-<a class="jxr_linenumber" name="L348" href="#L348">348</a>     }
-<a class="jxr_linenumber" name="L349" href="#L349">349</a> }
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>             children.forEach(d -&gt; <strong class="jxr_keyword">this</strong>.children.put(d.name, d));
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         }
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>     }
+<a class="jxr_linenumber" name="L106" href="#L106">106</a> 
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> <em class="jxr_javadoccomment">     * Constructor</em>
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_javadoccomment">     * @param configComponent the configuration component</em>
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment">     * @param isCollection the collection flag.</em>
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">     * @param childClass the type of object that the method getter/setter expects.</em>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a> <em class="jxr_javadoccomment">     * @param children the collection of descriptions for all the components that</em>
+<a class="jxr_linenumber" name="L113" href="#L113">113</a> <em class="jxr_javadoccomment">     * are children the described component.</em>
+<a class="jxr_linenumber" name="L114" href="#L114">114</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>     <strong class="jxr_keyword">public</strong> <a name="Description" href="../../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a>(<strong class="jxr_keyword">final</strong> ConfigComponent configComponent, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> isCollection, <strong class="jxr_keyword">final</strong> Class&lt;?&gt; childClass,
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>                        <strong class="jxr_keyword">final</strong> Collection&lt;Description&gt; children) {
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         <strong class="jxr_keyword">this</strong>(configComponent.type(), configComponent.name(), configComponent.desc(), isCollection, childClass, children,
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>                 configComponent.required());
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>     }
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> 
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L122" href="#L122">122</a> <em class="jxr_javadoccomment">     * Get the canBeChild flag.</em>
+<a class="jxr_linenumber" name="L123" href="#L123">123</a> <em class="jxr_javadoccomment">     * @return {@code true} if this item can be a child of the containing item.</em>
+<a class="jxr_linenumber" name="L124" href="#L124">124</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L125" href="#L125">125</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isRequired() {
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>         <strong class="jxr_keyword">return</strong> required;
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>     }
+<a class="jxr_linenumber" name="L128" href="#L128">128</a> 
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L130" href="#L130">130</a> <em class="jxr_javadoccomment">     * Gets the type of the component.</em>
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> <em class="jxr_javadoccomment">     * @return the component type.</em>
+<a class="jxr_linenumber" name="L132" href="#L132">132</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L133" href="#L133">133</a>     <strong class="jxr_keyword">public</strong> <a name="ComponentType" href="../../../../../org/apache/rat/config/parameters/ComponentType.html#ComponentType">ComponentType</a> getType() {
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>         <strong class="jxr_keyword">return</strong> type;
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>     }
+<a class="jxr_linenumber" name="L136" href="#L136">136</a> 
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L138" href="#L138">138</a> <em class="jxr_javadoccomment">     * Get the isCollection flag.</em>
+<a class="jxr_linenumber" name="L139" href="#L139">139</a> <em class="jxr_javadoccomment">     * @return true if this is a collection.</em>
+<a class="jxr_linenumber" name="L140" href="#L140">140</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isCollection() {
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>         <strong class="jxr_keyword">return</strong> isCollection;
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>     }
+<a class="jxr_linenumber" name="L144" href="#L144">144</a> 
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     * Get the class of the objects for the getter/setter methods.</em>
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     * @return the getter/setter param class.</em>
+<a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>     <strong class="jxr_keyword">public</strong> Class&lt;?&gt; getChildType() {
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>         <strong class="jxr_keyword">return</strong> childClass;
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>     }
+<a class="jxr_linenumber" name="L152" href="#L152">152</a> 
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L154" href="#L154">154</a> <em class="jxr_javadoccomment">     * Gets the common name for the matcher. (e.g. 'text', 'spdx', etc.) May not be</em>
+<a class="jxr_linenumber" name="L155" href="#L155">155</a> <em class="jxr_javadoccomment">     * null.</em>
+<a class="jxr_linenumber" name="L156" href="#L156">156</a> <em class="jxr_javadoccomment">     * @return The common name for the item being inspected.</em>
+<a class="jxr_linenumber" name="L157" href="#L157">157</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L158" href="#L158">158</a>     <strong class="jxr_keyword">public</strong> String getCommonName() {
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>         <strong class="jxr_keyword">return</strong> name;
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>     }
+<a class="jxr_linenumber" name="L161" href="#L161">161</a> 
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L163" href="#L163">163</a> <em class="jxr_javadoccomment">     * Gets the description of descriptive text for the component. May be an empty</em>
+<a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     * string or null.</em>
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * @return the descriptive text;</em>
+<a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>     <strong class="jxr_keyword">public</strong> String getDescription() {
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>         <strong class="jxr_keyword">return</strong> desc;
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>     }
+<a class="jxr_linenumber" name="L170" href="#L170">170</a> 
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L172" href="#L172">172</a> <em class="jxr_javadoccomment">     * Retrieve the value of the described parameter from the specified object.</em>
+<a class="jxr_linenumber" name="L173" href="#L173">173</a> <em class="jxr_javadoccomment">     * If the parameter is a collection return {@code null}.</em>
+<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     * @param object the object that contains the value.</em>
+<a class="jxr_linenumber" name="L175" href="#L175">175</a> <em class="jxr_javadoccomment">     * @return the string value.</em>
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>     <strong class="jxr_keyword">public</strong> String getParamValue(<strong class="jxr_keyword">final</strong> Object object) {
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         <strong class="jxr_keyword">if</strong> (isCollection) {
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         }
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>             Object val = getter(object.getClass()).invoke(object);
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>             <strong class="jxr_keyword">return</strong> val == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : val.toString();
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         } <strong class="jxr_keyword">catch</strong> (IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>                 | SecurityException e) {
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>             DefaultLog.getInstance().error(format(<span class="jxr_string">"Can not retrieve value for '%s' from %s%n"</span>, name, object.getClass().getName()),
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>                     e);
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         }
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>     }
+<a class="jxr_linenumber" name="L191" href="#L191">191</a> 
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L193" href="#L193">193</a> <em class="jxr_javadoccomment">     * Gets a map of the parameters that the object contains. For example Copyright</em>
+<a class="jxr_linenumber" name="L194" href="#L194">194</a> <em class="jxr_javadoccomment">     * has 'start', 'stop', and 'owner' parameters. Some IHeaderMatchers have simple</em>
+<a class="jxr_linenumber" name="L195" href="#L195">195</a> <em class="jxr_javadoccomment">     * text values (e.g. 'regex' or 'text' types) these should list an unnamed</em>
+<a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">     * parameter (empty string) with the text value.</em>
+<a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     * @return the map of parameters to the objects that represent them.</em>
+<a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>     <strong class="jxr_keyword">public</strong> Map&lt;String, Description&gt; getChildren() {
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>         <strong class="jxr_keyword">return</strong> children;
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>     }
+<a class="jxr_linenumber" name="L202" href="#L202">202</a> 
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L204" href="#L204">204</a> <em class="jxr_javadoccomment">     * Get all the children of a specific type</em>
+<a class="jxr_linenumber" name="L205" href="#L205">205</a> <em class="jxr_javadoccomment">     * @param type the type to return</em>
+<a class="jxr_linenumber" name="L206" href="#L206">206</a> <em class="jxr_javadoccomment">     * @return the collection of children of the specified type.</em>
+<a class="jxr_linenumber" name="L207" href="#L207">207</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>     <strong class="jxr_keyword">public</strong> Collection&lt;Description&gt; childrenOfType(<strong class="jxr_keyword">final</strong> <a name="ComponentType" href="../../../../../org/apache/rat/config/parameters/ComponentType.html#ComponentType">ComponentType</a> type) {
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>         <strong class="jxr_keyword">return</strong> filterChildren(d -&gt; d.getType() == type);
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>     }
+<a class="jxr_linenumber" name="L211" href="#L211">211</a> 
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L213" href="#L213">213</a> <em class="jxr_javadoccomment">     * Get a filtered collection of the child descriptions.</em>
+<a class="jxr_linenumber" name="L214" href="#L214">214</a> <em class="jxr_javadoccomment">     * @param filter the filter to apply to the child descriptions.</em>
+<a class="jxr_linenumber" name="L215" href="#L215">215</a> <em class="jxr_javadoccomment">     * @return the collection of children that matche the filter..</em>
+<a class="jxr_linenumber" name="L216" href="#L216">216</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>     <strong class="jxr_keyword">public</strong> Collection&lt;Description&gt; filterChildren(<strong class="jxr_keyword">final</strong> Predicate&lt;Description&gt; filter) {
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>         <strong class="jxr_keyword">return</strong> children.values().stream().filter(filter).collect(Collectors.toList());
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>     }
+<a class="jxr_linenumber" name="L220" href="#L220">220</a> 
+<a class="jxr_linenumber" name="L221" href="#L221">221</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L222" href="#L222">222</a> <em class="jxr_javadoccomment">     * Generate a method name for this description.</em>
+<a class="jxr_linenumber" name="L223" href="#L223">223</a> <em class="jxr_javadoccomment">     * @param prefix the start of the method name (e.g. "set", "get" )</em>
+<a class="jxr_linenumber" name="L224" href="#L224">224</a> <em class="jxr_javadoccomment">     * @return the method name.</em>
+<a class="jxr_linenumber" name="L225" href="#L225">225</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L226" href="#L226">226</a>     <strong class="jxr_keyword">public</strong> String methodName(<strong class="jxr_keyword">final</strong> String prefix) {
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>         <strong class="jxr_keyword">return</strong> prefix + StringUtils.capitalize(name);
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>     }
+<a class="jxr_linenumber" name="L229" href="#L229">229</a> 
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L231" href="#L231">231</a> <em class="jxr_javadoccomment">     * Returns the getter for the component in the specified class.</em>
+<a class="jxr_linenumber" name="L232" href="#L232">232</a> <em class="jxr_javadoccomment">     * @param clazz the Class to get the getter from.</em>
+<a class="jxr_linenumber" name="L233" href="#L233">233</a> <em class="jxr_javadoccomment">     * @return the getter Method.</em>
+<a class="jxr_linenumber" name="L234" href="#L234">234</a> <em class="jxr_javadoccomment">     * @throws NoSuchMethodException if the class does not have the getter.</em>
+<a class="jxr_linenumber" name="L235" href="#L235">235</a> <em class="jxr_javadoccomment">     * @throws SecurityException if the getter can not be accessed.</em>
+<a class="jxr_linenumber" name="L236" href="#L236">236</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>     <strong class="jxr_keyword">public</strong> Method getter(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) <strong class="jxr_keyword">throws</strong> NoSuchMethodException, SecurityException {
+<a class="jxr_linenumber" name="L238" href="#L238">238</a>         <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName(<span class="jxr_string">"get"</span>));
+<a class="jxr_linenumber" name="L239" href="#L239">239</a>     }
+<a class="jxr_linenumber" name="L240" href="#L240">240</a> 
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L242" href="#L242">242</a> <em class="jxr_javadoccomment">     * Returns the setter for the component in the specified class. Notes:</em>
+<a class="jxr_linenumber" name="L243" href="#L243">243</a> <em class="jxr_javadoccomment">     * &lt;ul&gt;</em>
+<a class="jxr_linenumber" name="L244" href="#L244">244</a> <em class="jxr_javadoccomment">     * &lt;li&gt;License can not be set in components. They are top level components.&lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L245" href="#L245">245</a> <em class="jxr_javadoccomment">     * &lt;li&gt;Matcher expects an "add" method that accepts an</em>
+<a class="jxr_linenumber" name="L246" href="#L246">246</a> <em class="jxr_javadoccomment">     * IHeaderMatcher.Builder.&lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">     * &lt;li&gt;Parameter expects a {@code set(String)} method.&lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">     * &lt;li&gt;Unlabeled expects a {@code set(String)} method.&lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">     * &lt;li&gt;BuilderParam expects a {@code set} method that takes a</em>
+<a class="jxr_linenumber" name="L250" href="#L250">250</a> <em class="jxr_javadoccomment">     * {@code childeClass} argument.&lt;/li&gt;</em>
+<a class="jxr_linenumber" name="L251" href="#L251">251</a> <em class="jxr_javadoccomment">     * &lt;/ul&gt;</em>
+<a class="jxr_linenumber" name="L252" href="#L252">252</a> <em class="jxr_javadoccomment">     * @param clazz the Class to get the getter from, generally a Builder class..</em>
+<a class="jxr_linenumber" name="L253" href="#L253">253</a> <em class="jxr_javadoccomment">     * @return the getter Method.</em>
+<a class="jxr_linenumber" name="L254" href="#L254">254</a> <em class="jxr_javadoccomment">     * @throws NoSuchMethodException if the class does not have the getter.</em>
+<a class="jxr_linenumber" name="L255" href="#L255">255</a> <em class="jxr_javadoccomment">     * @throws SecurityException if the getter can not be accessed.</em>
+<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>     <strong class="jxr_keyword">public</strong> Method setter(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) <strong class="jxr_keyword">throws</strong> NoSuchMethodException, SecurityException {
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>         String methodName = methodName(isCollection ? <span class="jxr_string">"add"</span> : <span class="jxr_string">"set"</span>);
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>         <strong class="jxr_keyword">switch</strong> (type) {
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>         <strong class="jxr_keyword">case</strong> LICENSE:
+<a class="jxr_linenumber" name="L261" href="#L261">261</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> NoSuchMethodException(<span class="jxr_string">"Can not set a License as a child"</span>);
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>         <strong class="jxr_keyword">case</strong> MATCHER:
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>             <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName, IHeaderMatcher.Builder.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L264" href="#L264">264</a>         <strong class="jxr_keyword">case</strong> PARAMETER:
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>             <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName,
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>                     IHeaderMatcher.<strong class="jxr_keyword">class</strong>.isAssignableFrom(childClass) ? IHeaderMatcher.Builder.<strong class="jxr_keyword">class</strong> : childClass);
+<a class="jxr_linenumber" name="L267" href="#L267">267</a>         <strong class="jxr_keyword">case</strong> BUILD_PARAMETER:
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>             <strong class="jxr_keyword">return</strong> clazz.getMethod(methodName, childClass);
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>         }
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>         <em class="jxr_comment">// should not happen</em>
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>         <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalStateException(<span class="jxr_string">"Type "</span> + type + <span class="jxr_string">" not valid."</span>);
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>     }
+<a class="jxr_linenumber" name="L273" href="#L273">273</a> 
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> callSetter(<strong class="jxr_keyword">final</strong> <a name="Description" href="../../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> description, <strong class="jxr_keyword">final</strong> IHeaderMatcher.Builder builder, <strong class="jxr_keyword">final</strong> String value) {
+<a class="jxr_linenumber" name="L275" href="#L275">275</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L276" href="#L276">276</a>             description.setter(builder.getClass()).invoke(builder, value);
+<a class="jxr_linenumber" name="L277" href="#L277">277</a>         } <strong class="jxr_keyword">catch</strong> (NoSuchMethodException e) {
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>             String msg = format(<span class="jxr_string">"No setter for '%s' on %s"</span>, description.getCommonName(),
+<a class="jxr_linenumber" name="L279" href="#L279">279</a>                     builder.getClass().getCanonicalName());
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>             DefaultLog.getInstance().error(msg);
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(msg);
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>         } <strong class="jxr_keyword">catch</strong> (IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+<a class="jxr_linenumber" name="L283" href="#L283">283</a>             String msg = format(<span class="jxr_string">"Unable to call setter for '%s' on %s"</span>, description.getCommonName(),
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>                     builder.getClass().getCanonicalName());
+<a class="jxr_linenumber" name="L285" href="#L285">285</a>             DefaultLog.getInstance().error(msg, e);
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(msg, e);
+<a class="jxr_linenumber" name="L287" href="#L287">287</a>         }
+<a class="jxr_linenumber" name="L288" href="#L288">288</a>     }
+<a class="jxr_linenumber" name="L289" href="#L289">289</a> 
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L291" href="#L291">291</a> <em class="jxr_javadoccomment">     * Sets the children of values in the builder. Sets the parameters to the values</em>
+<a class="jxr_linenumber" name="L292" href="#L292">292</a> <em class="jxr_javadoccomment">     * specified in the map. Only children that accept string arguments should be</em>
+<a class="jxr_linenumber" name="L293" href="#L293">293</a> <em class="jxr_javadoccomment">     * specified.</em>
+<a class="jxr_linenumber" name="L294" href="#L294">294</a> <em class="jxr_javadoccomment">     * @param builder The Matcher builder to set the values in.</em>
+<a class="jxr_linenumber" name="L295" href="#L295">295</a> <em class="jxr_javadoccomment">     * @param attributes a Map of parameter names to values.</em>
+<a class="jxr_linenumber" name="L296" href="#L296">296</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L297" href="#L297">297</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setChildren(<strong class="jxr_keyword">final</strong> IHeaderMatcher.Builder builder, <strong class="jxr_keyword">final</strong> Map&lt;String, String&gt; attributes) {
+<a class="jxr_linenumber" name="L298" href="#L298">298</a>         attributes.forEach((key, value) -&gt; setChild(builder, key, value));
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>     }
+<a class="jxr_linenumber" name="L300" href="#L300">300</a> 
+<a class="jxr_linenumber" name="L301" href="#L301">301</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L302" href="#L302">302</a> <em class="jxr_javadoccomment">     * Sets the child value in the builder.</em>
+<a class="jxr_linenumber" name="L303" href="#L303">303</a> <em class="jxr_javadoccomment">     * @param builder The Matcher builder to set the values in.</em>
+<a class="jxr_linenumber" name="L304" href="#L304">304</a> <em class="jxr_javadoccomment">     * @param name the name of the child to set</em>
+<a class="jxr_linenumber" name="L305" href="#L305">305</a> <em class="jxr_javadoccomment">     * @param value the value of the parameter.</em>
+<a class="jxr_linenumber" name="L306" href="#L306">306</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L307" href="#L307">307</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setChild(<strong class="jxr_keyword">final</strong> IHeaderMatcher.Builder builder, <strong class="jxr_keyword">final</strong> String name, <strong class="jxr_keyword">final</strong> String value) {
+<a class="jxr_linenumber" name="L308" href="#L308">308</a>         <a name="Description" href="../../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> d = getChildren().get(name);
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>         <strong class="jxr_keyword">if</strong> (d == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>             DefaultLog.getInstance().error(format(<span class="jxr_string">"%s does not define a ConfigComponent for a member %s."</span>,
+<a class="jxr_linenumber" name="L311" href="#L311">311</a>                     builder.getClass().getCanonicalName(), name));
+<a class="jxr_linenumber" name="L312" href="#L312">312</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L313" href="#L313">313</a>             callSetter(d, builder, value);
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>         }
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>     }
+<a class="jxr_linenumber" name="L316" href="#L316">316</a> 
+<a class="jxr_linenumber" name="L317" href="#L317">317</a>     @Override
+<a class="jxr_linenumber" name="L318" href="#L318">318</a>     <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>         String childList = children.isEmpty() ? <span class="jxr_string">""</span>
+<a class="jxr_linenumber" name="L320" href="#L320">320</a>                 : children.values().stream().map(Description::getCommonName).collect(Collectors.joining(<span class="jxr_string">", "</span>));
+<a class="jxr_linenumber" name="L321" href="#L321">321</a> 
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>         <strong class="jxr_keyword">return</strong> format(<span class="jxr_string">"Description[%s t:%s c:%s %s children: [%s]] "</span>, name, type, isCollection, childClass,
+<a class="jxr_linenumber" name="L323" href="#L323">323</a>                 childList);
+<a class="jxr_linenumber" name="L324" href="#L324">324</a>     }
+<a class="jxr_linenumber" name="L325" href="#L325">325</a> 
+<a class="jxr_linenumber" name="L326" href="#L326">326</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L327" href="#L327">327</a> <em class="jxr_javadoccomment">     * Write a description with indentation.</em>
+<a class="jxr_linenumber" name="L328" href="#L328">328</a> <em class="jxr_javadoccomment">     * @param indent the number of spaces to indent.</em>
+<a class="jxr_linenumber" name="L329" href="#L329">329</a> <em class="jxr_javadoccomment">     * @return the string with the formatted data.</em>
+<a class="jxr_linenumber" name="L330" href="#L330">330</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>     <strong class="jxr_keyword">public</strong> String toString(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> indent) {
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>         <strong class="jxr_keyword">char</strong>[] spaces = <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">char</strong>[indent];
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>         Arrays.fill(spaces, ' ');
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>         String padding = String.copyValueOf(spaces);
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>         String top = format(<span class="jxr_string">"%sDescription[ t:%s n:%s c:%s %s%n%s   %s] "</span>, padding, type, name, isCollection,
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>                 childClass, padding, desc);
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>         <strong class="jxr_keyword">if</strong> (children.isEmpty()) {
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>             <strong class="jxr_keyword">return</strong> top;
+<a class="jxr_linenumber" name="L339" href="#L339">339</a>         }
+<a class="jxr_linenumber" name="L340" href="#L340">340</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder(top);
+<a class="jxr_linenumber" name="L341" href="#L341">341</a>         <strong class="jxr_keyword">for</strong> (<a name="Description" href="../../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> child : children.values()) {
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>             sb.append(System.lineSeparator()).append(child.toString(indent + 2));
+<a class="jxr_linenumber" name="L343" href="#L343">343</a>         }
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>         <strong class="jxr_keyword">return</strong> sb.toString();
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>     }
+<a class="jxr_linenumber" name="L346" href="#L346">346</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

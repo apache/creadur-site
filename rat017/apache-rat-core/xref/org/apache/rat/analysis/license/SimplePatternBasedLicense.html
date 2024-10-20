@@ -63,7 +63,7 @@
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>              <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="TextBuilder" href="../../../../../org/apache/rat/configuration/builders/TextBuilder.html#TextBuilder">TextBuilder</a>().setSimpleText(patterns[0]);
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>              <a name="AnyBuilder" href="../../../../../org/apache/rat/configuration/builders/AnyBuilder.html#AnyBuilder">AnyBuilder</a> any = <strong class="jxr_keyword">new</strong> <a name="AnyBuilder" href="../../../../../org/apache/rat/configuration/builders/AnyBuilder.html#AnyBuilder">AnyBuilder</a>();
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>              Arrays.stream(patterns).map(s -&gt; <strong class="jxr_keyword">new</strong> <a name="TextBuilder" href="../../../../../org/apache/rat/configuration/builders/TextBuilder.html#TextBuilder">TextBuilder</a>().setSimpleText(s)).forEach(b-&gt; any.addEnclosed(b));
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>              Arrays.stream(patterns).map(s -&gt; <strong class="jxr_keyword">new</strong> <a name="TextBuilder" href="../../../../../org/apache/rat/configuration/builders/TextBuilder.html#TextBuilder">TextBuilder</a>().setSimpleText(s)).forEach(any::addEnclosed);
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>              <strong class="jxr_keyword">return</strong> any;
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          }
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      }

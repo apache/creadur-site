@@ -68,7 +68,7 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">public</strong> <a name="AbstractBuilder" href="../../../../../org/apache/rat/configuration/builders/AbstractBuilder.html#AbstractBuilder">AbstractBuilder</a> setResource(String resourceName) {
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>          URL url = <strong class="jxr_keyword">this</strong>.getClass().getResource(resourceName);
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <strong class="jxr_keyword">try</strong> (<strong class="jxr_keyword">final</strong> InputStream in = url.openStream();
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>               BufferedReader buffer = <strong class="jxr_keyword">new</strong> BufferedReader(<strong class="jxr_keyword">new</strong> InputStreamReader(in, StandardCharsets.UTF_8));) {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>               BufferedReader buffer = <strong class="jxr_keyword">new</strong> BufferedReader(<strong class="jxr_keyword">new</strong> InputStreamReader(in, StandardCharsets.UTF_8))) {
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>              String txt;
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>              <strong class="jxr_keyword">while</strong> (<strong class="jxr_keyword">null</strong> != (txt = buffer.readLine())) {
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>                  txt = txt.trim();

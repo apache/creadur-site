@@ -34,8 +34,8 @@
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.io.OutputStreamWriter;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.io.PrintStream;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> java.io.StringReader;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.io.UnsupportedEncodingException;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.UndeclaredThrowableException;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.UndeclaredThrowableException;
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.StandardCharsets;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  
@@ -79,11 +79,11 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>          <strong class="jxr_keyword">return</strong> spf.newSAXParser().getXMLReader();
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      }
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isWellFormedXml(<strong class="jxr_keyword">final</strong> String string) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isWellFormedXml(<strong class="jxr_keyword">final</strong> String string) {
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>          <strong class="jxr_keyword">return</strong> isWellFormedXml(<strong class="jxr_keyword">new</strong> InputSource(<strong class="jxr_keyword">new</strong> StringReader(string)));
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>      }
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isWellFormedXml(<strong class="jxr_keyword">final</strong> InputStream in) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> isWellFormedXml(<strong class="jxr_keyword">final</strong> InputStream in) {
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>          <strong class="jxr_keyword">return</strong> isWellFormedXml(<strong class="jxr_keyword">new</strong> InputSource(in));
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>      }
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  
@@ -118,7 +118,7 @@
 <a class="jxr_linenumber" name="L110" href="#L110">110</a> 
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> Node getNode(Object source, XPath xPath, String xpath) <strong class="jxr_keyword">throws</strong> XPathExpressionException {
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         NodeList nodeList = getNodeList(source, xPath, xpath);
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>         assertEquals(1, nodeList.getLength(), <span class="jxr_string">"Could not find "</span> + xpath);
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>         assertEquals(1, nodeList.getLength(), <span class="jxr_string">"Could not find exactly one"</span> + xpath);
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>         <strong class="jxr_keyword">return</strong> nodeList.item(0);
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>     }
 <a class="jxr_linenumber" name="L116" href="#L116">116</a> 
@@ -152,7 +152,7 @@
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>     }
 <a class="jxr_linenumber" name="L145" href="#L145">145</a> 
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     * Print the and XML document to the output stream</em>
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     * Print the properties and XML document to the output stream</em>
 <a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_javadoccomment">     * </em>
 <a class="jxr_linenumber" name="L149" href="#L149">149</a> <em class="jxr_javadoccomment">     * @param out the OutputStream to print the document to.</em>
 <a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">     * @param document The XML DOM document to print</em>
@@ -169,13 +169,12 @@
 <a class="jxr_linenumber" name="L161" href="#L161">161</a>             transformer.setOutputProperty(OutputKeys.ENCODING, <span class="jxr_string">"UTF-8"</span>);
 <a class="jxr_linenumber" name="L162" href="#L162">162</a>             transformer.setOutputProperty(<span class="jxr_string">"{http://xml.apache.org/xslt}indent-amount"</span>, <span class="jxr_string">"4"</span>);
 <a class="jxr_linenumber" name="L163" href="#L163">163</a> 
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>             transformer.transform(<strong class="jxr_keyword">new</strong> DOMSource(document), <strong class="jxr_keyword">new</strong> StreamResult(<strong class="jxr_keyword">new</strong> OutputStreamWriter(out, <span class="jxr_string">"UTF-8"</span>)));
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>         } <strong class="jxr_keyword">catch</strong> (TransformerException | UnsupportedEncodingException e) {
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>             transformer.transform(<strong class="jxr_keyword">new</strong> DOMSource(document), <strong class="jxr_keyword">new</strong> StreamResult(<strong class="jxr_keyword">new</strong> OutputStreamWriter(out, StandardCharsets.UTF_8)));
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>         } <strong class="jxr_keyword">catch</strong> (TransformerException e) {
 <a class="jxr_linenumber" name="L166" href="#L166">166</a>             e.printStackTrace(<strong class="jxr_keyword">new</strong> PrintStream(out));
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>         }
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>     }
-<a class="jxr_linenumber" name="L169" href="#L169">169</a> 
-<a class="jxr_linenumber" name="L170" href="#L170">170</a> }
+<a class="jxr_linenumber" name="L169" href="#L169">169</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

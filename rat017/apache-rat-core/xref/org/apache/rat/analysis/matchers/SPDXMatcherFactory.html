@@ -69,12 +69,12 @@
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * The regular expression to locate the SPDX license identifier in the text</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     * stream</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Pattern groupSelector = Pattern.compile(<span class="jxr_string">".*"</span>+LICENSE_IDENTIFIER+<span class="jxr_string">"&#92;&#92;s([A-Za-z0-9&#92;&#92;.&#92;&#92;-]+)"</span>);
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Pattern groupSelector = Pattern.compile(<span class="jxr_string">".*"</span> + LICENSE_IDENTIFIER + <span class="jxr_string">"&#92;&#92;s([A-Za-z0-9&#92;&#92;.&#92;&#92;-]+)"</span>);
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * The last matcer to match the line.</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">private</strong> Set&lt;String&gt; lastMatch;
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Set&lt;String&gt; lastMatch;
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> checked;
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
@@ -133,7 +133,7 @@
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>     @ConfigComponent(type = ComponentType.MATCHER, name = <span class="jxr_string">"spdx"</span>, desc = <span class="jxr_string">"Matches SPDX enclosed license identifier."</span>)
 <a class="jxr_linenumber" name="L126" href="#L126">126</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> Match <strong class="jxr_keyword">extends</strong> <a name="AbstractHeaderMatcher" href="../../../../../org/apache/rat/analysis/matchers/AbstractHeaderMatcher.html#AbstractHeaderMatcher">AbstractHeaderMatcher</a> {
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>         @ConfigComponent(type = ComponentType.PARAMETER, name = <span class="jxr_string">"name"</span>, desc = <span class="jxr_string">"The SPDX identifier string"</span>)
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>         String spdxId;
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>         <strong class="jxr_keyword">final</strong> String spdxId;
 <a class="jxr_linenumber" name="L129" href="#L129">129</a> 
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>         <strong class="jxr_keyword">public</strong> String getName() {
 <a class="jxr_linenumber" name="L131" href="#L131">131</a>             <strong class="jxr_keyword">return</strong> spdxId;

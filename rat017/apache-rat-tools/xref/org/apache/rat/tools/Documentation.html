@@ -43,32 +43,36 @@
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * Utilizes the same command line as the CLI based Report client so that additional licenses, etc. can be added.</em>
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="Documentation" href="../../../../org/apache/rat/tools/Documentation.html#Documentation">Documentation</a> {
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     * Creates the documentation. Writes to the output specified by the -o or --out option. Defaults to System.out.</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     * @param args the arguments. Try --help for help.</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">     * @throws IOException on error</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(<strong class="jxr_keyword">final</strong> String[] args) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          ReportConfiguration config = OptionCollection.parseCommands(args, Documentation::printUsage, <strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <strong class="jxr_keyword">if</strong> (config != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>              <strong class="jxr_keyword">try</strong> (Writer writer = config.getWriter().get()) {
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>                  <strong class="jxr_keyword">new</strong> Licenses(config, writer).output();
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>              }
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          }
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      }
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> printUsage(<strong class="jxr_keyword">final</strong> Options opts) {
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>          HelpFormatter f = <strong class="jxr_keyword">new</strong> HelpFormatter();
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>          f.setOptionComparator(OptionCollection.optionComparator);
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          f.setWidth(AbstractHelp.HELP_WIDTH);
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          String header = <span class="jxr_string">"\nAvailable options"</span>;
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          String footer = <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          String cmdLine = format(<span class="jxr_string">"java -jar apache-rat/target/apache-rat-CURRENT-VERSION.jar %s"</span>,
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  Documentation.<strong class="jxr_keyword">class</strong>.getName());
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          f.printHelp(cmdLine, header, opts, footer, false);
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>          System.exit(0);
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>      }
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  }
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">private</strong> <a name="Documentation" href="../../../../org/apache/rat/tools/Documentation.html#Documentation">Documentation</a>() {
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>          <em class="jxr_comment">// do not instantiate.</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      }
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * Creates the documentation. Writes to the output specified by the -o or --out option. Defaults to System.out.</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     * @param args the arguments. Try --help for help.</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">     * @throws IOException on error</em>
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> main(<strong class="jxr_keyword">final</strong> String[] args) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          ReportConfiguration config = OptionCollection.parseCommands(args, Documentation::printUsage, <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <strong class="jxr_keyword">if</strong> (config != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>              <strong class="jxr_keyword">try</strong> (Writer writer = config.getWriter().get()) {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>                  <strong class="jxr_keyword">new</strong> Licenses(config, writer).output();
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>              }
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          }
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      }
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> printUsage(<strong class="jxr_keyword">final</strong> Options opts) {
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          HelpFormatter f = <strong class="jxr_keyword">new</strong> HelpFormatter();
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          f.setOptionComparator(OptionCollection.OPTION_COMPARATOR);
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          f.setWidth(AbstractHelp.HELP_WIDTH);
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          String header = <span class="jxr_string">"\nAvailable options"</span>;
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          String footer = <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          String cmdLine = format(<span class="jxr_string">"java -jar apache-rat/target/apache-rat-CURRENT-VERSION.jar %s"</span>,
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>                  Documentation.<strong class="jxr_keyword">class</strong>.getName());
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          f.printHelp(cmdLine, header, opts, footer, false);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          System.exit(0);
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>  }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

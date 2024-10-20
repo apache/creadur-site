@@ -42,92 +42,90 @@
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.ILicense;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.LicenseSetFactory;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.LicenseSetFactory.LicenseFilter;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingLicense;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.DefaultLog;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.BeforeEach;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.ParameterizedTest;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.provider.MethodSource;
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> * Test to see if short form license information will be recognized correctly.</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment"> *</em>
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="AbstractLicenseTest" href="../../../../../org/apache/rat/analysis/license/AbstractLicenseTest.html#AbstractLicenseTest">AbstractLicenseTest</a> {
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> NAME = 0;
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">int</strong> TEXT = 1;
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">private</strong> Defaults defaults;
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">protected</strong> MetaData data;
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">protected</strong> <a name="AbstractLicenseTest" href="../../../../../org/apache/rat/analysis/license/AbstractLicenseTest.html#AbstractLicenseTest">AbstractLicenseTest</a>() {
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>      }
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      @BeforeEach
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setup() {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          data = <strong class="jxr_keyword">new</strong> MetaData();
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          defaults = Defaults.builder().build();
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>      }
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">protected</strong> ILicense extractCategory(String famId, String id) {
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          Optional&lt;ILicense&gt; result = LicenseSetFactory.search(famId, id, defaults.getLicenseSetFactory().getLicenses(LicenseFilter.ALL));
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">if</strong> (!result.isPresent()) {
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>              fail(String.format(<span class="jxr_string">"No licenses for id: f:%s l:%s"</span>, famId, id));
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          }
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          <strong class="jxr_keyword">return</strong> result.get();
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      }
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>      @ParameterizedTest
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>      @MethodSource(<span class="jxr_string">"parameterProvider"</span>)
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMatchProcessing(String id, String familyPattern, String name, String notes, String[][] targets)
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>              <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          ILicense license = extractCategory(familyPattern, id);
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>              <strong class="jxr_keyword">for</strong> (String[] target : targets) {
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>                  <strong class="jxr_keyword">if</strong> (processText(license, target[TEXT])) {
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>                      data.reportOnLicense(license);
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>                      assertEquals(1, data.licenses().count());
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>                      assertEquals(license, data.licenses().findFirst().get());
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>                  } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>                      fail(license + <span class="jxr_string">" was not matched by "</span> + target[NAME]);
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>                  }
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>                  license.reset();
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>              }
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>              license.reset();
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>          }
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>  
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> processText(ILicense license, String text) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>          <strong class="jxr_keyword">try</strong> (BufferedReader in = <strong class="jxr_keyword">new</strong> BufferedReader(<strong class="jxr_keyword">new</strong> StringReader(text))) {
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>              IHeaders headers = HeaderCheckWorker.readHeader(in,
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>                      HeaderCheckWorker.DEFAULT_NUMBER_OF_RETAINED_HEADER_LINES);
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>              <strong class="jxr_keyword">return</strong> license.matches(headers);
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>          }
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>      }
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>  
-<a class="jxr_linenumber" name="L100" href="#L100">100</a>     @ParameterizedTest
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>     @MethodSource(<span class="jxr_string">"parameterProvider"</span>)
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testEmbeddedStrings(String id, String family, String name, String notes, String[][] targets)
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>             <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         String formats[] = { <span class="jxr_string">"%s"</span>, <span class="jxr_string">"now is not the time %s for copyright"</span>, <span class="jxr_string">"#%s"</span>, <span class="jxr_string">"##%s"</span>, <span class="jxr_string">"## %s"</span>, <span class="jxr_string">"##%s##"</span>, <span class="jxr_string">"## %s ##"</span>,
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>                 <span class="jxr_string">"/*%s*/"</span>, <span class="jxr_string">"/* %s */"</span> };
-<a class="jxr_linenumber" name="L106" href="#L106">106</a> 
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         ILicense license = extractCategory(family, id);
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>             <strong class="jxr_keyword">for</strong> (String[] target : targets) {
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>                 <strong class="jxr_keyword">for</strong> (String fmt : formats) {
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>                     <strong class="jxr_keyword">boolean</strong> found = processText(license, String.format(fmt, target[TEXT]));
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>                     license.reset();
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>                     assertTrue(found, () -&gt; String.format(<span class="jxr_string">"%s %s did not match pattern '%s' for target string %s"</span>, id,
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>                             name, fmt, target[NAME]));
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>                 }
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>             }
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>         } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>             license.reset();
-<a class="jxr_linenumber" name="L119" href="#L119">119</a>         }
-<a class="jxr_linenumber" name="L120" href="#L120">120</a>     }
-<a class="jxr_linenumber" name="L121" href="#L121">121</a> 
-<a class="jxr_linenumber" name="L122" href="#L122">122</a> }
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.BeforeEach;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.ParameterizedTest;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.provider.MethodSource;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> * Test to see if short form license information will be recognized correctly.</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="AbstractLicenseTest" href="../../../../../org/apache/rat/analysis/license/AbstractLicenseTest.html#AbstractLicenseTest">AbstractLicenseTest</a> {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> NAME = 0;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> TEXT = 1;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      <strong class="jxr_keyword">private</strong> Defaults defaults;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">protected</strong> MetaData data;
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">protected</strong> <a name="AbstractLicenseTest" href="../../../../../org/apache/rat/analysis/license/AbstractLicenseTest.html#AbstractLicenseTest">AbstractLicenseTest</a>() {
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>      }
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>  
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>      @BeforeEach
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setup() {
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          data = <strong class="jxr_keyword">new</strong> MetaData();
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          defaults = Defaults.builder().build();
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>      }
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>  
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">protected</strong> ILicense extractCategory(String famId, String id) {
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          Optional&lt;ILicense&gt; result = LicenseSetFactory.search(famId, id, defaults.getLicenseSetFactory().getLicenses(LicenseFilter.ALL));
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">if</strong> (!result.isPresent()) {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>              fail(String.format(<span class="jxr_string">"No licenses for id: f:%s l:%s"</span>, famId, id));
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          }
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <strong class="jxr_keyword">return</strong> result.get();
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      }
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      @ParameterizedTest
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      @MethodSource(<span class="jxr_string">"parameterProvider"</span>)
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testMatchProcessing(String id, String familyPattern, String name, String notes, String[][] targets)
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>              <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          ILicense license = extractCategory(familyPattern, id);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>              <strong class="jxr_keyword">for</strong> (String[] target : targets) {
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>                  <strong class="jxr_keyword">if</strong> (processText(license, target[TEXT])) {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>                      data.reportOnLicense(license);
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>                      assertEquals(1, data.licenses().count());
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>                      assertEquals(license, data.licenses().findFirst().get());
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>                  } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>                      fail(license + <span class="jxr_string">" was not matched by "</span> + target[NAME]);
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>                  }
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>                  license.reset();
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>              }
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>              license.reset();
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>          }
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>      }
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">boolean</strong> processText(ILicense license, String text) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">try</strong> (BufferedReader in = <strong class="jxr_keyword">new</strong> BufferedReader(<strong class="jxr_keyword">new</strong> StringReader(text))) {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>              IHeaders headers = HeaderCheckWorker.readHeader(in,
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>                      HeaderCheckWorker.DEFAULT_NUMBER_OF_RETAINED_HEADER_LINES);
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>              <strong class="jxr_keyword">return</strong> license.matches(headers);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>          }
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>      }
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>  
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>      @ParameterizedTest
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>      @MethodSource(<span class="jxr_string">"parameterProvider"</span>)
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testEmbeddedStrings(String id, String family, String name, String notes, String[][] targets)
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>             <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         String[] formats = { <span class="jxr_string">"%s"</span>, <span class="jxr_string">"now is not the time %s for copyright"</span>, <span class="jxr_string">"#%s"</span>, <span class="jxr_string">"##%s"</span>, <span class="jxr_string">"## %s"</span>, <span class="jxr_string">"##%s##"</span>, <span class="jxr_string">"## %s ##"</span>,
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>                 <span class="jxr_string">"/*%s*/"</span>, <span class="jxr_string">"/* %s */"</span> };
+<a class="jxr_linenumber" name="L104" href="#L104">104</a> 
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>         ILicense license = extractCategory(family, id);
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>             <strong class="jxr_keyword">for</strong> (String[] target : targets) {
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>                 <strong class="jxr_keyword">for</strong> (String fmt : formats) {
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>                     <strong class="jxr_keyword">boolean</strong> found = processText(license, String.format(fmt, target[TEXT]));
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>                     license.reset();
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>                     assertTrue(found, () -&gt; String.format(<span class="jxr_string">"%s %s did not match pattern '%s' for target string %s"</span>, id,
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>                             name, fmt, target[NAME]));
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>                 }
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>             }
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>         } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>             license.reset();
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>         }
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>     }
+<a class="jxr_linenumber" name="L119" href="#L119">119</a> 
+<a class="jxr_linenumber" name="L120" href="#L120">120</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

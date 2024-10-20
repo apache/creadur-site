@@ -76,7 +76,7 @@
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>          URL url = XMLConfigurationReaderTest.<strong class="jxr_keyword">class</strong>.getResource(<span class="jxr_string">"/org/apache/rat/default.xml"</span>);
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          reader.read(url.toURI());
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          Collection&lt;String&gt; readCategories = reader.readLicenses().stream().map(x -&gt; x.getId())
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          Collection&lt;String&gt; readCategories = reader.readLicenses().stream().map(IHeaderMatcher::getId)
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>                  .collect(Collectors.toList());
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          assertArrayEquals(EXPECTED_LICENSES, readCategories.toArray(<strong class="jxr_keyword">new</strong> String[readCategories.size()]));
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      }
@@ -115,7 +115,7 @@
 <a class="jxr_linenumber" name="L107" href="#L107">107</a>     }
 <a class="jxr_linenumber" name="L108" href="#L108">108</a> 
 <a class="jxr_linenumber" name="L109" href="#L109">109</a>     @Test
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> descriptionTest() <strong class="jxr_keyword">throws</strong> NoSuchMethodException, SecurityException, URISyntaxException {
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> descriptionTest() <strong class="jxr_keyword">throws</strong> SecurityException, URISyntaxException {
 <a class="jxr_linenumber" name="L111" href="#L111">111</a>         XMLConfigurationReader reader = <strong class="jxr_keyword">new</strong> XMLConfigurationReader();
 <a class="jxr_linenumber" name="L112" href="#L112">112</a>         URL url = XMLConfigurationReaderTest.<strong class="jxr_keyword">class</strong>.getResource(<span class="jxr_string">"/org/apache/rat/default.xml"</span>);
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>         reader.read(url.toURI());

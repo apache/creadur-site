@@ -79,7 +79,7 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          XMLConfigurationReader reader = <strong class="jxr_keyword">new</strong> XMLConfigurationReader();
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          reader.read(<strong class="jxr_keyword">new</strong> StringReader(configStr));
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>          assertThrows(ConfigurationException.<strong class="jxr_keyword">class</strong>, () -&gt; reader.readLicenses());
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          assertThrows(ConfigurationException.<strong class="jxr_keyword">class</strong>, reader::readLicenses);
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      }
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>  }
 </pre>

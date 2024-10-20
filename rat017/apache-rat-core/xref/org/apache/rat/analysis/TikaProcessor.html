@@ -49,7 +49,7 @@
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>      <em class="jxr_javadoccomment">/** A map of mime type string to non BINARY types.</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     * "text" types are already handled everything else</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * BINARY unless listed here*/</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Map&lt;String, Document.Type&gt; documentTypeMap;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Map&lt;String, Document.Type&gt; documentTypeMap;
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      <strong class="jxr_keyword">static</strong> {
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>          documentTypeMap = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
@@ -122,7 +122,7 @@
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String process(<strong class="jxr_keyword">final</strong> <a name="Document" href="../../../../org/apache/rat/api/Document.html#Document">Document</a> document) <strong class="jxr_keyword">throws</strong> <a name="RatDocumentAnalysisException" href="../../../../org/apache/rat/document/RatDocumentAnalysisException.html#RatDocumentAnalysisException">RatDocumentAnalysisException</a> {
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>         Metadata metadata = <strong class="jxr_keyword">new</strong> Metadata();
 <a class="jxr_linenumber" name="L116" href="#L116">116</a>         <strong class="jxr_keyword">try</strong> (InputStream stream = document.inputStream()) {
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>             metadata.set(TikaCoreProperties.RESOURCE_NAME_KEY, document.getName());
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>             metadata.set(TikaCoreProperties.RESOURCE_NAME_KEY, document.getName().getName());
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>             String result = TIKA.detect(stream, metadata);
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>             String[] parts = result.split(<span class="jxr_string">"/"</span>);
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>             MediaType mediaType = <strong class="jxr_keyword">new</strong> MediaType(parts[0], parts[1]);
