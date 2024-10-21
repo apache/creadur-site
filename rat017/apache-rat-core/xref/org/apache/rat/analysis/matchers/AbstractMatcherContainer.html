@@ -42,7 +42,7 @@
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">class</strong> <a name="AbstractMatcherContainer" href="../../../../../org/apache/rat/analysis/matchers/AbstractMatcherContainer.html#AbstractMatcherContainer">AbstractMatcherContainer</a> <strong class="jxr_keyword">extends</strong> <a name="AbstractHeaderMatcher" href="../../../../../org/apache/rat/analysis/matchers/AbstractHeaderMatcher.html#AbstractHeaderMatcher">AbstractHeaderMatcher</a> {
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>      <em class="jxr_javadoccomment">/** The collection of enclosed headers */</em>
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      @ConfigComponent(desc = <span class="jxr_string">"enclosed Matchers"</span>, type = ComponentType.PARAMETER, parameterType = IHeaderMatcher.<strong class="jxr_keyword">class</strong>, required=<strong class="jxr_keyword">true</strong>)
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      @ConfigComponent(desc = <span class="jxr_string">"enclosed Matchers"</span>, type = ComponentType.PARAMETER, parameterType = IHeaderMatcher.<strong class="jxr_keyword">class</strong>, required = <strong class="jxr_keyword">true</strong>)
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Collection&lt;IHeaderMatcher&gt; enclosed;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      <em class="jxr_javadoccomment">/** The resource the headers were read from.  May be null */</em>
@@ -59,7 +59,7 @@
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  <em class="jxr_javadoccomment">     * @param enclosed the collection of enclosed matchers.</em>
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  <em class="jxr_javadoccomment">     * @param resource the name of the resource if this container was read from a file or URL.</em>
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <a name="AbstractMatcherContainer" href="../../../../../org/apache/rat/analysis/matchers/AbstractMatcherContainer.html#AbstractMatcherContainer">AbstractMatcherContainer</a>(String id, Collection&lt;? <strong class="jxr_keyword">extends</strong> IHeaderMatcher&gt; enclosed, String resource) {
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">public</strong> <a name="AbstractMatcherContainer" href="../../../../../org/apache/rat/analysis/matchers/AbstractMatcherContainer.html#AbstractMatcherContainer">AbstractMatcherContainer</a>(<strong class="jxr_keyword">final</strong> String id, <strong class="jxr_keyword">final</strong> Collection&lt;? <strong class="jxr_keyword">extends</strong> IHeaderMatcher&gt; enclosed, <strong class="jxr_keyword">final</strong> String resource) {
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>          <strong class="jxr_keyword">super</strong>(id);
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>          Objects.requireNonNull(enclosed, <span class="jxr_string">"The collection of IHeaderMatcher may not be null"</span>);
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>          <strong class="jxr_keyword">this</strong>.enclosed = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(enclosed);
@@ -74,7 +74,7 @@
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * @param enclosed the collection of enclosed matchers.</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * @param resource the name of the resource if this container was read from a file or URL.</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <a name="AbstractMatcherContainer" href="../../../../../org/apache/rat/analysis/matchers/AbstractMatcherContainer.html#AbstractMatcherContainer">AbstractMatcherContainer</a>(Collection&lt;? <strong class="jxr_keyword">extends</strong> IHeaderMatcher&gt; enclosed, String resource) {
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>      <strong class="jxr_keyword">public</strong> <a name="AbstractMatcherContainer" href="../../../../../org/apache/rat/analysis/matchers/AbstractMatcherContainer.html#AbstractMatcherContainer">AbstractMatcherContainer</a>(<strong class="jxr_keyword">final</strong> Collection&lt;? <strong class="jxr_keyword">extends</strong> IHeaderMatcher&gt; enclosed, <strong class="jxr_keyword">final</strong> String resource) {
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>          <strong class="jxr_keyword">this</strong>(<strong class="jxr_keyword">null</strong>, enclosed, resource);
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      }
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  
