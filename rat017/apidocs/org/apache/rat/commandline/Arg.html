@@ -100,8 +100,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public enum </span><span class="element-name type-name-label">Arg</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="Arg.html" title="enum in org.apache.rat.commandline">Arg</a>&gt;</span></div>
 <div class="block">An enumeration of options.
- Each Arg contains an OptionGroup that contains the individual options that all resolve to the same option.  This allows
- us to deprecate options as we move forward in development.</div>
+ <p>
+ Each Arg contains an OptionGroup that contains the individual options that all resolve to the same option.
+ This allows us to deprecate options as we move forward in development.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -308,7 +309,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the first non-deprecated option from the group.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#processArgs(org.apache.rat.commandline.ArgumentContext)" class="member-name-link">processArgs</a><wbr>(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;ctxt)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#processArgs(org.apache.rat.commandline.ArgumentContext)" class="member-name-link">processArgs</a><wbr>(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Process the arguments.</div>
 </div>
@@ -643,6 +644,10 @@ not permitted.)</div>
 <section class="detail" id="defaultValue()">
 <h3>defaultValue</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">defaultValue</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>default value of this arg.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -652,7 +657,7 @@ not permitted.)</div>
 <div class="block">Gets the group for this arg.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the option gorup for this arg.</dd>
+<dd>the option group for this arg.</dd>
 </dl>
 </section>
 </li>
@@ -663,7 +668,7 @@ not permitted.)</div>
 <div class="block">Returns the first non-deprecated option from the group.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the first non-deprecated option or null if no non-deprecated option is available.</dd>
+<dd>the first non-deprecated option or <code>null</code> if no non-deprecated option is available.</dd>
 </dl>
 </section>
 </li>
@@ -688,12 +693,12 @@ not permitted.)</div>
 <li>
 <section class="detail" id="processArgs(org.apache.rat.commandline.ArgumentContext)">
 <h3>processArgs</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processArgs</span><wbr><span class="parameters">(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;ctxt)</span>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processArgs</span><wbr><span class="parameters">(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context)</span>
                         throws <span class="exceptions"><a href="../ConfigurationException.html" title="class in org.apache.rat">ConfigurationException</a></span></div>
 <div class="block">Process the arguments.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>ctxt</code> - the context in which to process the args.</dd>
+<dd><code>context</code> - the context in which to process the args.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="../ConfigurationException.html" title="class in org.apache.rat">ConfigurationException</a></code> - on error</dd>
 </dl>

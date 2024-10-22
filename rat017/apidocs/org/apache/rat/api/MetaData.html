@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">MetaData</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">Data about the document under test..</div>
+<div class="block">Data about the document under test.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -160,7 +160,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeLicenses(java.util.function.Predicate)" class="member-name-link">removeLicenses</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;filter)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Remove matched licenses based on a predicate.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reportOnLicense(org.apache.rat.license.ILicense)" class="member-name-link">reportOnLicense</a><wbr>(<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -299,7 +301,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Determine if the license is an approved license.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>license</code> - the license to check;</dd>
+<dd><code>license</code> - the license to check.</dd>
 <dt>Returns:</dt>
 <dd><code>true</code> if the license is in the list of approved licenses, <code>false</code> otherwise.</dd>
 </dl>
@@ -320,7 +322,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setSampleHeader(java.lang.String)">
 <h3>setSampleHeader</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSampleHeader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sampleHeader)</span></div>
-<div class="block">Sets the sample header.  This is the header that was collected during processing.</div>
+<div class="block">Sets the sample header. This is the header that was collected during processing.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>sampleHeader</code> - the sample header to use.</dd>
@@ -334,7 +336,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the sample header.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the smaple header.</dd>
+<dd>the sample header.</dd>
 </dl>
 </section>
 </li>
@@ -375,6 +377,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="removeLicenses(java.util.function.Predicate)">
 <h3>removeLicenses</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeLicenses</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;filter)</span></div>
+<div class="block">Remove matched licenses based on a predicate. Will remove licenses for which the predicate
+ returns true.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>filter</code> - the predicate to use.</dd>
+</dl>
 </section>
 </li>
 <li>

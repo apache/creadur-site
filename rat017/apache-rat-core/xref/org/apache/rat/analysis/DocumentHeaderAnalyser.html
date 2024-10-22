@@ -26,16 +26,16 @@
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_comment"> */</em>
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">package</strong> org.apache.rat.analysis;
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  
-<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.lang.String.format;
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.io.Reader;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.api.Document;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.IDocumentAnalyser;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.ILicense;
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.DefaultLog;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.io.Reader;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.util.Collection;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.api.Document;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.IDocumentAnalyser;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.ILicense;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.DefaultLog;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.lang.String.format;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * A Document analyzer that analyses document headers for a license.</em>
@@ -45,31 +45,30 @@
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      <em class="jxr_javadoccomment">/** The license to analyse */</em>
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Collection&lt;ILicense&gt; licenses;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     * Constructs the HeaderAnalyser for the specific license.</em>
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * @param licenses The licenses to analyse</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <a name="DocumentHeaderAnalyser" href="../../../../org/apache/rat/analysis/DocumentHeaderAnalyser.html#DocumentHeaderAnalyser">DocumentHeaderAnalyser</a>(<strong class="jxr_keyword">final</strong> Collection&lt;ILicense&gt; licenses) {
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          <strong class="jxr_keyword">super</strong>();
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <strong class="jxr_keyword">this</strong>.licenses = licenses;
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>      }
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>      @Override
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> analyse(<strong class="jxr_keyword">final</strong> <a name="Document" href="../../../../org/apache/rat/api/Document.html#Document">Document</a> document) {
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">try</strong> (Reader reader = document.reader()) {
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>              DefaultLog.getInstance().debug(format(<span class="jxr_string">"Processing: %s"</span>, document));
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>              <a name="HeaderCheckWorker" href="../../../../org/apache/rat/analysis/HeaderCheckWorker.html#HeaderCheckWorker">HeaderCheckWorker</a> worker = <strong class="jxr_keyword">new</strong> <a name="HeaderCheckWorker" href="../../../../org/apache/rat/analysis/HeaderCheckWorker.html#HeaderCheckWorker">HeaderCheckWorker</a>(reader, licenses, document);
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>              worker.read();
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>              DefaultLog.getInstance().warn(String.format(<span class="jxr_string">"Cannot read header of %s"</span>, document));
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>              document.getMetaData().setDocumentType(Document.Type.UNKNOWN);
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          } <strong class="jxr_keyword">catch</strong> (<a name="RatHeaderAnalysisException" href="../../../../org/apache/rat/analysis/RatHeaderAnalysisException.html#RatHeaderAnalysisException">RatHeaderAnalysisException</a> e) {
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>              DefaultLog.getInstance().warn(String.format(<span class="jxr_string">"Cannot process header of %s"</span>, document));
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>              document.getMetaData().setDocumentType(Document.Type.UNKNOWN);
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          }
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  }
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">     * Constructs the HeaderAnalyser for the specific license.</em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     * @param licenses The licenses to analyse</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>      <a name="DocumentHeaderAnalyser" href="../../../../org/apache/rat/analysis/DocumentHeaderAnalyser.html#DocumentHeaderAnalyser">DocumentHeaderAnalyser</a>(<strong class="jxr_keyword">final</strong> Collection&lt;ILicense&gt; licenses) {
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <strong class="jxr_keyword">super</strong>();
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          <strong class="jxr_keyword">this</strong>.licenses = licenses;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      }
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>      @Override
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> analyse(<strong class="jxr_keyword">final</strong> <a name="Document" href="../../../../org/apache/rat/api/Document.html#Document">Document</a> document) {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <strong class="jxr_keyword">try</strong> (Reader reader = document.reader()) {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>              DefaultLog.getInstance().debug(format(<span class="jxr_string">"Processing: %s"</span>, document));
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>              <a name="HeaderCheckWorker" href="../../../../org/apache/rat/analysis/HeaderCheckWorker.html#HeaderCheckWorker">HeaderCheckWorker</a> worker = <strong class="jxr_keyword">new</strong> <a name="HeaderCheckWorker" href="../../../../org/apache/rat/analysis/HeaderCheckWorker.html#HeaderCheckWorker">HeaderCheckWorker</a>(reader, licenses, document);
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>              worker.read();
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>              DefaultLog.getInstance().warn(String.format(<span class="jxr_string">"Cannot read header of %s"</span>, document));
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>              document.getMetaData().setDocumentType(Document.Type.UNKNOWN);
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          } <strong class="jxr_keyword">catch</strong> (<a name="RatHeaderAnalysisException" href="../../../../org/apache/rat/analysis/RatHeaderAnalysisException.html#RatHeaderAnalysisException">RatHeaderAnalysisException</a> e) {
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>              DefaultLog.getInstance().warn(String.format(<span class="jxr_string">"Cannot process header of %s"</span>, document));
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>              document.getMetaData().setDocumentType(Document.Type.UNKNOWN);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          }
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      }
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>  }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

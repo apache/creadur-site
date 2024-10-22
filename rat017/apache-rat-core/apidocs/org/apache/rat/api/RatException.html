@@ -144,11 +144,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="RatException.html" title="class in org.apache.rat.api">RatException</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#asRatException(java.lang.Exception)" class="member-name-link">asRatException</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;e)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="RatException.html" title="class in org.apache.rat.api">RatException</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#makeInstance(java.lang.Exception)" class="member-name-link">makeInstance</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;e)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#makeRatException(java.lang.Exception)" class="member-name-link">makeRatException</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;exception)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a RatException out of any other type of exception.</div>
+</div>
 </div>
 </div>
 </div>
@@ -203,15 +202,17 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="asRatException(java.lang.Exception)">
-<h3>asRatException</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="RatException.html" title="class in org.apache.rat.api">RatException</a></span>&nbsp;<span class="element-name">asRatException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;e)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="makeInstance(java.lang.Exception)">
-<h3>makeInstance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="RatException.html" title="class in org.apache.rat.api">RatException</a></span>&nbsp;<span class="element-name">makeInstance</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;e)</span></div>
+<section class="detail" id="makeRatException(java.lang.Exception)">
+<h3>makeRatException</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="RatException.html" title="class in org.apache.rat.api">RatException</a></span>&nbsp;<span class="element-name">makeRatException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;exception)</span></div>
+<div class="block">Creates a RatException out of any other type of exception.
+ If the exception is already a RatException, just return it.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>exception</code> - the exception to convert.</dd>
+<dt>Returns:</dt>
+<dd>A RatException.</dd>
+</dl>
 </section>
 </li>
 </ul>
