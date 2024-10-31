@@ -55,23 +55,64 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.analysis">org.apache.rat.analysis</a></div>
+<div class="col-first even-row-color"><a href="#org.apache.rat">org.apache.rat</a></div>
 <div class="col-last even-row-color">
+<div class="block">The base package for the RAT tool.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.analysis">org.apache.rat.analysis</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Classes that perform analyses of files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.document">org.apache.rat.document</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.document.impl.util">org.apache.rat.document.impl.util</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.policy">org.apache.rat.policy</a></div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.api">org.apache.rat.api</a></div>
+<div class="col-last even-row-color">
+<div class="block">Key abstractions.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.config.exclusion">org.apache.rat.config.exclusion</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Classes that manage the inclusion and exclusion of files.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.config.exclusion.fileProcessors">org.apache.rat.config.exclusion.fileProcessors</a></div>
+<div class="col-last even-row-color">
+<div class="block">Custom file processors to handles exclusions defined in various formats.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.document">org.apache.rat.document</a></div>
+<div class="col-last odd-row-color">
+<div class="block">The definitions of Documents and their analysers.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.policy">org.apache.rat.policy</a></div>
+<div class="col-last even-row-color">
 <div class="block">Policies for various methods of reporting.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim.util">org.apache.rat.report.claim.util</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.report">org.apache.rat.report</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Classes that generate the Rat report.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></div>
+<div class="col-last even-row-color">
+<div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.walker">org.apache.rat.walker</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Classes that walk directory trees and return documents.</div>
+</div>
 </div>
 <section class="package-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="org.apache.rat">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../package-summary.html">org.apache.rat</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentName.html#org.apache.rat">DocumentName</a></div>
+<div class="col-last even-row-color">
+<div class="block">A collection of names for a document.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/DocumentNameMatcher.html#org.apache.rat">DocumentNameMatcher</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="org.apache.rat.analysis">
 <div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../analysis/package-summary.html">org.apache.rat.analysis</a></span></div>
@@ -79,9 +120,58 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="class-use/IDocumentAnalyser.html#org.apache.rat.analysis">IDocumentAnalyser</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Analyses Documents.</div>
+</div>
 <div class="col-first odd-row-color"><a href="class-use/RatDocumentAnalysisException.html#org.apache.rat.analysis">RatDocumentAnalysisException</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.api">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../api/package-summary.html">org.apache.rat.api</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentName.html#org.apache.rat.api">DocumentName</a></div>
+<div class="col-last even-row-color">
+<div class="block">A collection of names for a document.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/DocumentNameMatcher.html#org.apache.rat.api">DocumentNameMatcher</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.config.exclusion">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../config/exclusion/package-summary.html">org.apache.rat.config.exclusion</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentName.html#org.apache.rat.config.exclusion">DocumentName</a></div>
+<div class="col-last even-row-color">
+<div class="block">A collection of names for a document.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/DocumentNameMatcher.html#org.apache.rat.config.exclusion">DocumentNameMatcher</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentNameMatcherSupplier.html#org.apache.rat.config.exclusion">DocumentNameMatcherSupplier</a></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a patch matcher based on the directory.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.config.exclusion.fileProcessors">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../config/exclusion/fileProcessors/package-summary.html">org.apache.rat.config.exclusion.fileProcessors</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentName.html#org.apache.rat.config.exclusion.fileProcessors">DocumentName</a></div>
+<div class="col-last even-row-color">
+<div class="block">A collection of names for a document.</div>
+</div>
 </div>
 </section>
 </li>
@@ -91,21 +181,26 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentName.html#org.apache.rat.document">DocumentName</a></div>
+<div class="col-last even-row-color">
+<div class="block">A collection of names for a document.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/DocumentNameMatcher.html#org.apache.rat.document">DocumentNameMatcher</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentNameMatcherSupplier.html#org.apache.rat.document">DocumentNameMatcherSupplier</a></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a patch matcher based on the directory.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IDocumentAnalyser.html#org.apache.rat.document">IDocumentAnalyser</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Analyses Documents.</div>
+</div>
 <div class="col-first even-row-color"><a href="class-use/RatDocumentAnalysisException.html#org.apache.rat.document">RatDocumentAnalysisException</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/TraceableDocumentNameMatcher.html#org.apache.rat.document">TraceableDocumentNameMatcher</a></div>
+<div class="col-last odd-row-color">
+<div class="block">A PatternMatcher that will emit trace messages during execution if the environment variable is set.</div>
 </div>
-</section>
-</li>
-<li>
-<section class="detail" id="org.apache.rat.document.impl.util">
-<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="impl/util/package-summary.html">org.apache.rat.document.impl.util</a></span></div>
-<div class="summary-table two-column-summary">
-<div class="table-header col-first">Class</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="class-use/IDocumentAnalyser.html#org.apache.rat.document.impl.util">IDocumentAnalyser</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/RatDocumentAnalysisException.html#org.apache.rat.document.impl.util">RatDocumentAnalysisException</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -116,18 +211,48 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="class-use/IDocumentAnalyser.html#org.apache.rat.policy">IDocumentAnalyser</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Analyses Documents.</div>
+</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="org.apache.rat.report.claim.util">
-<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../report/claim/util/package-summary.html">org.apache.rat.report.claim.util</a></span></div>
+<section class="detail" id="org.apache.rat.report">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../report/package-summary.html">org.apache.rat.report</a></span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="class-use/IDocumentAnalyser.html#org.apache.rat.report.claim.util">IDocumentAnalyser</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentName.html#org.apache.rat.report">DocumentName</a></div>
+<div class="col-last even-row-color">
+<div class="block">A collection of names for a document.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.report.claim">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../report/claim/package-summary.html">org.apache.rat.report.claim</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/IDocumentAnalyser.html#org.apache.rat.report.claim">IDocumentAnalyser</a></div>
+<div class="col-last even-row-color">
+<div class="block">Analyses Documents.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.walker">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.apache.rat.document</a> used by <a href="../walker/package-summary.html">org.apache.rat.walker</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/DocumentName.html#org.apache.rat.walker">DocumentName</a></div>
+<div class="col-last even-row-color">
+<div class="block">A collection of names for a document.</div>
+</div>
 </div>
 </section>
 </li>

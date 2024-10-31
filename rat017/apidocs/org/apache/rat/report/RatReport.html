@@ -89,11 +89,11 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="claim/impl/AbstractClaimReporter.html" title="class in org.apache.rat.report.claim.impl">AbstractClaimReporter</a></code>, <code><a href="AbstractReport.html" title="class in org.apache.rat.report">AbstractReport</a></code>, <code><a href="claim/impl/ClaimAggregator.html" title="class in org.apache.rat.report.claim.impl">ClaimAggregator</a></code>, <code><a href="claim/util/ClaimReporterMultiplexer.html" title="class in org.apache.rat.report.claim.util">ClaimReporterMultiplexer</a></code>, <code><a href="ConfigurationReport.html" title="class in org.apache.rat.report">ConfigurationReport</a></code>, <code><a href="claim/util/LicenseAddingReport.html" title="class in org.apache.rat.report.claim.util">LicenseAddingReport</a></code>, <code><a href="claim/impl/xml/SimpleXmlClaimReporter.html" title="class in org.apache.rat.report.claim.impl.xml">SimpleXmlClaimReporter</a></code></dd>
+<dd><code><a href="claim/AbstractClaimReporter.html" title="class in org.apache.rat.report.claim">AbstractClaimReporter</a></code>, <code><a href="AbstractReport.html" title="class in org.apache.rat.report">AbstractReport</a></code>, <code><a href="claim/ClaimAggregator.html" title="class in org.apache.rat.report.claim">ClaimAggregator</a></code>, <code><a href="claim/ClaimReporterMultiplexer.html" title="class in org.apache.rat.report.claim">ClaimReporterMultiplexer</a></code>, <code><a href="ConfigurationReport.html" title="class in org.apache.rat.report">ConfigurationReport</a></code>, <code><a href="claim/LicenseAddingReport.html" title="class in org.apache.rat.report.claim">LicenseAddingReport</a></code>, <code><a href="claim/SimpleXmlClaimReporter.html" title="class in org.apache.rat.report.claim">SimpleXmlClaimReporter</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">RatReport</span></div>
-<div class="block">Interface that defines a RatReport. 
+<div class="block">Interface that defines a RatReport.
  A RatReport examines a document and may report issues or modify the underlying file.</div>
 </section>
 <section class="summary">
@@ -143,7 +143,7 @@ loadScripts(document, 'script');</script>
 <h3>startReport</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">startReport</span>()
           throws <span class="exceptions"><a href="../api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
-<div class="block">Signals the start of execution for the report.  Will be called before the <code>report()</code> method
+<div class="block">Signals the start of execution for the report. Will be called before the <code>report()</code> method
  to ensure proper setup.</div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -176,7 +176,7 @@ loadScripts(document, 'script');</script>
 <h3>endReport</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">endReport</span>()
         throws <span class="exceptions"><a href="../api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
-<div class="block">Signals the end of execution for the report.  Will be called after the <code>report()</code> method
+<div class="block">Signals the end of execution for the report. Will be called after the <code>report()</code> method
  to ensure proper cleanup.</div>
 <dl class="notes">
 <dt>Throws:</dt>

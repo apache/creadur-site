@@ -60,23 +60,23 @@ loadScripts(document, 'script');</script>
 <div class="block">Classes to process configuration information from/to files.</div>
 </div>
 <div class="col-first odd-row-color"><a href="#org.apache.rat.report">org.apache.rat.report</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim.impl.xml">org.apache.rat.report.claim.impl.xml</a></div>
-<div class="col-last even-row-color">
-<div class="block">Classes to write claims in XML format</div>
+<div class="col-last odd-row-color">
+<div class="block">Classes that generate the Rat report.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.report.claim.util">org.apache.rat.report.claim.util</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></div>
 <div class="col-last even-row-color">
+<div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Classes that write the XML output.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml.writer">org.apache.rat.report.xml.writer</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.apache.rat.report.xml.writer">org.apache.rat.report.xml.writer</a></div>
+<div class="col-last even-row-color">
 <div class="block">Classes to handle writing well formed XML documents.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.xml.writer.impl.base">org.apache.rat.report.xml.writer.impl.base</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml.writer.impl.base">org.apache.rat.report.xml.writer.impl.base</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -114,36 +114,25 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="org.apache.rat.report.claim.impl.xml">
-<h2>Uses of <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a> in <a href="../../../claim/impl/xml/package-summary.html">org.apache.rat.report.claim.impl.xml</a></h2>
-<div class="caption"><span>Constructors in <a href="../../../claim/impl/xml/package-summary.html">org.apache.rat.report.claim.impl.xml</a> with parameters of type <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></span></div>
+<section class="detail" id="org.apache.rat.report.claim">
+<h2>Uses of <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a> in <a href="../../../claim/package-summary.html">org.apache.rat.report.claim</a></h2>
+<div class="caption"><span>Constructors in <a href="../../../claim/package-summary.html">org.apache.rat.report.claim</a> with parameters of type <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier</div>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../claim/impl/xml/SimpleXmlClaimReporter.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">SimpleXmlClaimReporter</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Constructor.</div>
-</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="org.apache.rat.report.claim.util">
-<h2>Uses of <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a> in <a href="../../../claim/util/package-summary.html">org.apache.rat.report.claim.util</a></h2>
-<div class="caption"><span>Constructors in <a href="../../../claim/util/package-summary.html">org.apache.rat.report.claim.util</a> with parameters of type <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../claim/util/ClaimReporterMultiplexer.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,boolean,org.apache.rat.document.IDocumentAnalyser,java.util.List)" class="member-name-link">ClaimReporterMultiplexer</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
+<div class="col-second even-row-color"><code><a href="../../../claim/ClaimReporterMultiplexer.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,boolean,org.apache.rat.document.IDocumentAnalyser,java.util.List)" class="member-name-link">ClaimReporterMultiplexer</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
  boolean&nbsp;dryRun,
  <a href="../../../../document/IDocumentAnalyser.html" title="interface in org.apache.rat.document">IDocumentAnalyser</a>&nbsp;analyser,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../../../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&gt;&nbsp;reporters)</code></div>
 <div class="col-last even-row-color">
 <div class="block">A multiplexer to run multiple claim reports.</div>
+</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../claim/SimpleXmlClaimReporter.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">SimpleXmlClaimReporter</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Constructor.</div>
 </div>
 </div>
 </section>
@@ -166,7 +155,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../../XmlReportFactory.html#endReport(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">endReport</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Ends the XML reprot by closing the element that startReport opened.</div>
+<div class="block">Ends the XML report by closing the element that startReport opened.</div>
 </div>
 <div class="col-first even-row-color"><code>static void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../../XmlReportFactory.html#startReport(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">startReport</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>

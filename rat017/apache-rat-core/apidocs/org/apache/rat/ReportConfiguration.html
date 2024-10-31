@@ -94,7 +94,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ReportConfiguration</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">A configuration object is used by the front end to invoke the
- <a href="Reporter.html" title="class in org.apache.rat"><code>Reporter</code></a>. The sole purpose of the front ends is to create the
+ <a href="Reporter.html" title="class in org.apache.rat"><code>Reporter</code></a>. The sole purpose of the frontends is to create the
  configuration and invoke the <a href="Reporter.html" title="class in org.apache.rat"><code>Reporter</code></a>.</div>
 </section>
 <section class="summary">
@@ -210,7 +210,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Adds a license family to the list of families.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addFamily(org.apache.rat.license.ILicenseFamily.Builder)" class="member-name-link">addFamily</a><wbr>(<a href="license/ILicenseFamily.Builder.html" title="interface in org.apache.rat.license">ILicenseFamily.Builder</a>&nbsp;builder)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addFamily(org.apache.rat.license.ILicenseFamily.Builder)" class="member-name-link">addFamily</a><wbr>(<a href="license/ILicenseFamily.Builder.html" title="class in org.apache.rat.license">ILicenseFamily.Builder</a>&nbsp;builder)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a license family to the list of families.</div>
 </div>
@@ -220,7 +220,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedFilter(java.io.FileFilter)" class="member-name-link">addIncludedFilter</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileFilter.html" title="class or interface in java.io" class="external-link">FileFilter</a>&nbsp;fileFilter)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add the file filter to filter files that should be included, this overrides any
+<div class="block">Adds the fileFilter to filter files that should be included, this overrides any
  exclusion of the same files.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
@@ -287,8 +287,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/LicenseSetFactory.html" title="class in org.apache.rat.license">LicenseSetFactory</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseSetFactory()" class="member-name-link">getLicenseSetFactory</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="document/impl/DocumentNameMatcher.html" title="interface in org.apache.rat.document.impl">DocumentNameMatcher</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameMatcher(org.apache.rat.document.impl.DocumentName)" class="member-name-link">getNameMatcher</a><wbr>(<a href="document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>&nbsp;baseDir)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameMatcher(org.apache.rat.document.DocumentName)" class="member-name-link">getNameMatcher</a><wbr>(<a href="document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseDir)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get the DocumentNameMatcher based on the directory.</div>
 </div>
@@ -709,7 +709,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="addIncludedFilter(java.io.FileFilter)">
 <h3>addIncludedFilter</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addIncludedFilter</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileFilter.html" title="class or interface in java.io" class="external-link">FileFilter</a>&nbsp;fileFilter)</span></div>
-<div class="block">Add the file filter to filter files that should be included, this overrides any
+<div class="block">Adds the fileFilter to filter files that should be included, this overrides any
  exclusion of the same files.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -730,9 +730,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getNameMatcher(org.apache.rat.document.impl.DocumentName)">
+<section class="detail" id="getNameMatcher(org.apache.rat.document.DocumentName)">
 <h3>getNameMatcher</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="document/impl/DocumentNameMatcher.html" title="interface in org.apache.rat.document.impl">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getNameMatcher</span><wbr><span class="parameters">(<a href="document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>&nbsp;baseDir)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getNameMatcher</span><wbr><span class="parameters">(<a href="document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseDir)</span></div>
 <div class="block">Get the DocumentNameMatcher based on the directory.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -959,7 +959,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addFamily(org.apache.rat.license.ILicenseFamily.Builder)">
 <h3>addFamily</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addFamily</span><wbr><span class="parameters">(<a href="license/ILicenseFamily.Builder.html" title="interface in org.apache.rat.license">ILicenseFamily.Builder</a>&nbsp;builder)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addFamily</span><wbr><span class="parameters">(<a href="license/ILicenseFamily.Builder.html" title="class in org.apache.rat.license">ILicenseFamily.Builder</a>&nbsp;builder)</span></div>
 <div class="block">Adds a license family to the list of families. Does not add the family to the
  list of approved licenses.</div>
 <dl class="notes">

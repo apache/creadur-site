@@ -76,7 +76,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Classes to process configuration information from/to files.</div>
 </div>
 <div class="col-first even-row-color"><a href="#org.apache.rat.license">org.apache.rat.license</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Classes describing licenses</div>
+</div>
 <div class="col-first odd-row-color"><a href="#org.apache.rat.mp">org.apache.rat.mp</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="#org.apache.rat.policy">org.apache.rat.policy</a></div>
@@ -240,6 +242,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.apache.rat.license">
 <h2>Uses of <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a> in <a href="../package-summary.html">org.apache.rat.license</a></h2>
+<div class="caption"><span>Fields in <a href="../package-summary.html">org.apache.rat.license</a> declared as <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ILicenseFamily.</span><code><a href="../ILicenseFamily.html#GENERATED" class="member-name-link">GENERATED</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The license family for generated files</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ILicenseFamily.</span><code><a href="../ILicenseFamily.html#UNKNOWN" class="member-name-link">UNKNOWN</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The license family for unknown licenses</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.license</a> that return <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -250,29 +268,26 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Builds the defined license family.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ILicenseFamilyBuilder.</span><code><a href="../ILicenseFamilyBuilder.html#build()" class="member-name-link">build</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#familySearch(java.lang.String,java.util.SortedSet)" class="member-name-link">familySearch</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;target,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;&nbsp;licenseFamilies)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Search a SortedSet of ILicenseFamily instances looking for a matching instance.</div>
-</div>
 <div class="col-first odd-row-color"><code>static <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#familySearch(org.apache.rat.license.ILicenseFamily,java.util.SortedSet)" class="member-name-link">familySearch</a><wbr>(<a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&nbsp;target,
+<div class="col-second odd-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#familySearch(java.lang.String,java.util.SortedSet)" class="member-name-link">familySearch</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;target,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;&nbsp;licenseFamilies)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Search a SortedSet of ILicenseFamily instances looking for a matching instance.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ILicense.</span><code><a href="../ILicense.html#getLicenseFamily()" class="member-name-link">getLicenseFamily</a>()</code></div>
+<div class="col-first even-row-color"><code>static <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#familySearch(org.apache.rat.license.ILicenseFamily,java.util.SortedSet)" class="member-name-link">familySearch</a><wbr>(<a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&nbsp;target,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;&nbsp;licenseFamilies)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Gets the license family.</div>
+<div class="block">Search a SortedSet of ILicenseFamily instances looking for a matching instance.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SimpleLicense.</span><code><a href="../SimpleLicense.html#getLicenseFamily()" class="member-name-link">getLicenseFamily</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><span class="type-name-label">ILicense.</span><code><a href="../ILicense.html#getLicenseFamily()" class="member-name-link">getLicenseFamily</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Gets the license family.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SimpleLicense.</span><code><a href="../SimpleLicense.html#getLicenseFamily()" class="member-name-link">getLicenseFamily</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.license</a> that return types with arguments of type <a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></span></div>
 <div class="summary-table three-column-summary">
@@ -325,7 +340,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../ILicense.Builder.html" title="interface in org.apache.rat.license">ILicense.Builder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ILicense.Builder.</span><code><a href="../ILicense.Builder.html#setLicenseFamilies(java.util.SortedSet)" class="member-name-link">setLicenseFamilies</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;&nbsp;licenseFamilies)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Sets the set of license families to use duirng build.</div>
+<div class="block">Sets the set of license families to use during build.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../SimpleLicense.Builder.html" title="class in org.apache.rat.license">SimpleLicense.Builder</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">SimpleLicense.Builder.</span><code><a href="../SimpleLicense.Builder.html#setLicenseFamilies(java.util.SortedSet)" class="member-name-link">setLicenseFamilies</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;&nbsp;licenseFamilies)</code></div>

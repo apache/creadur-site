@@ -33,7 +33,7 @@
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.config.exclusion.plexus.MatchPattern;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.config.exclusion.plexus.SelectorUtils;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.impl.DocumentName;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.DocumentName;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.ExtendedIterator;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">/**</em>
@@ -47,7 +47,7 @@
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      String REGEX_FMT = <span class="jxr_string">"%%regex[%s]"</span>;
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>      <em class="jxr_javadoccomment">/** an empty file processor returning no entries.*/</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <a name="FileProcessor" href="../../../../../org/apache/rat/config/exclusion/FileProcessor.html#FileProcessor">FileProcessor</a> EMPTY = <a name="DocumentName" href="../../../../../org/apache/rat/document/impl/DocumentName.html#DocumentName">DocumentName</a> -&gt; Collections.emptyList();
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>      <a name="FileProcessor" href="../../../../../org/apache/rat/config/exclusion/FileProcessor.html#FileProcessor">FileProcessor</a> EMPTY = <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> -&gt; Collections.emptyList();
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">     * Create a virtual file processor out of a list of file patterns.</em>
@@ -68,7 +68,7 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  <em class="jxr_javadoccomment">     * @param entry the entry from that document.</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  <em class="jxr_javadoccomment">     * @return the modified string or null to skip the string.</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">default</strong> String modifyEntry(<a name="DocumentName" href="../../../../../org/apache/rat/document/impl/DocumentName.html#DocumentName">DocumentName</a> documentName, String entry) {
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">default</strong> String modifyEntry(<a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> documentName, String entry) {
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          <strong class="jxr_keyword">return</strong> entry;
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  
@@ -79,7 +79,7 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * @param pattern the pattern to format.</em>
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * @return the completely formatted pattern</em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">static</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/impl/DocumentName.html#DocumentName">DocumentName</a> localizePattern(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/impl/DocumentName.html#DocumentName">DocumentName</a> baseName, <strong class="jxr_keyword">final</strong> String pattern) {
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      <strong class="jxr_keyword">static</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> localizePattern(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> baseName, <strong class="jxr_keyword">final</strong> String pattern) {
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>          <strong class="jxr_keyword">boolean</strong> prefix = pattern.startsWith(<span class="jxr_string">"!"</span>);
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          String workingPattern = prefix ? pattern.substring(1) : pattern;
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>          String normalizedPattern = SelectorUtils.extractPattern(workingPattern, baseName.getDirectorySeparator());
@@ -96,7 +96,7 @@
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>                      .append(baseName.getDirectorySeparator())
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>                      .append(normalizedPattern);
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>          }
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/impl/DocumentName.html#DocumentName">DocumentName</a>(sb.toString(), baseName.getBaseName(), baseName.getDirectorySeparator(), baseName.isCaseSensitive());
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a>(sb.toString(), baseName.getBaseName(), baseName.getDirectorySeparator(), baseName.isCaseSensitive());
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>      }
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  }
 </pre>

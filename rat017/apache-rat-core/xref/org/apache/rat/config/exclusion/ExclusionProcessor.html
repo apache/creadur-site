@@ -36,10 +36,10 @@
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.config.exclusion.plexus.MatchPattern;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.config.exclusion.plexus.MatchPatterns;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.impl.DocumentName;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.impl.DocumentNameMatcher;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.impl.DocumentNameMatcherSupplier;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.impl.TraceableDocumentNameMatcher;
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.DocumentName;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.DocumentNameMatcher;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.DocumentNameMatcherSupplier;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.TraceableDocumentNameMatcher;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.DefaultLog;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.ExtendedIterator;
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  
@@ -68,9 +68,9 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      <em class="jxr_javadoccomment">/** Standard collections that contribute to the exclusion procession */</em>
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Set&lt;StandardCollection&gt; excludedCollections = <strong class="jxr_keyword">new</strong> HashSet&lt;&gt;();
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>      <em class="jxr_javadoccomment">/** The last generated PathMatcher */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/impl/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a> lastMatcher;
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">private</strong> <a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a> lastMatcher;
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      <em class="jxr_javadoccomment">/** The base dir for the last PathMatcher */</em>
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">private</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/impl/DocumentName.html#DocumentName">DocumentName</a> lastMatcherBaseDir;
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">private</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> lastMatcherBaseDir;
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      <em class="jxr_javadoccomment">/** Reset the pathmatcher to start again */</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> resetLastMatcher() {
@@ -97,7 +97,7 @@
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>  <em class="jxr_javadoccomment">     * @param matcherSupplier the supplier of the pathMatcher to add (may be null).</em>
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment">     * @return this</em>
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">public</strong> <a name="ExclusionProcessor" href="../../../../../org/apache/rat/config/exclusion/ExclusionProcessor.html#ExclusionProcessor">ExclusionProcessor</a> addIncludedFilter(<strong class="jxr_keyword">final</strong> <a name="DocumentNameMatcherSupplier" href="../../../../../org/apache/rat/document/impl/DocumentNameMatcherSupplier.html#DocumentNameMatcherSupplier">DocumentNameMatcherSupplier</a> matcherSupplier) {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">public</strong> <a name="ExclusionProcessor" href="../../../../../org/apache/rat/config/exclusion/ExclusionProcessor.html#ExclusionProcessor">ExclusionProcessor</a> addIncludedFilter(<strong class="jxr_keyword">final</strong> <a name="DocumentNameMatcherSupplier" href="../../../../../org/apache/rat/document/DocumentNameMatcherSupplier.html#DocumentNameMatcherSupplier">DocumentNameMatcherSupplier</a> matcherSupplier) {
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>          <strong class="jxr_keyword">if</strong> (matcherSupplier != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>              includedPaths.add(matcherSupplier);
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>              resetLastMatcher();
@@ -152,7 +152,7 @@
 <a class="jxr_linenumber" name="L144" href="#L144">144</a> <em class="jxr_javadoccomment">     * @param matcherSupplier the supplier of the path matcher to add.</em>
 <a class="jxr_linenumber" name="L145" href="#L145">145</a> <em class="jxr_javadoccomment">     * @return this</em>
 <a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>     <strong class="jxr_keyword">public</strong> <a name="ExclusionProcessor" href="../../../../../org/apache/rat/config/exclusion/ExclusionProcessor.html#ExclusionProcessor">ExclusionProcessor</a> addExcludedFilter(<strong class="jxr_keyword">final</strong> <a name="DocumentNameMatcherSupplier" href="../../../../../org/apache/rat/document/impl/DocumentNameMatcherSupplier.html#DocumentNameMatcherSupplier">DocumentNameMatcherSupplier</a> matcherSupplier) {
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>     <strong class="jxr_keyword">public</strong> <a name="ExclusionProcessor" href="../../../../../org/apache/rat/config/exclusion/ExclusionProcessor.html#ExclusionProcessor">ExclusionProcessor</a> addExcludedFilter(<strong class="jxr_keyword">final</strong> <a name="DocumentNameMatcherSupplier" href="../../../../../org/apache/rat/document/DocumentNameMatcherSupplier.html#DocumentNameMatcherSupplier">DocumentNameMatcherSupplier</a> matcherSupplier) {
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>         <strong class="jxr_keyword">if</strong> (matcherSupplier != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>             excludedPaths.add(matcherSupplier);
 <a class="jxr_linenumber" name="L150" href="#L150">150</a>             resetLastMatcher();
@@ -196,7 +196,7 @@
 <a class="jxr_linenumber" name="L188" href="#L188">188</a> <em class="jxr_javadoccomment">     * @param basedir the base directory to make everything relative to.</em>
 <a class="jxr_linenumber" name="L189" href="#L189">189</a> <em class="jxr_javadoccomment">     * @return A container of files, which are being checked.</em>
 <a class="jxr_linenumber" name="L190" href="#L190">190</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>     <strong class="jxr_keyword">public</strong> <a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/impl/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> getNameMatcher(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/impl/DocumentName.html#DocumentName">DocumentName</a> basedir) {
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>     <strong class="jxr_keyword">public</strong> <a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> getNameMatcher(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> basedir) {
 <a class="jxr_linenumber" name="L192" href="#L192">192</a>         <strong class="jxr_keyword">if</strong> (lastMatcher == <strong class="jxr_keyword">null</strong> || !basedir.equals(lastMatcherBaseDir)) {
 <a class="jxr_linenumber" name="L193" href="#L193">193</a>             lastMatcherBaseDir = basedir;
 <a class="jxr_linenumber" name="L194" href="#L194">194</a> 
@@ -239,43 +239,46 @@
 <a class="jxr_linenumber" name="L231" href="#L231">231</a>             }
 <a class="jxr_linenumber" name="L232" href="#L232">232</a> 
 <a class="jxr_linenumber" name="L233" href="#L233">233</a>             <strong class="jxr_keyword">if</strong> (!includedPaths.isEmpty()) {
-<a class="jxr_linenumber" name="L234" href="#L234">234</a>                 <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcherSupplier" href="../../../../../org/apache/rat/document/impl/DocumentNameMatcherSupplier.html#DocumentNameMatcherSupplier">DocumentNameMatcherSupplier</a> supplier : includedPaths) {
-<a class="jxr_linenumber" name="L235" href="#L235">235</a>                     <a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/impl/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a> nameMatcher = TraceableDocumentNameMatcher.make(supplier::toString, supplier.get(basedir));
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>                 <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcherSupplier" href="../../../../../org/apache/rat/document/DocumentNameMatcherSupplier.html#DocumentNameMatcherSupplier">DocumentNameMatcherSupplier</a> supplier : includedPaths) {
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>                     <a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a> nameMatcher = TraceableDocumentNameMatcher.make(supplier::toString, supplier.get(basedir));
 <a class="jxr_linenumber" name="L236" href="#L236">236</a>                     DefaultLog.getInstance().info(format(<span class="jxr_string">"Including path matcher %s"</span>, nameMatcher));
 <a class="jxr_linenumber" name="L237" href="#L237">237</a>                     inclMatchers.add(nameMatcher);
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>                 }
 <a class="jxr_linenumber" name="L239" href="#L239">239</a>             }
 <a class="jxr_linenumber" name="L240" href="#L240">240</a>             <strong class="jxr_keyword">if</strong> (!excludedPaths.isEmpty()) {
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>                 <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcherSupplier" href="../../../../../org/apache/rat/document/impl/DocumentNameMatcherSupplier.html#DocumentNameMatcherSupplier">DocumentNameMatcherSupplier</a> supplier : excludedPaths) {
-<a class="jxr_linenumber" name="L242" href="#L242">242</a>                     <a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/impl/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a> pathMatcher = TraceableDocumentNameMatcher.make(supplier::toString, supplier.get(basedir));
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>                     DefaultLog.getInstance().info(format(<span class="jxr_string">"Excluding path matcher %s"</span>, pathMatcher));
-<a class="jxr_linenumber" name="L244" href="#L244">244</a>                     exclMatchers.add(pathMatcher);
-<a class="jxr_linenumber" name="L245" href="#L245">245</a>                 }
-<a class="jxr_linenumber" name="L246" href="#L246">246</a>             }
-<a class="jxr_linenumber" name="L247" href="#L247">247</a> 
-<a class="jxr_linenumber" name="L248" href="#L248">248</a>             lastMatcher = TraceableDocumentNameMatcher.TRUE;
-<a class="jxr_linenumber" name="L249" href="#L249">249</a>             <strong class="jxr_keyword">if</strong> (!exclMatchers.isEmpty()) {
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>                 lastMatcher = TraceableDocumentNameMatcher.not(TraceableDocumentNameMatcher.or(exclMatchers));
-<a class="jxr_linenumber" name="L251" href="#L251">251</a>                 <strong class="jxr_keyword">if</strong> (!inclMatchers.isEmpty()) {
-<a class="jxr_linenumber" name="L252" href="#L252">252</a>                     lastMatcher = TraceableDocumentNameMatcher.or(TraceableDocumentNameMatcher.or(inclMatchers), lastMatcher);
-<a class="jxr_linenumber" name="L253" href="#L253">253</a>                 }
-<a class="jxr_linenumber" name="L254" href="#L254">254</a>             }
-<a class="jxr_linenumber" name="L255" href="#L255">255</a>         }
-<a class="jxr_linenumber" name="L256" href="#L256">256</a>         <strong class="jxr_keyword">return</strong> lastMatcher;
-<a class="jxr_linenumber" name="L257" href="#L257">257</a>     }
-<a class="jxr_linenumber" name="L258" href="#L258">258</a> 
-<a class="jxr_linenumber" name="L259" href="#L259">259</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L260" href="#L260">260</a> <em class="jxr_javadoccomment">     * Creates a TraceablePathMatcher</em>
-<a class="jxr_linenumber" name="L261" href="#L261">261</a> <em class="jxr_javadoccomment">     * @param name the name of the matcher.</em>
-<a class="jxr_linenumber" name="L262" href="#L262">262</a> <em class="jxr_javadoccomment">     * @param patterns the patterns in the matcher.</em>
-<a class="jxr_linenumber" name="L263" href="#L263">263</a> <em class="jxr_javadoccomment">     * @param basedir the base directory for the scanning.</em>
-<a class="jxr_linenumber" name="L264" href="#L264">264</a> <em class="jxr_javadoccomment">     * @return The matcher</em>
-<a class="jxr_linenumber" name="L265" href="#L265">265</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L266" href="#L266">266</a>     <a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/impl/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a> makeMatcher(<strong class="jxr_keyword">final</strong> Supplier&lt;String&gt; name, <strong class="jxr_keyword">final</strong> <a name="MatchPatterns" href="../../../../../org/apache/rat/config/exclusion/plexus/MatchPatterns.html#MatchPatterns">MatchPatterns</a> patterns, <strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/impl/DocumentName.html#DocumentName">DocumentName</a> basedir) {
-<a class="jxr_linenumber" name="L267" href="#L267">267</a>         <strong class="jxr_keyword">return</strong> TraceableDocumentNameMatcher.make(name,
-<a class="jxr_linenumber" name="L268" href="#L268">268</a>                 p -&gt; patterns.matches(p.getName(), MatchPattern.tokenizePathToString(p.getName(), basedir.getDirectorySeparator()), basedir.isCaseSensitive()));
-<a class="jxr_linenumber" name="L269" href="#L269">269</a>     }
-<a class="jxr_linenumber" name="L270" href="#L270">270</a> }
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>                 <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcherSupplier" href="../../../../../org/apache/rat/document/DocumentNameMatcherSupplier.html#DocumentNameMatcherSupplier">DocumentNameMatcherSupplier</a> supplier : excludedPaths) {
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>                     <a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> dnm = supplier.get(basedir);
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>                     <a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a> pathMatcher = dnm instanceof <a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> ?
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>                             (<a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a>) dnm :
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>                             TraceableDocumentNameMatcher.make(supplier::toString, supplier.get(basedir));
+<a class="jxr_linenumber" name="L246" href="#L246">246</a>                     DefaultLog.getInstance().info(format(<span class="jxr_string">"Excluding path matcher %s"</span>, pathMatcher));
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>                     exclMatchers.add(pathMatcher);
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>                 }
+<a class="jxr_linenumber" name="L249" href="#L249">249</a>             }
+<a class="jxr_linenumber" name="L250" href="#L250">250</a> 
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>             lastMatcher = TraceableDocumentNameMatcher.TRUE;
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>             <strong class="jxr_keyword">if</strong> (!exclMatchers.isEmpty()) {
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>                 lastMatcher = TraceableDocumentNameMatcher.not(TraceableDocumentNameMatcher.or(exclMatchers));
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>                 <strong class="jxr_keyword">if</strong> (!inclMatchers.isEmpty()) {
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>                     lastMatcher = TraceableDocumentNameMatcher.or(TraceableDocumentNameMatcher.or(inclMatchers), lastMatcher);
+<a class="jxr_linenumber" name="L256" href="#L256">256</a>                 }
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>             }
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>         }
+<a class="jxr_linenumber" name="L259" href="#L259">259</a>         <strong class="jxr_keyword">return</strong> lastMatcher;
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>     }
+<a class="jxr_linenumber" name="L261" href="#L261">261</a> 
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L263" href="#L263">263</a> <em class="jxr_javadoccomment">     * Creates a TraceablePathMatcher</em>
+<a class="jxr_linenumber" name="L264" href="#L264">264</a> <em class="jxr_javadoccomment">     * @param name the name of the matcher.</em>
+<a class="jxr_linenumber" name="L265" href="#L265">265</a> <em class="jxr_javadoccomment">     * @param patterns the patterns in the matcher.</em>
+<a class="jxr_linenumber" name="L266" href="#L266">266</a> <em class="jxr_javadoccomment">     * @param basedir the base directory for the scanning.</em>
+<a class="jxr_linenumber" name="L267" href="#L267">267</a> <em class="jxr_javadoccomment">     * @return The matcher</em>
+<a class="jxr_linenumber" name="L268" href="#L268">268</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>     <a name="TraceableDocumentNameMatcher" href="../../../../../org/apache/rat/document/TraceableDocumentNameMatcher.html#TraceableDocumentNameMatcher">TraceableDocumentNameMatcher</a> makeMatcher(<strong class="jxr_keyword">final</strong> Supplier&lt;String&gt; name, <strong class="jxr_keyword">final</strong> <a name="MatchPatterns" href="../../../../../org/apache/rat/config/exclusion/plexus/MatchPatterns.html#MatchPatterns">MatchPatterns</a> patterns, <strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> basedir) {
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>         <strong class="jxr_keyword">return</strong> TraceableDocumentNameMatcher.make(name,
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>                 p -&gt; patterns.matches(p.getName(), MatchPattern.tokenizePathToString(p.getName(), basedir.getDirectorySeparator()), basedir.isCaseSensitive()));
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>     }
+<a class="jxr_linenumber" name="L273" href="#L273">273</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

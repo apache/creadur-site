@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>,<wbr><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>,<wbr><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
@@ -102,7 +102,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html" title="class or interface in java.lang" class="external-link">@FunctionalInterface</a>
 </span><span class="modifiers">public interface </span><span class="element-name type-name-label">FileProcessor</span><span class="extends-implements">
-extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>,<wbr><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</span></div>
+extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>,<wbr><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</span></div>
 <div class="block">An interface that defines the FileProcessor. The file processor reads the file specified in the DocumentName.
  It must return a list of fully qualified strings for the <a href="plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> to process. It may return either
  Ant or Regex style strings, or a mixture of both. See <a href="plexus/SelectorUtils.html" title="class in org.apache.rat.config.exclusion.plexus"><code>SelectorUtils</code></a> for a description of the formats.</div>
@@ -147,15 +147,15 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Fu
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1">
 <div class="block">Create a virtual file processor out of a list of file patterns.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="../../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#localizePattern(org.apache.rat.document.impl.DocumentName,java.lang.String)" class="member-name-link">localizePattern</a><wbr>(<a href="../../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>&nbsp;baseName,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#localizePattern(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">localizePattern</a><wbr>(<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pattern)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
 <div class="block">Modifies the <a href="plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> formatted <code>pattern</code> argument by expanding the pattern and
  by adjusting the pattern to include the basename from the <code>basename</code> argument.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#modifyEntry(org.apache.rat.document.impl.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>&nbsp;documentName,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Allows modification of the file entry to match the <a href="plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> format.</div>
@@ -221,9 +221,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Fu
 </section>
 </li>
 <li>
-<section class="detail" id="modifyEntry(org.apache.rat.document.impl.DocumentName,java.lang.String)">
+<section class="detail" id="modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)">
 <h3>modifyEntry</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">modifyEntry</span><wbr><span class="parameters">(<a href="../../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>&nbsp;documentName,
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">modifyEntry</span><wbr><span class="parameters">(<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</span></div>
 <div class="block">Allows modification of the file entry to match the <a href="plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> format.
  Default implementation returns the @{code entry} argument.</div>
@@ -237,9 +237,9 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Fu
 </section>
 </li>
 <li>
-<section class="detail" id="localizePattern(org.apache.rat.document.impl.DocumentName,java.lang.String)">
+<section class="detail" id="localizePattern(org.apache.rat.document.DocumentName,java.lang.String)">
 <h3>localizePattern</h3>
-<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="../../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a></span>&nbsp;<span class="element-name">localizePattern</span><wbr><span class="parameters">(<a href="../../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>&nbsp;baseName,
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span>&nbsp;<span class="element-name">localizePattern</span><wbr><span class="parameters">(<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pattern)</span></div>
 <div class="block">Modifies the <a href="plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> formatted <code>pattern</code> argument by expanding the pattern and
  by adjusting the pattern to include the basename from the <code>basename</code> argument.</div>

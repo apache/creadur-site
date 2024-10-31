@@ -68,15 +68,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Classes to process configuration information from/to files.</div>
 </div>
 <div class="col-first odd-row-color"><a href="#org.apache.rat.report">org.apache.rat.report</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim.impl">org.apache.rat.report.claim.impl</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.report.claim.impl.xml">org.apache.rat.report.claim.impl.xml</a></div>
 <div class="col-last odd-row-color">
-<div class="block">Classes to write claims in XML format</div>
+<div class="block">Classes that generate the Rat report.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim.util">org.apache.rat.report.claim.util</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></div>
+<div class="col-last even-row-color">
+<div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
+</div>
 <div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Classes that write the XML output.</div>
@@ -197,52 +195,30 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="org.apache.rat.report.claim.impl">
-<h2>Uses of <a href="../RatException.html" title="class in org.apache.rat.api">RatException</a> in <a href="../../report/claim/impl/package-summary.html">org.apache.rat.report.claim.impl</a></h2>
-<div class="caption"><span>Methods in <a href="../../report/claim/impl/package-summary.html">org.apache.rat.report.claim.impl</a> that throw <a href="../RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
+<section class="detail" id="org.apache.rat.report.claim">
+<h2>Uses of <a href="../RatException.html" title="class in org.apache.rat.api">RatException</a> in <a href="../../report/claim/package-summary.html">org.apache.rat.report.claim</a></h2>
+<div class="caption"><span>Methods in <a href="../../report/claim/package-summary.html">org.apache.rat.report.claim</a> that throw <a href="../RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ClaimAggregator.</span><code><a href="../../report/claim/impl/ClaimAggregator.html#endReport()" class="member-name-link">endReport</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="org.apache.rat.report.claim.impl.xml">
-<h2>Uses of <a href="../RatException.html" title="class in org.apache.rat.api">RatException</a> in <a href="../../report/claim/impl/xml/package-summary.html">org.apache.rat.report.claim.impl.xml</a></h2>
-<div class="caption"><span>Methods in <a href="../../report/claim/impl/xml/package-summary.html">org.apache.rat.report.claim.impl.xml</a> that throw <a href="../RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SimpleXmlClaimReporter.</span><code><a href="../../report/claim/impl/xml/SimpleXmlClaimReporter.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;subject)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="org.apache.rat.report.claim.util">
-<h2>Uses of <a href="../RatException.html" title="class in org.apache.rat.api">RatException</a> in <a href="../../report/claim/util/package-summary.html">org.apache.rat.report.claim.util</a></h2>
-<div class="caption"><span>Methods in <a href="../../report/claim/util/package-summary.html">org.apache.rat.report.claim.util</a> that throw <a href="../RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/util/ClaimReporterMultiplexer.html#endReport()" class="member-name-link">endReport</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ClaimAggregator.</span><code><a href="../../report/claim/ClaimAggregator.html#endReport()" class="member-name-link">endReport</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/util/ClaimReporterMultiplexer.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/ClaimReporterMultiplexer.html#endReport()" class="member-name-link">endReport</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LicenseAddingReport.</span><code><a href="../../report/claim/util/LicenseAddingReport.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/ClaimReporterMultiplexer.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/util/ClaimReporterMultiplexer.html#startReport()" class="member-name-link">startReport</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LicenseAddingReport.</span><code><a href="../../report/claim/LicenseAddingReport.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SimpleXmlClaimReporter.</span><code><a href="../../report/claim/SimpleXmlClaimReporter.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;subject)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/ClaimReporterMultiplexer.html#startReport()" class="member-name-link">startReport</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -258,7 +234,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../../report/xml/XmlReportFactory.html#endReport(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">endReport</a><wbr>(<a href="../../report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Ends the XML reprot by closing the element that startReport opened.</div>
+<div class="block">Ends the XML report by closing the element that startReport opened.</div>
 </div>
 <div class="col-first odd-row-color"><code>static void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../../report/xml/XmlReportFactory.html#startReport(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">startReport</a><wbr>(<a href="../../report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>

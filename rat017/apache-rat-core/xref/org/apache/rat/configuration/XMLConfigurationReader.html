@@ -81,7 +81,7 @@
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Element rootElement;
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>      <em class="jxr_javadoccomment">/** The families element in the document */</em>
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Element familiesElement;
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <em class="jxr_javadoccomment">/** The licenses element in the doucment */</em>
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>      <em class="jxr_javadoccomment">/** The licenses element in the document */</em>
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Element licensesElement;
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>      <em class="jxr_javadoccomment">/** The approved element in the document */</em>
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Element approvedElement;
@@ -179,7 +179,7 @@
 <a class="jxr_linenumber" name="L171" href="#L171">171</a>     }
 <a class="jxr_linenumber" name="L172" href="#L172">172</a> 
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     * Applies the {@code consumer} to each node in the {@code list}.  Generally used for extracting info from a</em>
+<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     * Applies the {@code consumer} to each node in the {@code list}. Generally used for extracting info from a</em>
 <a class="jxr_linenumber" name="L175" href="#L175">175</a> <em class="jxr_javadoccomment">     * {@code NodeList}.</em>
 <a class="jxr_linenumber" name="L176" href="#L176">176</a> <em class="jxr_javadoccomment">     * @param list the NodeList to process</em>
 <a class="jxr_linenumber" name="L177" href="#L177">177</a> <em class="jxr_javadoccomment">     * @param consumer the consumer to apply to each node in the list.</em>
@@ -310,7 +310,7 @@
 <a class="jxr_linenumber" name="L302" href="#L302">302</a> <em class="jxr_javadoccomment">     * Sets the value of the element described by the description in the builder with the value from childDescription.</em>
 <a class="jxr_linenumber" name="L303" href="#L303">303</a> <em class="jxr_javadoccomment">     * @param description the property in the builder to set.</em>
 <a class="jxr_linenumber" name="L304" href="#L304">304</a> <em class="jxr_javadoccomment">     * @param childDescription the description of the child property to extract.</em>
-<a class="jxr_linenumber" name="L305" href="#L305">305</a> <em class="jxr_javadoccomment">     * @param builder the bulider to set the value in.</em>
+<a class="jxr_linenumber" name="L305" href="#L305">305</a> <em class="jxr_javadoccomment">     * @param builder the builder to set the value in.</em>
 <a class="jxr_linenumber" name="L306" href="#L306">306</a> <em class="jxr_javadoccomment">     * @param child the child to extract the value from.</em>
 <a class="jxr_linenumber" name="L307" href="#L307">307</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L308" href="#L308">308</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> setValue(<strong class="jxr_keyword">final</strong> <a name="Description" href="../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> description, <strong class="jxr_keyword">final</strong> <a name="Description" href="../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> childDescription, <strong class="jxr_keyword">final</strong> IHeaderMatcher.Builder builder,
@@ -323,12 +323,12 @@
 <a class="jxr_linenumber" name="L315" href="#L315">315</a>     }
 <a class="jxr_linenumber" name="L316" href="#L316">316</a> 
 <a class="jxr_linenumber" name="L317" href="#L317">317</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L318" href="#L318">318</a> <em class="jxr_javadoccomment">     * Process the ELEEMENT_NODEs children of the parent whose names match child</em>
-<a class="jxr_linenumber" name="L319" href="#L319">319</a> <em class="jxr_javadoccomment">     * descriptions. All children children are processed with the childProcessor. If</em>
+<a class="jxr_linenumber" name="L318" href="#L318">318</a> <em class="jxr_javadoccomment">     * Process the ELEMENT_NODEs children of the parent whose names match child</em>
+<a class="jxr_linenumber" name="L319" href="#L319">319</a> <em class="jxr_javadoccomment">     * descriptions. All children of children are processed with the childProcessor. If</em>
 <a class="jxr_linenumber" name="L320" href="#L320">320</a> <em class="jxr_javadoccomment">     * the childProcessor handles the node it is not included in the resulting list.</em>
 <a class="jxr_linenumber" name="L321" href="#L321">321</a> <em class="jxr_javadoccomment">     * @param description the Description of the parent node.</em>
 <a class="jxr_linenumber" name="L322" href="#L322">322</a> <em class="jxr_javadoccomment">     * @param parent the node being processed</em>
-<a class="jxr_linenumber" name="L323" href="#L323">323</a> <em class="jxr_javadoccomment">     * @param childProcessor the BiProcessor to handle process each child. if the</em>
+<a class="jxr_linenumber" name="L323" href="#L323">323</a> <em class="jxr_javadoccomment">     * @param childProcessor the BiProcessor to handle process each child. If the</em>
 <a class="jxr_linenumber" name="L324" href="#L324">324</a> <em class="jxr_javadoccomment">     * processor handles the child it must return {@code true}.</em>
 <a class="jxr_linenumber" name="L325" href="#L325">325</a> <em class="jxr_javadoccomment">     * @return A Pair comprising a boolean flag indicating children were found, and</em>
 <a class="jxr_linenumber" name="L326" href="#L326">326</a> <em class="jxr_javadoccomment">     * a list of all child nodes that were not processed by the childProcessor.</em>
@@ -384,7 +384,7 @@
 <a class="jxr_linenumber" name="L376" href="#L376">376</a> 
 <a class="jxr_linenumber" name="L377" href="#L377">377</a>             <strong class="jxr_keyword">for</strong> (<a name="Description" href="../../../../org/apache/rat/config/parameters/Description.html#Description">Description</a> childDescription : childDescriptions) {
 <a class="jxr_linenumber" name="L378" href="#L378">378</a>                 <strong class="jxr_keyword">if</strong> (XMLConfig.isInlineNode(description.getCommonName(), childDescription.getCommonName())) {
-<a class="jxr_linenumber" name="L379" href="#L379">379</a>                     <em class="jxr_comment">// can only process text inline if there were not child nodes.</em>
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>                     <em class="jxr_comment">// can only process text inline if there were no child nodes.</em>
 <a class="jxr_linenumber" name="L380" href="#L380">380</a>                     <strong class="jxr_keyword">if</strong> (childDescription.getChildType() == String.<strong class="jxr_keyword">class</strong>) {
 <a class="jxr_linenumber" name="L381" href="#L381">381</a>                         <strong class="jxr_keyword">if</strong> (!foundChildren) {
 <a class="jxr_linenumber" name="L382" href="#L382">382</a>                             callSetter(childDescription, builder, matcherNode.getTextContent());
@@ -596,8 +596,8 @@
 <a class="jxr_linenumber" name="L588" href="#L588">588</a>         <em class="jxr_javadoccomment">/** The builder we are delegating to */</em>
 <a class="jxr_linenumber" name="L589" href="#L589">589</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a name="AbstractBuilder" href="../../../../org/apache/rat/configuration/builders/AbstractBuilder.html#AbstractBuilder">AbstractBuilder</a> delegate;
 <a class="jxr_linenumber" name="L590" href="#L590">590</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L591" href="#L591">591</a> <em class="jxr_javadoccomment">         * The map of matchers that the system is building during processing.  We will utilize this to set the</em>
-<a class="jxr_linenumber" name="L592" href="#L592">592</a> <em class="jxr_javadoccomment">         * matcher value later.</em>
+<a class="jxr_linenumber" name="L591" href="#L591">591</a> <em class="jxr_javadoccomment">         * The map of matchers that the system is building during processing.</em>
+<a class="jxr_linenumber" name="L592" href="#L592">592</a> <em class="jxr_javadoccomment">         * We will utilize this to set the matcher value later.</em>
 <a class="jxr_linenumber" name="L593" href="#L593">593</a> <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L594" href="#L594">594</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Map&lt;String, IHeaderMatcher&gt; matchers;
 <a class="jxr_linenumber" name="L595" href="#L595">595</a> 

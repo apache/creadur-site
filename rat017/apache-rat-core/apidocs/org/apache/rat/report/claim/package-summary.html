@@ -39,7 +39,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Package:</p>
 <ul>
-<li>Description</li>
+<li><a href="#package-description">Description</a></li>
 <li><a href="#related-package-summary">Related Packages</a></li>
 <li><a href="#class-summary">Classes and Interfaces</a></li>
 </ul>
@@ -50,7 +50,7 @@ loadScripts(document, 'script');</script>
 <div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Package:&nbsp;</li>
-<li>Description&nbsp;|&nbsp;</li>
+<li><a href="#package-description">Description</a>&nbsp;|&nbsp;</li>
 <li><a href="#related-package-summary">Related Packages</a>&nbsp;|&nbsp;</li>
 <li><a href="#class-summary">Classes and Interfaces</a></li>
 </ul>
@@ -70,6 +70,9 @@ loadScripts(document, 'script');</script>
 </div>
 <hr>
 <div class="package-signature">package <span class="element-name">org.apache.rat.report.claim</span></div>
+<section class="package-description" id="package-description">
+<div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
+</section>
 <section class="summary">
 <ul class="summary-list">
 <li>
@@ -79,11 +82,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="../package-summary.html">org.apache.rat.report</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="impl/package-summary.html">org.apache.rat.report.claim.impl</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="util/package-summary.html">org.apache.rat.report.claim.util</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Classes that generate the Rat report.</div>
+</div>
 <div class="col-first odd-row-color"><a href="../xml/package-summary.html">org.apache.rat.report.xml</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Classes that write the XML output.</div>
@@ -98,14 +99,34 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractClaimReporter.html" title="class in org.apache.rat.report.claim">AbstractClaimReporter</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Abstract base implementation of <a href="../AbstractReport.html" title="class in org.apache.rat.report"><code>AbstractReport</code></a>.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ClaimAggregator.html" title="class in org.apache.rat.report.claim">ClaimAggregator</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">The aggregator is used to create a numerical statistic of claims.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ClaimReporterMultiplexer.html" title="class in org.apache.rat.report.claim">ClaimReporterMultiplexer</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Executes a RatReport that multiplexes the running of multiple RatReports</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">This class provides a numerical overview about
  the report.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab3">
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
 <div class="block">The counter types</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LicenseAddingReport.html" title="class in org.apache.rat.report.claim">LicenseAddingReport</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">A Report that adds licenses text to files.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SimpleXmlClaimReporter.html" title="class in org.apache.rat.report.claim">SimpleXmlClaimReporter</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A claim reporter to write the XML document.</div>
 </div>
 </div>
 </div>

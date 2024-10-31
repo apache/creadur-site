@@ -60,9 +60,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Classes that perform analyses of files.</div>
 </div>
 <div class="col-first odd-row-color"><a href="#org.apache.rat.config.parameters">org.apache.rat.config.parameters</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.license">org.apache.rat.license</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Classes that manage information about parameters for builders, matchers and similar components.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DescriptionBuilder.</span><code><a href="../DescriptionBuilder.html#build(java.lang.Object)" class="member-name-link">build</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;obj)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DescriptionBuilder.</span><code><a href="../DescriptionBuilder.html#build(java.lang.Object)" class="member-name-link">build</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Create the description for the object.</div>
 </div>
@@ -119,17 +119,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">Description.</span><code><a href="../Description.html#filterChildren(java.util.function.Predicate)" class="member-name-link">filterChildren</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a>&gt;&nbsp;filter)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Get a filtered collection of the child descriptions.</div>
+<div class="block">Gets a filtered collection of the child descriptions.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Description.</span><code><a href="../Description.html#getChildren()" class="member-name-link">getChildren</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Gets a map of the parameters that the object contains.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a><wbr>&lt;<a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Description.</span><code><a href="../Description.html#typePredicate(org.apache.rat.config.parameters.ComponentType)" class="member-name-link">typePredicate</a><wbr>(<a href="../ComponentType.html" title="enum in org.apache.rat.config.parameters">ComponentType</a>&nbsp;type)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">A predicate to filter Descriptions by component type.</div>
 </div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../package-summary.html">org.apache.rat.config.parameters</a> with type arguments of type <a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a></span></div>
@@ -140,7 +135,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Description.</span><code><a href="../Description.html#filterChildren(java.util.function.Predicate)" class="member-name-link">filterChildren</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a>&gt;&nbsp;filter)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Get a filtered collection of the child descriptions.</div>
+<div class="block">Gets a filtered collection of the child descriptions.</div>
 </div>
 </div>
 <div class="caption"><span>Constructor parameters in <a href="../package-summary.html">org.apache.rat.config.parameters</a> with type arguments of type <a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a></span></div>
@@ -167,20 +162,6 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Constructor</div>
 </div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="org.apache.rat.license">
-<h2>Uses of <a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a> in <a href="../../../license/package-summary.html">org.apache.rat.license</a></h2>
-<div class="caption"><span>Methods in <a href="../../../license/package-summary.html">org.apache.rat.license</a> that return <a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../Description.html" title="class in org.apache.rat.config.parameters">Description</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SimpleLicense.</span><code><a href="../../../license/SimpleLicense.html#getDescription()" class="member-name-link">getDescription</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

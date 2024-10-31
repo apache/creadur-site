@@ -130,7 +130,7 @@ implements <a href="../../analysis/IHeaderMatcher.html" title="interface in org.
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.Map)" class="member-name-link">IHeaderMatcherProxy</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;proxyId,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../../analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&gt;&nbsp;matchers)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Constuctor.</div>
+<div class="block">Constructor.</div>
 </div>
 </div>
 </section>
@@ -154,7 +154,7 @@ implements <a href="../../analysis/IHeaderMatcher.html" title="interface in org.
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRefId()" class="member-name-link">getRefId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get the reference ID that this proxy is using.</div>
+<div class="block">Gets the matcher ID that this proxy references.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#matches(org.apache.rat.analysis.IHeaders)" class="member-name-link">matches</a><wbr>(<a href="../../analysis/IHeaders.html" title="interface in org.apache.rat.analysis">IHeaders</a>&nbsp;header)</code></div>
@@ -192,7 +192,7 @@ implements <a href="../../analysis/IHeaderMatcher.html" title="interface in org.
 <h3>IHeaderMatcherProxy</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">IHeaderMatcherProxy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;proxyId,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../../analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&gt;&nbsp;matchers)</span></div>
-<div class="block">Constuctor. The matchers map should be a reference to an object that will be
+<div class="block">Constructor. The matchers map should be a reference to an object that will be
  updated by later processing of matcher definitions.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -209,17 +209,6 @@ implements <a href="../../analysis/IHeaderMatcher.html" title="interface in org.
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
-<li>
-<section class="detail" id="getRefId()">
-<h3>getRefId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getRefId</span>()</div>
-<div class="block">Get the reference ID that this proxy is using.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the reference id that points to the actual matcher.</dd>
-</dl>
-</section>
-</li>
 <li>
 <section class="detail" id="getId()">
 <h3>getId</h3>
@@ -264,6 +253,17 @@ implements <a href="../../analysis/IHeaderMatcher.html" title="interface in org.
 <dd><code>header</code> - the representations of the headers to check</dd>
 <dt>Returns:</dt>
 <dd><code>true</code> if the matcher matches the text, <code>false</code> otherwise.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRefId()">
+<h3>getRefId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getRefId</span>()</div>
+<div class="block">Gets the matcher ID that this proxy references.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The matcher ID that this proxy references.</dd>
 </dl>
 </section>
 </li>

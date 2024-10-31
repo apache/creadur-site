@@ -39,7 +39,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Package:</p>
 <ul>
-<li>Description</li>
+<li><a href="#package-description">Description</a></li>
 <li><a href="#related-package-summary">Related Packages</a></li>
 <li><a href="#class-summary">Classes and Interfaces</a></li>
 </ul>
@@ -50,7 +50,7 @@ loadScripts(document, 'script');</script>
 <div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Package:&nbsp;</li>
-<li>Description&nbsp;|&nbsp;</li>
+<li><a href="#package-description">Description</a>&nbsp;|&nbsp;</li>
 <li><a href="#related-package-summary">Related Packages</a>&nbsp;|&nbsp;</li>
 <li><a href="#class-summary">Classes and Interfaces</a></li>
 </ul>
@@ -70,6 +70,9 @@ loadScripts(document, 'script');</script>
 </div>
 <hr>
 <div class="package-signature">package <span class="element-name">org.apache.rat.document</span></div>
+<section class="package-description" id="package-description">
+<div class="block">The definitions of Documents and their analysers.</div>
+</section>
 <section class="summary">
 <ul class="summary-list">
 <li>
@@ -82,24 +85,50 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The base package for the RAT tool.</div>
 </div>
-<div class="col-first odd-row-color"><a href="impl/package-summary.html">org.apache.rat.document.impl</a></div>
+<div class="col-first odd-row-color"><a href="guesser/package-summary.html">org.apache.rat.document.guesser</a></div>
 <div class="col-last odd-row-color">
-<div class="block">Implementations of the Document interface.</div>
+<div class="block">Classes that attempt to determine if a file is a specific type of file.</div>
 </div>
 </div>
 </div>
 </li>
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab5" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab5', 2)" class="table-tab">Exception Classes</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab5" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab5', 2)" class="table-tab">Exception Classes</button></div>
 <div id="class-summary.tabpanel" role="tabpanel" aria-labelledby="class-summary-tab0">
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ArchiveEntryDocument.html" title="class in org.apache.rat.document">ArchiveEntryDocument</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A Document that wraps an Archive entry.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DocumentAnalyserMultiplexer.html" title="class in org.apache.rat.document">DocumentAnalyserMultiplexer</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A collection of names for a document.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Creates a patch matcher based on the directory.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Document wrapping a File object</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="IDocumentAnalyser.html" title="interface in org.apache.rat.document">IDocumentAnalyser</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Analyses Documents.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab5"><a href="RatDocumentAnalysisException.html" title="class in org.apache.rat.document">RatDocumentAnalysisException</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab5">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A PatternMatcher that will emit trace messages during execution if the environment variable is set.</div>
+</div>
 </div>
 </div>
 </div>

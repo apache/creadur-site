@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../document/impl/ArchiveEntryDocument.html" title="class in org.apache.rat.document.impl">ArchiveEntryDocument</a></code>, <code><a href="../document/impl/FileDocument.html" title="class in org.apache.rat.document.impl">FileDocument</a></code></dd>
+<dd><code><a href="../document/ArchiveEntryDocument.html" title="class in org.apache.rat.document">ArchiveEntryDocument</a></code>, <code><a href="../document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Document</span>
@@ -132,12 +132,12 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected final <a href="../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a></code></div>
+<div class="col-first even-row-color"><code>protected final <a href="../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
 <div class="col-second even-row-color"><code><a href="#name" class="member-name-link">name</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">The fully qualified name of this document</div>
 </div>
-<div class="col-first odd-row-color"><code>protected final <a href="../document/impl/DocumentNameMatcher.html" title="interface in org.apache.rat.document.impl">DocumentNameMatcher</a></code></div>
+<div class="col-first odd-row-color"><code>protected final <a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#nameMatcher" class="member-name-link">nameMatcher</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">The path matcher used by this document</div>
@@ -155,8 +155,8 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected </code></div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.apache.rat.document.impl.DocumentName,org.apache.rat.document.impl.DocumentNameMatcher)" class="member-name-link">Document</a><wbr>(<a href="../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>&nbsp;name,
- <a href="../document/impl/DocumentNameMatcher.html" title="interface in org.apache.rat.document.impl">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">Document</a><wbr>(<a href="../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;name,
+ <a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance.</div>
 </div>
@@ -185,12 +185,12 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets data describing this resource.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the name of the current document.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../document/impl/DocumentNameMatcher.html" title="interface in org.apache.rat.document.impl">DocumentNameMatcher</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameMatcher()" class="member-name-link">getNameMatcher</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the file filter this document was created with.</div>
@@ -243,14 +243,14 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <li>
 <section class="detail" id="nameMatcher">
 <h3>nameMatcher</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../document/impl/DocumentNameMatcher.html" title="interface in org.apache.rat.document.impl">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">nameMatcher</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">nameMatcher</span></div>
 <div class="block">The path matcher used by this document</div>
 </section>
 </li>
 <li>
 <section class="detail" id="name">
 <h3>name</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a></span>&nbsp;<span class="element-name">name</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span>&nbsp;<span class="element-name">name</span></div>
 <div class="block">The fully qualified name of this document</div>
 </section>
 </li>
@@ -263,10 +263,10 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(org.apache.rat.document.impl.DocumentName,org.apache.rat.document.impl.DocumentNameMatcher)">
+<section class="detail" id="&lt;init&gt;(org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentNameMatcher)">
 <h3>Document</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">Document</span><wbr><span class="parameters">(<a href="../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a>&nbsp;name,
- <a href="../document/impl/DocumentNameMatcher.html" title="interface in org.apache.rat.document.impl">DocumentNameMatcher</a>&nbsp;nameMatcher)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">Document</span><wbr><span class="parameters">(<a href="../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;name,
+ <a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</span></div>
 <div class="block">Creates an instance.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -286,7 +286,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <li>
 <section class="detail" id="getName()">
 <h3>getName</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../document/impl/DocumentName.html" title="class in org.apache.rat.document.impl">DocumentName</a></span>&nbsp;<span class="element-name">getName</span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span>&nbsp;<span class="element-name">getName</span>()</div>
 <div class="block">Gets the name of the current document.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -297,7 +297,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <li>
 <section class="detail" id="getNameMatcher()">
 <h3>getNameMatcher</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../document/impl/DocumentNameMatcher.html" title="interface in org.apache.rat.document.impl">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getNameMatcher</span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getNameMatcher</span>()</div>
 <div class="block">Gets the file filter this document was created with.</div>
 <dl class="notes">
 <dt>Returns:</dt>
