@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="impl/base/XmlWriter.html" title="class in org.apache.rat.report.xml.writer.impl.base">XmlWriter</a></code></dd>
+<dd><code><a href="XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IXmlWriter</span><span class="extends-implements">
@@ -208,7 +208,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
 <dt>Returns:</dt>
 <dd>this object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="InvalidXmlException.html" title="class in org.apache.rat.report.xml.writer">InvalidXmlException</a></code> - if the name is not valid for an xml element</dd>
+<dd><code><a href="InvalidXmlException.html" title="class in org.apache.rat.report.xml.writer">InvalidXmlException</a></code> - if the name is not valid for a xml element</dd>
 <dd><code><a href="OperationNotAllowedException.html" title="class in org.apache.rat.report.xml.writer">OperationNotAllowedException</a></code> - if called after the first element has been closed</dd>
 <dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
@@ -247,7 +247,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
 <dt>Returns:</dt>
 <dd>this object</dd>
 <dt>Throws:</dt>
-<dd><code><a href="InvalidXmlException.html" title="class in org.apache.rat.report.xml.writer">InvalidXmlException</a></code> - if the name is not valid for an xml attribute
+<dd><code><a href="InvalidXmlException.html" title="class in org.apache.rat.report.xml.writer">InvalidXmlException</a></code> - if the name is not valid for a xml attribute
  or if a value for the attribute has already been written</dd>
 <dd><code><a href="OperationNotAllowedException.html" title="class in org.apache.rat.report.xml.writer">OperationNotAllowedException</a></code> - if called after <a href="#content(java.lang.CharSequence)"><code>content(CharSequence)</code></a>
  or <a href="#closeElement()"><code>closeElement()</code></a> or before any call to <a href="#openElement(java.lang.CharSequence)"><code>openElement(CharSequence)</code></a></dd>
@@ -282,7 +282,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/AutoCloseab
           throws <span class="exceptions"><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Writes CDATA content.
  This method DOES NOT automatically escape characters.
- It will remove enclosed CDATA closing strings (e.g. <code>]]&gt;</code></div>
+ It will remove enclosed CDATA closing strings (e.g. <code>]]&gt;</code>)</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>content</code> - the content to write</dd>

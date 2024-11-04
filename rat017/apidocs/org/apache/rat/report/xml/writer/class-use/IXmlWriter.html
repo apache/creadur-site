@@ -73,10 +73,8 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><a href="#org.apache.rat.report.xml.writer">org.apache.rat.report.xml.writer</a></div>
 <div class="col-last even-row-color">
-<div class="block">Classes to handle writing well formed XML documents.</div>
+<div class="block">Classes to handle writing well-formed XML documents.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml.writer.impl.base">org.apache.rat.report.xml.writer.impl.base</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -168,6 +166,18 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.apache.rat.report.xml.writer">
 <h2>Uses of <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a> in <a href="../package-summary.html">org.apache.rat.report.xml.writer</a></h2>
+<div class="caption"><span>Classes in <a href="../package-summary.html">org.apache.rat.report.xml.writer</a> that implement <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../XmlWriter.html" class="type-name-link" title="class in org.apache.rat.report.xml.writer">XmlWriter</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">
+ Lightweight <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer"><code>IXmlWriter</code></a> implementation.</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.report.xml.writer</a> that return <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -180,37 +190,72 @@ loadScripts(document, 'script');</script>
 <div class="block">Writes an attribute of an element.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#cdata(java.lang.CharSequence)" class="member-name-link">cdata</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;content)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#attribute(java.lang.CharSequence,java.lang.CharSequence)" class="member-name-link">attribute</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;name,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Writes an attribute of an element.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#cdata(java.lang.CharSequence)" class="member-name-link">cdata</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;content)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Writes CDATA content.</div>
 </div>
+<div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#cdata(java.lang.CharSequence)" class="member-name-link">cdata</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;content)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#closeDocument()" class="member-name-link">closeDocument</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Closes all pending elements.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#closeElement()" class="member-name-link">closeElement</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#closeDocument()" class="member-name-link">closeDocument</a>()</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Closes the last element written.</div>
+<div class="block">Closes all pending elements.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#closeElement(java.lang.CharSequence)" class="member-name-link">closeElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#closeElement()" class="member-name-link">closeElement</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Closes all open elements back to and including the named element.</div>
+<div class="block">Closes the last element written.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#comment(java.lang.CharSequence)" class="member-name-link">comment</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;text)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#closeElement(java.lang.CharSequence)" class="member-name-link">closeElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Closes all open elements back to and including the named element.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#closeElement()" class="member-name-link">closeElement</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Closes the last element written.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#closeElement(java.lang.CharSequence)" class="member-name-link">closeElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Closes back to and including the last instance of the specified element name.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#comment(java.lang.CharSequence)" class="member-name-link">comment</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;text)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Writes a comment</div>
 </div>
+<div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#comment(java.lang.CharSequence)" class="member-name-link">comment</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;text)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#content(java.lang.CharSequence)" class="member-name-link">content</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;content)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Writes content.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#openElement(java.lang.CharSequence)" class="member-name-link">openElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;elementName)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#content(java.lang.CharSequence)" class="member-name-link">content</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;content)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#openElement(java.lang.CharSequence)" class="member-name-link">openElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;elementName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Writes the start of an element.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#openElement(java.lang.CharSequence)" class="member-name-link">openElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;elementName)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Writes the start of an element.</div>
 </div>
@@ -219,67 +264,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Starts a document by writing a prolog.</div>
 </div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="org.apache.rat.report.xml.writer.impl.base">
-<h2>Uses of <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a> in <a href="../impl/base/package-summary.html">org.apache.rat.report.xml.writer.impl.base</a></h2>
-<div class="caption"><span>Classes in <a href="../impl/base/package-summary.html">org.apache.rat.report.xml.writer.impl.base</a> that implement <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Class</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../impl/base/XmlWriter.html" class="type-name-link" title="class in org.apache.rat.report.xml.writer.impl.base">XmlWriter</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">
- Lightweight <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer"><code>IXmlWriter</code></a> implementation.</div>
-</div>
-</div>
-<div class="caption"><span>Methods in <a href="../impl/base/package-summary.html">org.apache.rat.report.xml.writer.impl.base</a> that return <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#attribute(java.lang.CharSequence,java.lang.CharSequence)" class="member-name-link">attribute</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;name,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Writes an attribute of an element.</div>
-</div>
 <div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#cdata(java.lang.CharSequence)" class="member-name-link">cdata</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;content)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#closeDocument()" class="member-name-link">closeDocument</a>()</code></div>
-<div class="col-last even-row-color">
-<div class="block">Closes all pending elements.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#closeElement()" class="member-name-link">closeElement</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#startDocument()" class="member-name-link">startDocument</a>()</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Closes the last element written.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#closeElement(java.lang.CharSequence)" class="member-name-link">closeElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Closes back to and including the last instance of the specified element name.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#comment(java.lang.CharSequence)" class="member-name-link">comment</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;text)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#content(java.lang.CharSequence)" class="member-name-link">content</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;content)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#openElement(java.lang.CharSequence)" class="member-name-link">openElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;elementName)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Writes the start of an element.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../impl/base/XmlWriter.html#startDocument()" class="member-name-link">startDocument</a>()</code></div>
-<div class="col-last even-row-color">
 <div class="block">Starts a document by writing a prolog.</div>
 </div>
 </div>

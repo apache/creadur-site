@@ -34,7 +34,7 @@
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.Log;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.lang.String.format;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  @SuppressWarnings({<span class="jxr_string">"checkstyle:RegexpSingleLine"</span>, <span class="jxr_string">"checkstyle:JavadocVariable"</span>})
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Describes a match target for SelectorUtils.&lt;/p&gt;</em>
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> *</em>
@@ -46,7 +46,7 @@
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> * @see &lt;a href="<a href="https://github.com/codehaus-plexus/plexus-utils/blob/master/src/main/java/org/codehaus/plexus/util/MatchPattern.java" target="alexandria_uri">https://github.com/codehaus-plexus/plexus-utils/blob/master/src/main/java/org/codehaus/plexus/util/MatchPattern.java</a>"&gt;</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> * plexus-utils MatchPattern&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> <a name="MatchPattern" href="../../../../../../org/apache/rat/config/exclusion/plexus/MatchPattern.html#MatchPattern">MatchPattern</a> {
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> MatchPattern {
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String source;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String regexPattern;
@@ -57,7 +57,7 @@
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">char</strong>[][] tokenizedChar;
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>  
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">private</strong> <a name="MatchPattern" href="../../../../../../org/apache/rat/config/exclusion/plexus/MatchPattern.html#MatchPattern">MatchPattern</a>(<strong class="jxr_keyword">final</strong> String source, <strong class="jxr_keyword">final</strong> String separator) {
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>      <strong class="jxr_keyword">private</strong> MatchPattern(<strong class="jxr_keyword">final</strong> String source, <strong class="jxr_keyword">final</strong> String separator) {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          regexPattern = SelectorUtils.isRegexPrefixedPattern(source)
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>                  ? source.substring(
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>                  SelectorUtils.REGEX_HANDLER_PREFIX.length(),
@@ -149,8 +149,8 @@
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>         <strong class="jxr_keyword">return</strong> tokenizedNameChar;
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>     }
 <a class="jxr_linenumber" name="L143" href="#L143">143</a> 
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a name="MatchPattern" href="../../../../../../org/apache/rat/config/exclusion/plexus/MatchPattern.html#MatchPattern">MatchPattern</a> fromString(<strong class="jxr_keyword">final</strong>     String source) {
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> <a name="MatchPattern" href="../../../../../../org/apache/rat/config/exclusion/plexus/MatchPattern.html#MatchPattern">MatchPattern</a>(source, File.separator);
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> MatchPattern fromString(<strong class="jxr_keyword">final</strong>     String source) {
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> MatchPattern(source, File.separator);
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>     }
 <a class="jxr_linenumber" name="L147" href="#L147">147</a> }
 </pre>
