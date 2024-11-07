@@ -94,3 +94,9 @@ Usually it helps to copy over the release-generated version into the subfolder /
 ### Combined release notes
 
 Make sure to generate a combined changelog that includes the most current release, available under [relase-notes/rat.txt](/release-notes/rat.txt)
+
+## Local hacking
+
+The whole page can be started locally with the help of [docker-compose](https://docs.docker.com/compose/) and will provide the contents via http://localhost:8888
+
+Happy hacking :)
