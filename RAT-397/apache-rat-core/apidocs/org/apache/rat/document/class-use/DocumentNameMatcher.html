@@ -88,6 +88,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Get the DocumentNameMatcher based on the directory.</div>
 </div>
 </div>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">org.apache.rat</a> with parameters of type <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#addExcludedMatcher(java.lang.String,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">addExcludedMatcher</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;matcher)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Excludes files that match a FileFilter.</div>
+</div>
+</div>
 </section>
 </li>
 <li>
@@ -191,10 +203,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TraceableDocumentNameMatcher.</span><code><a href="../TraceableDocumentNameMatcher.html#make(java.util.function.Supplier,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">make</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;name,
- <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;delegate)</code></div>
+<div class="col-first even-row-color"><code>static <a href="../DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DocumentNameMatcherSupplier.</span><code><a href="../DocumentNameMatcherSupplier.html#from(java.lang.String,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">from</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Create a DocumentNameMatcherSupplier from a DocumentNameMatcher and a name.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TraceableDocumentNameMatcher.</span><code><a href="../TraceableDocumentNameMatcher.html#make(java.util.function.Supplier,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">make</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;name,
+ <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;delegate)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates a TraceableDocumentNameMatcher from a PathMatcher.</div>
 </div>
 </div>

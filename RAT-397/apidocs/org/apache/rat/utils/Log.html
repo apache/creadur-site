@@ -171,7 +171,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isEnabled(org.apache.rat.utils.Log.Level)" class="member-name-link">isEnabled</a><wbr>(<a href="Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Determines if the log level is enabled.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#log(org.apache.rat.utils.Log.Level,java.lang.Object)" class="member-name-link">log</a><wbr>(<a href="Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;message)</code></div>
@@ -199,14 +201,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Write a log message and report throwable stack trace at the specified log level.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#warn(java.lang.Object)" class="member-name-link">warn</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;message)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#setLevel(org.apache.rat.utils.Log.Level)" class="member-name-link">setLevel</a><wbr>(<a href="Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
-<div class="block">Write a message at WARN level.</div>
+<div class="block">Sets the log level.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#warn(java.lang.Object,java.lang.Throwable)" class="member-name-link">warn</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;message,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;throwable)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#warn(java.lang.Object)" class="member-name-link">warn</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;message)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Write a message at WARN level.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#warn(java.lang.Object,java.lang.Throwable)" class="member-name-link">warn</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;message,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;throwable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Write a warn message and report throwable stack trace.</div>
 </div>
 </div>
@@ -236,9 +243,29 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="setLevel(org.apache.rat.utils.Log.Level)">
+<h3>setLevel</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLevel</span><wbr><span class="parameters">(<a href="Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level)</span></div>
+<div class="block">Sets the log level.
+ Implementations may elect not to set the level dynamically.  However, if the option is supported
+ this method should be overridden.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>level</code> - the level to set.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="isEnabled(org.apache.rat.utils.Log.Level)">
 <h3>isEnabled</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEnabled</span><wbr><span class="parameters">(<a href="Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level)</span></div>
+<div class="block">Determines if the log level is enabled.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>level</code> - The level to check.</dd>
+<dt>Returns:</dt>
+<dd>true if the level will produce output in the log.</dd>
+</dl>
 </section>
 </li>
 <li>

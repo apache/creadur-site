@@ -59,12 +59,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The base package for the RAT tool.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.config.results">org.apache.rat.config.results</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Contains utilities to validate the results.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></div>
+<div class="col-last even-row-color">
 <div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Classes that write the XML output.</div>
 </div>
 </div>
@@ -79,9 +83,35 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Reporter.</span><code><a href="../../../Reporter.html#getClaimsStatistic()" class="member-name-link">getClaimsStatistic</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Reporter.</span><code><a href="../../../Reporter.html#execute()" class="member-name-link">execute</a>()</code></div>
 <div class="col-last even-row-color">
+<div class="block">Executes the report and builds the output.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Reporter.</span><code><a href="../../../Reporter.html#getClaimsStatistic()" class="member-name-link">getClaimsStatistic</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Get the claim statistics from the run.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.config.results">
+<h2>Uses of <a href="../ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a> in <a href="../../../config/results/package-summary.html">org.apache.rat.config.results</a></h2>
+<div class="caption"><span>Methods in <a href="../../../config/results/package-summary.html">org.apache.rat.config.results</a> with parameters of type <a href="../ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ClaimValidator.</span><code><a href="../../../config/results/ClaimValidator.html#listIssues(org.apache.rat.report.claim.ClaimStatistic)" class="member-name-link">listIssues</a><wbr>(<a href="../ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a list of items that have issues.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ClaimValidator.</span><code><a href="../../../config/results/ClaimValidator.html#logIssues(org.apache.rat.report.claim.ClaimStatistic)" class="member-name-link">logIssues</a><wbr>(<a href="../ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Logs all the invalid values as errors.</div>
 </div>
 </div>
 </section>
@@ -97,6 +127,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../ClaimAggregator.html#%3Cinit%3E(org.apache.rat.report.claim.ClaimStatistic)" class="member-name-link">ClaimAggregator</a><wbr>(<a href="../ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Constructor.</div>
+</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../ClaimValidatorReport.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">ClaimValidatorReport</a><wbr>(<a href="../../xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
+ <a href="../ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
+ <a href="../../../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Constructor.</div>
 </div>
 </div>

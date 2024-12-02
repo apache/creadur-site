@@ -55,6 +55,14 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.commandline">org.apache.rat.commandline</a></div>
+<div class="col-last even-row-color">
+<div class="block">Helper classes for command line processing.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.config.results">org.apache.rat.config.results</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Contains utilities to validate the results.</div>
+</div>
 <div class="col-first even-row-color"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></div>
 <div class="col-last even-row-color">
 <div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
@@ -62,6 +70,61 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="org.apache.rat.commandline">
+<h2>Uses of <a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a> in <a href="../../../commandline/package-summary.html">org.apache.rat.commandline</a></h2>
+<div class="caption"><span>Fields in <a href="../../../commandline/package-summary.html">org.apache.rat.commandline</a> with type parameters of type <a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final org.apache.commons.cli.Converter<wbr>&lt;org.apache.commons.lang3.tuple.Pair&lt;<a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>,<wbr><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;,<wbr><a href="../../../ConfigurationException.html" title="class in org.apache.rat">ConfigurationException</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Converters.</span><code><a href="../../../commandline/Converters.html#COUNTER_CONVERTER" class="member-name-link">COUNTER_CONVERTER</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">converts the Converter pattern into a Converter, count pair.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.config.results">
+<h2>Uses of <a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a> in <a href="../../../config/results/package-summary.html">org.apache.rat.config.results</a></h2>
+<div class="caption"><span>Methods in <a href="../../../config/results/package-summary.html">org.apache.rat.config.results</a> with parameters of type <a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>int</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ClaimValidator.</span><code><a href="../../../config/results/ClaimValidator.html#getMax(org.apache.rat.report.claim.ClaimStatistic.Counter)" class="member-name-link">getMax</a><wbr>(<a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Gets the limit for the specific counter.</div>
+</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ClaimValidator.</span><code><a href="../../../config/results/ClaimValidator.html#getMin(org.apache.rat.report.claim.ClaimStatistic.Counter)" class="member-name-link">getMin</a><wbr>(<a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Gets the limit for the specific counter.</div>
+</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ClaimValidator.</span><code><a href="../../../config/results/ClaimValidator.html#isValid(org.apache.rat.report.claim.ClaimStatistic.Counter,int)" class="member-name-link">isValid</a><wbr>(<a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
+ int&nbsp;count)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Determines if the specified count is within the limits for the counter.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ClaimValidator.</span><code><a href="../../../config/results/ClaimValidator.html#setMax(org.apache.rat.report.claim.ClaimStatistic.Counter,int)" class="member-name-link">setMax</a><wbr>(<a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
+ int&nbsp;value)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets the max value for the specified counter.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ClaimValidator.</span><code><a href="../../../config/results/ClaimValidator.html#setMin(org.apache.rat.report.claim.ClaimStatistic.Counter,int)" class="member-name-link">setMin</a><wbr>(<a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
+ int&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Sets the max value for the specified counter.</div>
+</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="org.apache.rat.report.claim">
 <h2>Uses of <a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a> in <a href="../package-summary.html">org.apache.rat.report.claim</a></h2>
@@ -96,7 +159,7 @@ the order they are declared.</div>
 <div class="col-second odd-row-color"><span class="type-name-label">ClaimStatistic.</span><code><a href="../ClaimStatistic.html#incCounter(org.apache.rat.report.claim.ClaimStatistic.Counter,int)" class="member-name-link">incCounter</a><wbr>(<a href="../ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
  int&nbsp;value)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Increments the counts for hte counter.</div>
+<div class="block">Increments the counts for the counter.</div>
 </div>
 </div>
 </section>

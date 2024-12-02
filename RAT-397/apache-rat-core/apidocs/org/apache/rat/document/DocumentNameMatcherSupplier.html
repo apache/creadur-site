@@ -111,10 +111,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#from(java.io.FileFilter)" class="member-name-link">from</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileFilter.html" title="class or interface in java.io" class="external-link">FileFilter</a>&nbsp;fileFilter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#get(org.apache.rat.document.DocumentName)" class="member-name-link">get</a><wbr>(<a href="DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;dir)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1">
+<div class="block">Creates a DocumentNameMatcherSupplier from a file filter.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1"><code>static <a href="DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1"><code><a href="#from(java.lang.String,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">from</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1">
+<div class="block">Create a DocumentNameMatcherSupplier from a DocumentNameMatcher and a name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#get(org.apache.rat.document.DocumentName)" class="member-name-link">get</a><wbr>(<a href="DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;dir)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -139,6 +147,28 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="from(java.io.FileFilter)">
 <h3>from</h3>
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></span>&nbsp;<span class="element-name">from</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileFilter.html" title="class or interface in java.io" class="external-link">FileFilter</a>&nbsp;fileFilter)</span></div>
+<div class="block">Creates a DocumentNameMatcherSupplier from a file filter.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>fileFilter</code> - the file filter to process.</dd>
+<dt>Returns:</dt>
+<dd>a DocumentNameMatcherSupplier.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="from(java.lang.String,org.apache.rat.document.DocumentNameMatcher)">
+<h3>from</h3>
+<div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></span>&nbsp;<span class="element-name">from</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</span></div>
+<div class="block">Create a DocumentNameMatcherSupplier from a DocumentNameMatcher and a name.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the name for the matcher.</dd>
+<dd><code>nameMatcher</code> - the matcher.</dd>
+<dt>Returns:</dt>
+<dd>A DocumentNameMatcherDupplier.</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -128,8 +128,15 @@ loadScripts(document, 'script');</script>
 <div class="block">A multiplexer to run multiple claim reports.</div>
 </div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../../claim/SimpleXmlClaimReporter.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">SimpleXmlClaimReporter</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../claim/ClaimValidatorReport.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">ClaimValidatorReport</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
+ <a href="../../../claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
+ <a href="../../../../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Constructor.</div>
+</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../../claim/SimpleXmlClaimReporter.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">SimpleXmlClaimReporter</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Constructor.</div>
 </div>
 </div>
@@ -150,15 +157,16 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Creates a RatReport from the arguments.</div>
 </div>
-<div class="col-first odd-row-color"><code>static void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../../XmlReportFactory.html#endReport(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">endReport</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Ends the XML report by closing the element that startReport opened.</div>
 </div>
-<div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../../XmlReportFactory.html#startReport(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">startReport</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
+<div class="caption"><span>Constructors in <a href="../../package-summary.html">org.apache.rat.report.xml</a> with parameters of type <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../XmlElements.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">XmlElements</a><wbr>(<a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;xmlWriter)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Starts the XML report by writing the standard header into the writer.</div>
+<div class="block">Constructor.</div>
 </div>
 </div>
 </section>
@@ -254,19 +262,24 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Writes the start of an element.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#openElement(java.lang.CharSequence)" class="member-name-link">openElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;elementName)</code></div>
+<div class="col-first odd-row-color"><code>default <a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#openElement(org.apache.rat.report.xml.XmlElements.Elements)" class="member-name-link">openElement</a><wbr>(<a href="../../XmlElements.Elements.html" title="enum in org.apache.rat.report.xml">XmlElements.Elements</a>&nbsp;element)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Writes the start of an element.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#startDocument()" class="member-name-link">startDocument</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#openElement(java.lang.CharSequence)" class="member-name-link">openElement</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;elementName)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Starts a document by writing a prolog.</div>
+<div class="block">Writes the start of an element.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#startDocument()" class="member-name-link">startDocument</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IXmlWriter.</span><code><a href="../IXmlWriter.html#startDocument()" class="member-name-link">startDocument</a>()</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Starts a document by writing a prolog.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlWriter.</span><code><a href="../XmlWriter.html#startDocument()" class="member-name-link">startDocument</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Starts a document by writing a prolog.</div>
 </div>
 </div>

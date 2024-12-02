@@ -64,7 +64,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Classes that perform analyses of files.</div>
 </div>
 <div class="col-first even-row-color"><a href="#org.apache.rat.anttasks">org.apache.rat.anttasks</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The base package for the RAT Apache Ant Task Library.</div>
+</div>
 <div class="col-first odd-row-color"><a href="#org.apache.rat.commandline">org.apache.rat.commandline</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Helper classes for command line processing.</div>
@@ -85,8 +87,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Classes that generate the Rat report.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></div>
 <div class="col-last even-row-color">
+<div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Classes that write the XML output.</div>
 </div>
 </div>
@@ -259,6 +265,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>protected <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractRatMojo.</span><code><a href="../mp/AbstractRatMojo.html#getConfiguration()" class="member-name-link">getConfiguration</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RatCheckMojo.</span><code><a href="../mp/RatCheckMojo.html#getConfiguration()" class="member-name-link">getConfiguration</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../mp/package-summary.html">org.apache.rat.mp</a> with parameters of type <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RatCheckMojo.</span><code><a href="../mp/RatCheckMojo.html#check(org.apache.rat.ReportConfiguration)" class="member-name-link">check</a><wbr>(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -272,6 +290,24 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../report/ConfigurationReport.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,org.apache.rat.ReportConfiguration)" class="member-name-link">ConfigurationReport</a><wbr>(<a href="../report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
+ <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructor.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.report.claim">
+<h2>Uses of <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a> in <a href="../report/claim/package-summary.html">org.apache.rat.report.claim</a></h2>
+<div class="caption"><span>Constructors in <a href="../report/claim/package-summary.html">org.apache.rat.report.claim</a> with parameters of type <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../report/claim/ClaimValidatorReport.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">ClaimValidatorReport</a><wbr>(<a href="../report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
+ <a href="../report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
  <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructor.</div>
