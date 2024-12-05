@@ -94,7 +94,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-first even-row-color"><code><a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#getNameMatcher(org.apache.rat.document.DocumentName)" class="member-name-link">getNameMatcher</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseDir)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Get the DocumentNameMatcher based on the directory.</div>
@@ -134,7 +134,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected </code></div>
 <div class="col-second even-row-color"><code><a href="../../api/Document.html#%3Cinit%3E(org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">Document</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;name,
- <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+ <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance.</div>
 </div>
@@ -144,47 +144,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.apache.rat.config.exclusion">
 <h2>Uses of <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a> in <a href="../../config/exclusion/package-summary.html">org.apache.rat.config.exclusion</a></h2>
-<div class="caption"><span>Methods in <a href="../../config/exclusion/package-summary.html">org.apache.rat.config.exclusion</a> that return <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FileProcessor.</span><code><a href="../../config/exclusion/FileProcessor.html#localizePattern(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">localizePattern</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pattern)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Modifies the <a href="../../config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> formatted <code>pattern</code> argument by expanding the pattern and
- by adjusting the pattern to include the basename from the <code>basename</code> argument.</div>
-</div>
-</div>
 <div class="caption"><span>Methods in <a href="../../config/exclusion/package-summary.html">org.apache.rat.config.exclusion</a> with parameters of type <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileFilter.html" title="class or interface in java.io" class="external-link">FileFilter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ExclusionUtils.</span><code><a href="../../config/exclusion/ExclusionUtils.html#asFileFilter(org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">asFileFilter</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;parent,
- <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FileProcessor.</span><code><a href="../../config/exclusion/FileProcessor.html#apply(org.apache.rat.document.DocumentName)" class="member-name-link">apply</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileFilter.html" title="class or interface in java.io" class="external-link">FileFilter</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ExclusionUtils.</span><code><a href="../../config/exclusion/ExclusionUtils.html#asFileFilter(org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">asFileFilter</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;parent,
+ <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Create a FileFilter from a PathMatcher.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ExclusionProcessor.</span><code><a href="../../config/exclusion/ExclusionProcessor.html#getNameMatcher(org.apache.rat.document.DocumentName)" class="member-name-link">getNameMatcher</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ExclusionProcessor.</span><code><a href="../../config/exclusion/ExclusionProcessor.html#getNameMatcher(org.apache.rat.document.DocumentName)" class="member-name-link">getNameMatcher</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Creates a Document name matcher that will return <code>false</code> on any
  document that is excluded.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FileProcessor.</span><code><a href="../../config/exclusion/FileProcessor.html#localizePattern(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">localizePattern</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
+<div class="col-first odd-row-color"><code>protected final <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FileProcessor.</span><code><a href="../../config/exclusion/FileProcessor.html#localizePattern(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">localizePattern</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pattern)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Modifies the <a href="../../config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> formatted <code>pattern</code> argument by expanding the pattern and
- by adjusting the pattern to include the basename from the <code>basename</code> argument.</div>
-</div>
-<div class="col-first odd-row-color"><code>default <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FileProcessor.</span><code><a href="../../config/exclusion/FileProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Modifies the <a href="../../config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> formatted <code>pattern</code> argument by expanding the pattern and
+ by adjusting the pattern to include the basename from the <code>documentName</code> argument.</div>
+</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FileProcessor.</span><code><a href="../../config/exclusion/FileProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Allows modification of the file entry to match the <a href="../../config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> format.</div>
 </div>
 </div>
@@ -201,29 +191,35 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DescendingFileProcessor.</span><code><a href="../../config/exclusion/fileProcessors/DescendingFileProcessor.html#apply(org.apache.rat.document.DocumentName)" class="member-name-link">apply</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;dir)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DescendingFileProcessor.</span><code><a href="../../config/exclusion/fileProcessors/DescendingFileProcessor.html#checkDirectory(org.apache.rat.document.DocumentName,java.io.FileFilter)" class="member-name-link">checkDirectory</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;directory,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/FileFilter.html" title="class or interface in java.io" class="external-link">FileFilter</a>&nbsp;fileFilter)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Process the directory tree looking for files that match the filter.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">BazaarIgnoreProcessor.</span><code><a href="../../config/exclusion/fileProcessors/BazaarIgnoreProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">BazaarIgnoreProcessor.</span><code><a href="../../config/exclusion/fileProcessors/BazaarIgnoreProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
+<div class="col-second odd-row-color"><span class="type-name-label">GitFileProcessor.</span><code><a href="../../config/exclusion/fileProcessors/GitFileProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">GitFileProcessor.</span><code><a href="../../config/exclusion/fileProcessors/GitFileProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
+<div class="col-second even-row-color"><span class="type-name-label">HgIgnoreProcessor.</span><code><a href="../../config/exclusion/fileProcessors/HgIgnoreProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">HgIgnoreProcessor.</span><code><a href="../../config/exclusion/fileProcessors/HgIgnoreProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CVSFileProcessor.</span><code><a href="../../config/exclusion/fileProcessors/CVSFileProcessor.html#process(org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DescendingFileProcessor.</span><code><a href="../../config/exclusion/fileProcessors/DescendingFileProcessor.html#process(org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-second odd-row-color"><span class="type-name-label">CVSFileProcessor.</span><code><a href="../../config/exclusion/fileProcessors/CVSFileProcessor.html#process(org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DescendingFileProcessor.</span><code><a href="../../config/exclusion/fileProcessors/DescendingFileProcessor.html#process(org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Process by reading the file and return a list of properly formatted patterns.</div>
 </div>
-<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">HgIgnoreProcessor.</span><code><a href="../../config/exclusion/fileProcessors/HgIgnoreProcessor.html#process(org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">HgIgnoreProcessor.</span><code><a href="../../config/exclusion/fileProcessors/HgIgnoreProcessor.html#process(org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -236,14 +232,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#getBaseDocumentName()" class="member-name-link">getBaseDocumentName</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DocumentName.Builder.</span><code><a href="../DocumentName.Builder.html#build()" class="member-name-link">build</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Gets the DocumentName for the basename of this document name.</div>
+<div class="block">Build a DocumentName from this builder.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#resolve(java.lang.String)" class="member-name-link">resolve</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;child)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#getBaseDocumentName()" class="member-name-link">getBaseDocumentName</a>()</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates a new document name by adding the child to the current name.</div>
+<div class="block">Gets the DocumentName for the basename of this DocumentName.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#resolve(java.lang.String)" class="member-name-link">resolve</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;child)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new DocumentName by adding the child to the current name.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.document</a> with parameters of type <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span></div>
@@ -251,18 +252,24 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#compareTo(org.apache.rat.document.DocumentName)" class="member-name-link">compareTo</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;o)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DocumentNameMatcherSupplier.</span><code><a href="../DocumentNameMatcherSupplier.html#get(org.apache.rat.document.DocumentName)" class="member-name-link">get</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;dir)</code></div>
+<div class="col-first even-row-color"><code>static <a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#builder(org.apache.rat.document.DocumentName)" class="member-name-link">builder</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a Builder from a document name.</div>
+</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#compareTo(org.apache.rat.document.DocumentName)" class="member-name-link">compareTo</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;o)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DocumentNameMatcher.</span><code><a href="../DocumentNameMatcher.html#matches(org.apache.rat.document.DocumentName)" class="member-name-link">matches</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TraceableDocumentNameMatcher.</span><code><a href="../TraceableDocumentNameMatcher.html#matches(org.apache.rat.document.DocumentName)" class="member-name-link">matches</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Performs the match against the DocumentName.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DocumentName.Builder.</span><code><a href="../DocumentName.Builder.html#setBaseName(org.apache.rat.document.DocumentName)" class="member-name-link">setBaseName</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets the basename from the <code>DocumentName.Builder.name</code> of the specified DocumentName.</div>
+</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../package-summary.html">org.apache.rat.document</a> with parameters of type <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span></div>
 <div class="summary-table three-column-summary">
@@ -272,22 +279,35 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../ArchiveEntryDocument.html#%3Cinit%3E(org.apache.rat.document.DocumentName,byte%5B%5D,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">ArchiveEntryDocument</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;outerName,
  byte[]&nbsp;contents,
- <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+ <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an Archive entry.</div>
 </div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../DocumentName.html#%3Cinit%3E(java.io.File,org.apache.rat.document.DocumentName)" class="member-name-link">DocumentName</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
- <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName)</code></div>
+<div class="col-second odd-row-color"><code><a href="../DocumentNameMatcher.html#%3Cinit%3E(java.lang.String,org.apache.rat.config.exclusion.plexus.MatchPatterns,org.apache.rat.document.DocumentName)" class="member-name-link">DocumentNameMatcher</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="../../config/exclusion/plexus/MatchPatterns.html" title="class in org.apache.rat.config.exclusion.plexus">MatchPatterns</a>&nbsp;patterns,
+ <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates a document name with the name of the file and the same basename as the baseName document.</div>
+<div class="block">Constructs a DocumentNameMatcher from a name a MatchPatterns instance and the DocumentName for the base name.</div>
 </div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../FileDocument.html#%3Cinit%3E(org.apache.rat.document.DocumentName,java.io.File,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">FileDocument</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
- <a href="../DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+ <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates a File document.</div>
+</div>
+</div>
+<div class="caption"><span>Constructor parameters in <a href="../package-summary.html">org.apache.rat.document</a> with type arguments of type <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../DocumentNameMatcher.html#%3Cinit%3E(java.lang.String,java.util.function.Predicate)" class="member-name-link">DocumentNameMatcher</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&gt;&nbsp;predicate)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a DocumentNameMatcher from a name and a DocumentName predicate.</div>
 </div>
 </div>
 </section>
@@ -317,8 +337,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FileListWalker.</span><code><a href="../../walker/FileListWalker.html#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IReportableListWalker.</span><code><a href="../../walker/IReportableListWalker.html#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Walker.</span><code><a href="../../walker/Walker.html#getName()" class="member-name-link">getName</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../walker/package-summary.html">org.apache.rat.walker</a> with parameters of type <a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../walker/IReportableListWalker.Builder.html" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IReportableListWalker.</span><code><a href="../../walker/IReportableListWalker.html#builder(org.apache.rat.document.DocumentName)" class="member-name-link">builder</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Create a builder for the list walker.</div>
+</div>
 </div>
 </section>
 </li>

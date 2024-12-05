@@ -84,7 +84,7 @@
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>  
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     * Specifies the licenses to accept. By default, these are added to the default</em>
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * licenses, unless you set &amp;lt;addDefaultLicenseMatchers&amp;gt; to false.  Arguments should be</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>  <em class="jxr_javadoccomment">     * licenses, unless you set &amp;lt;addDefaultLicenseMatchers&amp;gt; to false. Arguments should be</em>
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>  <em class="jxr_javadoccomment">     * file name of &amp;lt;Configs&amp;gt; file structure.</em>
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * @deprecated Use &amp;lt;config&amp;gt;.</em>
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     * @since 0.8</em>
@@ -545,8 +545,8 @@
 <a class="jxr_linenumber" name="L537" href="#L537">537</a>                             .map(x -&gt; x.setLicenseFamilies(families).build()).forEach(process);
 <a class="jxr_linenumber" name="L538" href="#L538">538</a>                     getLicenses().map(x -&gt; x.build(families)).forEach(process);
 <a class="jxr_linenumber" name="L539" href="#L539">539</a>                 }
-<a class="jxr_linenumber" name="L540" href="#L540">540</a>                 DocumentName dirName = <strong class="jxr_keyword">new</strong> DocumentName(basedir);
-<a class="jxr_linenumber" name="L541" href="#L541">541</a>                 config.setReportable(<strong class="jxr_keyword">new</strong> DirectoryWalker(<strong class="jxr_keyword">new</strong> FileDocument(dirName, basedir, config.getNameMatcher(dirName))));
+<a class="jxr_linenumber" name="L540" href="#L540">540</a>                 DocumentName dirName = DocumentName.builder(basedir).build();
+<a class="jxr_linenumber" name="L541" href="#L541">541</a>                 config.addSource(<strong class="jxr_keyword">new</strong> DirectoryWalker(<strong class="jxr_keyword">new</strong> FileDocument(dirName, basedir, config.getNameMatcher(dirName))));
 <a class="jxr_linenumber" name="L542" href="#L542">542</a> 
 <a class="jxr_linenumber" name="L543" href="#L543">543</a>                 <strong class="jxr_keyword">if</strong> (helpLicenses) {
 <a class="jxr_linenumber" name="L544" href="#L544">544</a>                     <strong class="jxr_keyword">new</strong> org.apache.rat.help.Licenses(config, <strong class="jxr_keyword">new</strong> PrintWriter(log.asWriter())).printHelp();

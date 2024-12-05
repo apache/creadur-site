@@ -46,7 +46,7 @@
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> java.util.stream.Collectors;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * Generated class to provide Ant support for standard Rat command line options.</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment"> * Generated class to provide Ant support for standard RAT command line options.</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> *</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * DO NOT EDIT - GENERATED FILE</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> */</em>
@@ -620,143 +620,152 @@
 <a class="jxr_linenumber" name="L612" href="#L612">612</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> CounterMin <strong class="jxr_keyword">extends</strong> Child { CounterMin() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"counter-min"</span>);}}
 <a class="jxr_linenumber" name="L613" href="#L613">613</a> 
 <a class="jxr_linenumber" name="L614" href="#L614">614</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L615" href="#L615">615</a> <em class="jxr_javadoccomment">     * Excludes files matching &amp;lt;Expression&amp;gt;.</em>
-<a class="jxr_linenumber" name="L616" href="#L616">616</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --input-exclude instead.</em>
-<a class="jxr_linenumber" name="L617" href="#L617">617</a> <em class="jxr_javadoccomment">     * @deprecated</em>
-<a class="jxr_linenumber" name="L618" href="#L618">618</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L619" href="#L619">619</a>     <strong class="jxr_keyword">public</strong> Exclude createExclude() {
-<a class="jxr_linenumber" name="L620" href="#L620">620</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Exclude();
-<a class="jxr_linenumber" name="L621" href="#L621">621</a>     }
+<a class="jxr_linenumber" name="L615" href="#L615">615</a> <em class="jxr_javadoccomment">     * A file containing file names to process. File names must use linux directory separator ('/') or none at all. File names that do not start with '/' are relative to the directory where the argument is located.</em>
+<a class="jxr_linenumber" name="L616" href="#L616">616</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L617" href="#L617">617</a>     <strong class="jxr_keyword">public</strong> InputSource createInputSource() {
+<a class="jxr_linenumber" name="L618" href="#L618">618</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputSource();
+<a class="jxr_linenumber" name="L619" href="#L619">619</a>     }
+<a class="jxr_linenumber" name="L620" href="#L620">620</a> 
+<a class="jxr_linenumber" name="L621" href="#L621">621</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputSource <strong class="jxr_keyword">extends</strong> Child { InputSource() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-source"</span>);}}
 <a class="jxr_linenumber" name="L622" href="#L622">622</a> 
-<a class="jxr_linenumber" name="L623" href="#L623">623</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> Exclude <strong class="jxr_keyword">extends</strong> Child { Exclude() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"exclude"</span>);}}
-<a class="jxr_linenumber" name="L624" href="#L624">624</a> 
-<a class="jxr_linenumber" name="L625" href="#L625">625</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L626" href="#L626">626</a> <em class="jxr_javadoccomment">     * Excludes files matching &amp;lt;Expression&amp;gt;.</em>
+<a class="jxr_linenumber" name="L623" href="#L623">623</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L624" href="#L624">624</a> <em class="jxr_javadoccomment">     * Excludes files matching &amp;lt;Expression&amp;gt;.</em>
+<a class="jxr_linenumber" name="L625" href="#L625">625</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --input-exclude instead.</em>
+<a class="jxr_linenumber" name="L626" href="#L626">626</a> <em class="jxr_javadoccomment">     * @deprecated</em>
 <a class="jxr_linenumber" name="L627" href="#L627">627</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L628" href="#L628">628</a>     <strong class="jxr_keyword">public</strong> InputExclude createInputExclude() {
-<a class="jxr_linenumber" name="L629" href="#L629">629</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExclude();
+<a class="jxr_linenumber" name="L628" href="#L628">628</a>     <strong class="jxr_keyword">public</strong> Exclude createExclude() {
+<a class="jxr_linenumber" name="L629" href="#L629">629</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Exclude();
 <a class="jxr_linenumber" name="L630" href="#L630">630</a>     }
 <a class="jxr_linenumber" name="L631" href="#L631">631</a> 
-<a class="jxr_linenumber" name="L632" href="#L632">632</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExclude <strong class="jxr_keyword">extends</strong> Child { InputExclude() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude"</span>);}}
+<a class="jxr_linenumber" name="L632" href="#L632">632</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> Exclude <strong class="jxr_keyword">extends</strong> Child { Exclude() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"exclude"</span>);}}
 <a class="jxr_linenumber" name="L633" href="#L633">633</a> 
 <a class="jxr_linenumber" name="L634" href="#L634">634</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L635" href="#L635">635</a> <em class="jxr_javadoccomment">     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will be excluded from processing.</em>
-<a class="jxr_linenumber" name="L636" href="#L636">636</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --input-exclude-file instead.</em>
-<a class="jxr_linenumber" name="L637" href="#L637">637</a> <em class="jxr_javadoccomment">     * @deprecated</em>
-<a class="jxr_linenumber" name="L638" href="#L638">638</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L639" href="#L639">639</a>     <strong class="jxr_keyword">public</strong> ExcludeFile createExcludeFile() {
-<a class="jxr_linenumber" name="L640" href="#L640">640</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ExcludeFile();
-<a class="jxr_linenumber" name="L641" href="#L641">641</a>     }
+<a class="jxr_linenumber" name="L635" href="#L635">635</a> <em class="jxr_javadoccomment">     * Excludes files matching &amp;lt;Expression&amp;gt;.</em>
+<a class="jxr_linenumber" name="L636" href="#L636">636</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L637" href="#L637">637</a>     <strong class="jxr_keyword">public</strong> InputExclude createInputExclude() {
+<a class="jxr_linenumber" name="L638" href="#L638">638</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExclude();
+<a class="jxr_linenumber" name="L639" href="#L639">639</a>     }
+<a class="jxr_linenumber" name="L640" href="#L640">640</a> 
+<a class="jxr_linenumber" name="L641" href="#L641">641</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExclude <strong class="jxr_keyword">extends</strong> Child { InputExclude() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude"</span>);}}
 <a class="jxr_linenumber" name="L642" href="#L642">642</a> 
-<a class="jxr_linenumber" name="L643" href="#L643">643</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> ExcludeFile <strong class="jxr_keyword">extends</strong> Child { ExcludeFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"exclude-file"</span>);}}
-<a class="jxr_linenumber" name="L644" href="#L644">644</a> 
-<a class="jxr_linenumber" name="L645" href="#L645">645</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L646" href="#L646">646</a> <em class="jxr_javadoccomment">     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will be excluded from processing.</em>
+<a class="jxr_linenumber" name="L643" href="#L643">643</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L644" href="#L644">644</a> <em class="jxr_javadoccomment">     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will be excluded from processing.</em>
+<a class="jxr_linenumber" name="L645" href="#L645">645</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --input-exclude-file instead.</em>
+<a class="jxr_linenumber" name="L646" href="#L646">646</a> <em class="jxr_javadoccomment">     * @deprecated</em>
 <a class="jxr_linenumber" name="L647" href="#L647">647</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L648" href="#L648">648</a>     <strong class="jxr_keyword">public</strong> InputExcludeFile createInputExcludeFile() {
-<a class="jxr_linenumber" name="L649" href="#L649">649</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExcludeFile();
+<a class="jxr_linenumber" name="L648" href="#L648">648</a>     <strong class="jxr_keyword">public</strong> ExcludeFile createExcludeFile() {
+<a class="jxr_linenumber" name="L649" href="#L649">649</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> ExcludeFile();
 <a class="jxr_linenumber" name="L650" href="#L650">650</a>     }
 <a class="jxr_linenumber" name="L651" href="#L651">651</a> 
-<a class="jxr_linenumber" name="L652" href="#L652">652</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExcludeFile <strong class="jxr_keyword">extends</strong> Child { InputExcludeFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude-file"</span>);}}
+<a class="jxr_linenumber" name="L652" href="#L652">652</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> ExcludeFile <strong class="jxr_keyword">extends</strong> Child { ExcludeFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"exclude-file"</span>);}}
 <a class="jxr_linenumber" name="L653" href="#L653">653</a> 
 <a class="jxr_linenumber" name="L654" href="#L654">654</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L655" href="#L655">655</a> <em class="jxr_javadoccomment">     * Excludes files defined in standard collections based on commonly occurring groups.</em>
+<a class="jxr_linenumber" name="L655" href="#L655">655</a> <em class="jxr_javadoccomment">     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will be excluded from processing.</em>
 <a class="jxr_linenumber" name="L656" href="#L656">656</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L657" href="#L657">657</a>     <strong class="jxr_keyword">public</strong> InputExcludeStd createInputExcludeStd() {
-<a class="jxr_linenumber" name="L658" href="#L658">658</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExcludeStd();
+<a class="jxr_linenumber" name="L657" href="#L657">657</a>     <strong class="jxr_keyword">public</strong> InputExcludeFile createInputExcludeFile() {
+<a class="jxr_linenumber" name="L658" href="#L658">658</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExcludeFile();
 <a class="jxr_linenumber" name="L659" href="#L659">659</a>     }
 <a class="jxr_linenumber" name="L660" href="#L660">660</a> 
-<a class="jxr_linenumber" name="L661" href="#L661">661</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExcludeStd <strong class="jxr_keyword">extends</strong> Child { InputExcludeStd() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude-std"</span>);}}
+<a class="jxr_linenumber" name="L661" href="#L661">661</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExcludeFile <strong class="jxr_keyword">extends</strong> Child { InputExcludeFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude-file"</span>);}}
 <a class="jxr_linenumber" name="L662" href="#L662">662</a> 
 <a class="jxr_linenumber" name="L663" href="#L663">663</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L664" href="#L664">664</a> <em class="jxr_javadoccomment">     * Excludes files with sizes less than the given argument.</em>
+<a class="jxr_linenumber" name="L664" href="#L664">664</a> <em class="jxr_javadoccomment">     * Excludes files defined in standard collections based on commonly occurring groups.</em>
 <a class="jxr_linenumber" name="L665" href="#L665">665</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L666" href="#L666">666</a>     <strong class="jxr_keyword">public</strong> InputExcludeSize createInputExcludeSize() {
-<a class="jxr_linenumber" name="L667" href="#L667">667</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExcludeSize();
+<a class="jxr_linenumber" name="L666" href="#L666">666</a>     <strong class="jxr_keyword">public</strong> InputExcludeStd createInputExcludeStd() {
+<a class="jxr_linenumber" name="L667" href="#L667">667</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExcludeStd();
 <a class="jxr_linenumber" name="L668" href="#L668">668</a>     }
 <a class="jxr_linenumber" name="L669" href="#L669">669</a> 
-<a class="jxr_linenumber" name="L670" href="#L670">670</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExcludeSize <strong class="jxr_keyword">extends</strong> Child { InputExcludeSize() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude-size"</span>);}}
+<a class="jxr_linenumber" name="L670" href="#L670">670</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExcludeStd <strong class="jxr_keyword">extends</strong> Child { InputExcludeStd() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude-std"</span>);}}
 <a class="jxr_linenumber" name="L671" href="#L671">671</a> 
 <a class="jxr_linenumber" name="L672" href="#L672">672</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L673" href="#L673">673</a> <em class="jxr_javadoccomment">     * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files.</em>
+<a class="jxr_linenumber" name="L673" href="#L673">673</a> <em class="jxr_javadoccomment">     * Excludes files with sizes less than the given argument.</em>
 <a class="jxr_linenumber" name="L674" href="#L674">674</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L675" href="#L675">675</a>     <strong class="jxr_keyword">public</strong> InputInclude createInputInclude() {
-<a class="jxr_linenumber" name="L676" href="#L676">676</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputInclude();
+<a class="jxr_linenumber" name="L675" href="#L675">675</a>     <strong class="jxr_keyword">public</strong> InputExcludeSize createInputExcludeSize() {
+<a class="jxr_linenumber" name="L676" href="#L676">676</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExcludeSize();
 <a class="jxr_linenumber" name="L677" href="#L677">677</a>     }
 <a class="jxr_linenumber" name="L678" href="#L678">678</a> 
-<a class="jxr_linenumber" name="L679" href="#L679">679</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputInclude <strong class="jxr_keyword">extends</strong> Child { InputInclude() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-include"</span>);}}
+<a class="jxr_linenumber" name="L679" href="#L679">679</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExcludeSize <strong class="jxr_keyword">extends</strong> Child { InputExcludeSize() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude-size"</span>);}}
 <a class="jxr_linenumber" name="L680" href="#L680">680</a> 
 <a class="jxr_linenumber" name="L681" href="#L681">681</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L682" href="#L682">682</a> <em class="jxr_javadoccomment">     * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files.</em>
-<a class="jxr_linenumber" name="L683" href="#L683">683</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --input-include instead.</em>
-<a class="jxr_linenumber" name="L684" href="#L684">684</a> <em class="jxr_javadoccomment">     * @deprecated</em>
-<a class="jxr_linenumber" name="L685" href="#L685">685</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L686" href="#L686">686</a>     <strong class="jxr_keyword">public</strong> Include createInclude() {
-<a class="jxr_linenumber" name="L687" href="#L687">687</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Include();
-<a class="jxr_linenumber" name="L688" href="#L688">688</a>     }
+<a class="jxr_linenumber" name="L683" href="#L683">683</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L684" href="#L684">684</a>     <strong class="jxr_keyword">public</strong> InputInclude createInputInclude() {
+<a class="jxr_linenumber" name="L685" href="#L685">685</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputInclude();
+<a class="jxr_linenumber" name="L686" href="#L686">686</a>     }
+<a class="jxr_linenumber" name="L687" href="#L687">687</a> 
+<a class="jxr_linenumber" name="L688" href="#L688">688</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputInclude <strong class="jxr_keyword">extends</strong> Child { InputInclude() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-include"</span>);}}
 <a class="jxr_linenumber" name="L689" href="#L689">689</a> 
-<a class="jxr_linenumber" name="L690" href="#L690">690</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> Include <strong class="jxr_keyword">extends</strong> Child { Include() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"include"</span>);}}
-<a class="jxr_linenumber" name="L691" href="#L691">691</a> 
-<a class="jxr_linenumber" name="L692" href="#L692">692</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L693" href="#L693">693</a> <em class="jxr_javadoccomment">     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will override excluded files.</em>
+<a class="jxr_linenumber" name="L690" href="#L690">690</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L691" href="#L691">691</a> <em class="jxr_javadoccomment">     * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files.</em>
+<a class="jxr_linenumber" name="L692" href="#L692">692</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --input-include instead.</em>
+<a class="jxr_linenumber" name="L693" href="#L693">693</a> <em class="jxr_javadoccomment">     * @deprecated</em>
 <a class="jxr_linenumber" name="L694" href="#L694">694</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L695" href="#L695">695</a>     <strong class="jxr_keyword">public</strong> InputIncludeFile createInputIncludeFile() {
-<a class="jxr_linenumber" name="L696" href="#L696">696</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputIncludeFile();
+<a class="jxr_linenumber" name="L695" href="#L695">695</a>     <strong class="jxr_keyword">public</strong> Include createInclude() {
+<a class="jxr_linenumber" name="L696" href="#L696">696</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Include();
 <a class="jxr_linenumber" name="L697" href="#L697">697</a>     }
 <a class="jxr_linenumber" name="L698" href="#L698">698</a> 
-<a class="jxr_linenumber" name="L699" href="#L699">699</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputIncludeFile <strong class="jxr_keyword">extends</strong> Child { InputIncludeFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-include-file"</span>);}}
+<a class="jxr_linenumber" name="L699" href="#L699">699</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> Include <strong class="jxr_keyword">extends</strong> Child { Include() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"include"</span>);}}
 <a class="jxr_linenumber" name="L700" href="#L700">700</a> 
 <a class="jxr_linenumber" name="L701" href="#L701">701</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L702" href="#L702">702</a> <em class="jxr_javadoccomment">     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will be excluded from processing.</em>
-<a class="jxr_linenumber" name="L703" href="#L703">703</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --input-include-file instead.</em>
-<a class="jxr_linenumber" name="L704" href="#L704">704</a> <em class="jxr_javadoccomment">     * @deprecated</em>
-<a class="jxr_linenumber" name="L705" href="#L705">705</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L706" href="#L706">706</a>     <strong class="jxr_keyword">public</strong> IncludesFile createIncludesFile() {
-<a class="jxr_linenumber" name="L707" href="#L707">707</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> IncludesFile();
-<a class="jxr_linenumber" name="L708" href="#L708">708</a>     }
+<a class="jxr_linenumber" name="L702" href="#L702">702</a> <em class="jxr_javadoccomment">     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will override excluded files.</em>
+<a class="jxr_linenumber" name="L703" href="#L703">703</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L704" href="#L704">704</a>     <strong class="jxr_keyword">public</strong> InputIncludeFile createInputIncludeFile() {
+<a class="jxr_linenumber" name="L705" href="#L705">705</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputIncludeFile();
+<a class="jxr_linenumber" name="L706" href="#L706">706</a>     }
+<a class="jxr_linenumber" name="L707" href="#L707">707</a> 
+<a class="jxr_linenumber" name="L708" href="#L708">708</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputIncludeFile <strong class="jxr_keyword">extends</strong> Child { InputIncludeFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-include-file"</span>);}}
 <a class="jxr_linenumber" name="L709" href="#L709">709</a> 
-<a class="jxr_linenumber" name="L710" href="#L710">710</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> IncludesFile <strong class="jxr_keyword">extends</strong> Child { IncludesFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"includes-file"</span>);}}
-<a class="jxr_linenumber" name="L711" href="#L711">711</a> 
-<a class="jxr_linenumber" name="L712" href="#L712">712</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L713" href="#L713">713</a> <em class="jxr_javadoccomment">     * Includes files defined in standard collections based on commonly occurring groups. Will override excluded files.</em>
+<a class="jxr_linenumber" name="L710" href="#L710">710</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L711" href="#L711">711</a> <em class="jxr_javadoccomment">     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will be excluded from processing.</em>
+<a class="jxr_linenumber" name="L712" href="#L712">712</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --input-include-file instead.</em>
+<a class="jxr_linenumber" name="L713" href="#L713">713</a> <em class="jxr_javadoccomment">     * @deprecated</em>
 <a class="jxr_linenumber" name="L714" href="#L714">714</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L715" href="#L715">715</a>     <strong class="jxr_keyword">public</strong> InputIncludeStd createInputIncludeStd() {
-<a class="jxr_linenumber" name="L716" href="#L716">716</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputIncludeStd();
+<a class="jxr_linenumber" name="L715" href="#L715">715</a>     <strong class="jxr_keyword">public</strong> IncludesFile createIncludesFile() {
+<a class="jxr_linenumber" name="L716" href="#L716">716</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> IncludesFile();
 <a class="jxr_linenumber" name="L717" href="#L717">717</a>     }
 <a class="jxr_linenumber" name="L718" href="#L718">718</a> 
-<a class="jxr_linenumber" name="L719" href="#L719">719</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputIncludeStd <strong class="jxr_keyword">extends</strong> Child { InputIncludeStd() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-include-std"</span>);}}
+<a class="jxr_linenumber" name="L719" href="#L719">719</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> IncludesFile <strong class="jxr_keyword">extends</strong> Child { IncludesFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"includes-file"</span>);}}
 <a class="jxr_linenumber" name="L720" href="#L720">720</a> 
 <a class="jxr_linenumber" name="L721" href="#L721">721</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L722" href="#L722">722</a> <em class="jxr_javadoccomment">     * Parse SCM based exclusion files to exclude specified files and directories.</em>
+<a class="jxr_linenumber" name="L722" href="#L722">722</a> <em class="jxr_javadoccomment">     * Includes files defined in standard collections based on commonly occurring groups. Will override excluded files.</em>
 <a class="jxr_linenumber" name="L723" href="#L723">723</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L724" href="#L724">724</a>     <strong class="jxr_keyword">public</strong> InputExcludeParsedScm createInputExcludeParsedScm() {
-<a class="jxr_linenumber" name="L725" href="#L725">725</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExcludeParsedScm();
+<a class="jxr_linenumber" name="L724" href="#L724">724</a>     <strong class="jxr_keyword">public</strong> InputIncludeStd createInputIncludeStd() {
+<a class="jxr_linenumber" name="L725" href="#L725">725</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputIncludeStd();
 <a class="jxr_linenumber" name="L726" href="#L726">726</a>     }
 <a class="jxr_linenumber" name="L727" href="#L727">727</a> 
-<a class="jxr_linenumber" name="L728" href="#L728">728</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExcludeParsedScm <strong class="jxr_keyword">extends</strong> Child { InputExcludeParsedScm() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude-parsed-scm"</span>);}}
+<a class="jxr_linenumber" name="L728" href="#L728">728</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputIncludeStd <strong class="jxr_keyword">extends</strong> Child { InputIncludeStd() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-include-std"</span>);}}
 <a class="jxr_linenumber" name="L729" href="#L729">729</a> 
 <a class="jxr_linenumber" name="L730" href="#L730">730</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L731" href="#L731">731</a> <em class="jxr_javadoccomment">     * Define the output file where to write a report to.</em>
-<a class="jxr_linenumber" name="L732" href="#L732">732</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --output-file instead.</em>
-<a class="jxr_linenumber" name="L733" href="#L733">733</a> <em class="jxr_javadoccomment">     * @deprecated</em>
-<a class="jxr_linenumber" name="L734" href="#L734">734</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L735" href="#L735">735</a>     <strong class="jxr_keyword">public</strong> Out createOut() {
-<a class="jxr_linenumber" name="L736" href="#L736">736</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Out();
-<a class="jxr_linenumber" name="L737" href="#L737">737</a>     }
+<a class="jxr_linenumber" name="L731" href="#L731">731</a> <em class="jxr_javadoccomment">     * Parse SCM based exclusion files to exclude specified files and directories.</em>
+<a class="jxr_linenumber" name="L732" href="#L732">732</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L733" href="#L733">733</a>     <strong class="jxr_keyword">public</strong> InputExcludeParsedScm createInputExcludeParsedScm() {
+<a class="jxr_linenumber" name="L734" href="#L734">734</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> InputExcludeParsedScm();
+<a class="jxr_linenumber" name="L735" href="#L735">735</a>     }
+<a class="jxr_linenumber" name="L736" href="#L736">736</a> 
+<a class="jxr_linenumber" name="L737" href="#L737">737</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputExcludeParsedScm <strong class="jxr_keyword">extends</strong> Child { InputExcludeParsedScm() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"input-exclude-parsed-scm"</span>);}}
 <a class="jxr_linenumber" name="L738" href="#L738">738</a> 
-<a class="jxr_linenumber" name="L739" href="#L739">739</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> Out <strong class="jxr_keyword">extends</strong> Child { Out() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"out"</span>);}}
-<a class="jxr_linenumber" name="L740" href="#L740">740</a> 
-<a class="jxr_linenumber" name="L741" href="#L741">741</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L742" href="#L742">742</a> <em class="jxr_javadoccomment">     * Define the output file where to write a report to.</em>
+<a class="jxr_linenumber" name="L739" href="#L739">739</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L740" href="#L740">740</a> <em class="jxr_javadoccomment">     * Define the output file where to write a report to.</em>
+<a class="jxr_linenumber" name="L741" href="#L741">741</a> <em class="jxr_javadoccomment">     * Deprecated for removal since 0.17: Use --output-file instead.</em>
+<a class="jxr_linenumber" name="L742" href="#L742">742</a> <em class="jxr_javadoccomment">     * @deprecated</em>
 <a class="jxr_linenumber" name="L743" href="#L743">743</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L744" href="#L744">744</a>     <strong class="jxr_keyword">public</strong> OutputFile createOutputFile() {
-<a class="jxr_linenumber" name="L745" href="#L745">745</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> OutputFile();
+<a class="jxr_linenumber" name="L744" href="#L744">744</a>     <strong class="jxr_keyword">public</strong> Out createOut() {
+<a class="jxr_linenumber" name="L745" href="#L745">745</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> Out();
 <a class="jxr_linenumber" name="L746" href="#L746">746</a>     }
 <a class="jxr_linenumber" name="L747" href="#L747">747</a> 
-<a class="jxr_linenumber" name="L748" href="#L748">748</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> OutputFile <strong class="jxr_keyword">extends</strong> Child { OutputFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"output-file"</span>);}}
+<a class="jxr_linenumber" name="L748" href="#L748">748</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> Out <strong class="jxr_keyword">extends</strong> Child { Out() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"out"</span>);}}
 <a class="jxr_linenumber" name="L749" href="#L749">749</a> 
-<a class="jxr_linenumber" name="L750" href="#L750">750</a> 
-<a class="jxr_linenumber" name="L751" href="#L751">751</a> }
+<a class="jxr_linenumber" name="L750" href="#L750">750</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L751" href="#L751">751</a> <em class="jxr_javadoccomment">     * Define the output file where to write a report to.</em>
+<a class="jxr_linenumber" name="L752" href="#L752">752</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L753" href="#L753">753</a>     <strong class="jxr_keyword">public</strong> OutputFile createOutputFile() {
+<a class="jxr_linenumber" name="L754" href="#L754">754</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> OutputFile();
+<a class="jxr_linenumber" name="L755" href="#L755">755</a>     }
+<a class="jxr_linenumber" name="L756" href="#L756">756</a> 
+<a class="jxr_linenumber" name="L757" href="#L757">757</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> OutputFile <strong class="jxr_keyword">extends</strong> Child { OutputFile() {<strong class="jxr_keyword">super</strong>(<span class="jxr_string">"output-file"</span>);}}
+<a class="jxr_linenumber" name="L758" href="#L758">758</a> 
+<a class="jxr_linenumber" name="L759" href="#L759">759</a> 
+<a class="jxr_linenumber" name="L760" href="#L760">760</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

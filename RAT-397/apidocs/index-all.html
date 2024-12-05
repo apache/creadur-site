@@ -257,17 +257,17 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Excludes files that match a FileFilter.</div>
 </dd>
-<dt><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html#addExcludedFilter(org.apache.rat.document.DocumentNameMatcherSupplier)" class="member-name-link">addExcludedFilter(DocumentNameMatcherSupplier)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></dt>
+<dt><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html#addExcludedMatcher(org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">addExcludedMatcher(DocumentNameMatcher)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></dt>
 <dd>
-<div class="block">Add the excluded file/directory paths from a PathMatcherSupplier of strings.</div>
+<div class="block">Add the DocumentNameMatcher as an excluded pattern.</div>
 </dd>
-<dt><a href="org/apache/rat/ReportConfiguration.html#addExcludedMatcher(java.lang.String,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">addExcludedMatcher(String, DocumentNameMatcher)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
+<dt><a href="org/apache/rat/ReportConfiguration.html#addExcludedMatcher(org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">addExcludedMatcher(DocumentNameMatcher)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
-<div class="block">Excludes files that match a FileFilter.</div>
+<div class="block">Excludes files that match a DocumentNameMatcher.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html#addExcludedPatterns(java.lang.Iterable)" class="member-name-link">addExcludedPatterns(Iterable&lt;String&gt;)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></dt>
 <dd>
-<div class="block">Add the excluded file/directory patterns from an iterable of strings.</div>
+<div class="block">Add the patterns from collections of patterns as excluded patterns.</div>
 </dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#addExcludedPatterns(java.lang.Iterable)" class="member-name-link">addExcludedPatterns(Iterable&lt;String&gt;)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
@@ -307,18 +307,20 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html#addIncludedCollection(org.apache.rat.config.exclusion.StandardCollection)" class="member-name-link">addIncludedCollection(StandardCollection)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></dt>
 <dd>
-<div class="block">Add the included files from a StandardCollection.</div>
+<div class="block">Add the patterns from the StandardCollection as included patterns.</div>
 </dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#addIncludedCollection(org.apache.rat.config.exclusion.StandardCollection)" class="member-name-link">addIncludedCollection(StandardCollection)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Adds the patterns from the standard collection as included patterns.</div>
+</dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#addIncludedFilter(java.io.FileFilter)" class="member-name-link">addIncludedFilter(FileFilter)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Adds the fileFilter to filter files that should be included, this overrides any
  exclusion of the same files.</div>
 </dd>
-<dt><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html#addIncludedFilter(org.apache.rat.document.DocumentNameMatcherSupplier)" class="member-name-link">addIncludedFilter(DocumentNameMatcherSupplier)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></dt>
+<dt><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html#addIncludedMatcher(org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">addIncludedMatcher(DocumentNameMatcher)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></dt>
 <dd>
-<div class="block">Add a PathMatcherSupplier to the collection of file/directory patters to ignore.</div>
+<div class="block">Add a DocumentNameMatcher to the collection of file/directory patterns to ignore.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html#addIncludedPatterns(java.lang.Iterable)" class="member-name-link">addIncludedPatterns(Iterable&lt;String&gt;)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></dt>
 <dd>
@@ -400,6 +402,18 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Removes a family category to the list of approved licenses.</div>
 </dd>
+<dt><a href="org/apache/rat/walker/IReportableListWalker.Builder.html#addReportable(org.apache.rat.report.IReportable)" class="member-name-link">addReportable(IReportable)</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/IReportableListWalker.Builder.html" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a></dt>
+<dd>
+<div class="block">Add a reportable to the list of reportables to run.</div>
+</dd>
+<dt><a href="org/apache/rat/ReportConfiguration.html#addSource(java.io.File)" class="member-name-link">addSource(File)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
+<dd>
+<div class="block">Adds a file as a source of files to scan.</div>
+</dd>
+<dt><a href="org/apache/rat/ReportConfiguration.html#addSource(org.apache.rat.report.IReportable)" class="member-name-link">addSource(IReportable)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
+<dd>
+<div class="block">Adds a Reportable as a source of files to scan.</div>
+</dd>
 <dt><a href="org/apache/rat/anttasks/Report.html#addStylesheet(org.apache.tools.ant.types.Resource)" class="member-name-link">addStylesheet(Resource)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Report.html" title="class in org.apache.rat.anttasks">Report</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -460,7 +474,7 @@ loadScripts(document, 'script');</script>
 &nbsp;</dd>
 <dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#ALL" class="member-name-link">ALL</a> - Enum constant in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
 <dd>
-<div class="block">All the standard excludes combined</div>
+<div class="block">All the standard excludes combined.</div>
 </dd>
 <dt><a href="org/apache/rat/license/LicenseSetFactory.LicenseFilter.html#ALL" class="member-name-link">ALL</a> - Enum constant in enum org.apache.rat.license.<a href="org/apache/rat/license/LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a></dt>
 <dd>
@@ -482,9 +496,13 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/policy/DefaultPolicy.html#analyse(org.apache.rat.api.Document)" class="member-name-link">analyse(Document)</a> - Method in class org.apache.rat.policy.<a href="org/apache/rat/policy/DefaultPolicy.html" title="class in org.apache.rat.policy">DefaultPolicy</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#and(org.apache.rat.document.TraceableDocumentNameMatcher...)" class="member-name-link">and(TraceableDocumentNameMatcher...)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#and(java.util.Collection)" class="member-name-link">and(Collection&lt;DocumentNameMatcher&gt;)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>
-<div class="block">Performs a logical "AND" across the collection of matchers.</div>
+<div class="block">Performs a logical <code>AND</code> across the collection of matchers.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#and(org.apache.rat.document.DocumentNameMatcher...)" class="member-name-link">and(DocumentNameMatcher...)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
+<dd>
+<div class="block">Performs a logical <code>AND</code> across the collection of matchers.</div>
 </dd>
 <dt><a href="org/apache/rat/analysis/matchers/AndMatcher.html" class="type-name-link" title="class in org.apache.rat.analysis.matchers">AndMatcher</a> - Class in <a href="org/apache/rat/analysis/matchers/package-summary.html">org.apache.rat.analysis.matchers</a></dt>
 <dd>
@@ -567,6 +585,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Append the default license header to the supplied document.</div>
 </dd>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#apply(org.apache.rat.document.DocumentName)" class="member-name-link">apply(DocumentName)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/config/exclusion/fileProcessors/DescendingFileProcessor.html#apply(org.apache.rat.document.DocumentName)" class="member-name-link">apply(DocumentName)</a> - Method in class org.apache.rat.config.exclusion.fileProcessors.<a href="org/apache/rat/config/exclusion/fileProcessors/DescendingFileProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">DescendingFileProcessor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/report/xml/XmlElements.Attributes.html#APPROVAL" class="member-name-link">APPROVAL</a> - Enum constant in enum org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlElements.Attributes.html" title="enum in org.apache.rat.report.xml">XmlElements.Attributes</a></dt>
@@ -742,7 +762,7 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>
-<div class="block">Generated class to provide Ant support for standard Rat command line options.</div>
+<div class="block">Generated class to provide Ant support for standard RAT command line options.</div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#%3Cinit%3E()" class="member-name-link">BaseAntTask()</a> - Constructor for class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>&nbsp;</dd>
@@ -780,6 +800,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.InputIncludeStd.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputIncludeStd</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputSource.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputSource</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.LicenseFamiliesApproved.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.LicenseFamiliesApproved</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.LicenseFamiliesApprovedFile.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.LicenseFamiliesApprovedFile</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
@@ -812,7 +834,7 @@ loadScripts(document, 'script');</script>
 &nbsp;</dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html" class="type-name-link" title="class in org.apache.rat.plugin">BaseRatMojo</a> - Class in <a href="org/apache/rat/plugin/package-summary.html">org.apache.rat.plugin</a></dt>
 <dd>
-<div class="block">Generated class to provide Maven support for standard Rat command line options</div>
+<div class="block">Generated class to provide Maven support for standard RAT command line options</div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#%3Cinit%3E()" class="member-name-link">BaseRatMojo()</a> - Constructor for class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>&nbsp;</dd>
@@ -896,6 +918,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Builds the defaults object.</div>
 </dd>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#build()" class="member-name-link">build()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
+<dd>
+<div class="block">Build a DocumentName from this builder.</div>
+</dd>
 <dt><a href="org/apache/rat/license/ILicense.Builder.html#build()" class="member-name-link">build()</a> - Method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicense.Builder.html" title="interface in org.apache.rat.license">ILicense.Builder</a></dt>
 <dd>
 <div class="block">Builds the license.</div>
@@ -926,6 +952,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</dd>
+<dt><a href="org/apache/rat/walker/IReportableListWalker.Builder.html#build()" class="member-name-link">build()</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/IReportableListWalker.Builder.html" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a></dt>
+<dd>
+<div class="block">Build the reportable.</div>
+</dd>
 <dt><a href="org/apache/rat/config/parameters/DescriptionBuilder.html#build(java.lang.Object)" class="member-name-link">build(Object)</a> - Static method in class org.apache.rat.config.parameters.<a href="org/apache/rat/config/parameters/DescriptionBuilder.html" title="class in org.apache.rat.config.parameters">DescriptionBuilder</a></dt>
 <dd>
 <div class="block">Create the description for the object.</div>
@@ -946,6 +976,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets a builder for a Defaults object.</div>
 </dd>
+<dt><a href="org/apache/rat/document/DocumentName.html#builder()" class="member-name-link">builder()</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
+<dd>
+<div class="block">Creates a Builder with directory separator and case sensitivity based on the local file system.</div>
+</dd>
 <dt><a href="org/apache/rat/license/ILicense.html#builder()" class="member-name-link">builder()</a> - Static method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a></dt>
 <dd>
 <div class="block">Gets a builder for licenses.</div>
@@ -953,6 +987,18 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/license/ILicenseFamily.html#builder()" class="member-name-link">builder()</a> - Static method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></dt>
 <dd>
 <div class="block">Gets the Builder for license families.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentName.html#builder(java.io.File)" class="member-name-link">builder(File)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
+<dd>
+<div class="block">Creates a builder from a File.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentName.html#builder(org.apache.rat.document.DocumentName)" class="member-name-link">builder(DocumentName)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
+<dd>
+<div class="block">Creates a Builder from a document name.</div>
+</dd>
+<dt><a href="org/apache/rat/walker/IReportableListWalker.html#builder(org.apache.rat.document.DocumentName)" class="member-name-link">builder(DocumentName)</a> - Static method in class org.apache.rat.walker.<a href="org/apache/rat/walker/IReportableListWalker.html" title="class in org.apache.rat.walker">IReportableListWalker</a></dt>
+<dd>
+<div class="block">Create a builder for the list walker.</div>
 </dd>
 <dt><a href="org/apache/rat/license/ILicenseFamily.Builder.html#%3Cinit%3E()" class="member-name-link">Builder()</a> - Constructor for class org.apache.rat.license.<a href="org/apache/rat/license/ILicenseFamily.Builder.html" title="class in org.apache.rat.license">ILicenseFamily.Builder</a></dt>
 <dd>&nbsp;</dd>
@@ -999,6 +1045,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/mp/RatCheckMojo.html#check(org.apache.rat.ReportConfiguration)" class="member-name-link">check(ReportConfiguration)</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/RatCheckMojo.html" title="class in org.apache.rat.mp">RatCheckMojo</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/config/exclusion/fileProcessors/DescendingFileProcessor.html#checkDirectory(org.apache.rat.document.DocumentName,java.io.FileFilter)" class="member-name-link">checkDirectory(DocumentName, FileFilter)</a> - Method in class org.apache.rat.config.exclusion.fileProcessors.<a href="org/apache/rat/config/exclusion/fileProcessors/DescendingFileProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">DescendingFileProcessor</a></dt>
+<dd>
+<div class="block">Process the directory tree looking for files that match the filter.</div>
+</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.Child.html#%3Cinit%3E(java.lang.String)" class="member-name-link">Child(String)</a> - Constructor for class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.Child.html" title="class in org.apache.rat.anttasks">BaseAntTask.Child</a></dt>
 <dd>
 <div class="block">Constructor.</div>
@@ -1348,6 +1398,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Includes files defined in standard collections based on commonly occurring groups.</div>
 </dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputSource()" class="member-name-link">createInputSource()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">A file containing file names to process.</div>
+</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createLicenseFamiliesApproved()" class="member-name-link">createLicenseFamiliesApproved()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="block">The approved License Family IDs.</div>
@@ -1412,6 +1466,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a RatReport from the arguments.</div>
 </dd>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#customDocumentNameMatchers()" class="member-name-link">customDocumentNameMatchers()</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dd>
+<div class="block">If this FileProcessor builds custom matchers to handles special cases this method returns them
+ to the processing stream.</div>
+</dd>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#customMatchers" class="member-name-link">customMatchers</a> - Variable in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dd>
+<div class="block">The collection of custom DocumentNameMatchers generated by this processor</div>
+</dd>
 <dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#CVS" class="member-name-link">CVS</a> - Enum constant in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
 <dd>
 <div class="block">The files and directories created by a CVS source code control based tool.</div>
@@ -1474,7 +1537,9 @@ loadScripts(document, 'script');</script>
 <div class="block">The Defaults builder.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#defaultValue()" class="member-name-link">defaultValue()</a> - Method in enum org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum in org.apache.rat.commandline">Arg</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the default value for this arg.</div>
+</dd>
 <dt><a href="org/apache/rat/help/AbstractHelp.html#DEPRECATED_MSG" class="member-name-link">DEPRECATED_MSG</a> - Static variable in class org.apache.rat.help.<a href="org/apache/rat/help/AbstractHelp.html" title="class in org.apache.rat.help">AbstractHelp</a></dt>
 <dd>
 <div class="block">Function to format deprecated display</div>
@@ -1594,29 +1659,39 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/document/DocumentName.html" class="type-name-link" title="class in org.apache.rat.document">DocumentName</a> - Class in <a href="org/apache/rat/document/package-summary.html">org.apache.rat.document</a></dt>
 <dd>
-<div class="block">A collection of names for a document.</div>
+<div class="block">The name for a document.</div>
 </dd>
-<dt><a href="org/apache/rat/document/DocumentName.html#%3Cinit%3E(java.io.File)" class="member-name-link">DocumentName(File)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html" class="type-name-link" title="class in org.apache.rat.document">DocumentName.Builder</a> - Class in <a href="org/apache/rat/document/package-summary.html">org.apache.rat.document</a></dt>
 <dd>
-<div class="block">Creates a document name with the name and basename equal to the file name</div>
+<div class="block">The Builder for a DocumentName.</div>
 </dd>
-<dt><a href="org/apache/rat/document/DocumentName.html#%3Cinit%3E(java.io.File,org.apache.rat.document.DocumentName)" class="member-name-link">DocumentName(File, DocumentName)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html" class="type-name-link" title="class in org.apache.rat.document">DocumentNameMatcher</a> - Class in <a href="org/apache/rat/document/package-summary.html">org.apache.rat.document</a></dt>
 <dd>
-<div class="block">Creates a document name with the name of the file and the same basename as the baseName document.</div>
+<div class="block">Matches document names.</div>
 </dd>
-<dt><a href="org/apache/rat/document/DocumentName.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,boolean)" class="member-name-link">DocumentName(String, String, String, boolean)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#%3Cinit%3E(java.io.FileFilter)" class="member-name-link">DocumentNameMatcher(FileFilter)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>
-<div class="block">Creates a Document name.</div>
+<div class="block">Creates a DocumentNameMatcher from a File filter.</div>
 </dd>
-<dt><a href="org/apache/rat/document/DocumentNameMatcher.html" class="type-name-link" title="interface in org.apache.rat.document">DocumentNameMatcher</a> - Interface in <a href="org/apache/rat/document/package-summary.html">org.apache.rat.document</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#documentNameMatcherSupplier()" class="member-name-link">documentNameMatcherSupplier()</a> - Method in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#%3Cinit%3E(java.lang.String,java.io.FileFilter)" class="member-name-link">DocumentNameMatcher(String, FileFilter)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>
-<div class="block">Returns the documentNameMatchSupplier if it exists.</div>
+<div class="block">Creates a DocumentNameMatcher from a File filter.</div>
 </dd>
-<dt><a href="org/apache/rat/document/DocumentNameMatcherSupplier.html" class="type-name-link" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a> - Interface in <a href="org/apache/rat/document/package-summary.html">org.apache.rat.document</a></dt>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#%3Cinit%3E(java.lang.String,java.util.function.Predicate)" class="member-name-link">DocumentNameMatcher(String, Predicate&lt;DocumentName&gt;)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>
-<div class="block">Creates a patch matcher based on the directory.</div>
+<div class="block">Constructs a DocumentNameMatcher from a name and a DocumentName predicate.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#%3Cinit%3E(java.lang.String,org.apache.rat.config.exclusion.plexus.MatchPatterns)" class="member-name-link">DocumentNameMatcher(String, MatchPatterns)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
+<dd>
+<div class="block">Constructs a DocumentNameMatcher from a name and a DocumentName predicate.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#%3Cinit%3E(java.lang.String,org.apache.rat.config.exclusion.plexus.MatchPatterns,org.apache.rat.document.DocumentName)" class="member-name-link">DocumentNameMatcher(String, MatchPatterns, DocumentName)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
+<dd>
+<div class="block">Constructs a DocumentNameMatcher from a name a MatchPatterns instance and the DocumentName for the base name.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#%3Cinit%3E(java.lang.String,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">DocumentNameMatcher(String, DocumentNameMatcher)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
+<dd>
+<div class="block">Constructs a DocumentNameMatcher from a name and a delegate DocumentNameMatcher.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/XmlElements.html#documentType(java.lang.String,int)" class="member-name-link">documentType(String, int)</a> - Method in class org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></dt>
 <dd>
@@ -1653,9 +1728,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">An element</div>
 </dd>
-<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#EMPTY" class="member-name-link">EMPTY</a> - Static variable in interface org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#EMPTY" class="member-name-link">EMPTY</a> - Static variable in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
 <dd>
-<div class="block">an empty file processor returning no entries.</div>
+<div class="block">An empty file processor returning no entries.</div>
 </dd>
 <dt><a href="org/apache/rat/utils/ExtendedIterator.html#emptyIterator()" class="member-name-link">emptyIterator()</a> - Static method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a></dt>
 <dd>
@@ -1679,10 +1754,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/report/RatReport.html#endReport()" class="member-name-link">endReport()</a> - Method in interface org.apache.rat.report.<a href="org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a></dt>
 <dd>
 <div class="block">Signals the end of execution for the report.</div>
-</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#ENV_VAR" class="member-name-link">ENV_VAR</a> - Static variable in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
-<dd>
-<div class="block">The environment variable to set to enable tracing for the PatternMatcher execution</div>
 </dd>
 <dt><a href="org/apache/rat/utils/DefaultLog.html#ENV_VAR" class="member-name-link">ENV_VAR</a> - Static variable in class org.apache.rat.utils.<a href="org/apache/rat/utils/DefaultLog.html" title="class in org.apache.rat.utils">DefaultLog</a></dt>
 <dd>
@@ -1742,7 +1813,9 @@ loadScripts(document, 'script');</script>
  to return an IReportable that contains all the reportable objects.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html#%3Cinit%3E()" class="member-name-link">ExclusionProcessor()</a> - Constructor for class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs the processor.</div>
+</dd>
 <dt><a href="org/apache/rat/config/exclusion/ExclusionUtils.html" class="type-name-link" title="class in org.apache.rat.config.exclusion">ExclusionUtils</a> - Class in <a href="org/apache/rat/config/exclusion/package-summary.html">org.apache.rat.config.exclusion</a></dt>
 <dd>
 <div class="block">Utilities for Exclusion processing.</div>
@@ -1790,10 +1863,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/config/AddLicenseHeaders.html#FALSE" class="member-name-link">FALSE</a> - Enum constant in enum org.apache.rat.config.<a href="org/apache/rat/config/AddLicenseHeaders.html" title="enum in org.apache.rat.config">AddLicenseHeaders</a></dt>
 <dd>
 <div class="block">Do not add headers.</div>
-</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#FALSE" class="member-name-link">FALSE</a> - Static variable in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
-<dd>
-<div class="block">A TraceableDocumentNameMatcher that always returns <code>false</code></div>
 </dd>
 <dt><a href="org/apache/rat/configuration/XMLConfig.html#FAMILIES" class="member-name-link">FAMILIES</a> - Static variable in class org.apache.rat.configuration.<a href="org/apache/rat/configuration/XMLConfig.html" title="class in org.apache.rat.configuration">XMLConfig</a></dt>
 <dd>
@@ -1867,17 +1936,38 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Document wrapping a File object.</div>
 </dd>
+<dt><a href="org/apache/rat/document/FileDocument.html#%3Cinit%3E(java.io.File,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">FileDocument(File, DocumentNameMatcher)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></dt>
+<dd>
+<div class="block">Creates a File document where the baseDir is the root directory.</div>
+</dd>
 <dt><a href="org/apache/rat/document/FileDocument.html#%3Cinit%3E(org.apache.rat.document.DocumentName,java.io.File,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">FileDocument(DocumentName, File, DocumentNameMatcher)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></dt>
 <dd>
 <div class="block">Creates a File document.</div>
+</dd>
+<dt><a href="org/apache/rat/walker/FileListWalker.html" class="type-name-link" title="class in org.apache.rat.walker">FileListWalker</a> - Class in <a href="org/apache/rat/walker/package-summary.html">org.apache.rat.walker</a></dt>
+<dd>
+<div class="block">Implementation of IReportable that traverses over a resource collection
+ internally.</div>
+</dd>
+<dt><a href="org/apache/rat/walker/FileListWalker.html#%3Cinit%3E(org.apache.rat.document.FileDocument)" class="member-name-link">FileListWalker(FileDocument)</a> - Constructor for class org.apache.rat.walker.<a href="org/apache/rat/walker/FileListWalker.html" title="class in org.apache.rat.walker">FileListWalker</a></dt>
+<dd>
+<div class="block">Constructor.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#fileProcessor()" class="member-name-link">fileProcessor()</a> - Method in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
 <dd>
 <div class="block">Returns the fileProcessor if it exists.</div>
 </dd>
-<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html" class="type-name-link" title="interface in org.apache.rat.config.exclusion">FileProcessor</a> - Interface in <a href="org/apache/rat/config/exclusion/package-summary.html">org.apache.rat.config.exclusion</a></dt>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html" class="type-name-link" title="class in org.apache.rat.config.exclusion">FileProcessor</a> - Class in <a href="org/apache/rat/config/exclusion/package-summary.html">org.apache.rat.config.exclusion</a></dt>
 <dd>
-<div class="block">An interface that defines the FileProcessor.</div>
+<div class="block">The file processor reads the file specified in the DocumentName.</div>
+</dd>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#%3Cinit%3E()" class="member-name-link">FileProcessor()</a> - Constructor for class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dd>
+<div class="block">Protected constructor.</div>
+</dd>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#%3Cinit%3E(java.lang.Iterable)" class="member-name-link">FileProcessor(Iterable&lt;String&gt;)</a> - Constructor for class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dd>
+<div class="block">Create a file processor out of a list of file patterns.</div>
 </dd>
 <dt><a href="org/apache/rat/utils/ExtendedIterator.html#filter(java.util.function.Predicate)" class="member-name-link">filter(Predicate&lt;T&gt;)</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a></dt>
 <dd>
@@ -1933,22 +2023,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Determine the <code>Format</code> from a file.</div>
 </dd>
-<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#from(java.io.FileFilter)" class="member-name-link">from(FileFilter)</a> - Static method in interface org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></dt>
-<dd>
-<div class="block">Creates a DocumentNameMatcher from a File filter.</div>
-</dd>
-<dt><a href="org/apache/rat/document/DocumentNameMatcherSupplier.html#from(java.io.FileFilter)" class="member-name-link">from(FileFilter)</a> - Static method in interface org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></dt>
-<dd>
-<div class="block">Creates a DocumentNameMatcherSupplier from a file filter.</div>
-</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#from(java.io.FileFilter)" class="member-name-link">from(FileFilter)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/ConfigurationException.html#from(java.lang.Exception)" class="member-name-link">from(Exception)</a> - Static method in exception class org.apache.rat.<a href="org/apache/rat/ConfigurationException.html" title="class in org.apache.rat">ConfigurationException</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#from(java.lang.Iterable)" class="member-name-link">from(Iterable&lt;String&gt;)</a> - Static method in interface org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></dt>
-<dd>
-<div class="block">Create a virtual file processor out of a list of file patterns.</div>
-</dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/MatchPatterns.html#from(java.lang.Iterable)" class="member-name-link">from(Iterable&lt;String&gt;)</a> - Static method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/MatchPatterns.html" title="class in org.apache.rat.config.exclusion.plexus">MatchPatterns</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/configuration/Format.html#from(java.lang.String)" class="member-name-link">from(String)</a> - Static method in enum org.apache.rat.configuration.<a href="org/apache/rat/configuration/Format.html" title="enum in org.apache.rat.configuration">Format</a></dt>
@@ -1957,10 +2033,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/MatchPatterns.html#from(java.lang.String...)" class="member-name-link">from(String...)</a> - Static method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/MatchPatterns.html" title="class in org.apache.rat.config.exclusion.plexus">MatchPatterns</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/document/DocumentNameMatcherSupplier.html#from(java.lang.String,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">from(String, DocumentNameMatcher)</a> - Static method in interface org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></dt>
-<dd>
-<div class="block">Create a DocumentNameMatcherSupplier from a DocumentNameMatcher and a name.</div>
-</dd>
 <dt><a href="org/apache/rat/configuration/Format.html#from(java.net.URI)" class="member-name-link">from(URI)</a> - Static method in enum org.apache.rat.configuration.<a href="org/apache/rat/configuration/Format.html" title="enum in org.apache.rat.configuration">Format</a></dt>
 <dd>
 <div class="block">Determine the <code>Format</code> from a URI.</div>
@@ -1973,7 +2045,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/document/DocumentName.html#FS_IS_CASE_SENSITIVE" class="member-name-link">FS_IS_CASE_SENSITIVE</a> - Static variable in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
 <dd>
-<div class="block">True if the file system on which we are operating is case-sensitive</div>
+<div class="block"><code>True</code> if the file system on which we are operating is case-sensitive.</div>
 </dd>
 <dt><a href="org/apache/rat/analysis/matchers/FullTextMatcher.html" class="type-name-link" title="class in org.apache.rat.analysis.matchers">FullTextMatcher</a> - Class in <a href="org/apache/rat/analysis/matchers/package-summary.html">org.apache.rat.analysis.matchers</a></dt>
 <dd>
@@ -2037,8 +2109,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets one of the contained methods by name.</div>
 </dd>
-<dt><a href="org/apache/rat/document/DocumentNameMatcherSupplier.html#get(org.apache.rat.document.DocumentName)" class="member-name-link">get(DocumentName)</a> - Method in interface org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/policy/DefaultPolicy.html#getApprovedLicenseFamilies()" class="member-name-link">getApprovedLicenseFamilies()</a> - Method in class org.apache.rat.policy.<a href="org/apache/rat/policy/DefaultPolicy.html" title="class in org.apache.rat.policy">DefaultPolicy</a></dt>
 <dd>
 <div class="block">Gets an unmodifiable reference to the SortedSet of approved licenses that
@@ -2070,7 +2140,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/document/DocumentName.html#getBaseDocumentName()" class="member-name-link">getBaseDocumentName()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
 <dd>
-<div class="block">Gets the DocumentName for the basename of this document name.</div>
+<div class="block">Gets the DocumentName for the basename of this DocumentName.</div>
 </dd>
 <dt><a href="org/apache/rat/document/DocumentName.html#getBaseName()" class="member-name-link">getBaseName()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
 <dd>
@@ -2257,6 +2327,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</dd>
+<dt><a href="org/apache/rat/document/FileDocument.html#getFile()" class="member-name-link">getFile()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></dt>
+<dd>
+<div class="block">Gets the file underlying this document.</div>
+</dd>
 <dt><a href="org/apache/rat/tools/AntGenerator.html#getFilter()" class="member-name-link">getFilter()</a> - Static method in class org.apache.rat.tools.<a href="org/apache/rat/tools/AntGenerator.html" title="class in org.apache.rat.tools">AntGenerator</a></dt>
 <dd>
 <div class="block">Gets the Option predicate that removes unsupported CLI options.</div>
@@ -2418,8 +2492,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the default license set factory.</div>
 </dd>
-<dt><a href="org/apache/rat/ReportConfiguration.html#getLicenseSetFactory()" class="member-name-link">getLicenseSetFactory()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/annotation/AbstractLicenseAppender.html#getLine(int,java.lang.String)" class="member-name-link">getLine(int, String)</a> - Method in class org.apache.rat.annotation.<a href="org/apache/rat/annotation/AbstractLicenseAppender.html" title="class in org.apache.rat.annotation">AbstractLicenseAppender</a></dt>
 <dd>
 <div class="block">Get a line of the license header formatted
@@ -2491,6 +2563,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the Maven name for the CLI option.</div>
 </dd>
+<dt><a href="org/apache/rat/walker/FileListWalker.html#getName()" class="member-name-link">getName()</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/FileListWalker.html" title="class in org.apache.rat.walker">FileListWalker</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/walker/IReportableListWalker.html#getName()" class="member-name-link">getName()</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/IReportableListWalker.html" title="class in org.apache.rat.walker">IReportableListWalker</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/walker/Walker.html#getName()" class="member-name-link">getName()</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/Walker.html" title="class in org.apache.rat.walker">Walker</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/mp/RatReportMojo.html#getName(java.util.Locale)" class="member-name-link">getName(Locale)</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/RatReportMojo.html" title="class in org.apache.rat.mp">RatReportMojo</a></dt>
@@ -2562,15 +2638,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/mp/RatCheckMojo.html#getRatTxtFile()" class="member-name-link">getRatTxtFile()</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/RatCheckMojo.html" title="class in org.apache.rat.mp">RatCheckMojo</a></dt>
 <dd>
-<div class="block">Reads the location of the rat text file from the Mojo.</div>
+<div class="block">Reads the location of the RAT text file from the Mojo.</div>
 </dd>
 <dt><a href="org/apache/rat/configuration/builders/MatcherRefBuilder.IHeaderMatcherProxy.html#getRefId()" class="member-name-link">getRefId()</a> - Method in class org.apache.rat.configuration.builders.<a href="org/apache/rat/configuration/builders/MatcherRefBuilder.IHeaderMatcherProxy.html" title="class in org.apache.rat.configuration.builders">MatcherRefBuilder.IHeaderMatcherProxy</a></dt>
 <dd>
 <div class="block">Gets the matcher ID that this proxy references.</div>
-</dd>
-<dt><a href="org/apache/rat/ReportConfiguration.html#getReportable()" class="member-name-link">getReportable()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>
-<div class="block">Gets the reportable object.</div>
 </dd>
 <dt><a href="org/apache/rat/mp/RatReportMojo.html#getReportOutputDirectory()" class="member-name-link">getReportOutputDirectory()</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/RatReportMojo.html" title="class in org.apache.rat.mp">RatReportMojo</a></dt>
 <dd>&nbsp;</dd>
@@ -2578,9 +2650,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Get the resource that was provided in the constructor.</div>
 </dd>
-<dt><a href="org/apache/rat/api/MetaData.html#getSampleHeader()" class="member-name-link">getSampleHeader()</a> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/MetaData.html" title="class in org.apache.rat.api">MetaData</a></dt>
+<dt><a href="org/apache/rat/document/DocumentName.html#getRoot()" class="member-name-link">getRoot()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
 <dd>
-<div class="block">Gets the sample header.</div>
+<div class="block">Gets the root for this document.</div>
 </dd>
 <dt><a href="org/apache/rat/utils/CasedString.html#getSegments()" class="member-name-link">getSegments()</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.html" title="class in org.apache.rat.utils">CasedString</a></dt>
 <dd>
@@ -2606,6 +2678,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/mp/RatReportMojo.html#getSiteRenderer()" class="member-name-link">getSiteRenderer()</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/RatReportMojo.html" title="class in org.apache.rat.mp">RatReportMojo</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ReportConfiguration.html#getSources()" class="member-name-link">getSources()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
+<dd>
+<div class="block">Gets a builder initialized with any files specified as sources.</div>
+</dd>
 <dt><a href="org/apache/rat/VersionInfo.html#getSpecTitle()" class="member-name-link">getSpecTitle()</a> - Method in class org.apache.rat.<a href="org/apache/rat/VersionInfo.html" title="class in org.apache.rat">VersionInfo</a></dt>
 <dd>
 <div class="block">Gets the specification title of the package.</div>
@@ -2699,9 +2775,13 @@ loadScripts(document, 'script');</script>
 <div class="block">The files and directories created by GIT source code control to support GIT, also processes files listed in '.gitignore'.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/fileProcessors/GitFileProcessor.html" class="type-name-link" title="class in org.apache.rat.config.exclusion.fileProcessors">GitFileProcessor</a> - Class in <a href="org/apache/rat/config/exclusion/fileProcessors/package-summary.html">org.apache.rat.config.exclusion.fileProcessors</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Processes the .gitignore file.</div>
+</dd>
 <dt><a href="org/apache/rat/config/exclusion/fileProcessors/GitFileProcessor.html#%3Cinit%3E()" class="member-name-link">GitFileProcessor()</a> - Constructor for class org.apache.rat.config.exclusion.fileProcessors.<a href="org/apache/rat/config/exclusion/fileProcessors/GitFileProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">GitFileProcessor</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Constructs a file processor that processes a .gitignore file and ignores any lines starting with "#".</div>
+</dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#group()" class="member-name-link">group()</a> - Method in enum org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum in org.apache.rat.commandline">Arg</a></dt>
 <dd>
 <div class="block">Gets the group for this arg.</div>
@@ -2736,10 +2816,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns <code>true</code> if the option has multiple arguments.</div>
 </dd>
-<dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#hasDocumentNameMatchSupplier()" class="member-name-link">hasDocumentNameMatchSupplier()</a> - Method in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
-<dd>
-<div class="block">Returns <code>true</code> if the collections has a document name match supplier.</div>
-</dd>
 <dt><a href="org/apache/rat/config/results/ClaimValidator.html#hasErrors()" class="member-name-link">hasErrors()</a> - Method in class org.apache.rat.config.results.<a href="org/apache/rat/config/results/ClaimValidator.html" title="class in org.apache.rat.config.results">ClaimValidator</a></dt>
 <dd>
 <div class="block">Returns <code>true</code> if any validation failed.</div>
@@ -2766,6 +2842,14 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/utils/ExtendedIterator.html#hasNext()" class="member-name-link">hasNext()</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ReportConfiguration.html#hasSource()" class="member-name-link">hasSource()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
+<dd>
+<div class="block">Returns <code>true</code> if the configuration has any sources defined.</div>
+</dd>
+<dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#hasStaticDocumentNameMatcher()" class="member-name-link">hasStaticDocumentNameMatcher()</a> - Method in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
+<dd>
+<div class="block">Returns <code>true</code> if the collections has a document name match supplier.</div>
+</dd>
 <dt><a href="org/apache/rat/help/AbstractHelp.html#header(java.lang.String)" class="member-name-link">header(String)</a> - Static method in class org.apache.rat.help.<a href="org/apache/rat/help/AbstractHelp.html" title="class in org.apache.rat.help">AbstractHelp</a></dt>
 <dd>
 <div class="block">Create a section header for the output.</div>
@@ -3029,11 +3113,21 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/report/IReportable.html" class="type-name-link" title="interface in org.apache.rat.report">IReportable</a> - Interface in <a href="org/apache/rat/report/package-summary.html">org.apache.rat.report</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/walker/IReportableListWalker.html" class="type-name-link" title="class in org.apache.rat.walker">IReportableListWalker</a> - Class in <a href="org/apache/rat/walker/package-summary.html">org.apache.rat.walker</a></dt>
+<dd>
+<div class="block">A Reportable that walks a list of IReportables and executes the run on each.</div>
+</dd>
+<dt><a href="org/apache/rat/walker/IReportableListWalker.Builder.html" class="type-name-link" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a> - Class in <a href="org/apache/rat/walker/package-summary.html">org.apache.rat.walker</a></dt>
+<dd>
+<div class="block">A Builder for the ListWalker.</div>
+</dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#isAddingLicenses()" class="member-name-link">isAddingLicenses()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the flag that determines if license headers should be added if missing.</div>
+</dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#isAddingLicensesForced()" class="member-name-link">isAddingLicensesForced()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
-<div class="block">This value is ignored if RAT is not adding licenses.</div>
+<div class="block">Gets the flag that determines if license headers are "forced" overwriting existing files.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/SelectorUtils.html#isAntPrefixedPattern(java.lang.String)" class="member-name-link">isAntPrefixedPattern(String)</a> - Static method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/SelectorUtils.html" title="class in org.apache.rat.config.exclusion.plexus">SelectorUtils</a></dt>
 <dd>&nbsp;</dd>
@@ -3318,7 +3412,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/document/FileDocument.html#listChildren()" class="member-name-link">listChildren()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#listFamilies()" class="member-name-link">listFamilies()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Return the current filter that determines which families will be output in the XML document.</div>
+</dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#listFamilies(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listFamilies(LicenseSetFactory.LicenseFilter)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Set the level of license families that should be output in the XML document.</div>
@@ -3347,10 +3443,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Gets the portion of the name that is not part of the base name.</div>
 </dd>
-<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#localizePattern(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">localizePattern(DocumentName, String)</a> - Static method in interface org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#localizePattern(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">localizePattern(DocumentName, String)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
 <dd>
 <div class="block">Modifies the <a href="org/apache/rat/config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> formatted <code>pattern</code> argument by expanding the pattern and
- by adjusting the pattern to include the basename from the <code>basename</code> argument.</div>
+ by adjusting the pattern to include the basename from the <code>documentName</code> argument.</div>
 </dd>
 <dt><a href="org/apache/rat/utils/Log.html#log(org.apache.rat.utils.Log.Level,java.lang.Object)" class="member-name-link">log(Log.Level, Object)</a> - Method in interface org.apache.rat.utils.<a href="org/apache/rat/utils/Log.html" title="interface in org.apache.rat.utils">Log</a></dt>
 <dd>
@@ -3461,10 +3557,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Simple testing output.</div>
 </dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#make(java.util.function.Supplier,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">make(Supplier&lt;String&gt;, DocumentNameMatcher)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
-<dd>
-<div class="block">Creates a TraceableDocumentNameMatcher from a PathMatcher.</div>
-</dd>
 <dt><a href="org/apache/rat/license/ILicenseFamily.html#makeCategory(java.lang.String)" class="member-name-link">makeCategory(String)</a> - Static method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a></dt>
 <dd>
 <div class="block">Convert a potential category string into a category string of exactly 5
@@ -3496,7 +3588,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/ExclusionUtils.html#MATCH_FILTER" class="member-name-link">MATCH_FILTER</a> - Static variable in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/ExclusionUtils.html" title="class in org.apache.rat.config.exclusion">ExclusionUtils</a></dt>
 <dd>
-<div class="block">A predicate that filters out lines that  start with "!"</div>
+<div class="block">A predicate that filters out lines that start with "!"</div>
 </dd>
 <dt><a href="org/apache/rat/config/parameters/ComponentType.html#MATCHER" class="member-name-link">MATCHER</a> - Enum constant in enum org.apache.rat.config.parameters.<a href="org/apache/rat/config/parameters/ComponentType.html" title="enum in org.apache.rat.config.parameters">ComponentType</a></dt>
 <dd>
@@ -3583,10 +3675,18 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/license/SimpleLicense.html#matches(org.apache.rat.analysis.IHeaders)" class="member-name-link">matches(IHeaders)</a> - Method in class org.apache.rat.license.<a href="org/apache/rat/license/SimpleLicense.html" title="class in org.apache.rat.license">SimpleLicense</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#matches(org.apache.rat.document.DocumentName)" class="member-name-link">matches(DocumentName)</a> - Method in interface org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#matches(org.apache.rat.document.DocumentName)" class="member-name-link">matches(DocumentName)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
-<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#matches(org.apache.rat.document.DocumentName)" class="member-name-link">matches(DocumentName)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
+<dd>
+<div class="block">Performs the match against the DocumentName.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#MATCHES_ALL" class="member-name-link">MATCHES_ALL</a> - Static variable in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
+<dd>
+<div class="block">A matcher that matches all documents.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#MATCHES_NONE" class="member-name-link">MATCHES_NONE</a> - Static variable in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
+<dd>
+<div class="block">A matcher that matches no documents.</div>
+</dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/MatchPatterns.html#matchesPatternStart(java.lang.String,boolean)" class="member-name-link">matchesPatternStart(String, boolean)</a> - Method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/MatchPatterns.html" title="class in org.apache.rat.config.exclusion.plexus">MatchPatterns</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/MatchPattern.html#matchPath(java.lang.String,boolean)" class="member-name-link">matchPath(String, boolean)</a> - Method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus">MatchPattern</a></dt>
@@ -3661,7 +3761,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">The files and directories created by an MKS source code control based tool.</div>
 </dd>
-<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry(DocumentName, String)</a> - Method in interface org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry(DocumentName, String)</a> - Method in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
 <dd>
 <div class="block">Allows modification of the file entry to match the <a href="org/apache/rat/config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> format.</div>
 </dd>
@@ -3677,10 +3777,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/api/Document.html#name" class="member-name-link">name</a> - Variable in class org.apache.rat.api.<a href="org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a></dt>
 <dd>
 <div class="block">The fully qualified name of this document</div>
-</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#name" class="member-name-link">name</a> - Variable in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
-<dd>
-<div class="block">The supplier for the name</div>
 </dd>
 <dt><a href="org/apache/rat/tools/AbstractOption.html#name" class="member-name-link">name</a> - Variable in class org.apache.rat.tools.<a href="org/apache/rat/tools/AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></dt>
 <dd>
@@ -3702,6 +3798,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">A simple tool to convert CLI options to Maven and Ant format and produce a CSV file.</div>
 </dd>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#NEGATION_PREFIX" class="member-name-link">NEGATION_PREFIX</a> - Static variable in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dd>
+<div class="block">Prefix used to negate the given pattern.</div>
+</dd>
 <dt><a href="org/apache/rat/utils/ExtendedIterator.html#next()" class="member-name-link">next()</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html#%3Cinit%3E(java.io.OutputStream)" class="member-name-link">NoCloseOutputStream(OutputStream)</a> - Constructor for class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.NoCloseOutputStream.html" title="class in org.apache.rat">ReportConfiguration.NoCloseOutputStream</a></dt>
@@ -3722,9 +3822,9 @@ loadScripts(document, 'script');</script>
 <div class="deprecation-comment">Use new NotBuilder()</div>
 </div>
 </dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#not(org.apache.rat.document.TraceableDocumentNameMatcher)" class="member-name-link">not(TraceableDocumentNameMatcher)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#not(org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">not(DocumentNameMatcher)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>
-<div class="block">Performs a logical "not" on a nameMatcher.</div>
+<div class="block">Performs a logical <code>NOT</code> on a DocumentNameMatcher.</div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/Not.html" class="type-name-link" title="class in org.apache.rat.anttasks">Not</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>
@@ -3835,13 +3935,13 @@ loadScripts(document, 'script');</script>
 <div class="block">The collection of standard options for the CLI as well as utility methods to manage them and methods to create the
  ReportConfiguration from the options and an array of arguments.</div>
 </dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#or(java.util.Collection)" class="member-name-link">or(Collection&lt;TraceableDocumentNameMatcher&gt;)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#or(java.util.Collection)" class="member-name-link">or(Collection&lt;DocumentNameMatcher&gt;)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>
-<div class="block">Performs a logical "OR" across the collection of matchers.</div>
+<div class="block">Performs a logical <code>OR</code> across the collection of matchers.</div>
 </dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#or(org.apache.rat.document.TraceableDocumentNameMatcher...)" class="member-name-link">or(TraceableDocumentNameMatcher...)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#or(org.apache.rat.document.DocumentNameMatcher...)" class="member-name-link">or(DocumentNameMatcher...)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>
-<div class="block">Performs a logical "OR" across the collection of matchers.</div>
+<div class="block">Performs a logical <code>OR</code> across the collection of matchers.</div>
 </dd>
 <dt><a href="org/apache/rat/package-summary.html">org.apache.rat</a> - package org.apache.rat</dt>
 <dd>
@@ -4049,7 +4149,9 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/config/exclusion/plexus/SelectorUtils.html#PATTERN_HANDLER_SUFFIX" class="member-name-link">PATTERN_HANDLER_SUFFIX</a> - Static variable in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/SelectorUtils.html" title="class in org.apache.rat.config.exclusion.plexus">SelectorUtils</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#patterns()" class="member-name-link">patterns()</a> - Method in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns combined and deduped collection of patterns.</div>
+</dd>
 <dt><a href="org/apache/rat/utils/CasedString.StringCase.html#PHRASE" class="member-name-link">PHRASE</a> - Enum constant in enum org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.StringCase.html" title="enum in org.apache.rat.utils">CasedString.StringCase</a></dt>
 <dd>
 <div class="block">Phrase case tags phrases of words like 'phrase case'.</div>
@@ -4192,7 +4294,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#RCS" class="member-name-link">RCS</a> - Enum constant in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
 <dd>
-<div class="block">The files and directories created by a RCS source code control based tool.</div>
+<div class="block">The files and directories created by an RCS source code control based tool.</div>
 </dd>
 <dt><a href="org/apache/rat/analysis/HeaderCheckWorker.html#read()" class="member-name-link">read()</a> - Method in class org.apache.rat.analysis.<a href="org/apache/rat/analysis/HeaderCheckWorker.html" title="class in org.apache.rat.analysis">HeaderCheckWorker</a></dt>
 <dd>
@@ -4266,7 +4368,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</dd>
-<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#REGEX_FMT" class="member-name-link">REGEX_FMT</a> - Static variable in interface org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></dt>
+<dt><a href="org/apache/rat/config/exclusion/FileProcessor.html#REGEX_FMT" class="member-name-link">REGEX_FMT</a> - Static variable in class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></dt>
 <dd>
 <div class="block">A String format pattern to print a regex string</div>
 </dd>
@@ -4467,7 +4569,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/document/DocumentName.html#resolve(java.lang.String)" class="member-name-link">resolve(String)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
 <dd>
-<div class="block">Creates a new document name by adding the child to the current name.</div>
+<div class="block">Creates a new DocumentName by adding the child to the current name.</div>
 </dd>
 <dt><a href="org/apache/rat/configuration/builders/ChildContainerBuilder.html#resource" class="member-name-link">resource</a> - Variable in class org.apache.rat.configuration.builders.<a href="org/apache/rat/configuration/builders/ChildContainerBuilder.html" title="class in org.apache.rat.configuration.builders">ChildContainerBuilder</a></dt>
 <dd>
@@ -4497,17 +4599,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Run a report over all files and directories in this DirectoryWalker,
  ignoring any files/directories set to be ignored.</div>
 </dd>
+<dt><a href="org/apache/rat/walker/FileListWalker.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run(RatReport)</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/FileListWalker.html" title="class in org.apache.rat.walker">FileListWalker</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/walker/IReportableListWalker.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run(RatReport)</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/IReportableListWalker.html" title="class in org.apache.rat.walker">IReportableListWalker</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:S">S</h2>
 <dl class="index">
-<dt><a href="org/apache/rat/report/xml/XmlElements.html#sample(java.lang.String)" class="member-name-link">sample(String)</a> - Method in class org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></dt>
-<dd>
-<div class="block">Creates a sample element.</div>
-</dd>
-<dt><a href="org/apache/rat/report/xml/XmlElements.Elements.html#SAMPLE" class="member-name-link">SAMPLE</a> - Enum constant in enum org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlElements.Elements.html" title="enum in org.apache.rat.report.xml">XmlElements.Elements</a></dt>
-<dd>
-<div class="block">A sample from the file</div>
-</dd>
 <dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#SCCS" class="member-name-link">SCCS</a> - Enum constant in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
 <dd>
 <div class="block">The files and directories created by a SCCS source code control based tool.</div>
@@ -4639,6 +4737,22 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set a key and value into the argument list.</div>
 </dd>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#setBaseName(java.io.File)" class="member-name-link">setBaseName(File)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
+<dd>
+<div class="block">Sets the basename from a File.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#setBaseName(java.lang.String)" class="member-name-link">setBaseName(String)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
+<dd>
+<div class="block">Sets the baseName.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#setBaseName(org.apache.rat.document.DocumentName)" class="member-name-link">setBaseName(DocumentName)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
+<dd>
+<div class="block">Sets the basename from the <code>DocumentName.Builder.name</code> of the specified DocumentName.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#setCaseSensitive(boolean)" class="member-name-link">setCaseSensitive(boolean)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
+<dd>
+<div class="block">Sets the <a href="org/apache/rat/document/DocumentName.html#isCaseSensitive()"><code>DocumentName.isCaseSensitive()</code></a> flag.</div>
+</dd>
 <dt><a href="org/apache/rat/api/MetaData.html#setCharset(java.nio.charset.Charset)" class="member-name-link">setCharset(Charset)</a> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/MetaData.html" title="class in org.apache.rat.api">MetaData</a></dt>
 <dd>
 <div class="block">Sets the charset for the document.</div>
@@ -4729,6 +4843,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setCounterMins(java.lang.String%5B%5D)" class="member-name-link">setCounterMins(String[])</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="block">The minimum number for the specified counter.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#setDirSeparator(java.lang.String)" class="member-name-link">setDirSeparator(String)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
+<dd>
+<div class="block">Sets the directory separator.</div>
 </dd>
 <dt><a href="org/apache/rat/api/MetaData.html#setDocumentType(org.apache.rat.api.Document.Type)" class="member-name-link">setDocumentType(Document.Type)</a> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/MetaData.html" title="class in org.apache.rat.api">MetaData</a></dt>
 <dd>
@@ -4993,6 +5111,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Includes files defined in standard collections based on commonly occurring groups.</div>
 </dd>
+<dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setInputSource(java.lang.String)" class="member-name-link">setInputSource(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
+<dd>
+<div class="block">A file containing file names to process.</div>
+</dd>
+<dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setInputSources(java.lang.String%5B%5D)" class="member-name-link">setInputSources(String[])</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
+<dd>
+<div class="block">A file containing file names to process.</div>
+</dd>
 <dt><a href="org/apache/rat/utils/DefaultLog.html#setInstance(org.apache.rat.utils.Log)" class="member-name-link">setInstance(Log)</a> - Static method in class org.apache.rat.utils.<a href="org/apache/rat/utils/DefaultLog.html" title="class in org.apache.rat.utils">DefaultLog</a></dt>
 <dd>
 <div class="block">Sets the default log instance.</div>
@@ -5189,6 +5315,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the function to generate the log message.</div>
 </dd>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#setName(java.io.File)" class="member-name-link">setName(File)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
+<dd>
+<div class="block">Sets the properties from the file.</div>
+</dd>
 <dt><a href="org/apache/rat/anttasks/Family.html#setName(java.lang.String)" class="member-name-link">setName(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Family.html" title="class in org.apache.rat.anttasks">Family</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
@@ -5204,6 +5334,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/configuration/builders/SpdxBuilder.html#setName(java.lang.String)" class="member-name-link">setName(String)</a> - Method in class org.apache.rat.configuration.builders.<a href="org/apache/rat/configuration/builders/SpdxBuilder.html" title="class in org.apache.rat.configuration.builders">SpdxBuilder</a></dt>
 <dd>
 <div class="block">Sets the name for the SPDX matcher.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#setName(java.lang.String)" class="member-name-link">setName(String)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
+<dd>
+<div class="block">Sets the name for this DocumentName.</div>
 </dd>
 <dt><a href="org/apache/rat/license/ILicense.Builder.html#setName(java.lang.String)" class="member-name-link">setName(String)</a> - Method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicense.Builder.html" title="interface in org.apache.rat.license">ILicense.Builder</a></dt>
 <dd>
@@ -5360,7 +5494,7 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/anttasks/Report.html#setRemoveApprovedLicense(java.lang.String)" class="member-name-link">setRemoveApprovedLicense(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Report.html" title="class in org.apache.rat.anttasks">Report</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">use removeApprovedLicense child element}</div>
+<div class="deprecation-comment">use removeApprovedLicense child element</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/Report.html#setRemoveApprovedLicense(java.lang.String%5B%5D)" class="member-name-link">setRemoveApprovedLicense(String[])</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Report.html" title="class in org.apache.rat.anttasks">Report</a></dt>
@@ -5368,10 +5502,6 @@ loadScripts(document, 'script');</script>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">use removeApprovedLicense element</div>
 </div>
-</dd>
-<dt><a href="org/apache/rat/ReportConfiguration.html#setReportable(org.apache.rat.report.IReportable)" class="member-name-link">setReportable(IReportable)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
-<dd>
-<div class="block">Sets the reportable object.</div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/Report.html#setReportFile(java.io.File)" class="member-name-link">setReportFile(File)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Report.html" title="class in org.apache.rat.anttasks">Report</a></dt>
 <dd>
@@ -5397,9 +5527,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Reads a text file.</div>
 </dd>
-<dt><a href="org/apache/rat/api/MetaData.html#setSampleHeader(java.lang.String)" class="member-name-link">setSampleHeader(String)</a> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/MetaData.html" title="class in org.apache.rat.api">MetaData</a></dt>
+<dt><a href="org/apache/rat/document/DocumentName.Builder.html#setRoot(java.lang.String)" class="member-name-link">setRoot(String)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
 <dd>
-<div class="block">Sets the sample header.</div>
+<div class="block">Sets the root for the DocumentName.</div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setScanHiddenDirectories(boolean)" class="member-name-link">setScanHiddenDirectories(boolean)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
@@ -5599,6 +5729,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/MatchPatterns.html#source()" class="member-name-link">source()</a> - Method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/MatchPatterns.html" title="class in org.apache.rat.config.exclusion.plexus">MatchPatterns</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/commandline/Arg.html#SOURCE" class="member-name-link">SOURCE</a> - Enum constant in enum org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum in org.apache.rat.commandline">Arg</a></dt>
+<dd>
+<div class="block">Reads files to test from file.</div>
+</dd>
 <dt><a href="org/apache/rat/analysis/IHeaderMatcher.Builder.html#spdx()" class="member-name-link">spdx()</a> - Static method in interface org.apache.rat.analysis.<a href="org/apache/rat/analysis/IHeaderMatcher.Builder.html" title="interface in org.apache.rat.analysis">IHeaderMatcher.Builder</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -5658,7 +5792,9 @@ loadScripts(document, 'script');</script>
 <div class="block">A standard collection of SCMs.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/StandardCollection.html" class="type-name-link" title="enum in org.apache.rat.config.exclusion">StandardCollection</a> - Enum in <a href="org/apache/rat/config/exclusion/package-summary.html">org.apache.rat.config.exclusion</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Collection of standard excludes.</div>
+</dd>
 <dt><a href="org/apache/rat/report/claim/ClaimStatistic.Counter.html#STANDARDS" class="member-name-link">STANDARDS</a> - Enum constant in enum org.apache.rat.report.claim.<a href="org/apache/rat/report/claim/ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a></dt>
 <dd>
 <div class="block">count of standard files</div>
@@ -5686,6 +5822,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/MatchPattern.html#startsWith(java.lang.String)" class="member-name-link">startsWith(String)</a> - Method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus">MatchPattern</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#staticDocumentNameMatcher()" class="member-name-link">staticDocumentNameMatcher()</a> - Method in enum org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></dt>
+<dd>
+<div class="block">Returns the documentNameMatchSupplier if it exists.</div>
+</dd>
 <dt><a href="org/apache/rat/report/xml/XmlElements.html#statistic(java.lang.String,int,java.lang.String,boolean)" class="member-name-link">statistic(String, int, String, boolean)</a> - Method in class org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></dt>
 <dd>
 <div class="block">Creates a statistic element.</div>
@@ -5777,7 +5917,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/apache/rat/document/DocumentName.html#tokenize(java.lang.String)" class="member-name-link">tokenize(String)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
 <dd>
-<div class="block">Tokenizes the string based on the dirSeparator</div>
+<div class="block">Tokenizes the string based on the <code>DocumentName.dirSeparator</code> of this DocumentName.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/MatchPattern.html#tokenizePathToString(java.lang.String,java.lang.String)" class="member-name-link">tokenizePathToString(String, String)</a> - Static method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus">MatchPattern</a></dt>
 <dd>&nbsp;</dd>
@@ -5812,8 +5952,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/apache/rat/configuration/builders/TextBuilder.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.configuration.builders.<a href="org/apache/rat/configuration/builders/TextBuilder.html" title="class in org.apache.rat.configuration.builders">TextBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/document/DocumentName.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
+<dd>
+<div class="block">Returns the localized file name.</div>
+</dd>
+<dt><a href="org/apache/rat/document/DocumentNameMatcher.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/license/SimpleLicense.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.license.<a href="org/apache/rat/license/SimpleLicense.html" title="class in org.apache.rat.license">SimpleLicense</a></dt>
 <dd>&nbsp;</dd>
@@ -5839,21 +5981,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Default string representation of the implementation information from the package.</div>
 </dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" class="type-name-link" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a> - Class in <a href="org/apache/rat/document/package-summary.html">org.apache.rat.document</a></dt>
-<dd>
-<div class="block">A PatternMatcher that will emit trace messages during execution if the environment variable is set.</div>
-</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#%3Cinit%3E(java.util.function.Supplier,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">TraceableDocumentNameMatcher(Supplier&lt;String&gt;, DocumentNameMatcher)</a> - Constructor for class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
-<dd>
-<div class="block">Creates a traceable pattern matcher with the specified name.</div>
-</dd>
 <dt><a href="org/apache/rat/config/AddLicenseHeaders.html#TRUE" class="member-name-link">TRUE</a> - Enum constant in enum org.apache.rat.config.<a href="org/apache/rat/config/AddLicenseHeaders.html" title="enum in org.apache.rat.config">AddLicenseHeaders</a></dt>
 <dd>
 <div class="block">Add license headers to a '.new' file.</div>
-</dd>
-<dt><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html#TRUE" class="member-name-link">TRUE</a> - Static variable in class org.apache.rat.document.<a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></dt>
-<dd>
-<div class="block">A TraceableDocumentNameMatcher that always returns <code>true</code></div>
 </dd>
 <dt><a href="org/apache/rat/configuration/Format.html#TXT" class="member-name-link">TXT</a> - Enum constant in enum org.apache.rat.configuration.<a href="org/apache/rat/configuration/Format.html" title="enum in org.apache.rat.configuration">Format</a></dt>
 <dd>

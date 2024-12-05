@@ -69,26 +69,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.apache.rat">
 <h2>Uses of <a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a> in <a href="../../package-summary.html">org.apache.rat</a></h2>
-<div class="caption"><span>Methods in <a href="../../package-summary.html">org.apache.rat</a> that return <a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#getReportable()" class="member-name-link">getReportable</a>()</code></div>
-<div class="col-last even-row-color">
-<div class="block">Gets the reportable object.</div>
-</div>
-</div>
 <div class="caption"><span>Methods in <a href="../../package-summary.html">org.apache.rat</a> with parameters of type <a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#setReportable(org.apache.rat.report.IReportable)" class="member-name-link">setReportable</a><wbr>(<a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a>&nbsp;reportable)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#addSource(org.apache.rat.report.IReportable)" class="member-name-link">addSource</a><wbr>(<a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a>&nbsp;reportable)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Sets the reportable object.</div>
+<div class="block">Adds a Reportable as a source of files to scan.</div>
 </div>
 </div>
 </section>
@@ -112,9 +101,42 @@ loadScripts(document, 'script');</script>
 <div class="block">Walks directories.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../walker/FileListWalker.html" class="type-name-link" title="class in org.apache.rat.walker">FileListWalker</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Implementation of IReportable that traverses over a resource collection
+ internally.</div>
+</div>
+<div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../walker/IReportableListWalker.html" class="type-name-link" title="class in org.apache.rat.walker">IReportableListWalker</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">A Reportable that walks a list of IReportables and executes the run on each.</div>
+</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../walker/Walker.html" class="type-name-link" title="class in org.apache.rat.walker">Walker</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Abstract walker.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../walker/package-summary.html">org.apache.rat.walker</a> that return <a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IReportableListWalker.Builder.</span><code><a href="../../walker/IReportableListWalker.Builder.html#build()" class="member-name-link">build</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Build the reportable.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../walker/package-summary.html">org.apache.rat.walker</a> with parameters of type <a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../walker/IReportableListWalker.Builder.html" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IReportableListWalker.Builder.</span><code><a href="../../walker/IReportableListWalker.Builder.html#addReportable(org.apache.rat.report.IReportable)" class="member-name-link">addReportable</a><wbr>(<a href="../IReportable.html" title="interface in org.apache.rat.report">IReportable</a>&nbsp;reportable)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Add a reportable to the list of reportables to run.</div>
 </div>
 </div>
 </section>

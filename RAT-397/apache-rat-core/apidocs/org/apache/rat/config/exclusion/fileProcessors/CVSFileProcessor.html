@@ -87,14 +87,16 @@ loadScripts(document, 'script');</script>
 <h1 title="Class CVSFileProcessor" class="title">Class CVSFileProcessor</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance"><a href="../FileProcessor.html" title="class in org.apache.rat.config.exclusion">org.apache.rat.config.exclusion.FileProcessor</a>
 <div class="inheritance"><a href="DescendingFileProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">org.apache.rat.config.exclusion.fileProcessors.DescendingFileProcessor</a>
 <div class="inheritance">org.apache.rat.config.exclusion.fileProcessors.CVSFileProcessor</div>
+</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>,<wbr><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</code>, <code><a href="../FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>,<wbr><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CVSFileProcessor</span>
@@ -111,8 +113,8 @@ loadScripts(document, 'script');</script>
 <h3 id="fields-inherited-from-class-org.apache.rat.config.exclusion.fileProcessors.DescendingFileProcessor">Fields inherited from class&nbsp;org.apache.rat.config.exclusion.fileProcessors.<a href="DescendingFileProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">DescendingFileProcessor</a></h3>
 <code><a href="DescendingFileProcessor.html#commentFilter">commentFilter</a></code></div>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-org.apache.rat.config.exclusion.FileProcessor">Fields inherited from interface&nbsp;org.apache.rat.config.exclusion.<a href="../FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></h3>
-<code><a href="../FileProcessor.html#EMPTY">EMPTY</a>, <a href="../FileProcessor.html#REGEX_FMT">REGEX_FMT</a></code></div>
+<h3 id="fields-inherited-from-class-org.apache.rat.config.exclusion.FileProcessor">Fields inherited from class&nbsp;org.apache.rat.config.exclusion.<a href="../FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></h3>
+<code><a href="../FileProcessor.html#customMatchers">customMatchers</a>, <a href="../FileProcessor.html#EMPTY">EMPTY</a>, <a href="../FileProcessor.html#NEGATION_PREFIX">NEGATION_PREFIX</a>, <a href="../FileProcessor.html#REGEX_FMT">REGEX_FMT</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -151,13 +153,13 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.apache.rat.config.exclusion.fileProcessors.DescendingFileProcessor">Methods inherited from class&nbsp;org.apache.rat.config.exclusion.fileProcessors.<a href="DescendingFileProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">DescendingFileProcessor</a></h3>
-<code><a href="DescendingFileProcessor.html#apply(org.apache.rat.document.DocumentName)">apply</a></code></div>
+<code><a href="DescendingFileProcessor.html#apply(org.apache.rat.document.DocumentName)">apply</a>, <a href="DescendingFileProcessor.html#checkDirectory(org.apache.rat.document.DocumentName,java.io.FileFilter)">checkDirectory</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.apache.rat.config.exclusion.FileProcessor">Methods inherited from class&nbsp;org.apache.rat.config.exclusion.<a href="../FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></h3>
+<code><a href="../FileProcessor.html#customDocumentNameMatchers()">customDocumentNameMatchers</a>, <a href="../FileProcessor.html#localizePattern(org.apache.rat.document.DocumentName,java.lang.String)">localizePattern</a>, <a href="../FileProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)">modifyEntry</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone--" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals-java.lang.Object-" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#finalize--" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#getClass--" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#notify--" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#notifyAll--" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait--" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait-long-" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait-long-int-" title="class or interface in java.lang" class="external-link">wait</a></code></div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.apache.rat.config.exclusion.FileProcessor">Methods inherited from interface&nbsp;org.apache.rat.config.exclusion.<a href="../FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></h3>
-<code><a href="../FileProcessor.html#modifyEntry(org.apache.rat.document.DocumentName,java.lang.String)">modifyEntry</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.util.function.Function">Methods inherited from interface&nbsp;java.util.function.<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html#andThen-java.util.function.Function-" title="class or interface in java.util.function" class="external-link">andThen</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html#compose-java.util.function.Function-" title="class or interface in java.util.function" class="external-link">compose</a></code></div>

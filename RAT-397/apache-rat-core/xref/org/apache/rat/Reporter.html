@@ -93,14 +93,14 @@
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>      <strong class="jxr_keyword">public</strong> <a name="ClaimStatistic" href="../../../org/apache/rat/report/claim/ClaimStatistic.html#ClaimStatistic">ClaimStatistic</a> execute() <strong class="jxr_keyword">throws</strong> <a name="RatException" href="../../../org/apache/rat/api/RatException.html#RatException">RatException</a>  {
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>          <strong class="jxr_keyword">if</strong> (document == <strong class="jxr_keyword">null</strong> || statistic == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>              <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>                  <strong class="jxr_keyword">if</strong> (configuration.getReportable() != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>                  <strong class="jxr_keyword">if</strong> (configuration.hasSource()) {
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>                      ByteArrayOutputStream outputStream = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>                      Writer outputWriter = <strong class="jxr_keyword">new</strong> OutputStreamWriter(outputStream, StandardCharsets.UTF_8);
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>                      <strong class="jxr_keyword">try</strong> (<a name="IXmlWriter" href="../../../org/apache/rat/report/xml/writer/IXmlWriter.html#IXmlWriter">IXmlWriter</a> writer = <strong class="jxr_keyword">new</strong> XmlWriter(outputWriter)) {
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>                          statistic = <strong class="jxr_keyword">new</strong> <a name="ClaimStatistic" href="../../../org/apache/rat/report/claim/ClaimStatistic.html#ClaimStatistic">ClaimStatistic</a>();
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>                          <a name="RatReport" href="../../../org/apache/rat/report/RatReport.html#RatReport">RatReport</a> report = XmlReportFactory.createStandardReport(writer, statistic, configuration);
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>                          report.startReport();
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>                          configuration.getReportable().run(report);
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>                          configuration.getSources().build().run(report);
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>                          report.endReport();
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>  
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>                          InputStream inputStream = <strong class="jxr_keyword">new</strong> ByteArrayInputStream(outputStream.toByteArray());
@@ -165,32 +165,33 @@
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L158" href="#L158">158</a> <em class="jxr_javadoccomment">     * Lists the licenses on the configured output stream.</em>
 <a class="jxr_linenumber" name="L159" href="#L159">159</a> <em class="jxr_javadoccomment">     * @param configuration The configuration for the system</em>
-<a class="jxr_linenumber" name="L160" href="#L160">160</a> <em class="jxr_javadoccomment">     * @throws IOException if PrintWriter can not be retrieved from configuration.</em>
-<a class="jxr_linenumber" name="L161" href="#L161">161</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> listLicenses(<strong class="jxr_keyword">final</strong> <a name="ReportConfiguration" href="../../../org/apache/rat/ReportConfiguration.html#ReportConfiguration">ReportConfiguration</a> configuration, <strong class="jxr_keyword">final</strong> LicenseFilter filter) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>         <strong class="jxr_keyword">try</strong> (PrintWriter pw = configuration.getWriter().get()) {
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>             pw.format(<span class="jxr_string">"Licenses (%s):%n"</span>, filter);
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>             configuration.getLicenses(filter)
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>                     .forEach(lic -&gt; pw.format(LICENSE_FORMAT, lic.getLicenseFamily().getFamilyCategory(),
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>                             lic.getLicenseFamily().getFamilyName(), lic.getNote()));
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>             pw.println();
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>         }
-<a class="jxr_linenumber" name="L170" href="#L170">170</a>     }
-<a class="jxr_linenumber" name="L171" href="#L171">171</a> 
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L173" href="#L173">173</a> <em class="jxr_javadoccomment">     * Writes a text summary of issues with the run.</em>
-<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     * @param appendable the appendable to write to.</em>
-<a class="jxr_linenumber" name="L175" href="#L175">175</a> <em class="jxr_javadoccomment">     * @throws IOException on error.</em>
-<a class="jxr_linenumber" name="L176" href="#L176">176</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> writeSummary(<strong class="jxr_keyword">final</strong> Appendable appendable) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>         appendable.append(<span class="jxr_string">"Rat summary:"</span>).append(System.lineSeparator());
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         <strong class="jxr_keyword">for</strong> (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>             appendable.append(<span class="jxr_string">"  "</span>).append(counter.displayName()).append(<span class="jxr_string">":  "</span>)
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>                     .append(Integer.toString(getClaimsStatistic().getCounter(counter)))
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>                     .append(System.lineSeparator());
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>         }
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>     }
-<a class="jxr_linenumber" name="L185" href="#L185">185</a> }
+<a class="jxr_linenumber" name="L160" href="#L160">160</a> <em class="jxr_javadoccomment">     * @param filter the license filter that specifies which licenses to output.</em>
+<a class="jxr_linenumber" name="L161" href="#L161">161</a> <em class="jxr_javadoccomment">     * @throws IOException if PrintWriter can not be retrieved from configuration.</em>
+<a class="jxr_linenumber" name="L162" href="#L162">162</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> listLicenses(<strong class="jxr_keyword">final</strong> <a name="ReportConfiguration" href="../../../org/apache/rat/ReportConfiguration.html#ReportConfiguration">ReportConfiguration</a> configuration, <strong class="jxr_keyword">final</strong> LicenseFilter filter) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>         <strong class="jxr_keyword">try</strong> (PrintWriter pw = configuration.getWriter().get()) {
+<a class="jxr_linenumber" name="L165" href="#L165">165</a>             pw.format(<span class="jxr_string">"Licenses (%s):%n"</span>, filter);
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>             configuration.getLicenses(filter)
+<a class="jxr_linenumber" name="L167" href="#L167">167</a>                     .forEach(lic -&gt; pw.format(LICENSE_FORMAT, lic.getLicenseFamily().getFamilyCategory(),
+<a class="jxr_linenumber" name="L168" href="#L168">168</a>                             lic.getLicenseFamily().getFamilyName(), lic.getNote()));
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>             pw.println();
+<a class="jxr_linenumber" name="L170" href="#L170">170</a>         }
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>     }
+<a class="jxr_linenumber" name="L172" href="#L172">172</a> 
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     * Writes a text summary of issues with the run.</em>
+<a class="jxr_linenumber" name="L175" href="#L175">175</a> <em class="jxr_javadoccomment">     * @param appendable the appendable to write to.</em>
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> <em class="jxr_javadoccomment">     * @throws IOException on error.</em>
+<a class="jxr_linenumber" name="L177" href="#L177">177</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> writeSummary(<strong class="jxr_keyword">final</strong> Appendable appendable) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>         appendable.append(<span class="jxr_string">"RAT summary:"</span>).append(System.lineSeparator());
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         <strong class="jxr_keyword">for</strong> (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>             appendable.append(<span class="jxr_string">"  "</span>).append(counter.displayName()).append(<span class="jxr_string">":  "</span>)
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>                     .append(Integer.toString(getClaimsStatistic().getCounter(counter)))
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>                     .append(System.lineSeparator());
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         }
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>     }
+<a class="jxr_linenumber" name="L186" href="#L186">186</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

@@ -67,7 +67,7 @@
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>      }
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>  
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">public</strong> Document toWalk() {
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          DocumentName documentName = <strong class="jxr_keyword">new</strong> DocumentName(tempDir);
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          DocumentName documentName = DocumentName.builder(tempDir).build();
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> FileDocument(documentName, tempDir, reportConfiguration.getNameMatcher(documentName));
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      }
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  

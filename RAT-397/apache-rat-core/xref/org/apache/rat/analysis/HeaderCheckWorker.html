@@ -155,15 +155,14 @@
 <a class="jxr_linenumber" name="L147" href="#L147">147</a>                 }
 <a class="jxr_linenumber" name="L148" href="#L148">148</a>             } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L149" href="#L149">149</a>                 document.getMetaData().reportOnLicense(UnknownLicense.INSTANCE);
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>                 document.getMetaData().setSampleHeader(headers.raw());
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>             }
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="RatHeaderAnalysisException" href="../../../../org/apache/rat/analysis/RatHeaderAnalysisException.html#RatHeaderAnalysisException">RatHeaderAnalysisException</a>(<span class="jxr_string">"Cannot read header for "</span> + document, e);
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>         } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>             licenses.forEach(ILicense::reset);
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>         }
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>     }
-<a class="jxr_linenumber" name="L158" href="#L158">158</a> }
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>             }
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="RatHeaderAnalysisException" href="../../../../org/apache/rat/analysis/RatHeaderAnalysisException.html#RatHeaderAnalysisException">RatHeaderAnalysisException</a>(<span class="jxr_string">"Cannot read header for "</span> + document, e);
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>         } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>             licenses.forEach(ILicense::reset);
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>         }
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>     }
+<a class="jxr_linenumber" name="L157" href="#L157">157</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>
