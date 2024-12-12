@@ -953,43 +953,44 @@
 <a class="jxr_linenumber" name="L945" href="#L945">945</a>             }
 <a class="jxr_linenumber" name="L946" href="#L946">946</a>             <strong class="jxr_keyword">return</strong> result;
 <a class="jxr_linenumber" name="L947" href="#L947">947</a>         } <strong class="jxr_keyword">catch</strong> (Throwable t) {
-<a class="jxr_linenumber" name="L948" href="#L948">948</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(format(<span class="jxr_string">"'%s' converter for %s does not produce a class of tye %s"</span>, <strong class="jxr_keyword">this</strong>, option, option.getType()));
-<a class="jxr_linenumber" name="L949" href="#L949">949</a>         }
-<a class="jxr_linenumber" name="L950" href="#L950">950</a>     }
-<a class="jxr_linenumber" name="L951" href="#L951">951</a> 
-<a class="jxr_linenumber" name="L952" href="#L952">952</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L953" href="#L953">953</a> <em class="jxr_javadoccomment">     * Standard messages used in descriptions.</em>
-<a class="jxr_linenumber" name="L954" href="#L954">954</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L955" href="#L955">955</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> StdMsgs {
-<a class="jxr_linenumber" name="L956" href="#L956">956</a>         <strong class="jxr_keyword">private</strong> StdMsgs() {
-<a class="jxr_linenumber" name="L957" href="#L957">957</a>             <em class="jxr_comment">// do not instantiate</em>
-<a class="jxr_linenumber" name="L958" href="#L958">958</a>         }
-<a class="jxr_linenumber" name="L959" href="#L959">959</a> 
-<a class="jxr_linenumber" name="L960" href="#L960">960</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L961" href="#L961">961</a> <em class="jxr_javadoccomment">         * Gets the standard "use instead" message for the specific name.</em>
-<a class="jxr_linenumber" name="L962" href="#L962">962</a> <em class="jxr_javadoccomment">         *</em>
-<a class="jxr_linenumber" name="L963" href="#L963">963</a> <em class="jxr_javadoccomment">         * @param name the name of the option to use instead.</em>
-<a class="jxr_linenumber" name="L964" href="#L964">964</a> <em class="jxr_javadoccomment">         * @return combined "use instead" message.</em>
-<a class="jxr_linenumber" name="L965" href="#L965">965</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L966" href="#L966">966</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String useMsg(<strong class="jxr_keyword">final</strong> String name) {
-<a class="jxr_linenumber" name="L967" href="#L967">967</a>             <strong class="jxr_keyword">return</strong> format(<span class="jxr_string">"Use %s instead."</span>, name);
-<a class="jxr_linenumber" name="L968" href="#L968">968</a>         }
-<a class="jxr_linenumber" name="L969" href="#L969">969</a>     }
-<a class="jxr_linenumber" name="L970" href="#L970">970</a> 
-<a class="jxr_linenumber" name="L971" href="#L971">971</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L972" href="#L972">972</a> <em class="jxr_javadoccomment">     * The default values description map</em>
-<a class="jxr_linenumber" name="L973" href="#L973">973</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L974" href="#L974">974</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Map&lt;Arg, String&gt; DEFAULT_VALUES = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
-<a class="jxr_linenumber" name="L975" href="#L975">975</a> 
-<a class="jxr_linenumber" name="L976" href="#L976">976</a>     <strong class="jxr_keyword">static</strong> {
-<a class="jxr_linenumber" name="L977" href="#L977">977</a>         DEFAULT_VALUES.put(OUTPUT_FILE, <span class="jxr_string">"System.out"</span>);
-<a class="jxr_linenumber" name="L978" href="#L978">978</a>         DEFAULT_VALUES.put(LOG_LEVEL, Log.Level.WARN.name());
-<a class="jxr_linenumber" name="L979" href="#L979">979</a>         DEFAULT_VALUES.put(OUTPUT_ARCHIVE, Defaults.ARCHIVE_PROCESSING.name());
-<a class="jxr_linenumber" name="L980" href="#L980">980</a>         DEFAULT_VALUES.put(OUTPUT_STANDARD, Defaults.STANDARD_PROCESSING.name());
-<a class="jxr_linenumber" name="L981" href="#L981">981</a>         DEFAULT_VALUES.put(OUTPUT_LICENSES, Defaults.LIST_LICENSES.name());
-<a class="jxr_linenumber" name="L982" href="#L982">982</a>         DEFAULT_VALUES.put(OUTPUT_FAMILIES, Defaults.LIST_FAMILIES.name());
-<a class="jxr_linenumber" name="L983" href="#L983">983</a>     }
-<a class="jxr_linenumber" name="L984" href="#L984">984</a> }
+<a class="jxr_linenumber" name="L948" href="#L948">948</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(format(<span class="jxr_string">"'%s' converter for %s '%s' does not produce a class of type %s"</span>, <strong class="jxr_keyword">this</strong>,
+<a class="jxr_linenumber" name="L949" href="#L949">949</a>                     option.getKey(), option.getConverter().getClass().getName(), option.getType()));
+<a class="jxr_linenumber" name="L950" href="#L950">950</a>         }
+<a class="jxr_linenumber" name="L951" href="#L951">951</a>     }
+<a class="jxr_linenumber" name="L952" href="#L952">952</a> 
+<a class="jxr_linenumber" name="L953" href="#L953">953</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L954" href="#L954">954</a> <em class="jxr_javadoccomment">     * Standard messages used in descriptions.</em>
+<a class="jxr_linenumber" name="L955" href="#L955">955</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L956" href="#L956">956</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> StdMsgs {
+<a class="jxr_linenumber" name="L957" href="#L957">957</a>         <strong class="jxr_keyword">private</strong> StdMsgs() {
+<a class="jxr_linenumber" name="L958" href="#L958">958</a>             <em class="jxr_comment">// do not instantiate</em>
+<a class="jxr_linenumber" name="L959" href="#L959">959</a>         }
+<a class="jxr_linenumber" name="L960" href="#L960">960</a> 
+<a class="jxr_linenumber" name="L961" href="#L961">961</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L962" href="#L962">962</a> <em class="jxr_javadoccomment">         * Gets the standard "use instead" message for the specific name.</em>
+<a class="jxr_linenumber" name="L963" href="#L963">963</a> <em class="jxr_javadoccomment">         *</em>
+<a class="jxr_linenumber" name="L964" href="#L964">964</a> <em class="jxr_javadoccomment">         * @param name the name of the option to use instead.</em>
+<a class="jxr_linenumber" name="L965" href="#L965">965</a> <em class="jxr_javadoccomment">         * @return combined "use instead" message.</em>
+<a class="jxr_linenumber" name="L966" href="#L966">966</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L967" href="#L967">967</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String useMsg(<strong class="jxr_keyword">final</strong> String name) {
+<a class="jxr_linenumber" name="L968" href="#L968">968</a>             <strong class="jxr_keyword">return</strong> format(<span class="jxr_string">"Use %s instead."</span>, name);
+<a class="jxr_linenumber" name="L969" href="#L969">969</a>         }
+<a class="jxr_linenumber" name="L970" href="#L970">970</a>     }
+<a class="jxr_linenumber" name="L971" href="#L971">971</a> 
+<a class="jxr_linenumber" name="L972" href="#L972">972</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L973" href="#L973">973</a> <em class="jxr_javadoccomment">     * The default values description map</em>
+<a class="jxr_linenumber" name="L974" href="#L974">974</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L975" href="#L975">975</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> Map&lt;Arg, String&gt; DEFAULT_VALUES = <strong class="jxr_keyword">new</strong> HashMap&lt;&gt;();
+<a class="jxr_linenumber" name="L976" href="#L976">976</a> 
+<a class="jxr_linenumber" name="L977" href="#L977">977</a>     <strong class="jxr_keyword">static</strong> {
+<a class="jxr_linenumber" name="L978" href="#L978">978</a>         DEFAULT_VALUES.put(OUTPUT_FILE, <span class="jxr_string">"System.out"</span>);
+<a class="jxr_linenumber" name="L979" href="#L979">979</a>         DEFAULT_VALUES.put(LOG_LEVEL, Log.Level.WARN.name());
+<a class="jxr_linenumber" name="L980" href="#L980">980</a>         DEFAULT_VALUES.put(OUTPUT_ARCHIVE, Defaults.ARCHIVE_PROCESSING.name());
+<a class="jxr_linenumber" name="L981" href="#L981">981</a>         DEFAULT_VALUES.put(OUTPUT_STANDARD, Defaults.STANDARD_PROCESSING.name());
+<a class="jxr_linenumber" name="L982" href="#L982">982</a>         DEFAULT_VALUES.put(OUTPUT_LICENSES, Defaults.LIST_LICENSES.name());
+<a class="jxr_linenumber" name="L983" href="#L983">983</a>         DEFAULT_VALUES.put(OUTPUT_FAMILIES, Defaults.LIST_FAMILIES.name());
+<a class="jxr_linenumber" name="L984" href="#L984">984</a>     }
+<a class="jxr_linenumber" name="L985" href="#L985">985</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>

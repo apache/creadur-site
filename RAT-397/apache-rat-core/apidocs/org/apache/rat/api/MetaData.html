@@ -149,9 +149,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the defined media type.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isApproved(org.apache.rat.license.ILicense)" class="member-name-link">isApproved</a><wbr>(<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasCharset()" class="member-name-link">hasCharset</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns <code>true</code> if <a href="#setCharset(java.nio.charset.Charset)"><code>setCharset(java.nio.charset.Charset)</code></a> has been called.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isApproved(org.apache.rat.license.ILicense)" class="member-name-link">isApproved</a><wbr>(<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Determine if the license is an approved license.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDirectory()" class="member-name-link">isDirectory</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Return <code>true</code> if the directory flag was set.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a><wbr>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#licenses()" class="member-name-link">licenses</a>()</code></div>
@@ -184,16 +194,21 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the document type.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMediaType(org.apache.tika.mime.MediaType)" class="member-name-link">setMediaType</a><wbr>(org.apache.tika.mime.MediaType&nbsp;mediaType)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setIsDirectory(boolean)" class="member-name-link">setIsDirectory</a><wbr>(boolean&nbsp;state)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Set the directory flag.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMediaType(org.apache.tika.mime.MediaType)" class="member-name-link">setMediaType</a><wbr>(org.apache.tika.mime.MediaType&nbsp;mediaType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the defined media type.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a><wbr>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unapprovedLicenses()" class="member-name-link">unapprovedLicenses</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link">Stream</a><wbr>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unapprovedLicenses()" class="member-name-link">unapprovedLicenses</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the stream of unapproved licenses that have been matched.</div>
 </div>
 </div>
@@ -247,6 +262,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>charset</code> - the charset to use.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="hasCharset()">
+<h3>hasCharset</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasCharset</span>()</div>
+<div class="block">Returns <code>true</code> if <a href="#setCharset(java.nio.charset.Charset)"><code>setCharset(java.nio.charset.Charset)</code></a> has been called.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if <a href="#setCharset(java.nio.charset.Charset)"><code>setCharset(java.nio.charset.Charset)</code></a> has been called.</dd>
 </dl>
 </section>
 </li>
@@ -348,6 +374,28 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>type</code> - the document type for the document being recorded.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setIsDirectory(boolean)">
+<h3>setIsDirectory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setIsDirectory</span><wbr><span class="parameters">(boolean&nbsp;state)</span></div>
+<div class="block">Set the directory flag.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>state</code> - the state to set the directory flag in.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isDirectory()">
+<h3>isDirectory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDirectory</span>()</div>
+<div class="block">Return <code>true</code> if the directory flag was set.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the directory flag.</dd>
 </dl>
 </section>
 </li>

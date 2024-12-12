@@ -52,8 +52,8 @@
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>          BINARIES(<span class="jxr_string">"A count of binary files."</span>, -1, 0),
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>          <em class="jxr_javadoccomment">/** count of distinct document types */</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>          DOCUMENT_TYPES(<span class="jxr_string">"A count of distinct document types."</span>, -1, 1),
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <em class="jxr_javadoccomment">/** count of generated files */</em>
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          GENERATED(<span class="jxr_string">"A count of generated files."</span>, -1, 0),
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <em class="jxr_javadoccomment">/** count of generated/ignored files */</em>
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          IGNORED(<span class="jxr_string">"A count of ignored files."</span>, -1, 0),
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>          <em class="jxr_javadoccomment">/** count of license categories */</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          LICENSE_CATEGORIES(<span class="jxr_string">"A count of distinct license categories."</span>, -1, 1),
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          <em class="jxr_javadoccomment">/** count of distinct license names */</em>
@@ -68,11 +68,11 @@
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>          UNKNOWN(<span class="jxr_string">"A count of unknown file types."</span>, -1, 0);
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>  
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>          <em class="jxr_javadoccomment">/** The description of the counter */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">private</strong> String description;
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String description;
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          <em class="jxr_javadoccomment">/** The default max value for the counter */</em>
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> defaultMaxValue;
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <em class="jxr_javadoccomment">/** THe default minimum value for the counter */</em>
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> defaultMinValue;
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMaxValue;
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <em class="jxr_javadoccomment">/** The default minimum value for the counter */</em>
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMinValue;
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>          Counter(<strong class="jxr_keyword">final</strong> String description, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMaxValue, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMinValue) {
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>              <strong class="jxr_keyword">this</strong>.description = description;
@@ -191,8 +191,8 @@
 <a class="jxr_linenumber" name="L183" href="#L183">183</a>             <strong class="jxr_keyword">case</strong> UNKNOWN:
 <a class="jxr_linenumber" name="L184" href="#L184">184</a>                 incCounter(Counter.UNKNOWN, value);
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>             <strong class="jxr_keyword">case</strong> GENERATED:
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>                 incCounter(Counter.GENERATED, value);
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>             <strong class="jxr_keyword">case</strong> IGNORED:
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>                 incCounter(Counter.IGNORED, value);
 <a class="jxr_linenumber" name="L188" href="#L188">188</a>                 <strong class="jxr_keyword">break</strong>;
 <a class="jxr_linenumber" name="L189" href="#L189">189</a>         }
 <a class="jxr_linenumber" name="L190" href="#L190">190</a>     }
@@ -281,7 +281,7 @@
 <a class="jxr_linenumber" name="L273" href="#L273">273</a> 
 <a class="jxr_linenumber" name="L274" href="#L274">274</a>         <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">         * Increment the count.</em>
-<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">         * @param count the count to increment by (may be negative)</em>
+<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">         * @param count the count to increment by (can be negative).</em>
 <a class="jxr_linenumber" name="L277" href="#L277">277</a> <em class="jxr_javadoccomment">         * @return this.</em>
 <a class="jxr_linenumber" name="L278" href="#L278">278</a> <em class="jxr_javadoccomment">         */</em>
 <a class="jxr_linenumber" name="L279" href="#L279">279</a>         <strong class="jxr_keyword">public</strong> IntCounter increment(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> count) {

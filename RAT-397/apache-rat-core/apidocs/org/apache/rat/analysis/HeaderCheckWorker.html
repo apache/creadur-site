@@ -126,14 +126,16 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.io.Reader,int,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.apache.rat.analysis.IHeaderMatcher,java.io.Reader,int,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&nbsp;generatedMatcher,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
  int&nbsp;numberOfRetainedHeaderLine,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses,
  <a href="../api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructs a check worker for the license against the specified document.</div>
 </div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.io.Reader,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.apache.rat.analysis.IHeaderMatcher,java.io.Reader,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&nbsp;generatedMatcher,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses,
  <a href="../api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">
@@ -207,15 +209,17 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.io.Reader,java.util.Collection,org.apache.rat.api.Document)">
+<section class="detail" id="&lt;init&gt;(org.apache.rat.analysis.IHeaderMatcher,java.io.Reader,java.util.Collection,org.apache.rat.api.Document)">
 <h3>HeaderCheckWorker</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">HeaderCheckWorker</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">HeaderCheckWorker</span><wbr><span class="parameters">(<a href="IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&nbsp;generatedMatcher,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses,
  <a href="../api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;name)</span></div>
 <div class="block">Convenience constructor wraps given <code>Reader</code> in a
  <code>BufferedReader</code>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
+<dd><code>generatedMatcher</code> - The matcher for generated headers.</dd>
 <dd><code>reader</code> - The reader on the document. Not null.</dd>
 <dd><code>licenses</code> - The licenses to check against. Not null.</dd>
 <dd><code>name</code> - The document that is being checked. Possibly null.</dd>
@@ -223,15 +227,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="&lt;init&gt;(java.io.Reader,int,java.util.Collection,org.apache.rat.api.Document)">
+<section class="detail" id="&lt;init&gt;(org.apache.rat.analysis.IHeaderMatcher,java.io.Reader,int,java.util.Collection,org.apache.rat.api.Document)">
 <h3>HeaderCheckWorker</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">HeaderCheckWorker</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">HeaderCheckWorker</span><wbr><span class="parameters">(<a href="IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&nbsp;generatedMatcher,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
  int&nbsp;numberOfRetainedHeaderLine,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses,
  <a href="../api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</span></div>
 <div class="block">Constructs a check worker for the license against the specified document.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
+<dd><code>generatedMatcher</code> - The matcher for generated headers.</dd>
 <dd><code>reader</code> - The reader on the document. Not null.</dd>
 <dd><code>numberOfRetainedHeaderLine</code> - the maximum number of lines to read to find
  the license information.</dd>
@@ -276,7 +282,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Read the input and perform the header check.</div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="RatHeaderAnalysisException.html" title="class in org.apache.rat.analysis">RatHeaderAnalysisException</a></code> - on IO Exception.</dd>
+<dd><code><a href="RatHeaderAnalysisException.html" title="class in org.apache.rat.analysis">RatHeaderAnalysisException</a></code> - on IO exception.</dd>
 </dl>
 </section>
 </li>

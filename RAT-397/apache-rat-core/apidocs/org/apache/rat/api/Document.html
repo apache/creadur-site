@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../document/ArchiveEntryDocument.html" title="class in org.apache.rat.document">ArchiveEntryDocument</a></code>, <code><a href="../document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></code></dd>
+<dd><code><a href="../document/ArchiveEntryDocument.html" title="class in org.apache.rat.document">ArchiveEntryDocument</a></code>, <code><a href="../document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></code>, <code><a href="../document/IgnoredDocument.html" title="class in org.apache.rat.document">IgnoredDocument</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Document</span>
@@ -206,21 +206,26 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isDirectory()" class="member-name-link">isDirectory</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Determines if this Document is a directory type.</div>
+<div class="block">Determines if this document is a directory type.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="Document.html" title="class in org.apache.rat.api">Document</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#listChildren()" class="member-name-link">listChildren</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Gets a sorted set of Documents that are children of this document.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isIgnored()" class="member-name-link">isIgnored</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks if document is ignored or not.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reader()" class="member-name-link">reader</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="Document.html" title="class in org.apache.rat.api">Document</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#listChildren()" class="member-name-link">listChildren</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Gets a sorted set of documents that are children of this document.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reader()" class="member-name-link">reader</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Reads the contents of this document.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Representations suitable for logging.</div>
 </div>
 </div>
@@ -375,6 +380,17 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 </section>
 </li>
 <li>
+<section class="detail" id="isIgnored()">
+<h3>isIgnored</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isIgnored</span>()</div>
+<div class="block">Checks if document is ignored or not.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the document is of type <code>IGNORED</code>.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="toString()">
 <h3>toString</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span>()</div>
@@ -392,7 +408,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <section class="detail" id="isDirectory()">
 <h3>isDirectory</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDirectory</span>()</div>
-<div class="block">Determines if this Document is a directory type.</div>
+<div class="block">Determines if this document is a directory type.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><code>true</code> if this is a directory.</dd>
@@ -403,7 +419,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <section class="detail" id="listChildren()">
 <h3>listChildren</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="Document.html" title="class in org.apache.rat.api">Document</a>&gt;</span>&nbsp;<span class="element-name">listChildren</span>()</div>
-<div class="block">Gets a sorted set of Documents that are children of this document.</div>
+<div class="block">Gets a sorted set of documents that are children of this document.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>A sorted set of child Documents. May be empty.</dd>

@@ -282,7 +282,7 @@ usage: java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar [options] [DIR|A
 
          DOCUMENT_TYPES: A count of distinct document types. Default range [1, unlimited]
 
-         GENERATED: A count of generated files. Default range [0, unlimited]
+         IGNORED: A count of ignored files. Default range [0, unlimited]
 
          LICENSE_CATEGORIES: A count of distinct license categories. Default range [1, unlimited]
 
@@ -404,9 +404,10 @@ usage: java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar [options] [DIR|A
          **/-darcs-backup*, **/*.ln, **/.metadata/**, **/.project, **/cvslog.*, **/.make.state, **/core,
          **/.factorypath, **/CVS/**, **/.idea/**, **/%*%, **/.git/**, **/_$*, **/.checkstyle, **/*.BAK, **/.hg/**,
          **/.bzrignore, **/.arch-ids/**, **/release.properties, **/*.o, **/SCCS/**, **/,*, **/*.Z, **/.#*,
-         **/vssver.scc, **/#*#, **/*.a, **/*.iws, **/target/**, **/RCS/**, **/*.bak, **/*.orig, **/.nse_depinfo,
-         **/.darcs-temp-mail, **/RCSLOG/**, **/*.exe, **/tags/**, **/.gitignore, **/#*, **/*.obj, **/.MySCMServerInfo,
-         **/.repository, **/_darcs/**, **/cobertura.ser, **/.darcsrepo/**, **/.DS_Store, **/.cvsignore
+         **/vssver.scc, **/#*#, **/*.a, **/*.iws, **/target/**, **/RCS/**, **/*.bak, **/.externalToolBuilders,
+         **/*.orig, **/.nse_depinfo, **/.darcs-temp-mail, **/RCSLOG/**, **/*.exe, **/tags/**, **/.gitignore, **/#*,
+         **/*.obj, **/.MySCMServerInfo, **/.repository, **/_darcs/**, **/cobertura.ser, **/.darcsrepo/**, **/.DS_Store,
+         **/.cvsignore
      Provides a path matcher: true
      Provides a file processor: true
 
@@ -445,7 +446,8 @@ usage: java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar [options] [DIR|A
 
 &lt;ECLIPSE&gt;
      The files and directories created by an Eclipse IDE based tool.
-     File patterns: **/.project, **/.checkstyle, **/.classpath, **/.factorypath, **/.settings/**
+     File patterns: **/.project, **/.checkstyle, **/.classpath, **/.factorypath, **/.externalToolBuilders,
+         **/.settings/**
      Provides a path matcher: false
      Provides a file processor: false
 
