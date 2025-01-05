@@ -63,7 +63,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/report/claim/AbstractClaimReporter.html" title="class in org.apache.rat.report.claim">AbstractClaimReporter</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Abstract base implementation of <a href="org/apache/rat/report/AbstractReport.html" title="class in org.apache.rat.report"><code>AbstractReport</code></a>.</div>
+<div class="block">Abstract base implementation of <a href="org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report"><code>RatReport</code></a>.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/matchers/AbstractHeaderMatcher.html" title="class in org.apache.rat.analysis.matchers">AbstractHeaderMatcher</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
@@ -89,8 +89,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Abstract base class for Mojos, which are running Rat.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/report/AbstractReport.html" title="class in org.apache.rat.report">AbstractReport</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Abstract base class for deriving implementations of <a href="org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report"><code>RatReport</code></a>.</div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">Deprecated.
+<div class="deprecation-comment">use <a href="org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report"><code>RatReport</code></a> directly.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/config/AddLicenseHeaders.html" title="enum in org.apache.rat.config">AddLicenseHeaders</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
@@ -168,13 +168,13 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Generated class to provide Ant support for standard Rat command line options.</div>
+<div class="block">Generated class to provide Ant support for standard RAT command line options.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/license/BaseLicense.html" title="class in org.apache.rat.analysis.license">BaseLicense</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">Deprecated.</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Generated class to provide Maven support for standard Rat command line options</div>
+<div class="block">Generated class to provide Maven support for standard RAT command line options</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/config/exclusion/fileProcessors/BazaarIgnoreProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">BazaarIgnoreProcessor</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
@@ -212,6 +212,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/report/claim/ClaimStatistic.Counter.html" title="enum in org.apache.rat.report.claim">ClaimStatistic.Counter</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">The counter types</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/config/results/ClaimValidator.html" title="class in org.apache.rat.config.results">ClaimValidator</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Validates the ClaimStatistic results meet the specified requirements.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/report/claim/ClaimValidatorReport.html" title="class in org.apache.rat.report.claim">ClaimValidatorReport</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A RatReport that publishes the results of the ClaimValidator.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/config/parameters/ComponentType.html" title="enum in org.apache.rat.config.parameters">ComponentType</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
@@ -319,13 +327,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">A collection of names for a document.</div>
+<div class="block">The name for a document.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/apache/rat/document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/apache/rat/document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
-<div class="block">Creates a patch matcher based on the directory.</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">The Builder for a DocumentName.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Matches document names.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/config/exclusion/ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
@@ -351,57 +361,68 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Document wrapping a File object</div>
+<div class="block">Document wrapping a File object.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/apache/rat/config/exclusion/FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
-<div class="block">An interface that defines the FileProcessor.</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/walker/FileListWalker.html" title="class in org.apache.rat.walker">FileListWalker</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Implementation of IReportable that traverses over a resource collection
+ internally.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/configuration/Format.html" title="enum in org.apache.rat.configuration">Format</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/config/exclusion/FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">The file processor reads the file specified in the DocumentName.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/configuration/Format.html" title="enum in org.apache.rat.configuration">Format</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">An enumeration of the types of files that can contain the configuration
  information.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/matchers/FullTextMatcher.html" title="class in org.apache.rat.analysis.matchers">FullTextMatcher</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/matchers/FullTextMatcher.html" title="class in org.apache.rat.analysis.matchers">FullTextMatcher</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Accumulates all letters and numbers contained inside the header and compares
  it to the full text of a given license (after reducing it to letters and
  numbers as well).</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/license/FullTextMatchingLicense.html" title="class in org.apache.rat.analysis.license">FullTextMatchingLicense</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">Deprecated.
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/license/FullTextMatchingLicense.html" title="class in org.apache.rat.analysis.license">FullTextMatchingLicense</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">Deprecated.
 <div class="deprecation-comment">Use new configuration options</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/config/exclusion/fileProcessors/GitFileProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">GitFileProcessor</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/header/HeaderBean.html" title="class in org.apache.rat.header">HeaderBean</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">Deprecated.</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/HeaderCheckWorker.html" title="class in org.apache.rat.analysis">HeaderCheckWorker</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/config/exclusion/fileProcessors/GitFileProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">GitFileProcessor</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Processes the .gitignore file.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/header/HeaderBean.html" title="class in org.apache.rat.header">HeaderBean</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">Deprecated.</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/HeaderCheckWorker.html" title="class in org.apache.rat.analysis">HeaderCheckWorker</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Reads from a stream to check license.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/header/HeaderMatcher.html" title="class in org.apache.rat.header">HeaderMatcher</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">Deprecated.</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/mp/HeaderMatcherSpecification.html" title="class in org.apache.rat.mp">HeaderMatcherSpecification</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">Deprecated.
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/header/HeaderMatcher.html" title="class in org.apache.rat.header">HeaderMatcher</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">Deprecated.</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/mp/HeaderMatcherSpecification.html" title="class in org.apache.rat.mp">HeaderMatcherSpecification</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">Deprecated.
 <div class="deprecation-comment">use Configuration file to define licenses</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/help/Help.html" title="class in org.apache.rat.help">Help</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/help/Help.html" title="class in org.apache.rat.help">Help</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">The help output for the command line client.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/apache_rat_plugin/HelpMojo.html" title="class in org.apache.rat.apache_rat_plugin">HelpMojo</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/plugin/HelpMojo.html" title="class in org.apache.rat.plugin">HelpMojo</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Display help information on apache-rat-plugin.<br>
  Call <code>mvn apache-rat:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to display parameter details.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/config/exclusion/fileProcessors/HgIgnoreProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">HgIgnoreProcessor</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/config/exclusion/fileProcessors/HgIgnoreProcessor.html" title="class in org.apache.rat.config.exclusion.fileProcessors">HgIgnoreProcessor</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A processor for the <code>.hgignore</code> files.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/apache/rat/document/IDocumentAnalyser.html" title="interface in org.apache.rat.document">IDocumentAnalyser</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/apache/rat/document/IDocumentAnalyser.html" title="interface in org.apache.rat.document">IDocumentAnalyser</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Analyses Documents.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/document/IgnoredDocument.html" title="class in org.apache.rat.document">IgnoredDocument</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Document wrapping a File object that is ignored by rule.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/apache/rat/analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
@@ -445,6 +466,14 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/apache/rat/report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/walker/IReportableListWalker.html" title="class in org.apache.rat.walker">IReportableListWalker</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A Reportable that walks a list of IReportables and executes the run on each.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/walker/IReportableListWalker.Builder.html" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A Builder for the ListWalker.</div>
+</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Simple interface for creating basic XML documents.</div>
@@ -630,7 +659,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/Reporter.html" title="class in org.apache.rat">Reporter</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
-<div class="block">Class that executes the report as defined in a ReportConfiguration and stores
+<div class="block">Class that executes the report as defined in a <a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat"><code>ReportConfiguration</code></a> and stores
  the result for later handling.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet&lt;T&gt;</a></div>
@@ -684,7 +713,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Defines a factory to produce matchers for an SPDX tag.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="block">Collection of standard excludes.</div>
+</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/commandline/StyleSheets.html" title="enum in org.apache.rat.commandline">StyleSheets</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">The enumeration of system defined stylesheets.</div>
@@ -705,33 +736,41 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A wrapping around the tika processor.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/document/TraceableDocumentNameMatcher.html" title="class in org.apache.rat.document">TraceableDocumentNameMatcher</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/UnknownLicense.html" title="class in org.apache.rat.analysis">UnknownLicense</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
-<div class="block">A PatternMatcher that will emit trace messages during execution if the environment variable is set.</div>
-</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/analysis/UnknownLicense.html" title="class in org.apache.rat.analysis">UnknownLicense</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An ILicense implementation that represents an unknown license.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/VersionInfo.html" title="class in org.apache.rat">VersionInfo</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/VersionInfo.html" title="class in org.apache.rat">VersionInfo</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A formatter for Package information about a class.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/walker/Walker.html" title="class in org.apache.rat.walker">Walker</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/walker/Walker.html" title="class in org.apache.rat.walker">Walker</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Abstract walker.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/configuration/XMLConfig.html" title="class in org.apache.rat.configuration">XMLConfig</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/configuration/XMLConfig.html" title="class in org.apache.rat.configuration">XMLConfig</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Configuration definitions for XMLConfiguration reader and writer.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/configuration/XMLConfigurationReader.html" title="class in org.apache.rat.configuration">XMLConfigurationReader</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/configuration/XMLConfigurationReader.html" title="class in org.apache.rat.configuration">XMLConfigurationReader</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A class that reads the XML configuration file format.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/configuration/XMLConfigurationWriter.html" title="class in org.apache.rat.configuration">XMLConfigurationWriter</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/configuration/XMLConfigurationWriter.html" title="class in org.apache.rat.configuration">XMLConfigurationWriter</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Writes the XML configuration file format.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Creates the elements in the XML report.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/report/xml/XmlElements.Attributes.html" title="enum in org.apache.rat.report.xml">XmlElements.Attributes</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="block">The attributes of elements in the report.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/apache/rat/report/xml/XmlElements.Elements.html" title="enum in org.apache.rat.report.xml">XmlElements.Elements</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="block">The elements in the report.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/apache/rat/report/xml/XmlReportFactory.html" title="class in org.apache.rat.report.xml">XmlReportFactory</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
@@ -760,7 +799,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

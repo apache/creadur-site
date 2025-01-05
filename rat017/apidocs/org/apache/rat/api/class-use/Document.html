@@ -83,8 +83,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.walker">org.apache.rat.walker</a></div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Classes that write the XML output.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.apache.rat.walker">org.apache.rat.walker</a></div>
+<div class="col-last even-row-color">
 <div class="block">Classes that walk directory trees and return documents.</div>
 </div>
 </div>
@@ -110,7 +114,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../analysis/HeaderCheckWorker.html#%3Cinit%3E(java.io.Reader,int,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+<div class="col-second even-row-color"><code><a href="../../analysis/HeaderCheckWorker.html#%3Cinit%3E(org.apache.rat.analysis.IHeaderMatcher,java.io.Reader,int,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="../../analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&nbsp;generatedMatcher,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
  int&nbsp;numberOfRetainedHeaderLine,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses,
  <a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
@@ -118,7 +123,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Constructs a check worker for the license against the specified document.</div>
 </div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../analysis/HeaderCheckWorker.html#%3Cinit%3E(java.io.Reader,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+<div class="col-second odd-row-color"><code><a href="../../analysis/HeaderCheckWorker.html#%3Cinit%3E(org.apache.rat.analysis.IHeaderMatcher,java.io.Reader,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="../../analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&nbsp;generatedMatcher,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses,
  <a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">
@@ -139,7 +145,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Document.</span><code><a href="../Document.html#listChildren()" class="member-name-link">listChildren</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Gets a sorted set of Documents that are children of this document.</div>
+<div class="block">Gets a sorted set of documents that are children of this document.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.api</a> with parameters of type <a href="../Document.html" title="class in org.apache.rat.api">Document</a></span></div>
@@ -169,7 +175,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../document/FileDocument.html" class="type-name-link" title="class in org.apache.rat.document">FileDocument</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Document wrapping a File object</div>
+<div class="block">Document wrapping a File object.</div>
+</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../document/IgnoredDocument.html" class="type-name-link" title="class in org.apache.rat.document">IgnoredDocument</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Document wrapping a File object that is ignored by rule.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../../document/package-summary.html">org.apache.rat.document</a> that return types with arguments of type <a href="../Document.html" title="class in org.apache.rat.api">Document</a></span></div>
@@ -183,6 +194,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FileDocument.</span><code><a href="../../document/FileDocument.html#listChildren()" class="member-name-link">listChildren</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IgnoredDocument.</span><code><a href="../../document/IgnoredDocument.html#listChildren()" class="member-name-link">listChildren</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../document/package-summary.html">org.apache.rat.document</a> with parameters of type <a href="../Document.html" title="class in org.apache.rat.api">Document</a></span></div>
 <div class="summary-table three-column-summary">
@@ -243,9 +257,10 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractReport.</span><code><a href="../../report/AbstractReport.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
 <div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
 <div class="block">Empty default implementation.</div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-first odd-row-color"><code>default void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">RatReport.</span><code><a href="../../report/RatReport.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Performs the actual reporting on the given document.</div>
@@ -271,8 +286,24 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">LicenseAddingReport.</span><code><a href="../../report/claim/LicenseAddingReport.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SimpleXmlClaimReporter.</span><code><a href="../../report/claim/SimpleXmlClaimReporter.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;subject)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SimpleXmlClaimReporter.</span><code><a href="../../report/claim/SimpleXmlClaimReporter.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.report.xml">
+<h2>Uses of <a href="../Document.html" title="class in org.apache.rat.api">Document</a> in <a href="../../report/xml/package-summary.html">org.apache.rat.report.xml</a></h2>
+<div class="caption"><span>Methods in <a href="../../report/xml/package-summary.html">org.apache.rat.report.xml</a> with parameters of type <a href="../Document.html" title="class in org.apache.rat.api">Document</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#document(org.apache.rat.api.Document)" class="member-name-link">document</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a document element with attributes.</div>
+</div>
 </div>
 </section>
 </li>
@@ -341,7 +372,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

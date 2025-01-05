@@ -241,7 +241,7 @@
 <a class="jxr_linenumber" name="L233" href="#L233">233</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L234" href="#L234">234</a> <em class="jxr_javadoccomment">     * Removes a family category to the list of approved licenses.</em>
 <a class="jxr_linenumber" name="L235" href="#L235">235</a> <em class="jxr_javadoccomment">     * @param familyCategory the category to add.</em>
-<a class="jxr_linenumber" name="L236" href="#L236">236</a> <em class="jxr_javadoccomment">     * @deprecated use removeApprovedLicense child element}</em>
+<a class="jxr_linenumber" name="L236" href="#L236">236</a> <em class="jxr_javadoccomment">     * @deprecated use removeApprovedLicense child element</em>
 <a class="jxr_linenumber" name="L237" href="#L237">237</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L238" href="#L238">238</a>     @Deprecated
 <a class="jxr_linenumber" name="L239" href="#L239">239</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setRemoveApprovedLicense(<strong class="jxr_keyword">final</strong> String familyCategory) {
@@ -366,8 +366,8 @@
 <a class="jxr_linenumber" name="L358" href="#L358">358</a>             <strong class="jxr_keyword">if</strong> (getValues(Arg.OUTPUT_FILE).isEmpty()) {
 <a class="jxr_linenumber" name="L359" href="#L359">359</a>                 configuration.setOut(() -&gt; <strong class="jxr_keyword">new</strong> LogOutputStream(<strong class="jxr_keyword">this</strong>, Project.MSG_INFO));
 <a class="jxr_linenumber" name="L360" href="#L360">360</a>             }
-<a class="jxr_linenumber" name="L361" href="#L361">361</a>             DocumentName name = <strong class="jxr_keyword">new</strong> DocumentName(getProject().getBaseDir());
-<a class="jxr_linenumber" name="L362" href="#L362">362</a>             configuration.setReportable(<strong class="jxr_keyword">new</strong> <a name="ResourceCollectionContainer" href="../../../../org/apache/rat/anttasks/ResourceCollectionContainer.html#ResourceCollectionContainer">ResourceCollectionContainer</a>(name, configuration, nestedResources));
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>             DocumentName name = DocumentName.builder(getProject().getBaseDir()).build();
+<a class="jxr_linenumber" name="L362" href="#L362">362</a>             configuration.addSource(<strong class="jxr_keyword">new</strong> <a name="ResourceCollectionContainer" href="../../../../org/apache/rat/anttasks/ResourceCollectionContainer.html#ResourceCollectionContainer">ResourceCollectionContainer</a>(name, configuration, nestedResources));
 <a class="jxr_linenumber" name="L363" href="#L363">363</a>             configuration.addApprovedLicenseCategories(deprecatedConfig.approvedLicenseCategories);
 <a class="jxr_linenumber" name="L364" href="#L364">364</a>             configuration.removeApprovedLicenseCategories(deprecatedConfig.removedLicenseCategories);
 <a class="jxr_linenumber" name="L365" href="#L365">365</a>             <strong class="jxr_keyword">if</strong> (deprecatedConfig.inputFileFilter != <strong class="jxr_keyword">null</strong>) {
@@ -529,6 +529,6 @@
 <a class="jxr_linenumber" name="L521" href="#L521">521</a> }
 </pre>
 <hr/>
-<div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>
+<div id="footer">© 2006–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>
 </body>
 </html>

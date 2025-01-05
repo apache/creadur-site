@@ -68,7 +68,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Classes that perform specific matching operations.</div>
 </div>
 <div class="col-first odd-row-color"><a href="#org.apache.rat.anttasks">org.apache.rat.anttasks</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">The base package for the RAT Apache Ant Task Library.</div>
+</div>
 <div class="col-first even-row-color"><a href="#org.apache.rat.configuration.builders">org.apache.rat.configuration.builders</a></div>
 <div class="col-last even-row-color">
 <div class="block">Classes to build matchers</div>
@@ -87,6 +89,17 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.apache.rat">
 <h2>Uses of <a href="../IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a> in <a href="../../package-summary.html">org.apache.rat</a></h2>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">org.apache.rat</a> that return <a href="../IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#getGeneratedMatcher()" class="member-name-link">getGeneratedMatcher</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Gets the matcher that matches generated text.</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../../package-summary.html">org.apache.rat</a> that return types with arguments of type <a href="../IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -127,6 +140,30 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="../IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">UnknownLicense.</span><code><a href="../UnknownLicense.html#getMatcher()" class="member-name-link">getMatcher</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../package-summary.html">org.apache.rat.analysis</a> with parameters of type <a href="../IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../HeaderCheckWorker.html#%3Cinit%3E(org.apache.rat.analysis.IHeaderMatcher,java.io.Reader,int,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="../IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&nbsp;generatedMatcher,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+ int&nbsp;numberOfRetainedHeaderLine,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses,
+ <a href="../../api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a check worker for the license against the specified document.</div>
+</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../HeaderCheckWorker.html#%3Cinit%3E(org.apache.rat.analysis.IHeaderMatcher,java.io.Reader,java.util.Collection,org.apache.rat.api.Document)" class="member-name-link">HeaderCheckWorker</a><wbr>(<a href="../IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>&nbsp;generatedMatcher,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses,
+ <a href="../../api/Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Convenience constructor wraps given <code>Reader</code> in a
+ <code>BufferedReader</code>.</div>
+</div>
 </div>
 </section>
 </li>
@@ -472,7 +509,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

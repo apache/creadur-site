@@ -107,7 +107,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">ExclusionProcessor</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs the processor.</div>
+</div>
 </div>
 </section>
 </li>
@@ -128,14 +130,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Excludes the files/directories specified by a StandardCollection.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addExcludedFilter(org.apache.rat.document.DocumentNameMatcherSupplier)" class="member-name-link">addExcludedFilter</a><wbr>(<a href="../../document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a>&nbsp;matcherSupplier)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addExcludedMatcher(org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">addExcludedMatcher</a><wbr>(<a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;matcher)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add the excluded file/directory paths from a PathMatcherSupplier of strings.</div>
+<div class="block">Add the DocumentNameMatcher as an excluded pattern.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addExcludedPatterns(java.lang.Iterable)" class="member-name-link">addExcludedPatterns</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;patterns)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add the excluded file/directory patterns from an iterable of strings.</div>
+<div class="block">Add the patterns from collections of patterns as excluded patterns.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addFileProcessor(org.apache.rat.config.exclusion.StandardCollection)" class="member-name-link">addFileProcessor</a><wbr>(<a href="StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a>&nbsp;collection)</code></div>
@@ -145,19 +147,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedCollection(org.apache.rat.config.exclusion.StandardCollection)" class="member-name-link">addIncludedCollection</a><wbr>(<a href="StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a>&nbsp;collection)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add the included files from a StandardCollection.</div>
+<div class="block">Add the patterns from the StandardCollection as included patterns.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedFilter(org.apache.rat.document.DocumentNameMatcherSupplier)" class="member-name-link">addIncludedFilter</a><wbr>(<a href="../../document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a>&nbsp;matcherSupplier)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedMatcher(org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">addIncludedMatcher</a><wbr>(<a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;matcher)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add a PathMatcherSupplier to the collection of file/directory patters to ignore.</div>
+<div class="block">Add a DocumentNameMatcher to the collection of file/directory patterns to ignore.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedPatterns(java.lang.Iterable)" class="member-name-link">addIncludedPatterns</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;patterns)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add the Iterable of strings to the collection of file/directory patters to ignore.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameMatcher(org.apache.rat.document.DocumentName)" class="member-name-link">getNameMatcher</a><wbr>(<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates a Document name matcher that will return <code>false</code> on any
@@ -184,6 +186,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>ExclusionProcessor</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ExclusionProcessor</span>()</div>
+<div class="block">Constructs the processor.</div>
 </section>
 </li>
 </ul>
@@ -208,13 +211,13 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addIncludedFilter(org.apache.rat.document.DocumentNameMatcherSupplier)">
-<h3>addIncludedFilter</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></span>&nbsp;<span class="element-name">addIncludedFilter</span><wbr><span class="parameters">(<a href="../../document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a>&nbsp;matcherSupplier)</span></div>
-<div class="block">Add a PathMatcherSupplier to the collection of file/directory patters to ignore.</div>
+<section class="detail" id="addIncludedMatcher(org.apache.rat.document.DocumentNameMatcher)">
+<h3>addIncludedMatcher</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></span>&nbsp;<span class="element-name">addIncludedMatcher</span><wbr><span class="parameters">(<a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;matcher)</span></div>
+<div class="block">Add a DocumentNameMatcher to the collection of file/directory patterns to ignore.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>matcherSupplier</code> - the supplier of the pathMatcher to add (may be null).</dd>
+<dd><code>matcher</code> - the DocumentNameMatcher to add. Will be ignored if <code>null</code>.</dd>
 <dt>Returns:</dt>
 <dd>this</dd>
 </dl>
@@ -237,7 +240,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="addIncludedCollection(org.apache.rat.config.exclusion.StandardCollection)">
 <h3>addIncludedCollection</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></span>&nbsp;<span class="element-name">addIncludedCollection</span><wbr><span class="parameters">(<a href="StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a>&nbsp;collection)</span></div>
-<div class="block">Add the included files from a StandardCollection.</div>
+<div class="block">Add the patterns from the StandardCollection as included patterns.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>collection</code> - the standard collection to add the includes from.</dd>
@@ -250,23 +253,23 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="addExcludedPatterns(java.lang.Iterable)">
 <h3>addExcludedPatterns</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></span>&nbsp;<span class="element-name">addExcludedPatterns</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;patterns)</span></div>
-<div class="block">Add the excluded file/directory patterns from an iterable of strings.</div>
+<div class="block">Add the patterns from collections of patterns as excluded patterns.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>patterns</code> - the strings to add to the excluded patterns.</dd>
+<dd><code>patterns</code> - the strings to that define patterns to be ecxcuded from processing.</dd>
 <dt>Returns:</dt>
 <dd>this</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="addExcludedFilter(org.apache.rat.document.DocumentNameMatcherSupplier)">
-<h3>addExcludedFilter</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></span>&nbsp;<span class="element-name">addExcludedFilter</span><wbr><span class="parameters">(<a href="../../document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a>&nbsp;matcherSupplier)</span></div>
-<div class="block">Add the excluded file/directory paths from a PathMatcherSupplier of strings.</div>
+<section class="detail" id="addExcludedMatcher(org.apache.rat.document.DocumentNameMatcher)">
+<h3>addExcludedMatcher</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></span>&nbsp;<span class="element-name">addExcludedMatcher</span><wbr><span class="parameters">(<a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;matcher)</span></div>
+<div class="block">Add the DocumentNameMatcher as an excluded pattern.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>matcherSupplier</code> - the supplier of the path matcher to add.</dd>
+<dd><code>matcher</code> - the DocumentNameMatcher to exclude.</dd>
 <dt>Returns:</dt>
 <dd>this</dd>
 </dl>
@@ -288,14 +291,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getNameMatcher(org.apache.rat.document.DocumentName)">
 <h3>getNameMatcher</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getNameMatcher</span><wbr><span class="parameters">(<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getNameMatcher</span><wbr><span class="parameters">(<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir)</span></div>
 <div class="block">Creates a Document name matcher that will return <code>false</code> on any
  document that is excluded.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>basedir</code> - the base directory to make everything relative to.</dd>
 <dt>Returns:</dt>
-<dd>A container of files, which are being checked.</dd>
+<dd>A DocumentNameMatcher that will return <code>false</code> for any document that is to be excluded.</dd>
 </dl>
 </section>
 </li>
@@ -308,7 +311,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

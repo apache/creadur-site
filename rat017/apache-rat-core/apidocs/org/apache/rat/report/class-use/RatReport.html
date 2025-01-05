@@ -85,7 +85,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../AbstractReport.html" class="type-name-link" title="class in org.apache.rat.report">AbstractReport</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Abstract base class for deriving implementations of <a href="../RatReport.html" title="interface in org.apache.rat.report"><code>RatReport</code></a>.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">use <a href="../RatReport.html" title="interface in org.apache.rat.report"><code>RatReport</code></a> directly.</div>
+</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../ConfigurationReport.html" class="type-name-link" title="class in org.apache.rat.report">ConfigurationReport</a></code></div>
@@ -117,7 +119,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../claim/AbstractClaimReporter.html" class="type-name-link" title="class in org.apache.rat.report.claim">AbstractClaimReporter</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Abstract base implementation of <a href="../AbstractReport.html" title="class in org.apache.rat.report"><code>AbstractReport</code></a>.</div>
+<div class="block">Abstract base implementation of <a href="../RatReport.html" title="interface in org.apache.rat.report"><code>RatReport</code></a>.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../claim/ClaimAggregator.html" class="type-name-link" title="class in org.apache.rat.report.claim">ClaimAggregator</a></code></div>
@@ -130,13 +132,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Executes a RatReport that multiplexes the running of multiple RatReports</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../claim/LicenseAddingReport.html" class="type-name-link" title="class in org.apache.rat.report.claim">LicenseAddingReport</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../claim/ClaimValidatorReport.html" class="type-name-link" title="class in org.apache.rat.report.claim">ClaimValidatorReport</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">A Report that adds licenses text to files.</div>
+<div class="block">A RatReport that publishes the results of the ClaimValidator.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../claim/SimpleXmlClaimReporter.html" class="type-name-link" title="class in org.apache.rat.report.claim">SimpleXmlClaimReporter</a></code></div>
+<div class="col-second even-row-color"><code><a href="../claim/LicenseAddingReport.html" class="type-name-link" title="class in org.apache.rat.report.claim">LicenseAddingReport</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">A Report that adds licenses text to files.</div>
+</div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../claim/SimpleXmlClaimReporter.html" class="type-name-link" title="class in org.apache.rat.report.claim">SimpleXmlClaimReporter</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">A claim reporter to write the XML document.</div>
 </div>
 </div>
@@ -200,6 +207,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Run a report over all files and directories in this DirectoryWalker,
  ignoring any files/directories set to be ignored.</div>
 </div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FileListWalker.</span><code><a href="../../walker/FileListWalker.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IReportableListWalker.</span><code><a href="../../walker/IReportableListWalker.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -208,7 +221,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

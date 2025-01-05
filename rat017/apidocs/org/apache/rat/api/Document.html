@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../document/ArchiveEntryDocument.html" title="class in org.apache.rat.document">ArchiveEntryDocument</a></code>, <code><a href="../document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></code></dd>
+<dd><code><a href="../document/ArchiveEntryDocument.html" title="class in org.apache.rat.document">ArchiveEntryDocument</a></code>, <code><a href="../document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></code>, <code><a href="../document/IgnoredDocument.html" title="class in org.apache.rat.document">IgnoredDocument</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Document</span>
@@ -137,7 +137,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <div class="col-last even-row-color">
 <div class="block">The fully qualified name of this document</div>
 </div>
-<div class="col-first odd-row-color"><code>protected final <a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-first odd-row-color"><code>protected final <a href="../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#nameMatcher" class="member-name-link">nameMatcher</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">The path matcher used by this document</div>
@@ -156,7 +156,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected </code></div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">Document</a><wbr>(<a href="../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;name,
- <a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+ <a href="../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance.</div>
 </div>
@@ -190,7 +190,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the name of the current document.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameMatcher()" class="member-name-link">getNameMatcher</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the file filter this document was created with.</div>
@@ -206,21 +206,26 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isDirectory()" class="member-name-link">isDirectory</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Determines if this Document is a directory type.</div>
+<div class="block">Determines if this document is a directory type.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="Document.html" title="class in org.apache.rat.api">Document</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#listChildren()" class="member-name-link">listChildren</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Gets a sorted set of Documents that are children of this document.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isIgnored()" class="member-name-link">isIgnored</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks if document is ignored or not.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#reader()" class="member-name-link">reader</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="Document.html" title="class in org.apache.rat.api">Document</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#listChildren()" class="member-name-link">listChildren</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Gets a sorted set of documents that are children of this document.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reader()" class="member-name-link">reader</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Reads the contents of this document.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Representations suitable for logging.</div>
 </div>
 </div>
@@ -243,7 +248,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <li>
 <section class="detail" id="nameMatcher">
 <h3>nameMatcher</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">nameMatcher</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">nameMatcher</span></div>
 <div class="block">The path matcher used by this document</div>
 </section>
 </li>
@@ -266,7 +271,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <section class="detail" id="&lt;init&gt;(org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentNameMatcher)">
 <h3>Document</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">Document</span><wbr><span class="parameters">(<a href="../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;name,
- <a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</span></div>
+ <a href="../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</span></div>
 <div class="block">Creates an instance.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -297,7 +302,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <li>
 <section class="detail" id="getNameMatcher()">
 <h3>getNameMatcher</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../document/DocumentNameMatcher.html" title="interface in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getNameMatcher</span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getNameMatcher</span>()</div>
 <div class="block">Gets the file filter this document was created with.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -338,14 +343,14 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <li>
 <section class="detail" id="reader()">
 <h3>reader</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a></span>&nbsp;<span class="element-name">reader</span>()
-                       throws <span class="exceptions"><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a></span>&nbsp;<span class="element-name">reader</span>()
+              throws <span class="exceptions"><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Reads the contents of this document.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><code>Reader</code> not null</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if this document cannot be read</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if this document cannot be read.</dd>
 </dl>
 </section>
 </li>
@@ -359,7 +364,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <dt>Returns:</dt>
 <dd>a non-null input stream of the document.</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - when stream could not be opened</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - when stream could not be opened.</dd>
 </dl>
 </section>
 </li>
@@ -371,6 +376,17 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a non-null MetaData object.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isIgnored()">
+<h3>isIgnored</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isIgnored</span>()</div>
+<div class="block">Checks if document is ignored or not.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the document is of type <code>IGNORED</code>.</dd>
 </dl>
 </section>
 </li>
@@ -392,7 +408,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <section class="detail" id="isDirectory()">
 <h3>isDirectory</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDirectory</span>()</div>
-<div class="block">Determines if this Document is a directory type.</div>
+<div class="block">Determines if this document is a directory type.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><code>true</code> if this is a directory.</dd>
@@ -403,7 +419,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 <section class="detail" id="listChildren()">
 <h3>listChildren</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="Document.html" title="class in org.apache.rat.api">Document</a>&gt;</span>&nbsp;<span class="element-name">listChildren</span>()</div>
-<div class="block">Gets a sorted set of Documents that are children of this document.</div>
+<div class="block">Gets a sorted set of documents that are children of this document.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>A sorted set of child Documents. May be empty.</dd>
@@ -419,7 +435,7 @@ implements <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparab
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

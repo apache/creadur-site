@@ -99,6 +99,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public enum </span><span class="element-name type-name-label">StandardCollection</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a>&gt;</span></div>
+<div class="block">Collection of standard excludes.
+ HINT: In order to work recursively each entry is prefixed with <code>"**\/"</code>.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -112,7 +114,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="#ALL" class="member-name-link">ALL</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">All the standard excludes combined</div>
+<div class="block">All the standard excludes combined.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#ARCH" class="member-name-link">ARCH</a></code></div>
 <div class="col-last odd-row-color">
@@ -176,7 +178,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><code><a href="#RCS" class="member-name-link">RCS</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">The files and directories created by a RCS source code control based tool.</div>
+<div class="block">The files and directories created by an RCS source code control based tool.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#SCCS" class="member-name-link">SCCS</a></code></div>
 <div class="col-last odd-row-color">
@@ -223,24 +225,26 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#desc()" class="member-name-link">desc</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#documentNameMatcherSupplier()" class="member-name-link">documentNameMatcherSupplier</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a><wbr>&lt;<a href="FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fileProcessor()" class="member-name-link">fileProcessor</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the documentNameMatchSupplier if it exists.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a><wbr>&lt;<a href="FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fileProcessor()" class="member-name-link">fileProcessor</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the fileProcessor if it exists.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasDocumentNameMatchSupplier()" class="member-name-link">hasDocumentNameMatchSupplier</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasStaticDocumentNameMatcher()" class="member-name-link">hasStaticDocumentNameMatcher</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns <code>true</code> if the collections has a document name match supplier.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#patterns()" class="member-name-link">patterns</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#patterns()" class="member-name-link">patterns</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns combined and deduped collection of patterns.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#staticDocumentNameMatcher()" class="member-name-link">staticDocumentNameMatcher</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the documentNameMatchSupplier if it exists.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -276,7 +280,7 @@ the order they are declared.</div>
 <section class="detail" id="ALL">
 <h3>ALL</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></span>&nbsp;<span class="element-name">ALL</span></div>
-<div class="block">All the standard excludes combined</div>
+<div class="block">All the standard excludes combined.</div>
 </section>
 </li>
 <li>
@@ -396,7 +400,7 @@ the order they are declared.</div>
 <section class="detail" id="RCS">
 <h3>RCS</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="StandardCollection.html" title="enum in org.apache.rat.config.exclusion">StandardCollection</a></span>&nbsp;<span class="element-name">RCS</span></div>
-<div class="block">The files and directories created by a RCS source code control based tool.</div>
+<div class="block">The files and directories created by an RCS source code control based tool.</div>
 </section>
 </li>
 <li>
@@ -500,7 +504,8 @@ not permitted.)</div>
 <li>
 <section class="detail" id="patterns()">
 <h3>patterns</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">patterns</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">patterns</span>()</div>
+<div class="block">Returns combined and deduped collection of patterns.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the combined and deduped collection of patterns in the given collection.</dd>
@@ -510,7 +515,7 @@ not permitted.)</div>
 <li>
 <section class="detail" id="fileProcessor()">
 <h3>fileProcessor</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a>&lt;<a href="FileProcessor.html" title="interface in org.apache.rat.config.exclusion">FileProcessor</a>&gt;</span>&nbsp;<span class="element-name">fileProcessor</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a>&lt;<a href="FileProcessor.html" title="class in org.apache.rat.config.exclusion">FileProcessor</a>&gt;</span>&nbsp;<span class="element-name">fileProcessor</span>()</div>
 <div class="block">Returns the fileProcessor if it exists.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -519,9 +524,9 @@ not permitted.)</div>
 </section>
 </li>
 <li>
-<section class="detail" id="documentNameMatcherSupplier()">
-<h3>documentNameMatcherSupplier</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../document/DocumentNameMatcherSupplier.html" title="interface in org.apache.rat.document">DocumentNameMatcherSupplier</a></span>&nbsp;<span class="element-name">documentNameMatcherSupplier</span>()</div>
+<section class="detail" id="staticDocumentNameMatcher()">
+<h3>staticDocumentNameMatcher</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">staticDocumentNameMatcher</span>()</div>
 <div class="block">Returns the documentNameMatchSupplier if it exists.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -530,9 +535,9 @@ not permitted.)</div>
 </section>
 </li>
 <li>
-<section class="detail" id="hasDocumentNameMatchSupplier()">
-<h3>hasDocumentNameMatchSupplier</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasDocumentNameMatchSupplier</span>()</div>
+<section class="detail" id="hasStaticDocumentNameMatcher()">
+<h3>hasStaticDocumentNameMatcher</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasStaticDocumentNameMatcher</span>()</div>
 <div class="block">Returns <code>true</code> if the collections has a document name match supplier.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -549,7 +554,7 @@ not permitted.)</div>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>
