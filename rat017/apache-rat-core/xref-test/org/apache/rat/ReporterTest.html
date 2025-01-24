@@ -340,7 +340,7 @@
 <a class="jxr_linenumber" name="L332" href="#L332">332</a>         configuration.setFrom(defaults);
 <a class="jxr_linenumber" name="L333" href="#L333">333</a>         DocumentName documentName = DocumentName.builder(elementsFile).build();
 <a class="jxr_linenumber" name="L334" href="#L334">334</a>         configuration.addSource(<strong class="jxr_keyword">new</strong> DirectoryWalker(<strong class="jxr_keyword">new</strong> FileDocument(documentName, elementsFile,
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>                 configuration.getNameMatcher(documentName))));
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>                 configuration.getDocumentExcluder(documentName))));
 <a class="jxr_linenumber" name="L336" href="#L336">336</a>         <strong class="jxr_keyword">return</strong> configuration;
 <a class="jxr_linenumber" name="L337" href="#L337">337</a>     }
 <a class="jxr_linenumber" name="L338" href="#L338">338</a> 

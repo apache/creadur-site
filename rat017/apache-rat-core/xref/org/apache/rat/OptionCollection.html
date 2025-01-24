@@ -257,10 +257,10 @@
 <a class="jxr_linenumber" name="L249" href="#L249">249</a>             DefaultLog.getInstance().error(<span class="jxr_string">"Directory '"</span> + documentName + <span class="jxr_string">"' does not exist."</span>);
 <a class="jxr_linenumber" name="L250" href="#L250">250</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L251" href="#L251">251</a>         }
-<a class="jxr_linenumber" name="L252" href="#L252">252</a>         <a name="DocumentNameMatcher" href="../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> documentNameMatcher = config.getNameMatcher(documentName);
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>         <a name="DocumentNameMatcher" href="../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> documentExcluder = config.getDocumentExcluder(documentName);
 <a class="jxr_linenumber" name="L253" href="#L253">253</a> 
-<a class="jxr_linenumber" name="L254" href="#L254">254</a>         <a name="Document" href="../../../org/apache/rat/api/Document.html#Document">Document</a> doc = <strong class="jxr_keyword">new</strong> <a name="FileDocument" href="../../../org/apache/rat/document/FileDocument.html#FileDocument">FileDocument</a>(documentName, absBase, documentNameMatcher);
-<a class="jxr_linenumber" name="L255" href="#L255">255</a>         <strong class="jxr_keyword">if</strong> (!documentNameMatcher.matches(doc.getName())) {
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>         <a name="Document" href="../../../org/apache/rat/api/Document.html#Document">Document</a> doc = <strong class="jxr_keyword">new</strong> <a name="FileDocument" href="../../../org/apache/rat/document/FileDocument.html#FileDocument">FileDocument</a>(documentName, absBase, documentExcluder);
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>         <strong class="jxr_keyword">if</strong> (!documentExcluder.matches(doc.getName())) {
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>             DefaultLog.getInstance().error(<span class="jxr_string">"Directory '"</span> + documentName + <span class="jxr_string">"' is in excluded list."</span>);
 <a class="jxr_linenumber" name="L257" href="#L257">257</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L258" href="#L258">258</a>         }

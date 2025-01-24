@@ -162,6 +162,17 @@ loadScripts(document, 'script');</script>
 <div class="block">An ILicense implementation that represents an unknown license.</div>
 </div>
 </div>
+<div class="caption"><span>Method parameters in <a href="../../analysis/package-summary.html">org.apache.rat.analysis</a> with type arguments of type <a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../document/DocumentAnalyser.html" title="interface in org.apache.rat.document">DocumentAnalyser</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AnalyserFactory.</span><code><a href="../../analysis/AnalyserFactory.html#createPolicy(java.util.function.Predicate)" class="member-name-link">createPolicy</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;approvalPredicate)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an analyser that adds the approved license predicate to the document metadata.</div>
+</div>
+</div>
 <div class="caption"><span>Constructor parameters in <a href="../../analysis/package-summary.html">org.apache.rat.analysis</a> with type arguments of type <a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier</div>
@@ -254,6 +265,11 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Remove matched licenses based on a predicate.</div>
 </div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">MetaData.</span><code><a href="../../api/MetaData.html#setApprovalPredicate(java.util.function.Predicate)" class="member-name-link">setApprovalPredicate</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;approvalPredicate)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets the set of approved licenses.</div>
+</div>
 </div>
 </section>
 </li>
@@ -311,22 +327,27 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenses</a><wbr>(<a href="../LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#getApprovedLicensePredicate()" class="member-name-link">getApprovedLicensePredicate</a>()</code></div>
 <div class="col-last even-row-color">
+<div class="block">Gets a predicate to filter for approved licenses.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenses</a><wbr>(<a href="../LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Gets the License objects based on the filter.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#search(java.lang.String,java.lang.String,java.util.SortedSet)" class="member-name-link">search</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyId,
+<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#search(java.lang.String,java.lang.String,java.util.SortedSet)" class="member-name-link">search</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyId,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Search a SortedSet of licenses for the matching license id.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#search(org.apache.rat.license.ILicense,java.util.SortedSet)" class="member-name-link">search</a><wbr>(<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;target,
+<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#search(org.apache.rat.license.ILicense,java.util.SortedSet)" class="member-name-link">search</a><wbr>(<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;target,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Search a SortedSet of licenses for the matching license.</div>
 </div>
 </div>

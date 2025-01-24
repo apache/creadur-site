@@ -83,9 +83,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#getNameMatcher(org.apache.rat.document.DocumentName)" class="member-name-link">getNameMatcher</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseDir)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#getDocumentExcluder(org.apache.rat.document.DocumentName)" class="member-name-link">getDocumentExcluder</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseDir)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Get the DocumentNameMatcher based on the directory.</div>
+<div class="block">Get the DocumentNameMatcher that excludes files found in the directory tree..</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../../package-summary.html">org.apache.rat</a> with parameters of type <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></span></div>
@@ -110,7 +110,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected final <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Document.</span><code><a href="../../api/Document.html#nameMatcher" class="member-name-link">nameMatcher</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Document.</span><code><a href="../../api/Document.html#nameExcluder" class="member-name-link">nameExcluder</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">The path matcher used by this document</div>
 </div>
@@ -121,7 +121,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>final <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Document.</span><code><a href="../../api/Document.html#getNameMatcher()" class="member-name-link">getNameMatcher</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Document.</span><code><a href="../../api/Document.html#getNameExcluder()" class="member-name-link">getNameExcluder</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Gets the file filter this document was created with.</div>
 </div>
@@ -133,7 +133,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected </code></div>
 <div class="col-second even-row-color"><code><a href="../../api/Document.html#%3Cinit%3E(org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">Document</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;name,
- <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+ <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameExcluder)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates an instance.</div>
 </div>
@@ -314,14 +314,14 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../FileDocument.html#%3Cinit%3E(java.io.File,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">FileDocument</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
- <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+ <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameExcluder)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates a File document where the baseDir is the root directory.</div>
 </div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../FileDocument.html#%3Cinit%3E(org.apache.rat.document.DocumentName,java.io.File,org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">FileDocument</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
- <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameMatcher)</code></div>
+ <a href="../DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;nameExcluder)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Creates a File document.</div>
 </div>

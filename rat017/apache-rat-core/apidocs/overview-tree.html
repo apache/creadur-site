@@ -73,7 +73,6 @@ loadScripts(document, 'script');</script>
 <li><a href="org/apache/rat/header/package-tree.html">org.apache.rat.header</a>, </li>
 <li><a href="org/apache/rat/help/package-tree.html">org.apache.rat.help</a>, </li>
 <li><a href="org/apache/rat/license/package-tree.html">org.apache.rat.license</a>, </li>
-<li><a href="org/apache/rat/policy/package-tree.html">org.apache.rat.policy</a>, </li>
 <li><a href="org/apache/rat/report/package-tree.html">org.apache.rat.report</a>, </li>
 <li><a href="org/apache/rat/report/claim/package-tree.html">org.apache.rat.report.claim</a>, </li>
 <li><a href="org/apache/rat/report/xml/package-tree.html">org.apache.rat.report.xml</a>, </li>
@@ -138,6 +137,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">org.apache.rat.report.<a href="org/apache/rat/report/AbstractReport.html" class="type-name-link" title="class in org.apache.rat.report">AbstractReport</a> (implements org.apache.rat.report.<a href="org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>)</li>
+<li class="circle">org.apache.rat.analysis.<a href="org/apache/rat/analysis/AnalyserFactory.html" class="type-name-link" title="class in org.apache.rat.analysis">AnalyserFactory</a></li>
 <li class="circle">org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.StdMsgs.html" class="type-name-link" title="class in org.apache.rat.commandline">Arg.StdMsgs</a></li>
 <li class="circle">org.apache.rat.commandline.<a href="org/apache/rat/commandline/ArgumentContext.html" class="type-name-link" title="class in org.apache.rat.commandline">ArgumentContext</a></li>
 <li class="circle">org.apache.rat.analysis.license.<a href="org/apache/rat/analysis/license/BaseLicense.html" class="type-name-link" title="class in org.apache.rat.analysis.license">BaseLicense</a> (implements org.apache.rat.analysis.license.<a href="org/apache/rat/analysis/license/DeprecatedConfig.html" title="interface in org.apache.rat.analysis.license">DeprecatedConfig</a>)
@@ -153,9 +153,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">org.apache.rat.report.claim.<a href="org/apache/rat/report/claim/ClaimValidatorReport.html" class="type-name-link" title="class in org.apache.rat.report.claim">ClaimValidatorReport</a> (implements org.apache.rat.report.<a href="org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>)</li>
 <li class="circle">org.apache.rat.report.<a href="org/apache/rat/report/ConfigurationReport.html" class="type-name-link" title="class in org.apache.rat.report">ConfigurationReport</a> (implements org.apache.rat.report.<a href="org/apache/rat/report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>)</li>
 <li class="circle">org.apache.rat.commandline.<a href="org/apache/rat/commandline/Converters.html" class="type-name-link" title="class in org.apache.rat.commandline">Converters</a></li>
-<li class="circle">org.apache.rat.analysis.<a href="org/apache/rat/analysis/DefaultAnalyserFactory.html" class="type-name-link" title="class in org.apache.rat.analysis">DefaultAnalyserFactory</a></li>
 <li class="circle">org.apache.rat.utils.<a href="org/apache/rat/utils/DefaultLog.html" class="type-name-link" title="class in org.apache.rat.utils">DefaultLog</a> (implements org.apache.rat.utils.<a href="org/apache/rat/utils/Log.html" title="interface in org.apache.rat.utils">Log</a>)</li>
-<li class="circle">org.apache.rat.policy.<a href="org/apache/rat/policy/DefaultPolicy.html" class="type-name-link" title="class in org.apache.rat.policy">DefaultPolicy</a> (implements org.apache.rat.document.<a href="org/apache/rat/document/IDocumentAnalyser.html" title="interface in org.apache.rat.document">IDocumentAnalyser</a>)</li>
 <li class="circle">org.apache.rat.<a href="org/apache/rat/Defaults.html" class="type-name-link" title="class in org.apache.rat">Defaults</a></li>
 <li class="circle">org.apache.rat.<a href="org/apache/rat/Defaults.Builder.html" class="type-name-link" title="class in org.apache.rat">Defaults.Builder</a></li>
 <li class="circle">org.apache.rat.<a href="org/apache/rat/DeprecationReporter.html" class="type-name-link" title="class in org.apache.rat">DeprecationReporter</a></li>
@@ -168,7 +166,6 @@ loadScripts(document, 'script');</script>
 <li class="circle">org.apache.rat.document.<a href="org/apache/rat/document/IgnoredDocument.html" class="type-name-link" title="class in org.apache.rat.document">IgnoredDocument</a></li>
 </ul>
 </li>
-<li class="circle">org.apache.rat.document.<a href="org/apache/rat/document/DocumentAnalyserMultiplexer.html" class="type-name-link" title="class in org.apache.rat.document">DocumentAnalyserMultiplexer</a> (implements org.apache.rat.document.<a href="org/apache/rat/document/IDocumentAnalyser.html" title="interface in org.apache.rat.document">IDocumentAnalyser</a>)</li>
 <li class="circle">org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" class="type-name-link" title="class in org.apache.rat.document">DocumentName</a> (implements java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;T&gt;)</li>
 <li class="circle">org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" class="type-name-link" title="class in org.apache.rat.document">DocumentName.Builder</a></li>
 <li class="circle">org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" class="type-name-link" title="class in org.apache.rat.document">DocumentNameMatcher</a></li>
@@ -286,7 +283,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">org.apache.rat.analysis.license.<a href="org/apache/rat/analysis/license/DeprecatedConfig.html" class="type-name-link" title="interface in org.apache.rat.analysis.license">DeprecatedConfig</a></li>
-<li class="circle">org.apache.rat.document.<a href="org/apache/rat/document/IDocumentAnalyser.html" class="type-name-link" title="interface in org.apache.rat.document">IDocumentAnalyser</a></li>
+<li class="circle">org.apache.rat.document.<a href="org/apache/rat/document/DocumentAnalyser.html" class="type-name-link" title="interface in org.apache.rat.document">DocumentAnalyser</a></li>
 <li class="circle">org.apache.rat.analysis.<a href="org/apache/rat/analysis/IHeaderMatcher.html" class="type-name-link" title="interface in org.apache.rat.analysis">IHeaderMatcher</a>
 <ul>
 <li class="circle">org.apache.rat.license.<a href="org/apache/rat/license/ILicense.html" class="type-name-link" title="interface in org.apache.rat.license">ILicense</a> (also extends java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;T&gt;)</li>

@@ -171,19 +171,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Adds a license to the list of licenses.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicenseCategory(java.lang.String)" class="member-name-link">addLicenseCategory</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicenses(java.util.Collection)" class="member-name-link">addLicenses</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds a license family category (id) to the list of approved licenses</div>
+<div class="block">Adds multiple licenses to the list of licenses.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicenseId(java.lang.String)" class="member-name-link">addLicenseId</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#approveLicenseCategory(java.lang.String)" class="member-name-link">approveLicenseCategory</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a license family category (id) to the list of approved licenses</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicenses(java.util.Collection)" class="member-name-link">addLicenses</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#approveLicenseId(java.lang.String)" class="member-name-link">approveLicenseId</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds multiple licenses to the list of licenses.</div>
+<div class="block">Adds a license family category (id) to the list of approved licenses</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#familyDuplicateOption(org.apache.rat.utils.ReportingSet.Options)" class="member-name-link">familyDuplicateOption</a><wbr>(<a href="../utils/ReportingSet.Options.html" title="enum in org.apache.rat.utils">ReportingSet.Options</a>&nbsp;state)</code></div>
@@ -202,62 +202,67 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Search a SortedSet of ILicenseFamily instances looking for a matching instance.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseCategories(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseCategories</a><wbr>(<a href="LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a><wbr>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getApprovedLicensePredicate()" class="member-name-link">getApprovedLicensePredicate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets a predicate to filter for approved licenses.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseCategories(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseCategories</a><wbr>(<a href="LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the License ids based on the filter.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseFamilies(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseFamilies</a><wbr>(<a href="LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseFamilies(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseFamilies</a><wbr>(<a href="LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the LicenseFamily objects based on the filter.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseIds(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseIds</a><wbr>(<a href="LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseIds(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseIds</a><wbr>(<a href="LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the License ids based on the filter.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenses</a><wbr>(<a href="LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenses</a><wbr>(<a href="LicenseSetFactory.LicenseFilter.html" title="enum in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the License objects based on the filter.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#licenseDuplicateOption(org.apache.rat.utils.ReportingSet.Options)" class="member-name-link">licenseDuplicateOption</a><wbr>(<a href="../utils/ReportingSet.Options.html" title="enum in org.apache.rat.utils">ReportingSet.Options</a>&nbsp;state)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#licenseDuplicateOption(org.apache.rat.utils.ReportingSet.Options)" class="member-name-link">licenseDuplicateOption</a><wbr>(<a href="../utils/ReportingSet.Options.html" title="enum in org.apache.rat.utils">ReportingSet.Options</a>&nbsp;state)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the reporting option for duplicate licenses.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logFamilyCollisions(org.apache.rat.utils.Log.Level)" class="member-name-link">logFamilyCollisions</a><wbr>(<a href="../utils/Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logFamilyCollisions(org.apache.rat.utils.Log.Level)" class="member-name-link">logFamilyCollisions</a><wbr>(<a href="../utils/Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the log level for reporting collisions in the set of license families.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logLicenseCollisions(org.apache.rat.utils.Log.Level)" class="member-name-link">logLicenseCollisions</a><wbr>(<a href="../utils/Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logLicenseCollisions(org.apache.rat.utils.Log.Level)" class="member-name-link">logLicenseCollisions</a><wbr>(<a href="../utils/Log.Level.html" title="enum in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the log level for reporting license collisions.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeLicenseCategory(java.lang.String)" class="member-name-link">removeLicenseCategory</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeLicenseCategory(java.lang.String)" class="member-name-link">removeLicenseCategory</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a license family category (id) to the list of approved licenses</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeLicenseId(java.lang.String)" class="member-name-link">removeLicenseId</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeLicenseId(java.lang.String)" class="member-name-link">removeLicenseId</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Removes a license ID from the list of approved licenses.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#search(java.lang.String,java.lang.String,java.util.SortedSet)" class="member-name-link">search</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyId,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#search(java.lang.String,java.lang.String,java.util.SortedSet)" class="member-name-link">search</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyId,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Search a SortedSet of licenses for the matching license id.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#search(org.apache.rat.license.ILicense,java.util.SortedSet)" class="member-name-link">search</a><wbr>(<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;target,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#search(org.apache.rat.license.ILicense,java.util.SortedSet)" class="member-name-link">search</a><wbr>(<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;target,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Search a SortedSet of licenses for the matching license.</div>
 </div>
 </div>
@@ -450,9 +455,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addLicenseCategory(java.lang.String)">
-<h3>addLicenseCategory</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addLicenseCategory</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</span></div>
+<section class="detail" id="approveLicenseCategory(java.lang.String)">
+<h3>approveLicenseCategory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">approveLicenseCategory</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</span></div>
 <div class="block">Adds a license family category (id) to the list of approved licenses</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -472,9 +477,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addLicenseId(java.lang.String)">
-<h3>addLicenseId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addLicenseId</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId)</span></div>
+<section class="detail" id="approveLicenseId(java.lang.String)">
+<h3>approveLicenseId</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">approveLicenseId</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId)</span></div>
 <div class="block">Adds a license family category (id) to the list of approved licenses</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -490,6 +495,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>licenseId</code> - the license ID to remove.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getApprovedLicensePredicate()">
+<h3>getApprovedLicensePredicate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</span>&nbsp;<span class="element-name">getApprovedLicensePredicate</span>()</div>
+<div class="block">Gets a predicate to filter for approved licenses.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a predicate that returns <code>true</code> if the license is approved.</dd>
 </dl>
 </section>
 </li>
@@ -526,7 +542,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the License ids based on the filter.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>filter</code> - the types of License IDs to return.</dd>
+<dd><code>filter</code> - the types of License Ids to return.</dd>
 <dt>Returns:</dt>
 <dd>The list of all licenses in the category regardless of whether or not it is used by an ILicense implementation.</dd>
 </dl>
@@ -539,7 +555,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Gets the License ids based on the filter.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>filter</code> - the types of License IDs to return.</dd>
+<dd><code>filter</code> - the types of License Ids to return.</dd>
 <dt>Returns:</dt>
 <dd>The list of all licenses in the category regardless of whether or not it is used by an ILicense implementation.</dd>
 </dl>
@@ -570,7 +586,7 @@ loadScripts(document, 'script');</script>
  License must match both family code, and license id.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>target</code> - the license to search for. Must not be null.</dd>
+<dd><code>target</code> - the license to search for. Must not be <code>null</code>.</dd>
 <dd><code>licenses</code> - the SortedSet of licenses to search.</dd>
 <dt>Returns:</dt>
 <dd>the matching license or <code>null</code> if not found.</dd>
