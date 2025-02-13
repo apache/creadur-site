@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
-<script type="text/javascript" src="../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-use-page">
@@ -107,13 +107,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#parseCommands(java.lang.String%5B%5D,java.util.function.Consumer)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args,
+<div class="col-second even-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Parses the standard options to create a ReportConfiguration.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#parseCommands(java.lang.String%5B%5D,java.util.function.Consumer,boolean)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args,
+<div class="col-second odd-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer,boolean)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd,
  boolean&nbsp;noArgs)</code></div>
 <div class="col-last odd-row-color">
@@ -153,10 +155,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../document/IDocumentAnalyser.html" title="interface in org.apache.rat.document">IDocumentAnalyser</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DefaultAnalyserFactory.</span><code><a href="../analysis/DefaultAnalyserFactory.html#createDefaultAnalyser(org.apache.rat.ReportConfiguration)" class="member-name-link">createDefaultAnalyser</a><wbr>(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-first even-row-color"><code>static <a href="../document/DocumentAnalyser.html" title="interface in org.apache.rat.document">DocumentAnalyser</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AnalyserFactory.</span><code><a href="../analysis/AnalyserFactory.html#createConfiguredAnalyser(org.apache.rat.ReportConfiguration)" class="member-name-link">createConfiguredAnalyser</a><wbr>(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a DocumentAnalyser from a collection of ILicenses.</div>
+<div class="block">Creates a DocumentAnalyser from the report configuration.</div>
 </div>
 </div>
 </section>
@@ -213,10 +215,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../commandline/ArgumentContext.html#%3Cinit%3E(org.apache.rat.ReportConfiguration,org.apache.commons.cli.CommandLine)" class="member-name-link">ArgumentContext</a><wbr>(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration,
+<div class="col-second even-row-color"><code><a href="../commandline/ArgumentContext.html#%3Cinit%3E(java.io.File,org.apache.rat.ReportConfiguration,org.apache.commons.cli.CommandLine)" class="member-name-link">ArgumentContext</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
+ <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration,
  org.apache.commons.cli.CommandLine&nbsp;commandLine)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Constructor.</div>
+<div class="block">Creates a context with the specified configuration.</div>
 </div>
 </div>
 </section>
@@ -338,7 +341,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

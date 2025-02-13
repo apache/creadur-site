@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-use-page">
@@ -73,7 +73,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#builder()" class="member-name-link">builder</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a Builder with directory separator and case sensitivity based on the local file system.</div>
+<div class="block">Creates a Builder with the default file system info.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#builder(java.io.File)" class="member-name-link">builder</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
@@ -81,9 +81,19 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a builder from a File.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#builder(org.apache.rat.document.DocumentName)" class="member-name-link">builder</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#builder(java.nio.file.FileSystem)" class="member-name-link">builder</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/FileSystem.html" title="class or interface in java.nio.file" class="external-link">FileSystem</a>&nbsp;fileSystem)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a Builder from a document name.</div>
+<div class="block">Creates a builder for the specified file system.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#builder(org.apache.rat.document.DocumentName)" class="member-name-link">builder</a><wbr>(<a href="../DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a builder from a document name.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DocumentName.</span><code><a href="../DocumentName.html#builder(org.apache.rat.document.DocumentName.FSInfo)" class="member-name-link">builder</a><wbr>(<a href="../DocumentName.FSInfo.html" title="class in org.apache.rat.document">DocumentName.FSInfo</a>&nbsp;fsInfo)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a builder with the specified FSInfo instance.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">DocumentName.Builder.</span><code><a href="../DocumentName.Builder.html#setBaseName(java.io.File)" class="member-name-link">setBaseName</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
@@ -101,16 +111,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the basename from the <code>name</code> of the specified DocumentName.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DocumentName.Builder.</span><code><a href="../DocumentName.Builder.html#setCaseSensitive(boolean)" class="member-name-link">setCaseSensitive</a><wbr>(boolean&nbsp;isCaseSensitive)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Sets the <a href="../DocumentName.html#isCaseSensitive()"><code>DocumentName.isCaseSensitive()</code></a> flag.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DocumentName.Builder.</span><code><a href="../DocumentName.Builder.html#setDirSeparator(java.lang.String)" class="member-name-link">setDirSeparator</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dirSeparator)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Sets the directory separator.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DocumentName.Builder.</span><code><a href="../DocumentName.Builder.html#setName(java.io.File)" class="member-name-link">setName</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Sets the properties from the file.</div>
@@ -118,7 +118,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">DocumentName.Builder.</span><code><a href="../DocumentName.Builder.html#setName(java.lang.String)" class="member-name-link">setName</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Sets the name for this DocumentName.</div>
+<div class="block">Sets the name for this DocumentName relative to the baseName.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DocumentName.Builder.</span><code><a href="../DocumentName.Builder.html#setRoot(java.lang.String)" class="member-name-link">setRoot</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;root)</code></div>
@@ -133,7 +133,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
+<p class="legal-copy"><small>Copyright &#169; 2006&#x2013;2025 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</small></p>
 </footer>
 </div>
 </div>

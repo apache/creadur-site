@@ -31,7 +31,7 @@
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.api.Document;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.api.RatException;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.IDocumentAnalyser;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.DocumentAnalyser;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.RatDocumentAnalysisException;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.RatReport;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.xml.XmlElements;
@@ -42,7 +42,7 @@
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> */</em>
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ClaimReporterMultiplexer" href="../../../../../org/apache/rat/report/claim/ClaimReporterMultiplexer.html#ClaimReporterMultiplexer">ClaimReporterMultiplexer</a> <strong class="jxr_keyword">implements</strong> <a name="RatReport" href="../../../../../org/apache/rat/report/RatReport.html#RatReport">RatReport</a> {
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>      <em class="jxr_javadoccomment">/** The document analyser to use */</em>
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a name="IDocumentAnalyser" href="../../../../../org/apache/rat/document/IDocumentAnalyser.html#IDocumentAnalyser">IDocumentAnalyser</a> analyser;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a name="DocumentAnalyser" href="../../../../../org/apache/rat/document/DocumentAnalyser.html#DocumentAnalyser">DocumentAnalyser</a> analyser;
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <em class="jxr_javadoccomment">/** A list of reports that are being updated */</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> List&lt;? <strong class="jxr_keyword">extends</strong> RatReport&gt; reporters;
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>      <em class="jxr_javadoccomment">/** If {@code true} this is a dry run do not generate report */</em>
@@ -56,7 +56,7 @@
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     * @param analyser the analyser to use.</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment">     * @param reporters the reports to execute.</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">public</strong> <a name="ClaimReporterMultiplexer" href="../../../../../org/apache/rat/report/claim/ClaimReporterMultiplexer.html#ClaimReporterMultiplexer">ClaimReporterMultiplexer</a>(<strong class="jxr_keyword">final</strong> <a name="IXmlWriter" href="../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html#IXmlWriter">IXmlWriter</a> writer, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> dryRun, <strong class="jxr_keyword">final</strong> <a name="IDocumentAnalyser" href="../../../../../org/apache/rat/document/IDocumentAnalyser.html#IDocumentAnalyser">IDocumentAnalyser</a> analyser,
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>      <strong class="jxr_keyword">public</strong> <a name="ClaimReporterMultiplexer" href="../../../../../org/apache/rat/report/claim/ClaimReporterMultiplexer.html#ClaimReporterMultiplexer">ClaimReporterMultiplexer</a>(<strong class="jxr_keyword">final</strong> <a name="IXmlWriter" href="../../../../../org/apache/rat/report/xml/writer/IXmlWriter.html#IXmlWriter">IXmlWriter</a> writer, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> dryRun, <strong class="jxr_keyword">final</strong> <a name="DocumentAnalyser" href="../../../../../org/apache/rat/document/DocumentAnalyser.html#DocumentAnalyser">DocumentAnalyser</a> analyser,
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>                                      <strong class="jxr_keyword">final</strong> List&lt;? <strong class="jxr_keyword">extends</strong> RatReport&gt; reporters) {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>          <strong class="jxr_keyword">this</strong>.analyser  = analyser;
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>          <strong class="jxr_keyword">this</strong>.reporters = reporters;
@@ -98,6 +98,6 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  }
 </pre>
 <hr/>
-<div id="footer">© 2006–2024 <a href="https://www.apache.org">Apache Software Foundation</a></div>
+<div id="footer">© 2006–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>
 </body>
 </html>
