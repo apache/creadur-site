@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-use-page">
@@ -59,6 +59,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Classes that manage the inclusion and exclusion of files.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.config.exclusion.fileProcessors">org.apache.rat.config.exclusion.fileProcessors</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Custom file processors to handles exclusions defined in various formats.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -86,6 +90,94 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">MatcherSet.</span><code><a href="../MatcherSet.html#merge(java.util.List)" class="member-name-link">merge</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSets)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.config.exclusion.fileProcessors">
+<h2>Uses of <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a> in <a href="../fileProcessors/package-summary.html">org.apache.rat.config.exclusion.fileProcessors</a></h2>
+<div class="caption"><span>Methods in <a href="../fileProcessors/package-summary.html">org.apache.rat.config.exclusion.fileProcessors</a> that return <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractFileProcessorBuilder.</span><code><a href="../fileProcessors/AbstractFileProcessorBuilder.html#process(java.util.function.Consumer,org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;root,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Process by reading the file, creating a MatcherSet, and adding it to the
+ matcherSets.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CVSIgnoreBuilder.</span><code><a href="../fileProcessors/CVSIgnoreBuilder.html#process(java.util.function.Consumer,org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;root,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">HgIgnoreBuilder.</span><code><a href="../fileProcessors/HgIgnoreBuilder.html#process(java.util.function.Consumer,org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;root,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../fileProcessors/package-summary.html">org.apache.rat.config.exclusion.fileProcessors</a> that return types with arguments of type <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>final <a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractFileProcessorBuilder.</span><code><a href="../fileProcessors/AbstractFileProcessorBuilder.html#build(org.apache.rat.document.DocumentName)" class="member-name-link">build</a><wbr>(<a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;root)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Builder the list of MatcherSet that define the inclusions/exclusions for the file processor.</div>
+</div>
+</div>
+<div class="caption"><span>Method parameters in <a href="../fileProcessors/package-summary.html">org.apache.rat.config.exclusion.fileProcessors</a> with type arguments of type <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractFileProcessorBuilder.</span><code><a href="../fileProcessors/AbstractFileProcessorBuilder.html#modifyEntry(java.util.function.Consumer,org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Allows modification of the file entry to match the <a href="../plexus/MatchPattern.html" title="class in org.apache.rat.config.exclusion.plexus"><code>MatchPattern</code></a> format.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">BazaarIgnoreBuilder.</span><code><a href="../fileProcessors/BazaarIgnoreBuilder.html#modifyEntry(java.util.function.Consumer,org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseName,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">GitIgnoreBuilder.</span><code><a href="../fileProcessors/GitIgnoreBuilder.html#modifyEntry(java.util.function.Consumer,org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Convert the string entry.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">HgIgnoreBuilder.</span><code><a href="../fileProcessors/HgIgnoreBuilder.html#modifyEntry(java.util.function.Consumer,org.apache.rat.document.DocumentName,java.lang.String)" class="member-name-link">modifyEntry</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName,
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;entry)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractFileProcessorBuilder.</span><code><a href="../fileProcessors/AbstractFileProcessorBuilder.html#process(java.util.function.Consumer,org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;root,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Process by reading the file, creating a MatcherSet, and adding it to the
+ matcherSets.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CVSIgnoreBuilder.</span><code><a href="../fileProcessors/CVSIgnoreBuilder.html#process(java.util.function.Consumer,org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;root,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected <a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">HgIgnoreBuilder.</span><code><a href="../fileProcessors/HgIgnoreBuilder.html#process(java.util.function.Consumer,org.apache.rat.document.DocumentName,org.apache.rat.document.DocumentName)" class="member-name-link">process</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../MatcherSet.html" title="interface in org.apache.rat.config.exclusion">MatcherSet</a>&gt;&nbsp;matcherSetConsumer,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;root,
+ <a href="../../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;documentName)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

@@ -89,7 +89,7 @@
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">super</strong>(BaseAntTask.unsupportedArgs(), testPath.toFile());
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>          }
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>  
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>          <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> ReportConfiguration generateConfig(List&lt;Pair&lt;Option, String[]&gt;&gt; args) {
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          <strong class="jxr_keyword">protected</strong> ReportConfiguration generateConfig(<strong class="jxr_keyword">final</strong> List&lt;Pair&lt;Option, String[]&gt;&gt; args) {
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>              BuildTask task = args.get(0).getKey() == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">new</strong> BuildTask() : <strong class="jxr_keyword">new</strong> BuildTask(args.get(0).getKey());
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>              task.setUp(args);
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>              task.buildRule.executeTarget(task.name);

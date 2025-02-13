@@ -61,184 +61,168 @@
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.lang.String.format;
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Assertions.assertThat;
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.fail;
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.assertj.core.api.Fail.fail;
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="OptionCollectionTest" href="../../../org/apache/rat/OptionCollectionTest.html#OptionCollectionTest">OptionCollectionTest</a> {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>  
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>      @TempDir
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>      <strong class="jxr_keyword">static</strong> Path testPath;
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>  
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>      @AfterAll
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> preserveData() {
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          AbstractOptionsProvider.preserveData(testPath.toFile(), <span class="jxr_string">"optionTest"</span>);
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>      }
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>  
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * The base directory for the test.</em>
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     * We do not use TempFile because we want the evidence of the run</em>
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>  <em class="jxr_javadoccomment">     * to exist after a failure.</em>
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> File baseDir;
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>      @TempDir
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>      <strong class="jxr_keyword">static</strong> Path testPath;
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>  
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>      @AfterAll
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> preserveData() {
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          AbstractOptionsProvider.preserveData(testPath.toFile(), <span class="jxr_string">"optionTest"</span>);
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     * Defines the test method that is stored in a map.</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>      @FunctionalInterface
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> OptionTest {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">void</strong> test();
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>      }
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment">     * Constructor.</em>
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>      <strong class="jxr_keyword">public</strong> <a name="OptionCollectionTest" href="../../../org/apache/rat/OptionCollectionTest.html#OptionCollectionTest">OptionCollectionTest</a>() {
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          baseDir = <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"target/optionTools"</span>);
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>          baseDir.mkdirs();
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      }
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">     * Defines the test method that is stored in a map.</em>
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>      @FunctionalInterface
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">interface</strong> OptionTest {
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>          <strong class="jxr_keyword">void</strong> test();
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>      }
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>  
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>      <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     * This method is a known workaround for</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">     * {@link &lt;a href="<a href="https://github.com/junit-team/junit5/issues/2811" target="alexandria_uri">https://github.com/junit-team/junit5/issues/2811</a>"&gt;junit 5 issue #2811&lt;/a&gt; }.</em>
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>      @AfterEach
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      @EnabledOnOs(OS.WINDOWS)
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>      <strong class="jxr_keyword">void</strong> cleanUp() {
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          System.gc();
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>      }
-<a class="jxr_linenumber" name="L100" href="#L100">100</a> 
-<a class="jxr_linenumber" name="L101" href="#L101">101</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L102" href="#L102">102</a> <em class="jxr_javadoccomment">     * Returns the command line format (with '--' prefix) for the Option.</em>
-<a class="jxr_linenumber" name="L103" href="#L103">103</a> <em class="jxr_javadoccomment">     * @param opt the option to process.</em>
-<a class="jxr_linenumber" name="L104" href="#L104">104</a> <em class="jxr_javadoccomment">     * @return the command line option.</em>
-<a class="jxr_linenumber" name="L105" href="#L105">105</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L106" href="#L106">106</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String longOpt(Option opt) {
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"--"</span> + opt.getLongOpt();
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>     }
-<a class="jxr_linenumber" name="L109" href="#L109">109</a> 
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>     @Test
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDeprecatedUseLogged() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>         <a name="TestingLog" href="../../../org/apache/rat/testhelpers/TestingLog.html#TestingLog">TestingLog</a> log = <strong class="jxr_keyword">new</strong> <a name="TestingLog" href="../../../org/apache/rat/testhelpers/TestingLog.html#TestingLog">TestingLog</a>();
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment">     * This method is a known workaround for</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">     * {@link &lt;a href="<a href="https://github.com/junit-team/junit5/issues/2811" target="alexandria_uri">https://github.com/junit-team/junit5/issues/2811</a>"&gt;junit 5 issue #2811&lt;/a&gt; }.</em>
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>      @AfterEach
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>      @EnabledOnOs(OS.WINDOWS)
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>      <strong class="jxr_keyword">void</strong> cleanUp() {
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          System.gc();
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      }
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">     * Returns the command line format (with '--' prefix) for the Option.</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">     * @param opt the option to process.</em>
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_javadoccomment">     * @return the command line option.</em>
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String longOpt(Option opt) {
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          <strong class="jxr_keyword">return</strong> <span class="jxr_string">"--"</span> + opt.getLongOpt();
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      }
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>  
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>      @Test
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDeprecatedUseLogged() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>          <a name="TestingLog" href="../../../org/apache/rat/testhelpers/TestingLog.html#TestingLog">TestingLog</a> log = <strong class="jxr_keyword">new</strong> <a name="TestingLog" href="../../../org/apache/rat/testhelpers/TestingLog.html#TestingLog">TestingLog</a>();
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>              DefaultLog.setInstance(log);
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>              String[] args = {<span class="jxr_string">"--dir"</span>, <span class="jxr_string">"target"</span>, <span class="jxr_string">"-a"</span>};
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>             ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), args, o -&gt; fail(<span class="jxr_string">"Help printed"</span>), <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L101" href="#L101">101</a>             assertThat(config).isNotNull();
+<a class="jxr_linenumber" name="L102" href="#L102">102</a>         } <strong class="jxr_keyword">finally</strong> {
+<a class="jxr_linenumber" name="L103" href="#L103">103</a>             DefaultLog.setInstance(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         }
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>         log.assertContainsExactly(1, <span class="jxr_string">"WARN: Option [-d, --dir] used. Deprecated for removal since 0.17: Use the standard '--'"</span>);
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         log.assertContainsExactly(1, <span class="jxr_string">"WARN: Option [-a] used. Deprecated for removal since 0.17: Use --edit-license"</span>);
+<a class="jxr_linenumber" name="L107" href="#L107">107</a>     }
+<a class="jxr_linenumber" name="L108" href="#L108">108</a> 
+<a class="jxr_linenumber" name="L109" href="#L109">109</a>     @Test
+<a class="jxr_linenumber" name="L110" href="#L110">110</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDirOptionCapturesDirectoryToScan() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L111" href="#L111">111</a>         <a name="TestingLog" href="../../../org/apache/rat/testhelpers/TestingLog.html#TestingLog">TestingLog</a> log = <strong class="jxr_keyword">new</strong> <a name="TestingLog" href="../../../org/apache/rat/testhelpers/TestingLog.html#TestingLog">TestingLog</a>();
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         ReportConfiguration config;
 <a class="jxr_linenumber" name="L113" href="#L113">113</a>         <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L114" href="#L114">114</a>             DefaultLog.setInstance(log);
-<a class="jxr_linenumber" name="L115" href="#L115">115</a>             String[] args = {<span class="jxr_string">"--dir"</span>, <span class="jxr_string">"target"</span>, <span class="jxr_string">"-a"</span>};
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>             ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), args, o -&gt; fail(<span class="jxr_string">"Help printed"</span>), <strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L117" href="#L117">117</a>             assertThat(config).isNotNull();
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>             String[] args = {<span class="jxr_string">"--dir"</span>, testPath.toFile().getAbsolutePath()};
+<a class="jxr_linenumber" name="L116" href="#L116">116</a>             config = OptionCollection.parseCommands(testPath.toFile(), args, (o) -&gt; {
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>             }, <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L118" href="#L118">118</a>         } <strong class="jxr_keyword">finally</strong> {
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>             DefaultLog.setInstance(<strong class="jxr_keyword">null</strong>);
 <a class="jxr_linenumber" name="L120" href="#L120">120</a>         }
-<a class="jxr_linenumber" name="L121" href="#L121">121</a>         log.assertContainsExactly(1, <span class="jxr_string">"WARN: Option [-d, --dir] used. Deprecated for removal since 0.17: Use the standard '--'"</span>);
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>         log.assertContainsExactly(1, <span class="jxr_string">"WARN: Option [-a] used. Deprecated for removal since 0.17: Use --edit-license"</span>);
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>         assertThat(config).isNotNull();
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>         log.assertContainsExactly(1,<span class="jxr_string">"WARN: Option [-d, --dir] used. Deprecated for removal since 0.17: Use the standard '--'"</span>);
 <a class="jxr_linenumber" name="L123" href="#L123">123</a>     }
 <a class="jxr_linenumber" name="L124" href="#L124">124</a> 
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>     @Test
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDirOptionCapturesDirectoryToScan() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L127" href="#L127">127</a>         <a name="TestingLog" href="../../../org/apache/rat/testhelpers/TestingLog.html#TestingLog">TestingLog</a> log = <strong class="jxr_keyword">new</strong> <a name="TestingLog" href="../../../org/apache/rat/testhelpers/TestingLog.html#TestingLog">TestingLog</a>();
-<a class="jxr_linenumber" name="L128" href="#L128">128</a>         ReportConfiguration config;
-<a class="jxr_linenumber" name="L129" href="#L129">129</a>         <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L130" href="#L130">130</a>             DefaultLog.setInstance(log);
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>             String[] args = {<span class="jxr_string">"--dir"</span>, baseDir.getAbsolutePath()};
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>             config = OptionCollection.parseCommands(testPath.toFile(), args, (o) -&gt; {
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>             }, <strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L134" href="#L134">134</a>         } <strong class="jxr_keyword">finally</strong> {
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>             DefaultLog.setInstance(<strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="L136" href="#L136">136</a>         }
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>         assertThat(config).isNotNull();
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>         log.assertContainsExactly(1,<span class="jxr_string">"WARN: Option [-d, --dir] used. Deprecated for removal since 0.17: Use the standard '--'"</span>);
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>     }
-<a class="jxr_linenumber" name="L140" href="#L140">140</a> 
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>     @Test
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShortenedOptions() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>         String[] args = {<span class="jxr_string">"--output-lic"</span>, <span class="jxr_string">"ALL"</span>};
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>         ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), args, (o) -&gt; {
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>         }, <strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L146" href="#L146">146</a>         assertThat(config).isNotNull();
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>         assertThat(config.listLicenses()).isEqualTo(LicenseSetFactory.LicenseFilter.ALL);
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>     }
-<a class="jxr_linenumber" name="L149" href="#L149">149</a> 
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>     @Test
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDefaultConfiguration() <strong class="jxr_keyword">throws</strong> ParseException {
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>         String[] empty = {};
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>         CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(OptionCollection.buildOptions(), empty);
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>         ArgumentContext context = <strong class="jxr_keyword">new</strong> ArgumentContext(<strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"."</span>), cl);
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>         ReportConfiguration config = OptionCollection.createConfiguration(context);
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>         ReportConfigurationTest.validateDefault(config);
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>     }
-<a class="jxr_linenumber" name="L158" href="#L158">158</a> 
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>     @ParameterizedTest
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>     @ValueSource(strings = { <span class="jxr_string">"."</span>, <span class="jxr_string">"./"</span>, <span class="jxr_string">"target"</span>, <span class="jxr_string">"./target"</span> })
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getReportableTest(String fName) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L162" href="#L162">162</a>         File base = <strong class="jxr_keyword">new</strong> File(fName);
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>         String expected = DocumentName.FSInfo.getDefault().normalize(base.getAbsolutePath());
-<a class="jxr_linenumber" name="L164" href="#L164">164</a>         ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), <strong class="jxr_keyword">new</strong> String[]{fName}, o -&gt; fail(<span class="jxr_string">"Help called"</span>), false);
-<a class="jxr_linenumber" name="L165" href="#L165">165</a>         IReportable reportable = OptionCollection.getReportable(base, config);
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>         assertThat(reportable).as(() -&gt; format(<span class="jxr_string">"'%s' returned null"</span>, fName)).isNotNull();
-<a class="jxr_linenumber" name="L167" href="#L167">167</a>         assertThat(reportable.getName().getName()).isEqualTo(expected);
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>     }
-<a class="jxr_linenumber" name="L169" href="#L169">169</a> 
-<a class="jxr_linenumber" name="L170" href="#L170">170</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L171" href="#L171">171</a> <em class="jxr_javadoccomment">     * A parameterized test for the options.</em>
-<a class="jxr_linenumber" name="L172" href="#L172">172</a> <em class="jxr_javadoccomment">     * @param name The name of the test.</em>
-<a class="jxr_linenumber" name="L173" href="#L173">173</a> <em class="jxr_javadoccomment">     * @param test the option test to execute.</em>
-<a class="jxr_linenumber" name="L174" href="#L174">174</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>     @ParameterizedTest( name = <span class="jxr_string">"{index} {0}"</span>)
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>     @ArgumentsSource(CliOptionsProvider.<strong class="jxr_keyword">class</strong>)
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testOptionsUpdateConfig(String name, OptionTest test) {
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>         DefaultLog.getInstance().log(Log.Level.INFO, <span class="jxr_string">"Running test for: "</span> + name);
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         test.test();
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>     }
-<a class="jxr_linenumber" name="L181" href="#L181">181</a> 
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L183" href="#L183">183</a> <em class="jxr_javadoccomment">     * A class to provide the Options and tests to the testOptionsUpdateConfig.</em>
-<a class="jxr_linenumber" name="L184" href="#L184">184</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> CliOptionsProvider <strong class="jxr_keyword">extends</strong> <a name="AbstractOptionsProvider" href="../../../org/apache/rat/test/AbstractOptionsProvider.html#AbstractOptionsProvider">AbstractOptionsProvider</a> <strong class="jxr_keyword">implements</strong> ArgumentsProvider {
-<a class="jxr_linenumber" name="L186" href="#L186">186</a> 
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>         <em class="jxr_javadoccomment">/** A flag to determine if help was called */</em>
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>         <strong class="jxr_keyword">final</strong> AtomicBoolean helpCalled = <strong class="jxr_keyword">new</strong> AtomicBoolean(false);
-<a class="jxr_linenumber" name="L189" href="#L189">189</a> 
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>         @Override
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> helpTest() {
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>             String[] args = {longOpt(OptionCollection.HELP)};
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>                 ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), args, o -&gt; helpCalled.set(<strong class="jxr_keyword">true</strong>), <strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>                 assertThat(config).as(<span class="jxr_string">"Should not have config"</span>).isNull();
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>                 assertThat(helpCalled.get()).as(<span class="jxr_string">"Help was not called"</span>).isTrue();
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>             } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>                 fail(e.getMessage());
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>             }
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>         }
-<a class="jxr_linenumber" name="L201" href="#L201">201</a> 
-<a class="jxr_linenumber" name="L202" href="#L202">202</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L203" href="#L203">203</a> <em class="jxr_javadoccomment">         * Constructor. Sets the baseDir and loads the testMap.</em>
-<a class="jxr_linenumber" name="L204" href="#L204">204</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>         <strong class="jxr_keyword">public</strong> CliOptionsProvider() {
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>             <strong class="jxr_keyword">super</strong>(Collections.emptyList(), testPath.toFile());
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>         }
-<a class="jxr_linenumber" name="L208" href="#L208">208</a> 
-<a class="jxr_linenumber" name="L209" href="#L209">209</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L210" href="#L210">210</a> <em class="jxr_javadoccomment">         * Generate a ReportConfiguration from a set of arguments.</em>
-<a class="jxr_linenumber" name="L211" href="#L211">211</a> <em class="jxr_javadoccomment">         * Forces the {@code helpCalled} flag to be reset.</em>
-<a class="jxr_linenumber" name="L212" href="#L212">212</a> <em class="jxr_javadoccomment">         * @param args the arguments.</em>
-<a class="jxr_linenumber" name="L213" href="#L213">213</a> <em class="jxr_javadoccomment">         * @return A ReportConfiguration</em>
-<a class="jxr_linenumber" name="L214" href="#L214">214</a> <em class="jxr_javadoccomment">         * @throws IOException on critical error.</em>
-<a class="jxr_linenumber" name="L215" href="#L215">215</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L216" href="#L216">216</a>         <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> ReportConfiguration generateConfig(List&lt;Pair&lt;Option, String[]&gt;&gt; args) <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L217" href="#L217">217</a>             helpCalled.set(false);
-<a class="jxr_linenumber" name="L218" href="#L218">218</a>             List&lt;String&gt; sArgs = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>             <strong class="jxr_keyword">for</strong> (Pair&lt;Option, String[]&gt; pair : args) {
-<a class="jxr_linenumber" name="L220" href="#L220">220</a>                 <strong class="jxr_keyword">if</strong> (pair.getKey() != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L221" href="#L221">221</a>                     sArgs.add(<span class="jxr_string">"--"</span> + pair.getKey().getLongOpt());
-<a class="jxr_linenumber" name="L222" href="#L222">222</a>                     String[] oArgs = pair.getValue();
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>                     <strong class="jxr_keyword">if</strong> (oArgs != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L224" href="#L224">224</a>                         Collections.addAll(sArgs, oArgs);
-<a class="jxr_linenumber" name="L225" href="#L225">225</a>                     }
-<a class="jxr_linenumber" name="L226" href="#L226">226</a>                 }
-<a class="jxr_linenumber" name="L227" href="#L227">227</a>             }
-<a class="jxr_linenumber" name="L228" href="#L228">228</a>             ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), sArgs.toArray(<strong class="jxr_keyword">new</strong> String[0]), o -&gt; helpCalled.set(<strong class="jxr_keyword">true</strong>), <strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="L229" href="#L229">229</a>             assertThat(helpCalled.get()).as(<span class="jxr_string">"Help was called"</span>).isFalse();
-<a class="jxr_linenumber" name="L230" href="#L230">230</a>             <strong class="jxr_keyword">return</strong> config;
-<a class="jxr_linenumber" name="L231" href="#L231">231</a>         }
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>     }
-<a class="jxr_linenumber" name="L233" href="#L233">233</a> }
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testShortenedOptions() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         String[] args = {<span class="jxr_string">"--output-lic"</span>, <span class="jxr_string">"ALL"</span>};
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>         ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), args, (o) -&gt; {
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>         }, <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L130" href="#L130">130</a>         assertThat(config).isNotNull();
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         assertThat(config.listLicenses()).isEqualTo(LicenseSetFactory.LicenseFilter.ALL);
+<a class="jxr_linenumber" name="L132" href="#L132">132</a>     }
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> 
+<a class="jxr_linenumber" name="L134" href="#L134">134</a>     @Test
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testDefaultConfiguration() <strong class="jxr_keyword">throws</strong> ParseException {
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         String[] empty = {};
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>         CommandLine cl = <strong class="jxr_keyword">new</strong> DefaultParser().parse(OptionCollection.buildOptions(), empty);
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>         ArgumentContext context = <strong class="jxr_keyword">new</strong> ArgumentContext(<strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"."</span>), cl);
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>         ReportConfiguration config = OptionCollection.createConfiguration(context);
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>         ReportConfigurationTest.validateDefault(config);
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>     }
+<a class="jxr_linenumber" name="L142" href="#L142">142</a> 
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>     @ParameterizedTest
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>     @ValueSource(strings = { <span class="jxr_string">"."</span>, <span class="jxr_string">"./"</span>, <span class="jxr_string">"target"</span>, <span class="jxr_string">"./target"</span> })
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> getReportableTest(String fName) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>         File base = <strong class="jxr_keyword">new</strong> File(fName);
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>         String expected = DocumentName.FSInfo.getDefault().normalize(base.getAbsolutePath());
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>         ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), <strong class="jxr_keyword">new</strong> String[]{fName}, o -&gt; fail(<span class="jxr_string">"Help called"</span>), false);
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>         IReportable reportable = OptionCollection.getReportable(base, config);
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>         assertThat(reportable).as(() -&gt; format(<span class="jxr_string">"'%s' returned null"</span>, fName)).isNotNull();
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>         assertThat(reportable.getName().getName()).isEqualTo(expected);
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>     }
+<a class="jxr_linenumber" name="L153" href="#L153">153</a> 
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L155" href="#L155">155</a> <em class="jxr_javadoccomment">     * A parameterized test for the options.</em>
+<a class="jxr_linenumber" name="L156" href="#L156">156</a> <em class="jxr_javadoccomment">     * @param name The name of the test.</em>
+<a class="jxr_linenumber" name="L157" href="#L157">157</a> <em class="jxr_javadoccomment">     * @param test the option test to execute.</em>
+<a class="jxr_linenumber" name="L158" href="#L158">158</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L159" href="#L159">159</a>     @ParameterizedTest( name = <span class="jxr_string">"{index} {0}"</span>)
+<a class="jxr_linenumber" name="L160" href="#L160">160</a>     @ArgumentsSource(CliOptionsProvider.<strong class="jxr_keyword">class</strong>)
+<a class="jxr_linenumber" name="L161" href="#L161">161</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> testOptionsUpdateConfig(String name, OptionTest test) {
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>         DefaultLog.getInstance().log(Log.Level.INFO, <span class="jxr_string">"Running test for: "</span> + name);
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>         test.test();
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>     }
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> 
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L167" href="#L167">167</a> <em class="jxr_javadoccomment">     * A class to provide the Options and tests to the testOptionsUpdateConfig.</em>
+<a class="jxr_linenumber" name="L168" href="#L168">168</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L169" href="#L169">169</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> CliOptionsProvider <strong class="jxr_keyword">extends</strong> <a name="AbstractOptionsProvider" href="../../../org/apache/rat/test/AbstractOptionsProvider.html#AbstractOptionsProvider">AbstractOptionsProvider</a> <strong class="jxr_keyword">implements</strong> ArgumentsProvider {
+<a class="jxr_linenumber" name="L170" href="#L170">170</a> 
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>         <em class="jxr_javadoccomment">/** A flag to determine if help was called */</em>
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>         <strong class="jxr_keyword">final</strong> AtomicBoolean helpCalled = <strong class="jxr_keyword">new</strong> AtomicBoolean(false);
+<a class="jxr_linenumber" name="L173" href="#L173">173</a> 
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         @Override
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> helpTest() {
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>             String[] args = {longOpt(OptionCollection.HELP)};
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>                 ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), args, o -&gt; helpCalled.set(<strong class="jxr_keyword">true</strong>), <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>                 assertThat(config).as(<span class="jxr_string">"Should not have config"</span>).isNull();
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>                 assertThat(helpCalled.get()).as(<span class="jxr_string">"Help was not called"</span>).isTrue();
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>             } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>                 fail(e.getMessage());
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>             }
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         }
+<a class="jxr_linenumber" name="L185" href="#L185">185</a> 
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L187" href="#L187">187</a> <em class="jxr_javadoccomment">         * Constructor. Sets the baseDir and loads the testMap.</em>
+<a class="jxr_linenumber" name="L188" href="#L188">188</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <strong class="jxr_keyword">public</strong> CliOptionsProvider() {
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>             <strong class="jxr_keyword">super</strong>(Collections.emptyList(), testPath.toFile());
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>         }
+<a class="jxr_linenumber" name="L192" href="#L192">192</a> 
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L194" href="#L194">194</a> <em class="jxr_javadoccomment">         * Generate a ReportConfiguration from a set of arguments.</em>
+<a class="jxr_linenumber" name="L195" href="#L195">195</a> <em class="jxr_javadoccomment">         * Forces the {@code helpCalled} flag to be reset.</em>
+<a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">         * @param args the arguments.</em>
+<a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">         * @return A ReportConfiguration</em>
+<a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">         * @throws IOException on critical error.</em>
+<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>         <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> ReportConfiguration generateConfig(List&lt;Pair&lt;Option, String[]&gt;&gt; args) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>             helpCalled.set(false);
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>             List&lt;String&gt; sArgs = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>             <strong class="jxr_keyword">for</strong> (Pair&lt;Option, String[]&gt; pair : args) {
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>                 <strong class="jxr_keyword">if</strong> (pair.getKey() != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>                     sArgs.add(<span class="jxr_string">"--"</span> + pair.getKey().getLongOpt());
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>                     String[] oArgs = pair.getValue();
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>                     <strong class="jxr_keyword">if</strong> (oArgs != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>                         Collections.addAll(sArgs, oArgs);
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>                     }
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>                 }
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>             }
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>             ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), sArgs.toArray(<strong class="jxr_keyword">new</strong> String[0]), o -&gt; helpCalled.set(<strong class="jxr_keyword">true</strong>), <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>             assertThat(helpCalled.get()).as(<span class="jxr_string">"Help was called"</span>).isFalse();
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>             <strong class="jxr_keyword">return</strong> config;
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>         }
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>     }
+<a class="jxr_linenumber" name="L217" href="#L217">217</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>
