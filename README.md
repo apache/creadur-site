@@ -100,5 +100,12 @@ Make sure to generate a combined changelog that includes the most current releas
 ## Local hacking
 
 The whole page can be started locally with the help of [docker-compose](https://docs.docker.com/compose/) and will provide the contents via http://localhost:8888
+Depending on your docker version this means:
+```
+$ docker-compose up
+OR
+$ docker compose up
+```
+You may need to configure shared paths from Docker -> Preferences... -> Resources -> File Sharing in order to mount your local files.
 
 Happy hacking :)
