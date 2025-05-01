@@ -31,7 +31,7 @@
 <a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.app.Whisker;
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.app.load.StreamableResourceFactory;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.app.out.WriteResultsToSystemOutFactory;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.out.velocity.VelocityEngine;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.out.velocity.LoggingVelocityEngine;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> * Command line interface for whisker.</em>
@@ -136,7 +136,7 @@
 <a class="jxr_linenumber" name="L128" href="#L128">128</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L129" href="#L129">129</a>     <strong class="jxr_keyword">private</strong> Whisker configure(
 <a class="jxr_linenumber" name="L130" href="#L130">130</a>             <strong class="jxr_keyword">final</strong> CommandLine commandLine) <strong class="jxr_keyword">throws</strong> MissingOptionException {
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>         whisker.setEngine(<strong class="jxr_keyword">new</strong> VelocityEngine(<strong class="jxr_keyword">new</strong> <a name="SystemLog" href="../../../../../org/apache/creadur/whisker/cli/SystemLog.html#SystemLog">SystemLog</a>()));
+<a class="jxr_linenumber" name="L131" href="#L131">131</a>         whisker.setEngine(<strong class="jxr_keyword">new</strong> LoggingVelocityEngine());
 <a class="jxr_linenumber" name="L132" href="#L132">132</a>         whisker.setSource(CommandLineOption.SOURCE.getOptionValue(commandLine));
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>         whisker.setLicenseDescriptor(
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>                 <strong class="jxr_keyword">new</strong> StreamableResourceFactory().streamFromResource(

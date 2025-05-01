@@ -32,7 +32,7 @@
 <a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.app.Whisker;
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.app.load.StreamableResourceFactory;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.app.out.WriteResultsIntoDirectoryFactory;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.out.velocity.VelocityEngine;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.creadur.whisker.out.velocity.LoggingVelocityEngine;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.maven.plugin.AbstractMojo;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.maven.plugin.MojoExecutionException;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.maven.plugins.annotations.*;
@@ -71,24 +71,26 @@
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() <strong class="jxr_keyword">throws</strong> MojoExecutionException {
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">if</strong> (descriptor.exists()) {
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>              <strong class="jxr_keyword">if</strong> (descriptor.canRead()) {
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>                   <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>                      <strong class="jxr_keyword">new</strong> Whisker().setLicenseDescriptor(<strong class="jxr_keyword">new</strong> StreamableResourceFactory().streamFromFileResource(descriptor))
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>                          .setEngine(<strong class="jxr_keyword">new</strong> VelocityEngine(<strong class="jxr_keyword">new</strong> <a name="MojoToJCLLog" href="../../../../../../org/apache/creadur/whisker/plugin/maven/MojoToJCLLog.html#MojoToJCLLog">MojoToJCLLog</a>(getLog())))
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>                          .setWriterFactory(<strong class="jxr_keyword">new</strong> WriteResultsIntoDirectoryFactory(outputDirectory, outputEncoding))
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>                          .setAct(Act.GENERATE).act();
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>                  } <strong class="jxr_keyword">catch</strong> (Exception e) {
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Whisker failed to generate materials: "</span> + e.getMessage(), e);
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>                  }
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>              } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Read permission required on Whisker descriptor file: "</span> + descriptor);
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>              }
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>          } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Whisker descriptor file is missing: "</span> + descriptor);
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>          }
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>      }
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>  }
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>              getLog().info(<span class="jxr_string">"Reading descriptor from "</span> + descriptor);
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>              <strong class="jxr_keyword">if</strong> (descriptor.canRead()) {
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>                   <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>                      <strong class="jxr_keyword">new</strong> Whisker().setLicenseDescriptor(<strong class="jxr_keyword">new</strong> StreamableResourceFactory().streamFromFileResource(descriptor))
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>                          .setEngine(<strong class="jxr_keyword">new</strong> LoggingVelocityEngine())
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>                          .setWriterFactory(<strong class="jxr_keyword">new</strong> WriteResultsIntoDirectoryFactory(outputDirectory, outputEncoding))
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>                          .setAct(Act.GENERATE).act();
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>                  } <strong class="jxr_keyword">catch</strong> (Exception e) {
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>                      <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Whisker failed to generate materials: "</span> + e.getMessage(), e);
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>                  }
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>              } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Read permission required on Whisker descriptor file: "</span> + descriptor);
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>              }
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>              getLog().error(<span class="jxr_string">"No descriptor found "</span> + descriptor);
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MojoExecutionException(<span class="jxr_string">"Whisker descriptor file is missing: "</span> + descriptor);
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>          }
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>      }
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>  }
 </pre>
 <hr/>
 <div id="footer">© 2011–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>
