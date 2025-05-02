@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apache.creadur.whisker.app"},{"l":"org.apache.creadur.whisker.app.analysis"},{"l":"org.apache.creadur.whisker.app.load"},{"l":"org.apache.creadur.whisker.app.out"}];updateSearchResults();
