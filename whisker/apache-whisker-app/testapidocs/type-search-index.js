@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.apache.creadur.whisker.app","l":"TestConfigurationBuilder"},{"p":"org.apache.creadur.whisker.app.load","l":"TestStreamableResourceFactory"},{"p":"org.apache.creadur.whisker.app","l":"TestWhisker"}];updateSearchResults();
