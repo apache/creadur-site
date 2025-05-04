@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
-<script type="text/javascript" src="../../../../script-dir/jquery-3.6.1.min.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-3.7.1.min.js"></script>
 <script type="text/javascript" src="../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
@@ -105,7 +105,7 @@ loadScripts(document, 'script');</script>
 <h2>Field Summary</h2>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-org.apache.rat.tools.AbstractOption">Fields inherited from class&nbsp;org.apache.rat.tools.<a href="AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></h3>
-<code><a href="AbstractOption.html#name">name</a>, <a href="AbstractOption.html#option">option</a>, <a href="AbstractOption.html#PATTERN">PATTERN</a></code></div>
+<code><a href="AbstractOption.html#argumentType">argumentType</a>, <a href="AbstractOption.html#name">name</a>, <a href="AbstractOption.html#option">option</a>, <a href="AbstractOption.html#PATTERN">PATTERN</a></code></div>
 </section>
 </li>
 <!-- ========== METHOD SUMMARY =========== -->
@@ -113,9 +113,9 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
-<div class="summary-table three-column-summary">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -126,6 +126,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultValue()" class="member-name-link">getDefaultValue</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Return default value.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExample()" class="member-name-link">getExample</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets an example of how to use this option in the native UI.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;org.apache.commons.cli.Option&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getFilteredOptions()" class="member-name-link">getFilteredOptions</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Gets the set of options that are not supported by Ant.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMethodSignature(java.lang.String,boolean)" class="member-name-link">getMethodSignature</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;indent,
@@ -139,7 +149,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.apache.rat.tools.AbstractOption">Methods inherited from class&nbsp;org.apache.rat.tools.<a href="AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></h3>
-<code><a href="AbstractOption.html#cleanup(java.lang.String)">cleanup</a>, <a href="AbstractOption.html#getArgName()">getArgName</a>, <a href="AbstractOption.html#getDeprecated()">getDeprecated</a>, <a href="AbstractOption.html#getDescription()">getDescription</a>, <a href="AbstractOption.html#getName()">getName</a>, <a href="AbstractOption.html#getType()">getType</a>, <a href="AbstractOption.html#hasArg()">hasArg</a>, <a href="AbstractOption.html#hasArgs()">hasArgs</a>, <a href="AbstractOption.html#isDeprecated()">isDeprecated</a>, <a href="AbstractOption.html#isRequired()">isRequired</a>, <a href="AbstractOption.html#keyValue()">keyValue</a></code></div>
+<code><a href="AbstractOption.html#argCount()">argCount</a>, <a href="AbstractOption.html#cleanup(java.lang.String)">cleanup</a>, <a href="AbstractOption.html#cleanupName()">cleanupName</a>, <a href="AbstractOption.html#getArgName()">getArgName</a>, <a href="AbstractOption.html#getArgType()">getArgType</a>, <a href="AbstractOption.html#getDeprecated()">getDeprecated</a>, <a href="AbstractOption.html#getDescription()">getDescription</a>, <a href="AbstractOption.html#getName()">getName</a>, <a href="AbstractOption.html#getType()">getType</a>, <a href="AbstractOption.html#hasArg()">hasArg</a>, <a href="AbstractOption.html#hasArgs()">hasArgs</a>, <a href="AbstractOption.html#isDeprecated()">isDeprecated</a>, <a href="AbstractOption.html#isRequired()">isRequired</a>, <a href="AbstractOption.html#keyValue()">keyValue</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#clone--" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals-java.lang.Object-" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#finalize--" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#getClass--" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#hashCode--" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#notify--" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#notifyAll--" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait--" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait-long-" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#wait-long-int-" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -154,6 +164,17 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getFilteredOptions()">
+<h3>getFilteredOptions</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;org.apache.commons.cli.Option&gt;</span>&nbsp;<span class="element-name">getFilteredOptions</span>()</div>
+<div class="block">Gets the set of options that are not supported by Ant.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>The set of options that are not supported by Ant.</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="cleanupName(org.apache.commons.cli.Option)">
 <h3>cleanupName</h3>
@@ -189,6 +210,20 @@ loadScripts(document, 'script');</script>
 <h3>getMethodSignature</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getMethodSignature</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;indent,
  boolean&nbsp;multiple)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getExample()">
+<h3>getExample</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getExample</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="AbstractOption.html#getExample()">AbstractOption</a></code></span></div>
+<div class="block">Gets an example of how to use this option in the native UI.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="AbstractOption.html#getExample()">getExample</a></code>&nbsp;in class&nbsp;<code><a href="AbstractOption.html" title="class in org.apache.rat.tools">AbstractOption</a></code></dd>
+<dt>Returns:</dt>
+<dd>An example of how to use this option in the native UI.</dd>
+</dl>
 </section>
 </li>
 </ul>

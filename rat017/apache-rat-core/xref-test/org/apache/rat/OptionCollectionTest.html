@@ -181,7 +181,7 @@
 <a class="jxr_linenumber" name="L173" href="#L173">173</a> 
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>         @Override
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> helpTest() {
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>             String[] args = {longOpt(OptionCollection.HELP)};
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>             String[] args = { longOpt(OptionCollection.HELP) };
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>                 ReportConfiguration config = OptionCollection.parseCommands(testPath.toFile(), args, o -&gt; helpCalled.set(<strong class="jxr_keyword">true</strong>), <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L179" href="#L179">179</a>                 assertThat(config).as(<span class="jxr_string">"Should not have config"</span>).isNull();
