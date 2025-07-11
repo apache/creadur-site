@@ -45,14 +45,14 @@
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>      @ConfigComponent(desc = <span class="jxr_string">"enclosed Matchers"</span>, type = ComponentType.PARAMETER, parameterType = IHeaderMatcher.<strong class="jxr_keyword">class</strong>, required = <strong class="jxr_keyword">true</strong>)
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> Collection&lt;IHeaderMatcher&gt; enclosed;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <em class="jxr_javadoccomment">/** The resource the headers were read from.  May be null */</em>
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>      @ConfigComponent(desc = <span class="jxr_string">"Resource to read matcher definitions from."</span>, type = ComponentType.PARAMETER)
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>      <em class="jxr_javadoccomment">/** The resource the headers were read from. May be null */</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      @ConfigComponent(desc = <span class="jxr_string">"Resource (URL or file) to read enclosed text matcher definitions from."</span>, type = ComponentType.PARAMETER)
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String resource;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <em class="jxr_javadoccomment">     * Constructs the abstract matcher container. If the {@code id} is not set then</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <em class="jxr_javadoccomment">     * a unique random identifier is created. The {@code enclosed} collection is</em>
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">     * preserved in a new collection that retains the order of of the original</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <em class="jxr_javadoccomment">     * preserved in a new collection that retains the order of the original</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>  <em class="jxr_javadoccomment">     * collection.</em>
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>  <em class="jxr_javadoccomment">     * @param id The id for the matcher.</em>
@@ -69,7 +69,7 @@
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L62" href="#L62">62</a>  <em class="jxr_javadoccomment">     * Constructs the abstract matcher container with a unique random id. The</em>
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>  <em class="jxr_javadoccomment">     * {@code enclosed} collection is preserved in a new collection that retains the</em>
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">     * order of of the original collection.</em>
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  <em class="jxr_javadoccomment">     * order of the original collection.</em>
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  <em class="jxr_javadoccomment">     * @param enclosed the collection of enclosed matchers.</em>
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>  <em class="jxr_javadoccomment">     * @param resource the name of the resource if this container was read from a file or URL.</em>
