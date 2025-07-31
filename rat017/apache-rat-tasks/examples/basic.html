@@ -10,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content="Apache Maven Doxia Site Renderer 2.0.0" />
-    <title>Basic Usage Examples – Apache Rat\u2122 Task Library for Apache Ant</title>
+    <title>Basic Usage Examples – Apache RAT\u2122 Task Library for Apache Ant</title>
     <link rel="stylesheet" href="../css/apache-maven-fluido-2.1.0.min.css" />
     <link rel="stylesheet" href="../css/site.css" />
     <link rel="stylesheet" href="../css/print.css" media="print" />
@@ -35,7 +35,7 @@
       <li><a href="https://www.apache.org/">Apache</a><span class="divider">/</span></li>
       <li><a href="../../../">Creadur</a><span class="divider">/</span></li>
       <li><a href="../../">RAT</a><span class="divider">/</span></li>
-      <li><a href="../index.html">Apache Rat\u2122 Task Library for Apache Ant</a><span class="divider">/</span></li>
+      <li><a href="../index.html">Apache RAT\u2122 Task Library for Apache Ant</a><span class="divider">/</span></li>
     <li class="active">Basic Usage Examples</li>
           </ul>
         </div>
@@ -128,16 +128,16 @@
         <main id="bodyColumn" class="span10">
 <section><a id="Examples"></a>
 <h1>Examples</h1>
-<p>These examples assume you have installed the Rat Antlib in a way that provides the Report task in the XML namespace associated with the prefix <code>rat</code>.</p><section><a id="Run_Rat_in_default_configuration_on_all_files_in_directory_src."></a>
-<h2>Run Rat in default configuration on all files in directory <code>src</code>.</h2>
+<p>These examples assume you have installed the RAT Antlib in a way that provides the Report task in the XML namespace associated with the prefix <code>rat</code>.</p><section><a id="Run_RAT_in_default_configuration_on_all_files_in_directory_src."></a>
+<h2>Run RAT in default configuration on all files in directory <code>src</code>.</h2>
 <pre>&lt;rat:report&gt;
     &lt;fileset dir=&quot;src&quot;/&gt;
 &lt;/rat:report&gt;</pre>
 <p>The report will be written to Ant's logging system.</p>
 <p>This corresponds to the command line</p>
 <pre class="prettyprint"><code>java -jar apache-rat-0.17-SNAPSHOT.jar src</code></pre>
-<p>except that Ant's default excludes will be applied when looking for documents to check.</p></section><section><a id="Run_Rat_on_multiple_directories"></a>
-<h2>Run Rat on multiple directories</h2>
+<p>except that Ant's default excludes will be applied when looking for documents to check.</p></section><section><a id="Run_RAT_on_multiple_directories"></a>
+<h2>Run RAT on multiple directories</h2>
 <pre>&lt;rat:report&gt;
     &lt;fileset dir=&quot;module1/src/main&quot;/&gt;
     &lt;fileset dir=&quot;module2/src/test&quot;/&gt;
@@ -154,7 +154,7 @@
 &lt;/rat:report&gt;</pre></section><section><a id="Create_a_styled_report"></a>
 <h2>Create a styled report</h2>
 <p>There are two types of styled reports, both are activated by using the &quot;outputStyled&quot; attribute on the &quot;rat:report&quot; element.</p>
-<p>The first is the standard report type. This uses one of the standard reports shipped with Rat which are activated by setting the value of &quot;outputStyled&quot; to the name of the report.</p>
+<p>The first is the standard report type. This uses one of the standard reports shipped with RAT which are activated by setting the value of &quot;outputStyled&quot; to the name of the report.</p>
 <ul>
 <li>plain-rat: The default style.</li>
 <li>missing-headers: Produces a report of files that are missing headers.</li>
@@ -164,32 +164,32 @@
 <pre>&lt;rat:report outputStyle=&quot;unapproved-licenses&quot; outputFile=&quot;rat-unapproved.txt&quot;&gt;
     &lt;fileset dir=&quot;src&quot;/&gt;
 &lt;/rat:report&gt;</pre>
-<p>The second type is the user defined XSLT. In this case the user provides the path to the xslt document as shown below. There is a report XSD and the standard report XSLT files are listed in the Rat Output documentation. In the example below the user has provided a &quot;rat-xml-2-html.xslt&quot; transformation and the output will be written to &quot;rat.html&quot;</p>
+<p>The second type is the user defined XSLT. In this case the user provides the path to the xslt document as shown below. There is a report XSD and the standard report XSLT files are listed in the RAT Output documentation. In the example below the user has provided a &quot;rat-xml-2-html.xslt&quot; transformation and the output will be written to &quot;rat.html&quot;</p>
 <pre>&lt;rat:report outputStyle=&quot;my/rat-xml-2-html.xslt&quot; outputFile=&quot;rat.html&quot;&gt;
     &lt;fileset dir=&quot;src&quot;/&gt;
-&lt;/rat:report&gt;</pre></section><section><a id="Run_Rat_on_a_tarball_located_on_a_webserver"></a>
-<h2>Run Rat on a tarball located on a webserver</h2>
+&lt;/rat:report&gt;</pre></section><section><a id="Run_RAT_on_a_tarball_located_on_a_webserver"></a>
+<h2>Run RAT on a tarball located on a webserver</h2>
 <pre>&lt;rat:report&gt;
     &lt;tarfileset&gt;
         &lt;gzipresource&gt;
             &lt;url url=&quot;http://example.org/some.tar.gz&quot;/&gt;
         &lt;/gzipresource&gt;
     &lt;/tarfileset&gt;
-&lt;/rat:report&gt;</pre></section><section><a id="Run_Rat_but_make_the_Apache_License_Version_2.0_the_only_one_accepted"></a>
-<h2>Run Rat but make the Apache License Version 2.0 the only one accepted</h2>
+&lt;/rat:report&gt;</pre></section><section><a id="Run_RAT_but_make_the_Apache_License_Version_2.0_the_only_one_accepted"></a>
+<h2>Run RAT but make the Apache License Version 2.0 the only one accepted</h2>
 <pre>&lt;rat:report addDefaultLicenseMatchers=&quot;false&quot;&gt;
     &lt;fileset dir=&quot;src&quot;/&gt;
     &lt;rat:asl20/&gt;
-&lt;/rat:report&gt;</pre></section><section><a id="Run_Rat_on_all_files_in_src_that_have_been_modified_today"></a>
-<h2>Run Rat on all files in <code>src</code> that have been modified today</h2>
+&lt;/rat:report&gt;</pre></section><section><a id="Run_RAT_on_all_files_in_src_that_have_been_modified_today"></a>
+<h2>Run RAT on all files in <code>src</code> that have been modified today</h2>
 <pre>&lt;tstamp/&gt;
 &lt;rat:report xmlns:rat=&quot;antlib:org.apache.rat.anttasks&quot;&gt;
     &lt;restrict&gt;
         &lt;fileset dir=&quot;src&quot;/&gt;
         &lt;date when=&quot;after&quot; datetime=&quot;${DSTAMP}&quot; pattern=&quot;yyyyMMdd&quot;/&gt;
     &lt;/restrict&gt;
-&lt;/rat:report&gt;</pre></section><section><a id="Make_Rat_only_detect_your_custom_license_and_mark_this_license_approved."></a>
-<h2>Make Rat only detect your custom license and mark this license approved.</h2>
+&lt;/rat:report&gt;</pre></section><section><a id="Make_RAT_only_detect_your_custom_license_and_mark_this_license_approved."></a>
+<h2>Make RAT only detect your custom license and mark this license approved.</h2>
 <p>Create a configuration file containing only your definition(s).</p>
 <pre>&lt;rat:report addDefaultLicenseMatchers=&quot;false&quot;&gt;
     &lt;fileset dir=&quot;src&quot;/&gt;
