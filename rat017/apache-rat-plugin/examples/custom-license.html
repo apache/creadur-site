@@ -140,7 +140,22 @@
 <p>There is a file that defines all the standard licenses: <a class="externalLink" href="https://gitbox.apache.org/repos/asf/creadur-rat/blob/master/apache-rat-core/src/main/resources/org/apache/rat/default.xml">default.xml</a>. The pom.xml implementations vary slightly from the configuration because the pom does not allow attributes on the configuration entries. For a full mapping of the command line options to the Maven options see the <a href="/apache-rat/name_xref.html">Option Name Cross-Reference</a></p>
 <p>Please be aware that custom licenses need to have <b>unique names</b>, otherwise a warning is issued and your custom definitions are ignored in favour of the standard license definitions.</p>
 <p>The easiest solution for defining custom licenses is to use the <code>config</code> option. For this option write your custom configuration like you would for the command line and then include it. In the example below the custom configuration is called <code>myConfig.xml</code></p>
-<p>------------------------------------------------------------------ <i>build</i> <i>plugins</i> ... <i>plugin</i> <i>groupId</i>org.apache.rat<i>/groupId</i> <i>artifactId</i>apache-rat-plugin<i>/artifactId</i> <i>version</i>0.17-SNAPSHOT<i>/version</i> <i>configuration</i> <i>configs</i> <i>config</i>myConfig.xml<i>/config</i> <i>/configs</i> <i>/configuration</i> <i>/plugin</i> ... <i>/plugins</i> <i>/build</i> ------------------------------------------------------------------</p>
+<pre>  &lt;build&gt;
+    &lt;plugins&gt;
+      ...
+      &lt;plugin&gt;
+        &lt;groupId&gt;org.apache.rat&lt;/groupId&gt;
+        &lt;artifactId&gt;apache-rat-plugin&lt;/artifactId&gt;
+        &lt;version&gt;0.17-SNAPSHOT&lt;/version&gt;
+        &lt;configuration&gt;
+          &lt;configs&gt;
+            &lt;config&gt;myConfig.xml&lt;/config&gt;
+          &lt;/configs&gt;
+        &lt;/configuration&gt;
+      &lt;/plugin&gt;
+      ...
+    &lt;/plugins&gt;
+  &lt;/build&gt;</pre>
 <p>However it is possible to define licenses directly in the pom file. Assume that the header below is an acceptable license.</p>
 <pre>  /**
    * Yet Another Software License, 1.0
