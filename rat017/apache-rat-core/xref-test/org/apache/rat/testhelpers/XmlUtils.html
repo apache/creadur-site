@@ -216,7 +216,15 @@
 <a class="jxr_linenumber" name="L208" href="#L208">208</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> assertIsNotPresent(Object source, XPath xPath, String xpath) <strong class="jxr_keyword">throws</strong> XPathExpressionException {
 <a class="jxr_linenumber" name="L209" href="#L209">209</a>         assertThat(isPresent(source, xPath, xpath)).as(<span class="jxr_string">"Non-presence of "</span> + xpath).isFalse();
 <a class="jxr_linenumber" name="L210" href="#L210">210</a>     }
-<a class="jxr_linenumber" name="L211" href="#L211">211</a> }
+<a class="jxr_linenumber" name="L211" href="#L211">211</a> 
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> assertIsPresent(String identifier, Object source, XPath xPath, String xpath) <strong class="jxr_keyword">throws</strong> XPathExpressionException {
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         assertThat(isPresent(source, xPath, xpath)).as(identifier + <span class="jxr_string">": Presence of "</span> + xpath).isTrue();
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>     }
+<a class="jxr_linenumber" name="L215" href="#L215">215</a> 
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> assertIsNotPresent(String identifier, Object source, XPath xPath, String xpath) <strong class="jxr_keyword">throws</strong> XPathExpressionException {
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>         assertThat(isPresent(source, xPath, xpath)).as(identifier + <span class="jxr_string">": Non-presence of "</span> + xpath).isFalse();
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>     }
+<a class="jxr_linenumber" name="L219" href="#L219">219</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>

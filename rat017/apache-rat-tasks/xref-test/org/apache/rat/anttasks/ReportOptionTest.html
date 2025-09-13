@@ -34,7 +34,7 @@
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.cli.Option;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.lang3.tuple.ImmutablePair;
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.lang3.tuple.Pair;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.test.AbstractOptionsProvider;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.test.AbstractConfigurationOptionsProvider;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.OptionCollectionTest;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.TestingLog;
@@ -72,7 +72,7 @@
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>  
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      @AfterAll
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> preserveData() {
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          AbstractOptionsProvider.preserveData(testPath.toFile(), <span class="jxr_string">"optionTest"</span>);
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          AbstractConfigurationOptionsProvider.preserveData(testPath.toFile(), <span class="jxr_string">"optionTest"</span>);
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>      }
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      @ParameterizedTest
@@ -97,7 +97,7 @@
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          }
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> AntOptionsProvider <strong class="jxr_keyword">extends</strong> AbstractOptionsProvider <strong class="jxr_keyword">implements</strong> ArgumentsProvider {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> AntOptionsProvider <strong class="jxr_keyword">extends</strong> AbstractConfigurationOptionsProvider <strong class="jxr_keyword">implements</strong> ArgumentsProvider {
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">public</strong> AntOptionsProvider() {
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>              <strong class="jxr_keyword">super</strong>(BaseAntTask.unsupportedArgs(), testPath.toFile());

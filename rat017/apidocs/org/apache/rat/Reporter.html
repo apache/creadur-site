@@ -140,12 +140,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Lists the licenses on the configured output stream.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output()" class="member-name-link">output</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Outputs the report using the stylesheet and output specified in the configuration.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output(org.apache.commons.io.function.IOSupplier,org.apache.commons.io.function.IOSupplier)" class="member-name-link">output</a><wbr>(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;stylesheet,
  org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;output)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -223,10 +223,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="output()">
 <h3>output</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">output</span>()
-            throws <span class="exceptions"><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></span>&nbsp;<span class="element-name">output</span>()
+                      throws <span class="exceptions"><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
 <div class="block">Outputs the report using the stylesheet and output specified in the configuration.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>the Claim statistic from the run.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></code> - on error.</dd>
 </dl>
@@ -235,15 +237,17 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="output(org.apache.commons.io.function.IOSupplier,org.apache.commons.io.function.IOSupplier)">
 <h3>output</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">output</span><wbr><span class="parameters">(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;stylesheet,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></span>&nbsp;<span class="element-name">output</span><wbr><span class="parameters">(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;stylesheet,
  org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;output)</span>
-            throws <span class="exceptions"><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
+                      throws <span class="exceptions"><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
 <div class="block">Outputs the report to the specified output using the stylesheet. It is safe to call this method more than once
  in order to generate multiple reports from the same run.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>stylesheet</code> - the style sheet to use for XSLT formatting.</dd>
 <dd><code>output</code> - the output stream to write to.</dd>
+<dt>Returns:</dt>
+<dd>the Claim statistic for the run.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></code> - on error.</dd>
 </dl>

@@ -33,7 +33,7 @@
 <a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.apache.maven.project.MavenProject;
 <a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> org.apache.maven.project.ProjectBuilder;
 <a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> org.apache.maven.project.ProjectBuildingRequest;
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.test.AbstractOptionsProvider;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.test.AbstractConfigurationOptionsProvider;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.OptionCollectionTest;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.plugin.BaseRatMojo;
@@ -77,7 +77,7 @@
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>  
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      @AfterAll
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> preserveData() {
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>           AbstractOptionsProvider.preserveData(testPath.toFile(), <span class="jxr_string">"optionTest"</span>);
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>           AbstractConfigurationOptionsProvider.preserveData(testPath.toFile(), <span class="jxr_string">"optionTest"</span>);
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      }
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>      <em class="jxr_javadoccomment">/**</em>
@@ -97,7 +97,7 @@
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          test.test();
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> MojoOptionsProvider <strong class="jxr_keyword">extends</strong> AbstractOptionsProvider <strong class="jxr_keyword">implements</strong> ArgumentsProvider  {
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> MojoOptionsProvider <strong class="jxr_keyword">extends</strong> AbstractConfigurationOptionsProvider <strong class="jxr_keyword">implements</strong> ArgumentsProvider  {
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>  
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">private</strong> RatCheckMojo mojo = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>  
@@ -147,7 +147,7 @@
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>         <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">final</strong> ReportConfiguration generateConfig(List&lt;Pair&lt;Option, String[]&gt;&gt; args) <strong class="jxr_keyword">throws</strong> IOException {
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>             <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>                 <strong class="jxr_keyword">this</strong>.mojo = generateMojo(args);
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>                 AbstractOptionsProvider.setup(<strong class="jxr_keyword">this</strong>.mojo.getProject().getBasedir());
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>                 AbstractConfigurationOptionsProvider.setup(<strong class="jxr_keyword">this</strong>.mojo.getProject().getBasedir());
 <a class="jxr_linenumber" name="L143" href="#L143">143</a>                 <strong class="jxr_keyword">return</strong> mojo.getConfiguration();
 <a class="jxr_linenumber" name="L144" href="#L144">144</a>             } <strong class="jxr_keyword">catch</strong> (MojoExecutionException e) {
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(e.getMessage(), e);
