@@ -854,7 +854,7 @@
 <a class="jxr_linenumber" name="L846" href="#L846">846</a>             assertThat(claimStatistic.getCounter(ClaimStatistic.Counter.UNAPPROVED)).isEqualTo(0);
 <a class="jxr_linenumber" name="L847" href="#L847">847</a> 
 <a class="jxr_linenumber" name="L848" href="#L848">848</a>             String actualText = TextUtils.readFile(outFile);
-<a class="jxr_linenumber" name="L849" href="#L849">849</a>             TextUtils.assertContainsExactly(1, <span class="jxr_string">"Apache License Version 2.0: 1 "</span>, actualText);
+<a class="jxr_linenumber" name="L849" href="#L849">849</a>             TextUtils.assertContainsExactly(1, <span class="jxr_string">"Apache License 2.0: 1 "</span>, actualText);
 <a class="jxr_linenumber" name="L850" href="#L850">850</a>             TextUtils.assertContainsExactly(1, <span class="jxr_string">"STANDARD: 1 "</span>, actualText);
 <a class="jxr_linenumber" name="L851" href="#L851">851</a> 
 <a class="jxr_linenumber" name="L852" href="#L852">852</a>         } <strong class="jxr_keyword">catch</strong> (IOException | RatException e) {
@@ -1026,15 +1026,15 @@
 <a class="jxr_linenumber" name="L1018" href="#L1018">1018</a>                 Document document = XmlUtils.toDom(<strong class="jxr_keyword">new</strong> FileInputStream(outFile));
 <a class="jxr_linenumber" name="L1019" href="#L1019">1019</a>                 <strong class="jxr_keyword">switch</strong> (filter) {
 <a class="jxr_linenumber" name="L1020" href="#L1020">1020</a>                     <strong class="jxr_keyword">case</strong> ALL:
-<a class="jxr_linenumber" name="L1021" href="#L1021">1021</a>                         XmlUtils.assertIsPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='AL']"</span>);
+<a class="jxr_linenumber" name="L1021" href="#L1021">1021</a>                         XmlUtils.assertIsPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='AL2.0']"</span>);
 <a class="jxr_linenumber" name="L1022" href="#L1022">1022</a>                         XmlUtils.assertIsPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='GPL1']"</span>);
 <a class="jxr_linenumber" name="L1023" href="#L1023">1023</a>                         <strong class="jxr_keyword">break</strong>;
 <a class="jxr_linenumber" name="L1024" href="#L1024">1024</a>                     <strong class="jxr_keyword">case</strong> APPROVED:
-<a class="jxr_linenumber" name="L1025" href="#L1025">1025</a>                         XmlUtils.assertIsPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='AL']"</span>);
+<a class="jxr_linenumber" name="L1025" href="#L1025">1025</a>                         XmlUtils.assertIsPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='AL2.0']"</span>);
 <a class="jxr_linenumber" name="L1026" href="#L1026">1026</a>                         XmlUtils.assertIsNotPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='GPL1']"</span>);
 <a class="jxr_linenumber" name="L1027" href="#L1027">1027</a>                         <strong class="jxr_keyword">break</strong>;
 <a class="jxr_linenumber" name="L1028" href="#L1028">1028</a>                     <strong class="jxr_keyword">case</strong> NONE:
-<a class="jxr_linenumber" name="L1029" href="#L1029">1029</a>                         XmlUtils.assertIsNotPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='AL']"</span>);
+<a class="jxr_linenumber" name="L1029" href="#L1029">1029</a>                         XmlUtils.assertIsNotPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='AL2.0']"</span>);
 <a class="jxr_linenumber" name="L1030" href="#L1030">1030</a>                         XmlUtils.assertIsNotPresent(filter.name(), document, xPath, <span class="jxr_string">"/rat-report/rat-config/licenses/license[@id='GPL1']"</span>);
 <a class="jxr_linenumber" name="L1031" href="#L1031">1031</a>                         <strong class="jxr_keyword">break</strong>;
 <a class="jxr_linenumber" name="L1032" href="#L1032">1032</a>                     <strong class="jxr_keyword">default</strong>:
