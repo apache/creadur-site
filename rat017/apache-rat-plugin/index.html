@@ -187,7 +187,20 @@
 <li><a href="./examples/basic.html">Basic use</a> of the <b>apache-rat:check</b> goal.</li>
 <li><a href="./examples/verify.html">Automatically running</a> the <b>apache-rat:check</b> goal when the project is built.</li>
 <li>Adding the report to the <a href="./examples/site.html">generated site</a>.</li>
-<li>Applying a <a href="./examples/custom-license.html">custom license</a>.</li></ul></section></section>        </main>
+<li>Applying a <a href="./examples/custom-license.html">custom license</a>.</li></ul></section></section><section><a id="Using_SNAPSHOT_versions"></a>
+<h1>Using SNAPSHOT versions</h1>
+<p>In case you want to try out current development versions, you need to adapt your pom.xml in order to include the ASF snapshot repossitory:</p>
+<pre>    &lt;pluginRepositories&gt;
+        &lt;pluginRepository&gt;
+            &lt;id&gt;apache.snapshots&lt;/id&gt;
+            &lt;url&gt;https://repository.apache.org/content/repositories/snapshots&lt;/url&gt;
+            &lt;snapshots&gt;
+                &lt;enabled&gt;true&lt;/enabled&gt;
+                &lt;updatePolicy&gt;always&lt;/updatePolicy&gt;
+                &lt;checksumPolicy&gt;warn&lt;/checksumPolicy&gt;
+            &lt;/snapshots&gt;
+        &lt;/pluginRepository&gt;
+    &lt;/pluginRepositories&gt;</pre></section>        </main>
       </div>
     </div>
     <hr/>
