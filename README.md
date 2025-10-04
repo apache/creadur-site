@@ -108,4 +108,15 @@ $ docker compose up
 ```
 You may need to configure shared paths from Docker -> Preferences... -> Resources -> File Sharing in order to mount your local files.
 
+## Checking for broken links
+
+In order to prepare release documentation you may want to start the webpage locally and issue:
+
+```
+$ linkchecker http://localhost:8888/rat
+$ linkchecker http://localhost:8888/rat017
+```
+
+to look for broken links automatically.
+
 Happy hacking :)
