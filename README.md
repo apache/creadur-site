@@ -119,4 +119,10 @@ $ linkchecker http://localhost:8888/rat017
 
 to look for broken links automatically.
 
+If you do not have a local linkchecker installed, you may use docker as well:
+
+```
+docker run --rm -it -u $(id -u):$(id -g) -v "$PWD":/mnt ghcr.io/linkchecker/linkchecker:latest --verbose -F text/utf8/mnt/linkcheck.txt  index.html
+```
+
 Happy hacking :)
