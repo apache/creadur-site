@@ -102,7 +102,7 @@
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> logDeprecated(<strong class="jxr_keyword">final</strong> Class&lt;?&gt; clazz) {
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>          <strong class="jxr_keyword">if</strong> (clazz.getAnnotation(Deprecated.<strong class="jxr_keyword">class</strong>) != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>              String name = format(<span class="jxr_string">"Deprecated class used: %s "</span>, clazz);
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>              String name = format(<span class="jxr_string">"class used: %s "</span>, clazz);
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>              Info info = clazz.getAnnotation(Info.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>              <strong class="jxr_keyword">if</strong> (info == <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L100" href="#L100">100</a>                 DefaultLog.getInstance().warn(formatEntry(name, <span class="jxr_string">""</span>, false, <span class="jxr_string">""</span>));
