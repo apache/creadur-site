@@ -88,22 +88,22 @@ $ mvn site:site site:stage
 
 ### Building the webpage for releases/release candidates
 
+Generate the webpage from the release tag:
+
 ```
 $ cd creadur-rat
 $ git checkout apache-rat-project-0.17
-$ $ .buildtools/generateStagingSiteInWebpageRepo
+$ .buildtools/generateStagingSiteInWebpageRepo
 OR
 $ mvn site:site site:stage
+```
 
-Verify contents under target/staging
+Verify contents under target/staging:
 
-$ cd ../creadur-site
-$ mkdir rat016
-$ cp -rvf ../creadur-rat/target/staging/* ./rat0161/
+Make sure to manually verify download pages as they need to reference the current release and future SNAPSHOT versions!
 
-Make sure to manually verify download pages as they need to reference the current release and SNAPSHOT versions!
-
-$ git commit -am "Push new preview version of RAT 0.16.1"
+```
+$ git commit -am "Push new preview version of RAT 0.17"
 ```
 
 ### RAT-306: Fix errors in release notes
