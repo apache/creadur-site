@@ -11,10 +11,10 @@ In order to work with Creadur's git repositories some scripts expect that all pr
 ```
 $ cd ~/myworkspace
 $ ls -l
-drwxrwxr-x 16 hirsch hirsch 4096 Okt  9 19:37 creadur-rat
-drwxrwxr-x 13 hirsch hirsch 4096 Okt  9 20:28 creadur-site
-drwxrwxr-x 10 hirsch hirsch 4096 Okt  9 18:25 creadur-tentacles
-drwxrwxr-x 16 hirsch hirsch 4096 Okt  9 17:17 creadur-whisker
+drwxrwxr-x 16 user user 4096 Okt  9 19:37 creadur-rat
+drwxrwxr-x 13 user user 4096 Okt  9 20:28 creadur-site
+drwxrwxr-x 10 user user 4096 Okt  9 18:25 creadur-tentacles
+drwxrwxr-x 16 user user 4096 Okt  9 17:17 creadur-whisker
 ```
 
 ## How to generate new page versions for Creadur subprojects
@@ -85,12 +85,15 @@ As a workaround copy these files into your local .m2 repository as a deployment 
 ```
 $ mvn site:site site:stage
 ```
-or
+
+### Building the webpage for releases/release candidates
 
 ```
 $ cd creadur-rat
-$ git checkout apache-rat-project-0.16.1
-$ mvn clean site:site site:stage
+$ git checkout apache-rat-project-0.17
+$ $ .buildtools/generateStagingSiteInWebpageRepo
+OR
+$ mvn site:site site:stage
 
 Verify contents under target/staging
 
@@ -98,11 +101,10 @@ $ cd ../creadur-site
 $ mkdir rat016
 $ cp -rvf ../creadur-rat/target/staging/* ./rat0161/
 
-Make sure to manually adapt download pages as they need to reference the current release and SNAPSHOT versions!
+Make sure to manually verify download pages as they need to reference the current release and SNAPSHOT versions!
 
 $ git commit -am "Push new preview version of RAT 0.16.1"
 ```
-This will allow a preview of the release site build at [rat0161](./rat0161)
 
 ### RAT-306: Fix errors in release notes
 
