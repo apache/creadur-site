@@ -1,6 +1,6 @@
 # Release Notes Readme
 
-The webpage links to
+The main webpage links to
 https://creadur.apache.org/release-notes/rat.txt
 in order to show a combined release notes document over *all* available versions.
 
