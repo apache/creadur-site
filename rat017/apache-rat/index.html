@@ -31,7 +31,7 @@
           <ul class="breadcrumb">
         <li id="publishDate">Last Published: 2025-10-12<span class="divider">|</span>
 </li>
-          <li id="projectVersion">Version: 0.17-SNAPSHOT<span class="divider">|</span></li>
+          <li id="projectVersion">Version: 0.17<span class="divider">|</span></li>
       <li><a href="https://www.apache.org/">Apache</a><span class="divider">/</span></li>
       <li><a href="../../">Creadur</a><span class="divider">/</span></li>
       <li><a href="../">RAT</a><span class="divider">/</span></li>
@@ -135,12 +135,12 @@
 <li>RAT relies on heuristics: it may miss issues</li></ol></section><section><a id="Running_from_the_Command_Line"></a>
 <h1>Running from the Command Line</h1>
 <p>RAT has a number of <a href="../apache-rat/cli_options.html">command line options</a>. The simplest way to retrieve the list of options is to run the help command:</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar --help</code></pre>
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar --help</code></pre>
 <p>This will output a help message similar to the <a href="../apache-rat/cli_options.html">command line options</a> document as well as information from the <a href="../apache-rat/standard_collections.html">standard collections documentation</a>. options available to you.</p></section><section><a id="Adding_license_headers"></a>
 <h1>Adding license headers</h1>
 <p>RAT can be used to automatically add Apache-2.0 license headers to files that do not currently have them. Only files that are not excluded by the RAT configurations will be affected.</p>
 <p>To add license headers use a command such as:</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar --edit-license \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar --edit-license \
   --edit-copyright &quot;Copyright 2008 Foo&quot; \
   --edit-overwrite \
   /path/to/project</code></pre>
@@ -150,40 +150,40 @@
 <p>RAT supports exclusion and inclusion. By default all files are processed. Using the exclude command files can be excluded from processing. In addition file may be explicitly included. <b>Files that are explicitly included can not be excluded.</b></p><section><a id="Exclusion_by_glob_pattern"></a>
 <h2>Exclusion by glob pattern</h2>
 <p>The following command will exclude all files with a &quot;foo&quot; extension as wll as all files in the junk folder at the root of the project.</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar \
  --input-exclude **/*.foo junk/** -- \
   /path/to/project</code></pre>
 <p>Note that the command ends with a double dash (--). This signals the end of the list of patterns and is standard for all options that accept multiple arguments.</p></section><section><a id="Exclusion_by_glob_pattern_file"></a>
 <h2>Exclusion by glob pattern file</h2>
 <p>It is often more efficient to place the exclusion patterns in a file and read that from disk. The following is an example of how to do that.</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar \
  --input-exclude-file /path/to/project/.rat-excludes \
   /path/to/project</code></pre></section><section><a id="Using_standard_exclusions"></a>
 <h2>Using standard exclusions</h2>
 <p>RAT defines a number of <a href="../apache-rat/standard_collections.html">standard collections</a> that can be used to exclude files based on a standard pattern. For example to exclude all the files associated with the git SCM the following could be used.</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar \
  --input-exclude-std GIT -- \
   /path/to/project</code></pre>
 <p>Again notice the double dash (--) to signal the end of the list. To exclude the files associated with the <code>.gitignore</code> file the --input-exclude-parsed-scm option is used.</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar \
  --input-exclude-std GIT \
  --input-exclude-parsed-scm GIT -- \
   /path/to/project</code></pre>
 <p>Notice that the double dash (--) of the --input-exclude-parsed-scm stops the multiple input of the --input-excludes-std. Adding an additional double dash before the --input-exclude-parsed-scm option will result in an error.</p>
 <p>RAT will by default include all the files in hidden directories. To exclude the hidden files and directories and the git excluded resources the following command could be used:</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar \
  --input-exclude-std GIT HIDDEN_DIR HIDDEN_FILE
  --input-exclude-parsed-scm GIT -- \
   /path/to/project</code></pre></section><section><a id="Excluding_files_by_size"></a>
 <h2>Excluding files by size</h2>
 <p>RAT will exclude files below a specified size if desired. This is done with the --input-exclude-size option. This option takes the the file size in bytes as an argument. The following will exclude files of 10 bytes or less.</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar \
  --input-exclude-size 10 -- \
   /path/to/project</code></pre>
 <ul>
 <li>Including excluded files
 <p>The &quot;--input-exclude&quot;, &quot;--input-exclude-file&quot; and &quot;--input-exclude-std&quot; have include counterparts &quot;--input-include&quot;, &quot;--input-include-file&quot;, &quot;--input-include-std&quot;. The include options will add files back to the processing list. For example, taking the earlier &quot;--input-exclude&quot; example, if there was a file named &quot;master/kung.foo&quot; that should not be excluded the following command will ensure that it is processed.</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar \
  --input-exclude **/*.foo junk/** \
  --input-include master/kung.foo -- \
   /path/to/project</code></pre>
@@ -196,7 +196,7 @@
 <li><a class="externalLink" href="https://gitbox.apache.org/repos/asf/creadur-rat/blob/master/apache-rat-core/src/main/resources/org/apache/rat/unapproved-licenses.xsl">unapproved-licenses</a> - Produces a report of the files with unapproved licenses.</li>
 <li><a class="externalLink" href="https://gitbox.apache.org/repos/asf/creadur-rat/blob/master/apache-rat-core/src/main/resources/org/apache/rat/xml.xsl">xml</a> - Produces output in pretty-printed XML.
 <p>These stylesheets can be specified using the &quot;--output-style&quot; option. The following example create a pretty printed XML report output.</p>
-<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17-SNAPSHOT.jar \
+<pre class="prettyprint"><code>java -jar apache-rat/target/apache-rat-0.17.jar \
  --output-style xml \
   /path/to/project</code></pre>
 <p>To develop your own stylesheets see the RAT Output section of the menu on the left.</p></li></ul></section>        </main>
