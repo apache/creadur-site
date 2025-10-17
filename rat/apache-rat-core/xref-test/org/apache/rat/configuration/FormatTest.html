@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
 <head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <title>FormatTest xref</title>
 <link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
@@ -28,22 +28,21 @@
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.assertThrows;
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.net.MalformedURLException;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FormatTest" href="../../../../org/apache/rat/configuration/FormatTest.html#FormatTest">FormatTest</a> {
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>      @Test
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> fromNameTest() <strong class="jxr_keyword">throws</strong> MalformedURLException {
-<a class="jxr_linenumber" name="L30" href="#L30">30</a>          assertEquals(Format.XML, Format.fromName(<span class="jxr_string">"foo/x.xml"</span>));
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>          assertEquals(Format.XML, Format.fromName(<span class="jxr_string">"x.xml"</span>));
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>          assertThrows(IllegalArgumentException.<strong class="jxr_keyword">class</strong>, () -&gt;Format.fromName(<span class="jxr_string">"junk"</span>));
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>          assertEquals(Format.XML, Format.fromFile( <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"foo/y.xml"</span>)));
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  }
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Test;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FormatTest" href="../../../../org/apache/rat/configuration/FormatTest.html#FormatTest">FormatTest</a> {
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>      @Test
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> fromNameTest() {
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>          assertEquals(Format.XML, Format.from(<span class="jxr_string">"foo/x.xml"</span>));
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>          assertEquals(Format.XML, Format.from(<span class="jxr_string">"x.xml"</span>));
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          assertThrows(IllegalArgumentException.<strong class="jxr_keyword">class</strong>, () -&gt;Format.from(<span class="jxr_string">"junk"</span>));
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>          assertEquals(Format.XML, Format.from( <strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"foo/y.xml"</span>)));
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>      }
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  }
 </pre>
 <hr/>
-<div id="footer">Copyright &#169; 2006&#x2013;2024 <a href="https://www.apache.org">Apache Software Foundation</a>. All rights reserved.</div>
+<div id="footer">© 2006–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>
 </body>
 </html>
