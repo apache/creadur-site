@@ -19,3 +19,10 @@ and are generated with the help of the maven-changes-plugin in RAT's repo.
 ```
 $ ./mvnw changes:announcement-generate -Prelease-notes -Dchanges.version=0.17
 ```
+
+## release notes in base directory of this repo
+
+For compatibility reasons and to not break older bookmarks, 
+make sure that 
+https://creadur.apache.org/rat/RELEASE_NOTES.txt
+points to the same version as the RELEASE_NOTES in this directory!
