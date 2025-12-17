@@ -179,68 +179,70 @@
 <a class="jxr_linenumber" name="L171" href="#L171">171</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> checkDirectory(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> level, <strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> root, <strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> directory, <strong class="jxr_keyword">final</strong> FileFilter fileFilter) {
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>         File dirFile = directory.asFile();
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <strong class="jxr_keyword">for</strong> (File file : listFiles(dirFile, fileFilter)) {
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>             LevelBuilder levelBuilder = levelBuilders.computeIfAbsent(level, k -&gt; <strong class="jxr_keyword">new</strong> LevelBuilder());
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>             levelBuilder.add(process(levelBuilder::add, root, DocumentName.builder(file).build()));
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>         }
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>         <strong class="jxr_keyword">for</strong> (File dir : listFiles(dirFile, DirectoryFileFilter.DIRECTORY)) {
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>             checkDirectory(level + 1, root, DocumentName.builder(dir).setBaseName(directory.getBaseName()).build(), fileFilter);
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>         }
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>     }
-<a class="jxr_linenumber" name="L182" href="#L182">182</a> 
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L184" href="#L184">184</a> <em class="jxr_javadoccomment">     * Allows modification of the file entry to match the {@link MatchPattern} format.</em>
-<a class="jxr_linenumber" name="L185" href="#L185">185</a> <em class="jxr_javadoccomment">     * Default implementation returns the @{code entry} argument.</em>
-<a class="jxr_linenumber" name="L186" href="#L186">186</a> <em class="jxr_javadoccomment">     * @param documentName the name of the document that the file was read from.</em>
-<a class="jxr_linenumber" name="L187" href="#L187">187</a> <em class="jxr_javadoccomment">     * @param entry the entry from that document.</em>
-<a class="jxr_linenumber" name="L188" href="#L188">188</a> <em class="jxr_javadoccomment">     * @return the modified string or an empty Optional to skip the string.</em>
-<a class="jxr_linenumber" name="L189" href="#L189">189</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>     <strong class="jxr_keyword">protected</strong> Optional&lt;String&gt; modifyEntry(<strong class="jxr_keyword">final</strong> Consumer&lt;MatcherSet&gt; matcherSetConsumer, <strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> documentName, <strong class="jxr_keyword">final</strong> String entry) {
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         <strong class="jxr_keyword">return</strong> Optional.of(entry);
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>     }
-<a class="jxr_linenumber" name="L193" href="#L193">193</a> 
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L195" href="#L195">195</a> <em class="jxr_javadoccomment">     * Create a list of files by applying the filter to the specified directory.</em>
-<a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">     * @param dir the directory.</em>
-<a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     * @param filter the filter.</em>
-<a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">     * @return an array of files. May be empty but will not be null.</em>
-<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>     <strong class="jxr_keyword">protected</strong> File[] listFiles(<strong class="jxr_keyword">final</strong> File dir, <strong class="jxr_keyword">final</strong> FileFilter filter) {
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>         File[] result = dir.listFiles(filter);
-<a class="jxr_linenumber" name="L202" href="#L202">202</a>         <strong class="jxr_keyword">return</strong> result == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">new</strong> File[0] : result;
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>     }
-<a class="jxr_linenumber" name="L204" href="#L204">204</a> 
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>     <strong class="jxr_keyword">protected</strong> LevelBuilder getLevelBuilder(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> level) {
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>         <strong class="jxr_keyword">return</strong> levelBuilders.computeIfAbsent(level, k -&gt; <strong class="jxr_keyword">new</strong> LevelBuilder());
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>     }
-<a class="jxr_linenumber" name="L208" href="#L208">208</a> 
-<a class="jxr_linenumber" name="L209" href="#L209">209</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L210" href="#L210">210</a> <em class="jxr_javadoccomment">     * Manages the merging of {@link MatcherSet}s for the specified level.</em>
-<a class="jxr_linenumber" name="L211" href="#L211">211</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L212" href="#L212">212</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> LevelBuilder {
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L214" href="#L214">214</a> <em class="jxr_javadoccomment">         * The list of MatcherSets that this builder produced.</em>
-<a class="jxr_linenumber" name="L215" href="#L215">215</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L216" href="#L216">216</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> MatcherSet.Builder builder = <strong class="jxr_keyword">new</strong> MatcherSet.Builder();
-<a class="jxr_linenumber" name="L217" href="#L217">217</a> 
-<a class="jxr_linenumber" name="L218" href="#L218">218</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L219" href="#L219">219</a> <em class="jxr_javadoccomment">         * Adds a MatcherSet to this level.</em>
-<a class="jxr_linenumber" name="L220" href="#L220">220</a> <em class="jxr_javadoccomment">         * @param matcherSet the matcher set to add.</em>
-<a class="jxr_linenumber" name="L221" href="#L221">221</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L222" href="#L222">222</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> add(<strong class="jxr_keyword">final</strong> <a name="MatcherSet" href="../../../../../../org/apache/rat/config/exclusion/MatcherSet.html#MatcherSet">MatcherSet</a> matcherSet) {
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>             matcherSet.includes().ifPresent(builder::addIncluded);
-<a class="jxr_linenumber" name="L224" href="#L224">224</a>             matcherSet.excludes().ifPresent(builder::addExcluded);
-<a class="jxr_linenumber" name="L225" href="#L225">225</a>         }
-<a class="jxr_linenumber" name="L226" href="#L226">226</a> 
-<a class="jxr_linenumber" name="L227" href="#L227">227</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L228" href="#L228">228</a> <em class="jxr_javadoccomment">         * Constructs the MatcherSet for this level.</em>
-<a class="jxr_linenumber" name="L229" href="#L229">229</a> <em class="jxr_javadoccomment">         * @return the MatcherSet.</em>
-<a class="jxr_linenumber" name="L230" href="#L230">230</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L231" href="#L231">231</a>         <strong class="jxr_keyword">public</strong> <a name="MatcherSet" href="../../../../../../org/apache/rat/config/exclusion/MatcherSet.html#MatcherSet">MatcherSet</a> asMatcherSet() {
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>             <strong class="jxr_keyword">return</strong> builder.build();
-<a class="jxr_linenumber" name="L233" href="#L233">233</a>         }
-<a class="jxr_linenumber" name="L234" href="#L234">234</a>     }
-<a class="jxr_linenumber" name="L235" href="#L235">235</a> }
+<a class="jxr_linenumber" name="L174" href="#L174">174</a>         <em class="jxr_comment">// find any instances of the file being processed (e.g. .gitignore) in this directory.</em>
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>         <strong class="jxr_keyword">for</strong> (File file : listFiles(dirFile, fileFilter)) {
+<a class="jxr_linenumber" name="L176" href="#L176">176</a>             LevelBuilder levelBuilder = levelBuilders.computeIfAbsent(level, k -&gt; <strong class="jxr_keyword">new</strong> LevelBuilder());
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>             levelBuilder.add(process(levelBuilder::add, root, DocumentName.builder(file).build()));
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         }
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>         <em class="jxr_comment">// find all the directories under this directory and add them.</em>
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         <strong class="jxr_keyword">for</strong> (File dir : listFiles(dirFile, DirectoryFileFilter.DIRECTORY)) {
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>             checkDirectory(level + 1, root, DocumentName.builder(dir).setBaseName(directory.getBaseName()).build(), fileFilter);
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         }
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>     }
+<a class="jxr_linenumber" name="L184" href="#L184">184</a> 
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L186" href="#L186">186</a> <em class="jxr_javadoccomment">     * Allows modification of the file entry to match the {@link MatchPattern} format.</em>
+<a class="jxr_linenumber" name="L187" href="#L187">187</a> <em class="jxr_javadoccomment">     * Default implementation returns the @{code entry} argument.</em>
+<a class="jxr_linenumber" name="L188" href="#L188">188</a> <em class="jxr_javadoccomment">     * @param documentName the name of the document that the file was read from.</em>
+<a class="jxr_linenumber" name="L189" href="#L189">189</a> <em class="jxr_javadoccomment">     * @param entry the entry from that document.</em>
+<a class="jxr_linenumber" name="L190" href="#L190">190</a> <em class="jxr_javadoccomment">     * @return the modified string or an empty Optional to skip the string.</em>
+<a class="jxr_linenumber" name="L191" href="#L191">191</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>     <strong class="jxr_keyword">protected</strong> Optional&lt;String&gt; modifyEntry(<strong class="jxr_keyword">final</strong> Consumer&lt;MatcherSet&gt; matcherSetConsumer, <strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> documentName, <strong class="jxr_keyword">final</strong> String entry) {
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         <strong class="jxr_keyword">return</strong> Optional.of(entry);
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>     }
+<a class="jxr_linenumber" name="L195" href="#L195">195</a> 
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     * Create a list of files by applying the filter to the specified directory.</em>
+<a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">     * @param dir the directory.</em>
+<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     * @param filter the filter.</em>
+<a class="jxr_linenumber" name="L200" href="#L200">200</a> <em class="jxr_javadoccomment">     * @return an array of files. May be empty but will not be null.</em>
+<a class="jxr_linenumber" name="L201" href="#L201">201</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>     <strong class="jxr_keyword">protected</strong> File[] listFiles(<strong class="jxr_keyword">final</strong> File dir, <strong class="jxr_keyword">final</strong> FileFilter filter) {
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>         File[] result = dir.listFiles(filter);
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>         <strong class="jxr_keyword">return</strong> result == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">new</strong> File[0] : result;
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>     }
+<a class="jxr_linenumber" name="L206" href="#L206">206</a> 
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>     <strong class="jxr_keyword">protected</strong> LevelBuilder getLevelBuilder(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> level) {
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>         <strong class="jxr_keyword">return</strong> levelBuilders.computeIfAbsent(level, k -&gt; <strong class="jxr_keyword">new</strong> LevelBuilder());
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>     }
+<a class="jxr_linenumber" name="L210" href="#L210">210</a> 
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L212" href="#L212">212</a> <em class="jxr_javadoccomment">     * Manages the merging of {@link MatcherSet}s for the specified level.</em>
+<a class="jxr_linenumber" name="L213" href="#L213">213</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong> LevelBuilder {
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L216" href="#L216">216</a> <em class="jxr_javadoccomment">         * The list of MatcherSets that this builder produced.</em>
+<a class="jxr_linenumber" name="L217" href="#L217">217</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> MatcherSet.Builder builder = <strong class="jxr_keyword">new</strong> MatcherSet.Builder();
+<a class="jxr_linenumber" name="L219" href="#L219">219</a> 
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L221" href="#L221">221</a> <em class="jxr_javadoccomment">         * Adds a MatcherSet to this level.</em>
+<a class="jxr_linenumber" name="L222" href="#L222">222</a> <em class="jxr_javadoccomment">         * @param matcherSet the matcher set to add.</em>
+<a class="jxr_linenumber" name="L223" href="#L223">223</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L224" href="#L224">224</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> add(<strong class="jxr_keyword">final</strong> <a name="MatcherSet" href="../../../../../../org/apache/rat/config/exclusion/MatcherSet.html#MatcherSet">MatcherSet</a> matcherSet) {
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>             matcherSet.includes().ifPresent(builder::addIncluded);
+<a class="jxr_linenumber" name="L226" href="#L226">226</a>             matcherSet.excludes().ifPresent(builder::addExcluded);
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>         }
+<a class="jxr_linenumber" name="L228" href="#L228">228</a> 
+<a class="jxr_linenumber" name="L229" href="#L229">229</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L230" href="#L230">230</a> <em class="jxr_javadoccomment">         * Constructs the MatcherSet for this level.</em>
+<a class="jxr_linenumber" name="L231" href="#L231">231</a> <em class="jxr_javadoccomment">         * @return the MatcherSet.</em>
+<a class="jxr_linenumber" name="L232" href="#L232">232</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L233" href="#L233">233</a>         <strong class="jxr_keyword">public</strong> <a name="MatcherSet" href="../../../../../../org/apache/rat/config/exclusion/MatcherSet.html#MatcherSet">MatcherSet</a> asMatcherSet() {
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>             <strong class="jxr_keyword">return</strong> builder.build();
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>         }
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>     }
+<a class="jxr_linenumber" name="L237" href="#L237">237</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>
