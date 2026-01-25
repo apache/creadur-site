@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChildContainerBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.configuration.builders</a> &gt; <span class="el_source">ChildContainerBuilder.java</span></div><h1>ChildContainerBuilder.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.configuration.builders;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.rat.ConfigurationException;
+import org.apache.rat.analysis.IHeaderMatcher;
+
+/**
+ * Constructs a builder that contains other builders.
+ */
+public abstract class ChildContainerBuilder extends AbstractBuilder {
+
+    /** The list of builders that will build the enclosed matchers. */
+<span class="fc" id="L43">    protected final List&lt;IHeaderMatcher.Builder&gt; children = new ArrayList&lt;&gt;();</span>
+
+    /** The resource the builders came from if it was read from a resource */
+    protected String resource;
+
+    /**
+     * Empty default constructor.
+     */
+<span class="fc" id="L51">    protected ChildContainerBuilder() {</span>
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Reads a text file. Each line becomes a text matcher in the resulting list.
+     *
+     * @param resourceName the name of the resource to read.
+     * @return a List of Matchers, one for each non-empty line in the input file.
+     */
+    public AbstractBuilder setResource(final String resourceName) {
+        // this method is called by reflection
+<span class="fc" id="L62">        URL url = this.getClass().getResource(resourceName);</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        if (url == null) {</span>
+<span class="nc" id="L64">            throw new ConfigurationException(&quot;Unable to read matching text file: &quot; + resourceName);</span>
+        }
+
+<span class="fc" id="L67">        try (InputStream in = url.openStream();</span>
+<span class="fc" id="L68">             BufferedReader buffer = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {</span>
+            String txt;
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            while (null != (txt = buffer.readLine())) {</span>
+<span class="fc" id="L71">                txt = txt.trim();</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">                if (StringUtils.isNotBlank(txt)) {</span>
+<span class="fc" id="L73">                    children.add(new TextBuilder().setSimpleText(txt));</span>
+                }
+            }
+<span class="fc" id="L76">            this.resource = resourceName;</span>
+<span class="fc" id="L77">            return this;</span>
+<span class="nc" id="L78">        } catch (IOException e) {</span>
+<span class="nc" id="L79">            throw new ConfigurationException(&quot;Unable to read matching text file: &quot; + resourceName, e);</span>
+        }
+    }
+
+    /**
+     * Adds a builder to the list of builders.
+     *
+     * @param child the child builder to add.
+     * @return this for chaining.
+     */
+    public AbstractBuilder addEnclosed(final IHeaderMatcher.Builder child) {
+<span class="fc" id="L90">        children.add(child);</span>
+<span class="fc" id="L91">        return this;</span>
+    }
+
+    /**
+     * Adds a collection of builders to the list of child builders.
+     *
+     * @param children the children to add.
+     * @return this for chaining.
+     */
+    public AbstractBuilder addEnclosed(final Collection&lt;IHeaderMatcher.Builder&gt; children) {
+        // this method is called by reflection
+<span class="nc" id="L102">        this.children.addAll(children);</span>
+<span class="nc" id="L103">        return this;</span>
+    }
+
+    public List&lt;IHeaderMatcher.Builder&gt; getEnclosedBuilders() {
+        // this method is called by reflection
+<span class="nc" id="L108">        return Collections.unmodifiableList(children);</span>
+    }
+    /**
+     * @return the list of child builders for this builder.
+     */
+    public List&lt;IHeaderMatcher&gt; getEnclosed() {
+<span class="fc" id="L114">        return children.stream().map(IHeaderMatcher.Builder::build).collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L119">        StringBuilder sb = new StringBuilder(this.getClass().getSimpleName()).append(&quot;:&quot;);</span>
+<span class="nc" id="L120">        children.stream().map(Object::toString).forEach(x -&gt; sb.append(System.lineSeparator()).append(x));</span>
+<span class="nc" id="L121">        return sb.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

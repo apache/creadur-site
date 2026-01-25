@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileListWalker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.walker</a> &gt; <span class="el_source">FileListWalker.java</span></div><h1>FileListWalker.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.walker;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.rat.api.RatException;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.config.exclusion.ExclusionUtils;
+import org.apache.rat.document.DocumentName;
+import org.apache.rat.document.DocumentNameMatcher;
+import org.apache.rat.document.FileDocument;
+import org.apache.rat.report.IReportable;
+import org.apache.rat.report.RatReport;
+import org.apache.rat.utils.DefaultLog;
+
+/**
+ * Implementation of IReportable that traverses over a resource collection
+ * internally.
+ */
+public class FileListWalker implements IReportable {
+    /** The source document name. */
+    private final FileDocument source;
+    /** The root document name. */
+    private final DocumentName rootDoc;
+    /** The base directory for the source document. */
+    private final DocumentName baseDoc;
+
+    /**
+     * Constructor.
+     * @param source The file document that is the source from which this walker will read.
+     */
+<span class="fc" id="L52">    public FileListWalker(final FileDocument source) {</span>
+<span class="fc" id="L53">        this.source = source;</span>
+<span class="fc" id="L54">        File baseDir = source.getFile().getParentFile().getAbsoluteFile();</span>
+<span class="fc" id="L55">        this.baseDoc = DocumentName.builder(baseDir).build();</span>
+<span class="fc" id="L56">        File p = baseDir;</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        while (p.getParentFile() != null) {</span>
+<span class="fc" id="L58">            p = p.getParentFile();</span>
+        }
+<span class="fc" id="L60">        this.rootDoc = DocumentName.builder(p).build();</span>
+<span class="fc" id="L61">    }</span>
+
+    private FileDocument createDocument(final String unixFileName) {
+<span class="fc" id="L64">        DocumentName sourceName = source.getName();</span>
+<span class="fc" id="L65">        String finalName = ExclusionUtils.convertSeparator(unixFileName, &quot;/&quot;, sourceName.getDirectorySeparator());</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        DocumentName documentBase = unixFileName.startsWith(&quot;/&quot;) ? rootDoc : baseDoc;</span>
+<span class="fc" id="L67">        DocumentName documentName = documentBase.resolve(finalName);</span>
+<span class="fc" id="L68">        File documentFile = documentName.asFile();</span>
+<span class="fc" id="L69">        return new FileDocument(documentBase, documentFile, DocumentNameMatcher.MATCHES_ALL);</span>
+    }
+
+    @Override
+    public void run(final RatReport report) throws RatException {
+<span class="fc" id="L74">        DefaultLog.getInstance().debug(String.format(&quot;Reading file name: %s due to option %s&quot;, source, Arg.SOURCE.option()));</span>
+<span class="fc" id="L75">        DocumentName sourceName = getName();</span>
+<span class="fc" id="L76">        try (Reader reader = source.reader()) {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            for (String docName : IOUtils.readLines(reader)) {</span>
+                try {
+<span class="fc" id="L79">                    DefaultLog.getInstance().debug(&quot;Reading file name: &quot; + docName);</span>
+<span class="fc" id="L80">                    FileDocument document = createDocument(docName);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">                    if (document.isDirectory()) {</span>
+<span class="fc" id="L82">                        new DirectoryWalker(document).run(report);</span>
+                    } else {
+<span class="fc" id="L84">                        report.report(document);</span>
+                    }
+<span class="nc" id="L86">                } catch (RatException e) {</span>
+<span class="nc" id="L87">                    throw new RatException(String.format(&quot;Error reading file `%s` read from `%s`&quot;, docName, sourceName), e);</span>
+<span class="fc" id="L88">                }</span>
+<span class="fc" id="L89">            }</span>
+<span class="nc" id="L90">        }  catch (IOException e) {</span>
+<span class="nc" id="L91">            throw new RatException(&quot;can not read &quot; + sourceName.getName(), e);</span>
+<span class="fc" id="L92">        }</span>
+<span class="fc" id="L93">    }</span>
+
+    @Override
+    public DocumentName getName() {
+<span class="fc" id="L97">        return source.getName();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

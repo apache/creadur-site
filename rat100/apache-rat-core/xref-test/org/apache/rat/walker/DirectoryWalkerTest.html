@@ -142,7 +142,7 @@
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>             assertThat(actual).as(()-&gt; String.format(<span class="jxr_string">"Missing %s"</span>, ex)).contains(ex);
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>         }
 <a class="jxr_linenumber" name="L136" href="#L136">136</a> 
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>         List&lt;Document&gt; excluded = scanned.stream().filter(Document::isIgnored).collect(Collectors.toList());
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>         List&lt;Document&gt; excluded = scanned.stream().filter(Document::isIgnored).toList();
 <a class="jxr_linenumber" name="L138" href="#L138">138</a>         assertThat(excluded.size()).isEqualTo(1);
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>         Document d = excluded.get(0);
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         assertThat(d.getName().localized(<span class="jxr_string">"/"</span>)).isEqualTo(<span class="jxr_string">"/.hidden"</span>);
@@ -190,6 +190,6 @@
 <a class="jxr_linenumber" name="L182" href="#L182">182</a> }
 </pre>
 <hr/>
-<div id="footer">© 2006–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>
+<div id="footer">© 2006–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>
 </body>
 </html>

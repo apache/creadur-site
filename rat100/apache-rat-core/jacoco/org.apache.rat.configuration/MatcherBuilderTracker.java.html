@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatcherBuilderTracker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.configuration</a> &gt; <span class="el_source">MatcherBuilderTracker.java</span></div><h1>MatcherBuilderTracker.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.configuration;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
+import org.apache.rat.ConfigurationException;
+import org.apache.rat.Defaults;
+import org.apache.rat.configuration.builders.AbstractBuilder;
+
+/**
+ * A class to track the Matcher Builders as they are defined. Matchers may be defined in multiple configuration files.
+ * This class tracks them so that they can be referenced across the configuration files.
+ */
+public final class MatcherBuilderTracker {
+
+    /** The instance of the BuildTracker. */
+    private static MatcherBuilderTracker instance;
+
+    /** Map of matcher name to the class of the Builder */
+    private final Map&lt;String, Class&lt;? extends AbstractBuilder&gt;&gt; matcherBuilders;
+
+    /**
+     * Gets the instance of the MatcherBuilderTracker.
+     * @return the instance of the MatcherBuilderTracker.
+     */
+    public  static synchronized MatcherBuilderTracker instance() {
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (instance == null) {</span>
+<span class="fc" id="L52">            instance = new MatcherBuilderTracker();</span>
+<span class="fc" id="L53">            Defaults.init();</span>
+        }
+<span class="fc" id="L55">        return instance;</span>
+    }
+
+    /**
+     * Adds a builder to the tracker.
+     * If the {@code name} is null then the builder class name simple is used with the &quot;Builder&quot; suffix removed.
+     * @param className the Class name for the builder.
+     * @param name the short name for the builder.
+     */
+    public static void addBuilder(final String className, final String name) {
+<span class="fc" id="L65">        instance().addBuilderImpl(className, name);</span>
+<span class="fc" id="L66">    }</span>
+
+    /**
+     * Get the matching builder for the name.
+     * @param name The name of the builder.
+     * @return the builder for that name. (not null)
+     */
+    public static AbstractBuilder getMatcherBuilder(final String name) {
+<span class="fc" id="L74">        Class&lt;? extends AbstractBuilder&gt; clazz = instance().matcherBuilders.get(name);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (clazz == null) {</span>
+<span class="nc" id="L76">            StringBuilder sb = new StringBuilder(System.lineSeparator()).append(&quot;Valid builders&quot;).append(System.lineSeparator());</span>
+<span class="nc" id="L77">            instance().matcherBuilders.keySet().forEach(x -&gt; sb.append(x).append(System.lineSeparator()));</span>
+<span class="nc" id="L78">            sb.append(&quot;ERROR MSG&quot;).append(System.lineSeparator());</span>
+<span class="nc" id="L79">            throw new ConfigurationException(sb.append(&quot;No matcher builder named &quot;).append(name).toString());</span>
+        }
+        try {
+<span class="fc" id="L82">            return clazz.getConstructor().newInstance();</span>
+<span class="nc" id="L83">        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException</span>
+                | IllegalArgumentException | InvocationTargetException e) {
+<span class="nc" id="L85">            throw new ConfigurationException(</span>
+<span class="nc" id="L86">                    String.format(&quot;Can not instantiate matcher builder named %s (%s)&quot;, name, clazz.getName()), e);</span>
+        }
+    }
+
+<span class="fc" id="L90">    private MatcherBuilderTracker() {</span>
+<span class="fc" id="L91">        matcherBuilders = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * Gets a collection of classes that are recognized as builders.
+     * @return the collection of builder classes
+     */
+    public Collection&lt;Class&lt;? extends AbstractBuilder&gt;&gt; getClasses() {
+<span class="fc" id="L99">        return Collections.unmodifiableCollection(matcherBuilders.values());</span>
+    }
+
+    private void addBuilderImpl(final String className, final String name) {
+<span class="fc" id="L103">        Objects.requireNonNull(className, &quot;className may not be null&quot;);</span>
+        Class&lt;?&gt; clazz;
+        try {
+<span class="fc" id="L106">            clazz = getClass().getClassLoader().loadClass(className);</span>
+<span class="nc" id="L107">        } catch (ClassNotFoundException e) {</span>
+<span class="nc" id="L108">            throw new ConfigurationException(e);</span>
+<span class="fc" id="L109">        }</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (AbstractBuilder.class.isAssignableFrom(clazz)) {</span>
+            @SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L112">            Class&lt;? extends AbstractBuilder&gt; candidate = (Class&lt;? extends AbstractBuilder&gt;) clazz;</span>
+<span class="fc" id="L113">            String workingName = name;</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (StringUtils.isBlank(workingName)) {</span>
+<span class="fc" id="L115">                workingName = candidate.getSimpleName();</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">                if (!workingName.endsWith(&quot;Builder&quot;)) {</span>
+<span class="nc" id="L117">                    throw new ConfigurationException(</span>
+<span class="nc" id="L118">                            &quot;name is required, or &quot; + candidate.getName() + &quot; must end with 'Builder'&quot;);</span>
+                }
+<span class="fc" id="L120">                workingName = workingName.substring(0, workingName.lastIndexOf(&quot;Builder&quot;));</span>
+<span class="pc bpc" id="L121" title="1 of 2 branches missed.">                if (StringUtils.isBlank(workingName)) {</span>
+<span class="nc" id="L122">                    throw new ConfigurationException(&quot;Last segment of &quot; + candidate.getName()</span>
+                            + &quot; may not be 'Builder', but must end in 'Builder'&quot;);
+                }
+<span class="fc" id="L125">                workingName = WordUtils.uncapitalize(workingName);</span>
+            }
+<span class="fc" id="L127">            matcherBuilders.put(workingName, candidate);</span>
+<span class="fc" id="L128">        } else {</span>
+<span class="nc" id="L129">            throw new ConfigurationException(&quot;Class &quot; + clazz.getName() + &quot; does not extend &quot; + AbstractBuilder.class);</span>
+        }
+<span class="fc" id="L131">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

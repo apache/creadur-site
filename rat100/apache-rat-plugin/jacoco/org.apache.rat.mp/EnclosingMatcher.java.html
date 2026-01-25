@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EnclosingMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Plugin4Maven</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.mp</a> &gt; <span class="el_source">EnclosingMatcher.java</span></div><h1>EnclosingMatcher.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.mp;
+
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.rat.analysis.IHeaderMatcher;
+
+/**
+ *  @deprecated use Configuration file to define licenses
+ */
+@Deprecated
+<span class="nc" id="L28">abstract class EnclosingMatcher {</span>
+
+    protected abstract void setMatcher(IHeaderMatcher.Builder builder);
+
+    @Parameter(required = false)
+    public void setAll(final All all) {
+<span class="nc" id="L34">        setMatcher(all);</span>
+<span class="nc" id="L35">    }</span>
+
+    @Parameter(required = false)
+    public void setAny(final Any any) {
+<span class="nc" id="L39">        setMatcher(any);</span>
+<span class="nc" id="L40">    }</span>
+
+    @Parameter(required = false)
+    public void setText(Text text) {
+<span class="nc" id="L44">        setMatcher(text);</span>
+<span class="nc" id="L45">    }</span>
+
+    @Parameter(required = false)
+    public void setCopyright(Copyright copyright) {
+<span class="nc" id="L49">        setMatcher(copyright);</span>
+<span class="nc" id="L50">    }</span>
+
+    @Parameter(required = false)
+    public void setRegex(Regex regex) {
+<span class="nc" id="L54">        setMatcher(regex);</span>
+<span class="nc" id="L55">    }</span>
+
+    @Parameter(required = false)
+    public void setSpdx(Spdx spdx) {
+<span class="nc" id="L59">        setMatcher(spdx);</span>
+<span class="nc" id="L60">    }</span>
+    
+    @Parameter(required = false)
+    public void setNot(Not not) {
+<span class="nc" id="L64">        setMatcher(not);</span>
+<span class="nc" id="L65">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

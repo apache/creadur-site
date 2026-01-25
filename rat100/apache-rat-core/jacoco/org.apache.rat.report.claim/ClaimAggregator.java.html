@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ClaimAggregator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.report.claim</a> &gt; <span class="el_source">ClaimAggregator.java</span></div><h1>ClaimAggregator.java</h1><pre class="source lang-java linenums">/*
+* Licensed to the Apache Software Foundation (ASF) under one   *
+* or more contributor license agreements.  See the NOTICE file *
+* distributed with this work for additional information        *
+* regarding copyright ownership.  The ASF licenses this file   *
+* to you under the Apache License, Version 2.0 (the            *
+* &quot;License&quot;); you may not use this file except in compliance   *
+* with the License.  You may obtain a copy of the License at   *
+*                                                              *
+*   http://www.apache.org/licenses/LICENSE-2.0                 *
+*                                                              *
+* Unless required by applicable law or agreed to in writing,   *
+* software distributed under the License is distributed on an  *
+* &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+* KIND, either express or implied.  See the License for the    *
+* specific language governing permissions and limitations      *
+* under the License.                                           *
+*/
+
+package org.apache.rat.report.claim;
+
+import org.apache.rat.api.Document;
+import org.apache.rat.api.MetaData;
+import org.apache.rat.api.RatException;
+import org.apache.rat.license.ILicense;
+import org.apache.rat.license.ILicenseFamily;
+import org.apache.rat.report.claim.ClaimStatistic.Counter;
+
+/**
+ * The aggregator is used to create a numerical statistic of claims.
+ */
+public class ClaimAggregator extends AbstractClaimReporter {
+    /** The claim statistics this aggregator is reporting to. */
+    private final ClaimStatistic statistic;
+
+    /**
+     * Constructor.
+     * @param statistic The statistic to store the statistics in.
+     */
+<span class="fc" id="L40">    public ClaimAggregator(final ClaimStatistic statistic) {</span>
+<span class="fc" id="L41">        this.statistic = statistic;</span>
+<span class="fc" id="L42">    }</span>
+
+    @Override
+    protected void handleDocumentCategoryClaim(final Document.Type documentType) {
+<span class="fc" id="L46">        statistic.incCounter(documentType, 1);</span>
+<span class="fc" id="L47">    }</span>
+
+    @Override
+    protected void handleApprovedLicenseClaim(final MetaData metadata) {
+<span class="fc" id="L51">        statistic.incCounter(ClaimStatistic.Counter.APPROVED, (int) metadata.approvedLicenses().count());</span>
+<span class="fc" id="L52">        statistic.incCounter(ClaimStatistic.Counter.UNAPPROVED,  (int) metadata.unapprovedLicenses().count());</span>
+<span class="fc" id="L53">    }</span>
+
+    @Override
+    protected void handleLicenseClaim(final ILicense license) {
+<span class="fc" id="L57">        String category = license.getLicenseFamily().getFamilyCategory();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (category.equals(ILicenseFamily.UNKNOWN.getFamilyCategory())) {</span>
+<span class="fc" id="L59">            statistic.incCounter(Counter.UNKNOWN, 1);</span>
+        }
+<span class="fc" id="L61">        statistic.incLicenseCategoryCount(category, 1);</span>
+<span class="fc" id="L62">        statistic.incLicenseNameCount(license.getName(), 1);</span>
+<span class="fc" id="L63">    }</span>
+
+    @Override
+    public void endReport() throws RatException {
+<span class="fc" id="L67">        super.endReport();</span>
+<span class="fc" id="L68">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
