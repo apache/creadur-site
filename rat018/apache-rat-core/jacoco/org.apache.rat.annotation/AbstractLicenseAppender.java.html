@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractLicenseAppender.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.annotation</a> &gt; <span class="el_source">AbstractLicenseAppender.java</span></div><h1>AbstractLicenseAppender.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.annotation;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.input.BOMInputStream;
+import org.apache.rat.utils.DefaultLog;
+
+/**
+ * Add a license header to a document. This appender does not check for the
+ * existence of an existing license header, it is assumed that either a second
+ * license header is intentional or that there is no license header present
+ * already.
+ */
+public abstract class AbstractLicenseAppender {
+    /** The dot '.' character */
+    private static final String DOT = &quot;.&quot;;
+    /** unknown files */
+    private static final int TYPE_UNKNOWN = 0;
+    /** Java files */
+    private static final int TYPE_JAVA = 1;
+    /** XML files */
+    private static final int TYPE_XML = 2;
+    /** HTML files */
+    private static final int TYPE_HTML = 3;
+    /** CSS files */
+    private static final int TYPE_CSS = 4;
+    /** javascript files */
+    private static final int TYPE_JAVASCRIPT = 5;
+    /** Almost plain text files */
+    private static final int TYPE_APT = 6;
+    /** Properties files */
+    private static final int TYPE_PROPERTIES = 7;
+    /** Python files */
+    private static final int TYPE_PYTHON = 8;
+    /** C files */
+    private static final int TYPE_C = 9;
+    /** C Header files */
+    private static final int TYPE_H = 10;
+    /** Shell script files */
+    private static final int TYPE_SH = 11;
+    /** Batch files */
+    private static final int TYPE_BAT = 12;
+    /** VM files */
+    private static final int TYPE_VM = 13;
+    /** scala files */
+    private static final int TYPE_SCALA = 14;
+    /** Ruby files */
+    private static final int TYPE_RUBY = 15;
+    /** PERL files */
+    private static final int TYPE_PERL = 16;
+    /** TCL files */
+    private static final int TYPE_TCL = 17;
+    /** C++ files */
+    private static final int TYPE_CPP = 18;
+    /** C# files */
+    private static final int TYPE_CSHARP = 19;
+    /** PHP files */
+    private static final int TYPE_PHP = 20;
+    /** Groovy files */
+    private static final int TYPE_GROOVY = 21;
+    /** Visual studio solution files */
+    private static final int TYPE_VISUAL_STUDIO_SOLUTION = 22;
+    /** BeanShell files */
+    private static final int TYPE_BEANSHELL = 23;
+    /** JSP files */
+    private static final int TYPE_JSP = 24;
+    /** FML files */
+    private static final int TYPE_FML = 25;
+    /** GO files */
+    private static final int TYPE_GO = 26;
+    /** PM files */
+    private static final int TYPE_PM = 27;
+    /** Markdown files */
+    private static final int TYPE_MD = 28;
+    /** YAML files */
+    private static final int TYPE_YAML = 29;
+
+    /**
+     * The line separator for this OS.
+     */
+<span class="fc" id="L114">    private static final String LINE_SEP = System.lineSeparator();</span>
+    /**
+     * Files that are in the C family.
+     */
+<span class="fc" id="L118">    private static final int[] FAMILY_C = new int[]{</span>
+            TYPE_JAVA, TYPE_JAVASCRIPT, TYPE_C, TYPE_H, TYPE_SCALA,
+            TYPE_CSS, TYPE_CPP, TYPE_CSHARP, TYPE_PHP, TYPE_GROOVY,
+            TYPE_BEANSHELL, TYPE_GO,
+    };
+    /**
+     * Files that are in the SGML family.
+     */
+<span class="fc" id="L126">    private static final int[] FAMILY_SGML = new int[]{</span>
+            TYPE_XML, TYPE_HTML, TYPE_JSP, TYPE_FML, TYPE_MD,
+    };
+    /**
+     * Files that are in the Shell family.
+     */
+<span class="fc" id="L132">    private static final int[] FAMILY_SH = new int[]{</span>
+            TYPE_PROPERTIES, TYPE_PYTHON, TYPE_SH, TYPE_RUBY, TYPE_PERL,
+            TYPE_TCL, TYPE_VISUAL_STUDIO_SOLUTION, TYPE_PM, TYPE_YAML,
+    };
+    /**
+     * Files that are in the batch family.
+     */
+<span class="fc" id="L139">    private static final int[] FAMILY_BAT = new int[] {</span>
+            TYPE_BAT,
+    };
+    /**
+     * Files that are in the Almost Plain Text family.
+     */
+<span class="fc" id="L145">    private static final int[] FAMILY_APT = new int[] {</span>
+            TYPE_APT,
+    };
+    /**
+     * Files in the velocity family.
+     */
+<span class="fc" id="L151">    private static final int[] FAMILY_VELOCITY = new int[] {</span>
+            TYPE_VM,
+    };
+    /**
+     * Files that expect &quot;#/some/path&quot;.
+     */
+<span class="fc" id="L157">    private static final int[] EXPECTS_HASH_PLING = new int[] {</span>
+            TYPE_PYTHON, TYPE_SH, TYPE_RUBY, TYPE_PERL, TYPE_TCL,
+    };
+    /**
+     * Files that expect &quot;@Echo&quot;.
+     */
+<span class="fc" id="L163">    private static final int[] EXPECTS_AT_ECHO = new int[]{</span>
+            TYPE_BAT,
+    };
+    /**
+     * Files that expect package names.
+     */
+<span class="fc" id="L169">    private static final int[] EXPECTS_PACKAGE = new int[]{</span>
+            TYPE_JAVA, TYPE_GO, TYPE_PM,
+    };
+    /**
+     * Files that expect the XML Declaration.
+     */
+<span class="fc" id="L175">    private static final int[] EXPECTS_XML_DECL = new int[]{</span>
+            TYPE_XML,
+    };
+    /**
+     * Files that expect the PHP header.
+     */
+<span class="fc" id="L181">    private static final int[] EXPECTS_PHP_PI = new int[] {</span>
+            TYPE_PHP,
+    };
+    /**
+     * Files that expect the Microsoft Visual Source Safe header.
+     */
+<span class="fc" id="L187">    private static final int[] EXPECTS_MSVSSF_HEADER = new int[] {</span>
+            TYPE_VISUAL_STUDIO_SOLUTION,
+    };
+
+    /**
+     * Mapping of extension to family type.
+     */
+<span class="fc" id="L194">    private static final Map&lt;String, Integer&gt; EXT2TYPE = new HashMap&lt;&gt;();</span>
+
+    static {
+        // these arrays are used in Arrays.binarySearch so they must
+        // be sorted
+<span class="fc" id="L199">        Arrays.sort(FAMILY_C);</span>
+<span class="fc" id="L200">        Arrays.sort(FAMILY_SGML);</span>
+<span class="fc" id="L201">        Arrays.sort(FAMILY_SH);</span>
+<span class="fc" id="L202">        Arrays.sort(FAMILY_BAT);</span>
+<span class="fc" id="L203">        Arrays.sort(FAMILY_APT);</span>
+<span class="fc" id="L204">        Arrays.sort(FAMILY_VELOCITY);</span>
+
+<span class="fc" id="L206">        Arrays.sort(EXPECTS_HASH_PLING);</span>
+<span class="fc" id="L207">        Arrays.sort(EXPECTS_AT_ECHO);</span>
+<span class="fc" id="L208">        Arrays.sort(EXPECTS_PACKAGE);</span>
+<span class="fc" id="L209">        Arrays.sort(EXPECTS_XML_DECL);</span>
+<span class="fc" id="L210">        Arrays.sort(EXPECTS_MSVSSF_HEADER);</span>
+
+<span class="fc" id="L212">        EXT2TYPE.put(&quot;apt&quot;, TYPE_APT);</span>
+<span class="fc" id="L213">        EXT2TYPE.put(&quot;asax&quot;, TYPE_HTML);</span>
+<span class="fc" id="L214">        EXT2TYPE.put(&quot;ascx&quot;, TYPE_HTML);</span>
+<span class="fc" id="L215">        EXT2TYPE.put(&quot;aspx&quot;, TYPE_HTML);</span>
+<span class="fc" id="L216">        EXT2TYPE.put(&quot;bat&quot;, TYPE_BAT);</span>
+<span class="fc" id="L217">        EXT2TYPE.put(&quot;bsh&quot;, TYPE_BEANSHELL);</span>
+<span class="fc" id="L218">        EXT2TYPE.put(&quot;c&quot;, TYPE_C);</span>
+<span class="fc" id="L219">        EXT2TYPE.put(&quot;cc&quot;, TYPE_CPP);</span>
+<span class="fc" id="L220">        EXT2TYPE.put(&quot;cmd&quot;, TYPE_BAT);</span>
+<span class="fc" id="L221">        EXT2TYPE.put(&quot;config&quot;, TYPE_XML);</span>
+<span class="fc" id="L222">        EXT2TYPE.put(&quot;cpp&quot;, TYPE_CPP);</span>
+<span class="fc" id="L223">        EXT2TYPE.put(&quot;cs&quot;, TYPE_CSHARP);</span>
+<span class="fc" id="L224">        EXT2TYPE.put(&quot;csdproj&quot;, TYPE_XML);</span>
+<span class="fc" id="L225">        EXT2TYPE.put(&quot;csproj&quot;, TYPE_XML);</span>
+<span class="fc" id="L226">        EXT2TYPE.put(&quot;css&quot;, TYPE_CSS);</span>
+<span class="fc" id="L227">        EXT2TYPE.put(&quot;fxcop&quot;, TYPE_XML);</span>
+<span class="fc" id="L228">        EXT2TYPE.put(&quot;fml&quot;, TYPE_FML);</span>
+<span class="fc" id="L229">        EXT2TYPE.put(&quot;groovy&quot;, TYPE_GROOVY);</span>
+<span class="fc" id="L230">        EXT2TYPE.put(&quot;go&quot;, TYPE_GO);</span>
+<span class="fc" id="L231">        EXT2TYPE.put(&quot;h&quot;, TYPE_H);</span>
+<span class="fc" id="L232">        EXT2TYPE.put(&quot;hh&quot;, TYPE_H);</span>
+<span class="fc" id="L233">        EXT2TYPE.put(&quot;hpp&quot;, TYPE_H);</span>
+<span class="fc" id="L234">        EXT2TYPE.put(&quot;htm&quot;, TYPE_HTML);</span>
+<span class="fc" id="L235">        EXT2TYPE.put(&quot;html&quot;, TYPE_HTML);</span>
+<span class="fc" id="L236">        EXT2TYPE.put(&quot;java&quot;, TYPE_JAVA);</span>
+<span class="fc" id="L237">        EXT2TYPE.put(&quot;js&quot;, TYPE_JAVASCRIPT);</span>
+<span class="fc" id="L238">        EXT2TYPE.put(&quot;jsp&quot;, TYPE_JSP);</span>
+<span class="fc" id="L239">        EXT2TYPE.put(&quot;md&quot;, TYPE_MD);</span>
+<span class="fc" id="L240">        EXT2TYPE.put(&quot;ndoc&quot;, TYPE_XML);</span>
+<span class="fc" id="L241">        EXT2TYPE.put(&quot;nunit&quot;, TYPE_XML);</span>
+<span class="fc" id="L242">        EXT2TYPE.put(&quot;php&quot;, TYPE_PHP);</span>
+<span class="fc" id="L243">        EXT2TYPE.put(&quot;pl&quot;, TYPE_PERL);</span>
+<span class="fc" id="L244">        EXT2TYPE.put(&quot;pm&quot;, TYPE_PM);</span>
+<span class="fc" id="L245">        EXT2TYPE.put(&quot;properties&quot;, TYPE_PROPERTIES);</span>
+<span class="fc" id="L246">        EXT2TYPE.put(&quot;py&quot;, TYPE_PYTHON);</span>
+<span class="fc" id="L247">        EXT2TYPE.put(&quot;rb&quot;, TYPE_RUBY);</span>
+<span class="fc" id="L248">        EXT2TYPE.put(&quot;rdf&quot;, TYPE_XML);</span>
+<span class="fc" id="L249">        EXT2TYPE.put(&quot;resx&quot;, TYPE_XML);</span>
+<span class="fc" id="L250">        EXT2TYPE.put(&quot;scala&quot;, TYPE_SCALA);</span>
+<span class="fc" id="L251">        EXT2TYPE.put(&quot;sh&quot;, TYPE_SH);</span>
+<span class="fc" id="L252">        EXT2TYPE.put(&quot;shfbproj&quot;, TYPE_XML);</span>
+<span class="fc" id="L253">        EXT2TYPE.put(&quot;sln&quot;, TYPE_VISUAL_STUDIO_SOLUTION);</span>
+<span class="fc" id="L254">        EXT2TYPE.put(&quot;stylecop&quot;, TYPE_XML);</span>
+<span class="fc" id="L255">        EXT2TYPE.put(&quot;svg&quot;, TYPE_XML);</span>
+<span class="fc" id="L256">        EXT2TYPE.put(&quot;tcl&quot;, TYPE_TCL);</span>
+<span class="fc" id="L257">        EXT2TYPE.put(&quot;vbdproj&quot;, TYPE_XML);</span>
+<span class="fc" id="L258">        EXT2TYPE.put(&quot;vbproj&quot;, TYPE_XML);</span>
+<span class="fc" id="L259">        EXT2TYPE.put(&quot;vcproj&quot;, TYPE_XML);</span>
+<span class="fc" id="L260">        EXT2TYPE.put(&quot;vm&quot;, TYPE_VM);</span>
+<span class="fc" id="L261">        EXT2TYPE.put(&quot;vsdisco&quot;, TYPE_XML);</span>
+<span class="fc" id="L262">        EXT2TYPE.put(&quot;webinfo&quot;, TYPE_XML);</span>
+<span class="fc" id="L263">        EXT2TYPE.put(&quot;xml&quot;, TYPE_XML);</span>
+<span class="fc" id="L264">        EXT2TYPE.put(&quot;xproj&quot;, TYPE_XML);</span>
+<span class="fc" id="L265">        EXT2TYPE.put(&quot;xsl&quot;, TYPE_XML);</span>
+<span class="fc" id="L266">        EXT2TYPE.put(&quot;yaml&quot;, TYPE_YAML);</span>
+<span class="fc" id="L267">        EXT2TYPE.put(&quot;yml&quot;, TYPE_YAML);</span>
+<span class="fc" id="L268">    }</span>
+
+    /**
+     * if {@code true} overwrite the existing files.
+     */
+    private boolean isOverwrite;
+
+    /**
+     * Constructor
+     */
+    public AbstractLicenseAppender() {
+<span class="fc" id="L279">        super();</span>
+<span class="fc" id="L280">    }</span>
+
+    /**
+     * Append the default license header to the supplied document.
+     *
+     * @param document document to append to.
+     * @throws IOException if there is a problem while reading or writing the file.
+     */
+    public void append(final File document) throws IOException {
+<span class="fc" id="L289">        int type = getType(document);</span>
+<span class="fc bfc" id="L290" title="All 2 branches covered.">        if (type == TYPE_UNKNOWN) {</span>
+<span class="fc" id="L291">            return;</span>
+        }
+
+<span class="fc" id="L294">        boolean expectsHashPling = expectsHashPling(type);</span>
+<span class="fc" id="L295">        boolean expectsAtEcho = expectsAtEcho(type);</span>
+<span class="fc" id="L296">        boolean expectsPackage = expectsPackage(type);</span>
+<span class="fc" id="L297">        boolean expectsXMLDecl = expectsXMLDecl(type);</span>
+<span class="fc" id="L298">        boolean expectsPhpPI = expectsPhpPI(type);</span>
+<span class="fc" id="L299">        boolean expectsMSVSSF = expectsMSVisualStudioSolutionFileHeader(type);</span>
+
+<span class="fc" id="L301">        File newDocument = new File(document.getAbsolutePath() + &quot;.new&quot;);</span>
+<span class="fc" id="L302">        try (FileWriter writer = new FileWriter(newDocument, StandardCharsets.UTF_8)) {</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">            if (!attachLicense(writer, document,</span>
+                    expectsHashPling, expectsAtEcho, expectsPackage,
+                    expectsXMLDecl, expectsPhpPI, expectsMSVSSF)) {
+                // Java File without package, XML file without decl or PHP
+                // file without PI
+                // for Java just place the license at the front, for XML add
+                // an XML decl first - don't know how to handle PHP
+<span class="pc bpc" id="L310" title="1 of 4 branches missed.">                if (expectsPackage || expectsXMLDecl) {</span>
+<span class="fc" id="L311">                    try (FileWriter writer2  = new FileWriter(newDocument)) {</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">                        if (expectsXMLDecl) {</span>
+<span class="fc" id="L313">                            writer2.write(&quot;&lt;?xml version='1.0'?&gt;&quot;);</span>
+<span class="fc" id="L314">                            writer2.write(LINE_SEP);</span>
+                        }
+<span class="fc" id="L316">                        attachLicense(writer2, document,</span>
+                                false, false, false, false, false, false);
+                    }
+                }
+            }
+        }
+
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        if (isOverwrite) {</span>
+            try {
+<span class="fc" id="L325">                Path docPath = document.toPath();</span>
+<span class="fc" id="L326">                boolean isExecutable = Files.isExecutable(docPath);</span>
+<span class="fc" id="L327">                Files.move(newDocument.toPath(), docPath, StandardCopyOption.REPLACE_EXISTING);</span>
+<span class="pc bpc" id="L328" title="1 of 4 branches missed.">                if (isExecutable &amp;&amp; !document.setExecutable(true)) {</span>
+<span class="nc" id="L329">                    DefaultLog.getInstance().warn(String.format(&quot;Could not set %s as executable.&quot;, document));</span>
+                }
+<span class="nc" id="L331">            } catch (InvalidPathException | IOException e) {</span>
+<span class="nc" id="L332">                DefaultLog.getInstance().error(String.format(&quot;Failed to rename new file to %s, original file is unchanged.&quot;, document), e);</span>
+<span class="fc" id="L333">            }</span>
+        }
+<span class="fc" id="L335">    }</span>
+
+    /**
+     * Write document's content to writer attaching the license using
+     * the given flags as hints for where to put it.
+     *
+     * @return whether the license has actually been written
+     */
+    private boolean attachLicense(final Writer writer, final File document,
+                                  final boolean expectsHashPling,
+                                  final boolean expectsAtEcho,
+                                  final boolean expectsPackage,
+                                  final boolean expectsXMLDecl,
+                                  final boolean expectsPhpPI,
+                                  final boolean expectsMSVSSF)
+            throws IOException {
+<span class="fc" id="L351">        boolean written = false;</span>
+<span class="fc" id="L352">        FileInputStream fis = null;</span>
+<span class="fc" id="L353">        BufferedReader br = null;</span>
+        try {
+<span class="fc" id="L355">            fis = new FileInputStream(document);</span>
+<span class="fc" id="L356">            BOMInputStream bos = BOMInputStream.builder().setInputStream(fis).get();</span>
+<span class="fc" id="L357">            br = new BufferedReader(new InputStreamReader(bos, StandardCharsets.UTF_8));</span>
+
+<span class="pc bpc" id="L359" title="1 of 12 branches missed.">            if (!expectsHashPling</span>
+                    &amp;&amp; !expectsAtEcho
+                    &amp;&amp; !expectsPackage
+                    &amp;&amp; !expectsXMLDecl
+                    &amp;&amp; !expectsPhpPI
+                    &amp;&amp; !expectsMSVSSF) {
+<span class="fc" id="L365">                written = true;</span>
+<span class="fc" id="L366">                writer.write(getLicenseHeader(document));</span>
+<span class="fc" id="L367">                writer.write(LINE_SEP);</span>
+            }
+
+            String line;
+<span class="fc" id="L371">            boolean first = true;</span>
+<span class="fc bfc" id="L372" title="All 2 branches covered.">            while ((line = br.readLine()) != null) {</span>
+<span class="fc bfc" id="L373" title="All 4 branches covered.">                if (first &amp;&amp; expectsHashPling) {</span>
+<span class="fc" id="L374">                    written = true;</span>
+<span class="fc" id="L375">                    doFirstLine(document, writer, line, &quot;#!&quot;);</span>
+<span class="pc bpc" id="L376" title="1 of 4 branches missed.">                } else if (first &amp;&amp; expectsAtEcho) {</span>
+<span class="nc" id="L377">                    written = true;</span>
+<span class="nc" id="L378">                    doFirstLine(document, writer, line, &quot;@echo&quot;);</span>
+<span class="fc bfc" id="L379" title="All 4 branches covered.">                } else if (first &amp;&amp; expectsMSVSSF) {</span>
+<span class="fc" id="L380">                    written = true;</span>
+<span class="fc bfc" id="L381" title="All 2 branches covered.">                    if (line.isEmpty()) {</span>
+<span class="fc" id="L382">                        line = passThroughReadNext(writer, line, br);</span>
+                    }
+<span class="pc bpc" id="L384" title="1 of 2 branches missed.">                    if (line.startsWith(&quot;Microsoft Visual Studio Solution&quot;</span>
+                            + &quot; File&quot;)) {
+<span class="fc" id="L386">                        line = passThroughReadNext(writer, line, br);</span>
+                    }
+<span class="fc" id="L388">                    doFirstLine(document, writer, line, &quot;# Visual &quot;);</span>
+                } else {
+<span class="fc" id="L390">                    writer.write(line);</span>
+<span class="fc" id="L391">                    writer.write(LINE_SEP);</span>
+                }
+
+<span class="fc bfc" id="L394" title="All 4 branches covered.">                if (expectsPackage &amp;&amp; line.startsWith(&quot;package &quot;)) {</span>
+<span class="fc" id="L395">                    written = true;</span>
+<span class="fc" id="L396">                    writer.write(LINE_SEP);</span>
+<span class="fc" id="L397">                    writer.write(getLicenseHeader(document));</span>
+<span class="fc" id="L398">                    writer.write(LINE_SEP);</span>
+<span class="fc bfc" id="L399" title="All 4 branches covered.">                } else if (expectsXMLDecl &amp;&amp; line.startsWith(&quot;&lt;?xml &quot;)) {</span>
+<span class="fc" id="L400">                    written = true;</span>
+<span class="fc" id="L401">                    writer.write(LINE_SEP);</span>
+<span class="fc" id="L402">                    writer.write(getLicenseHeader(document));</span>
+<span class="fc" id="L403">                    writer.write(LINE_SEP);</span>
+<span class="fc bfc" id="L404" title="All 4 branches covered.">                } else if (expectsPhpPI &amp;&amp; line.startsWith(&quot;&lt;?php&quot;)) {</span>
+<span class="fc" id="L405">                    written = true;</span>
+<span class="fc" id="L406">                    writer.write(LINE_SEP);</span>
+<span class="fc" id="L407">                    writer.write(getLicenseHeader(document));</span>
+<span class="fc" id="L408">                    writer.write(LINE_SEP);</span>
+                }
+<span class="fc" id="L410">                first = false;</span>
+            }
+        } finally {
+<span class="fc" id="L413">            IOUtils.closeQuietly(br);</span>
+<span class="fc" id="L414">            IOUtils.closeQuietly(fis);</span>
+<span class="fc" id="L415">            IOUtils.closeQuietly(writer);</span>
+        }
+<span class="fc" id="L417">        return written;</span>
+    }
+
+    /**
+     * Check first line for specified text and process.
+     */
+    private void doFirstLine(final File document, final Writer writer, final String line, final String lookFor) throws IOException {
+<span class="fc bfc" id="L424" title="All 2 branches covered.">        if (line.startsWith(lookFor)) {</span>
+<span class="fc" id="L425">            writer.write(line);</span>
+<span class="fc" id="L426">            writer.write(LINE_SEP);</span>
+<span class="fc" id="L427">            writer.write(getLicenseHeader(document));</span>
+        } else {
+<span class="fc" id="L429">            writer.write(getLicenseHeader(document));</span>
+<span class="fc" id="L430">            writer.write(line);</span>
+<span class="fc" id="L431">            writer.write(LINE_SEP);</span>
+        }
+<span class="fc" id="L433">    }</span>
+
+    /**
+     * Detect the type of document.
+     *
+     * @param document to retrieve type from.
+     * @return not null
+     * TODO use existing mechanism to detect the type of a file and record it in the report output, thus we will not need this duplication here.
+     */
+    protected int getType(final File document) {
+<span class="fc" id="L443">        String path = document.getPath();</span>
+<span class="fc" id="L444">        int lastDot = path.lastIndexOf(DOT);</span>
+<span class="pc bpc" id="L445" title="2 of 4 branches missed.">        if (lastDot &gt;= 0 &amp;&amp; lastDot &lt; path.length() - 1) {</span>
+<span class="fc" id="L446">            String ext = path.substring(lastDot + 1);</span>
+<span class="fc" id="L447">            Integer type = EXT2TYPE.get(ext);</span>
+<span class="fc bfc" id="L448" title="All 2 branches covered.">            if (type != null) {</span>
+<span class="fc" id="L449">                return type;</span>
+            }
+        }
+<span class="fc" id="L452">        return TYPE_UNKNOWN;</span>
+    }
+
+    /**
+     * Set the force flag on this appender. If this flag is set
+     * to true then files will be modified directly, otherwise
+     * new files will be created alongside the existing files.
+     *
+     * @param overwrite force flag.
+     */
+    public void setOverwrite(final boolean overwrite) {
+<span class="fc" id="L463">        isOverwrite = overwrite;</span>
+<span class="fc" id="L464">    }</span>
+
+    /**
+     * Gets the header text to insert into the file.
+     * @param document document to extract from.
+     * @return Get the license header of a document.
+     */
+    public abstract String getLicenseHeader(File document);
+
+    /**
+     * Get the first line of the license header formatted
+     * for the given type of file.
+     *
+     * @param type the type of file, see the TYPE_* constants
+     * @return not null
+     */
+    protected String getFirstLine(final int type) {
+<span class="fc bfc" id="L481" title="All 2 branches covered.">        if (isFamilyC(type)) {</span>
+<span class="fc" id="L482">            return &quot;/*&quot; + LINE_SEP;</span>
+<span class="fc bfc" id="L483" title="All 2 branches covered.">        } else if (isFamilySGML(type)) {</span>
+<span class="fc" id="L484">            return &quot;&lt;!--&quot; + LINE_SEP;</span>
+        }
+<span class="fc" id="L486">        return &quot;&quot;;</span>
+    }
+
+    /**
+     * Get the last line of the license header formatted
+     * for the given type of file.
+     *
+     * @param type the type of file, see the TYPE_* constants
+     * @return not null
+     */
+    protected String getLastLine(final int type) {
+<span class="fc bfc" id="L497" title="All 2 branches covered.">        if (isFamilyC(type)) {</span>
+<span class="fc" id="L498">            return &quot; */&quot; + LINE_SEP;</span>
+<span class="fc bfc" id="L499" title="All 2 branches covered.">        } else if (isFamilySGML(type)) {</span>
+<span class="fc" id="L500">            return &quot;--&gt;&quot; + LINE_SEP;</span>
+        }
+<span class="fc" id="L502">        return &quot;&quot;;</span>
+    }
+
+    /**
+     * Get a line of the license header formatted
+     * for the given type of file.
+     *
+     * @param type    the type of file, see the TYPE_* constants.
+     * @param content the content for this line.
+     * @return not null
+     */
+    protected String getLine(final int type, final String content) {
+<span class="fc bfc" id="L514" title="All 2 branches covered.">        if (isFamilyC(type)) {</span>
+<span class="fc" id="L515">            return &quot; * &quot; + content + LINE_SEP;</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">        } else if (isFamilySGML(type)) {</span>
+<span class="fc" id="L517">            return content + LINE_SEP;</span>
+<span class="fc bfc" id="L518" title="All 2 branches covered.">        } else if (isFamilyAPT(type)) {</span>
+<span class="fc" id="L519">            return &quot;~~ &quot; + content + LINE_SEP;</span>
+<span class="pc bpc" id="L520" title="1 of 2 branches missed.">        } else if (isFamilySH(type)) {</span>
+<span class="fc" id="L521">            return &quot;# &quot; + content + LINE_SEP;</span>
+<span class="nc bnc" id="L522" title="All 2 branches missed.">        } else if (isFamilyBAT(type)) {</span>
+<span class="nc" id="L523">            return &quot;rem &quot; + content + LINE_SEP;</span>
+<span class="nc bnc" id="L524" title="All 2 branches missed.">        } else if (isFamilyVelocity(type)) {</span>
+<span class="nc" id="L525">            return &quot;## &quot; + content + LINE_SEP;</span>
+        }
+<span class="nc" id="L527">        return &quot;&quot;;</span>
+    }
+
+    private static boolean isFamilyC(final int type) {
+<span class="fc" id="L531">        return isIn(FAMILY_C, type);</span>
+    }
+
+    private static boolean isFamilySGML(final int type) {
+<span class="fc" id="L535">        return isIn(FAMILY_SGML, type);</span>
+    }
+
+    private static boolean isFamilySH(final int type) {
+<span class="fc" id="L539">        return isIn(FAMILY_SH, type);</span>
+    }
+
+    private static boolean isFamilyAPT(final int type) {
+<span class="fc" id="L543">        return isIn(FAMILY_APT, type);</span>
+    }
+
+    private static boolean isFamilyBAT(final int type) {
+<span class="nc" id="L547">        return isIn(FAMILY_BAT, type);</span>
+    }
+
+    private static boolean isFamilyVelocity(final int type) {
+<span class="nc" id="L551">        return isIn(FAMILY_VELOCITY, type);</span>
+    }
+
+    private static boolean expectsHashPling(final int type) {
+<span class="fc" id="L555">        return isIn(EXPECTS_HASH_PLING, type);</span>
+    }
+
+    private static boolean expectsAtEcho(final int type) {
+<span class="fc" id="L559">        return isIn(EXPECTS_AT_ECHO, type);</span>
+    }
+
+    private static boolean expectsPackage(final int type) {
+<span class="fc" id="L563">        return isIn(EXPECTS_PACKAGE, type);</span>
+    }
+
+    private static boolean expectsXMLDecl(final int type) {
+<span class="fc" id="L567">        return isIn(EXPECTS_XML_DECL, type);</span>
+    }
+
+    private static boolean expectsPhpPI(final int type) {
+<span class="fc" id="L571">        return isIn(EXPECTS_PHP_PI, type);</span>
+    }
+
+    private static boolean expectsMSVisualStudioSolutionFileHeader(final int type) {
+<span class="fc" id="L575">        return isIn(EXPECTS_MSVSSF_HEADER, type);</span>
+    }
+
+    private static boolean isIn(final int[] arr, final int key) {
+<span class="fc bfc" id="L579" title="All 2 branches covered.">        return Arrays.binarySearch(arr, key) &gt;= 0;</span>
+    }
+
+    private String passThroughReadNext(final Writer writer, final String line,
+                                       final BufferedReader br) throws IOException {
+<span class="fc" id="L584">        writer.write(line);</span>
+<span class="fc" id="L585">        writer.write(LINE_SEP);</span>
+<span class="fc" id="L586">        String l = br.readLine();</span>
+<span class="pc bpc" id="L587" title="1 of 2 branches missed.">        return l == null ? &quot;&quot; : l;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

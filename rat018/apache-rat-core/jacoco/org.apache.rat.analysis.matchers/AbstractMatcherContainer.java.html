@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractMatcherContainer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.analysis.matchers</a> &gt; <span class="el_source">AbstractMatcherContainer.java</span></div><h1>AbstractMatcherContainer.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.analysis.matchers;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Objects;
+
+import org.apache.rat.analysis.IHeaderMatcher;
+import org.apache.rat.config.parameters.ComponentType;
+import org.apache.rat.config.parameters.ConfigComponent;
+
+/**
+ * A class that implements IHeaderMatcher as a collection of other
+ * IHeaderMatchers.
+ */
+public abstract class AbstractMatcherContainer extends AbstractHeaderMatcher {
+
+    /** The collection of enclosed headers */
+    @ConfigComponent(desc = &quot;enclosed Matchers&quot;, type = ComponentType.PARAMETER, parameterType = IHeaderMatcher.class, required = true)
+    private final Collection&lt;IHeaderMatcher&gt; enclosed;
+
+    /** The resource the headers were read from. May be null */
+    @ConfigComponent(desc = &quot;Resource (URL or file) to read enclosed text matcher definitions from.&quot;, type = ComponentType.PARAMETER)
+    private final String resource;
+
+    /**
+     * Constructs the abstract matcher container. If the {@code id} is not set then
+     * a unique random identifier is created. The {@code enclosed} collection is
+     * preserved in a new collection that retains the order of the original
+     * collection.
+     *
+     * @param id The id for the matcher.
+     * @param enclosed the collection of enclosed matchers.
+     * @param resource the name of the resource if this container was read from a file or URL.
+     */
+    public AbstractMatcherContainer(final String id, final Collection&lt;? extends IHeaderMatcher&gt; enclosed, final String resource) {
+<span class="fc" id="L55">        super(id);</span>
+<span class="fc" id="L56">        Objects.requireNonNull(enclosed, &quot;The collection of IHeaderMatcher may not be null&quot;);</span>
+<span class="fc" id="L57">        this.enclosed = new ArrayList&lt;&gt;(enclosed);</span>
+<span class="fc" id="L58">        this.resource = resource;</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Constructs the abstract matcher container with a unique random id. The
+     * {@code enclosed} collection is preserved in a new collection that retains the
+     * order of the original collection.
+     *
+     * @param enclosed the collection of enclosed matchers.
+     * @param resource the name of the resource if this container was read from a file or URL.
+     */
+    public AbstractMatcherContainer(final Collection&lt;? extends IHeaderMatcher&gt; enclosed, final String resource) {
+<span class="nc" id="L70">        this(null, enclosed, resource);</span>
+<span class="nc" id="L71">    }</span>
+
+    @Override
+    public void reset() {
+<span class="fc" id="L75">        enclosed.forEach(IHeaderMatcher::reset);</span>
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * Retrieves the collection of matchers that comprise the children of this matcher.
+     * @return the children of this matcher
+     */
+    public Collection&lt;IHeaderMatcher&gt; getEnclosed() {
+<span class="fc" id="L83">        return Collections.unmodifiableCollection(enclosed);</span>
+    }
+
+    /**
+     * Get the resource that was provided in the constructor.
+     * @return the resource or {@code null} if none was provided in the constructor.
+     */
+    public String getResource() {
+<span class="fc" id="L91">        return resource;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

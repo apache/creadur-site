@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HeaderMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.header</a> &gt; <span class="el_source">HeaderMatcher.java</span></div><h1>HeaderMatcher.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */ 
+package org.apache.rat.header;
+
+import org.apache.rat.DeprecationReporter;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * &lt;p&gt;Matches headers.&lt;/p&gt;
+ * &lt;p&gt;&lt;strong&gt;Usage:&lt;/strong&gt;&lt;/p&gt;
+ * &lt;ol&gt;
+ * &lt;li&gt;{@link #read(Reader)} content&lt;/li&gt;
+ * &lt;li&gt;{@link #matches(Pattern)} against filtered content&lt;/li&gt;
+ * &lt;/ol&gt;
+ * &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; use only from a single thread.&lt;/p&gt;
+ *
+ */
+@Deprecated // since 0.17
+@DeprecationReporter.Info(since = &quot;0.17&quot;, forRemoval = true)
+public class HeaderMatcher {
+
+    private final FilteringSequenceFactory factory;
+    private final HeaderBean[] headers;
+    private CharSequence read;
+    private int lines;
+    
+    public HeaderMatcher(final CharFilter filter, final int capacity) {
+<span class="fc" id="L48">        this(filter, capacity, null);</span>
+<span class="fc" id="L49">    }</span>
+    
+<span class="fc" id="L51">    public HeaderMatcher(final CharFilter filter, final int capacity, final HeaderBean[] headers) {</span>
+<span class="fc" id="L52">        DeprecationReporter.logDeprecated(this.getClass());</span>
+<span class="fc" id="L53">        factory = new FilteringSequenceFactory(capacity, filter);</span>
+<span class="fc" id="L54">        read = null;</span>
+<span class="fc" id="L55">        this.headers = headers;</span>
+<span class="fc" id="L56">    }</span>
+    
+    public void read(Reader reader) throws IOException {
+<span class="fc" id="L59">        final LineNumberReader lineNumberReader = new LineNumberReader(reader);</span>
+<span class="fc" id="L60">        read = factory.filter(lineNumberReader);</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (lineNumberReader.read() == -1) {</span>
+<span class="fc" id="L62">            lines = lineNumberReader.getLineNumber();</span>
+        } else {
+<span class="fc" id="L64">            lines = -1;</span>
+        }
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (headers != null) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            for (final HeaderBean headerBean : headers) {</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">                if (headerBean != null) {</span>
+<span class="fc" id="L69">                    final Pattern headerPattern = headerBean.getHeaderPattern();</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">                    if (headerPattern != null) {</span>
+<span class="fc" id="L71">                        final boolean matches = matches(headerPattern);</span>
+<span class="fc" id="L72">                        headerBean.setMatch(matches);</span>
+                    }
+                }
+            }
+        }
+<span class="fc" id="L77">    }</span>
+    
+    /**
+     * &lt;p&gt;Seeks a match in the last headers read.&lt;/p&gt;
+     * &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt; that this pattern
+     * must not contain filtered characters.
+     * &lt;/p&gt;
+     * @param pattern &lt;code&gt;Pattern&lt;/code&gt; to match
+     * @return true if the pattern matches,
+     * false otherwise or if {@link #read(Reader)} has not been
+     * called
+     */
+    public boolean matches(Pattern pattern) {
+<span class="fc" id="L90">        boolean result = false;</span>
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (read != null) {</span>
+<span class="fc" id="L92">            final Matcher matcher = pattern.matcher(read);</span>
+<span class="fc" id="L93">            result = matcher.matches();</span>
+        }
+<span class="fc" id="L95">        return result;</span>
+    }
+    
+    /**
+     * Number of lines read.
+     * @return the number of lines in the file
+     * or -1 if the file has more lines than were read
+     */
+    public int lines() {
+<span class="fc" id="L104">        return lines;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

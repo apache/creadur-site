@@ -512,7 +512,7 @@
 <a class="jxr_linenumber" name="L504" href="#L504">504</a>                     }
 <a class="jxr_linenumber" name="L505" href="#L505">505</a>                 }
 <a class="jxr_linenumber" name="L506" href="#L506">506</a>                 <strong class="jxr_keyword">if</strong> (families != <strong class="jxr_keyword">null</strong> || getDeprecatedConfigs().findAny().isPresent()) {
-<a class="jxr_linenumber" name="L507" href="#L507">507</a>                     <strong class="jxr_keyword">if</strong> (log.isEnabled(Log.Level.DEBUG)) {
+<a class="jxr_linenumber" name="L507" href="#L507">507</a>                     <strong class="jxr_keyword">if</strong> (log.isEnabled(Log.Level.DEBUG) &amp;&amp; families != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L508" href="#L508">508</a>                         log.debug(format(<span class="jxr_string">"%s license families loaded from pom"</span>, families.length));
 <a class="jxr_linenumber" name="L509" href="#L509">509</a>                     }
 <a class="jxr_linenumber" name="L510" href="#L510">510</a>                     Consumer&lt;ILicenseFamily&gt; logger = <strong class="jxr_keyword">super</strong>.getLog().isDebugEnabled() ? l -&gt; log.debug(format(<span class="jxr_string">"Family: %s"</span>, l))
@@ -575,6 +575,6 @@
 <a class="jxr_linenumber" name="L567" href="#L567">567</a> }
 </pre>
 <hr/>
-<div id="footer">© 2007–2025 <a href="https://www.apache.org">Apache Software Foundation</a></div>
+<div id="footer">© 2007–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>
 </body>
 </html>

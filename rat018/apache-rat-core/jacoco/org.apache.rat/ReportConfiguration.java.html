@@ -1,0 +1,905 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat</a> &gt; <span class="el_source">ReportConfiguration.java</span></div><h1>ReportConfiguration.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.SortedSet;
+import java.util.function.Consumer;
+
+import org.apache.commons.io.function.IOSupplier;
+import org.apache.rat.analysis.IHeaderMatcher;
+import org.apache.rat.commandline.StyleSheets;
+import org.apache.rat.config.AddLicenseHeaders;
+import org.apache.rat.config.exclusion.ExclusionProcessor;
+import org.apache.rat.config.exclusion.StandardCollection;
+import org.apache.rat.config.results.ClaimValidator;
+import org.apache.rat.configuration.builders.AnyBuilder;
+import org.apache.rat.document.DocumentName;
+import org.apache.rat.document.DocumentNameMatcher;
+import org.apache.rat.document.FileDocument;
+import org.apache.rat.license.ILicense;
+import org.apache.rat.license.ILicenseFamily;
+import org.apache.rat.license.LicenseSetFactory;
+import org.apache.rat.license.LicenseSetFactory.LicenseFilter;
+import org.apache.rat.report.IReportable;
+import org.apache.rat.utils.DefaultLog;
+import org.apache.rat.utils.Log.Level;
+import org.apache.rat.utils.ReportingSet;
+import org.apache.rat.walker.FileListWalker;
+import org.apache.rat.walker.IReportableListWalker;
+
+/**
+ * A configuration object is used by the front end to invoke the
+ * {@link Reporter}. The sole purpose of the frontends is to create the
+ * configuration and invoke the {@link Reporter}.
+ */
+public class ReportConfiguration {
+
+    /**
+     * The styles of processing for various categories of documents.
+     */
+<span class="fc" id="L73">    public enum Processing {</span>
+        /** List file as present only */
+<span class="fc" id="L75">        NOTIFICATION(&quot;List file as present&quot;),</span>
+        /** List all present licenses */
+<span class="fc" id="L77">        PRESENCE(&quot;List any licenses found&quot;),</span>
+        /** List all present licenses and unknown licenses */
+<span class="fc" id="L79">        ABSENCE(&quot;List licenses found and any unknown licences&quot;);</span>
+
+        /**
+         * Description of the processing
+         */
+        private final String description;
+
+
+<span class="fc" id="L87">        Processing(final String description) {</span>
+<span class="fc" id="L88">            this.description = description;</span>
+<span class="fc" id="L89">        }</span>
+
+        /**
+         * Gets the description of the processing type.
+         * @return the description of the processing type.
+         */
+        public String desc() {
+<span class="fc" id="L96">            return description;</span>
+        }
+    }
+
+    /** The LicenseSetFactory for the configuration */
+    private final LicenseSetFactory licenseSetFactory;
+
+    /**
+     * {@code true} if we are adding license headers to the files.
+     */
+    private boolean addingLicenses;
+    /**
+     * {@code true} if we are adding license headers in place (no *.new files)
+     */
+    private boolean addingLicensesForced;
+    /**
+     * The copyright message to add if we are adding headers. Will be null if we are not
+     * adding copyright messages.
+     */
+    private String copyrightMessage;
+    /**
+     * The IOSupplier that provides the output stream to write the report to.
+     */
+    private IOSupplier&lt;OutputStream&gt; out;
+    /**
+     * The IOSupplier that provides the stylesheet to style the XML output.
+     */
+    private IOSupplier&lt;InputStream&gt; styleSheet;
+
+    /**
+     * A list of files to read file names from.
+     */
+    private final List&lt;File&gt; sources;
+
+    /**
+     * A list of reportables to process;
+     */
+    private final List&lt;IReportable&gt; reportables;
+
+    /**
+     * A predicate to test if a path should be included in the processing.
+     */
+    private final ExclusionProcessor exclusionProcessor;
+
+    /**
+     * The default filter for displaying families.
+     */
+    private LicenseFilter listFamilies;
+    /**
+     * The default filter for displaying licenses.
+     */
+    private LicenseFilter listLicenses;
+    /**
+     * {@code true} if this is a dry run and no processing is to take place.
+     */
+    private boolean dryRun;
+    /**
+     * How to process ARCHIVE document types.
+     */
+    private Processing archiveProcessing;
+    /**
+     * How to process STANDARD document types.
+     */
+    private Processing standardProcessing;
+    /**
+     * The ClaimValidator to validate min/max counts and similar claims.
+     */
+    private final ClaimValidator claimValidator;
+    /**
+     * Constructor
+     */
+<span class="fc" id="L167">    public ReportConfiguration() {</span>
+<span class="fc" id="L168">        licenseSetFactory = new LicenseSetFactory();</span>
+<span class="fc" id="L169">        listFamilies = Defaults.LIST_FAMILIES;</span>
+<span class="fc" id="L170">        listLicenses = Defaults.LIST_LICENSES;</span>
+<span class="fc" id="L171">        dryRun = false;</span>
+<span class="fc" id="L172">        exclusionProcessor = new ExclusionProcessor();</span>
+<span class="fc" id="L173">        claimValidator = new ClaimValidator();</span>
+<span class="fc" id="L174">        sources = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L175">        reportables = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L176">    }</span>
+
+    /**
+     * Report the excluded files to the appendable object.
+     * @param appendable the appendable object to write to.
+     */
+    public void reportExclusions(final Appendable appendable) {
+        try {
+<span class="nc" id="L184">            exclusionProcessor.reportExclusions(appendable);</span>
+<span class="nc" id="L185">        } catch (IOException e) {</span>
+<span class="nc" id="L186">            DefaultLog.getInstance().warn(&quot;Unable to report exclusions&quot;, e);</span>
+<span class="nc" id="L187">        }</span>
+<span class="nc" id="L188">    }</span>
+
+    /**
+     * Adds a file as a source of files to scan.
+     * The file must be a text file that lists files to be included.
+     * File within the file must be in linux format with a
+     * &quot;/&quot; file separator.
+     * @param file the file to process.
+     */
+    public void addSource(final File file) {
+<span class="fc" id="L198">        notNull(file, &quot;File may not be null.&quot;);</span>
+<span class="fc" id="L199">        sources.add(file);</span>
+<span class="fc" id="L200">    }</span>
+
+    private void notNull(final Object o, final String msg) {
+<span class="fc bfc" id="L203" title="All 2 branches covered.">        if (o == null) {</span>
+<span class="fc" id="L204">            throw new ConfigurationException(msg);</span>
+        }
+<span class="fc" id="L206">    }</span>
+
+    /**
+     * Adds a Reportable as a source of files to scan.
+     * @param reportable the reportable to process.
+     */
+    public void addSource(final IReportable reportable) {
+<span class="fc" id="L213">        notNull(reportable, &quot;Reportable may not be null.&quot;);</span>
+<span class="fc" id="L214">        reportables.add(reportable);</span>
+<span class="fc" id="L215">    }</span>
+
+    /**
+     * Returns {@code true} if the configuration has any sources defined.
+     * @return {@code true} if the configuration has any sources defined.
+     */
+    public boolean hasSource() {
+<span class="fc bfc" id="L222" title="All 4 branches covered.">        return !reportables.isEmpty() || !sources.isEmpty();</span>
+    }
+
+    /**
+     * Gets a builder initialized with any files specified as sources.
+     * @return a configured builder.
+     */
+    public IReportableListWalker.Builder getSources() {
+<span class="fc" id="L230">        DocumentName name = DocumentName.builder(new File(&quot;.&quot;)).build();</span>
+<span class="fc" id="L231">        IReportableListWalker.Builder builder = IReportableListWalker.builder(name);</span>
+<span class="fc" id="L232">        sources.forEach(file -&gt; builder.addReportable(new FileListWalker(new FileDocument(file, DocumentNameMatcher.MATCHES_ALL))));</span>
+<span class="fc" id="L233">        reportables.forEach(builder::addReportable);</span>
+<span class="fc" id="L234">        return builder;</span>
+    }
+
+    /**
+     * Gets the matcher that matches generated text.
+     * @return the matcher that matches generated text.
+     */
+    public IHeaderMatcher getGeneratedMatcher() {
+<span class="fc" id="L242">        return new AnyBuilder().setResource(&quot;/org/apache/rat/generation-keywords.txt&quot;).build();</span>
+    }
+
+    /**
+     * Retrieves the archive processing type.
+     * @return The archive processing type.
+     */
+    public Processing getArchiveProcessing() {
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        return archiveProcessing == null ? Defaults.ARCHIVE_PROCESSING : archiveProcessing;</span>
+    }
+
+    /**
+     * Sets the archive processing type. If not set will default to NOTIFICATION.
+     * @param archiveProcessing the type of processing archives should have.
+     */
+    public void setArchiveProcessing(final Processing archiveProcessing) {
+<span class="fc" id="L258">        this.archiveProcessing = archiveProcessing;</span>
+<span class="fc" id="L259">    }</span>
+
+    /**
+     * Retrieves the archive processing type.
+     * @return The archive processing type.
+     */
+    public Processing getStandardProcessing() {
+<span class="fc bfc" id="L266" title="All 2 branches covered.">        return standardProcessing == null ? Defaults.STANDARD_PROCESSING : standardProcessing;</span>
+    }
+
+    /**
+     * Sets the archive processing type. If not set will default to NOTIFICATION.
+     * @param standardProcessing the type of processing archives should have.
+     */
+    public void setStandardProcessing(final Processing standardProcessing) {
+<span class="fc" id="L274">        this.standardProcessing = standardProcessing;</span>
+<span class="fc" id="L275">    }</span>
+
+    /**
+     * Set the log level for reporting collisions in the set of license families.
+     * &lt;p&gt;NOTE: should be set before licenses or license families are added.&lt;/p&gt;
+     * @param level The log level to use.
+     */
+    public void logFamilyCollisions(final Level level) {
+<span class="fc" id="L283">        licenseSetFactory.logFamilyCollisions(level);</span>
+<span class="fc" id="L284">    }</span>
+
+    /**
+     * Sets the reporting option for duplicate license families.
+     * @param state The ReportingSet.Option to use for reporting.
+     */
+    public void familyDuplicateOption(final ReportingSet.Options state) {
+<span class="fc" id="L291">        licenseSetFactory.familyDuplicateOption(state);</span>
+<span class="fc" id="L292">    }</span>
+
+    /**
+     * Sets the log level for reporting license collisions.
+     * @param level The log level.
+     */
+    public void logLicenseCollisions(final Level level) {
+<span class="fc" id="L299">        licenseSetFactory.logLicenseCollisions(level);</span>
+<span class="fc" id="L300">    }</span>
+
+    /**
+     * Sets the reporting option for duplicate licenses.
+     * @param state the ReportingSt.Option to use for reporting.
+     */
+    public void licenseDuplicateOption(final ReportingSet.Options state) {
+<span class="fc" id="L307">        licenseSetFactory.licenseDuplicateOption(state);</span>
+<span class="fc" id="L308">    }</span>
+
+    /**
+     * Set the level of license families that should be output in the XML document.
+     * @param filter the license families to list.
+     */
+    public void listFamilies(final LicenseFilter filter) {
+<span class="fc" id="L315">        listFamilies = filter;</span>
+<span class="fc" id="L316">    }</span>
+
+    /**
+     * Return the current filter that determines which families will be output in the XML document.
+     * @return the filter that defines the families to list.
+     */
+    public LicenseFilter listFamilies() {
+<span class="fc" id="L323">        return listFamilies;</span>
+    }
+
+    /**
+     * Set the level of licenses that should be output in the XML document.
+     * @param filter the licenses to list.
+     */
+    public void listLicenses(final LicenseFilter filter) {
+<span class="fc" id="L331">        listLicenses = filter;</span>
+<span class="fc" id="L332">    }</span>
+
+    /**
+     * Gets the selected license filter.
+     * @return the filter to limit license display.
+     */
+    public LicenseFilter listLicenses() {
+<span class="fc" id="L339">        return listLicenses;</span>
+    }
+
+    /**
+     * Sets the dry run flag.
+     * @param state the state for the dry run flag.
+     */
+    public void setDryRun(final boolean state) {
+<span class="fc" id="L347">        dryRun = state;</span>
+<span class="fc" id="L348">    }</span>
+
+    /**
+     * Returns the state of the dry run flag.
+     * @return the state of the dry run flag.
+     */
+    public boolean isDryRun() {
+<span class="fc" id="L355">        return dryRun;</span>
+    }
+
+    /**
+     * Excludes a StandardCollection of patterns.
+     * @param collection the StandardCollection to exclude.
+     * @see ExclusionProcessor#addExcludedCollection(StandardCollection)
+     */
+    public void addExcludedCollection(final StandardCollection collection) {
+<span class="fc" id="L364">        exclusionProcessor.addExcludedCollection(collection);</span>
+<span class="fc" id="L365">    }</span>
+
+    /**
+     * Excludes the file processor defined in the StandardCollection.
+     * @param collection the StandardCollection to exclude.
+     * @see ExclusionProcessor#addFileProcessor(StandardCollection)
+     */
+    public void addExcludedFileProcessor(final StandardCollection collection) {
+<span class="fc" id="L373">        exclusionProcessor.addFileProcessor(collection);</span>
+<span class="fc" id="L374">    }</span>
+
+    /**
+     * Excludes files that match a FileFilter.
+     * @param fileFilter the file filter to match.
+     */
+    public void addExcludedFilter(final FileFilter fileFilter) {
+<span class="fc" id="L381">        exclusionProcessor.addExcludedMatcher(new DocumentNameMatcher(fileFilter));</span>
+<span class="fc" id="L382">    }</span>
+
+    /**
+     * Excludes files that match a DocumentNameMatcher.
+     * @param matcher the DocumentNameMatcher to match.
+     */
+    public void addExcludedMatcher(final DocumentNameMatcher matcher) {
+<span class="fc" id="L389">        exclusionProcessor.addExcludedMatcher(matcher);</span>
+<span class="fc" id="L390">    }</span>
+
+    /**
+     * Excludes files that match the pattern.
+     *
+     * @param patterns the collection of patterns to exclude.
+     * @see ExclusionProcessor#addIncludedPatterns(Iterable)
+     */
+    public void addExcludedPatterns(final Iterable&lt;String&gt; patterns) {
+<span class="fc" id="L399">        exclusionProcessor.addExcludedPatterns(patterns);</span>
+<span class="fc" id="L400">    }</span>
+
+    /**
+     * Adds the patterns from the standard collection as included patterns.
+     * @param collection the standard collection to include.
+     */
+    public void addIncludedCollection(final StandardCollection collection) {
+<span class="fc" id="L407">        exclusionProcessor.addIncludedCollection(collection);</span>
+<span class="fc" id="L408">    }</span>
+
+    /**
+     * Adds the fileFilter to filter files that should be included, this overrides any
+     * exclusion of the same files.
+     * @param fileFilter the filter to identify files that should be included.
+     */
+    public void addIncludedFilter(final FileFilter fileFilter) {
+<span class="nc" id="L416">        exclusionProcessor.addIncludedMatcher(new DocumentNameMatcher(fileFilter));</span>
+<span class="nc" id="L417">    }</span>
+
+    /**
+     * Add file patterns that are to be included. These patterns override any exclusion of
+     * the same files.
+     * @param patterns The iterable of Strings containing the patterns.
+     */
+    public void addIncludedPatterns(final Iterable&lt;String&gt; patterns) {
+<span class="fc" id="L425">        exclusionProcessor.addIncludedPatterns(patterns);</span>
+<span class="fc" id="L426">    }</span>
+
+    /**
+     * Get the DocumentNameMatcher that excludes files found in the directory tree..
+     * @param baseDir the DocumentName for the base directory.
+     * @return the DocumentNameMatcher for the base directory.
+     */
+    public DocumentNameMatcher getDocumentExcluder(final DocumentName baseDir) {
+<span class="fc" id="L434">        return exclusionProcessor.getNameMatcher(baseDir);</span>
+    }
+
+    /**
+     * Gets the IOSupplier with the style sheet.
+     * @return the Supplier of the InputStream that is the XSLT style sheet to style
+     * the report with.
+     */
+    public IOSupplier&lt;InputStream&gt; getStyleSheet() {
+<span class="fc" id="L443">        return styleSheet;</span>
+    }
+
+    /**
+     * Sets the style sheet for custom processing. The IOSupplier may be called
+     * multiple times, so the input stream must be able to be opened and closed
+     * multiple times.
+     * @param styleSheet the XSLT style sheet to style the report with.
+     */
+    public void setStyleSheet(final IOSupplier&lt;InputStream&gt; styleSheet) {
+<span class="fc" id="L453">        this.styleSheet = styleSheet;</span>
+<span class="fc" id="L454">    }</span>
+
+    /**
+     * Adds the licenses and approved licenses from the defaults object to the
+     * configuration. &lt;em&gt;Side effect:&lt;/em&gt; if the report should be styled and no
+     * style sheet has been set the plain stylesheet from the defaults will be used.
+     * @param defaults The defaults to set.
+     */
+    public void setFrom(final Defaults defaults) {
+<span class="fc" id="L463">        licenseSetFactory.add(defaults.getLicenseSetFactory());</span>
+<span class="fc bfc" id="L464" title="All 2 branches covered.">        if (getStyleSheet() == null) {</span>
+<span class="fc" id="L465">            setStyleSheet(StyleSheets.PLAIN.getStyleSheet());</span>
+        }
+<span class="fc" id="L467">        defaults.getStandardExclusion().forEach(this::addExcludedCollection);</span>
+<span class="fc" id="L468">    }</span>
+
+    /**
+     * Sets the style sheet.
+     * @param styleSheet the XSLT style sheet file to style the report with.
+     */
+    public void setStyleSheet(final File styleSheet) {
+<span class="fc" id="L475">        Objects.requireNonNull(styleSheet, &quot;styleSheet file should not be null&quot;);</span>
+<span class="fc" id="L476">        setStyleSheet(styleSheet.toURI());</span>
+<span class="fc" id="L477">    }</span>
+
+    /**
+     * Sets the style sheet for custom processing. The stylesheet may be opened
+     * multiple times so the URI must be capable of being opened multiple times.
+     * @param styleSheet the URI of the XSLT style sheet to style the report with.
+     */
+    public void setStyleSheet(final URI styleSheet) {
+<span class="fc" id="L485">        Objects.requireNonNull(styleSheet, &quot;Stylesheet file must not be null&quot;);</span>
+        try {
+<span class="fc" id="L487">            setStyleSheet(styleSheet.toURL());</span>
+<span class="nc" id="L488">        } catch (MalformedURLException e) {</span>
+<span class="nc" id="L489">            throw new ConfigurationException(&quot;Unable to process stylesheet&quot;, e);</span>
+<span class="fc" id="L490">        }</span>
+<span class="fc" id="L491">    }</span>
+
+    /**
+     * Sets the style sheet for custom processing. The stylesheet may be opened
+     * multiple times so the URL must be capable of being opened multiple times.
+     * @param styleSheet the URL of the XSLT style sheet to style the report with.
+     */
+    public void setStyleSheet(final URL styleSheet) {
+<span class="fc" id="L499">        Objects.requireNonNull(styleSheet, &quot;Stylesheet file must not be null&quot;);</span>
+<span class="fc" id="L500">        setStyleSheet(styleSheet::openStream);</span>
+<span class="fc" id="L501">    }</span>
+
+    /**
+     * Sets the supplier for the output stream. The supplier may be called multiple
+     * times to provide the stream. Suppliers should prepare streams that are
+     * appended to and that can be closed. If an {@code OutputStream} should not be
+     * closed consider wrapping it in a {@code NoCloseOutputStream}
+     * @param out The OutputStream supplier that provides the output stream to write
+     * the report to. A null value will use System.out.
+     * @see NoCloseOutputStream
+     */
+    public void setOut(final IOSupplier&lt;OutputStream&gt; out) {
+<span class="fc" id="L513">        this.out = out;</span>
+<span class="fc" id="L514">    }</span>
+
+    /**
+     * Sets the OutputStream supplier to use the specified file. The file may be
+     * opened and closed several times. File is deleted first and then may be
+     * repeatedly opened in append mode.
+     * @see #setOut(IOSupplier)
+     * @param file The file to create the supplier with.
+     */
+    public void setOut(final File file) {
+<span class="fc" id="L524">        Objects.requireNonNull(file, &quot;output file should not be null&quot;);</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">        if (file.exists()) {</span>
+            try {
+<span class="fc" id="L527">                Files.delete(file.toPath());</span>
+<span class="nc" id="L528">            } catch (IOException e) {</span>
+<span class="nc" id="L529">                DefaultLog.getInstance().warn(&quot;Unable to delete file: &quot; + file);</span>
+<span class="fc" id="L530">            }</span>
+        }
+<span class="fc" id="L532">        File parent = file.getParentFile();</span>
+<span class="pc bpc" id="L533" title="2 of 4 branches missed.">        if (!parent.mkdirs() &amp;&amp; !parent.isDirectory()) {</span>
+<span class="nc" id="L534">            DefaultLog.getInstance().warn(&quot;Unable to create directory: &quot; + file.getParentFile());</span>
+        }
+<span class="fc" id="L536">        setOut(() -&gt; new FileOutputStream(file, true));</span>
+<span class="fc" id="L537">    }</span>
+
+    /**
+     * Returns the output stream supplier. If no stream has been set returns a
+     * supplier for System.out.
+     * @return The supplier of the output stream to write the report to.
+     */
+    public IOSupplier&lt;OutputStream&gt; getOutput() {
+<span class="fc bfc" id="L545" title="All 2 branches covered.">        return out == null ? () -&gt; new NoCloseOutputStream(System.out) : out;</span>
+    }
+
+    /**
+     * Gets a PrintWriter that wraps the output stream.
+     * @return A supplier for a PrintWriter that wraps the output stream.
+     * @see #getOutput()
+     */
+    public IOSupplier&lt;PrintWriter&gt; getWriter() {
+<span class="fc" id="L554">        return () -&gt; new PrintWriter(new OutputStreamWriter(getOutput().get(), StandardCharsets.UTF_8));</span>
+    }
+
+    /**
+     * Adds a license to the list of licenses. Does not add the license to the list
+     * of approved licenses.
+     * @param license The license to add to the list of licenses.
+     */
+    public void addLicense(final ILicense license) {
+<span class="fc" id="L563">        licenseSetFactory.addLicense(license);</span>
+<span class="fc" id="L564">    }</span>
+
+    /**
+     * Adds a license to the list of licenses. Does not add the license to the list
+     * of approved licenses.
+     * @param builder The license builder to build and add to the list of licenses.
+     * @return The ILicense implementation that was added.
+     */
+    public ILicense addLicense(final ILicense.Builder builder) {
+<span class="fc" id="L573">        return licenseSetFactory.addLicense(builder);</span>
+    }
+
+    /**
+     * Adds multiple licenses to the list of licenses. Does not add the licenses to
+     * the list of approved licenses.
+     * @param licenses The licenses to add.
+     */
+    public void addLicenses(final Collection&lt;ILicense&gt; licenses) {
+<span class="fc" id="L582">        licenseSetFactory.addLicenses(licenses);</span>
+<span class="fc" id="L583">    }</span>
+
+    /**
+     * Adds a license family to the list of families. Does not add the family to the
+     * list of approved licenses.
+     * @param family The license family to add to the list of license families.
+     */
+    public void addFamily(final ILicenseFamily family) {
+<span class="fc" id="L591">       licenseSetFactory.addFamily(family);</span>
+<span class="fc" id="L592">    }</span>
+
+    /**
+     * Adds a license family to the list of families. Does not add the family to the
+     * list of approved licenses.
+     * @param builder The licenseFamily.Builder to build and add to the list of
+     * licenses.
+     */
+    public void addFamily(final ILicenseFamily.Builder builder) {
+<span class="fc" id="L601">        licenseSetFactory.addFamily(builder);</span>
+<span class="fc" id="L602">    }</span>
+
+    /**
+     * Adds multiple families to the list of license families. Does not add the
+     * licenses to the list of approved licenses.
+     * @param families The license families to add.
+     */
+    public void addFamilies(final Collection&lt;ILicenseFamily&gt; families) {
+<span class="fc" id="L610">        families.forEach(this::addApprovedLicenseCategory);</span>
+<span class="fc" id="L611">    }</span>
+
+    /**
+     * Adds an ILicenseFamily to the list of approved licenses.
+     * @param approvedILicenseFamily the LicenseFamily to add.
+     */
+    public void addApprovedLicenseCategory(final ILicenseFamily approvedILicenseFamily) {
+<span class="fc" id="L618">        addApprovedLicenseCategory(approvedILicenseFamily.getFamilyCategory());</span>
+<span class="fc" id="L619">    }</span>
+
+    /**
+     * Adds a license family category (id) to the list of approved licenses
+     * @param familyCategory the category to add.
+     */
+    public void addApprovedLicenseCategory(final String familyCategory) {
+<span class="fc" id="L626">        licenseSetFactory.approveLicenseCategory(familyCategory);</span>
+<span class="fc" id="L627">    }</span>
+
+    /**
+     * Adds a collection of license family categories to the set of approved license
+     * names.
+     * @param approvedLicenseCategories set of approved license categories.
+     */
+    public void addApprovedLicenseCategories(final Collection&lt;String&gt; approvedLicenseCategories) {
+<span class="fc" id="L635">        approvedLicenseCategories.forEach(this::addApprovedLicenseCategory);</span>
+<span class="fc" id="L636">    }</span>
+
+    /**
+     * Adds a license family category to the list of approved licenses. &lt;em&gt;Once a
+     * license has been removed from the approved list it cannot be re-added&lt;/em&gt;
+     * @param familyCategory the category to add.
+     */
+    public void removeApprovedLicenseCategory(final String familyCategory) {
+<span class="fc" id="L644">        licenseSetFactory.removeLicenseCategory(ILicenseFamily.makeCategory(familyCategory));</span>
+<span class="fc" id="L645">    }</span>
+
+    /**
+     * Removes a license family category from the list of approved licenses.
+     * &lt;em&gt;Once a license has been removed from the approved list it cannot be
+     * re-added&lt;/em&gt;
+     * @param familyCategory the family category to remove.
+     */
+    public void removeApprovedLicenseCategories(final Collection&lt;String&gt; familyCategory) {
+<span class="fc" id="L654">        familyCategory.forEach(this::removeApprovedLicenseCategory);</span>
+<span class="fc" id="L655">    }</span>
+
+    /**
+     * Gets the SortedSet of approved license categories. &lt;em&gt;Once a license has
+     * been removed from the approved list it cannot be re-added&lt;/em&gt;
+     * @param filter The LicenseFilter to filter the categories by.
+     * @return the Sorted set of approved license categories.
+     */
+    public SortedSet&lt;String&gt; getLicenseCategories(final LicenseFilter filter) {
+<span class="fc" id="L664">        return licenseSetFactory.getLicenseCategories(filter);</span>
+    }
+
+    /**
+     * Gets the SortedSet of approved license categories. &lt;em&gt;Once a license has
+     * been removed from the approved list it cannot be re-added&lt;/em&gt;
+     * @param filter The LicenseFilter to filter the licenses by.
+     * @return the Sorted set of approved license categories.
+     */
+    public SortedSet&lt;ILicense&gt; getLicenses(final LicenseFilter filter) {
+<span class="fc" id="L674">        return licenseSetFactory.getLicenses(filter);</span>
+    }
+
+    /**
+     * Gets the SortedSet of approved license categories. &lt;em&gt;Once a license has
+     * been removed from the approved list it cannot be re-added&lt;/em&gt;
+     * @param filter The LicenseFilter to filter the licenses by.
+     * @return the Sorted set of approved license categories.
+     */
+    public SortedSet&lt;String&gt; getLicenseIds(final LicenseFilter filter) {
+<span class="fc" id="L684">        return licenseSetFactory.getLicenseIds(filter);</span>
+    }
+
+    /**
+     * Adds an ILicenseFamily to the list of approved licenses.
+     * @param approvedLicense the License to add.
+     */
+    public void addApprovedLicenseId(final ILicense approvedLicense) {
+<span class="nc" id="L692">        addApprovedLicenseId(approvedLicense.getId());</span>
+<span class="nc" id="L693">    }</span>
+
+    /**
+     * Adds a license family category (id) to the list of approved licenses
+     * @param licenseId the license id to add.
+     */
+    public void addApprovedLicenseId(final String licenseId) {
+<span class="fc" id="L700">        licenseSetFactory.approveLicenseId(licenseId);</span>
+<span class="fc" id="L701">    }</span>
+
+    /**
+     * Adds a collection of license family categories to the set of approved license
+     * names.
+     * @param approvedLicenseIds set of approved license IDs.
+     */
+    public void addApprovedLicenseIds(final Collection&lt;String&gt; approvedLicenseIds) {
+<span class="fc" id="L709">        approvedLicenseIds.forEach(this::addApprovedLicenseId);</span>
+<span class="fc" id="L710">    }</span>
+
+    /**
+     * Adds a license family category to the list of approved licenses. &lt;em&gt;Once a
+     * license has been removed from the approved list it cannot be re-added&lt;/em&gt;
+     * @param licenseId the license ID to add.
+     */
+    public void removeApprovedLicenseId(final String licenseId) {
+<span class="fc" id="L718">        licenseSetFactory.removeLicenseId(licenseId);</span>
+<span class="fc" id="L719">    }</span>
+
+    /**
+     * Removes a license family category from the list of approved licenses.
+     * &lt;em&gt;Once a license has been removed from the approved list it cannot be
+     * re-added&lt;/em&gt;
+     * @param licenseIds the license IDs to remove.
+     */
+    public void removeApprovedLicenseIds(final Collection&lt;String&gt; licenseIds) {
+<span class="fc" id="L728">        licenseIds.forEach(this::removeApprovedLicenseId);</span>
+<span class="fc" id="L729">    }</span>
+
+    /**
+     * Returns the optional license copyright being added if RAT is adding headers.
+     * This value is ignored, if no license headers are added.
+     * @return the optional copyright message.
+     * @see #isAddingLicenses()
+     */
+    public String getCopyrightMessage() {
+<span class="fc" id="L738">        return copyrightMessage;</span>
+    }
+
+    /**
+     * Sets the optional copyright message used if RAT is adding license headers.
+     * This value is ignored, if no license headers are added.
+     * @param copyrightMessage message to set.
+     * @see #isAddingLicenses()
+     */
+    public void setCopyrightMessage(final String copyrightMessage) {
+<span class="fc" id="L748">        this.copyrightMessage = copyrightMessage;</span>
+<span class="fc" id="L749">    }</span>
+
+    /**
+     * Gets the flag that determines if license headers are &quot;forced&quot; overwriting existing files.
+     * This value is ignored if RAT is not adding licenses.
+     * @return {@code true} if RAT is forcing the adding license headers.
+     * @see #isAddingLicenses()
+     */
+    public boolean isAddingLicensesForced() {
+<span class="fc" id="L758">        return addingLicensesForced;</span>
+    }
+
+    /**
+     * Gets the flag that determines if license headers should be added if missing.
+     * @return whether RAT should add missing license headers.
+     * @see #isAddingLicensesForced()
+     * @see #getCopyrightMessage()
+     */
+    public boolean isAddingLicenses() {
+<span class="fc" id="L768">        return addingLicenses;</span>
+    }
+
+    /**
+     * Sets whether RAT should enable, disable, or force the adding of license
+     * headers.
+     * @param addLicenseHeaders enables/disables or forces adding of licenses
+     * headers.
+     * @see #isAddingLicenses()
+     * @see #setCopyrightMessage(String)
+     */
+    public void setAddLicenseHeaders(final AddLicenseHeaders addLicenseHeaders) {
+<span class="fc" id="L780">        addingLicenses = false;</span>
+<span class="fc" id="L781">        addingLicensesForced = false;</span>
+<span class="pc bpc" id="L782" title="1 of 4 branches missed.">        switch (addLicenseHeaders) {</span>
+        case FALSE:
+            // do nothing
+<span class="fc" id="L785">            break;</span>
+        case FORCED:
+<span class="fc" id="L787">            addingLicensesForced = true;</span>
+<span class="fc" id="L788">            addingLicenses = true;</span>
+<span class="fc" id="L789">            break;</span>
+        case TRUE:
+<span class="fc" id="L791">            addingLicenses = true;</span>
+            break;
+        }
+<span class="fc" id="L794">    }</span>
+
+    /**
+     * Gets a sorted set of ILicenseFamily objects based on {@code filter}. if
+     * filter is set:
+     * &lt;ul&gt;
+     * &lt;li&gt;{@code all} - All licenses families will be returned.&lt;/li&gt;
+     * &lt;li&gt;{@code approved} - Only approved license families will be returned&lt;/li&gt;
+     * &lt;li&gt;{@code none} - No license families will be returned&lt;/li&gt;
+     * &lt;/ul&gt;
+     * @param filter The license filter.
+     * @return The set of defined licenses.
+     */
+    public SortedSet&lt;ILicenseFamily&gt; getLicenseFamilies(final LicenseFilter filter) {
+<span class="fc" id="L808">        return licenseSetFactory.getLicenseFamilies(filter);</span>
+    }
+
+    /**
+     * Gets the ClaimValidator for the configuration.
+     * @return the ClaimValidator.
+     */
+    public ClaimValidator getClaimValidator() {
+<span class="fc" id="L816">        return claimValidator;</span>
+    }
+
+    /**
+     * Gets the enclosed LicenseSetFactory.
+     * @return the license set factory.
+     */
+    public LicenseSetFactory getLicenseSetFactory() {
+<span class="fc" id="L824">        return licenseSetFactory;</span>
+    }
+
+    /**
+     * Validates that the configuration is valid.
+     * @param logger String consumer to log warning messages to.
+     * @throws ConfigurationException on configuration error.
+     */
+    public void validate(final Consumer&lt;String&gt; logger) {
+<span class="fc bfc" id="L833" title="All 2 branches covered.">        if (!hasSource()) {</span>
+<span class="fc" id="L834">            String msg = &quot;At least one source must be specified&quot;;</span>
+<span class="fc" id="L835">            logger.accept(msg);</span>
+<span class="fc" id="L836">            throw new ConfigurationException(msg);</span>
+        }
+<span class="fc bfc" id="L838" title="All 2 branches covered.">        if (licenseSetFactory.getLicenses(LicenseFilter.ALL).isEmpty()) {</span>
+<span class="fc" id="L839">            String msg = &quot;You must specify at least one license&quot;;</span>
+<span class="fc" id="L840">            logger.accept(msg);</span>
+<span class="fc" id="L841">            throw new ConfigurationException(msg);</span>
+        }
+<span class="fc" id="L843">    }</span>
+
+    /**
+     * A wrapper around an output stream that does not close the output stream.
+     */
+    public static class NoCloseOutputStream extends OutputStream {
+        /** the output stream this stream wraps */
+        private final OutputStream delegate;
+
+        /**
+         * Constructor.
+         * @param delegate the output stream to wrap.
+         */
+<span class="fc" id="L856">        public NoCloseOutputStream(final OutputStream delegate) {</span>
+<span class="fc" id="L857">            this.delegate = delegate;</span>
+<span class="fc" id="L858">        }</span>
+
+        @Override
+        public void write(final int arg0) throws IOException {
+<span class="nc" id="L862">            delegate.write(arg0);</span>
+<span class="nc" id="L863">        }</span>
+
+        /**
+         * Does not actually close the delegate. But does perform a flush.
+         * @throws IOException on Error.
+         */
+        @Override
+        public void close() throws IOException {
+<span class="fc" id="L871">            this.delegate.flush();</span>
+<span class="fc" id="L872">        }</span>
+
+        @Override
+        public boolean equals(final Object obj) {
+<span class="nc" id="L876">            return delegate.equals(obj);</span>
+        }
+
+        @Override
+        public void flush() throws IOException {
+<span class="fc" id="L881">            delegate.flush();</span>
+<span class="fc" id="L882">        }</span>
+
+        @Override
+        public int hashCode() {
+<span class="nc" id="L886">            return delegate.hashCode();</span>
+        }
+
+        @Override
+        public String toString() {
+<span class="nc" id="L891">            return delegate.toString();</span>
+        }
+
+        @Override
+        public void write(final byte[] arg0, final int arg1, final int arg2) throws IOException {
+<span class="fc" id="L896">            delegate.write(arg0, arg1, arg2);</span>
+<span class="fc" id="L897">        }</span>
+
+        @Override
+        public void write(final byte[] b) throws IOException {
+<span class="nc" id="L901">            delegate.write(b);</span>
+<span class="nc" id="L902">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

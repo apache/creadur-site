@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AnalyserFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.analysis</a> &gt; <span class="el_source">AnalyserFactory.java</span></div><h1>AnalyserFactory.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.analysis;
+
+import java.util.Collection;
+import java.util.Set;
+import java.util.function.Predicate;
+
+import org.apache.rat.ConfigurationException;
+import org.apache.rat.Defaults;
+import org.apache.rat.ReportConfiguration;
+import org.apache.rat.api.Document;
+import org.apache.rat.api.RatException;
+import org.apache.rat.document.DocumentAnalyser;
+import org.apache.rat.document.RatDocumentAnalysisException;
+import org.apache.rat.license.ILicense;
+import org.apache.rat.license.LicenseSetFactory;
+import org.apache.rat.utils.DefaultLog;
+import org.apache.rat.utils.Log;
+import org.apache.rat.walker.ArchiveWalker;
+
+/**
+ * Creates default analysers.
+ */
+public final class AnalyserFactory {
+
+    private AnalyserFactory() {
+        // do not instantiate
+    }
+
+    /**
+     * Creates an analyser that adds the approved license predicate to the document metadata.
+     * &lt;p&gt;
+     *     Note you probably do not want this as it is automatically added to {@link #createConfiguredAnalyser}.
+     * &lt;/p&gt;
+     * @param approvalPredicate the predicate to approve licenses.
+     * @return A document analyser that sets the approvalPredicate in document metadata.
+     */
+    public static DocumentAnalyser createPolicy(final Predicate&lt;ILicense&gt; approvalPredicate) {
+<span class="fc" id="L56">        return document -&gt; {</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">            if (document != null) {</span>
+<span class="fc" id="L58">                document.getMetaData().setApprovalPredicate(approvalPredicate);</span>
+            }
+<span class="fc" id="L60">        };</span>
+    }
+
+    /**
+     * Creates an analyser that calls each of the provided analysers in order.
+     * @param analysers the array of analysers to call.
+     * @return an analyser that will call all the provided analysers.
+     */
+    public static DocumentAnalyser createMultiplexer(final DocumentAnalyser... analysers) {
+<span class="fc" id="L69">        return document -&gt; {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            for (DocumentAnalyser analyser : analysers) {</span>
+<span class="fc" id="L71">                analyser.analyse(document);</span>
+            }
+<span class="fc" id="L73">        };</span>
+    }
+
+    /**
+     * Creates a DocumentAnalyser from the report configuration.
+     * @param configuration the ReportConfiguration
+     * @return A document analyser that uses the provided licenses.
+     */
+    public static DocumentAnalyser createConfiguredAnalyser(final ReportConfiguration configuration) {
+<span class="fc" id="L82">        LicenseSetFactory licenseSetFactory = configuration.getLicenseSetFactory();</span>
+<span class="fc" id="L83">        Set&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (licenses.isEmpty()) {</span>
+<span class="fc" id="L85">            throw new ConfigurationException(&quot;At least one license must be defined&quot;);</span>
+        }
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (DefaultLog.getInstance().isEnabled(Log.Level.DEBUG)) {</span>
+<span class="fc" id="L88">            DefaultLog.getInstance().debug(&quot;Currently active licenses are:&quot;);</span>
+<span class="fc" id="L89">            licenses.forEach(DefaultLog.getInstance()::debug);</span>
+        }
+<span class="fc" id="L91">        return createMultiplexer(createPolicy(licenseSetFactory.getApprovedLicensePredicate()),</span>
+         new DefaultAnalyser(configuration, licenses));
+    }
+
+    /**
+     * A DocumentAnalyser a collection of licenses.
+     */
+    private static final class DefaultAnalyser implements DocumentAnalyser {
+
+        /** The licenses to analyze */
+        private final Collection&lt;ILicense&gt; licenses;
+        /** the Report Configuration */
+        private final ReportConfiguration configuration;
+        /** The matcher for generated files */
+        private final IHeaderMatcher generatedMatcher;
+
+        /**
+         * Constructs a DocumentAnalyser for the specified license.
+         * @param config the ReportConfiguration
+         * @param licenses The licenses to analyse
+         */
+<span class="fc" id="L112">        DefaultAnalyser(final ReportConfiguration config, final Collection&lt;ILicense&gt; licenses) {</span>
+<span class="fc" id="L113">            this.licenses = licenses;</span>
+<span class="fc" id="L114">            this.configuration = config;</span>
+<span class="fc" id="L115">            this.generatedMatcher = configuration.getGeneratedMatcher();</span>
+<span class="fc" id="L116">        }</span>
+
+        /**
+         * Generates a predicate to filter out licenses that should not be reported.
+         * @param proc the processing status to filter.
+         * @return a Predicate to do the filtering.
+         */
+        private Predicate&lt;ILicense&gt; licenseFilter(final ReportConfiguration.Processing proc)  {
+<span class="fc" id="L124">            return license -&gt; {</span>
+<span class="fc bfc" id="L125" title="All 3 branches covered.">                return switch (proc) {</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">                    case PRESENCE -&gt; !license.getLicenseFamily().equals(UnknownLicense.INSTANCE.getLicenseFamily());</span>
+<span class="fc" id="L127">                    case ABSENCE -&gt; true;</span>
+<span class="fc" id="L128">                    default -&gt; false;</span>
+                };
+            };
+        }
+
+        @Override
+        public void analyse(final Document document) throws RatDocumentAnalysisException {
+            Predicate&lt;ILicense&gt; licensePredicate;
+
+<span class="fc" id="L137">            TikaProcessor.process(document);</span>
+<span class="fc bfc" id="L138" title="All 3 branches covered.">            switch (document.getMetaData().getDocumentType()) {</span>
+                case STANDARD:
+<span class="fc" id="L140">                    new DocumentHeaderAnalyser(generatedMatcher, licenses).analyse(document);</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">                    if (configuration.getStandardProcessing() != Defaults.STANDARD_PROCESSING) {</span>
+<span class="fc" id="L142">                        licensePredicate = licenseFilter(configuration.getStandardProcessing()).negate();</span>
+<span class="fc" id="L143">                        document.getMetaData().removeLicenses(licensePredicate);</span>
+                    }
+                    break;
+                case ARCHIVE:
+<span class="fc bfc" id="L147" title="All 2 branches covered.">                    if (configuration.getArchiveProcessing() != ReportConfiguration.Processing.NOTIFICATION) {</span>
+<span class="fc" id="L148">                        ArchiveWalker archiveWalker = new ArchiveWalker(document);</span>
+                        try {
+<span class="fc" id="L150">                            licensePredicate = licenseFilter(configuration.getArchiveProcessing());</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">                            for (Document doc : archiveWalker.getDocuments()) {</span>
+<span class="fc" id="L152">                                analyse(doc);</span>
+<span class="fc" id="L153">                                doc.getMetaData().licenses().filter(licensePredicate).forEach(lic -&gt; document.getMetaData().reportOnLicense(lic));</span>
+<span class="fc" id="L154">                            }</span>
+<span class="nc" id="L155">                        } catch (RatException e) {</span>
+<span class="nc" id="L156">                            throw new RatDocumentAnalysisException(e);</span>
+<span class="fc" id="L157">                        }</span>
+<span class="fc" id="L158">                    }</span>
+                    break;
+                default:
+                    break;
+            }
+<span class="fc" id="L163">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportingSet.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.utils</a> &gt; <span class="el_source">ReportingSet.java</span></div><h1>ReportingSet.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.utils;
+
+import java.io.PrintWriter;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.SortedSet;
+import java.util.Spliterator;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+import org.apache.rat.api.RatException;
+
+/**
+ * A sorted set that reports insertion collisions.
+ * @param &lt;T&gt; the type of object
+ */
+public class ReportingSet&lt;T&gt; implements SortedSet&lt;T&gt; {
+    /** The sorted set this reporting set delegates to */
+    private final SortedSet&lt;T&gt; delegate;
+    /** The what to do when duplicates are found */
+<span class="fc" id="L42">    private Options duplicateOption = Options.IGNORE;</span>
+    /** What level to log duplicate found messages */
+<span class="fc" id="L44">    private Log.Level duplicateLogLevel = Log.Level.WARN;</span>
+    /** The message to log the duplicate with */
+<span class="pc" id="L46">    private Function&lt;T, String&gt; duplicateFmt = t -&gt; String.format(&quot;Duplicate %s detected %s&quot;, t.getClass(), t);</span>
+    /** The Options for duplicate processing */
+<span class="fc" id="L48">    public enum Options { OVERWRITE, IGNORE, FAIL }</span>
+
+    /**
+     * Constructs.
+     * @param delegate the SortedSet to delegate to.
+     */
+<span class="fc" id="L54">    public ReportingSet(final SortedSet&lt;T&gt; delegate) {</span>
+<span class="fc" id="L55">        this.delegate = delegate;</span>
+<span class="fc" id="L56">    }</span>
+
+    /**
+     * Sets the function to generate the log message.
+     * @param msgFmt A function to return the string to be displayed when a collision occurs.
+     * @return This for chaining.
+     */
+    public ReportingSet&lt;T&gt; setMsgFormat(final Function&lt;T, String&gt; msgFmt) {
+<span class="fc" id="L64">        duplicateFmt = msgFmt;</span>
+<span class="fc" id="L65">        return this;</span>
+    }
+
+    /**
+     * If set true attempts to duplicate will throw an IllegalArgumentException.
+     * The default state is false;.
+     * @param state the state to set.
+     * @return this for chaining.
+     */
+    public ReportingSet&lt;T&gt; setDuplicateOption(final Options state) {
+<span class="fc" id="L75">        this.duplicateOption = state;</span>
+<span class="fc" id="L76">        return this;</span>
+    }
+
+    /**
+     * Sets the log level that the reporting set will log at.
+     * if not set the default level is WARN.
+     * @param level the log level to use.
+     * @return this for chaining.
+     */
+    public ReportingSet&lt;T&gt; setLogLevel(final Log.Level level) {
+<span class="fc" id="L86">        this.duplicateLogLevel = level;</span>
+<span class="fc" id="L87">        return this;</span>
+    }
+
+    private ReportingSet&lt;T&gt; sameConfig(final SortedSet&lt;T&gt; delegate) {
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        ReportingSet&lt;T&gt; result = delegate instanceof ReportingSet ? (ReportingSet&lt;T&gt;) delegate : new ReportingSet&lt;&gt;(delegate);</span>
+<span class="fc" id="L92">        return result.setDuplicateOption(this.duplicateOption).setLogLevel(this.duplicateLogLevel);</span>
+    }
+
+    /**
+     * Adds the item if it is not present.  Does not report collisions.
+     * @param e the item to add.
+     * @return true if the item was added, false otherwise.
+     */
+    public boolean addIfNotPresent(final T e) {
+<span class="fc" id="L101">        return add(false, e);</span>
+    }
+
+    @Override
+    public boolean add(final T e) {
+<span class="fc" id="L106">        return add(true, e);</span>
+    }
+
+    /**
+     * Attempts to add an item.  Report failures if reportDup is true.
+     * @param reportDup the reporting flag.
+     * @param e the item to add
+     * @return true if the item was added.
+     */
+    private boolean add(final boolean reportDup, final T e) {
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (delegate.contains(e)) {</span>
+<span class="fc" id="L117">            String msg = ReportingSet.this.duplicateFmt.apply(e);</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (reportDup) {</span>
+<span class="fc" id="L119">                msg =  String.format(&quot;%s (action: %s)&quot;, msg, duplicateOption);</span>
+<span class="fc" id="L120">                DefaultLog.getInstance().log(duplicateLogLevel, msg);</span>
+<span class="fc" id="L121">                new RatException(&quot;just for trace&quot;).printStackTrace(new PrintWriter(DefaultLog.getInstance().asWriter()));</span>
+<span class="fc" id="L122">                DefaultLog.getInstance().warn(new RatException(&quot;just for trace&quot;));</span>
+            }
+<span class="fc bfc" id="L124" title="All 3 branches covered.">            return switch (duplicateOption) {</span>
+<span class="fc" id="L125">                case FAIL -&gt; throw new IllegalArgumentException(msg);</span>
+<span class="fc" id="L126">                case IGNORE -&gt; false;</span>
+                case OVERWRITE -&gt; {
+<span class="fc" id="L128">                    delegate.remove(e);</span>
+<span class="fc" id="L129">                    yield delegate.add(e);</span>
+                }
+            };
+        }
+<span class="fc" id="L133">        return delegate.add(e);</span>
+    }
+
+    @Override
+    public boolean addAll(final Collection&lt;? extends T&gt; c) {
+<span class="fc" id="L138">        boolean updated = false;</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        for (T e : c) {</span>
+<span class="fc" id="L140">            updated |= add(e);</span>
+<span class="fc" id="L141">        }</span>
+<span class="fc" id="L142">        return updated;</span>
+    }
+
+    public boolean addAllIfNotPresent(final Collection&lt;? extends T&gt; c) {
+<span class="nc" id="L146">        boolean updated = false;</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">        for (T e : c) {</span>
+<span class="nc" id="L148">            updated |= addIfNotPresent(e);</span>
+<span class="nc" id="L149">        }</span>
+<span class="nc" id="L150">        return updated;</span>
+    }
+
+    @Override
+    public void clear() {
+<span class="nc" id="L155">        delegate.clear();</span>
+<span class="nc" id="L156">    }</span>
+
+    @Override
+    public Comparator&lt;? super T&gt; comparator() {
+<span class="fc" id="L160">        return delegate.comparator();</span>
+    }
+
+    @Override
+    public boolean contains(final Object o) {
+<span class="nc" id="L165">        return delegate.contains(o);</span>
+    }
+
+    @Override
+    public boolean containsAll(final Collection&lt;?&gt; c) {
+<span class="nc" id="L170">        return delegate.containsAll(c);</span>
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+<span class="nc" id="L175">        return delegate.equals(o);</span>
+    }
+
+    @Override
+    public T first() {
+<span class="fc" id="L180">        return delegate.first();</span>
+    }
+
+    @Override
+    public void forEach(final Consumer&lt;? super T&gt; action) {
+<span class="fc" id="L185">        delegate.forEach(action);</span>
+<span class="fc" id="L186">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L190">        return delegate.hashCode();</span>
+    }
+
+    @Override
+    public ReportingSet&lt;T&gt; headSet(final T toElement) {
+<span class="nc" id="L195">        return sameConfig(delegate.headSet(toElement));</span>
+    }
+
+    @Override
+    public boolean isEmpty() {
+<span class="fc" id="L200">        return delegate.isEmpty();</span>
+    }
+
+    @Override
+    public Iterator&lt;T&gt; iterator() {
+<span class="fc" id="L205">        return delegate.iterator();</span>
+    }
+
+    @Override
+    public T last() {
+<span class="nc" id="L210">        return delegate.last();</span>
+    }
+
+    @Override
+    public Stream&lt;T&gt; parallelStream() {
+<span class="nc" id="L215">        return delegate.parallelStream();</span>
+    }
+
+    @Override
+    public boolean remove(final Object o) {
+<span class="nc" id="L220">        return delegate.remove(o);</span>
+    }
+
+    @Override
+    public boolean removeAll(final Collection&lt;?&gt; c) {
+<span class="nc" id="L225">        return delegate.removeAll(c);</span>
+    }
+
+    @Override
+    public boolean removeIf(final Predicate&lt;? super T&gt; filter) {
+<span class="nc" id="L230">        return delegate.removeIf(filter);</span>
+    }
+
+    @Override
+    public boolean retainAll(final Collection&lt;?&gt; c) {
+<span class="nc" id="L235">        return delegate.retainAll(c);</span>
+    }
+
+    @Override
+    public int size() {
+<span class="fc" id="L240">        return delegate.size();</span>
+    }
+
+    @Override
+    public Spliterator&lt;T&gt; spliterator() {
+<span class="nc" id="L245">        return delegate.spliterator();</span>
+    }
+
+    @Override
+    public Stream&lt;T&gt; stream() {
+<span class="fc" id="L250">        return delegate.stream();</span>
+    }
+
+    @Override
+    public ReportingSet&lt;T&gt; subSet(final T fromElement, final T toElement) {
+<span class="nc" id="L255">        return sameConfig(delegate.subSet(fromElement, toElement));</span>
+    }
+
+    @Override
+    public ReportingSet&lt;T&gt; tailSet(final T fromElement) {
+<span class="fc" id="L260">        return sameConfig(delegate.tailSet(fromElement));</span>
+    }
+
+    @Override
+    public Object[] toArray() {
+<span class="nc" id="L265">        return delegate.toArray();</span>
+    }
+
+    @Override
+    public &lt;T&gt; T[] toArray(final T[] a) {
+<span class="nc" id="L270">        return delegate.toArray(a);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

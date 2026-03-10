@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SelectorUtils.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.config.exclusion.plexus</a> &gt; <span class="el_source">SelectorUtils.java</span></div><h1>SelectorUtils.java</h1><pre class="source lang-java linenums">package org.apache.rat.config.exclusion.plexus;
+
+/*
+ * The Apache Software License, Version 1.1
+ *
+ * Copyright (c) 2002-2003 The Apache Software Foundation.  All rights
+ * reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *
+ * 3. The end-user documentation included with the redistribution, if
+ *    any, must include the following acknowledgement:
+ *       &quot;This product includes software developed by the
+ *        Apache Software Foundation (http://www.codehaus.org/).&quot;
+ *    Alternately, this acknowledgement may appear in the software itself,
+ *    if and wherever such third-party acknowledgements normally appear.
+ *
+ * 4. The names &quot;Ant&quot; and &quot;Apache Software
+ *    Foundation&quot; must not be used to endorse or promote products derived
+ *    from this software without prior written permission. For written
+ *    permission, please contact codehaus@codehaus.org.
+ *
+ * 5. Products derived from this software may not be called &quot;Apache&quot;
+ *    nor may &quot;Apache&quot; appear in their names without prior written
+ *    permission of the Apache Group.
+ *
+ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND ANY EXPRESSED OR IMPLIED
+ * WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED.  IN NO EVENT SHALL THE APACHE SOFTWARE FOUNDATION OR
+ * ITS CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+ * USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ * ====================================================================
+ *
+ * This software consists of voluntary contributions made by many
+ * individuals on behalf of the Apache Software Foundation.  For more
+ * information on the Apache Software Foundation, please see
+ * &lt;http://www.codehaus.org/&gt;.
+ *
+ */
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
+@SuppressWarnings({&quot;checkstyle:RegexpSingleLine&quot;, &quot;checkstyle:JavadocVariable&quot;})
+/**
+ * &lt;p&gt;This is a utility class used by selectors and DirectoryScanner. The functionality more properly belongs just to
+ * selectors, but unfortunately DirectoryScanner exposed these as protected methods. Thus we have to support any
+ * subclasses of DirectoryScanner that may access these methods.&lt;/p&gt;
+ *
+ *
+ * &lt;p&gt;This is a Singleton.&lt;/p&gt;
+ * &lt;p&gt;Based on code from plexus-utils.&lt;/p&gt;
+ *
+ * @author Arnout J. Kuiper &lt;a href=&quot;mailto:ajkuiper@wxs.nl&quot;&gt;ajkuiper@wxs.nl&lt;/a&gt;
+ * @author Magesh Umasankar
+ * @author &lt;a href=&quot;mailto:bruce@callenish.com&quot;&gt;Bruce Atherton&lt;/a&gt;
+ * @see &lt;a href=&quot;https://github.com/codehaus-plexus/plexus-utils/blob/master/src/main/java/org/codehaus/plexus/util/SelectorUtils.java&quot;&gt;
+ * plexus-utils SelectorUtils&lt;/a&gt;
+ */
+public final class SelectorUtils {
+
+    public static final String PATTERN_HANDLER_PREFIX = &quot;[&quot;;
+
+    public static final String PATTERN_HANDLER_SUFFIX = &quot;]&quot;;
+
+    public static final String REGEX_HANDLER_PREFIX = &quot;%regex&quot; + PATTERN_HANDLER_PREFIX;
+
+    public static final String ANT_HANDLER_PREFIX = &quot;%ant&quot; + PATTERN_HANDLER_PREFIX;
+
+<span class="fc" id="L88">    private static final SelectorUtils INSTANCE = new SelectorUtils();</span>
+
+    /**
+     * Private Constructor
+     */
+    private SelectorUtils() {
+    }
+
+    /**
+     * @return Retrieves the manager of the Singleton.
+     */
+    public static SelectorUtils getInstance() {
+<span class="nc" id="L100">        return INSTANCE;</span>
+    }
+
+    /**
+     * &lt;p&gt;Tests whether or not a given path matches the start of a given pattern up to the first &quot;**&quot;.&lt;/p&gt;
+     *
+     * &lt;p&gt;This is not a general purpose test and should only be used if you can live with false positives. For example,
+     * &lt;code&gt;pattern=**\a&lt;/code&gt; and &lt;code&gt;str=b&lt;/code&gt; will yield &lt;code&gt;true&lt;/code&gt;.&lt;/p&gt;
+     *
+     * @param pattern The pattern to match against. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param str The path to match, as a String. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @return whether or not a given path matches the start of a given pattern up to the first &quot;**&quot;.
+     */
+    public static boolean matchPatternStart(final String pattern, final String str) {
+<span class="nc" id="L114">        return matchPatternStart(pattern, str, true);</span>
+    }
+
+    /**
+     * &lt;p&gt;Tests whether or not a given path matches the start of a given pattern up to the first &quot;**&quot;.&lt;/p&gt;
+     *
+     * &lt;p&gt;This is not a general purpose test and should only be used if you can live with false positives. For example,
+     * &lt;code&gt;pattern=**\a&lt;/code&gt; and &lt;code&gt;str=b&lt;/code&gt; will yield &lt;code&gt;true&lt;/code&gt;.&lt;/p&gt;
+     *
+     * @param pattern The pattern to match against. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param str The path to match, as a String. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param isCaseSensitive Whether or not matching should be performed case sensitively.
+     * @return whether or not a given path matches the start of a given pattern up to the first &quot;**&quot;.
+     */
+    public static boolean matchPatternStart(final String pattern, final String str, final boolean isCaseSensitive) {
+<span class="nc bnc" id="L129" title="All 2 branches missed.">        if (isRegexPrefixedPattern(pattern)) {</span>
+            // FIXME: ICK! But we can't do partial matches for regex, so we have to reserve judgement until we have
+            // a file to deal with, or we can definitely say this is an exclusion...
+<span class="nc" id="L132">            return true;</span>
+        }
+<span class="nc bnc" id="L134" title="All 2 branches missed.">        String workingPattern = isAntPrefixedPattern(pattern) ?</span>
+<span class="nc" id="L135">            pattern.substring(ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length())</span>
+<span class="nc" id="L136">                : pattern;</span>
+
+<span class="nc" id="L138">        String altStr = str.replace('\\', '/');</span>
+
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        return matchAntPathPatternStart(workingPattern, str, File.separator, isCaseSensitive)</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">                || matchAntPathPatternStart(workingPattern, altStr, &quot;/&quot;, isCaseSensitive);</span>
+
+    }
+
+    public static boolean isAntPrefixedPattern(final String pattern) {
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        return pattern.length() &gt; (ANT_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length() + 1)</span>
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">                &amp;&amp; pattern.startsWith(ANT_HANDLER_PREFIX)</span>
+<span class="pc bnc" id="L148" title="All 2 branches missed.">                &amp;&amp; pattern.endsWith(PATTERN_HANDLER_SUFFIX);</span>
+    }
+
+    @SuppressWarnings(&quot;SimplifiableIfStatement&quot;)
+    static boolean matchAntPathPatternStart(final MatchPattern pattern, final String str, final String separator, final boolean isCaseSensitive) {
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        if (separatorPatternStartSlashMismatch(pattern, str, separator)) {</span>
+<span class="nc" id="L154">            return false;</span>
+        }
+
+<span class="nc" id="L157">        return matchAntPathPatternStart(pattern.getTokenizedPathString(), str, separator, isCaseSensitive);</span>
+    }
+
+    static boolean matchAntPathPatternStart(final String pattern, final String str, final String separator, final boolean isCaseSensitive) {
+        // When str starts with a File.separator, pattern has to start with a
+        // File.separator.
+        // When pattern starts with a File.separator, str has to start with a
+        // File.separator.
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (separatorPatternStartSlashMismatch(pattern, str, separator)) {</span>
+<span class="nc" id="L166">            return false;</span>
+        }
+
+<span class="nc" id="L169">        String[] patDirs = tokenizePathToString(pattern, separator);</span>
+<span class="nc" id="L170">        return matchAntPathPatternStart(patDirs, str, separator, isCaseSensitive);</span>
+    }
+
+    // When str starts with a File.separator, pattern has to start with a
+    // File.separator.
+    // When pattern starts with a File.separator, str has to start with a
+    // File.separator.
+    private static boolean separatorPatternStartSlashMismatch(final String pattern, final String str, final String separator) {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">        return str.startsWith(separator) != pattern.startsWith(separator);</span>
+    }
+
+    private static boolean separatorPatternStartSlashMismatch(final MatchPattern matchPattern, final String str, final String separator) {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        return str.startsWith(separator) != matchPattern.startsWith(separator);</span>
+    }
+
+    static boolean matchAntPathPatternStart(final String[] patDirs, final String str, final String separator, final boolean isCaseSensitive) {
+<span class="nc" id="L186">        String[] strDirs = tokenizePathToString(str, separator);</span>
+
+<span class="nc" id="L188">        int patIdxStart = 0;</span>
+<span class="nc" id="L189">        int patIdxEnd = patDirs.length - 1;</span>
+<span class="nc" id="L190">        int strIdxStart = 0;</span>
+<span class="nc" id="L191">        int strIdxEnd = strDirs.length - 1;</span>
+
+        // up to first '**'
+<span class="nc bnc" id="L194" title="All 4 branches missed.">        while (patIdxStart &lt;= patIdxEnd &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="nc" id="L195">            String patDir = patDirs[patIdxStart];</span>
+<span class="nc bnc" id="L196" title="All 2 branches missed.">            if (patDir.equals(&quot;**&quot;)) {</span>
+<span class="nc" id="L197">                break;</span>
+            }
+<span class="nc bnc" id="L199" title="All 2 branches missed.">            if (!match(patDir, strDirs[strIdxStart], isCaseSensitive)) {</span>
+<span class="nc" id="L200">                return false;</span>
+            }
+<span class="nc" id="L202">            patIdxStart++;</span>
+<span class="nc" id="L203">            strIdxStart++;</span>
+<span class="nc" id="L204">        }</span>
+
+<span class="nc bnc" id="L206" title="All 4 branches missed.">        return strIdxStart &gt; strIdxEnd || patIdxStart &lt;= patIdxEnd;</span>
+    }
+
+    /**
+     * Tests whether or not a given path matches a given pattern.
+     *
+     * @param pattern The pattern to match against. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param str The path to match, as a String. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @return &lt;code&gt;true&lt;/code&gt; if the pattern matches against the string, or &lt;code&gt;false&lt;/code&gt; otherwise.
+     */
+    public static boolean matchPath(final String pattern, final String str) {
+<span class="nc" id="L217">        return matchPath(pattern, str, true);</span>
+    }
+
+    /**
+     * Tests whether or not a given path matches a given pattern.
+     *
+     * @param pattern The pattern to match against. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param str The path to match, as a String. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param isCaseSensitive Whether or not matching should be performed case sensitively.
+     * @return &lt;code&gt;true&lt;/code&gt; if the pattern matches against the string, or &lt;code&gt;false&lt;/code&gt; otherwise.
+     */
+    public static boolean matchPath(final String pattern, final String str, final boolean isCaseSensitive) {
+<span class="nc" id="L229">        return matchPath(pattern, str, File.separator, isCaseSensitive);</span>
+    }
+
+    public static String extractPattern(final String pattern, final String separator) {
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        if (isRegexPrefixedPattern(pattern)) {</span>
+<span class="fc" id="L234">            return pattern.substring(</span>
+<span class="fc" id="L235">                    REGEX_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length());</span>
+        } else {
+<span class="pc bpc" id="L237" title="1 of 2 branches missed.">            String localPattern = isAntPrefixedPattern(pattern)</span>
+<span class="nc" id="L238">                    ? pattern.substring(ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length())</span>
+<span class="fc" id="L239">                    : pattern;</span>
+<span class="fc" id="L240">            return toOSRelatedPath(localPattern, separator);</span>
+        }
+    }
+
+    public static boolean matchPath(final String pattern, final String str, final String separator, final boolean isCaseSensitive) {
+<span class="nc bnc" id="L245" title="All 2 branches missed.">        if (isRegexPrefixedPattern(pattern)) {</span>
+<span class="nc" id="L246">            String localPattern = pattern.substring(</span>
+<span class="nc" id="L247">                    REGEX_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length());</span>
+
+<span class="nc" id="L249">            return str.matches(localPattern);</span>
+        } else {
+<span class="nc bnc" id="L251" title="All 2 branches missed.">            String localPattern = isAntPrefixedPattern(pattern)</span>
+<span class="nc" id="L252">                    ? pattern.substring(ANT_HANDLER_PREFIX.length(), pattern.length() - PATTERN_HANDLER_SUFFIX.length())</span>
+<span class="nc" id="L253">                    : pattern;</span>
+<span class="nc" id="L254">            final String osRelatedPath = toOSRelatedPath(str, separator);</span>
+<span class="nc" id="L255">            final String osRelatedPattern = toOSRelatedPath(localPattern, separator);</span>
+<span class="nc" id="L256">            return matchAntPathPattern(osRelatedPattern, osRelatedPath, separator, isCaseSensitive);</span>
+        }
+    }
+
+    private static String toOSRelatedPath(final String pattern, final String separator) {
+<span class="fc bfc" id="L261" title="All 2 branches covered.">        if (&quot;/&quot;.equals(separator)) {</span>
+<span class="fc" id="L262">            return pattern.replace(&quot;\\&quot;, separator);</span>
+        }
+<span class="pc bpc" id="L264" title="1 of 2 branches missed.">        if (&quot;\\&quot;.equals(separator)) {</span>
+<span class="fc" id="L265">            return pattern.replace(&quot;/&quot;, separator);</span>
+        }
+<span class="nc" id="L267">        return pattern;</span>
+    }
+
+    public static boolean isRegexPrefixedPattern(final String pattern) {
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        return pattern.length() &gt; (REGEX_HANDLER_PREFIX.length() + PATTERN_HANDLER_SUFFIX.length() + 1)</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">                &amp;&amp; pattern.startsWith(REGEX_HANDLER_PREFIX)</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">                &amp;&amp; pattern.endsWith(PATTERN_HANDLER_SUFFIX);</span>
+    }
+
+    static boolean matchAntPathPattern(final MatchPattern matchPattern, final String str, final String separator, final boolean isCaseSensitive) {
+<span class="nc bnc" id="L277" title="All 2 branches missed.">        if (separatorPatternStartSlashMismatch(matchPattern, str, separator)) {</span>
+<span class="nc" id="L278">            return false;</span>
+        }
+<span class="nc" id="L280">        String[] patDirs = matchPattern.getTokenizedPathString();</span>
+<span class="nc" id="L281">        String[] strDirs = tokenizePathToString(str, separator);</span>
+<span class="nc" id="L282">        return matchAntPathPattern(patDirs, strDirs, isCaseSensitive);</span>
+    }
+
+    static boolean matchAntPathPattern(final String pattern, final String str, final String separator, final boolean isCaseSensitive) {
+<span class="nc bnc" id="L286" title="All 2 branches missed.">        if (separatorPatternStartSlashMismatch(pattern, str, separator)) {</span>
+<span class="nc" id="L287">            return false;</span>
+        }
+<span class="nc" id="L289">        String[] patDirs = tokenizePathToString(pattern, separator);</span>
+<span class="nc" id="L290">        String[] strDirs = tokenizePathToString(str, separator);</span>
+<span class="nc" id="L291">        return matchAntPathPattern(patDirs, strDirs, isCaseSensitive);</span>
+    }
+
+    static boolean matchAntPathPattern(final String[] patDirs, final String[] strDirs, final boolean isCaseSensitive) {
+<span class="nc" id="L295">        int patIdxStart = 0;</span>
+<span class="nc" id="L296">        int patIdxEnd = patDirs.length - 1;</span>
+<span class="nc" id="L297">        int strIdxStart = 0;</span>
+<span class="nc" id="L298">        int strIdxEnd = strDirs.length - 1;</span>
+
+        // up to first '**'
+<span class="nc bnc" id="L301" title="All 4 branches missed.">        while (patIdxStart &lt;= patIdxEnd &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="nc" id="L302">            String patDir = patDirs[patIdxStart];</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">            if (patDir.equals(&quot;**&quot;)) {</span>
+<span class="nc" id="L304">                break;</span>
+            }
+<span class="nc bnc" id="L306" title="All 2 branches missed.">            if (!match(patDir, strDirs[strIdxStart], isCaseSensitive)) {</span>
+<span class="nc" id="L307">                return false;</span>
+            }
+<span class="nc" id="L309">            patIdxStart++;</span>
+<span class="nc" id="L310">            strIdxStart++;</span>
+<span class="nc" id="L311">        }</span>
+<span class="nc bnc" id="L312" title="All 2 branches missed.">        if (strIdxStart &gt; strIdxEnd) {</span>
+            // String is exhausted
+<span class="nc bnc" id="L314" title="All 2 branches missed.">            for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="nc bnc" id="L315" title="All 2 branches missed.">                if (!patDirs[i].equals(&quot;**&quot;)) {</span>
+<span class="nc" id="L316">                    return false;</span>
+                }
+            }
+<span class="nc" id="L319">            return true;</span>
+        } else {
+<span class="nc bnc" id="L321" title="All 2 branches missed.">            if (patIdxStart &gt; patIdxEnd) {</span>
+                // String not exhausted, but pattern is. Failure.
+<span class="nc" id="L323">                return false;</span>
+            }
+        }
+
+        // up to last '**'
+<span class="nc bnc" id="L328" title="All 4 branches missed.">        while (patIdxStart &lt;= patIdxEnd &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="nc" id="L329">            String patDir = patDirs[patIdxEnd];</span>
+<span class="nc bnc" id="L330" title="All 2 branches missed.">            if (patDir.equals(&quot;**&quot;)) {</span>
+<span class="nc" id="L331">                break;</span>
+            }
+<span class="nc bnc" id="L333" title="All 2 branches missed.">            if (!match(patDir, strDirs[strIdxEnd], isCaseSensitive)) {</span>
+<span class="nc" id="L334">                return false;</span>
+            }
+<span class="nc" id="L336">            patIdxEnd--;</span>
+<span class="nc" id="L337">            strIdxEnd--;</span>
+<span class="nc" id="L338">        }</span>
+<span class="nc bnc" id="L339" title="All 2 branches missed.">        if (strIdxStart &gt; strIdxEnd) {</span>
+            // String is exhausted
+<span class="nc bnc" id="L341" title="All 2 branches missed.">            for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="nc bnc" id="L342" title="All 2 branches missed.">                if (!patDirs[i].equals(&quot;**&quot;)) {</span>
+<span class="nc" id="L343">                    return false;</span>
+                }
+            }
+<span class="nc" id="L346">            return true;</span>
+        }
+
+<span class="nc bnc" id="L349" title="All 4 branches missed.">        while (patIdxStart != patIdxEnd &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="nc" id="L350">            int patIdxTmp = -1;</span>
+<span class="nc bnc" id="L351" title="All 2 branches missed.">            for (int i = patIdxStart + 1; i &lt;= patIdxEnd; i++) {</span>
+<span class="nc bnc" id="L352" title="All 2 branches missed.">                if (patDirs[i].equals(&quot;**&quot;)) {</span>
+<span class="nc" id="L353">                    patIdxTmp = i;</span>
+<span class="nc" id="L354">                    break;</span>
+                }
+            }
+<span class="nc bnc" id="L357" title="All 2 branches missed.">            if (patIdxTmp == patIdxStart + 1) {</span>
+                // '**/**' situation, so skip one
+<span class="nc" id="L359">                patIdxStart++;</span>
+<span class="nc" id="L360">                continue;</span>
+            }
+            // Find the pattern between padIdxStart &amp; padIdxTmp in str between
+            // strIdxStart &amp; strIdxEnd
+<span class="nc" id="L364">            int patLength = patIdxTmp - patIdxStart - 1;</span>
+<span class="nc" id="L365">            int strLength = strIdxEnd - strIdxStart + 1;</span>
+<span class="nc" id="L366">            int foundIdx = -1;</span>
+            strLoop:
+<span class="nc bnc" id="L368" title="All 2 branches missed.">            for (int i = 0; i &lt;= strLength - patLength; i++) {</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">                for (int j = 0; j &lt; patLength; j++) {</span>
+<span class="nc" id="L370">                    String subPat = patDirs[patIdxStart + j + 1];</span>
+<span class="nc" id="L371">                    String subStr = strDirs[strIdxStart + i + j];</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">                    if (!match(subPat, subStr, isCaseSensitive)) {</span>
+<span class="nc" id="L373">                        continue strLoop;</span>
+                    }
+                }
+
+<span class="nc" id="L377">                foundIdx = strIdxStart + i;</span>
+<span class="nc" id="L378">                break;</span>
+            }
+
+<span class="nc bnc" id="L381" title="All 2 branches missed.">            if (foundIdx == -1) {</span>
+<span class="nc" id="L382">                return false;</span>
+            }
+
+<span class="nc" id="L385">            patIdxStart = patIdxTmp;</span>
+<span class="nc" id="L386">            strIdxStart = foundIdx + patLength;</span>
+<span class="nc" id="L387">        }</span>
+
+<span class="nc bnc" id="L389" title="All 2 branches missed.">        for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">            if (!patDirs[i].equals(&quot;**&quot;)) {</span>
+<span class="nc" id="L391">                return false;</span>
+            }
+        }
+
+<span class="nc" id="L395">        return true;</span>
+    }
+
+    static boolean matchAntPathPattern(final char[][] patDirs, final char[][] strDirs, final boolean isCaseSensitive) {
+<span class="fc" id="L399">        int patIdxStart = 0;</span>
+<span class="fc" id="L400">        int patIdxEnd = patDirs.length - 1;</span>
+<span class="fc" id="L401">        int strIdxStart = 0;</span>
+<span class="fc" id="L402">        int strIdxEnd = strDirs.length - 1;</span>
+
+        // up to first '**'
+<span class="fc bfc" id="L405" title="All 4 branches covered.">        while (patIdxStart &lt;= patIdxEnd &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="fc" id="L406">            char[] patDir = patDirs[patIdxStart];</span>
+<span class="fc bfc" id="L407" title="All 2 branches covered.">            if (isDoubleStar(patDir)) {</span>
+<span class="fc" id="L408">                break;</span>
+            }
+<span class="fc bfc" id="L410" title="All 2 branches covered.">            if (!match(patDir, strDirs[strIdxStart], isCaseSensitive)) {</span>
+<span class="fc" id="L411">                return false;</span>
+            }
+<span class="fc" id="L413">            patIdxStart++;</span>
+<span class="fc" id="L414">            strIdxStart++;</span>
+<span class="fc" id="L415">        }</span>
+<span class="fc bfc" id="L416" title="All 2 branches covered.">        if (strIdxStart &gt; strIdxEnd) {</span>
+            // String is exhausted
+<span class="fc bfc" id="L418" title="All 2 branches covered.">            for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="fc bfc" id="L419" title="All 2 branches covered.">                if (!isDoubleStar(patDirs[i])) {</span>
+<span class="fc" id="L420">                    return false;</span>
+                }
+            }
+<span class="fc" id="L423">            return true;</span>
+        } else {
+<span class="fc bfc" id="L425" title="All 2 branches covered.">            if (patIdxStart &gt; patIdxEnd) {</span>
+                // String not exhausted, but pattern is. Failure.
+<span class="fc" id="L427">                return false;</span>
+            }
+        }
+
+        // up to last '**'
+<span class="pc bpc" id="L432" title="1 of 4 branches missed.">        while (patIdxStart &lt;= patIdxEnd &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="fc" id="L433">            char[] patDir = patDirs[patIdxEnd];</span>
+<span class="fc bfc" id="L434" title="All 2 branches covered.">            if (isDoubleStar(patDir)) {</span>
+<span class="fc" id="L435">                break;</span>
+            }
+<span class="fc bfc" id="L437" title="All 2 branches covered.">            if (!match(patDir, strDirs[strIdxEnd], isCaseSensitive)) {</span>
+<span class="fc" id="L438">                return false;</span>
+            }
+<span class="fc" id="L440">            patIdxEnd--;</span>
+<span class="fc" id="L441">            strIdxEnd--;</span>
+<span class="fc" id="L442">        }</span>
+<span class="fc bfc" id="L443" title="All 2 branches covered.">        if (strIdxStart &gt; strIdxEnd) {</span>
+            // String is exhausted
+<span class="fc bfc" id="L445" title="All 2 branches covered.">            for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="fc bfc" id="L446" title="All 2 branches covered.">                if (!isDoubleStar(patDirs[i])) {</span>
+<span class="fc" id="L447">                    return false;</span>
+                }
+            }
+<span class="fc" id="L450">            return true;</span>
+        }
+
+<span class="pc bpc" id="L453" title="1 of 4 branches missed.">        while (patIdxStart != patIdxEnd &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="fc" id="L454">            int patIdxTmp = -1;</span>
+<span class="pc bpc" id="L455" title="1 of 2 branches missed.">            for (int i = patIdxStart + 1; i &lt;= patIdxEnd; i++) {</span>
+<span class="fc bfc" id="L456" title="All 2 branches covered.">                if (isDoubleStar(patDirs[i])) {</span>
+<span class="fc" id="L457">                    patIdxTmp = i;</span>
+<span class="fc" id="L458">                    break;</span>
+                }
+            }
+<span class="pc bpc" id="L461" title="1 of 2 branches missed.">            if (patIdxTmp == patIdxStart + 1) {</span>
+                // '**/**' situation, so skip one
+<span class="nc" id="L463">                patIdxStart++;</span>
+<span class="nc" id="L464">                continue;</span>
+            }
+            // Find the pattern between padIdxStart &amp; padIdxTmp in str between
+            // strIdxStart &amp; strIdxEnd
+<span class="fc" id="L468">            int patLength = patIdxTmp - patIdxStart - 1;</span>
+<span class="fc" id="L469">            int strLength = strIdxEnd - strIdxStart + 1;</span>
+<span class="fc" id="L470">            int foundIdx = -1;</span>
+            strLoop:
+<span class="fc bfc" id="L472" title="All 2 branches covered.">            for (int i = 0; i &lt;= strLength - patLength; i++) {</span>
+<span class="fc bfc" id="L473" title="All 2 branches covered.">                for (int j = 0; j &lt; patLength; j++) {</span>
+<span class="fc" id="L474">                    char[] subPat = patDirs[patIdxStart + j + 1];</span>
+<span class="fc" id="L475">                    char[] subStr = strDirs[strIdxStart + i + j];</span>
+<span class="fc bfc" id="L476" title="All 2 branches covered.">                    if (!match(subPat, subStr, isCaseSensitive)) {</span>
+<span class="fc" id="L477">                        continue strLoop;</span>
+                    }
+                }
+
+<span class="fc" id="L481">                foundIdx = strIdxStart + i;</span>
+<span class="fc" id="L482">                break;</span>
+            }
+
+<span class="fc bfc" id="L485" title="All 2 branches covered.">            if (foundIdx == -1) {</span>
+<span class="fc" id="L486">                return false;</span>
+            }
+
+<span class="fc" id="L489">            patIdxStart = patIdxTmp;</span>
+<span class="fc" id="L490">            strIdxStart = foundIdx + patLength;</span>
+<span class="fc" id="L491">        }</span>
+
+<span class="fc bfc" id="L493" title="All 2 branches covered.">        for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="pc bpc" id="L494" title="1 of 2 branches missed.">            if (!isDoubleStar(patDirs[i])) {</span>
+<span class="nc" id="L495">                return false;</span>
+            }
+        }
+
+<span class="fc" id="L499">        return true;</span>
+    }
+
+    private static boolean isDoubleStar(final char[] patDir) {
+<span class="pc bpc" id="L503" title="2 of 8 branches missed.">        return patDir != null &amp;&amp; patDir.length == 2 &amp;&amp; patDir[0] == '*' &amp;&amp; patDir[1] == '*';</span>
+    }
+
+    /**
+     * Tests whether or not a string matches against a pattern. The pattern may contain two special characters:&lt;br&gt;
+     * '*' means zero or more characters&lt;br&gt;
+     * '?' means one and only one character
+     *
+     * @param pattern The pattern to match against. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param str The string which must be matched against the pattern. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @return &lt;code&gt;true&lt;/code&gt; if the string matches against the pattern, or &lt;code&gt;false&lt;/code&gt; otherwise.
+     */
+    public static boolean match(final String pattern, final String str) {
+<span class="nc" id="L516">        return match(pattern, str, true);</span>
+    }
+
+    /**
+     * Tests whether or not a string matches against a pattern. The pattern may contain two special characters:&lt;br&gt;
+     * '*' means zero or more characters&lt;br&gt;
+     * '?' means one and only one character
+     *
+     * @param pattern The pattern to match against. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param str The string which must be matched against the pattern. Must not be &lt;code&gt;null&lt;/code&gt;.
+     * @param isCaseSensitive Whether or not matching should be performed case sensitively.
+     * @return &lt;code&gt;true&lt;/code&gt; if the string matches against the pattern, or &lt;code&gt;false&lt;/code&gt; otherwise.
+     */
+    public static boolean match(final String pattern, final String str, final boolean isCaseSensitive) {
+<span class="nc" id="L530">        char[] patArr = pattern.toCharArray();</span>
+<span class="nc" id="L531">        char[] strArr = str.toCharArray();</span>
+<span class="nc" id="L532">        return match(patArr, strArr, isCaseSensitive);</span>
+    }
+
+    public static boolean match(final char[] patArr, final char[] strArr, final boolean isCaseSensitive) {
+<span class="fc" id="L536">        int patIdxStart = 0;</span>
+<span class="fc" id="L537">        int patIdxEnd = patArr.length - 1;</span>
+<span class="fc" id="L538">        int strIdxStart = 0;</span>
+<span class="fc" id="L539">        int strIdxEnd = strArr.length - 1;</span>
+        char ch;
+
+<span class="fc" id="L542">        boolean containsStar = false;</span>
+<span class="fc bfc" id="L543" title="All 2 branches covered.">        for (char aPatArr : patArr) {</span>
+<span class="fc bfc" id="L544" title="All 2 branches covered.">            if (aPatArr == '*') {</span>
+<span class="fc" id="L545">                containsStar = true;</span>
+<span class="fc" id="L546">                break;</span>
+            }
+        }
+
+<span class="fc bfc" id="L550" title="All 2 branches covered.">        if (!containsStar) {</span>
+            // No '*'s, so we make a shortcut
+<span class="fc bfc" id="L552" title="All 2 branches covered.">            if (patIdxEnd != strIdxEnd) {</span>
+<span class="fc" id="L553">                return false; // Pattern and string do not have the same size</span>
+            }
+<span class="fc bfc" id="L555" title="All 2 branches covered.">            for (int i = 0; i &lt;= patIdxEnd; i++) {</span>
+<span class="fc" id="L556">                ch = patArr[i];</span>
+<span class="pc bpc" id="L557" title="1 of 4 branches missed.">                if (ch != '?' &amp;&amp; !equals(ch, strArr[i], isCaseSensitive)) {</span>
+<span class="fc" id="L558">                    return false; // Character mismatch</span>
+                }
+            }
+<span class="fc" id="L561">            return true; // String matches against pattern</span>
+        }
+
+<span class="fc bfc" id="L564" title="All 2 branches covered.">        if (patIdxEnd == 0) {</span>
+<span class="fc" id="L565">            return true; // Pattern contains only '*', which matches anything</span>
+        }
+
+        // Process characters before first star
+<span class="pc bpc" id="L569" title="1 of 4 branches missed.">        while ((ch = patArr[patIdxStart]) != '*' &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="pc bpc" id="L570" title="1 of 4 branches missed.">            if (ch != '?' &amp;&amp; !equals(ch, strArr[strIdxStart], isCaseSensitive)) {</span>
+<span class="fc" id="L571">                return false; // Character mismatch</span>
+            }
+<span class="fc" id="L573">            patIdxStart++;</span>
+<span class="fc" id="L574">            strIdxStart++;</span>
+        }
+<span class="pc bpc" id="L576" title="1 of 2 branches missed.">        if (strIdxStart &gt; strIdxEnd) {</span>
+            // All characters in the string are used. Check if only '*'s are
+            // left in the pattern. If so, we succeeded. Otherwise failure.
+<span class="nc bnc" id="L579" title="All 2 branches missed.">            for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="nc bnc" id="L580" title="All 2 branches missed.">                if (patArr[i] != '*') {</span>
+<span class="nc" id="L581">                    return false;</span>
+                }
+            }
+<span class="nc" id="L584">            return true;</span>
+        }
+
+        // Process characters after last star
+<span class="fc bfc" id="L588" title="All 4 branches covered.">        while ((ch = patArr[patIdxEnd]) != '*' &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="pc bpc" id="L589" title="1 of 4 branches missed.">            if (ch != '?' &amp;&amp; !equals(ch, strArr[strIdxEnd], isCaseSensitive)) {</span>
+<span class="fc" id="L590">                return false; // Character mismatch</span>
+            }
+<span class="fc" id="L592">            patIdxEnd--;</span>
+<span class="fc" id="L593">            strIdxEnd--;</span>
+        }
+<span class="fc bfc" id="L595" title="All 2 branches covered.">        if (strIdxStart &gt; strIdxEnd) {</span>
+            // All characters in the string are used. Check if only '*'s are
+            // left in the pattern. If so, we succeeded. Otherwise failure.
+<span class="pc bpc" id="L598" title="1 of 2 branches missed.">            for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="fc bfc" id="L599" title="All 2 branches covered.">                if (patArr[i] != '*') {</span>
+<span class="fc" id="L600">                    return false;</span>
+                }
+            }
+<span class="nc" id="L603">            return true;</span>
+        }
+
+        // process pattern between stars. padIdxStart and patIdxEnd point
+        // always to a '*'.
+<span class="pc bpc" id="L608" title="3 of 4 branches missed.">        while (patIdxStart != patIdxEnd &amp;&amp; strIdxStart &lt;= strIdxEnd) {</span>
+<span class="nc" id="L609">            int patIdxTmp = -1;</span>
+<span class="nc bnc" id="L610" title="All 2 branches missed.">            for (int i = patIdxStart + 1; i &lt;= patIdxEnd; i++) {</span>
+<span class="nc bnc" id="L611" title="All 2 branches missed.">                if (patArr[i] == '*') {</span>
+<span class="nc" id="L612">                    patIdxTmp = i;</span>
+<span class="nc" id="L613">                    break;</span>
+                }
+            }
+<span class="nc bnc" id="L616" title="All 2 branches missed.">            if (patIdxTmp == patIdxStart + 1) {</span>
+                // Two stars next to each other, skip the first one.
+<span class="nc" id="L618">                patIdxStart++;</span>
+<span class="nc" id="L619">                continue;</span>
+            }
+            // Find the pattern between padIdxStart &amp; padIdxTmp in str between
+            // strIdxStart &amp; strIdxEnd
+<span class="nc" id="L623">            int patLength = patIdxTmp - patIdxStart - 1;</span>
+<span class="nc" id="L624">            int strLength = strIdxEnd - strIdxStart + 1;</span>
+<span class="nc" id="L625">            int foundIdx = -1;</span>
+            strLoop:
+<span class="nc bnc" id="L627" title="All 2 branches missed.">            for (int i = 0; i &lt;= strLength - patLength; i++) {</span>
+<span class="nc bnc" id="L628" title="All 2 branches missed.">                for (int j = 0; j &lt; patLength; j++) {</span>
+<span class="nc" id="L629">                    ch = patArr[patIdxStart + j + 1];</span>
+<span class="nc bnc" id="L630" title="All 4 branches missed.">                    if (ch != '?' &amp;&amp; !equals(ch, strArr[strIdxStart + i + j], isCaseSensitive)) {</span>
+<span class="nc" id="L631">                        continue strLoop;</span>
+                    }
+                }
+
+<span class="nc" id="L635">                foundIdx = strIdxStart + i;</span>
+<span class="nc" id="L636">                break;</span>
+            }
+
+<span class="nc bnc" id="L639" title="All 2 branches missed.">            if (foundIdx == -1) {</span>
+<span class="nc" id="L640">                return false;</span>
+            }
+
+<span class="nc" id="L643">            patIdxStart = patIdxTmp;</span>
+<span class="nc" id="L644">            strIdxStart = foundIdx + patLength;</span>
+<span class="nc" id="L645">        }</span>
+
+        // All characters in the string are used. Check if only '*'s are left
+        // in the pattern. If so, we succeeded. Otherwise failure.
+<span class="fc bfc" id="L649" title="All 2 branches covered.">        for (int i = patIdxStart; i &lt;= patIdxEnd; i++) {</span>
+<span class="pc bpc" id="L650" title="1 of 2 branches missed.">            if (patArr[i] != '*') {</span>
+<span class="nc" id="L651">                return false;</span>
+            }
+        }
+<span class="fc" id="L654">        return true;</span>
+    }
+
+    /**
+     * Tests whether two characters are equal.
+     */
+    private static boolean equals(final char c1, final char c2, final boolean isCaseSensitive) {
+<span class="fc bfc" id="L661" title="All 2 branches covered.">        if (c1 == c2) {</span>
+<span class="fc" id="L662">            return true;</span>
+        }
+<span class="fc bfc" id="L664" title="All 2 branches covered.">        if (!isCaseSensitive) {</span>
+            // NOTE: Try both upper case and lower case as done by String.equalsIgnoreCase()
+<span class="pc bpc" id="L666" title="1 of 2 branches missed.">            return Character.toUpperCase(c1) == Character.toUpperCase(c2)</span>
+<span class="pc bpc" id="L667" title="1 of 2 branches missed.">                    || Character.toLowerCase(c1) == Character.toLowerCase(c2);</span>
+        }
+<span class="fc" id="L669">        return false;</span>
+    }
+
+    private static String[] tokenizePathToString(final String path, final String separator) {
+<span class="nc" id="L673">        List&lt;String&gt; ret = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L674">        StringTokenizer st = new StringTokenizer(path, separator);</span>
+<span class="nc bnc" id="L675" title="All 2 branches missed.">        while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L676">            ret.add(st.nextToken());</span>
+        }
+<span class="nc" id="L678">        return ret.toArray(new String[0]);</span>
+    }
+
+    /**
+     * Returns dependency information on these two files. If src has been modified later than target, it returns true.
+     * If target doesn't exist, it likewise returns true. Otherwise, target is newer than src and is not out of date,
+     * thus the method returns false. It also returns false if the src file doesn't even exist, since how could the
+     * target then be out of date.
+     *
+     * @param src the original file
+     * @param target the file being compared against
+     * @param granularity the amount in seconds of slack we will give in determining out of dateness
+     * @return whether the target is out of date
+     */
+    public static boolean isOutOfDate(final File src, final File target, final int granularity) {
+<span class="nc bnc" id="L693" title="All 2 branches missed.">        if (!src.exists()) {</span>
+<span class="nc" id="L694">            return false;</span>
+        }
+<span class="nc bnc" id="L696" title="All 2 branches missed.">        if (!target.exists()) {</span>
+<span class="nc" id="L697">            return true;</span>
+        }
+<span class="nc bnc" id="L699" title="All 2 branches missed.">        return (src.lastModified() - granularity) &gt; target.lastModified();</span>
+    }
+
+    /**
+     * &quot;Flattens&quot; a string by removing all whitespace (space, tab, linefeed, carriage return, and formfeed). This uses
+     * StringTokenizer and the default set of tokens as documented in the single argument constructor.
+     *
+     * @param input a String to remove all whitespace.
+     * @return a String that has had all whitespace removed.
+     */
+    public static String removeWhitespace(final String input) {
+<span class="nc" id="L710">        StringBuilder result = new StringBuilder();</span>
+<span class="nc bnc" id="L711" title="All 2 branches missed.">        if (input != null) {</span>
+<span class="nc" id="L712">            StringTokenizer st = new StringTokenizer(input);</span>
+<span class="nc bnc" id="L713" title="All 2 branches missed.">            while (st.hasMoreTokens()) {</span>
+<span class="nc" id="L714">                result.append(st.nextToken());</span>
+            }
+        }
+<span class="nc" id="L717">        return result.toString();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

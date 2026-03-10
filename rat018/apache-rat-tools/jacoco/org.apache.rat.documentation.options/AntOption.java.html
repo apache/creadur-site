@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AntOption.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Tools</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.documentation.options</a> &gt; <span class="el_source">AntOption.java</span></div><h1>AntOption.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.documentation.options;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
+import org.apache.commons.text.WordUtils;
+import org.apache.rat.OptionCollection;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.utils.CasedString;
+
+import static java.lang.String.format;
+
+/**
+ * A class that wraps the CLI option and provides Ant specific values.
+ */
+public class AntOption extends AbstractOption {
+
+    /**
+     * The filter to filter out CLI options that Ant does not support.
+     */
+    private static final Predicate&lt;Option&gt; ANT_FILTER;
+
+    /**
+     * The list of Options that are not supported by Ant.
+     */
+<span class="fc" id="L58">    private static final List&lt;Option&gt; UNSUPPORTED_LIST = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * The mapping of option to the implementation option in Ant.
+     */
+<span class="fc" id="L63">    private static final Map&lt;Option, Option&gt; ANT_CONVERSION_MAP = new HashMap&lt;&gt;();</span>
+
+    /**
+     * The list of example patterns for various classes.
+     */
+<span class="fc" id="L68">    private static final Map&lt;OptionCollection.ArgumentType, BuildType&gt; BUILD_TYPE_MAP = new HashMap&lt;&gt;();</span>
+
+    /** The list of attribute types. */
+<span class="fc" id="L71">    private static final List&lt;Class&lt;?&gt;&gt; ATTRIBUTE_TYPES = new ArrayList&lt;&gt;();</span>
+    /** A mapping of external name to internal name if not standard. */
+<span class="fc" id="L73">    private static final Map&lt;String, String&gt; RENAME_MAP = new HashMap&lt;&gt;();</span>
+
+    /** Attributes that are required for example data. */
+<span class="fc" id="L76">    private static final Map&lt;String, Map&lt;String, String&gt;&gt; REQUIRED_ATTRIBUTES = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Adds a mapping from the specified Arg to the Arg to be used for generation.
+     * @param arg the arg to map.
+     * @param actualArg the Arg to map {@code arg} to.
+     */
+    private static void updateConversionMap(final Arg arg, final Arg actualArg) {
+<span class="fc" id="L84">        Option mapTo = actualArg.option();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (Option option : arg.group().getOptions()) {</span>
+<span class="pc bpc" id="L86" title="1 of 4 branches missed.">            if (!option.equals(mapTo) &amp;&amp; !option.isDeprecated()) {</span>
+<span class="fc" id="L87">                ANT_CONVERSION_MAP.put(option, mapTo);</span>
+            }
+<span class="fc" id="L89">        }</span>
+<span class="fc" id="L90">    }</span>
+
+    static {
+<span class="fc" id="L93">        RENAME_MAP.put(&quot;addLicense&quot;, &quot;add-license&quot;);</span>
+<span class="fc" id="L94">        ATTRIBUTE_TYPES.add(String.class);</span>
+<span class="fc" id="L95">        ATTRIBUTE_TYPES.add(String[].class);</span>
+<span class="fc" id="L96">        ATTRIBUTE_TYPES.add(Integer.class);</span>
+<span class="fc" id="L97">        ATTRIBUTE_TYPES.add(Long.class);</span>
+<span class="fc" id="L98">        ATTRIBUTE_TYPES.add(File.class);</span>
+<span class="fc" id="L99">        Arg.getOptions().getOptions().stream().filter(o -&gt; Objects.isNull(o.getLongOpt())).forEach(UNSUPPORTED_LIST::add);</span>
+<span class="fc" id="L100">        UNSUPPORTED_LIST.addAll(Arg.LOG_LEVEL.group().getOptions());</span>
+<span class="fc" id="L101">        UNSUPPORTED_LIST.addAll(Arg.DIR.group().getOptions());</span>
+<span class="fc" id="L102">        UNSUPPORTED_LIST.add(OptionCollection.HELP);</span>
+<span class="fc" id="L103">        UNSUPPORTED_LIST.addAll(Arg.SOURCE.group().getOptions());</span>
+<span class="fc" id="L104">        updateConversionMap(Arg.LICENSES_APPROVED_FILE, Arg.LICENSES_APPROVED);</span>
+<span class="fc" id="L105">        updateConversionMap(Arg.LICENSES_DENIED_FILE, Arg.LICENSES_DENIED);</span>
+<span class="fc" id="L106">        updateConversionMap(Arg.FAMILIES_APPROVED_FILE, Arg.FAMILIES_APPROVED);</span>
+<span class="fc" id="L107">        updateConversionMap(Arg.FAMILIES_DENIED_FILE, Arg.FAMILIES_DENIED);</span>
+<span class="fc" id="L108">        updateConversionMap(Arg.INCLUDE_FILE, Arg.INCLUDE);</span>
+<span class="fc" id="L109">        updateConversionMap(Arg.INCLUDE_STD, Arg.INCLUDE);</span>
+<span class="fc" id="L110">        updateConversionMap(Arg.EXCLUDE_FILE, Arg.EXCLUDE);</span>
+<span class="fc" id="L111">        updateConversionMap(Arg.EXCLUDE_STD, Arg.EXCLUDE);</span>
+
+        /*
+         * Create the BuildTypes for the Argument types.
+         */
+        BuildType buildType;
+<span class="fc bfc" id="L117" title="All 2 branches covered.">        for (OptionCollection.ArgumentType type : OptionCollection.ArgumentType.values()) {</span>
+<span class="fc bfc" id="L118" title="All 7 branches covered.">            switch (type) {</span>
+                case FILE:
+                case DIRORARCHIVE:
+<span class="fc" id="L121">                    buildType = new BuildType(type, &quot;filename&quot;) {</span>
+                        @Override
+                        protected String getMultipleFormat(final AntOption antOption) {
+<span class="fc" id="L124">                            return &quot;  &lt;fileset file='%s' /&gt;\n&quot;;</span>
+                        }
+                    };
+<span class="fc" id="L127">                    BUILD_TYPE_MAP.put(type, buildType);</span>
+<span class="fc" id="L128">                    break;</span>
+                case NONE:
+<span class="fc" id="L130">                    buildType = new BuildType(type, &quot;&quot;);</span>
+<span class="fc" id="L131">                    BUILD_TYPE_MAP.put(type, buildType);</span>
+<span class="fc" id="L132">                    break;</span>
+                case COUNTERPATTERN:
+<span class="fc" id="L134">                    buildType = new BuildType(type, &quot;cntr&quot;);</span>
+<span class="fc" id="L135">                    BUILD_TYPE_MAP.put(type, buildType);</span>
+<span class="fc" id="L136">                    break;</span>
+                case EXPRESSION:
+<span class="fc" id="L138">                    buildType = new BuildType(type, &quot;expr&quot;);</span>
+<span class="fc" id="L139">                    BUILD_TYPE_MAP.put(type, buildType);</span>
+<span class="fc" id="L140">                    break;</span>
+                case STANDARDCOLLECTION:
+<span class="fc" id="L142">                    buildType = new BuildType(type, &quot;std&quot;);</span>
+<span class="fc" id="L143">                    BUILD_TYPE_MAP.put(type, buildType);</span>
+<span class="fc" id="L144">                    break;</span>
+                case LICENSEID:
+                case FAMILYID:
+<span class="fc" id="L147">                    buildType = new BuildType(type, &quot;lst&quot;);</span>
+<span class="fc" id="L148">                    BUILD_TYPE_MAP.put(type, buildType);</span>
+<span class="fc" id="L149">                    break;</span>
+                default:
+<span class="fc" id="L151">                    buildType = new BuildType(type, type.getDisplayName()) {</span>
+                        protected String getMethodFormat(final AntOption antOption) {
+<span class="nc" id="L153">                            return String.format(&quot;&lt;%1$s&gt;%%s&lt;/%1$s&gt;%n&quot;, WordUtils.uncapitalize(antOption.getArgName()));</span>
+                        }
+                    };
+<span class="fc" id="L156">                    BUILD_TYPE_MAP.put(type, buildType);</span>
+            }
+        }
+<span class="fc" id="L159">        Set&lt;Option&gt; filteredOptions = getFilteredOptions();</span>
+<span class="pc bpc" id="L160" title="1 of 4 branches missed.">        ANT_FILTER = option -&gt; !(filteredOptions.contains(option) || option.getLongOpt() == null);</span>
+
+<span class="fc" id="L162">        Map&lt;String, String&gt; attributes = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L163">        attributes.put(&quot;editLicense&quot;, &quot;true&quot;);</span>
+<span class="fc" id="L164">        REQUIRED_ATTRIBUTES.put(&quot;copyright&quot;, attributes);</span>
+<span class="fc" id="L165">        REQUIRED_ATTRIBUTES.put(&quot;editCopyright&quot;, attributes);</span>
+<span class="fc" id="L166">        REQUIRED_ATTRIBUTES.put(&quot;force&quot;, attributes);</span>
+<span class="fc" id="L167">        REQUIRED_ATTRIBUTES.put(&quot;editOverwrite&quot;, attributes);</span>
+<span class="fc" id="L168">    }</span>
+
+    /**
+     * Gets the list of all available Ant options.
+     * @return the list of all available Ant options.
+     */
+    public static List&lt;AntOption&gt; getAntOptions() {
+<span class="fc" id="L175">        return Arg.getOptions().getOptions().stream().filter(ANT_FILTER).map(AntOption::new)</span>
+<span class="fc" id="L176">                .collect(Collectors.toList());</span>
+    }
+    /**
+     * Gets the list of unsupported options.
+     * @return the list of unsupported options.
+     */
+    public static List&lt;Option&gt; getUnsupportedOptions() {
+<span class="fc" id="L183">        return Collections.unmodifiableList(UNSUPPORTED_LIST);</span>
+    }
+
+    /**
+     * Gets the set of options that are not supported by Ant either by not being supported or
+     * by being converted to another argument.
+     * @return The set of options that are not supported by Ant.
+     */
+    public static Set&lt;Option&gt; getFilteredOptions() {
+<span class="fc" id="L192">        HashSet&lt;Option&gt; filteredOptions = new HashSet&lt;&gt;(UNSUPPORTED_LIST);</span>
+<span class="fc" id="L193">        filteredOptions.addAll(ANT_CONVERSION_MAP.keySet());</span>
+<span class="fc" id="L194">        return filteredOptions;</span>
+    }
+
+    public static Map&lt;String, String&gt; getRenameMap() {
+<span class="fc" id="L198">        return Collections.unmodifiableMap(RENAME_MAP);</span>
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param option the option to wrap.
+     */
+    public AntOption(final Option option) {
+<span class="fc" id="L207">        super(option, createName(option));</span>
+<span class="fc" id="L208">    }</span>
+
+    public static String createName(final Option option) {
+<span class="fc" id="L211">        String name = option.getLongOpt();</span>
+<span class="fc" id="L212">        name = StringUtils.defaultIfEmpty(RENAME_MAP.get(name), name).toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L213">        return new CasedString(CasedString.StringCase.KEBAB, name).toCase(CasedString.StringCase.CAMEL);</span>
+    }
+
+    /**
+     * Returns {@code true} if the option should be an attribute of the &amp;lt;rat:report&amp;gt; element.
+     *
+     * @return {@code true} if the option should be an attribute of the &amp;lt;rat:report&amp;gt; element.
+     */
+    public boolean isAttribute() {
+<span class="fc bfc" id="L222" title="All 6 branches covered.">        return (!option.hasArg() || option.getArgs() == 1) &amp;&amp; convertedFrom().isEmpty()</span>
+<span class="pc bpc" id="L223" title="1 of 2 branches missed.">                &amp;&amp; ATTRIBUTE_TYPES.contains(option.getType());</span>
+    }
+
+    /**
+     * Returns {@code true} if the option should be a child element of the &amp;lt;rat:report&amp;gt; element.
+     *
+     * @return {@code true} if the option should be a child element of the &amp;lt;rat:report&amp;gt; element.
+     */
+    public boolean isElement() {
+<span class="nc bnc" id="L232" title="All 2 branches missed.">        return !isAttribute();</span>
+    }
+
+    /**
+     * If this option is converted to another option return that option otherwise
+     * return this option.
+     * @return the converted option.
+     */
+    public AntOption getActualAntOption() {
+<span class="fc" id="L241">        Option opt = ANT_CONVERSION_MAP.get(this.option);</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        return opt == null ? this : new AntOption(opt);</span>
+    }
+
+    /**
+     * Gets the set of options that are mapped to this option.
+     * @return the set of options that are mapped to this option.
+     */
+    public Set&lt;Option&gt; convertedFrom() {
+<span class="fc" id="L250">        return ANT_CONVERSION_MAP.entrySet().stream().filter(e -&gt; e.getValue().equals(option))</span>
+<span class="fc" id="L251">                .map(Map.Entry::getKey)</span>
+<span class="fc" id="L252">                .collect(Collectors.toSet());</span>
+    }
+
+    @Override
+    public String getText() {
+<span class="nc" id="L257">        return cleanupName(option);</span>
+    }
+
+    protected String cleanupName(final Option option) {
+<span class="fc" id="L261">        AntOption antOption = new AntOption(option);</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">        String fmt = antOption.isAttribute() ? &quot;%s attribute&quot; : &quot;&lt;%s&gt;&quot;;</span>
+<span class="fc" id="L263">        return format(fmt, createName(option));</span>
+    }
+
+    /**
+     * Get the method comment for this option.
+     *
+     * @param addParam if {@code true} the param annotation is added.
+     * @return the Comment block for the function.
+     */
+    public String getComment(final boolean addParam) {
+<span class="fc" id="L273">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L274">        String desc = getDescription();</span>
+<span class="pc bpc" id="L275" title="1 of 2 branches missed.">        if (desc == null) {</span>
+<span class="nc" id="L276">            throw new IllegalStateException(format(&quot;Description for %s may not be null&quot;, getName()));</span>
+        }
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">        if (!desc.contains(&quot;.&quot;)) {</span>
+<span class="nc" id="L279">            throw new IllegalStateException(format(&quot;First sentence of description for %s must end with a '.'&quot;, getName()));</span>
+        }
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (addParam) {</span>
+            String arg;
+<span class="fc bfc" id="L283" title="All 2 branches covered.">            if (option.hasArg()) {</span>
+<span class="fc" id="L284">                arg = desc.substring(desc.indexOf(&quot; &quot;) + 1, desc.indexOf(&quot;.&quot;) + 1);</span>
+<span class="fc" id="L285">                arg = WordUtils.capitalize(arg.substring(0, 1)) + arg.substring(1);</span>
+            } else {
+<span class="fc" id="L287">                arg = &quot;The state&quot;;</span>
+            }
+<span class="fc bfc" id="L289" title="All 2 branches covered.">            if (option.getArgName() != null) {</span>
+<span class="fc" id="L290">                Supplier&lt;String&gt; sup = OptionCollection.getArgumentTypes().get(option.getArgName());</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">                if (sup == null) {</span>
+<span class="nc" id="L292">                    throw new IllegalStateException(format(&quot;Argument type %s must be in OptionCollection.ARGUMENT_TYPES&quot;, option.getArgName()));</span>
+                }
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">                desc = format(&quot;%s Argument%s should be %s%s. (See Argument Types for clarification)&quot;, desc, option.hasArgs() ? &quot;s&quot; : &quot;&quot;,</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">                        option.hasArgs() ? &quot;&quot; : &quot;a &quot;, option.getArgName());</span>
+            }
+<span class="fc" id="L297">            sb.append(format(&quot;    /**%n     * %s%n     * @param %s %s%n&quot;, StringEscapeUtils.escapeHtml4(desc), getName(),</span>
+<span class="fc" id="L298">                    StringEscapeUtils.escapeHtml4(arg)));</span>
+<span class="fc" id="L299">        } else {</span>
+<span class="fc" id="L300">            sb.append(format(&quot;    /**%n     * %s%n&quot;, StringEscapeUtils.escapeHtml4(desc)));</span>
+        }
+<span class="fc bfc" id="L302" title="All 2 branches covered.">        if (option.isDeprecated()) {</span>
+<span class="fc" id="L303">            sb.append(format(&quot;     * @deprecated %s%n&quot;, StringEscapeUtils.escapeHtml4(getDeprecated())));</span>
+        }
+<span class="fc" id="L305">        return sb.append(format(&quot;     */%n&quot;)).toString();</span>
+    }
+
+    /**
+     * Get the signature of the attribute function.
+     *
+     * @return the signature of the attribute function.
+     */
+    public String getAttributeFunctionName() {
+<span class="fc" id="L314">        return &quot;set&quot; +</span>
+<span class="fc" id="L315">                WordUtils.capitalize(name) +</span>
+<span class="fc bfc" id="L316" title="All 2 branches covered.">                (option.hasArg() ? &quot;(String &quot; : &quot;(boolean &quot;) +</span>
+                name +
+                &quot;)&quot;;
+    }
+
+    @Override
+    public String getExample() {
+<span class="fc" id="L323">        return new ExampleGenerator().getExample();</span>
+    }
+
+    /**
+     * A mapping of data type of XML format.
+     */
+    private static class BuildType {
+        /** The argument type associated with their build type */
+        private final OptionCollection.ArgumentType type;
+        /** The configuration tag for this build type */
+        private final String tag;
+
+        /**
+         * The constructor for the build type.
+         * @param type the ArgumentType as specified in the OptionCollection.
+         * @param tag the XML tag for this data type.
+         */
+<span class="fc" id="L340">        BuildType(final OptionCollection.ArgumentType type, final String tag) {</span>
+<span class="fc" id="L341">            this.type = type;</span>
+<span class="fc" id="L342">            this.tag = tag;</span>
+<span class="fc" id="L343">        }</span>
+
+        /**
+         * Returns the format used when multiple arguments are expected by an Ant option.
+         * @param antOption the Ant option to check.
+         * @return the format used for multiple arguments.
+         */
+        protected String getMultipleFormat(final AntOption antOption) {
+<span class="fc" id="L351">            return String.format(&quot;&lt;%1$s&gt;%%s&lt;/%1$s&gt;%n&quot;, tag);</span>
+        }
+
+        /**
+         * Gets the method based on how many arguments an Ant option requires.
+         * @param antOption the Ant option to check.
+         * @return the method format for the option.
+         */
+        protected String getMethodFormat(final AntOption antOption) {
+<span class="fc bfc" id="L360" title="All 2 branches covered.">            return antOption.hasArgs() ? getMultipleFormat(antOption) : String.format(&quot;&lt;%1$s&gt;%%s&lt;/%1$s&gt;%n&quot;, tag);</span>
+        }
+
+        /**
+         * Gets a string comprising the Ant XML pattern for this data type and the number of arguments expected by the Ant option.
+         * @param delegateOption the Ant option that the call is delegated to.
+         * @param antOption the actual ant option.
+         * @param data the data for the actual ant option.
+         * @return the Ant XML pattern for this data type.
+         */
+        public String getPattern(final AntOption delegateOption, final AntOption antOption, final String data) {
+<span class="fc" id="L371">            String fmt = getMethodFormat(antOption);</span>
+<span class="pc bpc" id="L372" title="1 of 2 branches missed.">            String value = data == null ? WordUtils.uncapitalize(antOption.getArgName()) : data;</span>
+<span class="fc" id="L373">            String inner = format(fmt, value);</span>
+<span class="fc" id="L374">            return format(&quot;&lt;%1$s&gt;%2$s&lt;/%1$s&gt;%n&quot;, delegateOption.getName(), inner);</span>
+        }
+    }
+
+    /**
+     * An example code generator for this AntOption.
+     */
+    public class ExampleGenerator {
+
+        /**
+         * The constructor.
+         */
+<span class="fc" id="L386">        public ExampleGenerator() {</span>
+<span class="fc" id="L387">        }</span>
+
+        /**
+         * Gets an example Ant XML report call using ant option.
+         * @return the example of this ant option.
+         */
+        String getExample() {
+<span class="fc" id="L394">                return getExample(&quot;data&quot;, REQUIRED_ATTRIBUTES.get(getName()), null);</span>
+        }
+
+        /**
+         * Gets an example Ant XML report call using ant option with the specified attributes and child elements.
+         * @param data The data value for this option.
+         * @param attributes A map of attribute keys and values.
+         * @param childElements a list of child elements for the example
+         * @return example Ant XML report call using ant option with the specified attributes and child elements.
+         */
+        public String getExample(final String data, final Map&lt;String, String&gt; attributes, final List&lt;String&gt; childElements) {
+<span class="fc bfc" id="L405" title="All 2 branches covered.">            if (UNSUPPORTED_LIST.contains(option)) {</span>
+<span class="fc" id="L406">                return &quot;-- not supported --&quot;;</span>
+            }
+<span class="fc" id="L408">            return &quot;&lt;rat:report&quot; +</span>
+<span class="fc" id="L409">                    getExampleAttributes(data, attributes) +</span>
+                    &quot;&gt; \n&quot; +
+<span class="fc" id="L411">                    getChildElements(data, childElements) +</span>
+                    &quot;&lt;/rat:report&gt;\n&quot;;
+        }
+
+        /**
+         * Creates a string comprising the attributes for the Ant XML report call.
+         * @param data The data value for this option.
+         * @param attributes A map of attribute keys and values.
+         * @return a string comprising all the attribute keys and values for the Ant XML report element.
+         */
+        public String getExampleAttributes(final String data, final Map&lt;String, String&gt; attributes) {
+<span class="fc" id="L422">            AntOption actualOption = getActualAntOption();</span>
+<span class="fc" id="L423">            StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L424" title="All 2 branches covered.">            if (attributes != null) {</span>
+<span class="fc" id="L425">                attributes.forEach((k, v) -&gt; result.append(format(&quot; %s=\&quot;%s\&quot;&quot;, k, v)));</span>
+            }
+<span class="fc bfc" id="L427" title="All 2 branches covered.">            if (actualOption.isAttribute()) {</span>
+<span class="fc bfc" id="L428" title="All 2 branches covered.">                result.append(format(&quot; %s=\&quot;%s\&quot;&quot;, actualOption.getName(), actualOption.hasArg() ? data : &quot;true&quot;));</span>
+            }
+<span class="fc" id="L430">            return result.toString();</span>
+        }
+
+        /**
+         * Creates a string comprising the child elements for the Ant XML report call.
+         * @param data the data for this option.
+         * @param childElements additional child elements.
+         * @return A string comprising the child elements for the Ant XML report call.
+         */
+        public String getChildElements(final String data, final List&lt;String&gt; childElements) {
+<span class="fc" id="L440">            AntOption baseOption = AntOption.this;</span>
+<span class="fc" id="L441">            AntOption actualOption = getActualAntOption();</span>
+<span class="fc" id="L442">            StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L443" title="All 2 branches covered.">            if (!actualOption.isAttribute()) {</span>
+<span class="fc" id="L444">                String inner = BUILD_TYPE_MAP.get(getArgType()).getPattern(actualOption, baseOption, data);</span>
+<span class="fc" id="L445">                result.append(inner);</span>
+            }
+<span class="pc bpc" id="L447" title="1 of 2 branches missed.">            if (childElements != null) {</span>
+<span class="nc" id="L448">                childElements.forEach(x -&gt; result.append(x).append(&quot;\n&quot;));</span>
+            }
+<span class="fc" id="L450">            return result.toString();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
