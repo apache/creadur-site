@@ -138,6 +138,7 @@ In order to prepare release documentation you may want to start the webpage loca
 ```
 $ linkchecker http://localhost:8888/rat
 $ linkchecker http://localhost:8888/rat100
+$ linkchecker --check-extern [http://localhost:8888/rat100](https://creadur.apache.org/rat100/)
 ```
 
 to look for broken links automatically.
