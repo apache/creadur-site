@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MetaData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.api</a> &gt; <span class="el_source">MetaData.java</span></div><h1>MetaData.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.api;
+
+import java.nio.charset.Charset;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+import org.apache.rat.license.ILicense;
+import org.apache.rat.utils.DefaultLog;
+import org.apache.tika.mime.MediaType;
+
+/**
+ * Data about the document under test.
+ */
+public class MetaData {
+
+    /** The list of matched licenses */
+    private final SortedSet&lt;ILicense&gt; matchedLicenses;
+    /** The list of License Family Categories that are approved */
+    private Predicate&lt;ILicense&gt; approvalPredicate;
+    /** The charset for this document */
+    private Charset charset;
+    /** The media type for this document */
+    private MediaType mediaType;
+    /** The document type for this document */
+    private Document.Type documentType;
+    /** The flag for directory types */
+    private boolean isDirectory;
+
+    /**
+     * Create metadata without a content type.
+     */
+<span class="fc" id="L52">    public MetaData() {</span>
+<span class="fc" id="L53">        this.matchedLicenses = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L54">    }</span>
+
+    /**
+     * Gets the charset for the document. If the charset was not set will return the system default charset.
+     * @return the charset for the document
+     */
+    public Charset getCharset() {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        return charset == null ? Charset.defaultCharset() : charset;</span>
+    }
+
+    /**
+     * Sets the charset for the document. If set to {@code null} the system default charset will be used.
+     * @param charset the charset to use.
+     */
+    public void setCharset(final Charset charset) {
+<span class="fc" id="L69">        this.charset = charset;</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * Returns {@code true} if {@link #setCharset} has been called.
+     * @return {@code true} if {@link #setCharset} has been called.
+     */
+    public boolean hasCharset() {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return charset != null;</span>
+    }
+
+    /**
+     * Gets the defined media type.
+     * @return the media type.
+     */
+    public MediaType getMediaType() {
+<span class="fc" id="L85">        return mediaType;</span>
+    }
+
+    /**
+     * Sets the defined media type.
+     * @param mediaType the media type.
+     */
+    public void setMediaType(final MediaType mediaType) {
+<span class="fc" id="L93">        this.mediaType = mediaType;</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Determines if a matching license has been detected.
+     * @return true if there is a matching license.
+     */
+    public boolean detectedLicense() {
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        return !matchedLicenses.isEmpty();</span>
+    }
+
+    /**
+     * Gets the predicate to filter approved licenses.
+     * @return The predicate to validate licenses.
+     * @throws IllegalStateException if no predicate was set.
+     */
+    private Predicate&lt;ILicense&gt; getApprovalPredicate() {
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">        if (approvalPredicate == null) {</span>
+<span class="nc" id="L111">            DefaultLog.getInstance().error(&quot;Approval predicate was not set.&quot;);</span>
+<span class="nc" id="L112">            throw new IllegalStateException(&quot;Approval predicate was not set.&quot;);</span>
+        }
+<span class="fc" id="L114">        return approvalPredicate;</span>
+    }
+
+    /**
+     * Sets the set of approved licenses.
+     * @param approvalPredicate the predicate to validate licenses.
+     */
+    public void setApprovalPredicate(final Predicate&lt;ILicense&gt; approvalPredicate) {
+<span class="fc" id="L122">        this.approvalPredicate = approvalPredicate;</span>
+<span class="fc" id="L123">    }</span>
+
+    /**
+     * Gets the stream of licenses that have been matched.
+     * @return the stream of licenses that have been matched.
+     */
+    public Stream&lt;ILicense&gt; licenses() {
+<span class="fc" id="L130">        return matchedLicenses.stream();</span>
+    }
+
+    /**
+     * Gets the stream of approved licenses that have been matched.
+     * @return the stream of approved licenses that have been matched.
+     */
+    public Stream&lt;ILicense&gt; approvedLicenses() {
+<span class="fc" id="L138">        return licenses().filter(this::isApproved);</span>
+    }
+
+    /**
+     * Determine if the license is an approved license.
+     * @param license the license to check.
+     * @return {@code true} if the license is in the list of approved licenses, {@code false} otherwise.
+     */
+    public boolean isApproved(final ILicense license) {
+<span class="fc" id="L147">        return getApprovalPredicate().test(license);</span>
+    }
+
+    /**
+     * Gets the stream of unapproved licenses that have been matched.
+     * @return the stream of unapproved licenses that have been matched.
+     */
+    public Stream&lt;ILicense&gt; unapprovedLicenses() {
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        return licenses().filter(lic -&gt; !isApproved(lic));</span>
+    }
+
+    /**
+     * Sets the document type.
+     * @param type the document type for the document being recorded.
+     */
+    public void setDocumentType(final Document.Type type) {
+<span class="fc" id="L163">        this.documentType = type;</span>
+<span class="fc" id="L164">    }</span>
+
+    /**
+     * Set the directory flag.
+     * @param state the state to set the directory flag in.
+     */
+    public void setIsDirectory(final boolean state) {
+<span class="fc" id="L171">        this.isDirectory = state;</span>
+<span class="fc" id="L172">    }</span>
+
+    /**
+     * Return {@code true} if the directory flag was set.
+     * @return the directory flag.
+     */
+    public boolean isDirectory() {
+<span class="fc" id="L179">        return isDirectory;</span>
+    }
+
+    /**
+     * Gets the document type.
+     * @return the document type of the document that was recorded.
+     */
+    public Document.Type getDocumentType() {
+<span class="fc" id="L187">        return this.documentType;</span>
+    }
+
+    /**
+     * Add the license information to the metadata.
+     * @param license the license to add metadata for.
+     */
+    public void reportOnLicense(final ILicense license) {
+<span class="fc" id="L195">        this.matchedLicenses.add(license);</span>
+<span class="fc" id="L196">    }</span>
+
+    /**
+     * Remove matched licenses based on a predicate. Will remove licenses for which the predicate
+     * returns true.
+     * @param filter the predicate to use.
+     */
+    public void removeLicenses(final Predicate&lt;ILicense&gt; filter) {
+<span class="fc" id="L204">        this.matchedLicenses.removeIf(filter);</span>
+<span class="fc" id="L205">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L209">        return String.format(&quot;MetaData[%s license, %s approved]&quot;, matchedLicenses.size(),</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                approvalPredicate == null ? &quot;unknown&quot; : matchedLicenses.stream().filter(getApprovalPredicate()).count());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

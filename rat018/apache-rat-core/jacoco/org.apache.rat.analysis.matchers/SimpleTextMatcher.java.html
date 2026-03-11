@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SimpleTextMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.analysis.matchers</a> &gt; <span class="el_source">SimpleTextMatcher.java</span></div><h1>SimpleTextMatcher.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.analysis.matchers;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.rat.analysis.IHeaders;
+import org.apache.rat.config.parameters.ComponentType;
+import org.apache.rat.config.parameters.ConfigComponent;
+
+/**
+ * A simple text matching IHeaderMatcher implementation.
+ */
+@ConfigComponent(type = ComponentType.MATCHER, name = &quot;text&quot;, desc = &quot;Matches the enclosed text&quot;)
+public class SimpleTextMatcher extends AbstractHeaderMatcher {
+    /**
+     * The text to match.
+     */
+    @ConfigComponent(type = ComponentType.PARAMETER, name = &quot;simpleText&quot;, desc = &quot;The text to match&quot;, required = true)
+    private final String simpleText;
+
+    /**
+     * Constructs the simple text matcher for the simple string.
+     *
+     * @param simpleText The pattern to match. Will only match a single line from
+     * the input stream.
+     */
+    public SimpleTextMatcher(final String simpleText) {
+<span class="fc" id="L44">        this(null, simpleText);</span>
+<span class="fc" id="L45">    }</span>
+
+    /**
+     * Constructs the simple text matcher for the simple string.
+     *
+     * @param id The id for this matcher.
+     * @param simpleText The pattern to match.
+     */
+    public SimpleTextMatcher(final String id, final String simpleText) {
+<span class="fc" id="L54">        super(id);</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        if (StringUtils.isBlank(simpleText)) {</span>
+<span class="nc" id="L56">            throw new IllegalArgumentException(&quot;Simple text may not be null, empty or blank&quot;);</span>
+        }
+<span class="fc" id="L58">        this.simpleText = simpleText;</span>
+<span class="fc" id="L59">    }</span>
+
+    public String getSimpleText() {
+<span class="fc" id="L62">        return this.simpleText;</span>
+    }
+
+    @Override
+    public boolean matches(final IHeaders headers) {
+<span class="fc" id="L67">        return headers.raw().contains(simpleText);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

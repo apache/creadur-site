@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Matcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Tools</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.documentation.velocity</a> &gt; <span class="el_source">Matcher.java</span></div><h1>Matcher.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.documentation.velocity;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.rat.analysis.IHeaderMatcher;
+import org.apache.rat.analysis.matchers.AbstractMatcherContainer;
+import org.apache.rat.config.parameters.ComponentType;
+import org.apache.rat.config.parameters.Description;
+import org.apache.rat.config.parameters.DescriptionBuilder;
+import org.apache.rat.configuration.XMLConfig;
+
+/**
+ * The Matcher representation for documentation.
+ */
+public class Matcher {
+    /**
+     * The description for this matcher.
+     */
+    private final Description desc;
+
+    /**
+     * The header matcher we are wrapping. May be {@code null}.
+     */
+    private final IHeaderMatcher self;
+
+    /**
+     * The description of the enclosed attribute. May be null.
+     */
+    private final Enclosed enclosed;
+
+    /**
+     * The set of attributes for this matcher.
+     */
+    private final Set&lt;Attribute&gt; attributes;
+
+    /**
+     * Copy constructor.
+     * @param matcher the matcher to copy.
+     */
+<span class="nc" id="L67">    Matcher(final Matcher matcher) {</span>
+<span class="nc" id="L68">        this.desc = matcher.desc;</span>
+<span class="nc" id="L69">        this.self = matcher.self;</span>
+<span class="nc" id="L70">        this.enclosed = matcher.enclosed;</span>
+<span class="nc" id="L71">        this.attributes = matcher.attributes;</span>
+<span class="nc" id="L72">    }</span>
+
+    /**
+     * Creates from a system Matcher.
+     * @param self the IHeaderMatcher to wrap.
+     */
+    Matcher(final IHeaderMatcher self) {
+<span class="nc" id="L79">        this(DescriptionBuilder.buildMap(self.getClass()), self);</span>
+<span class="nc" id="L80">    }</span>
+
+    /**
+     * Creates from a description and a system matcher.
+     * @param desc the description of the matcher.
+     * @param self the matcher to wrap. May be {@code null}.
+     */
+<span class="nc" id="L87">    Matcher(final Description desc, final IHeaderMatcher self) {</span>
+<span class="nc" id="L88">        Objects.requireNonNull(desc);</span>
+<span class="nc" id="L89">        this.desc = desc;</span>
+<span class="nc" id="L90">        this.self = self;</span>
+<span class="nc" id="L91">        Enclosed enclosed = null;</span>
+<span class="nc" id="L92">        attributes = new TreeSet&lt;&gt;(Comparator.comparing(Attribute::getName));</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        for (Description child : desc.childrenOfType(ComponentType.PARAMETER)) {</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (XMLConfig.isInlineNode(desc.getCommonName(), child.getCommonName())) {</span>
+<span class="nc" id="L95">                enclosed = new Enclosed(child);</span>
+            } else {
+<span class="nc" id="L97">                attributes.add(new Attribute(child));</span>
+            }
+<span class="nc" id="L99">        }</span>
+<span class="nc" id="L100">        this.enclosed = enclosed;</span>
+<span class="nc" id="L101">    }</span>
+
+    /**
+     * Get the name of the matcher type.
+     * @return the name of the matcher type.
+     */
+    public String getName() {
+<span class="nc" id="L108">        return desc.getCommonName();</span>
+    }
+
+    /**
+     * Gets the description of the matcher type.
+     * @return The description of the matcher type or an empty string.
+     */
+    public String getDescription() {
+<span class="nc" id="L116">        return StringUtils.defaultIfEmpty(desc.getDescription(), &quot;&quot;);</span>
+    }
+
+    /**
+     * If the matcher encloses another matcher return the definition of that enclosure.
+     * @return the description of the enclose matcher. May be {@code null}.
+     */
+    public Enclosed getEnclosed() {
+<span class="nc" id="L124">        return enclosed;</span>
+    }
+
+    /**
+     * Gets the attributes of this matcher.
+     * @return a collection of attributes for this matcher. May be empty but not {@code null}.
+     */
+    public Collection&lt;Attribute&gt; getAttributes() {
+<span class="nc" id="L132">        return attributes;</span>
+    }
+
+    /**
+     * Gets the direct children of this matcher.
+     * @return A collection of the direct children of this matcher. May be empty but not {@code null}.
+     */
+    Collection&lt;Matcher&gt; getChildren() {
+<span class="nc bnc" id="L140" title="All 6 branches missed.">        if (self != null &amp;&amp; enclosed != null &amp;&amp; IHeaderMatcher.class.equals(enclosed.desc.getChildType())) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">            if (self instanceof AbstractMatcherContainer matcherContainer) {</span>
+<span class="nc" id="L142">                return matcherContainer.getEnclosed().stream().map(Matcher::new).collect(Collectors.toList());</span>
+            }
+            try {
+<span class="nc" id="L145">                IHeaderMatcher matcher = (IHeaderMatcher) enclosed.desc.getter(self.getClass()).invoke(self);</span>
+<span class="nc" id="L146">                return Collections.singleton(new Matcher(matcher));</span>
+<span class="nc" id="L147">            } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {</span>
+<span class="nc" id="L148">                throw new RuntimeException(e);</span>
+            }
+        }
+<span class="nc" id="L151">        return Collections.emptyList();</span>
+    }
+
+    /**
+     * The description of an enclosed matcher.
+     */
+    public final class Enclosed {
+        /** The description for the enclosed item */
+        private final Description desc;
+
+        /**
+         * Constructor.
+         * @param desc the description of the enclosed matcher.
+         */
+<span class="nc" id="L165">        Enclosed(final Description desc) {</span>
+<span class="nc" id="L166">            this.desc = desc;</span>
+<span class="nc" id="L167">        }</span>
+
+        /**
+         * Gets the required flag.
+         * @return the word &quot;required&quot; or &quot;optional&quot; depending on the state of the required flag.
+         */
+        public String getRequired() {
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            return desc.isRequired() ? &quot;required&quot; : &quot;optional&quot;;</span>
+        }
+
+        /**
+         * Gets the phrase &quot;or more &quot; if the enclosed matcher may be multiple.
+         * @return the phrase &quot;or more &quot; or an empty string.
+         */
+        public String getCollection() {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">            return desc.isCollection() ? &quot;or more &quot; : &quot;&quot;;</span>
+        }
+
+        /**
+         * Get the type of the enclosed matcher.
+         * @return the type of the enclosed matcher.
+         */
+        public String getType() {
+<span class="nc" id="L190">            return desc.getChildType().getSimpleName();</span>
+        }
+
+        /**
+         * Gets the value of the enclosed matcher.
+         *  &lt;ul&gt;
+         *  &lt;li&gt;If the Matcher does not have an {@link IHeaderMatcher} defined this method returns {@code null}.&lt;/li&gt;
+         *  &lt;li&gt;If the value is a string it is normalized before being returned.&lt;/li&gt;
+         *  &lt;/ul&gt;
+         * @return the value of the enclosed matcher in the provided {@link IHeaderMatcher}.
+         * @see StringUtils#normalizeSpace(String)
+         */
+        public Object getValue() {
+<span class="nc bnc" id="L203" title="All 2 branches missed.">            if (self != null) {</span>
+                try {
+<span class="nc" id="L205">                    Object value = desc.getter(self.getClass()).invoke(self);</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">                    return value instanceof String ? StringUtils.normalizeSpace((String) value) : value;</span>
+<span class="nc" id="L207">                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {</span>
+<span class="nc" id="L208">                    throw new RuntimeException(e);</span>
+                }
+            }
+<span class="nc" id="L211">            return null;</span>
+        }
+        Class&lt;?&gt; getChildType() {
+<span class="nc" id="L214">            return desc.getChildType();</span>
+        }
+    }
+
+    /**
+     * The definition of an attribute.
+     */
+    public final class Attribute {
+        /**
+         * The description for the attribute.
+         */
+        private final Description description;
+
+        /**
+         * Constructor
+         * @param description the description for this attribute.
+         */
+<span class="nc" id="L231">        Attribute(final Description description) {</span>
+<span class="nc" id="L232">            this.description = description;</span>
+<span class="nc" id="L233">        }</span>
+
+        /**
+         * Gets the attribute name.
+         * @return the attribut name.
+         */
+        public String getName() {
+<span class="nc" id="L240">            return description.getCommonName();</span>
+        }
+
+        /**
+         * Gets the required flag.
+         * @return the word &quot;required&quot; or &quot;optional&quot; depending on the state of the required flag.
+         */
+        public String getRequired() {
+<span class="nc bnc" id="L248" title="All 2 branches missed.">            return description.isRequired() ? &quot;required&quot; : &quot;optional&quot;;</span>
+        }
+
+        /**
+         * Get the type of the attribute.
+         * @return the type of the enclosed matcher.
+         */
+        public String getType() {
+<span class="nc" id="L256">            return description.getChildType().getSimpleName();</span>
+        }
+
+        /**
+         * Gets the description of the attribute or an empty string.
+         * @return the description of the attribute or an empty string.
+         */
+        public String getDescription() {
+<span class="nc" id="L264">            return StringUtils.defaultIfEmpty(description.getDescription(), &quot;&quot;);</span>
+        }
+
+        /**
+         * Gets the value of the enclosed matcher.
+         * &lt;ul&gt;
+         * &lt;li&gt;If the Matcher does not have an {@link IHeaderMatcher} defined this method returns {@code null}.&lt;/li&gt;
+         * &lt;li&gt;If the value of the attribute (self) is {@code null}, this method returns {@code null}.&lt;/li&gt;
+         * &lt;li&gt;If the value is a string, it is normalized before being returned.&lt;/li&gt;
+         * &lt;li&gt;If the attribute is an &quot;id&quot; and the value is a UUID, {@code null} is returned.&lt;/li&gt;
+         * &lt;li&gt;otherwise, the string value is returned.&lt;/li&gt;
+         * &lt;/ul&gt;
+         * @return the value of the enclosed matcher in the provided {@link IHeaderMatcher}.
+         * @see StringUtils#normalizeSpace(String)
+         */
+        public String getValue() {
+<span class="nc bnc" id="L280" title="All 2 branches missed.">            if (self != null) {</span>
+                try {
+<span class="nc" id="L282">                    Object value = description.getter(self.getClass()).invoke(self);</span>
+<span class="nc bnc" id="L283" title="All 2 branches missed.">                    if (value != null) {</span>
+<span class="nc" id="L284">                        String result = value.toString();</span>
+<span class="nc bnc" id="L285" title="All 2 branches missed.">                        if (description.getCommonName().equals(&quot;id&quot;)) {</span>
+                            try {
+<span class="nc" id="L287">                                UUID.fromString(result);</span>
+<span class="nc" id="L288">                                return null;</span>
+<span class="nc" id="L289">                            } catch (IllegalArgumentException e) {</span>
+                                // do nothing.
+                            }
+                        }
+<span class="nc" id="L293">                        return result;</span>
+                    }
+<span class="nc" id="L295">                } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {</span>
+<span class="nc" id="L296">                    throw new RuntimeException(e);</span>
+<span class="nc" id="L297">                }</span>
+            }
+<span class="nc" id="L299">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

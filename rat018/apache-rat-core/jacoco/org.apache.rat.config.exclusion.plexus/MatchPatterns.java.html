@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MatchPatterns.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.config.exclusion.plexus</a> &gt; <span class="el_source">MatchPatterns.java</span></div><h1>MatchPatterns.java</h1><pre class="source lang-java linenums">package org.apache.rat.config.exclusion.plexus;
+
+/*
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@SuppressWarnings({&quot;checkstyle:RegexpSingleLine&quot;, &quot;checkstyle:JavadocVariable&quot;})
+/**
+ * A list of patterns to be matched
+ * &lt;p&gt;Based on code from plexus-utils.&lt;/p&gt;
+ *
+ * @author Kristian Rosenvold
+ */
+public final class MatchPatterns {
+    private final MatchPattern[] patterns;
+
+<span class="fc" id="L39">    private MatchPatterns(final MatchPattern[] patterns) {</span>
+<span class="fc" id="L40">        this.patterns = patterns;</span>
+<span class="fc" id="L41">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L45">        return Arrays.stream(patterns).map(MatchPattern::toString).collect(Collectors.toList()).toString();</span>
+    }
+
+    public String source() {
+<span class="nc" id="L49">        return Arrays.stream(patterns).map(MatchPattern::source).collect(Collectors.toList()).toString();</span>
+    }
+
+    public Iterable&lt;MatchPattern&gt; patterns() {
+<span class="fc" id="L53">        return Arrays.asList(patterns);</span>
+    }
+
+    /**
+     * &lt;p&gt;Checks these MatchPatterns against a specified string.&lt;/p&gt;
+     *
+     * &lt;p&gt;Uses far less string tokenization than any of the alternatives.&lt;/p&gt;
+     *
+     * @param name The name to look for
+     * @param isCaseSensitive If the comparison is case-sensitive
+     * @return true if any of the supplied patterns match
+     */
+    public boolean matches(final String name, final boolean isCaseSensitive) {
+<span class="fc" id="L66">        String[] tokenized = MatchPattern.tokenizePathToString(name, File.separator);</span>
+<span class="fc" id="L67">        return matches(name, tokenized, isCaseSensitive);</span>
+    }
+
+    public boolean matches(final String name, final String[] tokenizedName, final boolean isCaseSensitive) {
+<span class="fc" id="L71">        char[][] tokenizedNameChar = new char[tokenizedName.length][];</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        for (int i = 0; i &lt; tokenizedName.length; i++) {</span>
+<span class="fc" id="L73">            tokenizedNameChar[i] = tokenizedName[i].toCharArray();</span>
+        }
+<span class="fc" id="L75">        return matches(name, tokenizedNameChar, isCaseSensitive);</span>
+    }
+
+    public boolean matches(final String name, final char[][] tokenizedNameChar, final boolean isCaseSensitive) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        for (MatchPattern pattern : patterns) {</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">            if (pattern.matchPath(name, tokenizedNameChar, isCaseSensitive)) {</span>
+<span class="fc" id="L81">                return true;</span>
+            }
+        }
+<span class="fc" id="L84">        return false;</span>
+    }
+
+    public static MatchPatterns from(final String separator, final String... sources) {
+<span class="fc" id="L88">        final int length = sources.length;</span>
+<span class="fc" id="L89">        MatchPattern[] result = new MatchPattern[length];</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L91">            result[i] = new MatchPattern(sources[i], separator);</span>
+        }
+<span class="fc" id="L93">        return new MatchPatterns(result);</span>
+    }
+
+    public static MatchPatterns from(final String separator, final Iterable&lt;String&gt; strings) {
+<span class="fc" id="L97">        return new MatchPatterns(getMatchPatterns(separator, strings));</span>
+    }
+
+    private static MatchPattern[] getMatchPatterns(final String separator, final Iterable&lt;String&gt; items) {
+<span class="fc" id="L101">        List&lt;MatchPattern&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        for (String string : items) {</span>
+<span class="fc" id="L103">            result.add(new MatchPattern(string, separator));</span>
+<span class="fc" id="L104">        }</span>
+<span class="fc" id="L105">        return result.toArray(new MatchPattern[0]);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

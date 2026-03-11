@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XMLConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.configuration</a> &gt; <span class="el_source">XMLConfig.java</span></div><h1>XMLConfig.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.configuration;
+
+import java.util.Arrays;
+
+/**
+ * Configuration definitions for XMLConfiguration reader and writer.
+ */
+public final class XMLConfig {
+
+    /** id attribute name */
+    public static final String ATT_ID = &quot;id&quot;;
+    /** name attribute name */
+    public static final String ATT_NAME = &quot;name&quot;;
+    /** license reference attribute name */
+    public static final String ATT_LICENSE_REF = &quot;license_ref&quot;;
+    /** class name attribute name */
+    public static final String ATT_CLASS_NAME = &quot;class&quot;;
+    /** resource file name attribute name. */
+    public static final String ATT_RESOURCE = &quot;resource&quot;;
+    /** root of the configuration file */
+    public static final String ROOT = &quot;rat-config&quot;;
+    /** families element name */
+    public static final String FAMILIES = &quot;families&quot;;
+    /** licenses element name */
+    public static final String LICENSES = &quot;licenses&quot;;
+    /** license element name */
+    public static final String LICENSE = &quot;license&quot;;
+    /** approved element name */
+    public static final String APPROVED = &quot;approved&quot;;
+    /** family element name */
+    public static final String FAMILY = &quot;family&quot;;
+    /** note element name */
+    public static final String NOTE = &quot;note&quot;;
+    /** matchers element name */
+    public static final String MATCHERS = &quot;matchers&quot;;
+    /** matcher element name */
+    public static final String MATCHER = &quot;matcher&quot;;
+
+    /** License property names that should be children */
+<span class="fc" id="L58">    static final String[] LICENSE_CHILDREN = { NOTE, MATCHER };</span>
+    /**
+     * License property names that should not be displayed contents should be placed
+     * inline
+     */
+<span class="fc" id="L63">    static final String[] LICENSE_INLINE = { MATCHER };</span>
+
+    /**
+     * Matcher properties that should be directly inlined Entries are matcher node
+     * name / property name pairs. A matcher may only have one inline node and then
+     * only if there is no other non-property node.
+     */
+<span class="fc" id="L70">    static final String[][] INLINE_NODES = { { &quot;any&quot;, &quot;enclosed&quot; }, { &quot;all&quot;, &quot;enclosed&quot; }, { &quot;not&quot;, &quot;enclosed&quot; },</span>
+            { &quot;text&quot;, &quot;simpleText&quot; } };
+
+    private XMLConfig() {
+        // do not instantiate
+    }
+
+    /**
+     * Returns true if the specified child node should be placed inline in the XML
+     * document.
+     *
+     * @param parent the parent node name.
+     * @param child the child node name.
+     * @return true if the child should be inlined.
+     */
+    public static boolean isInlineNode(final String parent, final String child) {
+<span class="fc bfc" id="L86" title="All 4 branches covered.">        return Arrays.stream(INLINE_NODES).anyMatch(s -&gt; s[0].equals(parent) &amp;&amp; s[1].equals(child));</span>
+    }
+
+    /**
+     * Returns true if the child should be a child node of a license node, as
+     * opposed to an attribute of the license.
+     *
+     * @param child the name of the child node.
+     * @return true if the child should be a child node.
+     */
+    public static boolean isLicenseChild(final String child) {
+<span class="fc" id="L97">        return Arrays.asList(LICENSE_CHILDREN).contains(child);</span>
+    }
+
+    /**
+     * Return true if the child should be inlined in the parent node.
+     *
+     * @param child the name of the child node.
+     * @return true if the child should be inlined.
+     */
+    public static boolean isLicenseInline(final String child) {
+<span class="fc" id="L107">        return Arrays.asList(LICENSE_INLINE).contains(child);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

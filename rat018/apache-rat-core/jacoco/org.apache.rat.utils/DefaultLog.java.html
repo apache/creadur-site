@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultLog.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.utils</a> &gt; <span class="el_source">DefaultLog.java</span></div><h1>DefaultLog.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.utils;
+
+import org.apache.rat.api.EnvVar;
+
+/**
+ * A default implementation of Log that writes to {@code System.out} and {@code System.err}.
+ */
+public final class DefaultLog implements Log {
+    /**
+     * The instance of the default log.
+     */
+<span class="fc" id="L30">    private static Log instance = new DefaultLog();</span>
+
+    /**
+     * Retrieves the DefaultLog instance.
+     * @return the Default log instance.
+     */
+    public static Log getInstance() {
+<span class="fc" id="L37">        return instance;</span>
+    }
+
+    /**
+     * Sets the default log instance.
+     * If not set an instance of DefaultLog will be returned
+     * @param newInstance a Log to use as the default.
+     * @return the old instance.
+     */
+    public static Log setInstance(final Log newInstance) {
+<span class="fc" id="L47">        Log result = instance;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        instance = newInstance == null ? new DefaultLog() : newInstance;</span>
+<span class="fc" id="L49">        return result;</span>
+    }
+
+    /**
+     * Creates a new instance of the default log.
+     * @return A new instance of the default log.
+     */
+    public static Log createDefault() {
+<span class="nc" id="L57">        return new DefaultLog();</span>
+    }
+
+    /** The level at which we will write messages */
+    private Level level;
+
+<span class="fc" id="L63">    private DefaultLog() {</span>
+        try {
+<span class="pc bpc" id="L65" title="1 of 2 branches missed.">            level = EnvVar.RAT_DEFAULT_LOG_LEVEL.isSet() ?</span>
+<span class="pc" id="L66">                    Level.valueOf(EnvVar.RAT_DEFAULT_LOG_LEVEL.getValue().toUpperCase()) : Level.INFO;</span>
+<span class="nc" id="L67">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L68">            level = Level.INFO;</span>
+<span class="nc" id="L69">            log(Level.WARN, &quot;Invalid log level set in environment: &quot; + EnvVar.RAT_DEFAULT_LOG_LEVEL.getValue().toUpperCase(), e);</span>
+<span class="fc" id="L70">        }</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * Sets the level. Log messages below the specified level will
+     * not be written to the log.
+     * @param level the level to use when writing messages.
+     */
+    public void setLevel(final Level level) {
+<span class="fc" id="L79">        this.level = level;</span>
+<span class="fc" id="L80">    }</span>
+
+    /**
+     * Gets the level we are writing at.
+     * @return the level we are writing at.
+     */
+    public Level getLevel() {
+<span class="fc" id="L87">        return level;</span>
+    }
+
+    @Override
+    public void log(final Level level, final String msg) {
+<span class="fc bfc" id="L92" title="All 2 branches covered.">        if (isEnabled(level)) {</span>
+<span class="pc bpc" id="L93" title="1 of 3 branches missed.">            switch (level) {</span>
+                case DEBUG:
+                case INFO:
+                case WARN:
+<span class="fc" id="L97">                    System.out.format(&quot;%s: %s%n&quot;, level, msg);</span>
+<span class="fc" id="L98">                    break;</span>
+                case ERROR:
+<span class="fc" id="L100">                    System.err.format(&quot;%s: %s%n&quot;, level, msg);</span>
+<span class="fc" id="L101">                    break;</span>
+                case OFF:
+                default:
+                    break;
+            }
+        }
+<span class="fc" id="L107">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

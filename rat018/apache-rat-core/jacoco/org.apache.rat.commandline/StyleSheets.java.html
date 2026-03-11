@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StyleSheets.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.commandline</a> &gt; <span class="el_source">StyleSheets.java</span></div><h1>StyleSheets.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.commandline;
+
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Objects;
+
+import org.apache.commons.io.function.IOSupplier;
+import org.apache.rat.ConfigurationException;
+
+import static java.lang.String.format;
+
+/**
+ * The enumeration of system defined stylesheets.
+ */
+<span class="fc" id="L36">public enum StyleSheets {</span>
+    /**
+     * The plain style sheet. The current default.
+     */
+<span class="fc" id="L40">    PLAIN(&quot;plain-rat&quot;, &quot;The default style.&quot;),</span>
+    /**
+     * The missing header report style sheet
+     */
+<span class="fc" id="L44">    MISSING_HEADERS(&quot;missing-headers&quot;, &quot;Produces a report of files that are missing headers.&quot;),</span>
+    /**
+     * The unapproved licenses report
+     */
+<span class="fc" id="L48">    UNAPPROVED_LICENSES(&quot;unapproved-licenses&quot;, &quot;Produces a report of the files with unapproved licenses.&quot;),</span>
+    /**
+     * The plain style sheet. The current default.
+     */
+<span class="fc" id="L52">    XML(&quot;xml&quot;, &quot;Produces output in pretty-printed XML.&quot;);</span>
+    /**
+     * The name of the style sheet. Must map to bundled resource xslt file
+     */
+    private final String name;
+    /**
+     * The description of the style sheet
+     */
+    private final String desc;
+
+    /**
+     * Constructor.
+     * @param name the name of the xslt file.
+     * @param description What this xslt produces.
+     */
+<span class="fc" id="L67">    StyleSheets(final String name, final String description) {</span>
+<span class="fc" id="L68">        this.name = name;</span>
+<span class="fc" id="L69">        this.desc = description;</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * Gets the IOSupplier for a style sheet.
+     * @return an IOSupplier for the sheet.
+     */
+    public IOSupplier&lt;InputStream&gt; getStyleSheet() {
+<span class="fc" id="L77">        return Objects.requireNonNull(StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name)),</span>
+                &quot;missing stylesheet: &quot; + name)::openStream;
+    }
+
+    /**
+     * Gets the IOSupplier for a style sheet.
+     * @param name the short name for or the path to a style sheet.
+     * @return the IOSupplier for the style sheet.
+     */
+    public static IOSupplier&lt;InputStream&gt; getStyleSheet(final String name) {
+<span class="fc" id="L87">        URL url = StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name));</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (url != null) {</span>
+<span class="fc" id="L89">            return url::openStream;</span>
+        }
+<span class="fc" id="L91">        Path p = Paths.get(name);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (p.toFile().exists()) {</span>
+<span class="fc" id="L93">            return () -&gt; Files.newInputStream(p);</span>
+        }
+<span class="nc" id="L95">        throw new ConfigurationException(format(&quot;Stylesheet file '%s' not found&quot;, name));</span>
+    }
+
+    /**
+     * Gets the name of the xslt file.
+     * @return the name of the xslt file, without the extension.
+     */
+    public String arg() {
+<span class="fc" id="L103">        return name;</span>
+    }
+
+    /**
+     * Gets the description of the xslt file.
+     * @return the description of the xslt file.
+     */
+    public String desc() {
+<span class="fc" id="L111">        return desc;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HeaderCheckWorker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.analysis</a> &gt; <span class="el_source">HeaderCheckWorker.java</span></div><h1>HeaderCheckWorker.java</h1><pre class="source lang-java linenums">package org.apache.rat.analysis;
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Collection;
+import java.util.Locale;
+import java.util.Objects;
+
+import org.apache.rat.ConfigurationException;
+import org.apache.rat.analysis.matchers.FullTextMatcher;
+import org.apache.rat.api.Document;
+import org.apache.rat.license.ILicense;
+
+/**
+ * Reads from a stream to check license.
+ * &lt;p&gt;
+ * &lt;strong&gt;Note&lt;/strong&gt; that this class is not thread safe.
+ * &lt;/p&gt;
+ */
+public class HeaderCheckWorker {
+
+    /*
+     * TODO revisit this class. It is only used in one place and can be moved inline
+     * as the DocumentHeaderAnalyser states. However, it may also be possible to
+     * make the entire set thread safe so that multiple files can be checked
+     * simultaneously.
+     */
+    /**
+     * The default number of header lines to read while looking for the license
+     * information.
+     */
+    public static final int DEFAULT_NUMBER_OF_RETAINED_HEADER_LINES = 50;
+    /** The number of header lines to retain for processing */
+    private final int numberOfRetainedHeaderLines;
+    /** The BufferedReader used to read the lines */
+    private final BufferedReader reader;
+    /** The licenses to check for match */
+    private final Collection&lt;ILicense&gt; licenses;
+    /** The document being processed */
+    private final Document document;
+    /**  The matcher for generated headers */
+    private final IHeaderMatcher generatedMatcher;
+
+
+    /**
+     * Read the input and perform the header check.
+     * &lt;p&gt;
+     * The number of lines indicates how many lines from the top of the file will be read for processing
+     *
+     * @param reader The reader for the document.
+     * @param numberOfLines the number of lines to read from the header.
+     * @return The IHeaders instance for the header.
+     * @throws IOException on input failure
+     */
+    public static IHeaders readHeader(final BufferedReader reader, final int numberOfLines) throws IOException {
+<span class="fc" id="L75">        final StringBuilder headers = new StringBuilder();</span>
+<span class="fc" id="L76">        int headerLinesRead = 0;</span>
+        String line;
+
+<span class="pc bpc" id="L79" title="1 of 4 branches missed.">        while (headerLinesRead &lt; numberOfLines &amp;&amp; (line = reader.readLine()) != null) {</span>
+<span class="fc" id="L80">            headers.append(line).append(System.lineSeparator());</span>
+        }
+<span class="fc" id="L82">        final String raw = headers.toString();</span>
+<span class="fc" id="L83">        final String pruned = FullTextMatcher.prune(raw).toLowerCase(Locale.ENGLISH);</span>
+<span class="fc" id="L84">        return new IHeaders() {</span>
+            @Override
+            public String raw() {
+<span class="fc" id="L87">                return raw;</span>
+            }
+
+            @Override
+            public String pruned() {
+<span class="fc" id="L92">                return pruned;</span>
+            }
+
+            @Override
+            public String toString() {
+<span class="nc" id="L97">                return this.getClass().getSimpleName();</span>
+            }
+        };
+    }
+
+    /**
+     * Convenience constructor wraps given &lt;code&gt;Reader&lt;/code&gt; in a
+     * &lt;code&gt;BufferedReader&lt;/code&gt;.
+     *
+     * @param generatedMatcher The matcher for generated headers.
+     * @param reader The reader on the document. Not null.
+     * @param licenses The licenses to check against. Not null.
+     * @param name The document that is being checked. Possibly null.
+     */
+    public HeaderCheckWorker(final IHeaderMatcher generatedMatcher, final Reader reader, final Collection&lt;ILicense&gt; licenses, final Document name) {
+<span class="fc" id="L112">        this(generatedMatcher, reader, DEFAULT_NUMBER_OF_RETAINED_HEADER_LINES, licenses, name);</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Constructs a check worker for the license against the specified document.
+     *
+     * @param generatedMatcher The matcher for generated headers.
+     * @param reader The reader on the document. Not null.
+     * @param numberOfRetainedHeaderLine the maximum number of lines to read to find
+     * the license information.
+     * @param licenses The licenses to check against. Not null.
+     * @param document The document that is being checked. Possibly null.
+     */
+    public HeaderCheckWorker(final IHeaderMatcher generatedMatcher, final Reader reader,
+                             final int numberOfRetainedHeaderLine, final Collection&lt;ILicense&gt; licenses,
+<span class="fc" id="L127">                             final Document document) {</span>
+<span class="fc" id="L128">        Objects.requireNonNull(reader, &quot;Reader may not be null&quot;);</span>
+<span class="fc" id="L129">        Objects.requireNonNull(licenses, &quot;Licenses may not be null&quot;);</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (numberOfRetainedHeaderLine &lt; 0) {</span>
+<span class="nc" id="L131">            throw new ConfigurationException(&quot;numberOfRetainedHeaderLine may not be less than zero&quot;);</span>
+        }
+<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        this.reader = reader instanceof BufferedReader ? (BufferedReader) reader : new BufferedReader(reader);</span>
+<span class="fc" id="L134">        this.numberOfRetainedHeaderLines = numberOfRetainedHeaderLine;</span>
+<span class="fc" id="L135">        this.licenses = licenses;</span>
+<span class="fc" id="L136">        this.document = document;</span>
+<span class="fc" id="L137">        this.generatedMatcher = generatedMatcher;</span>
+<span class="fc" id="L138">    }</span>
+
+    /**
+     * Read the input and perform the header check.
+     *
+     * @throws RatHeaderAnalysisException on IO exception.
+     */
+    public void read() throws RatHeaderAnalysisException {
+        try {
+<span class="fc" id="L147">            final IHeaders headers = readHeader(reader, numberOfRetainedHeaderLines);</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">            if (generatedMatcher.matches(headers)) {</span>
+<span class="fc" id="L149">                document.getMetaData().setDocumentType(Document.Type.IGNORED);</span>
+            } else {
+<span class="fc" id="L151">                licenses.stream().filter(lic -&gt; lic.matches(headers)).forEach(document.getMetaData()::reportOnLicense);</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">                if (!document.getMetaData().detectedLicense()) {</span>
+<span class="fc" id="L153">                    document.getMetaData().reportOnLicense(UnknownLicense.INSTANCE);</span>
+                }
+            }
+<span class="nc" id="L156">        } catch (IOException e) {</span>
+<span class="nc" id="L157">            throw new RatHeaderAnalysisException(&quot;Cannot read header for &quot; + document, e);</span>
+        } finally {
+<span class="fc" id="L159">            licenses.forEach(ILicense::reset);</span>
+        }
+<span class="fc" id="L161">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
