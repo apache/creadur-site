@@ -4,7 +4,7 @@ This repository contains our webpage.
 
 Every commit is directly pushed and available on [https://creadur.apache.org/](https://creadur.apache.org/), as its deployment is done via [asf.yaml](./.asf.yaml).
 
-## Prerequisites for working with on the webpage
+## Prerequisites for working on the webpage
 
 In order to work with Creadur's git repositories some scripts expect that all projects are checked out in one directory. Thus you should have the following directory structure on your local box:
 
