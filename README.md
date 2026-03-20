@@ -74,7 +74,7 @@ Have a look in [WHISKER's buildtools folder](https://github.com/apache/creadur-w
 
 ### No site can be generated - build failure during javadoc generation
 
-Due to problems when generating Javadoc do only use JDK16! Newer versions cannot generate the project's javadoc and run into an NPE during path traversal. This is documented in [RAT-497](https://issues.apache.org/jira/browse/RAT-497) und reported upstream as a JDK bug.
+Due to problems when generating Javadoc do only use >=JDK21! Newer versions cannot generate the project's javadoc and run into an NPE during path traversal. This is documented in [RAT-497](https://issues.apache.org/jira/browse/RAT-497) und reported upstream as a JDK bug.
 
 ### Keeping release artifacts locally
 
@@ -86,13 +86,15 @@ As a workaround copy these files into your local .m2 repository as a deployment 
 $ mvn site:site site:stage
 ```
 
+or use the script under .buildtools to generate the site from the release tag:
+
 ### Building the webpage for releases/release candidates
 
-Generate the webpage from the release tag, e.g. RAT 0.17:
+Generate the webpage from the release tag, e.g. RAT 0.18:
 
 ```
 $ cd creadur-rat
-$ git checkout apache-rat-project-0.17
+$ git checkout apache-rat-project-0.18
 $ .buildtools/generateStagingSiteInWebpageRepo
 OR
 $ mvn site:site site:stage
@@ -103,7 +105,7 @@ Verify contents under target/staging:
 Make sure to manually verify download pages as they need to reference the current release and future SNAPSHOT versions!
 
 ```
-$ git commit -am "Push new preview version of RAT 0.17"
+$ git commit -am "Push new preview version of RAT 0.18"
 ```
 
 ### RAT-306: Fix errors in release notes
