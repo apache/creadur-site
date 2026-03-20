@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FullTextMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.analysis.matchers</a> &gt; <span class="el_source">FullTextMatcher.java</span></div><h1>FullTextMatcher.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.analysis.matchers;
+
+import java.util.Locale;
+
+import org.apache.rat.analysis.IHeaders;
+
+/**
+ * Accumulates all letters and numbers contained inside the header and compares
+ * it to the full text of a given license (after reducing it to letters and
+ * numbers as well).
+ * &lt;p&gt;
+ * The text comparison is case-insensitive but assumes only characters in the
+ * US-ASCII charset are being matched.
+ * &lt;/p&gt;
+ */
+public class FullTextMatcher extends SimpleTextMatcher {
+    /**
+     * The text that we are searching for. This text has been pruned and converted to lower case.
+     */
+    private final String prunedText;
+
+    /**
+     * Constructs the full text matcher with a unique random id and the specified
+     * text to match.
+     *
+     * @param simpleText the text to match
+     */
+    public FullTextMatcher(final String simpleText) {
+<span class="fc" id="L47">        this(null, simpleText);</span>
+<span class="fc" id="L48">    }</span>
+
+    /**
+     * Constructs the full text matcher for the specified text.
+     *
+     * @param id the id for the matcher
+     * @param simpleText the text to match
+     */
+    public FullTextMatcher(final String id, final String simpleText) {
+<span class="fc" id="L57">        super(id, simpleText);</span>
+<span class="fc" id="L58">        this.prunedText = prune(simpleText).toLowerCase(Locale.ENGLISH);</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Removes everything except letter or digit from text.
+     *
+     * @param text The text to remove extra chars from.
+     * @return the pruned text.
+     */
+    public static String prune(final String text) {
+<span class="fc" id="L68">        final int length = text.length();</span>
+<span class="fc" id="L69">        final StringBuilder buffer = new StringBuilder(length);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L71">            char at = text.charAt(i);</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            if (Character.isLetterOrDigit(at)) {</span>
+<span class="fc" id="L73">                buffer.append(at);</span>
+            }
+        }
+<span class="fc" id="L76">        return buffer.toString();</span>
+    }
+
+    @Override
+    public boolean matches(final IHeaders headers) {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (headers.pruned().length() &gt;= prunedText.length()) { // we have enough data to match</span>
+<span class="fc" id="L82">            return headers.pruned().contains(prunedText);</span>
+        }
+<span class="fc" id="L84">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

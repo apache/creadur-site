@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IHeaderMatcher.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.analysis</a> &gt; <span class="el_source">IHeaderMatcher.java</span></div><h1>IHeaderMatcher.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.analysis;
+
+import org.apache.rat.config.parameters.Description;
+import org.apache.rat.config.parameters.DescriptionBuilder;
+import org.apache.rat.configuration.builders.AllBuilder;
+import org.apache.rat.configuration.builders.AnyBuilder;
+import org.apache.rat.configuration.builders.CopyrightBuilder;
+import org.apache.rat.configuration.builders.MatcherRefBuilder;
+import org.apache.rat.configuration.builders.NotBuilder;
+import org.apache.rat.configuration.builders.RegexBuilder;
+import org.apache.rat.configuration.builders.SpdxBuilder;
+import org.apache.rat.configuration.builders.TextBuilder;
+
+/**
+ * Performs explicit checks against a line from the header of a file. For
+ * implementations that need to check multiple lines the implementation must
+ * cache the earlier lines.
+ */
+public interface IHeaderMatcher {
+    /**
+     * Get the identifier for this matcher.
+     * &lt;p&gt;
+     * All matchers must have unique identifiers
+     * &lt;/p&gt;
+     *
+     * @return the identifier for this matcher.
+     */
+    String getId();
+
+    /**
+     * Resets this state of this matcher to its initial state in preparation for
+     * use with another document scan. In most cases this method does not need to
+     * do anything.
+     */
+    default void reset() {
+        // does nothing.
+<span class="fc" id="L55">    }</span>
+
+    /**
+     * Attempts to match text in the IHeaders instance.
+     *
+     * @param headers the representations of the headers to check
+     * @return {@code true} if the matcher matches the text, {@code false} otherwise.
+     */
+    boolean matches(IHeaders headers);
+
+    /**
+     * Generates the component Description.
+     * @return the component description.
+     */
+    default Description getDescription() {
+<span class="fc" id="L70">        return DescriptionBuilder.build(this);</span>
+    }
+
+    /**
+     * An IHeaderMatcher builder.
+     */
+    @FunctionalInterface
+    interface Builder {
+        /**
+         * Build the IHeaderMatcher.
+         * &lt;p&gt;
+         * Implementations of this interface should return a specific child class of IHeaderMatcher.
+         *
+         * @return a new IHeaderMatcher.
+         */
+        IHeaderMatcher build();
+
+        /**
+         * Gets the description for this builder.
+         * @return The description of the builder
+         */
+        default Description getDescription() {
+<span class="fc" id="L92">            return DescriptionBuilder.buildMap(this.getClass());</span>
+        }
+
+        /**
+         * @return an instance of the standard TextBuilder.
+         * @see TextBuilder
+         * @deprecated Use new TextBuilder()
+         */
+        @Deprecated // since 0.17
+        static TextBuilder text() {
+<span class="nc" id="L102">            return new TextBuilder();</span>
+        }
+
+        /**
+         * @return an instance of the standard AnyBuilder.
+         * @see AnyBuilder
+         * @deprecated Use new AnyBuilder()
+         */
+        @Deprecated // since 0.17
+        static AnyBuilder any() {
+<span class="nc" id="L112">            return new AnyBuilder();</span>
+        }
+
+        /**
+         * @return an instance of the standard AllBuilder.
+         * @see AllBuilder
+         * @deprecated Use new AllBuilder()
+         */
+        @Deprecated // since 0.17
+        static AllBuilder all() {
+<span class="nc" id="L122">            return new AllBuilder();</span>
+        }
+
+        /**
+         * @return an instance of the standard CopyrightBuilder.
+         * @see CopyrightBuilder
+         * @deprecated Use new CopyrightBuilder()
+         */
+        @Deprecated // since 0.17
+        static CopyrightBuilder copyright() {
+<span class="nc" id="L132">            return new CopyrightBuilder();</span>
+        }
+
+        /**
+         * @return an instance of the standard SpdxBuilder.
+         * @see SpdxBuilder
+         * @deprecated Use new SpdxBuilder()
+         */
+        @Deprecated // since 0.17
+        static SpdxBuilder spdx() {
+<span class="nc" id="L142">            return new SpdxBuilder();</span>
+        }
+
+        /**
+         * @return an instance of the standard MatcherRefBuilder.
+         * @see MatcherRefBuilder
+         * @deprecated Use new MatcherRefBuilder()
+         */
+        @Deprecated // since 0.17
+        static MatcherRefBuilder matcherRef() {
+<span class="nc" id="L152">            return new MatcherRefBuilder();</span>
+        }
+
+        /**
+         * @return an instance of the standard NotBuilder.
+         * @see NotBuilder
+         * @deprecated Use new NotBuilder()
+         */
+        @Deprecated // since 0.17
+        static NotBuilder not() {
+<span class="nc" id="L162">            return new NotBuilder();</span>
+        }
+
+        /**
+         * @return an instance of the standard RegexBuilder.
+         * @see RegexBuilder
+         * @deprecated Use new RegexBuilder()
+         */
+        @Deprecated // since 0.17
+        static RegexBuilder regex() {
+<span class="nc" id="L172">            return new RegexBuilder();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
