@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>XMLConfigurationWriter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.configuration</a> &gt; <span class="el_source">XMLConfigurationWriter.java</span></div><h1>XMLConfigurationWriter.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.configuration;
+
+import java.io.IOException;
+import java.io.Writer;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.UUID;
+import java.util.function.Predicate;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.rat.ImplementationException;
+import org.apache.rat.ReportConfiguration;
+import org.apache.rat.analysis.IHeaderMatcher;
+import org.apache.rat.api.RatException;
+import org.apache.rat.config.parameters.ComponentType;
+import org.apache.rat.config.parameters.Description;
+import org.apache.rat.configuration.builders.MatcherRefBuilder;
+import org.apache.rat.license.ILicense;
+import org.apache.rat.license.ILicenseFamily;
+import org.apache.rat.license.LicenseSetFactory.LicenseFilter;
+import org.apache.rat.report.xml.writer.IXmlWriter;
+import org.apache.rat.report.xml.writer.XmlWriter;
+
+/**
+ * Writes the XML configuration file format.
+ */
+public class XMLConfigurationWriter {
+    /** The configuration that is being written */
+    private final ReportConfiguration configuration;
+    /** The set of defined matcher IDs */
+    private final Set&lt;String&gt; matchers;
+    /** The set of defined license IDs */
+    private final Set&lt;String&gt; licenseChildren;
+
+    /**
+     * Constructor
+     * @param configuration the configuration information to write.
+     */
+<span class="fc" id="L62">    public XMLConfigurationWriter(final ReportConfiguration configuration) {</span>
+<span class="fc" id="L63">        this.configuration = configuration;</span>
+<span class="fc" id="L64">        this.matchers = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L65">        licenseChildren = new HashSet&lt;&gt;(Arrays.asList(XMLConfig.LICENSE_CHILDREN));</span>
+<span class="fc" id="L66">    }</span>
+
+    private Predicate&lt;Description&gt; attributeFilter(final Description parent) {
+<span class="fc" id="L69">        return d -&gt; {</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">            if (d.getType() == ComponentType.PARAMETER) {</span>
+<span class="pc bpc" id="L71" title="1 of 3 branches missed.">                return switch (parent.getType()) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">                    case MATCHER -&gt; !XMLConfig.isInlineNode(parent.getCommonName(), d.getCommonName());</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">                    case LICENSE -&gt; !licenseChildren.contains(d.getCommonName());</span>
+<span class="nc" id="L74">                    default -&gt; true;</span>
+                };
+            }
+<span class="fc" id="L77">            return false;</span>
+        };
+    }
+
+    /**
+     * Writes the configuration to the specified writer.
+     * @param plainWriter a writer to write the XML to.
+     * @throws RatException on error.
+     */
+    public void write(final Writer plainWriter) throws RatException {
+<span class="fc" id="L87">        write(new XmlWriter(plainWriter));</span>
+<span class="fc" id="L88">    }</span>
+
+    /**
+     * Writes the configuration to an IXmlWriter instance.
+     * @param writer the IXmlWriter to write to.
+     * @throws RatException on error.
+     */
+    public void write(final IXmlWriter writer) throws RatException {
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">        if (configuration.listFamilies() != LicenseFilter.NONE || configuration.listLicenses() != LicenseFilter.NONE) {</span>
+            try {
+<span class="fc" id="L98">                writer.openElement(XMLConfig.ROOT);</span>
+
+                // Families section
+<span class="fc" id="L101">                SortedSet&lt;ILicenseFamily&gt; families = configuration.getLicenseFamilies(configuration.listFamilies());</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">                if (!families.isEmpty()) {</span>
+<span class="fc" id="L103">                    writer.openElement(XMLConfig.FAMILIES);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">                    for (ILicenseFamily family : families) {</span>
+<span class="fc" id="L105">                        writeFamily(writer, family);</span>
+<span class="fc" id="L106">                    }</span>
+<span class="fc" id="L107">                    writer.closeElement(); // FAMILIES</span>
+                }
+
+                // licenses section
+<span class="fc" id="L111">                SortedSet&lt;ILicense&gt; licenses = configuration.getLicenses(configuration.listLicenses());</span>
+<span class="fc bfc" id="L112" title="All 2 branches covered.">                if (!licenses.isEmpty()) {</span>
+<span class="fc" id="L113">                    writer.openElement(XMLConfig.LICENSES);</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">                    for (ILicense license : licenses) {</span>
+<span class="fc" id="L115">                        writeDescription(writer, license.getDescription(), license);</span>
+<span class="fc" id="L116">                    }</span>
+<span class="fc" id="L117">                    writer.closeElement(); // LICENSES</span>
+                }
+
+                // approved section
+<span class="fc" id="L121">                writer.openElement(XMLConfig.APPROVED);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">                for (String family : configuration.getLicenseCategories(LicenseFilter.APPROVED)) {</span>
+<span class="fc" id="L123">                    writer.openElement(XMLConfig.APPROVED).attribute(XMLConfig.ATT_LICENSE_REF, family.trim())</span>
+<span class="fc" id="L124">                            .closeElement();</span>
+<span class="fc" id="L125">                }</span>
+<span class="fc" id="L126">                writer.closeElement(); // APPROVED</span>
+
+                // matchers section
+<span class="fc" id="L129">                MatcherBuilderTracker tracker = MatcherBuilderTracker.instance();</span>
+<span class="fc" id="L130">                writer.openElement(XMLConfig.MATCHERS);</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">                for (Class&lt;?&gt; clazz : tracker.getClasses()) {</span>
+<span class="fc" id="L132">                    writer.openElement(XMLConfig.MATCHER).attribute(XMLConfig.ATT_CLASS_NAME, clazz.getCanonicalName())</span>
+<span class="fc" id="L133">                            .closeElement();</span>
+<span class="fc" id="L134">                }</span>
+<span class="fc" id="L135">                writer.closeElement(); // MATCHERS</span>
+
+<span class="fc" id="L137">                writer.closeElement(); // ROOT</span>
+<span class="nc" id="L138">            } catch (IOException e) {</span>
+<span class="nc" id="L139">                throw new RatException(e);</span>
+<span class="fc" id="L140">            }</span>
+        }
+<span class="fc" id="L142">    }</span>
+
+    private void writeFamily(final IXmlWriter writer, final ILicenseFamily family) throws RatException {
+        try {
+<span class="fc" id="L146">            writer.openElement(XMLConfig.FAMILY).attribute(XMLConfig.ATT_ID, family.getFamilyCategory().trim())</span>
+<span class="fc" id="L147">                    .attribute(XMLConfig.ATT_NAME, family.getFamilyName());</span>
+<span class="fc" id="L148">            writer.closeElement();</span>
+<span class="nc" id="L149">        } catch (IOException e) {</span>
+<span class="nc" id="L150">            throw new RatException(e);</span>
+<span class="fc" id="L151">        }</span>
+<span class="fc" id="L152">    }</span>
+
+    private void writeDescriptions(final IXmlWriter writer, final Collection&lt;Description&gt; descriptions, final IHeaderMatcher component)
+            throws RatException {
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        for (Description description : descriptions) {</span>
+<span class="fc" id="L157">            writeDescription(writer, description, component);</span>
+<span class="fc" id="L158">        }</span>
+<span class="fc" id="L159">    }</span>
+
+    private void writeChildren(final IXmlWriter writer, final Description description, final IHeaderMatcher component)
+            throws RatException {
+<span class="fc" id="L163">        writeAttributes(writer, description.filterChildren(attributeFilter(component.getDescription())), component);</span>
+<span class="fc" id="L164">        writeDescriptions(writer, description.filterChildren(attributeFilter(component.getDescription()).negate()),</span>
+                component);
+<span class="fc" id="L166">    }</span>
+
+    private void writeAttributes(final IXmlWriter writer, final Collection&lt;Description&gt; descriptions, final IHeaderMatcher component)
+            throws RatException {
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        for (Description d : descriptions) {</span>
+            try {
+<span class="fc" id="L172">                writeAttribute(writer, d, component);</span>
+<span class="nc" id="L173">            } catch (IOException e) {</span>
+<span class="nc" id="L174">                throw new RatException(e);</span>
+<span class="fc" id="L175">            }</span>
+<span class="fc" id="L176">        }</span>
+<span class="fc" id="L177">    }</span>
+
+    private void writeComment(final IXmlWriter writer, final Description description) throws IOException {
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (StringUtils.isNotBlank(description.getDescription())) {</span>
+<span class="fc" id="L181">            writer.comment(description.getDescription().replace(&quot;--&gt;&quot;, &quot;-&amp;ndash;&gt;&quot;));</span>
+        }
+<span class="fc" id="L183">    }</span>
+
+    private void writeAttribute(final IXmlWriter writer, final Description description, final IHeaderMatcher component)
+            throws IOException {
+<span class="fc" id="L187">        String paramValue = description.getParamValue(component);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (paramValue != null) {</span>
+<span class="fc" id="L189">            writer.attribute(description.getCommonName(), paramValue);</span>
+        }
+<span class="fc" id="L191">    }</span>
+
+    /* package private for testing */
+    @SuppressWarnings(&quot;unchecked&quot;)
+    void writeDescription(final IXmlWriter writer, final Description desc, final IHeaderMatcher comp) throws RatException {
+<span class="fc" id="L196">        Description description = desc;</span>
+<span class="fc" id="L197">        IHeaderMatcher component = comp;</span>
+        try {
+<span class="fc bfc" id="L199" title="All 4 branches covered.">            switch (description.getType()) {</span>
+            case MATCHER:
+                // see if id was registered
+<span class="fc" id="L202">                Optional&lt;Description&gt; id = description.childrenOfType(ComponentType.PARAMETER).stream()</span>
+<span class="fc" id="L203">                        .filter(i -&gt; XMLConfig.ATT_ID.equals(i.getCommonName())).findFirst();</span>
+
+                // id will not be present in matcherRef
+<span class="fc bfc" id="L206" title="All 2 branches covered.">                if (id.isPresent()) {</span>
+<span class="fc" id="L207">                    String matcherId = id.get().getParamValue(component);</span>
+                    // if we have seen the ID before, put a reference to the other one.
+<span class="fc bfc" id="L209" title="All 2 branches covered.">                    if (matchers.contains(matcherId)) {</span>
+<span class="fc" id="L210">                        component = new MatcherRefBuilder.IHeaderMatcherProxy(matcherId, null);</span>
+<span class="fc" id="L211">                        description = component.getDescription();</span>
+                    } else {
+<span class="fc" id="L213">                        matchers.add(matcherId);</span>
+                    }
+                    // remove the matcher id if it is a UUID
+                    try {
+<span class="fc" id="L217">                        UUID.fromString(matcherId);</span>
+<span class="fc" id="L218">                        description.getChildren().remove(XMLConfig.ATT_ID);</span>
+<span class="fc" id="L219">                    } catch (IllegalArgumentException expected) {</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">                        if (description.getCommonName().equals(&quot;spdx&quot;)) {</span>
+<span class="fc" id="L221">                            description.getChildren().remove(XMLConfig.ATT_ID);</span>
+                        }
+<span class="fc" id="L223">                    }</span>
+                }
+
+                // if only a resource, list the resource not the contents of the matcher
+<span class="fc" id="L227">                Optional&lt;Description&gt; resource = description.childrenOfType(ComponentType.PARAMETER).stream()</span>
+<span class="fc" id="L228">                        .filter(i -&gt; XMLConfig.ATT_RESOURCE.equals(i.getCommonName())).findFirst();</span>
+<span class="fc bfc" id="L229" title="All 2 branches covered.">                if (resource.isPresent()) {</span>
+<span class="fc" id="L230">                    String resourceStr = resource.get().getParamValue(component);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">                    if (StringUtils.isNotBlank(resourceStr)) {</span>
+<span class="nc" id="L232">                        description.getChildren().remove(&quot;enclosed&quot;);</span>
+                    }
+                }
+<span class="fc" id="L235">                writeComment(writer, description);</span>
+<span class="fc" id="L236">                writer.openElement(description.getCommonName());</span>
+<span class="fc" id="L237">                writeChildren(writer, description, component);</span>
+<span class="fc" id="L238">                writer.closeElement();</span>
+<span class="fc" id="L239">                break;</span>
+            case LICENSE:
+<span class="fc" id="L241">                writer.openElement(XMLConfig.LICENSE);</span>
+<span class="fc" id="L242">                writeChildren(writer, description, component);</span>
+<span class="fc" id="L243">                writer.closeElement();</span>
+<span class="fc" id="L244">                break;</span>
+            case PARAMETER:
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">                if (&quot;id&quot;.equals(description.getCommonName())) {</span>
+                    try {
+<span class="nc" id="L248">                        String paramId = description.getParamValue(component);</span>
+                        // if a UUID skip it.
+<span class="nc bnc" id="L250" title="All 2 branches missed.">                        if (paramId != null) {</span>
+<span class="nc" id="L251">                            UUID.fromString(paramId);</span>
+<span class="nc" id="L252">                            return;</span>
+                        }
+<span class="nc" id="L254">                    } catch (IllegalArgumentException expected) {</span>
+                        // do nothing.
+<span class="nc" id="L256">                    }</span>
+                }
+<span class="fc bfc" id="L258" title="All 2 branches covered.">                if (description.getChildType() == String.class) {</span>
+
+<span class="fc" id="L260">                    boolean inline = XMLConfig.isInlineNode(component.getDescription().getCommonName(),</span>
+<span class="fc" id="L261">                            description.getCommonName());</span>
+<span class="fc" id="L262">                    String s = description.getParamValue(component);</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">                    if (StringUtils.isNotBlank(s)) {</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">                        if (!inline) {</span>
+<span class="fc" id="L265">                            writer.openElement(description.getCommonName());</span>
+                        }
+<span class="fc" id="L267">                        writer.content(description.getParamValue(component));</span>
+<span class="fc bfc" id="L268" title="All 2 branches covered.">                        if (!inline) {</span>
+<span class="fc" id="L269">                            writer.closeElement();</span>
+                        }
+                    }
+<span class="fc" id="L272">                } else {</span>
+                    try {
+<span class="fc bfc" id="L274" title="All 2 branches covered.">                        if (description.isCollection()) {</span>
+<span class="fc bfc" id="L275" title="All 2 branches covered.">                            for (IHeaderMatcher matcher : (Collection&lt;IHeaderMatcher&gt;) description</span>
+<span class="fc" id="L276">                                    .getter(component.getClass()).invoke(component)) {</span>
+<span class="fc" id="L277">                                writeDescription(writer, matcher.getDescription(), matcher);</span>
+<span class="fc" id="L278">                            }</span>
+                        } else {
+<span class="fc" id="L280">                            IHeaderMatcher matcher = (IHeaderMatcher) description.getter(component.getClass())</span>
+<span class="fc" id="L281">                                    .invoke(component);</span>
+<span class="fc" id="L282">                            writeDescription(writer, matcher.getDescription(), matcher);</span>
+                        }
+<span class="nc" id="L284">                    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException</span>
+                            | NoSuchMethodException | SecurityException | RatException e) {
+<span class="nc" id="L286">                        throw new ImplementationException(e);</span>
+<span class="fc" id="L287">                    }</span>
+                }
+                break;
+            case BUILD_PARAMETER:
+                // ignore;
+                break;
+            }
+<span class="nc" id="L294">        } catch (IOException e) {</span>
+<span class="nc" id="L295">            throw new RatException(e);</span>
+<span class="fc" id="L296">        }</span>
+<span class="fc" id="L297">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

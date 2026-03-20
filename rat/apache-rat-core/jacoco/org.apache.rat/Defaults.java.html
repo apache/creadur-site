@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Defaults.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat</a> &gt; <span class="el_source">Defaults.java</span></div><h1>Defaults.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat;
+
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
+import org.apache.rat.config.exclusion.StandardCollection;
+import org.apache.rat.configuration.Format;
+import org.apache.rat.configuration.LicenseReader;
+import org.apache.rat.configuration.MatcherReader;
+import org.apache.rat.license.ILicense;
+import org.apache.rat.license.ILicenseFamily;
+import org.apache.rat.license.LicenseSetFactory;
+import org.apache.rat.license.LicenseSetFactory.LicenseFilter;
+import org.apache.rat.utils.DefaultLog;
+
+import static java.lang.String.format;
+
+/**
+ * A class that provides the standard system defaults for the ReportConfiguration.
+ * Properties in this class may be overridden or added to by configuration options in the various UIs.
+ * See the specific UI for details.
+ */
+public final class Defaults {
+    /** The default configuration file from the package. */
+    private static final URI DEFAULT_CONFIG_URI;
+    /** The path to the default configuration file. */
+    private static final String DEFAULT_CONFIG_PATH = &quot;/org/apache/rat/default.xml&quot;;
+    /** The default ARCHIVES processing style. */
+<span class="fc" id="L54">    public static final ReportConfiguration.Processing ARCHIVE_PROCESSING = ReportConfiguration.Processing.NOTIFICATION;</span>
+    /** The default STANDARD processing style. */
+<span class="fc" id="L56">    public static final ReportConfiguration.Processing STANDARD_PROCESSING = ReportConfiguration.Processing.ABSENCE;</span>
+    /** The default license families to list. */
+<span class="fc" id="L58">    public static final LicenseFilter LIST_FAMILIES = LicenseFilter.NONE;</span>
+    /** The default licenses to list. */
+<span class="fc" id="L60">    public static final LicenseFilter LIST_LICENSES = LicenseFilter.NONE;</span>
+
+    /** The license set factory to build license sets based upon default options */
+    private final LicenseSetFactory setFactory;
+
+    // TODO look at this static block with respect to the init() static method and figure out if we need both.
+    static {
+<span class="fc" id="L67">         URL url = Defaults.class.getResource(DEFAULT_CONFIG_PATH);</span>
+<span class="fc" id="L68">         URI uri = null;</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">         if (url == null) {</span>
+<span class="nc" id="L70">             DefaultLog.getInstance().error(format(&quot;Unable to read '%s'&quot;, DEFAULT_CONFIG_PATH));</span>
+         } else {
+             try {
+<span class="fc" id="L73">                 uri = url.toURI();</span>
+<span class="nc" id="L74">             } catch (URISyntaxException e) {</span>
+<span class="nc" id="L75">                 DefaultLog.getInstance().error(&quot;Unable to read &quot; + url, e);</span>
+<span class="fc" id="L76">             }</span>
+         }
+<span class="fc" id="L78">         DEFAULT_CONFIG_URI = uri;</span>
+<span class="fc" id="L79">    }</span>
+    /**
+     * Initialize the system configuration reader.
+     */
+    public static void init() {
+<span class="fc" id="L84">        Format fmt = Format.from(DEFAULT_CONFIG_URI);</span>
+<span class="fc" id="L85">        MatcherReader mReader = fmt.matcherReader();</span>
+<span class="pc bpc" id="L86" title="1 of 2 branches missed.">        if (mReader != null) {</span>
+<span class="fc" id="L87">            mReader.addMatchers(DEFAULT_CONFIG_URI);</span>
+<span class="fc" id="L88">            mReader.readMatcherBuilders();</span>
+        } else {
+<span class="nc" id="L90">            DefaultLog.getInstance().error(&quot;Unable to construct MatcherReader from &quot; + DEFAULT_CONFIG_URI);</span>
+        }
+<span class="fc" id="L92">    }</span>
+
+    /**
+     * Builder constructs instances.
+     * @param uris The set of URIs to read.
+     */
+<span class="fc" id="L98">    private Defaults(final Set&lt;URI&gt; uris) {</span>
+<span class="fc" id="L99">        this.setFactory = Defaults.readConfigFiles(uris);</span>
+<span class="fc" id="L100">    }</span>
+
+    /**
+     * Gets a builder for a Defaults object.
+     * @return the Builder.
+     */
+    public static Builder builder() {
+<span class="fc" id="L107">        return new Builder();</span>
+    }
+
+    /**
+     * Reads the configuration files.
+     * @param uris the URIs to read.
+     */
+    private static LicenseSetFactory readConfigFiles(final Collection&lt;URI&gt; uris) {
+
+<span class="fc" id="L116">        SortedSet&lt;ILicense&gt; licenses = new TreeSet&lt;&gt;();</span>
+
+<span class="fc" id="L118">        SortedSet&lt;String&gt; approvedLicenseCategories = new TreeSet&lt;&gt;();</span>
+
+<span class="fc bfc" id="L120" title="All 2 branches covered.">        for (URI uri : uris) {</span>
+<span class="fc" id="L121">            Format fmt = Format.from(uri);</span>
+<span class="fc" id="L122">            MatcherReader mReader = fmt.matcherReader();</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">            if (mReader != null) {</span>
+<span class="fc" id="L124">                mReader.addMatchers(uri);</span>
+<span class="fc" id="L125">                mReader.readMatcherBuilders();</span>
+            }
+
+<span class="fc" id="L128">            LicenseReader lReader = fmt.licenseReader();</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">            if (lReader != null) {</span>
+<span class="fc" id="L130">                lReader.addLicenses(uri);</span>
+<span class="fc" id="L131">                licenses.addAll(lReader.readLicenses());</span>
+<span class="fc" id="L132">                lReader.approvedLicenseId().stream().map(ILicenseFamily::makeCategory).forEach(approvedLicenseCategories::add);</span>
+            }
+<span class="fc" id="L134">        }</span>
+
+<span class="fc" id="L136">        LicenseSetFactory result = new LicenseSetFactory(licenses);</span>
+<span class="fc" id="L137">        approvedLicenseCategories.forEach(result::approveLicenseCategory);</span>
+<span class="fc" id="L138">        return result;</span>
+    }
+
+    /**
+     * Gets the default license set factory.
+     * @return the default license set factory.
+     */
+    public LicenseSetFactory getLicenseSetFactory() {
+<span class="fc" id="L146">        return setFactory;</span>
+    }
+
+    /**
+     * Gets the default exclusion processor.
+     * @return the default exclusion processor.
+     */
+    public Collection&lt;StandardCollection&gt; getStandardExclusion() {
+<span class="fc" id="L154">        return Arrays.asList(StandardCollection.MISC, StandardCollection.HIDDEN_DIR);</span>
+    }
+
+
+    /**
+     * The Defaults builder.
+     */
+    public static final class Builder {
+        /** The list of URIs that we wil read to configure the Defaults */
+<span class="fc" id="L163">        private final Set&lt;URI&gt; fileNames = new TreeSet&lt;&gt;();</span>
+
+<span class="fc" id="L165">        private Builder() {</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">            if (DEFAULT_CONFIG_URI == null) {</span>
+<span class="nc" id="L167">                DefaultLog.getInstance().error(&quot;Unable to read default.xml&quot;);</span>
+            } else {
+<span class="fc" id="L169">               fileNames.add(DEFAULT_CONFIG_URI);</span>
+            }
+<span class="fc" id="L171">        }</span>
+
+        /**
+         * Adds a URL to a configuration file to be read.
+         * @param uri the URI to add
+         * @return this Builder for chaining
+         */
+        public Builder add(final URI uri) {
+<span class="fc" id="L179">            fileNames.add(uri);</span>
+<span class="fc" id="L180">            return this;</span>
+        }
+
+        /**
+         * Adds the name of a configuration file to be read.
+         * @param fileName the name of the file to add.
+         * @return this Builder for chaining
+         */
+        public Builder add(final String fileName) {
+<span class="nc" id="L189">            return add(new File(fileName));</span>
+        }
+
+        /**
+         * Adds a configuration file to be read.
+         * @param file the File to add.
+         * @return this Builder for chaining
+         */
+        public Builder add(final File file) {
+<span class="fc" id="L198">            return add(file.toURI());</span>
+        }
+
+        /**
+         * Removes a file from the list of configuration files to process.
+         * @param uri the URI of the file to remove.
+         * @return this Builder for chaining
+         */
+        public Builder remove(final URI uri) {
+<span class="fc" id="L207">            fileNames.remove(uri);</span>
+<span class="fc" id="L208">            return this;</span>
+        }
+
+        /**
+         * Removes a file name from the list of configuration files to process.
+         * @param fileName the fileName of the file to remove.
+         * @return this Builder for chaining
+         */
+        public Builder remove(final String fileName) {
+<span class="nc" id="L217">            return remove(new File(fileName));</span>
+        }
+
+        /**
+         * Removes a file from the list of configuration files to process.
+         * @param file the File of the file to remove.
+         * @return this Builder for chaining
+         */
+        public Builder remove(final File file) {
+<span class="nc" id="L226">            return remove(file.toURI());</span>
+        }
+
+        /**
+         * Removes the default definitions from the list of files to process.
+         * @return this Builder for chaining
+         */
+        public Builder noDefault() {
+<span class="fc" id="L234">            return remove(DEFAULT_CONFIG_URI);</span>
+        }
+
+        /**
+         * Builds the defaults object.
+         * @return the current defaults object.
+         */
+        public Defaults build() {
+<span class="fc" id="L242">            return new Defaults(fileNames);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

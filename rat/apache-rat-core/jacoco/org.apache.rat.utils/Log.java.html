@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Log.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.utils</a> &gt; <span class="el_source">Log.java</span></div><h1>Log.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.utils;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
+
+/**
+ * The definition of logging for the core. UIs are expected to provide an implementation of
+ * Log to log data to the appropriate system within the UI.
+ */
+public interface Log {
+    /**
+     * The log levels supported by logging.
+     */
+<span class="fc" id="L33">    enum Level {</span>
+        // these must be listed in order of decreasing noisiness.
+        /** Log debug only. */
+<span class="fc" id="L36">        DEBUG,</span>
+        /** Log info only. */
+<span class="fc" id="L38">        INFO,</span>
+        /** Log warn only. */
+<span class="fc" id="L40">        WARN,</span>
+        /** Log error only. */
+<span class="fc" id="L42">        ERROR,</span>
+        /** Log nothing. */
+<span class="fc" id="L44">        OFF</span>
+    }
+
+    static String formatLogEntry(final String message, final Throwable throwable) {
+<span class="fc" id="L48">        StringWriter writer = new StringWriter();</span>
+<span class="fc" id="L49">        PrintWriter pWriter = new PrintWriter(writer);</span>
+<span class="fc" id="L50">        pWriter.print(message);</span>
+<span class="fc" id="L51">        pWriter.print(System.lineSeparator());</span>
+<span class="fc" id="L52">        throwable.printStackTrace(pWriter);</span>
+<span class="fc" id="L53">        return writer.toString();</span>
+    }
+
+    /**
+     * Gets the log level that is enabled. If encapsulated logger does not report level
+     * implementations should return DEBUG.
+     * @return the level that is enabled.
+     */
+    Level getLevel();
+
+    /**
+     * Sets the log level.
+     * Implementations may elect not to set the level dynamically. However, if the option is supported
+     * this method should be overridden.
+     * @param level the level to set.
+     */
+    default void setLevel(Level level) {
+<span class="nc" id="L70">        warn(String.format(&quot;This logger does not support dynamically setting the log level. Setting to %s ignored.&quot;, level));</span>
+<span class="nc" id="L71">    }</span>
+
+    /**
+     * Determines if the log level is enabled.
+     * @param level The level to check.
+     * @return true if the level will produce output in the log.
+     */
+    default boolean isEnabled(Level level) {
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        return getLevel().ordinal() &lt;= level.ordinal();</span>
+    }
+
+    /**
+     * Writes a message at a specific log level.
+     * @param level The log level to write at.
+     * @param message the message to write.
+     */
+    void log(Level level, String message);
+
+    /**
+     * Writes a log message at the specified level.
+     * @param level the level to write the message at.
+     * @param message the message to write.
+     */
+    default void log(Level level, Object message) {
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        log(level, message == null ? &quot;NULL&quot; : message.toString());</span>
+<span class="fc" id="L96">    }</span>
+
+    /**
+     * Write a message at DEBUG level.
+     * @param message the message to write.
+     */
+    default void debug(Object message) {
+<span class="fc" id="L103">        log(Level.DEBUG, message);</span>
+<span class="fc" id="L104">    }</span>
+
+    /**
+     * Write a message at INFO level.
+     * @param message the message to write.
+     */
+    default void info(Object message) {
+<span class="fc" id="L111">        log(Level.INFO, message);</span>
+<span class="fc" id="L112">    }</span>
+
+    /**
+     * Write a message at WARN level.
+     * @param message the message to write.
+     */
+    default void warn(Object message) {
+<span class="fc" id="L119">        log(Level.WARN, message);</span>
+<span class="fc" id="L120">    }</span>
+
+    /**
+     * Write a message at ERROR level.
+     * @param message the message to write.
+     */
+    default void error(Object message) {
+<span class="fc" id="L127">        log(Level.ERROR, message);</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Write a log message and report throwable stack trace at the specified log level.
+     * @param level the level to report at
+     * @param message the message for the log
+     * @param throwable the throwable
+     */
+    default void log(Level level, String message, Throwable throwable) {
+<span class="fc" id="L137">        log(level, formatLogEntry(message, throwable));</span>
+<span class="fc" id="L138">    }</span>
+
+    /**
+     * Write a log message and report throwable stack trace at the specified log level.
+     * @param level the level to report at
+     * @param message the message for the log
+     * @param throwable the throwable
+     */
+    default void log(Level level, Object message, Throwable throwable) {
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">        log(level, message == null ? &quot;NULL&quot; : message.toString(), throwable);</span>
+<span class="fc" id="L148">    }</span>
+
+    /**
+     * Write a debug message and report throwable stack trace.
+     * @param message the message for the log
+     * @param throwable the throwable
+     */
+    default void debug(Object message, Throwable throwable) {
+<span class="nc" id="L156">        log(Level.DEBUG, message, throwable);</span>
+<span class="nc" id="L157">    }</span>
+
+    /**
+     * Write an info message and report throwable stack trace.
+     * @param message the message for the log
+     * @param throwable the throwable
+     */
+    default void info(Object message, Throwable throwable) {
+<span class="nc" id="L165">        log(Level.INFO, message, throwable);</span>
+<span class="nc" id="L166">    }</span>
+
+    /**
+     * Write a warn message and report throwable stack trace.
+     * @param message the message for the log
+     * @param throwable the throwable
+     */
+    default void warn(Object message, Throwable throwable) {
+<span class="nc" id="L174">        log(Level.WARN, message, throwable);</span>
+<span class="nc" id="L175">    }</span>
+
+    /**
+     * Write an error message and report throwable stack trace.
+     * @param message the message for the log
+     * @param throwable the throwable
+     */
+    default void error(Object message, Throwable throwable) {
+<span class="fc" id="L183">        log(Level.ERROR, message, throwable);</span>
+<span class="fc" id="L184">    }</span>
+
+    /**
+     * Returns a Writer backed by this log. All messages are logged at &quot;INFO&quot; level.
+     * @return the Writer backed by this log.
+     */
+    default Writer asWriter() {
+<span class="fc" id="L191">        return asWriter(Level.INFO);</span>
+    }
+
+    /**
+     * Returns a Writer backed by this log. All messages are logged at &quot;INFO&quot; level.
+     * @return the Writer backed by this log.
+     * @param level the Log level to write at.
+     */
+    default Writer asWriter(Level level) {
+<span class="fc" id="L200">        return new Writer() {</span>
+<span class="fc" id="L201">            private StringBuilder sb = new StringBuilder();</span>
+
+            @Override
+            public void write(final char[] cbuf, final int off, final int len) {
+<span class="fc" id="L205">                String txt = String.copyValueOf(cbuf, off, len);</span>
+<span class="fc" id="L206">                int pos = txt.indexOf(System.lineSeparator());</span>
+<span class="fc bfc" id="L207" title="All 2 branches covered.">                if (pos == -1) {</span>
+<span class="fc" id="L208">                    sb.append(txt);</span>
+                } else {
+<span class="fc bfc" id="L210" title="All 2 branches covered.">                    while (pos &gt; -1) {</span>
+<span class="fc" id="L211">                        Log.this.log(level, sb.append(txt, 0, pos).toString());</span>
+<span class="fc" id="L212">                        sb.delete(0, sb.length());</span>
+<span class="fc" id="L213">                        txt = txt.substring(pos + 1);</span>
+<span class="fc" id="L214">                        pos = txt.indexOf(System.lineSeparator());</span>
+                    }
+<span class="fc" id="L216">                    sb.append(txt);</span>
+                }
+<span class="fc" id="L218">            }</span>
+
+            @Override
+            public void flush() {
+<span class="nc bnc" id="L222" title="All 2 branches missed.">                if (!sb.isEmpty()) {</span>
+<span class="nc" id="L223">                    Log.this.log(level, sb.toString());</span>
+                }
+<span class="nc" id="L225">                sb = new StringBuilder();</span>
+<span class="nc" id="L226">            }</span>
+
+            @Override
+            public void close() {
+<span class="nc" id="L230">                flush();</span>
+<span class="nc" id="L231">            }</span>
+        };
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

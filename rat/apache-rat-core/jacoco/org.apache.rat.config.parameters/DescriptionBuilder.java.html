@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DescriptionBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.config.parameters</a> &gt; <span class="el_source">DescriptionBuilder.java</span></div><h1>DescriptionBuilder.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+package org.apache.rat.config.parameters;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
+import org.apache.rat.ConfigurationException;
+import org.apache.rat.ImplementationException;
+import org.apache.rat.analysis.IHeaderMatcher;
+import org.apache.rat.license.ILicense;
+
+import static java.lang.String.format;
+
+/**
+ * Builds Description objects for the various component instances.
+ */
+public final class DescriptionBuilder {
+    private DescriptionBuilder() {
+        // do not instantiate
+    }
+
+    /**
+     * Create the description for the object.
+     * The object must have a ConfigComponent annotation or {@code null} will be returned.
+     * @param object the object to process.
+     * @return the Description of the object.
+     */
+    public static Description build(final Object object) {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">        if (object instanceof ILicense license) {</span>
+<span class="fc" id="L54">            Class&lt;?&gt; clazz = object.getClass();</span>
+<span class="fc" id="L55">            ConfigComponent configComponent = clazz.getAnnotation(ConfigComponent.class);</span>
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">            if (configComponent == null || configComponent.type() != ComponentType.LICENSE) {</span>
+<span class="nc" id="L57">                throw new ConfigurationException(</span>
+<span class="nc" id="L58">                        format(&quot;Licenses must have License type specified in ConfigComponent annotation. Annotation missing or incorrect in %s&quot;, clazz));</span>
+            }
+<span class="fc" id="L60">            List&lt;Description&gt; children = getConfigComponents(object.getClass());</span>
+<span class="fc" id="L61">            return new Description(ComponentType.LICENSE, license.getId(), license.getName(), false, null, children, false);</span>
+        }
+<span class="fc" id="L63">        return buildMap(object.getClass());</span>
+    }
+
+    private static String fixupMethodName(final Method method) {
+<span class="fc" id="L67">        String name = method.getName();</span>
+<span class="pc bpc" id="L68" title="5 of 6 branches missed.">        if (name.startsWith(&quot;get&quot;) || name.startsWith(&quot;set&quot;) || name.startsWith(&quot;add&quot;)) {</span>
+<span class="pc bpc" id="L69" title="1 of 2 branches missed.">            if (name.length() &gt; 3) {</span>
+<span class="fc" id="L70">                return WordUtils.uncapitalize(name.substring(3));</span>
+            }
+        }
+<span class="nc" id="L73">        throw new ImplementationException(format(&quot;'%s' is not a recognized method name&quot;, name));</span>
+    }
+    /**
+     * Build the list of descriptions for children of the class.
+     * @param clazz source class.
+     * @return the Descriptions of the child elements.
+     */
+    static List&lt;Description&gt; getConfigComponents(final Class&lt;?&gt; clazz) {
+<span class="fc bfc" id="L81" title="All 6 branches covered.">        if (clazz == null || clazz == String.class || clazz == Object.class) {</span>
+<span class="fc" id="L82">            return Collections.emptyList();</span>
+        }
+<span class="fc" id="L84">        List&lt;Description&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        for (Field field : clazz.getDeclaredFields()) {</span>
+<span class="fc" id="L86">            ConfigComponent configComponent = field.getAnnotation(ConfigComponent.class);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (configComponent != null) {</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                String name = StringUtils.isBlank(configComponent.name()) ? field.getName() : configComponent.name();</span>
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                Class&lt;?&gt; childClazz = configComponent.parameterType() == void.class ? field.getType()</span>
+<span class="fc" id="L90">                        : configComponent.parameterType();</span>
+<span class="fc" id="L91">                boolean isCollection = Iterable.class.isAssignableFrom(field.getType());</span>
+
+<span class="fc" id="L93">                Description desc = new Description(configComponent.type(), name, configComponent.desc(), isCollection,</span>
+<span class="fc" id="L94">                        childClazz, getConfigComponents(childClazz), configComponent.required());</span>
+<span class="fc" id="L95">                result.add(desc);</span>
+            }
+        }
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        for (Method method : clazz.getDeclaredMethods()) {</span>
+<span class="fc" id="L99">            ConfigComponent configComponent = method.getAnnotation(ConfigComponent.class);</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">            if (configComponent != null) {</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">                String name = StringUtils.isBlank(configComponent.name()) ? fixupMethodName(method) : configComponent.name();</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">                Class&lt;?&gt; childClazz = configComponent.parameterType() == void.class ? method.getReturnType()</span>
+<span class="pc" id="L103">                        : configComponent.parameterType();</span>
+<span class="fc" id="L104">                boolean isCollection = Iterable.class.isAssignableFrom(method.getReturnType());</span>
+
+<span class="fc" id="L106">                Description desc = new Description(configComponent.type(), name, configComponent.desc(), isCollection,</span>
+<span class="fc" id="L107">                        childClazz, getConfigComponents(childClazz), configComponent.required());</span>
+<span class="fc" id="L108">                result.add(desc);</span>
+            }
+        }
+<span class="fc" id="L111">        result.addAll(getConfigComponents(clazz.getSuperclass()));</span>
+<span class="fc" id="L112">        Arrays.stream(clazz.getInterfaces()).forEach(c -&gt; result.addAll(getConfigComponents(c)));</span>
+<span class="fc" id="L113">        return result;</span>
+    }
+
+    private static ConfigComponent findConfigComponent(final Class&lt;?&gt; clazz) {
+<span class="pc bpc" id="L117" title="3 of 6 branches missed.">        if (clazz == null || clazz == String.class || clazz == Object.class) {</span>
+<span class="nc" id="L118">            return null;</span>
+        }
+<span class="fc" id="L120">        ConfigComponent configComponent = clazz.getAnnotation(ConfigComponent.class);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">        return configComponent == null ? findConfigComponent(clazz.getSuperclass()) : configComponent;</span>
+    }
+
+    public static Class&lt;?&gt; getBuiltClass(final Class&lt;? extends IHeaderMatcher.Builder&gt; clazz) {
+        try {
+<span class="fc" id="L126">            MatcherBuilder matcherBuilder = clazz.getAnnotation(MatcherBuilder.class);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">            if (matcherBuilder == null) {</span>
+<span class="fc" id="L128">                return clazz.getMethod(&quot;build&quot;).getReturnType();</span>
+            } else {
+<span class="fc" id="L130">                return matcherBuilder.value();</span>
+            }
+<span class="nc" id="L132">        } catch (NoSuchMethodException | SecurityException e) {</span>
+<span class="nc" id="L133">            throw new IllegalStateException(&quot;The 'build' method of the Builder interface must always be public&quot;);</span>
+        }
+    }
+
+    /**
+     * Create a description for a class.
+     * @param clazz the class to build the description for.
+     * @return the Description of the class or null if no ConfigComponent annotation was found on the class.
+     */
+    public static Description buildMap(final Class&lt;?&gt; clazz) {
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (clazz == IHeaderMatcher.class) {</span>
+<span class="nc" id="L144">            throw new ImplementationException(&quot;'clazz' parameter must not be IHeaderMatcher.class but may be a child of it&quot;);</span>
+        }
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        Class&lt;?&gt; workingClass = IHeaderMatcher.Builder.class.isAssignableFrom(clazz)</span>
+<span class="fc" id="L147">                    ? getBuiltClass((Class&lt;IHeaderMatcher.Builder&gt;) clazz)</span>
+<span class="fc" id="L148">                    : clazz;</span>
+
+<span class="fc" id="L150">        ConfigComponent configComponent = findConfigComponent(workingClass);</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">        if (configComponent == null) {</span>
+<span class="nc" id="L152">            return null;</span>
+        }
+<span class="fc" id="L154">        List&lt;Description&gt; children = getConfigComponents(workingClass);</span>
+
+<span class="fc" id="L156">        return new Description(configComponent, false, null, children);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

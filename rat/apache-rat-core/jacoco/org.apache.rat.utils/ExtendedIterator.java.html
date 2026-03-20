@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ExtendedIterator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.utils</a> &gt; <span class="el_source">ExtendedIterator.java</span></div><h1>ExtendedIterator.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.apache.rat.utils;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+import org.apache.commons.collections4.iterators.FilterIterator;
+import org.apache.commons.collections4.iterators.IteratorChain;
+import org.apache.commons.collections4.iterators.TransformIterator;
+
+/**
+ * An ExtendedIterator is an Iterator wrapping around a plain
+ * (or presented as plain) Iterator. The wrapping allows the usual
+ * operations found on streams (filtering, concatenating, mapping) to be done on an Iterator derived
+ * from some other source. It also provides convenience methods for common operations.
+ * @param &lt;T&gt; The type of object returned from the iterator.
+ */
+public final class ExtendedIterator&lt;T&gt; implements Iterator&lt;T&gt; {
+    /**
+     * Set to &lt;code&gt;true&lt;/code&gt; if this wrapping doesn't permit the use of
+     * {@link #remove()}, otherwise removal is delegated to the base iterator.
+     */
+    private final boolean removeDenied;
+
+    /**
+     * Answer an ExtendedIterator wrapped round &lt;code&gt;it&lt;/code&gt;,
+     * which does not permit &lt;code&gt;.remove()&lt;/code&gt;
+     * even if &lt;code&gt;it&lt;/code&gt; does.
+     * @param it The Iterator to wrap.
+     * @return an Extended iterator on {@code it}
+     */
+    public static &lt;T&gt; ExtendedIterator&lt;T&gt; createNoRemove(final Iterator&lt;T&gt; it) {
+<span class="nc" id="L56">        return new ExtendedIterator&lt;&gt;(it, true);</span>
+    }
+
+    /**
+     * Answer an ExtendedIterator wrapped round a {@link Stream}.
+     * The extended iterator does not permit &lt;code&gt;.remove()&lt;/code&gt;.
+     * &lt;p&gt;
+     * The stream should not be used directly. The effect of doing so is
+     * undefined.
+     * &lt;/p&gt;
+     * @param stream the Stream to create an iterator from.
+     * @return an Extended iterator on the {@code stream} iterator.
+     */
+    public static &lt;T&gt; ExtendedIterator&lt;T&gt; create(final Stream&lt;T&gt; stream) {
+<span class="nc" id="L70">        return new ExtendedIterator&lt;&gt;(stream.iterator(), true);</span>
+    }
+
+    /**
+     * Given an Iterator that returns Iterators, this creates an
+     * Iterator over the next level values.
+     * Similar to list splicing in lisp.
+     * @param it An iterator of iterators.
+     * @return An iterator over the logical concatenation of the inner iterators.
+     */
+    public static &lt;T&gt; ExtendedIterator&lt;T&gt; flatten(final Iterator&lt;Iterator&lt;T&gt;&gt; it) {
+<span class="nc" id="L81">        return new ExtendedIterator&lt;&gt;(new UnwindingIterator&lt;&gt;(it), false);</span>
+    }
+
+    /**
+     * An empty Extended iterator
+     * @return An empty Extended iterator.
+     */
+    public static ExtendedIterator&lt;?&gt; emptyIterator() {
+<span class="nc" id="L89">        return new ExtendedIterator&lt;&gt;(Collections.emptyIterator(), false);</span>
+    }
+
+    /**
+     * Answer an ExtendedIterator returning the elements of &lt;code&gt;it&lt;/code&gt;.
+     * If &lt;code&gt;it&lt;/code&gt; is itself an ExtendedIterator, return that;
+     * otherwise wrap &lt;code&gt;it&lt;/code&gt;.
+     * @param it The iterator to wrap.
+     * @return An Extended iterator wrapping {@code it}
+     */
+    public static &lt;T&gt; ExtendedIterator&lt;T&gt; create(final Iterator&lt;T&gt; it) {
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        return it instanceof ExtendedIterator&lt;?&gt;</span>
+<span class="nc" id="L101">                ? (ExtendedIterator&lt;T&gt;) it</span>
+<span class="fc" id="L102">                : new ExtendedIterator&lt;&gt;(it, false);</span>
+    }
+
+    /** the base iterator that we wrap */
+    private final Iterator&lt;? extends T&gt; base;
+
+    /**
+     * Initialise this wrapping with the given base iterator and remove-control.
+     * @param base the base iterator that this iterator wraps
+     * @param removeDenied true if .remove() must throw an exception
+     */
+<span class="fc" id="L113">    private ExtendedIterator(final Iterator&lt;? extends T&gt; base, final boolean removeDenied) {</span>
+<span class="fc" id="L114">        this.base = base;</span>
+<span class="fc" id="L115">        this.removeDenied = removeDenied;</span>
+<span class="fc" id="L116">    }</span>
+
+    @Override
+    public boolean hasNext() {
+<span class="fc" id="L120">        return base.hasNext();</span>
+    }
+
+    @Override
+    public T next() {
+<span class="fc" id="L125">        return base.next();</span>
+    }
+
+    @Override
+    public void forEachRemaining(final Consumer&lt;? super T&gt; action) {
+<span class="fc" id="L130">        base.forEachRemaining(action);</span>
+<span class="fc" id="L131">    }</span>
+
+    @Override
+    public void remove() {
+<span class="nc bnc" id="L135" title="All 2 branches missed.">        if (removeDenied) {</span>
+<span class="nc" id="L136">            throw new UnsupportedOperationException();</span>
+        }
+<span class="nc" id="L138">        base.remove();</span>
+<span class="nc" id="L139">    }</span>
+
+    /**
+     * Returns the next item and removes it from the iterator.
+     * @return the next item from the iterator.
+     */
+    public T removeNext() {
+<span class="nc" id="L146">        T result = next();</span>
+<span class="nc" id="L147">        remove();</span>
+<span class="nc" id="L148">        return result;</span>
+    }
+
+    /**
+     * Chains the {@code other} iterator to the end of this one.
+     * @param other the other iterator to extend this iterator with.
+     * @return A new iterator returning the contents of {@code this} iterator followed by the contents of {@code other{ iterator.}}
+     * @param &lt;X&gt; The type of object returned from the other iterator.
+     */
+    public &lt;X extends T&gt; ExtendedIterator&lt;T&gt; andThen(final Iterator&lt;X&gt; other) {
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if (base instanceof IteratorChain) {</span>
+<span class="nc" id="L159">            ((IteratorChain&lt;T&gt;) base).addIterator(other);</span>
+<span class="nc" id="L160">            return this;</span>
+        }
+<span class="fc" id="L162">        return new ExtendedIterator&lt;&gt;(new IteratorChain&lt;&gt;(this.base, other), this.removeDenied);</span>
+    }
+
+    /**
+     * Filter this iterator using a predicate.
+     * Only items for which the predicate returns {@code true} will be included in the result.
+     * @param predicate The predicate to filter the items with.
+     * @return An iterator filtered by the predicate.
+     */
+    public ExtendedIterator&lt;T&gt; filter(final Predicate&lt;T&gt; predicate) {
+<span class="fc" id="L172">        return new ExtendedIterator&lt;&gt;(new FilterIterator&lt;&gt;(this, predicate::test), this.removeDenied);</span>
+    }
+
+    /**
+     * Map the elements of the iterator to a now type.
+     * @param function The function to map elements of {@code &lt;T&gt;} to type {@code &lt;U&gt;}.
+     * @return An Extended iterator that returns a {@code &lt;U&gt;} for very {@code &lt;T&gt;} in the original iterator.
+     * @param &lt;U&gt; The object type to return.
+     */
+    public &lt;U&gt; ExtendedIterator&lt;U&gt; map(final Function&lt;T, U&gt; function) {
+<span class="fc" id="L182">        return new ExtendedIterator&lt;&gt;(new TransformIterator&lt;&gt;(this, function::apply), false);</span>
+    }
+
+    /**
+     * A method to add the remaining elements in the iterator an arbitrary collection.
+     * This method consumes the iterator.
+     * @param collection THe collection to add elements to.
+     * @return the {@code collection} with the elements added.
+     * @param &lt;U&gt; A collection of objects of type {@code &lt;T&gt;}.
+     */
+    public &lt;U extends Collection&lt;T&gt;&gt; U addTo(final U collection) {
+<span class="nc" id="L193">        this.forEachRemaining(collection::add);</span>
+<span class="nc" id="L194">        return collection;</span>
+    }
+
+    /**
+     * A class to unwind an iterator of iterators.
+     * @param &lt;T&gt; The type of the object returned from the iterator.
+     */
+    private static class UnwindingIterator&lt;T&gt; implements Iterator&lt;T&gt; {
+        /** The innermost iterator */
+        private final Iterator&lt;Iterator&lt;T&gt;&gt; inner;
+        /** The iterator extracted from the inner iterator */
+        private Iterator&lt;T&gt; outer;
+
+        /**
+         * Constructs an iterator from an iterator of iterators.
+         * @param it The iterator of iterators to unwind.
+         */
+<span class="nc" id="L211">        UnwindingIterator(final Iterator&lt;Iterator&lt;T&gt;&gt; it) {</span>
+<span class="nc" id="L212">            this.inner = it;</span>
+<span class="nc" id="L213">        }</span>
+
+        @Override
+        public boolean hasNext() {
+<span class="nc bnc" id="L217" title="All 2 branches missed.">            if (outer == null) {</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">                if (!inner.hasNext()) {</span>
+<span class="nc" id="L219">                    return false;</span>
+                }
+<span class="nc" id="L221">                outer = inner.next();</span>
+            }
+<span class="nc bnc" id="L223" title="All 2 branches missed.">            while (!outer.hasNext()) {</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">                if (!inner.hasNext()) {</span>
+<span class="nc" id="L225">                    return false;</span>
+                }
+<span class="nc" id="L227">                outer = inner.next();</span>
+            }
+<span class="nc" id="L229">            return true;</span>
+        }
+
+        @Override
+        public T next() {
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            if (!hasNext()) {</span>
+<span class="nc" id="L235">                throw new NoSuchElementException();</span>
+            }
+<span class="nc" id="L237">            return outer.next();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

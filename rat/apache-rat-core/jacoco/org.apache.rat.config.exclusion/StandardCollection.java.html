@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StandardCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.config.exclusion</a> &gt; <span class="el_source">StandardCollection.java</span></div><h1>StandardCollection.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.config.exclusion;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+
+import org.apache.rat.config.exclusion.fileProcessors.AbstractFileProcessorBuilder;
+import org.apache.rat.config.exclusion.fileProcessors.BazaarIgnoreBuilder;
+import org.apache.rat.config.exclusion.fileProcessors.CVSIgnoreBuilder;
+import org.apache.rat.config.exclusion.fileProcessors.GitIgnoreBuilder;
+import org.apache.rat.config.exclusion.fileProcessors.HgIgnoreBuilder;
+import org.apache.rat.document.DocumentName;
+import org.apache.rat.document.DocumentNameMatcher;
+import org.apache.rat.utils.ExtendedIterator;
+
+/**
+ * Collection of standard excludes.
+ * HINT: In order to work recursively each entry is prefixed with {@code &quot;**\/&quot;}.
+ */
+<span class="fc" id="L44">public enum StandardCollection {</span>
+    /**
+     * All the standard excludes combined.
+     */
+    // see getCollections() for loading
+<span class="fc" id="L49">    ALL(&quot;All of the Standard Excludes combined.&quot;, null, null, null),</span>
+    /**
+     * The files and directories created by an ARCH source code control based tool.
+     */
+<span class="fc" id="L53">    ARCH(&quot;The files and directories created by an ARCH source code control based tool.&quot;,</span>
+<span class="fc" id="L54">            Collections.singletonList(&quot;**/.arch-ids/**&quot;), null, null),</span>
+    /**
+     * The files and directories created by a Bazaar source code control based tool.
+     */
+<span class="fc" id="L58">    BAZAAR(&quot;The files and directories created by a Bazaar source code control based tool.&quot;,</span>
+<span class="fc" id="L59">            Arrays.asList(&quot;**/.bzr/**&quot;, &quot;**/.bzrignore&quot;), null, new BazaarIgnoreBuilder()),</span>
+    /**
+     * The files and directories created by a Bitkeeper source code control based tool.
+     */
+<span class="fc" id="L63">    BITKEEPER(&quot;The files and directories created by a Bitkeeper source code control based tool.&quot;,</span>
+<span class="fc" id="L64">            Arrays.asList(&quot;**/BitKeeper/**&quot;, &quot;**/ChangeSet/**&quot;), null, null),</span>
+    /**
+     * The files and directories created by a CVS source code control based tool.
+     * @see &lt;a href=&quot;https://www.gnu.org/software/trans-coord/manual/cvs/html_node/cvsignore.html#cvsignore&quot;&gt;Ignoring files via cvsignore&lt;/a&gt;
+     */
+<span class="fc" id="L69">    CVS(&quot;The files and directories created by a CVS source code control based tool.&quot;,</span>
+<span class="fc" id="L70">            Arrays.asList(&quot;**/.cvsignore&quot;,</span>
+                    &quot;**/RCS/**&quot;, &quot;**/SCCS/**&quot;, &quot;**/CVS/**&quot;, &quot;**/CVS.adm/**&quot;,
+                    &quot;**/RCSLOG/**&quot;, &quot;**/cvslog.*&quot;, &quot;**/tags/**&quot;, &quot;**/TAGS/**&quot;,
+                    &quot;**/.make.state&quot;, &quot;**/.nse_depinfo&quot;,
+                    &quot;**/*~&quot;, &quot;**/#*&quot;, &quot;**/.#*&quot;, &quot;**/,*&quot;, &quot;**/_$*&quot;, &quot;**/*$&quot;, &quot;**/*.old&quot;, &quot;**/*.bak&quot;, &quot;**/*.BAK&quot;,
+                    &quot;**/*.orig&quot;, &quot;**/*.rej&quot;, &quot;**/.del-*&quot;,
+                    &quot;**/*.a&quot;, &quot;**/*.old&quot;, &quot;**/*.o&quot;, &quot;**/*.obj&quot;, &quot;**/*.so&quot;, &quot;**/*.exe&quot;,
+                    &quot;**/*.Z&quot;, &quot;**/*.elc&quot;, &quot;**/*.ln&quot;, &quot;**/core&quot;),
+            null, new CVSIgnoreBuilder()),
+    /**
+     * The files and directories created by a DARCS source code control based tool.
+     */
+<span class="fc" id="L82">    DARCS(&quot;The files and directories created by a DARCS source code control based tool.&quot;,</span>
+<span class="fc" id="L83">            Arrays.asList(&quot;**/_darcs/**&quot;, &quot;**/.darcsrepo/**&quot;, &quot;**/-darcs-backup*&quot;, &quot;**/.darcs-temp-mail&quot;), null, null),</span>
+    /**
+     * The files and directories created by an Eclipse IDE based tool.
+     */
+<span class="fc" id="L87">    ECLIPSE(&quot;The files and directories created by an Eclipse IDE based tool.&quot;,</span>
+<span class="fc" id="L88">            Arrays.asList(&quot;**/.checkstyle&quot;, &quot;**/.classpath&quot;, &quot;**/.factorypath&quot;,</span>
+                    &quot;**/.project&quot;, &quot;**/.settings/**&quot;, &quot;**/.externalToolBuilders/**&quot;, &quot;**/bin/**&quot;),
+            null, null),
+    /**
+     * The files and directories created by GIT source code control to support GIT, also processes files listed in '.gitignore'
+     * and (unless RAT_NO_GIT_GLOBAL_IGNORE is specified) the global gitignore.
+     */
+<span class="fc" id="L95">    GIT(&quot;The files and directories created by GIT source code control to support GIT, also processes files listed in '.gitignore' &quot; +</span>
+        &quot;and (unless RAT_NO_GIT_GLOBAL_IGNORE is specified) the global gitignore.&quot;,
+<span class="fc" id="L97">            Arrays.asList(&quot;**/.git/**&quot;, &quot;**/.gitignore&quot;),</span>
+            null,
+            new GitIgnoreBuilder()
+    ),
+    /**
+     * The hidden directories. Directories with names that start with {@code .}
+     */
+<span class="fc" id="L104">    HIDDEN_DIR(&quot;The hidden directories. Directories with names that start with '.'&quot;,</span>
+            null,
+<span class="fc" id="L106">            new DocumentNameMatcher(&quot;HIDDEN_DIR&quot;, new Predicate&lt;&gt;() {</span>
+                @Override
+                public boolean test(final DocumentName documentName) {
+<span class="fc" id="L109">                    File file = documentName.asFile();</span>
+<span class="fc bfc" id="L110" title="All 4 branches covered.">                    return file.isDirectory() &amp;&amp; ExclusionUtils.isHidden(documentName.getShortName());</span>
+                }
+
+                @Override
+                public String toString() {
+<span class="nc" id="L115">                    return &quot;HIDDEN_DIR&quot;;</span>
+                }
+            }), null
+    ),
+    /**
+     * The hidden files. Directories with names that start with {@code .}
+     */
+<span class="fc" id="L122">    HIDDEN_FILE(&quot;The hidden files. Directories with names that start with '.'&quot;,</span>
+            null,
+<span class="fc" id="L124">            new DocumentNameMatcher(&quot;HIDDEN_FILE&quot;, new Predicate&lt;&gt;() {</span>
+                @Override
+                public boolean test(final DocumentName documentName) {
+<span class="fc" id="L127">                    File file = documentName.asFile();</span>
+<span class="fc bfc" id="L128" title="All 4 branches covered.">                    return file.isFile() &amp;&amp; ExclusionUtils.isHidden(documentName.getShortName());</span>
+                }
+
+                @Override
+                public String toString() {
+<span class="nc" id="L133">                    return &quot;HIDDEN_FILE&quot;;</span>
+                }
+            }), null
+    ),
+    /**
+     * The files and directories created by an IDEA IDE based tool.
+     */
+<span class="fc" id="L140">    IDEA(&quot;The files and directories created by an IDEA IDE based tool.&quot;,</span>
+<span class="fc" id="L141">            Arrays.asList(&quot;**/*.iml&quot;, &quot;**/*.ipr&quot;, &quot;**/*.iws&quot;, &quot;**/.idea/**&quot;), null, null),</span>
+    /**
+     * The {@code .DS_Store} files on Mac computers.
+     */
+<span class="fc" id="L145">    MAC(&quot;The .DS_Store files on Mac computers.&quot;,</span>
+<span class="fc" id="L146">            Collections.singletonList(&quot;**/.DS_Store&quot;), null, null),</span>
+    /**
+     * The files and directories created by Gradle build system based projects.
+     */
+<span class="fc" id="L150">    GRADLE(&quot;The files and directories created by Gradle build system based projects.&quot;,</span>
+<span class="fc" id="L151">            Arrays.asList(</span>
+                    &quot;**/build/**&quot;,
+                    &quot;**/.gradle/**&quot;,
+                    &quot;**/.kotlin/**&quot;
+                    ), null, null),
+    /**
+     * The files and directories created by Maven build system based project.
+     */
+<span class="fc" id="L159">    MAVEN(&quot;The files and directories created by Maven build system based project.&quot;,</span>
+<span class="fc" id="L160">            Arrays.asList(</span>
+                    &quot;**/target/**&quot;, //
+                    &quot;**/cobertura.ser&quot;, //
+                    &quot;**/MANIFEST.MF&quot;, // a MANIFEST.MF file cannot contain comment lines. In other words: It is not possible, to include a license.
+                    &quot;**/release.properties&quot;, //
+                    &quot;**/.repository&quot;, // Used by Jenkins when a Maven job uses a private repository that is &quot;Local to the workspace&quot;
+                    &quot;**/build.log&quot;, // RAT-160: until now maven-invoker-plugin runs create a build.log that is not part of a release
+                    &quot;**/.mvn/**&quot;, // Project configuration since Maven 3.3.1 which contains maven.config, jvm.config, extensions.xml
+                    &quot;**/pom.xml.releaseBackup&quot;), null, null),
+    /**
+     * The files and directories created by a Mercurial source code control based tool.
+     */
+<span class="fc" id="L172">    MERCURIAL(&quot;The files and directories created by a Mercurial source code control based tool.&quot;,</span>
+<span class="fc" id="L173">            Arrays.asList(&quot;**/.hg/**&quot;, &quot;**/.hgignore&quot;), null, new HgIgnoreBuilder()),</span>
+    /**
+     * The set of miscellaneous files generally left by editors and the like.
+     */
+<span class="fc" id="L177">    MISC(&quot;The set of miscellaneous files generally left by editors and the like.&quot;,</span>
+<span class="fc" id="L178">            Arrays.asList(&quot;**/*~&quot;, &quot;**/#*#&quot;, &quot;**/.#*&quot;, &quot;**/%*%&quot;, &quot;**/._*&quot;),</span>
+            null, null),
+    /**
+     * The files and directories created by an MKS source code control based tool.
+     */
+<span class="fc" id="L183">    MKS(&quot;The files and directories created by an MKS source code control based tool.&quot;,</span>
+<span class="fc" id="L184">            Collections.singletonList(&quot;**/project.pj&quot;), null, null),</span>
+    /**
+     * The files and directories created by an RCS source code control based tool.
+     */
+<span class="fc" id="L188">    RCS(&quot;The files and directories created by a RCS source code control based tool.&quot;,</span>
+<span class="fc" id="L189">            Collections.singletonList(&quot;**/RCS/**&quot;), null, null),</span>
+    /**
+     * The files and directories created by a SCCS source code control based tool.
+     */
+<span class="fc" id="L193">    SCCS(&quot;The files and directories created by a SCCS source code control based tool.&quot;,</span>
+<span class="fc" id="L194">            Collections.singletonList(&quot;**/SCCS/**&quot;), null, null),</span>
+    /**
+     * The files and directories created by a Serena Dimensions V10 change control system based tool.
+     */
+<span class="fc" id="L198">    SERENA_DIMENSIONS_10(&quot;The files and directories created by a Serena Dimensions V10 change control system based tool.&quot;,</span>
+<span class="fc" id="L199">            Collections.singletonList(&quot;**/.metadata/**&quot;), null, null),</span>
+    /**
+     * A standard collection of generally accepted patterns to ignore.
+     */
+    // see getCollections() for loading
+<span class="fc" id="L204">    STANDARD_PATTERNS(&quot;A standard collection of generally accepted patterns to ignore.&quot;, null, null, null),</span>
+    /**
+     * A standard collection of SCMs.
+     */
+    // see getCollections() for loading
+<span class="fc" id="L209">    STANDARD_SCMS(&quot;A standard collection of SCMs&quot;, null, null, null),</span>
+    /**
+     * The files and directories created by a Subversion source code control based tool.
+     */
+<span class="fc" id="L213">    SUBVERSION(&quot;The files and directories created by a Subversion source code control based tool.&quot;,</span>
+<span class="fc" id="L214">            Collections.singletonList(&quot;**/.svn/**&quot;), null, null),</span>
+    /**
+     * The files and directories created by a Surround SCM source code control based tool.
+     */
+<span class="fc" id="L218">    SURROUND_SCM(&quot;The files and directories created by a Surround SCM source code control based tool.&quot;,</span>
+<span class="fc" id="L219">            Collections.singletonList(&quot;**/.MySCMServerInfo&quot;), null, null),</span>
+    /**
+     * The files and directories created by a Visual Source Safe source code control based tool.
+     */
+<span class="fc" id="L223">    VSS(&quot;The files and directories created by a Visual Source Safe source code control based tool.&quot;,</span>
+<span class="fc" id="L224">            Collections.singletonList(&quot;**/vssver.scc&quot;), null, null);</span>
+
+    /** The collections of patterns to be excluded. May be empty.*/
+    private final Collection&lt;String&gt; patterns;
+    /** A document name matcher supplier to create a document name matcher. May be null */
+    private final DocumentNameMatcher staticDocumentNameMatcher;
+    /** The AbstractFileProcessorBuilder to process the exclude file associated with this exclusion. May be {@code null}. */
+    private final AbstractFileProcessorBuilder fileProcessorBuilder;
+    /** The description of this collection */
+    private final String desc;
+
+    StandardCollection(final String desc, final Collection&lt;String&gt; patterns, final DocumentNameMatcher documentNameMatcher,
+<span class="fc" id="L236">                       final AbstractFileProcessorBuilder fileProcessorBuilder) {</span>
+<span class="fc" id="L237">        this.desc = desc;</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        this.patterns = patterns == null ? Collections.emptyList() : new HashSet&lt;&gt;(patterns);</span>
+<span class="fc" id="L239">        this.staticDocumentNameMatcher = documentNameMatcher;</span>
+<span class="fc" id="L240">        this.fileProcessorBuilder = fileProcessorBuilder;</span>
+<span class="fc" id="L241">    }</span>
+
+    /**
+     * @return the description of the given collection.
+     */
+    public String desc() {
+<span class="fc" id="L247">        return desc;</span>
+    }
+
+    /**
+     * Handles aggregate StandardCollections (e.g. ALL) by generating the set of StandardCollection objects that
+     * comprise this StandardCollection.
+     * @return the set of StandardCollection objects that comprise this StandardCollection.
+     */
+    private Set&lt;StandardCollection&gt; getCollections() {
+<span class="fc" id="L256">        Set&lt;StandardCollection&gt; result = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L257" title="All 4 branches covered.">        switch (this) {</span>
+            case ALL:
+<span class="fc bfc" id="L259" title="All 2 branches covered.">                for (StandardCollection sc : StandardCollection.values()) {</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">                    if (sc != ALL) {</span>
+<span class="fc" id="L261">                        result.add(sc);</span>
+                    }
+                }
+<span class="fc" id="L264">                break;</span>
+            case STANDARD_PATTERNS:
+<span class="fc" id="L266">                result.addAll(Arrays.asList(MISC, CVS, RCS, SCCS, VSS, MKS, SUBVERSION, ARCH, BAZAAR, SURROUND_SCM, MAC,</span>
+                        SERENA_DIMENSIONS_10, MERCURIAL, GIT, BITKEEPER, DARCS));
+<span class="fc" id="L268">                break;</span>
+            case STANDARD_SCMS:
+<span class="fc" id="L270">                result.addAll(Arrays.asList(SUBVERSION, GIT, BAZAAR, MERCURIAL, CVS));</span>
+<span class="fc" id="L271">                break;</span>
+
+            default:
+<span class="fc" id="L274">                result.add(this);</span>
+        }
+<span class="fc" id="L276">        return result;</span>
+    }
+
+    /**
+     * Returns combined and deduped collection of patterns.
+     * @return the combined and deduped collection of patterns in the given collection.
+     */
+    public Set&lt;String&gt; patterns() {
+<span class="fc" id="L284">        Set&lt;String&gt; result = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L285">        getCollections().forEach(sc -&gt; result.addAll(sc.patterns));</span>
+<span class="fc" id="L286">        return result;</span>
+    }
+
+    /**
+     * Returns the fileProcessor if it exists.
+     *
+     * @return the fileProcessor if it exists, {@code null} otherwise.
+     */
+    public ExtendedIterator&lt;AbstractFileProcessorBuilder&gt; fileProcessorBuilder() {
+<span class="fc" id="L295">        List&lt;AbstractFileProcessorBuilder&gt; lst = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">        for (StandardCollection sc : getCollections()) {</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">            if (sc.fileProcessorBuilder != null) {</span>
+<span class="fc" id="L298">                lst.add(sc.fileProcessorBuilder);</span>
+            }
+<span class="fc" id="L300">        }</span>
+<span class="fc" id="L301">        return ExtendedIterator.create(lst.iterator());</span>
+    }
+
+    /**
+     * Returns the documentNameMatchSupplier if it exists.
+     *
+     * @return the documentNameMatchSupplier if it exists, {@code null} otherwise.
+     */
+    public DocumentNameMatcher staticDocumentNameMatcher() {
+        // account for cases where this has more than one supplier.
+<span class="fc" id="L311">        List&lt;DocumentNameMatcher&gt; lst = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L312" title="All 2 branches covered.">        for (StandardCollection sc : getCollections()) {</span>
+<span class="fc bfc" id="L313" title="All 2 branches covered.">            if (sc.staticDocumentNameMatcher != null) {</span>
+<span class="fc" id="L314">                lst.add(sc.staticDocumentNameMatcher);</span>
+            }
+<span class="fc" id="L316">        }</span>
+<span class="fc bfc" id="L317" title="All 2 branches covered.">        if (lst.isEmpty()) {</span>
+<span class="fc" id="L318">            return null;</span>
+        }
+<span class="pc bpc" id="L320" title="1 of 2 branches missed.">        if (lst.size() == 1) {</span>
+<span class="fc" id="L321">            return lst.get(0);</span>
+        }
+
+<span class="nc" id="L324">        return new DocumentNameMatcher(name() + &quot; static DocumentNameMatchers&quot;,  DocumentNameMatcher.or(lst));</span>
+    }
+
+    /**
+     * Returns {@code true} if the collections has a document name match supplier.
+     *
+     * @return {@code true} if the collections has a document name match supplier.
+     */
+    public boolean hasStaticDocumentNameMatcher() {
+        // account for cases where this has more than one supplier.
+<span class="fc bfc" id="L334" title="All 2 branches covered.">        for (StandardCollection sc : getCollections()) {</span>
+<span class="fc bfc" id="L335" title="All 2 branches covered.">            if (sc.staticDocumentNameMatcher != null) {</span>
+<span class="fc" id="L336">                return true;</span>
+            }
+<span class="fc" id="L338">        }</span>
+<span class="fc" id="L339">        return false;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
