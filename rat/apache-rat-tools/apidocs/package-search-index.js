@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apache.rat.documentation"},{"l":"org.apache.rat.documentation.options"},{"l":"org.apache.rat.documentation.velocity"},{"l":"org.apache.rat.tools"},{"l":"org.apache.rat.tools.xsd"}];updateSearchResults();
