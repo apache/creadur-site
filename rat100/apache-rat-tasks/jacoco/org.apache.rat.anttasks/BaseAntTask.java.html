@@ -514,17 +514,17 @@ public class Licenses {
     }
 
 public class LicensesApproved {
-<span class="nc" id="L517">    LicensesApproved() { }</span>
-public void addConfiguredLst(Lst licenseID) {
-<span class="nc" id="L519">    addArg(&quot;licenses-approved&quot;, licenseID.value);</span>
-<span class="nc" id="L520">}</span>
+<span class="fc" id="L517">    LicensesApproved() { }</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="nc bnc" id="L522" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
-<span class="nc bnc" id="L523" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="nc" id="L524">                    addArg(&quot;licenses-approved-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L519" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L520" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L521">                    addArg(&quot;licenses-approved-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="nc" id="L526">            }</span>
-<span class="nc" id="L527">        }</span>
+<span class="fc" id="L523">            }</span>
+<span class="fc" id="L524">        }</span>
+public void addConfiguredLst(Lst licenseID) {
+<span class="fc" id="L526">    addArg(&quot;licenses-approved&quot;, licenseID.value);</span>
+<span class="fc" id="L527">}</span>
     }
     /**
      * A comma separated list of approved license family IDs. These license families will be added to the list of approved license families.
@@ -534,17 +534,17 @@ public void addConfiguredLst(Lst licenseID) {
     }
 
 public class LicenseFamiliesApproved {
-<span class="fc" id="L537">    LicenseFamiliesApproved() { }</span>
+<span class="nc" id="L537">    LicenseFamiliesApproved() { }</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="fc bfc" id="L539" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
-<span class="pc bpc" id="L540" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="fc" id="L541">                    addArg(&quot;license-families-approved-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="nc bnc" id="L539" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
+<span class="nc bnc" id="L540" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="nc" id="L541">                    addArg(&quot;license-families-approved-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="fc" id="L543">            }</span>
-<span class="fc" id="L544">        }</span>
+<span class="nc" id="L543">            }</span>
+<span class="nc" id="L544">        }</span>
 public void addConfiguredLst(Lst familyID) {
-<span class="fc" id="L546">    addArg(&quot;license-families-approved&quot;, familyID.value);</span>
-<span class="fc" id="L547">}</span>
+<span class="nc" id="L546">    addArg(&quot;license-families-approved&quot;, familyID.value);</span>
+<span class="nc" id="L547">}</span>
     }
     /**
      * A comma separated list of denied License IDs. These licenses will be removed from the list of approved licenses. Once licenses are removed they can not be added back.
@@ -554,17 +554,17 @@ public void addConfiguredLst(Lst familyID) {
     }
 
 public class LicensesDenied {
-<span class="nc" id="L557">    LicensesDenied() { }</span>
+<span class="fc" id="L557">    LicensesDenied() { }</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="nc bnc" id="L559" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
-<span class="nc bnc" id="L560" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="nc" id="L561">                    addArg(&quot;licenses-denied-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L559" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L560" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L561">                    addArg(&quot;licenses-denied-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="nc" id="L563">            }</span>
-<span class="nc" id="L564">        }</span>
+<span class="fc" id="L563">            }</span>
+<span class="fc" id="L564">        }</span>
 public void addConfiguredLst(Lst licenseID) {
-<span class="nc" id="L566">    addArg(&quot;licenses-denied&quot;, licenseID.value);</span>
-<span class="nc" id="L567">}</span>
+<span class="fc" id="L566">    addArg(&quot;licenses-denied&quot;, licenseID.value);</span>
+<span class="fc" id="L567">}</span>
     }
     /**
      * A comma separated list of denied License family IDs. These license families will be removed from the list of approved licenses. Once license families are removed they can not be added back.
@@ -574,17 +574,17 @@ public void addConfiguredLst(Lst licenseID) {
     }
 
 public class LicenseFamiliesDenied {
-<span class="nc" id="L577">    LicenseFamiliesDenied() { }</span>
+<span class="fc" id="L577">    LicenseFamiliesDenied() { }</span>
 public void addConfiguredLst(Lst familyID) {
-<span class="nc" id="L579">    addArg(&quot;license-families-denied&quot;, familyID.value);</span>
-<span class="nc" id="L580">}</span>
+<span class="fc" id="L579">    addArg(&quot;license-families-denied&quot;, familyID.value);</span>
+<span class="fc" id="L580">}</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="nc bnc" id="L582" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
-<span class="nc bnc" id="L583" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="nc" id="L584">                    addArg(&quot;license-families-denied-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L582" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L583" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L584">                    addArg(&quot;license-families-denied-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="nc" id="L586">            }</span>
-<span class="nc" id="L587">        }</span>
+<span class="fc" id="L586">            }</span>
+<span class="fc" id="L587">        }</span>
     }
     /**
      * The acceptable maximum number for the specified counter. A value of '-1' specifies an unlimited number.
@@ -634,20 +634,20 @@ public void addConfiguredExpr(Expr expression) {
     }
 
 public class InputExclude {
-<span class="nc" id="L637">    InputExclude() { }</span>
-public void addConfiguredStd(Std standardCollection) {
-<span class="nc" id="L639">    addArg(&quot;input-exclude-std&quot;, standardCollection.value);</span>
-<span class="nc" id="L640">}</span>
+<span class="fc" id="L637">    InputExclude() { }</span>
 public void addConfiguredExpr(Expr expression) {
-<span class="nc" id="L642">    addArg(&quot;input-exclude&quot;, expression.value);</span>
-<span class="nc" id="L643">}</span>
+<span class="fc" id="L639">    addArg(&quot;input-exclude&quot;, expression.value);</span>
+<span class="fc" id="L640">}</span>
+public void addConfiguredStd(Std standardCollection) {
+<span class="fc" id="L642">    addArg(&quot;input-exclude-std&quot;, standardCollection.value);</span>
+<span class="fc" id="L643">}</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="nc bnc" id="L645" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
-<span class="nc bnc" id="L646" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="nc" id="L647">                    addArg(&quot;input-exclude-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L645" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L646" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L647">                    addArg(&quot;input-exclude-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="nc" id="L649">            }</span>
-<span class="nc" id="L650">        }</span>
+<span class="fc" id="L649">            }</span>
+<span class="fc" id="L650">        }</span>
     }
     /**
      * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files.
@@ -661,16 +661,16 @@ public class InputInclude {
 public void addConfiguredExpr(Expr expression) {
 <span class="nc" id="L662">    addArg(&quot;input-include&quot;, expression.value);</span>
 <span class="nc" id="L663">}</span>
-        public void addConfiguredFileset(FileSet fileSet) {
-<span class="nc bnc" id="L665" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
-<span class="nc bnc" id="L666" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="nc" id="L667">                    addArg(&quot;input-include-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
-                }
-<span class="nc" id="L669">            }</span>
-<span class="nc" id="L670">        }</span>
 public void addConfiguredStd(Std standardCollection) {
-<span class="nc" id="L672">    addArg(&quot;input-include-std&quot;, standardCollection.value);</span>
-<span class="nc" id="L673">}</span>
+<span class="nc" id="L665">    addArg(&quot;input-include-std&quot;, standardCollection.value);</span>
+<span class="nc" id="L666">}</span>
+        public void addConfiguredFileset(FileSet fileSet) {
+<span class="nc bnc" id="L668" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
+<span class="nc bnc" id="L669" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="nc" id="L670">                    addArg(&quot;input-include-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+                }
+<span class="nc" id="L672">            }</span>
+<span class="nc" id="L673">        }</span>
     }
     /**
      * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files.
