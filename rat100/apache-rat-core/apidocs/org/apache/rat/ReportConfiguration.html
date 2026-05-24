@@ -165,14 +165,9 @@ configuration and invoke the <a href="Reporter.html" title="class in org.apache.
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ReportConfiguration.NoCloseOutputStream.html" class="type-name-link" title="class in org.apache.rat">ReportConfiguration.NoCloseOutputStream</a></code></div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="ReportConfiguration.Processing.html" class="type-name-link" title="enum class in org.apache.rat">ReportConfiguration.Processing</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A wrapper around an output stream that does not close the output stream.</div>
-</div>
-<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="ReportConfiguration.Processing.html" class="type-name-link" title="enum class in org.apache.rat">ReportConfiguration.Processing</a></code></div>
-<div class="col-last odd-row-color">
 <div class="block">The styles of processing for various categories of documents.</div>
 </div>
 </div>
@@ -1080,15 +1075,15 @@ multiple times so the URL must be capable of being opened multiple times.</div>
 <div class="block">Sets the supplier for the output stream. The supplier may be called multiple
 times to provide the stream. Suppliers should prepare streams that are
 appended to and that can be closed. If an <code>OutputStream</code> should not be
-closed consider wrapping it in a <code>NoCloseOutputStream</code></div>
+closed consider wrapping it in a <code>CloseShieldOutputStream</code></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>out</code> - The OutputStream supplier that provides the output stream to write
 the report to. A null value will use System.out.</dd>
 <dt>See Also:</dt>
 <dd>
-<ul class="tag-list-long">
-<li><a href="ReportConfiguration.NoCloseOutputStream.html" title="class in org.apache.rat"><code>ReportConfiguration.NoCloseOutputStream</code></a></li>
+<ul class="tag-list">
+<li><code>CloseShieldOutputStream</code></li>
 </ul>
 </dd>
 </dl>

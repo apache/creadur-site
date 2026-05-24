@@ -218,7 +218,7 @@
 <a class="jxr_linenumber" name="L210" href="#L210">210</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String createName(<strong class="jxr_keyword">final</strong> Option option) {
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>         String name = option.getLongOpt();
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>         name = StringUtils.defaultIfEmpty(RENAME_MAP.get(name), name).toLowerCase(Locale.ROOT);
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> CasedString(CasedString.StringCase.KEBAB, name).toCase(CasedString.StringCase.CAMEL);
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> CasedString(CasedString.StringCase.KEBAB, name).toCase(CasedString.StringCase.PASCAL);
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>     }
 <a class="jxr_linenumber" name="L215" href="#L215">215</a> 
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>     <em class="jxr_javadoccomment">/**</em>

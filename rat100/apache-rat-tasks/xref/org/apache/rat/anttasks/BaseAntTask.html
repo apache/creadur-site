@@ -94,7 +94,7 @@
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>  
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String createName(String longOpt) {
 <a class="jxr_linenumber" name="L88" href="#L88">88</a>          String name = StringUtils.defaultIfEmpty(xlateName.get(longOpt), longOpt).toLowerCase(Locale.ROOT);
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> CasedString(CasedString.StringCase.KEBAB, name).toCase(CasedString.StringCase.CAMEL);
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> CasedString(CasedString.StringCase.KEBAB, name).toCase(CasedString.StringCase.PASCAL);
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>      }
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> List&lt;String&gt; unsupportedArgs() {
@@ -523,16 +523,16 @@
 <a class="jxr_linenumber" name="L515" href="#L515">515</a> 
 <a class="jxr_linenumber" name="L516" href="#L516">516</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> LicensesApproved {
 <a class="jxr_linenumber" name="L517" href="#L517">517</a>     LicensesApproved() { }
-<a class="jxr_linenumber" name="L518" href="#L518">518</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredFileset(FileSet fileSet) {
-<a class="jxr_linenumber" name="L519" href="#L519">519</a>             <strong class="jxr_keyword">for</strong> (Resource resource : fileSet) {
-<a class="jxr_linenumber" name="L520" href="#L520">520</a>                 <strong class="jxr_keyword">if</strong> (resource.isFilesystemOnly()) {
-<a class="jxr_linenumber" name="L521" href="#L521">521</a>                     addArg(<span class="jxr_string">"licenses-approved-file"</span>, ((FileResource) resource).getFile().getAbsolutePath());
-<a class="jxr_linenumber" name="L522" href="#L522">522</a>                 }
-<a class="jxr_linenumber" name="L523" href="#L523">523</a>             }
-<a class="jxr_linenumber" name="L524" href="#L524">524</a>         }
-<a class="jxr_linenumber" name="L525" href="#L525">525</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredLst(Lst licenseID) {
-<a class="jxr_linenumber" name="L526" href="#L526">526</a>     addArg(<span class="jxr_string">"licenses-approved"</span>, licenseID.value);
-<a class="jxr_linenumber" name="L527" href="#L527">527</a> }
+<a class="jxr_linenumber" name="L518" href="#L518">518</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredLst(Lst licenseID) {
+<a class="jxr_linenumber" name="L519" href="#L519">519</a>     addArg(<span class="jxr_string">"licenses-approved"</span>, licenseID.value);
+<a class="jxr_linenumber" name="L520" href="#L520">520</a> }
+<a class="jxr_linenumber" name="L521" href="#L521">521</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredFileset(FileSet fileSet) {
+<a class="jxr_linenumber" name="L522" href="#L522">522</a>             <strong class="jxr_keyword">for</strong> (Resource resource : fileSet) {
+<a class="jxr_linenumber" name="L523" href="#L523">523</a>                 <strong class="jxr_keyword">if</strong> (resource.isFilesystemOnly()) {
+<a class="jxr_linenumber" name="L524" href="#L524">524</a>                     addArg(<span class="jxr_string">"licenses-approved-file"</span>, ((FileResource) resource).getFile().getAbsolutePath());
+<a class="jxr_linenumber" name="L525" href="#L525">525</a>                 }
+<a class="jxr_linenumber" name="L526" href="#L526">526</a>             }
+<a class="jxr_linenumber" name="L527" href="#L527">527</a>         }
 <a class="jxr_linenumber" name="L528" href="#L528">528</a>     }
 <a class="jxr_linenumber" name="L529" href="#L529">529</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L530" href="#L530">530</a> <em class="jxr_javadoccomment">     * A comma separated list of approved license family IDs. These license families will be added to the list of approved license families.</em>
@@ -543,16 +543,16 @@
 <a class="jxr_linenumber" name="L535" href="#L535">535</a> 
 <a class="jxr_linenumber" name="L536" href="#L536">536</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> LicenseFamiliesApproved {
 <a class="jxr_linenumber" name="L537" href="#L537">537</a>     LicenseFamiliesApproved() { }
-<a class="jxr_linenumber" name="L538" href="#L538">538</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredFileset(FileSet fileSet) {
-<a class="jxr_linenumber" name="L539" href="#L539">539</a>             <strong class="jxr_keyword">for</strong> (Resource resource : fileSet) {
-<a class="jxr_linenumber" name="L540" href="#L540">540</a>                 <strong class="jxr_keyword">if</strong> (resource.isFilesystemOnly()) {
-<a class="jxr_linenumber" name="L541" href="#L541">541</a>                     addArg(<span class="jxr_string">"license-families-approved-file"</span>, ((FileResource) resource).getFile().getAbsolutePath());
-<a class="jxr_linenumber" name="L542" href="#L542">542</a>                 }
-<a class="jxr_linenumber" name="L543" href="#L543">543</a>             }
-<a class="jxr_linenumber" name="L544" href="#L544">544</a>         }
-<a class="jxr_linenumber" name="L545" href="#L545">545</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredLst(Lst familyID) {
-<a class="jxr_linenumber" name="L546" href="#L546">546</a>     addArg(<span class="jxr_string">"license-families-approved"</span>, familyID.value);
-<a class="jxr_linenumber" name="L547" href="#L547">547</a> }
+<a class="jxr_linenumber" name="L538" href="#L538">538</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredLst(Lst familyID) {
+<a class="jxr_linenumber" name="L539" href="#L539">539</a>     addArg(<span class="jxr_string">"license-families-approved"</span>, familyID.value);
+<a class="jxr_linenumber" name="L540" href="#L540">540</a> }
+<a class="jxr_linenumber" name="L541" href="#L541">541</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredFileset(FileSet fileSet) {
+<a class="jxr_linenumber" name="L542" href="#L542">542</a>             <strong class="jxr_keyword">for</strong> (Resource resource : fileSet) {
+<a class="jxr_linenumber" name="L543" href="#L543">543</a>                 <strong class="jxr_keyword">if</strong> (resource.isFilesystemOnly()) {
+<a class="jxr_linenumber" name="L544" href="#L544">544</a>                     addArg(<span class="jxr_string">"license-families-approved-file"</span>, ((FileResource) resource).getFile().getAbsolutePath());
+<a class="jxr_linenumber" name="L545" href="#L545">545</a>                 }
+<a class="jxr_linenumber" name="L546" href="#L546">546</a>             }
+<a class="jxr_linenumber" name="L547" href="#L547">547</a>         }
 <a class="jxr_linenumber" name="L548" href="#L548">548</a>     }
 <a class="jxr_linenumber" name="L549" href="#L549">549</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L550" href="#L550">550</a> <em class="jxr_javadoccomment">     * A comma separated list of denied License IDs. These licenses will be removed from the list of approved licenses. Once licenses are removed they can not be added back.</em>
@@ -583,16 +583,16 @@
 <a class="jxr_linenumber" name="L575" href="#L575">575</a> 
 <a class="jxr_linenumber" name="L576" href="#L576">576</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> LicenseFamiliesDenied {
 <a class="jxr_linenumber" name="L577" href="#L577">577</a>     LicenseFamiliesDenied() { }
-<a class="jxr_linenumber" name="L578" href="#L578">578</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredLst(Lst familyID) {
-<a class="jxr_linenumber" name="L579" href="#L579">579</a>     addArg(<span class="jxr_string">"license-families-denied"</span>, familyID.value);
-<a class="jxr_linenumber" name="L580" href="#L580">580</a> }
-<a class="jxr_linenumber" name="L581" href="#L581">581</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredFileset(FileSet fileSet) {
-<a class="jxr_linenumber" name="L582" href="#L582">582</a>             <strong class="jxr_keyword">for</strong> (Resource resource : fileSet) {
-<a class="jxr_linenumber" name="L583" href="#L583">583</a>                 <strong class="jxr_keyword">if</strong> (resource.isFilesystemOnly()) {
-<a class="jxr_linenumber" name="L584" href="#L584">584</a>                     addArg(<span class="jxr_string">"license-families-denied-file"</span>, ((FileResource) resource).getFile().getAbsolutePath());
-<a class="jxr_linenumber" name="L585" href="#L585">585</a>                 }
-<a class="jxr_linenumber" name="L586" href="#L586">586</a>             }
-<a class="jxr_linenumber" name="L587" href="#L587">587</a>         }
+<a class="jxr_linenumber" name="L578" href="#L578">578</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredFileset(FileSet fileSet) {
+<a class="jxr_linenumber" name="L579" href="#L579">579</a>             <strong class="jxr_keyword">for</strong> (Resource resource : fileSet) {
+<a class="jxr_linenumber" name="L580" href="#L580">580</a>                 <strong class="jxr_keyword">if</strong> (resource.isFilesystemOnly()) {
+<a class="jxr_linenumber" name="L581" href="#L581">581</a>                     addArg(<span class="jxr_string">"license-families-denied-file"</span>, ((FileResource) resource).getFile().getAbsolutePath());
+<a class="jxr_linenumber" name="L582" href="#L582">582</a>                 }
+<a class="jxr_linenumber" name="L583" href="#L583">583</a>             }
+<a class="jxr_linenumber" name="L584" href="#L584">584</a>         }
+<a class="jxr_linenumber" name="L585" href="#L585">585</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredLst(Lst familyID) {
+<a class="jxr_linenumber" name="L586" href="#L586">586</a>     addArg(<span class="jxr_string">"license-families-denied"</span>, familyID.value);
+<a class="jxr_linenumber" name="L587" href="#L587">587</a> }
 <a class="jxr_linenumber" name="L588" href="#L588">588</a>     }
 <a class="jxr_linenumber" name="L589" href="#L589">589</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L590" href="#L590">590</a> <em class="jxr_javadoccomment">     * The acceptable maximum number for the specified counter. A value of '-1' specifies an unlimited number.</em>
@@ -666,19 +666,19 @@
 <a class="jxr_linenumber" name="L658" href="#L658">658</a> 
 <a class="jxr_linenumber" name="L659" href="#L659">659</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> InputInclude {
 <a class="jxr_linenumber" name="L660" href="#L660">660</a>     InputInclude() { }
-<a class="jxr_linenumber" name="L661" href="#L661">661</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredExpr(Expr expression) {
-<a class="jxr_linenumber" name="L662" href="#L662">662</a>     addArg(<span class="jxr_string">"input-include"</span>, expression.value);
-<a class="jxr_linenumber" name="L663" href="#L663">663</a> }
-<a class="jxr_linenumber" name="L664" href="#L664">664</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredStd(Std standardCollection) {
-<a class="jxr_linenumber" name="L665" href="#L665">665</a>     addArg(<span class="jxr_string">"input-include-std"</span>, standardCollection.value);
-<a class="jxr_linenumber" name="L666" href="#L666">666</a> }
-<a class="jxr_linenumber" name="L667" href="#L667">667</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredFileset(FileSet fileSet) {
-<a class="jxr_linenumber" name="L668" href="#L668">668</a>             <strong class="jxr_keyword">for</strong> (Resource resource : fileSet) {
-<a class="jxr_linenumber" name="L669" href="#L669">669</a>                 <strong class="jxr_keyword">if</strong> (resource.isFilesystemOnly()) {
-<a class="jxr_linenumber" name="L670" href="#L670">670</a>                     addArg(<span class="jxr_string">"input-include-file"</span>, ((FileResource) resource).getFile().getAbsolutePath());
-<a class="jxr_linenumber" name="L671" href="#L671">671</a>                 }
-<a class="jxr_linenumber" name="L672" href="#L672">672</a>             }
-<a class="jxr_linenumber" name="L673" href="#L673">673</a>         }
+<a class="jxr_linenumber" name="L661" href="#L661">661</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredFileset(FileSet fileSet) {
+<a class="jxr_linenumber" name="L662" href="#L662">662</a>             <strong class="jxr_keyword">for</strong> (Resource resource : fileSet) {
+<a class="jxr_linenumber" name="L663" href="#L663">663</a>                 <strong class="jxr_keyword">if</strong> (resource.isFilesystemOnly()) {
+<a class="jxr_linenumber" name="L664" href="#L664">664</a>                     addArg(<span class="jxr_string">"input-include-file"</span>, ((FileResource) resource).getFile().getAbsolutePath());
+<a class="jxr_linenumber" name="L665" href="#L665">665</a>                 }
+<a class="jxr_linenumber" name="L666" href="#L666">666</a>             }
+<a class="jxr_linenumber" name="L667" href="#L667">667</a>         }
+<a class="jxr_linenumber" name="L668" href="#L668">668</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredExpr(Expr expression) {
+<a class="jxr_linenumber" name="L669" href="#L669">669</a>     addArg(<span class="jxr_string">"input-include"</span>, expression.value);
+<a class="jxr_linenumber" name="L670" href="#L670">670</a> }
+<a class="jxr_linenumber" name="L671" href="#L671">671</a> <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> addConfiguredStd(Std standardCollection) {
+<a class="jxr_linenumber" name="L672" href="#L672">672</a>     addArg(<span class="jxr_string">"input-include-std"</span>, standardCollection.value);
+<a class="jxr_linenumber" name="L673" href="#L673">673</a> }
 <a class="jxr_linenumber" name="L674" href="#L674">674</a>     }
 <a class="jxr_linenumber" name="L675" href="#L675">675</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L676" href="#L676">676</a> <em class="jxr_javadoccomment">     * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files.</em>

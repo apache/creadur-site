@@ -5,7 +5,7 @@
 <title>CasedString.StringCase (Apache Creadur RAT 1.0.0-SNAPSHOT API)</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="description" content="declaration: package: org.apache.rat.utils, class: CasedString, enum: StringCase">
+<meta name="description" content="declaration: package: org.apache.rat.utils, class: CasedString, class: StringCase">
 <meta name="generator" content="javadoc/ClassWriter">
 <link rel="stylesheet" type="text/css" href="../../../../resource-files/jquery-ui.min.css">
 <link rel="stylesheet" type="text/css" href="../../../../resource-files/stylesheet.css">
@@ -56,22 +56,31 @@ loadScripts(document, 'script');</script>
 <div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
-<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
-<li><a href="#enum-constant-summary" tabindex="0">Enum Constant Summary</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#constructor-summary" tabindex="0">Constructor Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
-<li><a href="#enum-constant-detail" tabindex="0">Enum Constant Details</a>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
 <ol class="toc-list">
 <li><a href="#CAMEL" tabindex="0">CAMEL</a></li>
+<li><a href="#PASCAL" tabindex="0">PASCAL</a></li>
 <li><a href="#SNAKE" tabindex="0">SNAKE</a></li>
 <li><a href="#KEBAB" tabindex="0">KEBAB</a></li>
 <li><a href="#PHRASE" tabindex="0">PHRASE</a></li>
 <li><a href="#DOT" tabindex="0">DOT</a></li>
+<li><a href="#SLASH" tabindex="0">SLASH</a></li>
+</ol>
+</li>
+<li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
+<ol class="toc-list">
+<li><a href="#%3Cinit%3E(java.lang.String,java.util.function.Predicate,boolean,java.util.function.Function)" tabindex="0">StringCase(String, Predicate, boolean, Function)</a></li>
+<li><a href="#%3Cinit%3E(java.lang.String,char)" tabindex="0">StringCase(String, char)</a></li>
+<li><a href="#%3Cinit%3E(java.lang.String,java.util.function.Predicate,boolean,java.util.function.Function,java.util.function.UnaryOperator)" tabindex="0">StringCase(String, Predicate, boolean, Function, UnaryOperator)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
-<li><a href="#values()" tabindex="0">values()</a></li>
-<li><a href="#valueOf(java.lang.String)" tabindex="0">valueOf(String)</a></li>
+<li><a href="#simpleJoiner(char)" tabindex="0">simpleJoiner(char)</a></li>
+<li><a href="#toString()" tabindex="0">toString()</a></li>
 <li><a href="#assemble(java.lang.String%5B%5D)" tabindex="0">assemble(String[])</a></li>
 <li><a href="#getSegments(java.lang.String)" tabindex="0">getSegments(String)</a></li>
 </ol>
@@ -81,27 +90,21 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<h1 title="Enum Class CasedString.StringCase" class="title">Enum Class CasedString.StringCase</h1>
+<h1 title="Class CasedString.StringCase" class="title">Class CasedString.StringCase</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">java.lang.Enum</a>&lt;<a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a>&gt;
 <div class="inheritance">org.apache.rat.utils.CasedString.StringCase</div>
 </div>
-</div>
 <section class="class-description" id="class-description">
-<dl class="notes">
-<dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a>&gt;, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/constant/Constable.html" title="class or interface in java.lang.constant" class="external-link">Constable</a></code></dd>
-</dl>
 <dl class="notes">
 <dt>Enclosing class:</dt>
 <dd><code><a href="CasedString.html" title="class in org.apache.rat.utils">CasedString</a></code></dd>
 </dl>
 <hr>
 <div class="horizontal-scroll">
-<div class="type-signature"><span class="modifiers">public static enum </span><span class="element-name type-name-label">CasedString.StringCase</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a>&gt;</span></div>
-<div class="block">An enumeration of supported string cases.  These cases tag strings as having a specific format.</div>
+<div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">CasedString.StringCase</span>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">The definition of a string case.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>0.17</dd>
@@ -110,42 +113,80 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
-<!-- ======== NESTED CLASS SUMMARY ======== -->
+<!-- =========== FIELD SUMMARY =========== -->
 <li>
-<section class="nested-class-summary" id="nested-class-summary">
-<h2>Nested Class Summary</h2>
-<div class="inherited-list">
-<h3 id="nested-classes-inherited-from-class-java.lang.Enum">Nested classes/interfaces inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#nested-class-summary" title="class or interface in java.lang" class="external-link">Enum</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.EnumDesc.html" title="class or interface in java.lang" class="external-link">Enum.EnumDesc</a>&lt;E&gt;</code></div>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></code></div>
+<div class="col-second even-row-color"><code><a href="#CAMEL" class="member-name-link">CAMEL</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The camel case.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#DOT" class="member-name-link">DOT</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The dot case.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></code></div>
+<div class="col-second even-row-color"><code><a href="#KEBAB" class="member-name-link">KEBAB</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The Kebab case.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#PASCAL" class="member-name-link">PASCAL</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The pascal case.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></code></div>
+<div class="col-second even-row-color"><code><a href="#PHRASE" class="member-name-link">PHRASE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The phrase case.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SLASH" class="member-name-link">SLASH</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The slash case.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SNAKE" class="member-name-link">SNAKE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The Snake case.</div>
+</div>
+</div>
 </section>
 </li>
-<!-- =========== ENUM CONSTANT SUMMARY =========== -->
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
-<section class="constants-summary" id="enum-constant-summary">
-<h2>Enum Constant Summary</h2>
-<div class="caption"><span>Enum Constants</span></div>
+<section class="constructor-summary" id="constructor-summary">
+<h2>Constructor Summary</h2>
+<div class="caption"><span>Constructors</span></div>
 <div class="summary-table two-column-summary">
-<div class="table-header col-first">Enum Constant</div>
+<div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="#CAMEL" class="member-name-link">CAMEL</a></code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,char)" class="member-name-link">StringCase</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ char&nbsp;delimiter)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Camel case tags strings like 'CamelCase' or 'camelCase'.</div>
+<div class="block">Constructs a String case for the common cases where the delimiter is not preserved in the segments.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#DOT" class="member-name-link">DOT</a></code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.function.Predicate,boolean,java.util.function.Function)" class="member-name-link">StringCase</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Character.html" title="class or interface in java.lang" class="external-link">Character</a>&gt;&nbsp;splitter,
+ boolean&nbsp;preserveSplit,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[],<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;joiner)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Dot case tags phrases of words like 'phrase.case'.</div>
+<div class="block">Constructs a StringCase</div>
 </div>
-<div class="col-first even-row-color"><code><a href="#KEBAB" class="member-name-link">KEBAB</a></code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.util.function.Predicate,boolean,java.util.function.Function,java.util.function.UnaryOperator)" class="member-name-link">StringCase</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Character.html" title="class or interface in java.lang" class="external-link">Character</a>&gt;&nbsp;splitter,
+ boolean&nbsp;preserveSplit,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[],<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;joiner,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html" title="class or interface in java.util.function" class="external-link">UnaryOperator</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;postProcess)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Kebab case tags strings like 'kebab-case'.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="#PHRASE" class="member-name-link">PHRASE</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Phrase case tags phrases of words like 'phrase case'.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="#SNAKE" class="member-name-link">SNAKE</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Snake case tags strings like 'Snake_Case'.</div>
+<div class="block">Constructs a StingCase.</div>
 </div>
 </div>
 </section>
@@ -164,52 +205,53 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#assemble(java.lang.String%5B%5D)" class="member-name-link">assemble</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;segments)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Creates a cased string from a collection of segments.</div>
+<div class="block">Assembles segments into a String.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSegments(java.lang.String)" class="member-name-link">getSegments</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;string)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns an array of each of the segments in this CasedString.</div>
+<div class="block">Parses a String into segments.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[],<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#simpleJoiner(char)" class="member-name-link">simpleJoiner</a><wbr>(char&nbsp;delimiter)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns the enum constant of this class with the specified name.</div>
+<div class="block">A simple joiner that assembles a String from a collection of segments.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Returns an array containing the constants of this enum class, in
-the order they are declared.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
-</div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Enum">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#method-summary" title="class or interface in java.lang" class="external-link">Enum</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#compareTo(E)" title="class or interface in java.lang" class="external-link">compareTo</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#describeConstable()" title="class or interface in java.lang" class="external-link">describeConstable</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#getDeclaringClass()" title="class or interface in java.lang" class="external-link">getDeclaringClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#name()" title="class or interface in java.lang" class="external-link">name</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#ordinal()" title="class or interface in java.lang" class="external-link">ordinal</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html#valueOf(java.lang.Class,java.lang.String)" title="class or interface in java.lang" class="external-link">valueOf</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
 </section>
 <section class="details">
 <ul class="details-list">
-<!-- ============ ENUM CONSTANT DETAIL =========== -->
+<!-- ============ FIELD DETAIL =========== -->
 <li>
-<section class="constant-details" id="enum-constant-detail">
-<h2>Enum Constant Details</h2>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="CAMEL">
 <h3>CAMEL</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">CAMEL</span></div>
-<div class="block">Camel case tags strings like 'CamelCase' or 'camelCase'. This conversion forces the first character to
-lower case. If specific capitalization rules are required use <code>WordUtils.capitalize(String)</code> to set the first
-character of the string.</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">CAMEL</span></div>
+<div class="block">The camel case. Example: "HelloWorld"</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="PASCAL">
+<h3>PASCAL</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">PASCAL</span></div>
+<div class="block">The pascal case. Example: "helloWorld"</div>
 </div>
 </section>
 </li>
@@ -217,10 +259,8 @@ character of the string.</div>
 <section class="detail" id="SNAKE">
 <h3>SNAKE</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">SNAKE</span></div>
-<div class="block">Snake case tags strings like 'Snake_Case'.  This conversion does not change the capitalization of any characters
-in the string.  If specific capitalization is required use <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#toUpperCase()" title="class or interface in java.lang" class="external-link"><code>String.toUpperCase()</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#toLowerCase()" title="class or interface in java.lang" class="external-link"><code>String.toLowerCase()</code></a>,
-or the commons-text methods <code>WordUtils.capitalize(String)</code>, or <code>WordUtils.uncapitalize(String)</code> as required.</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">SNAKE</span></div>
+<div class="block">The Snake case. Example: "hello_world"</div>
 </div>
 </section>
 </li>
@@ -228,10 +268,8 @@ or the commons-text methods <code>WordUtils.capitalize(String)</code>, or <code>
 <section class="detail" id="KEBAB">
 <h3>KEBAB</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">KEBAB</span></div>
-<div class="block">Kebab case tags strings like 'kebab-case'.  This conversion does not change the capitalization of any characters
-in the string.  If specific capitalization is required use <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#toUpperCase()" title="class or interface in java.lang" class="external-link"><code>String.toUpperCase()</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#toLowerCase()" title="class or interface in java.lang" class="external-link"><code>String.toLowerCase()</code></a>,
-         * or the commons-text methods <code>WordUtils.capitalize(String)</code>, or <code>WordUtils.uncapitalize(String)</code> as required.</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">KEBAB</span></div>
+<div class="block">The Kebab case. Example: "hello-world"</div>
 </div>
 </section>
 </li>
@@ -239,10 +277,8 @@ in the string.  If specific capitalization is required use <a href="https://docs
 <section class="detail" id="PHRASE">
 <h3>PHRASE</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">PHRASE</span></div>
-<div class="block">Phrase case tags phrases of words like 'phrase case'. This conversion does not change the capitalization of any characters
-in the string.  If specific capitalization is required use <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#toUpperCase()" title="class or interface in java.lang" class="external-link"><code>String.toUpperCase()</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#toLowerCase()" title="class or interface in java.lang" class="external-link"><code>String.toLowerCase()</code></a>,
-         * or the commons-text methods <code>WordUtils.capitalize(String)</code>, or <code>WordUtils.uncapitalize(String)</code> as required.</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">PHRASE</span></div>
+<div class="block">The phrase case. Example: "hello world"</div>
 </div>
 </section>
 </li>
@@ -250,10 +286,80 @@ in the string.  If specific capitalization is required use <a href="https://docs
 <section class="detail" id="DOT">
 <h3>DOT</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">DOT</span></div>
-<div class="block">Dot case tags phrases of words like 'phrase.case'. This conversion does not change the capitalization of any characters
-in the string.  If specific capitalization is required use <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#toUpperCase()" title="class or interface in java.lang" class="external-link"><code>String.toUpperCase()</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html#toLowerCase()" title="class or interface in java.lang" class="external-link"><code>String.toLowerCase()</code></a>,
-         * or the commons-text methods <code>WordUtils.capitalize(String)</code>, or <code>WordUtils.uncapitalize(String)</code> as required.</div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">DOT</span></div>
+<div class="block">The dot case. Example: "hello.world"</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="SLASH">
+<h3>SLASH</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">SLASH</span></div>
+<div class="block">The slash case. Example: "hello/world"</div>
+</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<li>
+<section class="constructor-details" id="constructor-detail">
+<h2>Constructor Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.util.function.Predicate,boolean,java.util.function.Function)">
+<h3>StringCase</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">StringCase</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Character.html" title="class or interface in java.lang" class="external-link">Character</a>&gt;&nbsp;splitter,
+ boolean&nbsp;preserveSplit,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[],<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;joiner)</span></div>
+<div class="block">Constructs a StringCase</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the name of the case.</dd>
+<dd><code>splitter</code> - the splitter to determine when to split a string.</dd>
+<dd><code>preserveSplit</code> - the preserveSplit flag.</dd>
+<dd><code>joiner</code> - the joiner to assemble the String from the segments.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,char)">
+<h3>StringCase</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">StringCase</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ char&nbsp;delimiter)</span></div>
+<div class="block">Constructs a String case for the common cases where the delimiter is not preserved in the segments.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the name of the case.</dd>
+<dd><code>delimiter</code> - the delimter between segments.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(java.lang.String,java.util.function.Predicate,boolean,java.util.function.Function,java.util.function.UnaryOperator)">
+<h3>StringCase</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">StringCase</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Character.html" title="class or interface in java.lang" class="external-link">Character</a>&gt;&nbsp;splitter,
+ boolean&nbsp;preserveSplit,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[],<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;joiner,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/UnaryOperator.html" title="class or interface in java.util.function" class="external-link">UnaryOperator</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;postProcess)</span></div>
+<div class="block">Constructs a StingCase.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>name</code> - the name of the string case.</dd>
+<dd><code>splitter</code> - the splitter to detect segments.</dd>
+<dd><code>preserveSplit</code> - the flag to preserve the splitter character.</dd>
+<dd><code>joiner</code> - the joiner to assemble a String from segments.</dd>
+<dd><code>postProcess</code> - the post-process applied to the segments after the splitter has created them.</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -266,36 +372,29 @@ in the string.  If specific capitalization is required use <a href="https://docs
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="values()">
-<h3>values</h3>
+<section class="detail" id="simpleJoiner(char)">
+<h3>simpleJoiner</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a>[]</span>&nbsp;<span class="element-name">values</span>()</div>
-<div class="block">Returns an array containing the constants of this enum class, in
-the order they are declared.</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[],<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">simpleJoiner</span><wbr><span class="parameters">(char&nbsp;delimiter)</span></div>
+<div class="block">A simple joiner that assembles a String from a collection of segments.
+Correctly handles the case where there are zero length segments.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>delimiter</code> - the delimiter to use between the segments.</dd>
 <dt>Returns:</dt>
-<dd>an array containing the constants of this enum class, in the order they are declared</dd>
+<dd>the assembled string.</dd>
 </dl>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="valueOf(java.lang.String)">
-<h3>valueOf</h3>
+<section class="detail" id="toString()">
+<h3>toString</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="CasedString.StringCase.html" title="enum class in org.apache.rat.utils">CasedString.StringCase</a></span>&nbsp;<span class="element-name">valueOf</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
-<div class="block">Returns the enum constant of this class with the specified name.
-The string must match <i>exactly</i> an identifier used to declare an
-enum constant in this class.  (Extraneous whitespace characters are 
-not permitted.)</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span>()</div>
 <dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>name</code> - the name of the enum constant to be returned.</dd>
-<dt>Returns:</dt>
-<dd>the enum constant with the specified name</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if this enum class has no constant with the specified name</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the argument is null</dd>
+<dt>Overrides:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
 </dl>
 </div>
 </section>
@@ -305,12 +404,12 @@ not permitted.)</div>
 <h3>assemble</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">assemble</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;segments)</span></div>
-<div class="block">Creates a cased string from a collection of segments.</div>
+<div class="block">Assembles segments into a String.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>segments</code> - the segments to create the CasedString from.</dd>
+<dd><code>segments</code> - the segments to assemble.</dd>
 <dt>Returns:</dt>
-<dd>a CasedString</dd>
+<dd>the complete String.</dd>
 </dl>
 </div>
 </section>
@@ -320,11 +419,12 @@ not permitted.)</div>
 <h3>getSegments</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getSegments</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;string)</span></div>
-<div class="block">Returns an array of each of the segments in this CasedString.  Segments are defined as the strings between
-the separators in the CasedString. For the CAMEL case the segments are determined by the presence of a capital letter.</div>
+<div class="block">Parses a String into segments.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>string</code> - the string to parse</dd>
 <dt>Returns:</dt>
-<dd>the array of Strings that are segments of the cased string.</dd>
+<dd>the segments from the string.</dd>
 </dl>
 </div>
 </section>
