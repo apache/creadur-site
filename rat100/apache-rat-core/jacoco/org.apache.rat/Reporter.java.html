@@ -94,19 +94,18 @@ public class Reporter {
 <span class="fc" id="L94">                        report.startReport();</span>
 <span class="fc" id="L95">                        configuration.getSources().build().run(report);</span>
 <span class="fc" id="L96">                        report.endReport();</span>
-
-<span class="fc" id="L98">                        InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());</span>
-<span class="fc" id="L99">                        document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);</span>
                     }
-<span class="fc" id="L101">                } else {</span>
-<span class="nc" id="L102">                    document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();</span>
-<span class="nc" id="L103">                    statistic = new ClaimStatistic();</span>
+<span class="fc" id="L98">                    InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());</span>
+<span class="fc" id="L99">                    document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);</span>
+<span class="fc" id="L100">                } else {</span>
+<span class="nc" id="L101">                    document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();</span>
+<span class="nc" id="L102">                    statistic = new ClaimStatistic();</span>
                 }
-<span class="fc" id="L105">            }  catch (Exception e) {</span>
-<span class="fc" id="L106">                throw RatException.makeRatException(e);</span>
-<span class="fc" id="L107">            }</span>
+<span class="fc" id="L104">            }  catch (Exception e) {</span>
+<span class="fc" id="L105">                throw RatException.makeRatException(e);</span>
+<span class="fc" id="L106">            }</span>
         }
-<span class="fc" id="L109">        return statistic;</span>
+<span class="fc" id="L108">        return statistic;</span>
     }
 
     /**
@@ -115,7 +114,7 @@ public class Reporter {
      * @return the claim statistics.
      */
     public ClaimStatistic getClaimsStatistic() {
-<span class="fc" id="L118">        return statistic;</span>
+<span class="fc" id="L117">        return statistic;</span>
     }
 
     /**
@@ -124,7 +123,7 @@ public class Reporter {
      * @throws RatException on error.
      */
     public ClaimStatistic output() throws RatException {
-<span class="fc" id="L127">        return output(configuration.getStyleSheet(), configuration.getOutput());</span>
+<span class="fc" id="L126">        return output(configuration.getStyleSheet(), configuration.getOutput());</span>
     }
 
     /**
@@ -137,22 +136,22 @@ public class Reporter {
      * @throws RatException on error.
      */
     public ClaimStatistic output(final IOSupplier&lt;InputStream&gt; stylesheet, final IOSupplier&lt;OutputStream&gt; output) throws RatException {
-<span class="fc" id="L140">        ClaimStatistic result = execute();</span>
-<span class="fc" id="L141">        TransformerFactory tf = TransformerFactory.newInstance();</span>
+<span class="fc" id="L139">        ClaimStatistic result = execute();</span>
+<span class="fc" id="L140">        TransformerFactory tf = TransformerFactory.newInstance();</span>
         Transformer transformer;
-<span class="fc" id="L143">        try (OutputStream out = output.get();</span>
-<span class="fc" id="L144">             InputStream styleIn = stylesheet.get()) {</span>
-<span class="fc" id="L145">            transformer = tf.newTransformer(new StreamSource(styleIn));</span>
-<span class="fc" id="L146">            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, &quot;yes&quot;);</span>
-<span class="fc" id="L147">            transformer.setOutputProperty(OutputKeys.METHOD, &quot;xml&quot;);</span>
-<span class="fc" id="L148">            transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
-<span class="fc" id="L149">            transformer.setOutputProperty(OutputKeys.ENCODING, &quot;UTF-8&quot;);</span>
-<span class="fc" id="L150">            transformer.setOutputProperty(&quot;{http://xml.apache.org/xslt}indent-amount&quot;, &quot;4&quot;);</span>
-<span class="fc" id="L151">            transformer.transform(new DOMSource(document),</span>
+<span class="fc" id="L142">        try (OutputStream out = output.get();</span>
+<span class="fc" id="L143">             InputStream styleIn = stylesheet.get()) {</span>
+<span class="fc" id="L144">            transformer = tf.newTransformer(new StreamSource(styleIn));</span>
+<span class="fc" id="L145">            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, &quot;yes&quot;);</span>
+<span class="fc" id="L146">            transformer.setOutputProperty(OutputKeys.METHOD, &quot;xml&quot;);</span>
+<span class="fc" id="L147">            transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+<span class="fc" id="L148">            transformer.setOutputProperty(OutputKeys.ENCODING, &quot;UTF-8&quot;);</span>
+<span class="fc" id="L149">            transformer.setOutputProperty(&quot;{http://xml.apache.org/xslt}indent-amount&quot;, &quot;4&quot;);</span>
+<span class="fc" id="L150">            transformer.transform(new DOMSource(document),</span>
                     new StreamResult(new OutputStreamWriter(out, StandardCharsets.UTF_8)));
-<span class="fc" id="L153">            return result;</span>
-<span class="nc" id="L154">        } catch (TransformerException | IOException e) {</span>
-<span class="nc" id="L155">            throw new RatException(e);</span>
+<span class="fc" id="L152">            return result;</span>
+<span class="nc" id="L153">        } catch (TransformerException | IOException e) {</span>
+<span class="nc" id="L154">            throw new RatException(e);</span>
         }
     }
 
@@ -163,14 +162,14 @@ public class Reporter {
      * @throws IOException if PrintWriter can not be retrieved from configuration.
      */
     public static void listLicenses(final ReportConfiguration configuration, final LicenseFilter filter) throws IOException {
-<span class="nc" id="L166">        try (PrintWriter pw = configuration.getWriter().get()) {</span>
-<span class="nc" id="L167">            pw.format(&quot;Licenses (%s):%n&quot;, filter);</span>
-<span class="nc" id="L168">            configuration.getLicenses(filter)</span>
-<span class="nc" id="L169">                    .forEach(lic -&gt; pw.format(LICENSE_FORMAT, lic.getLicenseFamily().getFamilyCategory(),</span>
-<span class="nc" id="L170">                            lic.getLicenseFamily().getFamilyName(), lic.getNote()));</span>
-<span class="nc" id="L171">            pw.println();</span>
+<span class="nc" id="L165">        try (PrintWriter pw = configuration.getWriter().get()) {</span>
+<span class="nc" id="L166">            pw.format(&quot;Licenses (%s):%n&quot;, filter);</span>
+<span class="nc" id="L167">            configuration.getLicenses(filter)</span>
+<span class="nc" id="L168">                    .forEach(lic -&gt; pw.format(LICENSE_FORMAT, lic.getLicenseFamily().getFamilyCategory(),</span>
+<span class="nc" id="L169">                            lic.getLicenseFamily().getFamilyName(), lic.getNote()));</span>
+<span class="nc" id="L170">            pw.println();</span>
         }
-<span class="nc" id="L173">    }</span>
+<span class="nc" id="L172">    }</span>
 
     /**
      * Writes a text summary of issues with the run.
@@ -178,20 +177,20 @@ public class Reporter {
      * @throws IOException on error.
      */
     public void writeSummary(final Appendable appendable) throws IOException {
-<span class="fc" id="L181">        appendable.append(&quot;RAT summary:&quot;).append(System.lineSeparator());</span>
-<span class="fc bfc" id="L182" title="All 2 branches covered.">        for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
-<span class="fc" id="L183">            appendable.append(&quot;  &quot;).append(counter.displayName()).append(&quot;:  &quot;)</span>
-<span class="fc" id="L184">                    .append(Integer.toString(getClaimsStatistic().getCounter(counter)))</span>
-<span class="fc" id="L185">                    .append(System.lineSeparator());</span>
+<span class="fc" id="L180">        appendable.append(&quot;RAT summary:&quot;).append(System.lineSeparator());</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
+<span class="fc" id="L182">            appendable.append(&quot;  &quot;).append(counter.displayName()).append(&quot;:  &quot;)</span>
+<span class="fc" id="L183">                    .append(Integer.toString(getClaimsStatistic().getCounter(counter)))</span>
+<span class="fc" id="L184">                    .append(System.lineSeparator());</span>
         }
-<span class="fc" id="L187">    }</span>
+<span class="fc" id="L186">    }</span>
 
     /**
      * Gets the document that was generated during execution.
      * @return the document that was generated during execution.
      */
     public Document getDocument() {
-<span class="fc" id="L194">        return document;</span>
+<span class="fc" id="L193">        return document;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

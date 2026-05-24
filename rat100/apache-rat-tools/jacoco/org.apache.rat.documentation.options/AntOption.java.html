@@ -210,7 +210,7 @@ public class AntOption extends AbstractOption {
     public static String createName(final Option option) {
 <span class="fc" id="L211">        String name = option.getLongOpt();</span>
 <span class="fc" id="L212">        name = StringUtils.defaultIfEmpty(RENAME_MAP.get(name), name).toLowerCase(Locale.ROOT);</span>
-<span class="fc" id="L213">        return new CasedString(CasedString.StringCase.KEBAB, name).toCase(CasedString.StringCase.CAMEL);</span>
+<span class="fc" id="L213">        return new CasedString(CasedString.StringCase.KEBAB, name).toCase(CasedString.StringCase.PASCAL);</span>
     }
 
     /**

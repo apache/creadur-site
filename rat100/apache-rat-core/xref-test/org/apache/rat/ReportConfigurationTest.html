@@ -49,7 +49,7 @@
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> java.util.function.Function;
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.filefilter.DirectoryFileFilter;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration.NoCloseOutputStream;
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.output.CloseShieldOutputStream;
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.analysis.IHeaderMatcher;
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.config.AddLicenseHeaders;
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.config.exclusion.StandardCollection;
@@ -460,7 +460,7 @@
 <a class="jxr_linenumber" name="L452" href="#L452">452</a> 
 <a class="jxr_linenumber" name="L453" href="#L453">453</a>     @Test
 <a class="jxr_linenumber" name="L454" href="#L454">454</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> outputTest() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L455" href="#L455">455</a>         assertThat(underTest.getOutput().get()).isExactlyInstanceOf(NoCloseOutputStream.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>         assertThat(underTest.getOutput().get()).isExactlyInstanceOf(CloseShieldOutputStream.<strong class="jxr_keyword">class</strong>);
 <a class="jxr_linenumber" name="L456" href="#L456">456</a>         assertThat(underTest.getWriter()).isNotNull();
 <a class="jxr_linenumber" name="L457" href="#L457">457</a> 
 <a class="jxr_linenumber" name="L458" href="#L458">458</a>         ByteArrayOutputStream stream = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();

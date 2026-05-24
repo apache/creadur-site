@@ -95,10 +95,11 @@ public final class TikaProcessor {
 <span class="fc" id="L95">        DOCUMENT_TYPE_MAP.put(&quot;application/x-xliff+zip&quot;, Document.Type.ARCHIVE);</span>
 //        org.apache.tika.parser.xml.DcXMLParser
 <span class="fc" id="L97">        DOCUMENT_TYPE_MAP.put(&quot;application/xml&quot;, Document.Type.STANDARD);</span>
-<span class="fc" id="L98">        DOCUMENT_TYPE_MAP.put(&quot;image/svg+xml&quot;, Document.Type.STANDARD);</span>
+<span class="fc" id="L98">        DOCUMENT_TYPE_MAP.put(&quot;application/xslt+xml&quot;, Document.Type.STANDARD);</span>
+<span class="fc" id="L99">        DOCUMENT_TYPE_MAP.put(&quot;image/svg+xml&quot;, Document.Type.STANDARD);</span>
 //        org.apache.tika.parser.xml.FictionBookParser
-<span class="fc" id="L100">        DOCUMENT_TYPE_MAP.put(&quot;application/x-fictionbook+xml&quot;, Document.Type.STANDARD);</span>
-<span class="fc" id="L101">    }</span>
+<span class="fc" id="L101">        DOCUMENT_TYPE_MAP.put(&quot;application/x-fictionbook+xml&quot;, Document.Type.STANDARD);</span>
+<span class="fc" id="L102">    }</span>
 
     private TikaProcessor() {
         // do not instantiate
@@ -110,7 +111,7 @@ public final class TikaProcessor {
      * @return a copy of the document type map.
      */
     static Map&lt;String, Document.Type&gt; getDocumentTypeMap() {
-<span class="fc" id="L113">        return new HashMap&lt;&gt;(DOCUMENT_TYPE_MAP);</span>
+<span class="fc" id="L114">        return new HashMap&lt;&gt;(DOCUMENT_TYPE_MAP);</span>
     }
 
     /**
@@ -119,7 +120,7 @@ public final class TikaProcessor {
      * @return a stream that supports {@code mark}.
      */
     public static InputStream markSupportedInputStream(final InputStream stream) {
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        return stream.markSupported() ? stream : new BufferedInputStream(stream);</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        return stream.markSupported() ? stream : new BufferedInputStream(stream);</span>
     }
 
     /**
@@ -129,30 +130,30 @@ public final class TikaProcessor {
      * @throws RatDocumentAnalysisException on error.
      */
     public static String process(final Document document) throws RatDocumentAnalysisException {
-<span class="fc" id="L132">        try (InputStream stream = markSupportedInputStream(document.inputStream())) {</span>
-<span class="fc" id="L133">            Metadata metadata = new Metadata();</span>
-<span class="fc" id="L134">            metadata.set(TikaCoreProperties.RESOURCE_NAME_KEY, document.getName().getShortName());</span>
-<span class="fc" id="L135">            String result = TIKA.detect(stream, metadata);</span>
-<span class="fc" id="L136">            String[] parts = result.split(&quot;/&quot;);</span>
-<span class="fc" id="L137">            MediaType mediaType = new MediaType(parts[0], parts[1]);</span>
-<span class="fc" id="L138">            document.getMetaData().setMediaType(mediaType);</span>
-<span class="fc bfc" id="L139" title="All 2 branches covered.">            if (!document.isIgnored()) {</span>
-<span class="fc" id="L140">                document.getMetaData()</span>
-<span class="fc" id="L141">                        .setDocumentType(fromMediaType(mediaType));</span>
+<span class="fc" id="L133">        try (InputStream stream = markSupportedInputStream(document.inputStream())) {</span>
+<span class="fc" id="L134">            Metadata metadata = new Metadata();</span>
+<span class="fc" id="L135">            metadata.set(TikaCoreProperties.RESOURCE_NAME_KEY, document.getName().getShortName());</span>
+<span class="fc" id="L136">            String result = TIKA.detect(stream, metadata);</span>
+<span class="fc" id="L137">            String[] parts = result.split(&quot;/&quot;);</span>
+<span class="fc" id="L138">            MediaType mediaType = new MediaType(parts[0], parts[1]);</span>
+<span class="fc" id="L139">            document.getMetaData().setMediaType(mediaType);</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">            if (!document.isIgnored()) {</span>
+<span class="fc" id="L141">                document.getMetaData()</span>
+<span class="fc" id="L142">                        .setDocumentType(fromMediaType(mediaType));</span>
             }
-<span class="fc bfc" id="L143" title="All 2 branches covered.">            if (Document.Type.STANDARD == document.getMetaData().getDocumentType()) {</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if (Document.Type.STANDARD == document.getMetaData().getDocumentType()) {</span>
                 try {
-<span class="fc" id="L145">                    document.getMetaData().setCharset(detectCharset(stream, document.getName()));</span>
-<span class="fc bfc" id="L146" title="All 2 branches covered.">                    if (NoteGuesser.isNote(document)) {</span>
-<span class="fc" id="L147">                        document.getMetaData().setDocumentType(Document.Type.NOTICE);</span>
+<span class="fc" id="L146">                    document.getMetaData().setCharset(detectCharset(stream, document.getName()));</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">                    if (NoteGuesser.isNote(document)) {</span>
+<span class="fc" id="L148">                        document.getMetaData().setDocumentType(Document.Type.NOTICE);</span>
                     }
-<span class="nc" id="L149">                } catch (UnsupportedCharsetException e) {</span>
-<span class="nc" id="L150">                    document.getMetaData().setDocumentType(Document.Type.UNKNOWN);</span>
-<span class="fc" id="L151">                }</span>
+<span class="nc" id="L150">                } catch (UnsupportedCharsetException e) {</span>
+<span class="nc" id="L151">                    document.getMetaData().setDocumentType(Document.Type.UNKNOWN);</span>
+<span class="fc" id="L152">                }</span>
             }
-<span class="fc" id="L153">            return result;</span>
-<span class="fc" id="L154">        } catch (IOException e) {</span>
-<span class="fc" id="L155">            throw new RatDocumentAnalysisException(e);</span>
+<span class="fc" id="L154">            return result;</span>
+<span class="fc" id="L155">        } catch (IOException e) {</span>
+<span class="fc" id="L156">            throw new RatDocumentAnalysisException(e);</span>
         }
     }
 
@@ -165,20 +166,20 @@ public final class TikaProcessor {
      * @throws UnsupportedCharsetException on unsupported charset.
      */
     private static Charset detectCharset(final InputStream stream, final DocumentName documentName) throws IOException, UnsupportedCharsetException {
-<span class="fc" id="L168">        final int bytesForCharsetDetection = 256;</span>
-<span class="fc" id="L169">        CharsetDetector encodingDetector = new CharsetDetector(bytesForCharsetDetection);</span>
-<span class="fc" id="L170">        encodingDetector.setText(stream);</span>
-<span class="fc" id="L171">        CharsetMatch charsetMatch = encodingDetector.detect();</span>
-<span class="pc bpc" id="L172" title="1 of 2 branches missed.">        if (charsetMatch != null) {</span>
+<span class="fc" id="L169">        final int bytesForCharsetDetection = 256;</span>
+<span class="fc" id="L170">        CharsetDetector encodingDetector = new CharsetDetector(bytesForCharsetDetection);</span>
+<span class="fc" id="L171">        encodingDetector.setText(stream);</span>
+<span class="fc" id="L172">        CharsetMatch charsetMatch = encodingDetector.detect();</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (charsetMatch != null) {</span>
             try {
-<span class="fc" id="L174">                return Charset.forName(charsetMatch.getName());</span>
-<span class="nc" id="L175">            } catch (UnsupportedCharsetException e) {</span>
-<span class="nc" id="L176">                DefaultLog.getInstance().warn(String.format(&quot;Unsupported character set '%s' in file '%s'&quot;,</span>
-<span class="nc" id="L177">                        charsetMatch.getName(), documentName));</span>
-<span class="nc" id="L178">                throw e;</span>
+<span class="fc" id="L175">                return Charset.forName(charsetMatch.getName());</span>
+<span class="nc" id="L176">            } catch (UnsupportedCharsetException e) {</span>
+<span class="nc" id="L177">                DefaultLog.getInstance().warn(String.format(&quot;Unsupported character set '%s' in file '%s'&quot;,</span>
+<span class="nc" id="L178">                        charsetMatch.getName(), documentName));</span>
+<span class="nc" id="L179">                throw e;</span>
             }
         }
-<span class="nc" id="L181">        return null;</span>
+<span class="nc" id="L182">        return null;</span>
     }
 
     /**
@@ -187,12 +188,12 @@ public final class TikaProcessor {
      * @return The document type.
      */
     public static Document.Type fromMediaType(final MediaType mediaType) {
-<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (&quot;text&quot;.equals(mediaType.getType())) {</span>
-<span class="fc" id="L191">            return Document.Type.STANDARD;</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        if (&quot;text&quot;.equals(mediaType.getType())) {</span>
+<span class="fc" id="L192">            return Document.Type.STANDARD;</span>
         }
 
-<span class="fc" id="L194">        Document.Type result = DOCUMENT_TYPE_MAP.get(mediaType.toString());</span>
-<span class="fc bfc" id="L195" title="All 2 branches covered.">        return result == null ? Document.Type.BINARY : result;</span>
+<span class="fc" id="L195">        Document.Type result = DOCUMENT_TYPE_MAP.get(mediaType.toString());</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        return result == null ? Document.Type.BINARY : result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
