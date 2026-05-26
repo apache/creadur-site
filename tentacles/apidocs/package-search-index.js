@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html","k":"18"},{"l":"org.apache.creadur.tentacles"},{"l":"org.apache.creadur.tentacles.filter"},{"l":"org.apache.creadur.tentacles.model"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"org.apache.creadur.tentacles"},{"l":"org.apache.creadur.tentacles.filter"},{"l":"org.apache.creadur.tentacles.model"}];updateSearchResults();

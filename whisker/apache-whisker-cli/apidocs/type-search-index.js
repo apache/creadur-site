@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"org.apache.creadur.whisker.cli","l":"CommandLineOption","k":"9"},{"p":"org.apache.creadur.whisker.cli","l":"Main"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.apache.creadur.whisker.cli","l":"CommandLineOption"},{"p":"org.apache.creadur.whisker.cli","l":"Main"}];updateSearchResults();
