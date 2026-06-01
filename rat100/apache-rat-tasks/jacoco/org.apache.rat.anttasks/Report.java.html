@@ -409,7 +409,7 @@ public class Report extends BaseAntTask {
      */
     public ReportConfiguration getConfiguration() {
         try {
-<span class="fc bfc" id="L412" title="All 2 branches covered.">            boolean helpLicenses = !getValues(Arg.HELP_LICENSES).isEmpty();</span>
+<span class="pc bpc" id="L412" title="1 of 2 branches missed.">            boolean helpLicenses = !getValues(Arg.HELP_LICENSES).isEmpty();</span>
 <span class="fc" id="L413">            removeKey(Arg.HELP_LICENSES);</span>
 
 <span class="fc" id="L415">            final ReportConfiguration configuration = OptionCollection.parseCommands(new File(&quot;.&quot;), args().toArray(new String[0]),</span>
@@ -428,8 +428,8 @@ public class Report extends BaseAntTask {
 <span class="fc" id="L428">            families.stream().map(Family::build).forEach(configuration::addFamily);</span>
 <span class="fc" id="L429">            licenses.stream().map(License::asBuilder)</span>
 <span class="fc" id="L430">                    .forEach(l -&gt; configuration.addApprovedLicenseCategory(configuration.addLicense(l).getLicenseFamily()));</span>
-<span class="fc bfc" id="L431" title="All 2 branches covered.">            if (helpLicenses) {</span>
-<span class="fc" id="L432">                new org.apache.rat.help.Licenses(configuration, new PrintWriter(DefaultLog.getInstance().asWriter())).printHelp();</span>
+<span class="pc bpc" id="L431" title="1 of 2 branches missed.">            if (helpLicenses) {</span>
+<span class="nc" id="L432">                new org.apache.rat.help.Licenses(configuration, new PrintWriter(DefaultLog.getInstance().asWriter())).printHelp();</span>
             }
 <span class="fc" id="L434">            return configuration;</span>
 <span class="nc" id="L435">        } catch (IOException | ImplementationException e) {</span>

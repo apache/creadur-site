@@ -185,44 +185,41 @@
 <a class="jxr_linenumber" name="L177" href="#L177">177</a>         <strong class="jxr_keyword">return</strong> DocumentName.builder(<strong class="jxr_keyword">new</strong> File(baseDir, name)).build();
 <a class="jxr_linenumber" name="L178" href="#L178">178</a>     }
 <a class="jxr_linenumber" name="L179" href="#L179">179</a> 
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>     <em class="jxr_javadoccomment">/** Help test */</em>
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">void</strong> helpTest();
-<a class="jxr_linenumber" name="L182" href="#L182">182</a> 
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>     <em class="jxr_javadoccomment">/** Display the option and value under test */</em>
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">protected</strong> String displayArgAndName(<strong class="jxr_keyword">final</strong> Option option, <strong class="jxr_keyword">final</strong> String fname) {
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>         <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"%s %s"</span>, option.getLongOpt(), fname);
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>     }
-<a class="jxr_linenumber" name="L187" href="#L187">187</a> 
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">protected</strong> String dump(<strong class="jxr_keyword">final</strong> DocumentNameMatcher nameMatcher, <strong class="jxr_keyword">final</strong> DocumentName name) {
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>         nameMatcher.decompose(name).forEach(s -&gt; sb.append(s).append(<span class="jxr_string">"\n"</span>));
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         <strong class="jxr_keyword">return</strong> sb.toString();
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>     }
-<a class="jxr_linenumber" name="L193" href="#L193">193</a> 
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">protected</strong> String dump(<strong class="jxr_keyword">final</strong> Option option, <strong class="jxr_keyword">final</strong> String fname, <strong class="jxr_keyword">final</strong> DocumentNameMatcher matcher, <strong class="jxr_keyword">final</strong> DocumentName name) {
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>         <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"Argument and Name: %s%nMatcher decomposition:%n%s"</span>, displayArgAndName(option, fname),
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>                 DocumentNameMatcherTest.processDecompose(matcher, name));
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>     }
-<a class="jxr_linenumber" name="L198" href="#L198">198</a> 
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>     @Override
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>     <strong class="jxr_keyword">public</strong> Stream&lt;? <strong class="jxr_keyword">extends</strong> Arguments&gt; provideArguments(<strong class="jxr_keyword">final</strong> ExtensionContext context) {
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>         List&lt;Arguments&gt; lst = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L202" href="#L202">202</a>         List&lt;String&gt; missingTests = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L203" href="#L203">203</a> 
-<a class="jxr_linenumber" name="L204" href="#L204">204</a>         <strong class="jxr_keyword">for</strong> (String key : OptionsList.getKeys()) {
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>             OptionCollectionTest.OptionTest test = testMap.get(key);
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>             <strong class="jxr_keyword">if</strong> (test == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>                 missingTests.add(key);
-<a class="jxr_linenumber" name="L208" href="#L208">208</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L209" href="#L209">209</a>                 lst.add(Arguments.of(key, test));
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>             }
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>     <em class="jxr_javadoccomment">/** Display the option and value under test */</em>
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">protected</strong> String displayArgAndName(<strong class="jxr_keyword">final</strong> Option option, <strong class="jxr_keyword">final</strong> String fname) {
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"%s %s"</span>, option.getLongOpt(), fname);
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>     }
+<a class="jxr_linenumber" name="L184" href="#L184">184</a> 
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">protected</strong> String dump(<strong class="jxr_keyword">final</strong> DocumentNameMatcher nameMatcher, <strong class="jxr_keyword">final</strong> DocumentName name) {
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>         nameMatcher.decompose(name).forEach(s -&gt; sb.append(s).append(<span class="jxr_string">"\n"</span>));
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>         <strong class="jxr_keyword">return</strong> sb.toString();
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>     }
+<a class="jxr_linenumber" name="L190" href="#L190">190</a> 
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>     <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">protected</strong> String dump(<strong class="jxr_keyword">final</strong> Option option, <strong class="jxr_keyword">final</strong> String fname, <strong class="jxr_keyword">final</strong> DocumentNameMatcher matcher, <strong class="jxr_keyword">final</strong> DocumentName name) {
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"Argument and Name: %s%nMatcher decomposition:%n%s"</span>, displayArgAndName(option, fname),
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>                 DocumentNameMatcherTest.processDecompose(matcher, name));
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>     }
+<a class="jxr_linenumber" name="L195" href="#L195">195</a> 
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>     @Override
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>     <strong class="jxr_keyword">public</strong> Stream&lt;? <strong class="jxr_keyword">extends</strong> Arguments&gt; provideArguments(<strong class="jxr_keyword">final</strong> ExtensionContext context) {
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>         List&lt;Arguments&gt; lst = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>         List&lt;String&gt; missingTests = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L200" href="#L200">200</a> 
+<a class="jxr_linenumber" name="L201" href="#L201">201</a>         <strong class="jxr_keyword">for</strong> (String key : OptionsList.getKeys()) {
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>             OptionCollectionTest.OptionTest test = testMap.get(key);
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>             <strong class="jxr_keyword">if</strong> (test == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>                 missingTests.add(key);
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>                 lst.add(Arguments.of(key, test));
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>             }
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>         }
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>         <strong class="jxr_keyword">if</strong> (!missingTests.isEmpty()) {
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>             System.out.println(<span class="jxr_string">"The following tests are excluded: '"</span> + String.join(<span class="jxr_string">"', '"</span>, missingTests) + <span class="jxr_string">"'"</span>);
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>         }
-<a class="jxr_linenumber" name="L212" href="#L212">212</a>         <strong class="jxr_keyword">if</strong> (!missingTests.isEmpty()) {
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>             System.out.println(<span class="jxr_string">"The following tests are excluded: '"</span> + String.join(<span class="jxr_string">"', '"</span>, missingTests) + <span class="jxr_string">"'"</span>);
-<a class="jxr_linenumber" name="L214" href="#L214">214</a>         }
-<a class="jxr_linenumber" name="L215" href="#L215">215</a>         <strong class="jxr_keyword">return</strong> lst.stream();
-<a class="jxr_linenumber" name="L216" href="#L216">216</a>     }
-<a class="jxr_linenumber" name="L217" href="#L217">217</a> }
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>         <strong class="jxr_keyword">return</strong> lst.stream();
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>     }
+<a class="jxr_linenumber" name="L214" href="#L214">214</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>

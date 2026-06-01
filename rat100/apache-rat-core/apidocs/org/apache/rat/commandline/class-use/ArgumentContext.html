@@ -59,13 +59,45 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.commandline">org.apache.rat.commandline</a></div>
+<div class="col-first even-row-color"><a href="#org.apache.rat">org.apache.rat</a></div>
 <div class="col-last even-row-color">
+<div class="block">The base package for the RAT tool.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.commandline">org.apache.rat.commandline</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Helper classes for command line processing.</div>
 </div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="org.apache.rat">
+<h2>Uses of <a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a> in <a href="../../package-summary.html">org.apache.rat</a></h2>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">org.apache.rat</a> that return <a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">OptionCollectionParser.</span><code><a href="../../OptionCollectionParser.html#parseCommands(java.io.File,java.lang.String%5B%5D)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Parses the standard options to create a ReportConfiguration.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">org.apache.rat</a> with parameters of type <a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../../OptionCollection.html#createConfiguration(org.apache.rat.commandline.ArgumentContext)" class="member-name-link">createConfiguration</a><wbr>(<a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;argumentContext)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Create the report configuration.</div>
+</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="org.apache.rat.commandline">
 <h2>Uses of <a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a> in <a href="../package-summary.html">org.apache.rat.commandline</a></h2>
@@ -75,9 +107,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Arg.</span><code><a href="../Arg.html#processArgs(org.apache.rat.commandline.ArgumentContext)" class="member-name-link">processArgs</a><wbr>(<a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Arg.</span><code><a href="../Arg.html#processArgs(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)" class="member-name-link">processArgs</a><wbr>(<a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context,
+ <a href="../../ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a>&lt;?&gt;&nbsp;optionCollection)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Process the arguments.</div>
+</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Arg.</span><code><a href="../Arg.html#processLogLevel(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)" class="member-name-link">processLogLevel</a><wbr>(<a href="../ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context,
+ <a href="../../ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a>&lt;?&gt;&nbsp;optionCollection)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Process the log level setting.</div>
 </div>
 </div>
 </section>

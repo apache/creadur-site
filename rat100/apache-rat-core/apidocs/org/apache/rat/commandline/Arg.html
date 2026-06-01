@@ -100,17 +100,14 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list">
 <li><a href="#values()" tabindex="0">values()</a></li>
 <li><a href="#valueOf(java.lang.String)" tabindex="0">valueOf(String)</a></li>
-<li><a href="#isSelected()" tabindex="0">isSelected()</a></li>
-<li><a href="#getSelected()" tabindex="0">getSelected()</a></li>
+<li><a href="#isEmpty()" tabindex="0">isEmpty()</a></li>
 <li><a href="#find(java.lang.String)" tabindex="0">find(String)</a></li>
-<li><a href="#defaultValue()" tabindex="0">defaultValue()</a></li>
 <li><a href="#group()" tabindex="0">group()</a></li>
 <li><a href="#option()" tabindex="0">option()</a></li>
 <li><a href="#getOptions()" tabindex="0">getOptions()</a></li>
-<li><a href="#processLogLevel(org.apache.commons.cli.CommandLine)" tabindex="0">processLogLevel(CommandLine)</a></li>
-<li><a href="#processArgs(org.apache.rat.commandline.ArgumentContext)" tabindex="0">processArgs(ArgumentContext)</a></li>
+<li><a href="#processLogLevel(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)" tabindex="0">processLogLevel(ArgumentContext, UIOptionCollection)</a></li>
+<li><a href="#processArgs(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)" tabindex="0">processArgs(ArgumentContext, UIOptionCollection)</a></li>
 <li><a href="#reset()" tabindex="0">reset()</a></li>
-<li><a href="#findArg(org.apache.commons.cli.Option)" tabindex="0">findArg(Option)</a></li>
 <li><a href="#findArg(java.lang.String)" tabindex="0">findArg(String)</a></li>
 </ol>
 </li>
@@ -135,10 +132,15 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public enum </span><span class="element-name type-name-label">Arg</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;<a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>&gt;</span></div>
-<div class="block">An enumeration of options.
-<p>
-Each Arg contains an OptionGroup that contains the individual options that all resolve to the same option.
-This allows us to deprecate options as we move forward in development.</div>
+<div class="block">An enumeration of options that are recommended across all UIs. A UI may not implement some options if they are unsupportable
+within the UI.
+Each Arg contains:
+<ul>
+     <li>An OptionGroup that contains the individual options that all resolve to the same option.
+This allows us to deprecate options as we move forward in development.</li>
+<li>A <code>BiConsumer&lt;ArgumentContext, Option&gt;</code> that defines the process to configure the option in
+the <code>ArgumentContext.configuration</code>.</li>
+</ul></div>
 </div>
 </section>
 <section class="summary">
@@ -173,11 +175,11 @@ This allows us to deprecate options as we move forward in development.</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="#CONFIGURATION" class="member-name-link">CONFIGURATION</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Group of options that read a configuration file</div>
+<div class="block">Group of options that read a configuration file.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#CONFIGURATION_NO_DEFAULTS" class="member-name-link">CONFIGURATION_NO_DEFAULTS</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Group of options that skip the default configuration file</div>
+<div class="block">Group of options that skip the default configuration file.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="#COUNTER_MAX" class="member-name-link">COUNTER_MAX</a></code></div>
 <div class="col-last even-row-color">
@@ -197,11 +199,11 @@ This allows us to deprecate options as we move forward in development.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="#EDIT_ADD" class="member-name-link">EDIT_ADD</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Defines options to add licenses to files</div>
+<div class="block">Defines options to add licenses to files.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#EDIT_COPYRIGHT" class="member-name-link">EDIT_COPYRIGHT</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Defines options to add copyright to files</div>
+<div class="block">Defines options to add copyright to files.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="#EDIT_OVERWRITE" class="member-name-link">EDIT_OVERWRITE</a></code></div>
 <div class="col-last even-row-color">
@@ -209,7 +211,7 @@ This allows us to deprecate options as we move forward in development.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#EXCLUDE" class="member-name-link">EXCLUDE</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Excludes files by expression</div>
+<div class="block">Excludes files by expression.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="#EXCLUDE_FILE" class="member-name-link">EXCLUDE_FILE</a></code></div>
 <div class="col-last even-row-color">
@@ -229,11 +231,11 @@ This allows us to deprecate options as we move forward in development.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="#FAMILIES_APPROVED" class="member-name-link">FAMILIES_APPROVED</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Option that specifies approved license families</div>
+<div class="block">Option that specifies approved license families.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#FAMILIES_APPROVED_FILE" class="member-name-link">FAMILIES_APPROVED_FILE</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Option that specifies approved license families from a file</div>
+<div class="block">Option that specifies approved license families from a file.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="#FAMILIES_DENIED" class="member-name-link">FAMILIES_DENIED</a></code></div>
 <div class="col-last even-row-color">
@@ -261,15 +263,15 @@ This allows us to deprecate options as we move forward in development.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="#LICENSES_APPROVED" class="member-name-link">LICENSES_APPROVED</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Option that adds approved licenses to the list</div>
+<div class="block">Option that adds approved licenses to the list.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#LICENSES_APPROVED_FILE" class="member-name-link">LICENSES_APPROVED_FILE</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">Option that adds approved licenses from a file</div>
+<div class="block">Option that adds approved licenses from a file.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="#LICENSES_DENIED" class="member-name-link">LICENSES_DENIED</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Option to remove licenses from the approved list</div>
+<div class="block">Option to remove licenses from the approved list.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="#LICENSES_DENIED_FILE" class="member-name-link">LICENSES_DENIED_FILE</a></code></div>
 <div class="col-last odd-row-color">
@@ -321,74 +323,61 @@ This allows us to deprecate options as we move forward in development.</div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#defaultValue()" class="member-name-link">defaultValue</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.cli.Option</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#find(java.lang.String)" class="member-name-link">find</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the default value for this arg.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.cli.Option</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#find(java.lang.String)" class="member-name-link">find</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Finds the element associated with the key within the element group.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#findArg(java.lang.String)" class="member-name-link">findArg</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Finds the Arg that contains an Option with the specified key.</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#findArg(org.apache.commons.cli.Option)" class="member-name-link">findArg</a><wbr>(org.apache.commons.cli.Option&nbsp;optionToFind)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#findArg(java.lang.String)" class="member-name-link">findArg</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Finds the Arg that an Option is in.</div>
+<div class="block">Finds the Arg that contains an Option with the specified key.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.apache.commons.cli.Options</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getOptions()" class="member-name-link">getOptions</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Gets the full set of options.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.cli.Option</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSelected()" class="member-name-link">getSelected</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.cli.OptionGroup</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#group()" class="member-name-link">group</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the select element from the group.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.cli.OptionGroup</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#group()" class="member-name-link">group</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the group for this arg.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSelected()" class="member-name-link">isSelected</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Determines if the group has a selected element.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.cli.Option</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#option()" class="member-name-link">option</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEmpty()" class="member-name-link">isEmpty</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines if all the options have been removed from this argument.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.cli.Option</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#option()" class="member-name-link">option</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the first non-deprecated option from the group.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#processArgs(org.apache.rat.commandline.ArgumentContext)" class="member-name-link">processArgs</a><wbr>(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#processArgs(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)" class="member-name-link">processArgs</a><wbr>(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context,
+ <a href="../ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a>&lt;?&gt;&nbsp;optionCollection)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Process the arguments.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#processLogLevel(org.apache.commons.cli.CommandLine)" class="member-name-link">processLogLevel</a><wbr>(org.apache.commons.cli.CommandLine&nbsp;commandLine)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#processLogLevel(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)" class="member-name-link">processLogLevel</a><wbr>(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context,
+ <a href="../ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a>&lt;?&gt;&nbsp;optionCollection)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Process the log level setting.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#reset()" class="member-name-link">reset</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#reset()" class="member-name-link">reset</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Resets the groups in the Args so that they are unused and ready to detect the next set of arguments.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#values()" class="member-name-link">values</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 </div>
@@ -417,7 +406,7 @@ the order they are declared.</div>
 <h3>EDIT_COPYRIGHT</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">EDIT_COPYRIGHT</span></div>
-<div class="block">Defines options to add copyright to files</div>
+<div class="block">Defines options to add copyright to files.</div>
 </div>
 </section>
 </li>
@@ -435,7 +424,7 @@ the order they are declared.</div>
 <h3>EDIT_ADD</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">EDIT_ADD</span></div>
-<div class="block">Defines options to add licenses to files</div>
+<div class="block">Defines options to add licenses to files.</div>
 </div>
 </section>
 </li>
@@ -444,7 +433,7 @@ the order they are declared.</div>
 <h3>CONFIGURATION</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">CONFIGURATION</span></div>
-<div class="block">Group of options that read a configuration file</div>
+<div class="block">Group of options that read a configuration file.</div>
 </div>
 </section>
 </li>
@@ -453,7 +442,7 @@ the order they are declared.</div>
 <h3>CONFIGURATION_NO_DEFAULTS</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">CONFIGURATION_NO_DEFAULTS</span></div>
-<div class="block">Group of options that skip the default configuration file</div>
+<div class="block">Group of options that skip the default configuration file.</div>
 </div>
 </section>
 </li>
@@ -462,7 +451,7 @@ the order they are declared.</div>
 <h3>LICENSES_APPROVED</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">LICENSES_APPROVED</span></div>
-<div class="block">Option that adds approved licenses to the list</div>
+<div class="block">Option that adds approved licenses to the list.</div>
 </div>
 </section>
 </li>
@@ -471,7 +460,7 @@ the order they are declared.</div>
 <h3>LICENSES_APPROVED_FILE</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">LICENSES_APPROVED_FILE</span></div>
-<div class="block">Option that adds approved licenses from a file</div>
+<div class="block">Option that adds approved licenses from a file.</div>
 </div>
 </section>
 </li>
@@ -480,7 +469,7 @@ the order they are declared.</div>
 <h3>FAMILIES_APPROVED</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">FAMILIES_APPROVED</span></div>
-<div class="block">Option that specifies approved license families</div>
+<div class="block">Option that specifies approved license families.</div>
 </div>
 </section>
 </li>
@@ -489,7 +478,7 @@ the order they are declared.</div>
 <h3>FAMILIES_APPROVED_FILE</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">FAMILIES_APPROVED_FILE</span></div>
-<div class="block">Option that specifies approved license families from a file</div>
+<div class="block">Option that specifies approved license families from a file.</div>
 </div>
 </section>
 </li>
@@ -498,7 +487,7 @@ the order they are declared.</div>
 <h3>LICENSES_DENIED</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">LICENSES_DENIED</span></div>
-<div class="block">Option to remove licenses from the approved list</div>
+<div class="block">Option to remove licenses from the approved list.</div>
 </div>
 </section>
 </li>
@@ -561,7 +550,7 @@ the order they are declared.</div>
 <h3>EXCLUDE</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">EXCLUDE</span></div>
-<div class="block">Excludes files by expression</div>
+<div class="block">Excludes files by expression.</div>
 </div>
 </section>
 </li>
@@ -762,27 +751,14 @@ not permitted.)</div>
 </section>
 </li>
 <li>
-<section class="detail" id="isSelected()">
-<h3>isSelected</h3>
+<section class="detail" id="isEmpty()">
+<h3>isEmpty</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSelected</span>()</div>
-<div class="block">Determines if the group has a selected element.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEmpty</span>()</div>
+<div class="block">Determines if all the options have been removed from this argument.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd><code>true</code> if the group has a selected element.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getSelected()">
-<h3>getSelected</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.apache.commons.cli.Option</span>&nbsp;<span class="element-name">getSelected</span>()</div>
-<div class="block">Gets the select element from the group.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the selected element or <code>null</code> if no element is selected.</dd>
+<dd><code>true</code> if all the options have been removed from this argument.</dd>
 </dl>
 </div>
 </section>
@@ -800,19 +776,6 @@ not permitted.)</div>
 <dd>the matching Option.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the key can not be found.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="defaultValue()">
-<h3>defaultValue</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">defaultValue</span>()</div>
-<div class="block">Gets the default value for this arg.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>default value of this arg.</dd>
 </dl>
 </div>
 </section>
@@ -838,7 +801,7 @@ not permitted.)</div>
 <div class="block">Returns the first non-deprecated option from the group.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the first non-deprecated option or <code>null</code> if no non-deprecated option is available.</dd>
+<dd>the first non-deprecated option or, if no non-deprecated option is available, the first option.</dd>
 </dl>
 </div>
 </section>
@@ -857,23 +820,28 @@ not permitted.)</div>
 </section>
 </li>
 <li>
-<section class="detail" id="processLogLevel(org.apache.commons.cli.CommandLine)">
+<section class="detail" id="processLogLevel(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)">
 <h3>processLogLevel</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processLogLevel</span><wbr><span class="parameters">(org.apache.commons.cli.CommandLine&nbsp;commandLine)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processLogLevel</span><wbr><span class="parameters">(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context,
+ <a href="../ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a>&lt;?&gt;&nbsp;optionCollection)</span>
+                            throws <span class="exceptions"><a href="../ConfigurationException.html" title="class in org.apache.rat">ConfigurationException</a></span></div>
 <div class="block">Process the log level setting.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>commandLine</code> - The command line to process.</dd>
+<dd><code>context</code> - The argument context</dd>
+<dt>Throws:</dt>
+<dd><code><a href="../ConfigurationException.html" title="class in org.apache.rat">ConfigurationException</a></code></dd>
 </dl>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="processArgs(org.apache.rat.commandline.ArgumentContext)">
+<section class="detail" id="processArgs(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)">
 <h3>processArgs</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processArgs</span><wbr><span class="parameters">(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context)</span>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">processArgs</span><wbr><span class="parameters">(<a href="ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;context,
+ <a href="../ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a>&lt;?&gt;&nbsp;optionCollection)</span>
                         throws <span class="exceptions"><a href="../ConfigurationException.html" title="class in org.apache.rat">ConfigurationException</a></span></div>
 <div class="block">Process the arguments.</div>
 <dl class="notes">
@@ -891,21 +859,6 @@ not permitted.)</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">reset</span>()</div>
 <div class="block">Resets the groups in the Args so that they are unused and ready to detect the next set of arguments.</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="findArg(org.apache.commons.cli.Option)">
-<h3>findArg</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span>&nbsp;<span class="element-name">findArg</span><wbr><span class="parameters">(org.apache.commons.cli.Option&nbsp;optionToFind)</span></div>
-<div class="block">Finds the Arg that an Option is in.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>optionToFind</code> - the Option to locate.</dd>
-<dt>Returns:</dt>
-<dd>The Arg or <code>null</code> if no Arg is found.</dd>
-</dl>
 </div>
 </section>
 </li>

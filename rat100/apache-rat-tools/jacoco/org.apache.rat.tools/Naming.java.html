@@ -44,8 +44,8 @@ import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.QuoteMode;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rat.OptionCollection;
-import org.apache.rat.documentation.options.AntOption;
-import org.apache.rat.documentation.options.MavenOption;
+import org.apache.rat.documentation.options.AntOptionCollection;
+import org.apache.rat.documentation.options.MavenOptionCollection;
 import org.apache.rat.help.AbstractHelp;
 
 /**
@@ -105,195 +105,208 @@ public final class Naming {
 <span class="fc" id="L105">        int width = Math.max(cl.getParsedOptionValue(WIDTH, AbstractHelp.HELP_WIDTH), AbstractHelp.HELP_WIDTH);</span>
 
 <span class="fc" id="L107">        boolean showMaven = cl.hasOption(MAVEN);</span>
+<span class="fc" id="L108">        MavenOptionCollection mavenCollection = MavenOptionCollection.INSTANCE;</span>
 
-<span class="fc" id="L109">        boolean showAnt = cl.hasOption(ANT);</span>
-<span class="fc" id="L110">        boolean includeDeprecated = cl.hasOption(INCLUDE_DEPRECATED);</span>
-<span class="fc bfc" id="L111" title="All 6 branches covered.">        Predicate&lt;Option&gt; filter = o -&gt; o.hasLongOpt() &amp;&amp; (!o.isDeprecated() || includeDeprecated);</span>
+<span class="fc" id="L110">        boolean showAnt = cl.hasOption(ANT);</span>
+<span class="fc" id="L111">        AntOptionCollection antCollection = AntOptionCollection.INSTANCE;</span>
 
-<span class="fc" id="L113">        List&lt;String&gt; columns = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L113">        boolean includeDeprecated = cl.hasOption(INCLUDE_DEPRECATED);</span>
+<span class="fc bfc" id="L114" title="All 6 branches covered.">        Predicate&lt;Option&gt; filter = o -&gt; o.hasLongOpt() &amp;&amp; (!o.isDeprecated() || includeDeprecated);</span>
 
-<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (cl.hasOption(CLI)) {</span>
-<span class="fc" id="L116">            columns.add(&quot;CLI&quot;);</span>
+<span class="fc" id="L116">        List&lt;String&gt; columns = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (cl.hasOption(CLI)) {</span>
+<span class="fc" id="L119">            columns.add(&quot;CLI&quot;);</span>
         }
 
-<span class="fc bfc" id="L119" title="All 2 branches covered.">        if (showAnt) {</span>
-<span class="fc" id="L120">            columns.add(&quot;Ant&quot;);</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">        if (showAnt) {</span>
+<span class="fc" id="L123">            columns.add(&quot;Ant&quot;);</span>
         }
 
-<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (showMaven) {</span>
-<span class="fc" id="L124">            columns.add(&quot;Maven&quot;);</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        if (showMaven) {</span>
+<span class="fc" id="L127">            columns.add(&quot;Maven&quot;);</span>
         }
-<span class="fc" id="L126">        columns.add(&quot;Description&quot;);</span>
-<span class="fc" id="L127">        columns.add(&quot;Argument Type&quot;);</span>
+<span class="fc" id="L129">        columns.add(&quot;Description&quot;);</span>
+<span class="fc" id="L130">        columns.add(&quot;Argument Type&quot;);</span>
 
         Function&lt;Option, String&gt; descriptionFunction;
 
-<span class="pc bpc" id="L131" title="1 of 6 branches missed.">        if (cl.hasOption(CLI) || !showAnt &amp;&amp; !showMaven) {</span>
-<span class="fc" id="L132">            descriptionFunction = o -&gt; {</span>
-<span class="fc" id="L133">                StringBuilder desc = new StringBuilder();</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">            if (o.isDeprecated()) {</span>
-<span class="fc" id="L135">                desc.append(&quot;[&quot;).append(o.getDeprecated().toString()).append(&quot;] &quot;);</span>
+<span class="pc bpc" id="L134" title="1 of 6 branches missed.">        if (cl.hasOption(CLI) || !showAnt &amp;&amp; !showMaven) {</span>
+<span class="fc" id="L135">            descriptionFunction = o -&gt; {</span>
+<span class="fc" id="L136">                StringBuilder desc = new StringBuilder();</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            if (o.isDeprecated()) {</span>
+<span class="fc" id="L138">                desc.append(&quot;[&quot;).append(o.getDeprecated().toString()).append(&quot;] &quot;);</span>
             }
-<span class="fc" id="L137">            return desc.append(StringUtils.defaultIfEmpty(o.getDescription(), &quot;&quot;)).toString();</span>
+<span class="fc" id="L140">            return desc.append(StringUtils.defaultIfEmpty(o.getDescription(), &quot;&quot;)).toString();</span>
             };
-<span class="fc bfc" id="L139" title="All 2 branches covered.">        } else if (showAnt) {</span>
-<span class="fc" id="L140">            descriptionFunction = o -&gt; {</span>
-<span class="fc" id="L141">                StringBuilder desc = new StringBuilder();</span>
-<span class="fc" id="L142">                AntOption antOption = new AntOption(o);</span>
-<span class="pc bpc" id="L143" title="1 of 2 branches missed.">                if (antOption.isDeprecated()) {</span>
-<span class="nc" id="L144">                    desc.append(&quot;[&quot;).append(antOption.getDeprecated()).append(&quot;] &quot;);</span>
-                }
-<span class="fc" id="L146">                return desc.append(StringUtils.defaultIfEmpty(antOption.getDescription(), &quot;&quot;)).toString();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        } else if (showAnt) {</span>
+<span class="fc" id="L143">            descriptionFunction = o -&gt; {</span>
+<span class="fc" id="L144">                StringBuilder desc = new StringBuilder();</span>
+<span class="fc" id="L145">                antCollection.getMappedOption(o).ifPresent(</span>
+                        antOption -&gt; {
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">                            if (antOption.isDeprecated()) {</span>
+<span class="nc" id="L148">                                desc.append(&quot;[&quot;).append(antOption.getDeprecated()).append(&quot;] &quot;);</span>
+                            }
+<span class="fc" id="L150">                            desc.append(StringUtils.defaultIfEmpty(antOption.getDescription(), &quot;&quot;));</span>
+<span class="fc" id="L151">                        });</span>
+<span class="fc" id="L152">                return desc.toString();</span>
             };
         } else {
-<span class="fc" id="L149">            descriptionFunction = o -&gt; {</span>
-<span class="fc" id="L150">                StringBuilder desc = new StringBuilder();</span>
-<span class="fc" id="L151">                MavenOption mavenOption = new MavenOption(o);</span>
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">                if (mavenOption.isDeprecated()) {</span>
-<span class="nc" id="L153">                    desc.append(&quot;[&quot;).append(mavenOption.getDeprecated()).append(&quot;] &quot;);</span>
-                }
-<span class="fc" id="L155">                return desc.append(StringUtils.defaultIfEmpty(mavenOption.getDescription(), &quot;&quot;)).toString();</span>
+<span class="fc" id="L155">            descriptionFunction = o -&gt; {</span>
+<span class="fc" id="L156">                StringBuilder desc = new StringBuilder();</span>
+<span class="fc" id="L157">                mavenCollection.getMappedOption(o).ifPresent(mavenOption -&gt; {</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">                    if (mavenOption.isDeprecated()) {</span>
+<span class="nc" id="L159">                        desc.append(&quot;[&quot;).append(mavenOption.getDeprecated()).append(&quot;] &quot;);</span>
+                    }
+<span class="fc" id="L161">                    desc.append(StringUtils.defaultIfEmpty(mavenOption.getDescription(), &quot;&quot;));</span>
+<span class="fc" id="L162">                });</span>
+<span class="fc" id="L163">                return desc.toString();</span>
             };
         }
 
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        try (Writer underWriter = cl.getArgs().length != 0 ?</span>
-<span class="pc" id="L160">                new FileWriter(cl.getArgs()[0], StandardCharsets.UTF_8) : new OutputStreamWriter(System.out, StandardCharsets.UTF_8)) {</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">            if (cl.hasOption(CSV)) {</span>
-<span class="fc" id="L162">                printCSV(columns, filter, cl.hasOption(CLI), showMaven, showAnt, descriptionFunction, underWriter);</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">        try (Writer underWriter = cl.getArgs().length != 0 ?</span>
+<span class="pc" id="L168">                new FileWriter(cl.getArgs()[0], StandardCharsets.UTF_8) : new OutputStreamWriter(System.out, StandardCharsets.UTF_8)) {</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">            if (cl.hasOption(CSV)) {</span>
+<span class="fc" id="L170">                printCSV(columns, filter, cl.hasOption(CLI), showMaven, showAnt, descriptionFunction, underWriter);</span>
             }
             else {
-<span class="fc" id="L165">                printText(columns, filter, cl.hasOption(CLI), showMaven, showAnt, descriptionFunction, underWriter, width);</span>
+<span class="fc" id="L173">                printText(columns, filter, cl.hasOption(CLI), showMaven, showAnt, descriptionFunction, underWriter, width);</span>
             }
         }
-<span class="fc" id="L168">    }</span>
+<span class="fc" id="L176">    }</span>
 
     private static List&lt;String&gt; fillColumns(final List&lt;String&gt; columns, final Option option, final boolean addCLI, final boolean showMaven,
                                             final boolean showAnt, final Function&lt;Option, String&gt; descriptionFunction) {
-<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (addCLI) {</span>
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">            if (option.hasLongOpt()) {</span>
-<span class="fc" id="L174">                columns.add(&quot;--&quot; + option.getLongOpt());</span>
+<span class="fc" id="L180">        AntOptionCollection antCollection = AntOptionCollection.INSTANCE;</span>
+<span class="fc" id="L181">        MavenOptionCollection mavenCollection = MavenOptionCollection.INSTANCE;</span>
+
+<span class="fc bfc" id="L183" title="All 2 branches covered.">        if (addCLI) {</span>
+<span class="pc bpc" id="L184" title="1 of 2 branches missed.">            if (option.hasLongOpt()) {</span>
+<span class="fc" id="L185">                columns.add(&quot;--&quot; + option.getLongOpt());</span>
             } else {
-<span class="nc" id="L176">                columns.add(&quot;-&quot; + option.getOpt());</span>
+<span class="nc" id="L187">                columns.add(&quot;-&quot; + option.getOpt());</span>
             }
         }
-<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (showAnt) {</span>
-<span class="fc" id="L180">            columns.add(new AntOption(option).getExample());</span>
+<span class="fc bfc" id="L190" title="All 2 branches covered.">        if (showAnt) {</span>
+<span class="fc" id="L191">            antCollection.getMappedOption(option).ifPresentOrElse(antOption -&gt; columns.add(antOption.getExample()),</span>
+<span class="fc" id="L192">                    () -&gt; columns.add(&quot; &quot;));</span>
         }
-<span class="fc bfc" id="L182" title="All 2 branches covered.">        if (showMaven) {</span>
-<span class="fc" id="L183">            columns.add(new MavenOption(option).getExample());</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        if (showMaven) {</span>
+<span class="fc" id="L195">            mavenCollection.getMappedOption(option).ifPresentOrElse(mavenOption -&gt; columns.add(mavenOption.getExample()),</span>
+<span class="fc" id="L196">                    () -&gt; columns.add(&quot; &quot;));</span>
         }
 
-<span class="fc" id="L186">        columns.add(descriptionFunction.apply(option));</span>
-<span class="pc bpc" id="L187" title="1 of 6 branches missed.">        columns.add(option.hasArgName() ? option.getArgName() : option.hasArgs() ? &quot;Strings&quot; : option.hasArg() ? &quot;String&quot; : &quot;-- none --&quot;);</span>
-<span class="pc bpc" id="L188" title="1 of 6 branches missed.">        columns.add(option.hasArgName() ? option.getArgName() : option.hasArgs() ? &quot;Strings&quot; : option.hasArg() ? &quot;String&quot; : &quot;-- none --&quot;);</span>
-<span class="pc bpc" id="L189" title="1 of 6 branches missed.">        columns.add(option.hasArgName() ? option.getArgName() : option.hasArgs() ? &quot;Strings&quot; : option.hasArg() ? &quot;String&quot; : &quot;-- none --&quot;);</span>
-<span class="fc" id="L190">        return columns;</span>
+<span class="fc" id="L199">        columns.add(descriptionFunction.apply(option));</span>
+<span class="pc bpc" id="L200" title="1 of 6 branches missed.">        columns.add(option.hasArgName() ? option.getArgName() : option.hasArgs() ? &quot;Strings&quot; : option.hasArg() ? &quot;String&quot; : &quot;-- none --&quot;);</span>
+<span class="pc bpc" id="L201" title="1 of 6 branches missed.">        columns.add(option.hasArgName() ? option.getArgName() : option.hasArgs() ? &quot;Strings&quot; : option.hasArg() ? &quot;String&quot; : &quot;-- none --&quot;);</span>
+<span class="pc bpc" id="L202" title="1 of 6 branches missed.">        columns.add(option.hasArgName() ? option.getArgName() : option.hasArgs() ? &quot;Strings&quot; : option.hasArg() ? &quot;String&quot; : &quot;-- none --&quot;);</span>
+<span class="fc" id="L203">        return columns;</span>
     }
 
     private static void printCSV(final List&lt;String&gt; columns, final Predicate&lt;Option&gt; filter, final boolean addCLI, final boolean showMaven,
                                  final boolean showAnt, final Function&lt;Option, String&gt; descriptionFunction,
                                  final Writer underWriter) throws IOException {
-<span class="fc" id="L196">        try (CSVPrinter printer = new CSVPrinter(underWriter, CSVFormat.DEFAULT.builder().setQuoteMode(QuoteMode.ALL).get())) {</span>
-<span class="fc" id="L197">            printer.printRecord(columns);</span>
-<span class="fc bfc" id="L198" title="All 2 branches covered.">            for (Option option : OptionCollection.buildOptions().getOptions()) {</span>
-<span class="fc bfc" id="L199" title="All 2 branches covered.">                if (filter.test(option)) {</span>
-<span class="fc" id="L200">                    columns.clear();</span>
-<span class="fc" id="L201">                    printer.printRecord(fillColumns(columns, option, addCLI, showMaven, showAnt, descriptionFunction));</span>
+<span class="fc" id="L209">        try (CSVPrinter printer = new CSVPrinter(underWriter, CSVFormat.DEFAULT.builder().setQuoteMode(QuoteMode.ALL).get())) {</span>
+<span class="fc" id="L210">            printer.printRecord(columns);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">            for (Option option : OptionCollection.buildOptions().getOptions()) {</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">                if (filter.test(option)) {</span>
+<span class="fc" id="L213">                    columns.clear();</span>
+<span class="fc" id="L214">                    printer.printRecord(fillColumns(columns, option, addCLI, showMaven, showAnt, descriptionFunction));</span>
                 }
-<span class="fc" id="L203">            }</span>
+<span class="fc" id="L216">            }</span>
         }
-<span class="fc" id="L205">    }</span>
+<span class="fc" id="L218">    }</span>
 
     private static int[] calculateColumnWidth(final int width, final int columnCount, final List&lt;List&lt;String&gt;&gt; page) {
-<span class="fc" id="L208">        int[] columnWidth = new int[columnCount];</span>
-<span class="fc bfc" id="L209" title="All 2 branches covered.">        for (List&lt;String&gt; row : page) {</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">            for (int i = 0; i &lt; columnCount; i++) {</span>
-<span class="fc" id="L211">                columnWidth[i] = Math.max(columnWidth[i], row.get(i).length());</span>
+<span class="fc" id="L221">        int[] columnWidth = new int[columnCount];</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        for (List&lt;String&gt; row : page) {</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">            for (int i = 0; i &lt; columnCount; i++) {</span>
+<span class="fc" id="L224">                columnWidth[i] = Math.max(columnWidth[i], row.get(i).length());</span>
             }
-<span class="fc" id="L213">        }</span>
-<span class="fc" id="L214">        int extra = 0;</span>
-<span class="fc" id="L215">        int averageWidth = (width - ((columnCount - 1) * 2)) / columnCount;</span>
-<span class="fc" id="L216">        int[] overage = new int[columnCount];</span>
-<span class="fc" id="L217">        int totalOverage = 0;</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">        for (int i = 0; i &lt; columnCount; i++) {</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">            if (columnWidth[i] &lt; averageWidth) {</span>
-<span class="fc" id="L220">                extra += averageWidth - columnWidth[i];</span>
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">            } else if (columnWidth[i] &gt; averageWidth) {</span>
-<span class="fc" id="L222">                overage[i] = columnWidth[i] - averageWidth;</span>
-<span class="fc" id="L223">                totalOverage += overage[i];</span>
+<span class="fc" id="L226">        }</span>
+<span class="fc" id="L227">        int extra = 0;</span>
+<span class="fc" id="L228">        int averageWidth = (width - ((columnCount - 1) * 2)) / columnCount;</span>
+<span class="fc" id="L229">        int[] overage = new int[columnCount];</span>
+<span class="fc" id="L230">        int totalOverage = 0;</span>
+<span class="fc bfc" id="L231" title="All 2 branches covered.">        for (int i = 0; i &lt; columnCount; i++) {</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            if (columnWidth[i] &lt; averageWidth) {</span>
+<span class="fc" id="L233">                extra += averageWidth - columnWidth[i];</span>
+<span class="pc bpc" id="L234" title="1 of 2 branches missed.">            } else if (columnWidth[i] &gt; averageWidth) {</span>
+<span class="fc" id="L235">                overage[i] = columnWidth[i] - averageWidth;</span>
+<span class="fc" id="L236">                totalOverage += overage[i];</span>
             }
         }
 
-<span class="fc bfc" id="L227" title="All 2 branches covered.">        for (int i = 0; i &lt; columnCount; i++) {</span>
-<span class="fc bfc" id="L228" title="All 2 branches covered.">            if (overage[i] &gt; 0) {</span>
-<span class="fc" id="L229">                int addl = (int) (extra * overage[i] * 1.0 / totalOverage);</span>
-<span class="fc" id="L230">                columnWidth[i] = averageWidth + addl;</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">        for (int i = 0; i &lt; columnCount; i++) {</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">            if (overage[i] &gt; 0) {</span>
+<span class="fc" id="L242">                int addl = (int) (extra * overage[i] * 1.0 / totalOverage);</span>
+<span class="fc" id="L243">                columnWidth[i] = averageWidth + addl;</span>
             }
         }
-<span class="fc" id="L233">        return columnWidth;</span>
+<span class="fc" id="L246">        return columnWidth;</span>
     }
 
     private static void printText(final List&lt;String&gt; columns, final Predicate&lt;Option&gt; filter, final boolean addCLI,
                                   final boolean showMaven, final boolean showAnt,
                                   final Function&lt;Option, String&gt; descriptionFunction, final Writer underWriter, final int width) throws IOException {
-<span class="fc" id="L239">        List&lt;List&lt;String&gt;&gt; page = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L252">        List&lt;List&lt;String&gt;&gt; page = new ArrayList&lt;&gt;();</span>
 
-<span class="fc" id="L241">        int columnCount = columns.size();</span>
-<span class="fc" id="L242">        page.add(columns);</span>
+<span class="fc" id="L254">        int columnCount = columns.size();</span>
+<span class="fc" id="L255">        page.add(columns);</span>
 
-<span class="fc bfc" id="L244" title="All 2 branches covered.">        for (Option option : OptionCollection.buildOptions().getOptions()) {</span>
-<span class="fc bfc" id="L245" title="All 2 branches covered.">            if (filter.test(option)) {</span>
-<span class="fc" id="L246">                page.add(fillColumns(new ArrayList&lt;&gt;(), option, addCLI, showMaven, showAnt, descriptionFunction));</span>
+<span class="fc bfc" id="L257" title="All 2 branches covered.">        for (Option option : OptionCollection.buildOptions().getOptions()) {</span>
+<span class="fc bfc" id="L258" title="All 2 branches covered.">            if (filter.test(option)) {</span>
+<span class="fc" id="L259">                page.add(fillColumns(new ArrayList&lt;&gt;(), option, addCLI, showMaven, showAnt, descriptionFunction));</span>
             }
-<span class="fc" id="L248">        }</span>
-<span class="fc" id="L249">        int[] columnWidth = calculateColumnWidth(width, columnCount, page);</span>
+<span class="fc" id="L261">        }</span>
+<span class="fc" id="L262">        int[] columnWidth = calculateColumnWidth(width, columnCount, page);</span>
         HelpFormatter helpFormatter;
-<span class="fc" id="L251">        helpFormatter = new HelpFormatter.Builder().get();</span>
-<span class="fc" id="L252">        helpFormatter.setWidth(width);</span>
+<span class="fc" id="L264">        helpFormatter = new HelpFormatter.Builder().get();</span>
+<span class="fc" id="L265">        helpFormatter.setWidth(width);</span>
 
 
-<span class="fc" id="L255">        List&lt;Deque&lt;String&gt;&gt; entries = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L256">        CharArrayWriter cWriter = new CharArrayWriter();</span>
+<span class="fc" id="L268">        List&lt;Deque&lt;String&gt;&gt; entries = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L269">        CharArrayWriter cWriter = new CharArrayWriter();</span>
 
         // process one line at a time
-<span class="fc bfc" id="L259" title="All 2 branches covered.">        for (List&lt;String&gt; cols : page) {</span>
-<span class="fc" id="L260">            entries.clear();</span>
-<span class="fc" id="L261">            PrintWriter writer = new PrintWriter(cWriter);</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">        for (List&lt;String&gt; cols : page) {</span>
+<span class="fc" id="L273">            entries.clear();</span>
+<span class="fc" id="L274">            PrintWriter writer = new PrintWriter(cWriter);</span>
             // print each column into a block of strings.
-<span class="fc bfc" id="L263" title="All 2 branches covered.">            for (int i = 0; i &lt; columnCount; i++) {</span>
-<span class="fc" id="L264">                String col = cols.get(i);</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">            for (int i = 0; i &lt; columnCount; i++) {</span>
+<span class="fc" id="L277">                String col = cols.get(i);</span>
                 // split on end of line within a column
-<span class="fc bfc" id="L266" title="All 2 branches covered.">                for (String line : col.split(&quot;\\v&quot;)) {</span>
-<span class="fc" id="L267">                    helpFormatter.printWrapped(writer, columnWidth[i], 2, line);</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">                for (String line : col.split(&quot;\\v&quot;)) {</span>
+<span class="fc" id="L280">                    helpFormatter.printWrapped(writer, columnWidth[i], 2, line);</span>
                 }
-<span class="fc" id="L269">                writer.flush();</span>
+<span class="fc" id="L282">                writer.flush();</span>
                 // please the block of strings into a queue.
-<span class="fc" id="L271">                Deque&lt;String&gt; entryLines = new LinkedList&lt;&gt;(Arrays.asList(cWriter.toString().split(&quot;\\v&quot;)));</span>
+<span class="fc" id="L284">                Deque&lt;String&gt; entryLines = new LinkedList&lt;&gt;(Arrays.asList(cWriter.toString().split(&quot;\\v&quot;)));</span>
                 // put the queue into the entries for this line.
-<span class="fc" id="L273">                entries.add(entryLines);</span>
-<span class="fc" id="L274">                cWriter.reset();</span>
+<span class="fc" id="L286">                entries.add(entryLines);</span>
+<span class="fc" id="L287">                cWriter.reset();</span>
             }
             // print the entries by printing the items from the queues until all queues are empty.
-<span class="fc" id="L277">            boolean cont = true;</span>
-<span class="fc bfc" id="L278" title="All 2 branches covered.">            while (cont) {</span>
-<span class="fc" id="L279">                cont = false;</span>
-<span class="fc bfc" id="L280" title="All 2 branches covered.">                for (int columnNumber = 0; columnNumber &lt; entries.size(); columnNumber++) {</span>
-<span class="fc" id="L281">                    Deque&lt;String&gt; queue = entries.get(columnNumber);</span>
-<span class="fc bfc" id="L282" title="All 2 branches covered.">                    if (queue.isEmpty()) {</span>
-<span class="fc" id="L283">                        underWriter.append(AbstractHelp.createPadding(columnWidth[columnNumber] + 2));</span>
+<span class="fc" id="L290">            boolean cont = true;</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">            while (cont) {</span>
+<span class="fc" id="L292">                cont = false;</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">                for (int columnNumber = 0; columnNumber &lt; entries.size(); columnNumber++) {</span>
+<span class="fc" id="L294">                    Deque&lt;String&gt; queue = entries.get(columnNumber);</span>
+<span class="fc bfc" id="L295" title="All 2 branches covered.">                    if (queue.isEmpty()) {</span>
+<span class="fc" id="L296">                        underWriter.append(AbstractHelp.createPadding(columnWidth[columnNumber] + 2));</span>
                     } else {
-<span class="fc" id="L285">                        String ln = queue.pop();</span>
-<span class="fc" id="L286">                        underWriter.append(ln);</span>
-<span class="fc" id="L287">                        underWriter.append(AbstractHelp.createPadding(columnWidth[columnNumber] - ln.length() + 2));</span>
-<span class="fc bfc" id="L288" title="All 2 branches covered.">                        if (!queue.isEmpty()) {</span>
-<span class="fc" id="L289">                            cont = true;</span>
+<span class="fc" id="L298">                        String ln = queue.pop();</span>
+<span class="fc" id="L299">                        underWriter.append(ln);</span>
+<span class="fc" id="L300">                        underWriter.append(AbstractHelp.createPadding(columnWidth[columnNumber] - ln.length() + 2));</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">                        if (!queue.isEmpty()) {</span>
+<span class="fc" id="L302">                            cont = true;</span>
                         }
                     }
                 }
-<span class="fc" id="L293">                underWriter.append(System.lineSeparator());</span>
+<span class="fc" id="L306">                underWriter.append(System.lineSeparator());</span>
             }
-<span class="fc" id="L295">            underWriter.append(System.lineSeparator());</span>
-<span class="fc" id="L296">        }</span>
-<span class="fc" id="L297">    }</span>
+<span class="fc" id="L308">            underWriter.append(System.lineSeparator());</span>
+<span class="fc" id="L309">        }</span>
+<span class="fc" id="L310">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

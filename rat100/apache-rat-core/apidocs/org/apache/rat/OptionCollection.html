@@ -69,7 +69,9 @@ loadScripts(document, 'script');</script>
 <li><a href="#getArgumentTypes()" tabindex="0">getArgumentTypes()</a></li>
 <li><a href="#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer)" tabindex="0">parseCommands(File, String[], Consumer)</a></li>
 <li><a href="#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer,boolean)" tabindex="0">parseCommands(File, String[], Consumer, boolean)</a></li>
+<li><a href="#createConfiguration(org.apache.rat.commandline.ArgumentContext)" tabindex="0">createConfiguration(ArgumentContext)</a></li>
 <li><a href="#buildOptions()" tabindex="0">buildOptions()</a></li>
+<li><a href="#getReportable(java.io.File,org.apache.rat.ReportConfiguration)" tabindex="0">getReportable(File, ReportConfiguration)</a></li>
 </ol>
 </li>
 </ol>
@@ -125,7 +127,7 @@ ReportConfiguration from the options and an array of arguments.</div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="class or interface in java.util" class="external-link">Comparator</a><wbr>&lt;org.apache.commons.cli.Option&gt;</code></div>
 <div class="col-second odd-row-color"><code><a href="#OPTION_COMPARATOR" class="member-name-link">OPTION_COMPARATOR</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">The Option comparator to sort the help</div>
+<div class="block">The Option comparator to sort the help.</div>
 </div>
 </div>
 </section>
@@ -146,12 +148,24 @@ ReportConfiguration from the options and an array of arguments.</div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Create an <code>Options</code> object from the list of defined Options.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getArgumentTypes()" class="member-name-link">getArgumentTypes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createConfiguration(org.apache.rat.commandline.ArgumentContext)" class="member-name-link">createConfiguration</a><wbr>(<a href="commandline/ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;argumentContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Create the report configuration.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getArgumentTypes()" class="member-name-link">getArgumentTypes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">use <a href="OptionCollection.ArgumentType.html" title="enum class in org.apache.rat"><code>OptionCollection.ArgumentType</code></a></div>
 </div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getReportable(java.io.File,org.apache.rat.ReportConfiguration)" class="member-name-link">getReportable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;base,
+ <a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates an IReportable object from the directory name and ReportConfiguration
+object.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
@@ -190,7 +204,7 @@ ReportConfiguration from the options and an array of arguments.</div>
 <h3>OPTION_COMPARATOR</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="class or interface in java.util" class="external-link">Comparator</a>&lt;org.apache.commons.cli.Option&gt;</span>&nbsp;<span class="element-name">OPTION_COMPARATOR</span></div>
-<div class="block">The Option comparator to sort the help</div>
+<div class="block">The Option comparator to sort the help.</div>
 </div>
 </section>
 </li>
@@ -275,6 +289,30 @@ ReportConfiguration from the options and an array of arguments.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="createConfiguration(org.apache.rat.commandline.ArgumentContext)">
+<h3>createConfiguration</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span>&nbsp;<span class="element-name">createConfiguration</span><wbr><span class="parameters">(<a href="commandline/ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a>&nbsp;argumentContext)</span></div>
+<div class="block">Create the report configuration.
+Note: this method is package private for testing.
+You probably want one of the <code>ParseCommands</code> methods.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>argumentContext</code> - The context to execute in.</dd>
+<dt>Returns:</dt>
+<dd>a ReportConfiguration</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer)"><code>parseCommands(File, String[], Consumer)</code></a></li>
+<li><a href="#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer,boolean)"><code>parseCommands(File, String[], Consumer, boolean)</code></a></li>
+</ul>
+</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="buildOptions()">
 <h3>buildOptions</h3>
 <div class="horizontal-scroll">
@@ -284,6 +322,24 @@ Mutually exclusive options must be listed in an OptionGroup.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the Options comprised of the Options defined in this class.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getReportable(java.io.File,org.apache.rat.ReportConfiguration)">
+<h3>getReportable</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a></span>&nbsp;<span class="element-name">getReportable</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;base,
+ <a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</span></div>
+<div class="block">Creates an IReportable object from the directory name and ReportConfiguration
+object.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>base</code> - the directory that contains the files to report on.</dd>
+<dd><code>config</code> - the ReportConfiguration.</dd>
+<dt>Returns:</dt>
+<dd>the IReportable instance containing the files.</dd>
 </dl>
 </div>
 </section>

@@ -84,28 +84,28 @@ public class Matcher {
      * @param desc the description of the matcher.
      * @param self the matcher to wrap. May be {@code null}.
      */
-<span class="nc" id="L87">    Matcher(final Description desc, final IHeaderMatcher self) {</span>
-<span class="nc" id="L88">        Objects.requireNonNull(desc);</span>
-<span class="nc" id="L89">        this.desc = desc;</span>
-<span class="nc" id="L90">        this.self = self;</span>
-<span class="nc" id="L91">        Enclosed enclosed = null;</span>
-<span class="nc" id="L92">        attributes = new TreeSet&lt;&gt;(Comparator.comparing(Attribute::getName));</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        for (Description child : desc.childrenOfType(ComponentType.PARAMETER)) {</span>
-<span class="nc bnc" id="L94" title="All 2 branches missed.">            if (XMLConfig.isInlineNode(desc.getCommonName(), child.getCommonName())) {</span>
-<span class="nc" id="L95">                enclosed = new Enclosed(child);</span>
+<span class="fc" id="L87">    Matcher(final Description desc, final IHeaderMatcher self) {</span>
+<span class="fc" id="L88">        Objects.requireNonNull(desc);</span>
+<span class="fc" id="L89">        this.desc = desc;</span>
+<span class="fc" id="L90">        this.self = self;</span>
+<span class="fc" id="L91">        Enclosed enclosed = null;</span>
+<span class="fc" id="L92">        attributes = new TreeSet&lt;&gt;(Comparator.comparing(Attribute::getName));</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        for (Description child : desc.childrenOfType(ComponentType.PARAMETER)) {</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            if (XMLConfig.isInlineNode(desc.getCommonName(), child.getCommonName())) {</span>
+<span class="fc" id="L95">                enclosed = new Enclosed(child);</span>
             } else {
-<span class="nc" id="L97">                attributes.add(new Attribute(child));</span>
+<span class="fc" id="L97">                attributes.add(new Attribute(child));</span>
             }
-<span class="nc" id="L99">        }</span>
-<span class="nc" id="L100">        this.enclosed = enclosed;</span>
-<span class="nc" id="L101">    }</span>
+<span class="fc" id="L99">        }</span>
+<span class="fc" id="L100">        this.enclosed = enclosed;</span>
+<span class="fc" id="L101">    }</span>
 
     /**
      * Get the name of the matcher type.
      * @return the name of the matcher type.
      */
     public String getName() {
-<span class="nc" id="L108">        return desc.getCommonName();</span>
+<span class="fc" id="L108">        return desc.getCommonName();</span>
     }
 
     /**
@@ -162,9 +162,9 @@ public class Matcher {
          * Constructor.
          * @param desc the description of the enclosed matcher.
          */
-<span class="nc" id="L165">        Enclosed(final Description desc) {</span>
-<span class="nc" id="L166">            this.desc = desc;</span>
-<span class="nc" id="L167">        }</span>
+<span class="fc" id="L165">        Enclosed(final Description desc) {</span>
+<span class="fc" id="L166">            this.desc = desc;</span>
+<span class="fc" id="L167">        }</span>
 
         /**
          * Gets the required flag.
@@ -228,16 +228,16 @@ public class Matcher {
          * Constructor
          * @param description the description for this attribute.
          */
-<span class="nc" id="L231">        Attribute(final Description description) {</span>
-<span class="nc" id="L232">            this.description = description;</span>
-<span class="nc" id="L233">        }</span>
+<span class="fc" id="L231">        Attribute(final Description description) {</span>
+<span class="fc" id="L232">            this.description = description;</span>
+<span class="fc" id="L233">        }</span>
 
         /**
          * Gets the attribute name.
          * @return the attribut name.
          */
         public String getName() {
-<span class="nc" id="L240">            return description.getCommonName();</span>
+<span class="fc" id="L240">            return description.getCommonName();</span>
         }
 
         /**

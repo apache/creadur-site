@@ -182,167 +182,170 @@
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>         <strong class="jxr_keyword">for</strong> (<a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> sc : fileProcessors) {
 <a class="jxr_linenumber" name="L175" href="#L175">175</a>             appendable.append(format(<span class="jxr_string">"Processing exclude file from %s.%n"</span>, sc.name()));
 <a class="jxr_linenumber" name="L176" href="#L176">176</a>         }
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>     }
-<a class="jxr_linenumber" name="L178" href="#L178">178</a> 
-<a class="jxr_linenumber" name="L179" href="#L179">179</a> 
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L181" href="#L181">181</a> <em class="jxr_javadoccomment">     * Excludes the files/directories specified by a StandardCollection.</em>
-<a class="jxr_linenumber" name="L182" href="#L182">182</a> <em class="jxr_javadoccomment">     * @param collection the StandardCollection that identifies the files to exclude.</em>
-<a class="jxr_linenumber" name="L183" href="#L183">183</a> <em class="jxr_javadoccomment">     * @return this</em>
-<a class="jxr_linenumber" name="L184" href="#L184">184</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>     <strong class="jxr_keyword">public</strong> <a name="ExclusionProcessor" href="../../../../../org/apache/rat/config/exclusion/ExclusionProcessor.html#ExclusionProcessor">ExclusionProcessor</a> addExcludedCollection(<strong class="jxr_keyword">final</strong> <a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> collection) {
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>         <strong class="jxr_keyword">if</strong> (collection != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>             DefaultLog.getInstance().debug(format(<span class="jxr_string">"Excluding %s collection."</span>, collection));
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>             excludedCollections.add(collection);
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>             resetLastMatcher();
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>         }
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>     }
-<a class="jxr_linenumber" name="L193" href="#L193">193</a> 
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L195" href="#L195">195</a> <em class="jxr_javadoccomment">     * Creates a Document name matcher that will return {@code false} on any</em>
-<a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">     * document that is excluded.</em>
-<a class="jxr_linenumber" name="L197" href="#L197">197</a> <em class="jxr_javadoccomment">     * @param basedir the base directory to make everything relative to.</em>
-<a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">     * @return A DocumentNameMatcher that will return {@code false} for any document that is to be excluded.</em>
-<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>     <strong class="jxr_keyword">public</strong> <a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> getNameMatcher(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> basedir) {
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>         <em class="jxr_comment">// if lastMatcher is not set or the basedir is not the same as the last one then</em>
-<a class="jxr_linenumber" name="L202" href="#L202">202</a>         <em class="jxr_comment">// we have to regenerate the matching document. Otherwise we can just return the</em>
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>         <em class="jxr_comment">// lastMatcher since there is no change.</em>
-<a class="jxr_linenumber" name="L204" href="#L204">204</a>         <strong class="jxr_keyword">if</strong> (lastMatcher == <strong class="jxr_keyword">null</strong> || !basedir.equals(lastMatcherBaseDir)) {
-<a class="jxr_linenumber" name="L205" href="#L205">205</a>             lastMatcherBaseDir = basedir;
-<a class="jxr_linenumber" name="L206" href="#L206">206</a> 
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>             <em class="jxr_comment">// add the file processors</em>
-<a class="jxr_linenumber" name="L208" href="#L208">208</a>             <strong class="jxr_keyword">final</strong> List&lt;MatcherSet&gt; matchers = extractFileProcessors(basedir);
-<a class="jxr_linenumber" name="L209" href="#L209">209</a>             <strong class="jxr_keyword">final</strong> MatcherSet.Builder fromCommandLine = <strong class="jxr_keyword">new</strong> MatcherSet.Builder();
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>             DocumentName.Builder nameBuilder = DocumentName.builder(basedir).setBaseName(basedir);
-<a class="jxr_linenumber" name="L211" href="#L211">211</a>             extractPatterns(nameBuilder, fromCommandLine);
-<a class="jxr_linenumber" name="L212" href="#L212">212</a>             extractCollectionPatterns(nameBuilder, fromCommandLine);
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>             extractCollectionMatchers(fromCommandLine);
-<a class="jxr_linenumber" name="L214" href="#L214">214</a>             extractPaths(fromCommandLine);
-<a class="jxr_linenumber" name="L215" href="#L215">215</a>             matchers.add(fromCommandLine.build());
-<a class="jxr_linenumber" name="L216" href="#L216">216</a> 
-<a class="jxr_linenumber" name="L217" href="#L217">217</a>             lastMatcher = MatcherSet.merge(matchers).createMatcher();
-<a class="jxr_linenumber" name="L218" href="#L218">218</a>             DefaultLog.getInstance().debug(format(<span class="jxr_string">"Created matcher set for %s%n%s"</span>, basedir.getName(),
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>                     lastMatcher));
-<a class="jxr_linenumber" name="L220" href="#L220">220</a>         }
-<a class="jxr_linenumber" name="L221" href="#L221">221</a>         <strong class="jxr_keyword">return</strong> lastMatcher;
-<a class="jxr_linenumber" name="L222" href="#L222">222</a>     }
-<a class="jxr_linenumber" name="L223" href="#L223">223</a> 
-<a class="jxr_linenumber" name="L224" href="#L224">224</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L225" href="#L225">225</a> <em class="jxr_javadoccomment">     * Extracts the file processors from {@link #fileProcessors}.</em>
-<a class="jxr_linenumber" name="L226" href="#L226">226</a> <em class="jxr_javadoccomment">     * @param basedir The directory to base the file processors on.</em>
-<a class="jxr_linenumber" name="L227" href="#L227">227</a> <em class="jxr_javadoccomment">     * @return a list of MatcherSets that are created for each {@link #fileProcessors} entry.</em>
-<a class="jxr_linenumber" name="L228" href="#L228">228</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L229" href="#L229">229</a>     <strong class="jxr_keyword">private</strong> List&lt;MatcherSet&gt; extractFileProcessors(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> basedir) {
-<a class="jxr_linenumber" name="L230" href="#L230">230</a>         <strong class="jxr_keyword">final</strong> List&lt;MatcherSet&gt; fileProcessorList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L231" href="#L231">231</a>         <strong class="jxr_keyword">for</strong> (<a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> sc : fileProcessors) {
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>             ExtendedIterator&lt;List&lt;MatcherSet&gt;&gt; iter =  sc.fileProcessorBuilder().map(builder -&gt; builder.build(basedir));
-<a class="jxr_linenumber" name="L233" href="#L233">233</a>             <strong class="jxr_keyword">if</strong> (iter.hasNext()) {
-<a class="jxr_linenumber" name="L234" href="#L234">234</a>                 iter.forEachRemaining(fileProcessorList::addAll);
-<a class="jxr_linenumber" name="L235" href="#L235">235</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L236" href="#L236">236</a>                 DefaultLog.getInstance().debug(String.format(<span class="jxr_string">"%s does not have a fileProcessor."</span>, sc));
-<a class="jxr_linenumber" name="L237" href="#L237">237</a>             }
-<a class="jxr_linenumber" name="L238" href="#L238">238</a>         }
-<a class="jxr_linenumber" name="L239" href="#L239">239</a>         <strong class="jxr_keyword">return</strong> fileProcessorList;
-<a class="jxr_linenumber" name="L240" href="#L240">240</a>     }
-<a class="jxr_linenumber" name="L241" href="#L241">241</a> 
-<a class="jxr_linenumber" name="L242" href="#L242">242</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L243" href="#L243">243</a> <em class="jxr_javadoccomment">     * Converts the pattern to use the directory separator specified by the document name and localises it for</em>
-<a class="jxr_linenumber" name="L244" href="#L244">244</a> <em class="jxr_javadoccomment">     * exclusion processing.</em>
-<a class="jxr_linenumber" name="L245" href="#L245">245</a> <em class="jxr_javadoccomment">     * @param documentName The document name to adjust the pattern against.</em>
-<a class="jxr_linenumber" name="L246" href="#L246">246</a> <em class="jxr_javadoccomment">     * @param pattern the pattern.</em>
-<a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">     * @return the prepared pattern.</em>
-<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L249" href="#L249">249</a>     <strong class="jxr_keyword">private</strong> String preparePattern(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> documentName, <strong class="jxr_keyword">final</strong> String pattern) {
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>         <strong class="jxr_keyword">return</strong> ExclusionUtils.qualifyPattern(documentName,
-<a class="jxr_linenumber" name="L251" href="#L251">251</a>                         ExclusionUtils.convertSeparator(pattern, <span class="jxr_string">"/"</span>, documentName.getDirectorySeparator()));
-<a class="jxr_linenumber" name="L252" href="#L252">252</a>     }
-<a class="jxr_linenumber" name="L253" href="#L253">253</a> 
-<a class="jxr_linenumber" name="L254" href="#L254">254</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L255" href="#L255">255</a> <em class="jxr_javadoccomment">     * Extracts {@link #includedPatterns} and {@link #excludedPatterns} into the specified matcherBuilder.</em>
-<a class="jxr_linenumber" name="L256" href="#L256">256</a> <em class="jxr_javadoccomment">     * @param nameBuilder The name builder for the pattern. File names are resolved against the generated name.</em>
-<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">     * @param matcherBuilder the MatcherSet.Builder to add the patterns to.</em>
-<a class="jxr_linenumber" name="L258" href="#L258">258</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L259" href="#L259">259</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> extractPatterns(<strong class="jxr_keyword">final</strong> DocumentName.Builder nameBuilder, <strong class="jxr_keyword">final</strong> MatcherSet.Builder matcherBuilder) {
-<a class="jxr_linenumber" name="L260" href="#L260">260</a>         <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> name = nameBuilder.setName(<span class="jxr_string">"Patterns"</span>).build();
-<a class="jxr_linenumber" name="L261" href="#L261">261</a>         <strong class="jxr_keyword">if</strong> (!excludedPatterns.isEmpty()) {
-<a class="jxr_linenumber" name="L262" href="#L262">262</a>             matcherBuilder.addExcluded(name, excludedPatterns.stream()
-<a class="jxr_linenumber" name="L263" href="#L263">263</a>                     .map(s -&gt; preparePattern(name, s))
-<a class="jxr_linenumber" name="L264" href="#L264">264</a>                     .collect(Collectors.toSet()));
-<a class="jxr_linenumber" name="L265" href="#L265">265</a>         }
-<a class="jxr_linenumber" name="L266" href="#L266">266</a>         <strong class="jxr_keyword">if</strong> (!includedPatterns.isEmpty()) {
-<a class="jxr_linenumber" name="L267" href="#L267">267</a>             matcherBuilder.addIncluded(name, includedPatterns.stream()
-<a class="jxr_linenumber" name="L268" href="#L268">268</a>                     .map(s -&gt; preparePattern(name, s)).collect(Collectors.toSet()));
-<a class="jxr_linenumber" name="L269" href="#L269">269</a>         }
-<a class="jxr_linenumber" name="L270" href="#L270">270</a>     }
-<a class="jxr_linenumber" name="L271" href="#L271">271</a> 
-<a class="jxr_linenumber" name="L272" href="#L272">272</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L273" href="#L273">273</a> <em class="jxr_javadoccomment">     * Extracts {@link #includedCollections} and {@link #excludedCollections} patterns into the specified matcherBuilder.</em>
-<a class="jxr_linenumber" name="L274" href="#L274">274</a> <em class="jxr_javadoccomment">     * @param nameBuilder the name builder for the pattern names.</em>
-<a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">     * @param matcherBuilder the MatcherSet.Builder to add the collections to.</em>
-<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L277" href="#L277">277</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> extractCollectionPatterns(<strong class="jxr_keyword">final</strong> DocumentName.Builder nameBuilder, <strong class="jxr_keyword">final</strong> MatcherSet.Builder matcherBuilder) {
-<a class="jxr_linenumber" name="L278" href="#L278">278</a>         <strong class="jxr_keyword">final</strong> Set&lt;String&gt; incl = <strong class="jxr_keyword">new</strong> TreeSet&lt;&gt;();
-<a class="jxr_linenumber" name="L279" href="#L279">279</a>         <strong class="jxr_keyword">final</strong> Set&lt;String&gt; excl = <strong class="jxr_keyword">new</strong> TreeSet&lt;&gt;();
-<a class="jxr_linenumber" name="L280" href="#L280">280</a>         <strong class="jxr_keyword">for</strong> (<a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> sc : includedCollections) {
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>             Set&lt;String&gt; patterns = sc.patterns();
-<a class="jxr_linenumber" name="L282" href="#L282">282</a>             <strong class="jxr_keyword">if</strong> (patterns.isEmpty()) {
-<a class="jxr_linenumber" name="L283" href="#L283">283</a>                 DefaultLog.getInstance().debug(String.format(<span class="jxr_string">"%s does not have a defined collection for inclusion."</span>, sc));
-<a class="jxr_linenumber" name="L284" href="#L284">284</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L285" href="#L285">285</a>                 MatcherSet.Builder.segregateList(incl, excl, sc.patterns());
-<a class="jxr_linenumber" name="L286" href="#L286">286</a>             }
-<a class="jxr_linenumber" name="L287" href="#L287">287</a>         }
-<a class="jxr_linenumber" name="L288" href="#L288">288</a>         <strong class="jxr_keyword">for</strong> (<a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> sc : excludedCollections) {
-<a class="jxr_linenumber" name="L289" href="#L289">289</a>             Set&lt;String&gt; patterns = sc.patterns();
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>             <strong class="jxr_keyword">if</strong> (patterns.isEmpty()) {
-<a class="jxr_linenumber" name="L291" href="#L291">291</a>                 DefaultLog.getInstance().debug(String.format(<span class="jxr_string">"%s does not have a defined collection for exclusion."</span>, sc));
-<a class="jxr_linenumber" name="L292" href="#L292">292</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L293" href="#L293">293</a>                 MatcherSet.Builder.segregateList(excl, incl, sc.patterns());
-<a class="jxr_linenumber" name="L294" href="#L294">294</a>             }
-<a class="jxr_linenumber" name="L295" href="#L295">295</a>         }
-<a class="jxr_linenumber" name="L296" href="#L296">296</a>         <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> name = nameBuilder.setName(<span class="jxr_string">"Collections"</span>).build();
-<a class="jxr_linenumber" name="L297" href="#L297">297</a>         matcherBuilder
-<a class="jxr_linenumber" name="L298" href="#L298">298</a>                 .addExcluded(name, excl.stream().map(s -&gt; preparePattern(name.getBaseDocumentName(), s)).collect(Collectors.toSet()))
-<a class="jxr_linenumber" name="L299" href="#L299">299</a>                 .addIncluded(name, incl.stream().map(s -&gt; preparePattern(name.getBaseDocumentName(), s)).collect(Collectors.toSet()));
-<a class="jxr_linenumber" name="L300" href="#L300">300</a>     }
-<a class="jxr_linenumber" name="L301" href="#L301">301</a> 
-<a class="jxr_linenumber" name="L302" href="#L302">302</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L303" href="#L303">303</a> <em class="jxr_javadoccomment">     * Extracts {@link #includedCollections} and {@link #excludedCollections} matchers into the specified matcherBuilder.</em>
-<a class="jxr_linenumber" name="L304" href="#L304">304</a> <em class="jxr_javadoccomment">     * @param matcherBuilder the MatcherSet.Builder to add the collections to.</em>
-<a class="jxr_linenumber" name="L305" href="#L305">305</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L306" href="#L306">306</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> extractCollectionMatchers(<strong class="jxr_keyword">final</strong> MatcherSet.Builder matcherBuilder) {
-<a class="jxr_linenumber" name="L307" href="#L307">307</a>         ExtendedIterator.create(includedCollections.iterator())
-<a class="jxr_linenumber" name="L308" href="#L308">308</a>                 .map(StandardCollection::staticDocumentNameMatcher)
-<a class="jxr_linenumber" name="L309" href="#L309">309</a>                 .filter(Objects::nonNull)
-<a class="jxr_linenumber" name="L310" href="#L310">310</a>                 .forEachRemaining(matcherBuilder::addIncluded);
-<a class="jxr_linenumber" name="L311" href="#L311">311</a> 
-<a class="jxr_linenumber" name="L312" href="#L312">312</a>         ExtendedIterator.create(excludedCollections.iterator())
-<a class="jxr_linenumber" name="L313" href="#L313">313</a>                 .map(StandardCollection::staticDocumentNameMatcher)
-<a class="jxr_linenumber" name="L314" href="#L314">314</a>                 .filter(Objects::nonNull)
-<a class="jxr_linenumber" name="L315" href="#L315">315</a>                 .forEachRemaining(matcherBuilder::addExcluded);
-<a class="jxr_linenumber" name="L316" href="#L316">316</a>     }
-<a class="jxr_linenumber" name="L317" href="#L317">317</a> 
-<a class="jxr_linenumber" name="L318" href="#L318">318</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L319" href="#L319">319</a> <em class="jxr_javadoccomment">     * Extracts {@link #includedPaths} and {@link #excludedPaths} patterns into the specified matcherBuilder.</em>
-<a class="jxr_linenumber" name="L320" href="#L320">320</a> <em class="jxr_javadoccomment">     * @param matcherBuilder the MatcherSet.Builder to add the collections to.</em>
-<a class="jxr_linenumber" name="L321" href="#L321">321</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L322" href="#L322">322</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> extractPaths(<strong class="jxr_keyword">final</strong> MatcherSet.Builder matcherBuilder) {
-<a class="jxr_linenumber" name="L323" href="#L323">323</a>         <strong class="jxr_keyword">if</strong> (!includedPaths.isEmpty()) {
-<a class="jxr_linenumber" name="L324" href="#L324">324</a>             <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> matcher : includedPaths) {
-<a class="jxr_linenumber" name="L325" href="#L325">325</a>                 DefaultLog.getInstance().debug(format(<span class="jxr_string">"Including path matcher %s"</span>, matcher));
-<a class="jxr_linenumber" name="L326" href="#L326">326</a>                 matcherBuilder.addIncluded(matcher);
-<a class="jxr_linenumber" name="L327" href="#L327">327</a>             }
-<a class="jxr_linenumber" name="L328" href="#L328">328</a>         }
-<a class="jxr_linenumber" name="L329" href="#L329">329</a>         <strong class="jxr_keyword">if</strong> (!excludedPaths.isEmpty()) {
-<a class="jxr_linenumber" name="L330" href="#L330">330</a>             <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> matcher : excludedPaths) {
-<a class="jxr_linenumber" name="L331" href="#L331">331</a>                 DefaultLog.getInstance().debug(format(<span class="jxr_string">"Excluding path matcher %s"</span>, matcher));
-<a class="jxr_linenumber" name="L332" href="#L332">332</a>                 matcherBuilder.addExcluded(matcher);
-<a class="jxr_linenumber" name="L333" href="#L333">333</a>             }
-<a class="jxr_linenumber" name="L334" href="#L334">334</a>         }
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>     }
-<a class="jxr_linenumber" name="L336" href="#L336">336</a> 
-<a class="jxr_linenumber" name="L337" href="#L337">337</a> }
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>         <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> nameMatcher : excludedPaths) {
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>             appendable.append(format(<span class="jxr_string">"Excluding %s.%n"</span>, nameMatcher.toString()));
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>         }
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>     }
+<a class="jxr_linenumber" name="L181" href="#L181">181</a> 
+<a class="jxr_linenumber" name="L182" href="#L182">182</a> 
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L184" href="#L184">184</a> <em class="jxr_javadoccomment">     * Excludes the files/directories specified by a StandardCollection.</em>
+<a class="jxr_linenumber" name="L185" href="#L185">185</a> <em class="jxr_javadoccomment">     * @param collection the StandardCollection that identifies the files to exclude.</em>
+<a class="jxr_linenumber" name="L186" href="#L186">186</a> <em class="jxr_javadoccomment">     * @return this</em>
+<a class="jxr_linenumber" name="L187" href="#L187">187</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>     <strong class="jxr_keyword">public</strong> <a name="ExclusionProcessor" href="../../../../../org/apache/rat/config/exclusion/ExclusionProcessor.html#ExclusionProcessor">ExclusionProcessor</a> addExcludedCollection(<strong class="jxr_keyword">final</strong> <a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> collection) {
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>         <strong class="jxr_keyword">if</strong> (collection != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>             DefaultLog.getInstance().debug(format(<span class="jxr_string">"Excluding %s collection."</span>, collection));
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>             excludedCollections.add(collection);
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>             resetLastMatcher();
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         }
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>     }
+<a class="jxr_linenumber" name="L196" href="#L196">196</a> 
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L198" href="#L198">198</a> <em class="jxr_javadoccomment">     * Creates a Document name matcher that will return {@code false} on any</em>
+<a class="jxr_linenumber" name="L199" href="#L199">199</a> <em class="jxr_javadoccomment">     * document that is excluded.</em>
+<a class="jxr_linenumber" name="L200" href="#L200">200</a> <em class="jxr_javadoccomment">     * @param basedir the base directory to make everything relative to.</em>
+<a class="jxr_linenumber" name="L201" href="#L201">201</a> <em class="jxr_javadoccomment">     * @return A DocumentNameMatcher that will return {@code false} for any document that is to be excluded.</em>
+<a class="jxr_linenumber" name="L202" href="#L202">202</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>     <strong class="jxr_keyword">public</strong> <a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> getNameMatcher(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> basedir) {
+<a class="jxr_linenumber" name="L204" href="#L204">204</a>         <em class="jxr_comment">// if lastMatcher is not set or the basedir is not the same as the last one then</em>
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>         <em class="jxr_comment">// we have to regenerate the matching document.</em>
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>         <em class="jxr_comment">// Otherwise we can just return the lastMatcher since there is no change.</em>
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>         <strong class="jxr_keyword">if</strong> (lastMatcher == <strong class="jxr_keyword">null</strong> || !basedir.equals(lastMatcherBaseDir)) {
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>             lastMatcherBaseDir = basedir;
+<a class="jxr_linenumber" name="L209" href="#L209">209</a> 
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>             <em class="jxr_comment">// add the file processors</em>
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>             <strong class="jxr_keyword">final</strong> List&lt;MatcherSet&gt; matchers = extractFileProcessors(basedir);
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>             <strong class="jxr_keyword">final</strong> MatcherSet.Builder fromCommandLine = <strong class="jxr_keyword">new</strong> MatcherSet.Builder();
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>             DocumentName.Builder nameBuilder = DocumentName.builder(basedir).setBaseName(basedir);
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>             extractPatterns(nameBuilder, fromCommandLine);
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>             extractCollectionPatterns(nameBuilder, fromCommandLine);
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>             extractCollectionMatchers(fromCommandLine);
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>             extractPaths(fromCommandLine);
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>             matchers.add(fromCommandLine.build());
+<a class="jxr_linenumber" name="L219" href="#L219">219</a> 
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>             lastMatcher = MatcherSet.merge(matchers).createMatcher();
+<a class="jxr_linenumber" name="L221" href="#L221">221</a>             DefaultLog.getInstance().debug(format(<span class="jxr_string">"Created matcher set for %s%n%s"</span>, basedir.getName(),
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>                     lastMatcher));
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>         }
+<a class="jxr_linenumber" name="L224" href="#L224">224</a>         <strong class="jxr_keyword">return</strong> lastMatcher;
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>     }
+<a class="jxr_linenumber" name="L226" href="#L226">226</a> 
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L228" href="#L228">228</a> <em class="jxr_javadoccomment">     * Extracts the file processors from {@link #fileProcessors}.</em>
+<a class="jxr_linenumber" name="L229" href="#L229">229</a> <em class="jxr_javadoccomment">     * @param basedir The directory to base the file processors on.</em>
+<a class="jxr_linenumber" name="L230" href="#L230">230</a> <em class="jxr_javadoccomment">     * @return a list of MatcherSets that are created for each {@link #fileProcessors} entry.</em>
+<a class="jxr_linenumber" name="L231" href="#L231">231</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>     <strong class="jxr_keyword">private</strong> List&lt;MatcherSet&gt; extractFileProcessors(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> basedir) {
+<a class="jxr_linenumber" name="L233" href="#L233">233</a>         <strong class="jxr_keyword">final</strong> List&lt;MatcherSet&gt; fileProcessorList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>         <strong class="jxr_keyword">for</strong> (<a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> sc : fileProcessors) {
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>             ExtendedIterator&lt;List&lt;MatcherSet&gt;&gt; iter =  sc.fileProcessorBuilder().map(builder -&gt; builder.build(basedir));
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>             <strong class="jxr_keyword">if</strong> (iter.hasNext()) {
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>                 iter.forEachRemaining(fileProcessorList::addAll);
+<a class="jxr_linenumber" name="L238" href="#L238">238</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L239" href="#L239">239</a>                 DefaultLog.getInstance().debug(String.format(<span class="jxr_string">"%s does not have a fileProcessor."</span>, sc));
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>             }
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>         }
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>         <strong class="jxr_keyword">return</strong> fileProcessorList;
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>     }
+<a class="jxr_linenumber" name="L244" href="#L244">244</a> 
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L246" href="#L246">246</a> <em class="jxr_javadoccomment">     * Converts the pattern to use the directory separator specified by the document name and localises it for</em>
+<a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">     * exclusion processing.</em>
+<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">     * @param documentName The document name to adjust the pattern against.</em>
+<a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">     * @param pattern the pattern.</em>
+<a class="jxr_linenumber" name="L250" href="#L250">250</a> <em class="jxr_javadoccomment">     * @return the prepared pattern.</em>
+<a class="jxr_linenumber" name="L251" href="#L251">251</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>     <strong class="jxr_keyword">private</strong> String preparePattern(<strong class="jxr_keyword">final</strong> <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> documentName, <strong class="jxr_keyword">final</strong> String pattern) {
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>         <strong class="jxr_keyword">return</strong> ExclusionUtils.qualifyPattern(documentName,
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>                         ExclusionUtils.convertSeparator(pattern, <span class="jxr_string">"/"</span>, documentName.getDirectorySeparator()));
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>     }
+<a class="jxr_linenumber" name="L256" href="#L256">256</a> 
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L258" href="#L258">258</a> <em class="jxr_javadoccomment">     * Extracts {@link #includedPatterns} and {@link #excludedPatterns} into the specified matcherBuilder.</em>
+<a class="jxr_linenumber" name="L259" href="#L259">259</a> <em class="jxr_javadoccomment">     * @param nameBuilder The name builder for the pattern. File names are resolved against the generated name.</em>
+<a class="jxr_linenumber" name="L260" href="#L260">260</a> <em class="jxr_javadoccomment">     * @param matcherBuilder the MatcherSet.Builder to add the patterns to.</em>
+<a class="jxr_linenumber" name="L261" href="#L261">261</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> extractPatterns(<strong class="jxr_keyword">final</strong> DocumentName.Builder nameBuilder, <strong class="jxr_keyword">final</strong> MatcherSet.Builder matcherBuilder) {
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>         <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> name = nameBuilder.setName(<span class="jxr_string">"Patterns"</span>).build();
+<a class="jxr_linenumber" name="L264" href="#L264">264</a>         <strong class="jxr_keyword">if</strong> (!excludedPatterns.isEmpty()) {
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>             matcherBuilder.addExcluded(name, excludedPatterns.stream()
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>                     .map(s -&gt; preparePattern(name, s))
+<a class="jxr_linenumber" name="L267" href="#L267">267</a>                     .collect(Collectors.toSet()));
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>         }
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>         <strong class="jxr_keyword">if</strong> (!includedPatterns.isEmpty()) {
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>             matcherBuilder.addIncluded(name, includedPatterns.stream()
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>                     .map(s -&gt; preparePattern(name, s)).collect(Collectors.toSet()));
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>         }
+<a class="jxr_linenumber" name="L273" href="#L273">273</a>     }
+<a class="jxr_linenumber" name="L274" href="#L274">274</a> 
+<a class="jxr_linenumber" name="L275" href="#L275">275</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">     * Extracts {@link #includedCollections} and {@link #excludedCollections} patterns into the specified matcherBuilder.</em>
+<a class="jxr_linenumber" name="L277" href="#L277">277</a> <em class="jxr_javadoccomment">     * @param nameBuilder the name builder for the pattern names.</em>
+<a class="jxr_linenumber" name="L278" href="#L278">278</a> <em class="jxr_javadoccomment">     * @param matcherBuilder the MatcherSet.Builder to add the collections to.</em>
+<a class="jxr_linenumber" name="L279" href="#L279">279</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> extractCollectionPatterns(<strong class="jxr_keyword">final</strong> DocumentName.Builder nameBuilder, <strong class="jxr_keyword">final</strong> MatcherSet.Builder matcherBuilder) {
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>         <strong class="jxr_keyword">final</strong> Set&lt;String&gt; incl = <strong class="jxr_keyword">new</strong> TreeSet&lt;&gt;();
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>         <strong class="jxr_keyword">final</strong> Set&lt;String&gt; excl = <strong class="jxr_keyword">new</strong> TreeSet&lt;&gt;();
+<a class="jxr_linenumber" name="L283" href="#L283">283</a>         <strong class="jxr_keyword">for</strong> (<a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> sc : includedCollections) {
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>             Set&lt;String&gt; patterns = sc.patterns();
+<a class="jxr_linenumber" name="L285" href="#L285">285</a>             <strong class="jxr_keyword">if</strong> (patterns.isEmpty()) {
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>                 DefaultLog.getInstance().debug(String.format(<span class="jxr_string">"%s does not have a defined collection for inclusion."</span>, sc));
+<a class="jxr_linenumber" name="L287" href="#L287">287</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L288" href="#L288">288</a>                 MatcherSet.Builder.segregateList(incl, excl, sc.patterns());
+<a class="jxr_linenumber" name="L289" href="#L289">289</a>             }
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>         }
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>         <strong class="jxr_keyword">for</strong> (<a name="StandardCollection" href="../../../../../org/apache/rat/config/exclusion/StandardCollection.html#StandardCollection">StandardCollection</a> sc : excludedCollections) {
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>             Set&lt;String&gt; patterns = sc.patterns();
+<a class="jxr_linenumber" name="L293" href="#L293">293</a>             <strong class="jxr_keyword">if</strong> (patterns.isEmpty()) {
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>                 DefaultLog.getInstance().debug(String.format(<span class="jxr_string">"%s does not have a defined collection for exclusion."</span>, sc));
+<a class="jxr_linenumber" name="L295" href="#L295">295</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L296" href="#L296">296</a>                 MatcherSet.Builder.segregateList(excl, incl, sc.patterns());
+<a class="jxr_linenumber" name="L297" href="#L297">297</a>             }
+<a class="jxr_linenumber" name="L298" href="#L298">298</a>         }
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>         <a name="DocumentName" href="../../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> name = nameBuilder.setName(<span class="jxr_string">"Collections"</span>).build();
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>         matcherBuilder
+<a class="jxr_linenumber" name="L301" href="#L301">301</a>                 .addExcluded(name, excl.stream().map(s -&gt; preparePattern(name.getBaseDocumentName(), s)).collect(Collectors.toSet()))
+<a class="jxr_linenumber" name="L302" href="#L302">302</a>                 .addIncluded(name, incl.stream().map(s -&gt; preparePattern(name.getBaseDocumentName(), s)).collect(Collectors.toSet()));
+<a class="jxr_linenumber" name="L303" href="#L303">303</a>     }
+<a class="jxr_linenumber" name="L304" href="#L304">304</a> 
+<a class="jxr_linenumber" name="L305" href="#L305">305</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L306" href="#L306">306</a> <em class="jxr_javadoccomment">     * Extracts {@link #includedCollections} and {@link #excludedCollections} matchers into the specified matcherBuilder.</em>
+<a class="jxr_linenumber" name="L307" href="#L307">307</a> <em class="jxr_javadoccomment">     * @param matcherBuilder the MatcherSet.Builder to add the collections to.</em>
+<a class="jxr_linenumber" name="L308" href="#L308">308</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L309" href="#L309">309</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> extractCollectionMatchers(<strong class="jxr_keyword">final</strong> MatcherSet.Builder matcherBuilder) {
+<a class="jxr_linenumber" name="L310" href="#L310">310</a>         ExtendedIterator.create(includedCollections.iterator())
+<a class="jxr_linenumber" name="L311" href="#L311">311</a>                 .map(StandardCollection::staticDocumentNameMatcher)
+<a class="jxr_linenumber" name="L312" href="#L312">312</a>                 .filter(Objects::nonNull)
+<a class="jxr_linenumber" name="L313" href="#L313">313</a>                 .forEachRemaining(matcherBuilder::addIncluded);
+<a class="jxr_linenumber" name="L314" href="#L314">314</a> 
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>         ExtendedIterator.create(excludedCollections.iterator())
+<a class="jxr_linenumber" name="L316" href="#L316">316</a>                 .map(StandardCollection::staticDocumentNameMatcher)
+<a class="jxr_linenumber" name="L317" href="#L317">317</a>                 .filter(Objects::nonNull)
+<a class="jxr_linenumber" name="L318" href="#L318">318</a>                 .forEachRemaining(matcherBuilder::addExcluded);
+<a class="jxr_linenumber" name="L319" href="#L319">319</a>     }
+<a class="jxr_linenumber" name="L320" href="#L320">320</a> 
+<a class="jxr_linenumber" name="L321" href="#L321">321</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L322" href="#L322">322</a> <em class="jxr_javadoccomment">     * Extracts {@link #includedPaths} and {@link #excludedPaths} patterns into the specified matcherBuilder.</em>
+<a class="jxr_linenumber" name="L323" href="#L323">323</a> <em class="jxr_javadoccomment">     * @param matcherBuilder the MatcherSet.Builder to add the collections to.</em>
+<a class="jxr_linenumber" name="L324" href="#L324">324</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L325" href="#L325">325</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> extractPaths(<strong class="jxr_keyword">final</strong> MatcherSet.Builder matcherBuilder) {
+<a class="jxr_linenumber" name="L326" href="#L326">326</a>         <strong class="jxr_keyword">if</strong> (!includedPaths.isEmpty()) {
+<a class="jxr_linenumber" name="L327" href="#L327">327</a>             <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> matcher : includedPaths) {
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>                 DefaultLog.getInstance().debug(format(<span class="jxr_string">"Including path matcher %s"</span>, matcher));
+<a class="jxr_linenumber" name="L329" href="#L329">329</a>                 matcherBuilder.addIncluded(matcher);
+<a class="jxr_linenumber" name="L330" href="#L330">330</a>             }
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>         }
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>         <strong class="jxr_keyword">if</strong> (!excludedPaths.isEmpty()) {
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>             <strong class="jxr_keyword">for</strong> (<a name="DocumentNameMatcher" href="../../../../../org/apache/rat/document/DocumentNameMatcher.html#DocumentNameMatcher">DocumentNameMatcher</a> matcher : excludedPaths) {
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>                 DefaultLog.getInstance().debug(format(<span class="jxr_string">"Excluding path matcher %s"</span>, matcher));
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>                 matcherBuilder.addExcluded(matcher);
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>             }
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>         }
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>     }
+<a class="jxr_linenumber" name="L339" href="#L339">339</a> 
+<a class="jxr_linenumber" name="L340" href="#L340">340</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>
