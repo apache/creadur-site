@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UIOption.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.ui</a> &gt; <span class="el_source">UIOption.java</span></div><h1>UIOption.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.ui;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.rat.OptionCollection;
+import org.apache.rat.utils.CasedString;
+
+import static java.lang.String.format;
+
+/**
+ * Abstract class that provides the framework for UI-specific RAT options.
+ * In this context UI option means an option expressed in the specific UI.
+ * @param &lt;T&gt; the concrete implementation of AbstractOption.
+ */
+public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
+    /** The pattern to match CLI options in text */
+<span class="fc" id="L42">    protected static final Pattern PATTERN = Pattern.compile(&quot;-?-([A-Za-z0-9]+-?)+&quot;); // NOSONAR</span>
+    /** The actual UI-specific name for the option */
+    protected final Option option;
+    /** The name for the option */
+    protected final CasedString name;
+    /** The argument type for this option */
+    protected final OptionCollection.ArgumentType argumentType;
+    /** The AbstractOptionCollection associated with this AbstractOption */
+    protected final UIOptionCollection&lt;T&gt; optionCollection;
+
+    /**
+     * Constructor.
+     *
+     * @param option The CLI option
+     * @param name the UI-specific name for the option
+     */
+<span class="fc" id="L58">    protected &lt;C extends UIOptionCollection&lt;T&gt;&gt; UIOption(final C optionCollection, final Option option, final CasedString name) {</span>
+<span class="fc" id="L59">        this.optionCollection = optionCollection;</span>
+<span class="fc" id="L60">        this.option = option;</span>
+<span class="fc" id="L61">        this.name = name;</span>
+        OptionCollection.ArgumentType argType;
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (option.hasArg()) {</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">            if (option.getArgName() == null) {</span>
+<span class="fc" id="L65">                argType = OptionCollection.ArgumentType.ARG;</span>
+            } else {
+                // extract the name of the argument type.
+                try {
+<span class="fc" id="L69">                    argType = OptionCollection.ArgumentType.valueOf(option.getArgName().toUpperCase(Locale.ROOT));</span>
+<span class="fc" id="L70">                } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L71">                    argType = OptionCollection.ArgumentType.ARG;</span>
+<span class="fc" id="L72">                }</span>
+            }
+        } else {
+<span class="fc" id="L75">            argType = OptionCollection.ArgumentType.NONE;</span>
+        }
+<span class="fc" id="L77">        this.argumentType = argType;</span>
+<span class="fc" id="L78">    }</span>
+
+    /**
+     * Gets the AbstractOptionCollection that this option is a member of.
+     * @return the AbstractOptionCollection that this option is a member of.
+     */
+    public final &lt;X extends UIOptionCollection&lt;T&gt;&gt; X getOptionCollection() {
+<span class="fc" id="L85">        return (X) optionCollection;</span>
+    }
+
+    /**
+     * Gets the option this abstract option is wrapping.
+     * @return the original Option.
+     */
+    public final Option getOption() {
+<span class="fc" id="L93">        return option;</span>
+    }
+
+    /**
+     * Return default value.
+     * @return default value or {@code null} if no argument given.
+     */
+    public final String getDefaultValue() {
+<span class="nc" id="L101">        return optionCollection.defaultValue(option);</span>
+    }
+
+    /**
+     * Provide means to wrap the given option depending on the UI-specific option implementation.
+     * @param option The CLI option
+     * @return the cleaned up option name.
+     */
+    protected abstract String cleanupName(Option option);
+
+    /**
+     * Gets an example of how to use this option in the native UI.
+     * @return An example of how to use this option in the native UI.
+     */
+    public abstract String getExample();
+
+    /**
+     * Replaces CLI pattern options with implementation specific pattern options.
+     * @param str the string to clean.
+     * @return the string with CLI names replaced with implementation specific names.
+     */
+    public String cleanup(final String str) {
+<span class="fc" id="L123">        String workingStr = str;</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (StringUtils.isNotBlank(workingStr)) {</span>
+<span class="fc" id="L125">            Map&lt;String, String&gt; maps = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L126">            Matcher matcher = PATTERN.matcher(workingStr);</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">            while (matcher.find()) {</span>
+<span class="fc" id="L128">                String key = matcher.group();</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">                String optKey = (1 == key.indexOf('-', 1)) ?  key.substring(2) : key.substring(1);</span>
+<span class="fc" id="L130">                Optional&lt;Option&gt; maybeResult = getOptionCollection().getOptions().getOptions().stream()</span>
+<span class="fc bfc" id="L131" title="All 4 branches covered.">                                .filter(o -&gt; optKey.equals(o.getOpt()) || optKey.equals(o.getLongOpt())).findFirst();</span>
+<span class="fc" id="L132">                maybeResult.ifPresent(value -&gt; maps.put(key, cleanupName(value)));</span>
+<span class="fc" id="L133">            }</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">            for (Map.Entry&lt;String, String&gt; entry : maps.entrySet()) {</span>
+<span class="fc" id="L135">                workingStr = workingStr.replaceAll(Pattern.quote(format(&quot;%s&quot;, entry.getKey())), entry.getValue());</span>
+<span class="fc" id="L136">            }</span>
+        }
+<span class="fc" id="L138">        return workingStr;</span>
+    }
+
+    /**
+     * Gets the implementation specific name for the native UI.
+     * @return The implementation specific name for the native UI.
+     */
+    public final String getName() {
+<span class="fc" id="L146">        return name.toString();</span>
+    }
+
+    /**
+     * Gets the CasedString version of the name for the native UI.
+     * @return the CasedString version of the name for the native UI.
+     */
+    public final CasedString getCasedName() {
+<span class="nc" id="L154">        return name;</span>
+    }
+
+    /**
+     * return a string showing long and short options if they are available. Will return
+     * a string.
+     * @return A string showing long and short options if they are available. Never {@code null}.
+     */
+    public abstract String getText();
+
+    /**
+     * Gets the description in implementation specific format.
+     *
+     * @return the description or an empty string.
+     */
+    public final String getDescription() {
+<span class="nc" id="L170">        return cleanup(option.getDescription());</span>
+    }
+
+    /**
+     * Gets the simple class name for the data type for this option.
+     * Normally &quot;String&quot;.
+     * @return the simple class name for the type.
+     */
+    public final Class&lt;?&gt; getType() {
+<span class="nc bnc" id="L179" title="All 2 branches missed.">        return option.hasArg() ? ((Class&lt;?&gt;) option.getType()) : boolean.class;</span>
+    }
+
+    /**
+     * Gets the argument name if there is one.
+     * @return the Argument name
+     */
+    public final String getArgName() {
+<span class="nc" id="L187">        return argumentType.getDisplayName();</span>
+    }
+
+    /**
+     * Gets the argument type if there is one.
+     * @return the Argument name
+     */
+    public final OptionCollection.ArgumentType getArgType() {
+<span class="nc" id="L195">        return argumentType;</span>
+    }
+
+    /**
+     * Determines if the option is deprecated.
+     * @return {@code true} if the option is deprecated
+     */
+    public final boolean isDeprecated() {
+<span class="fc" id="L203">        return option.isDeprecated();</span>
+    }
+
+    /**
+     * Determines if the option is required.
+     * @return {@code true} if the option is required.
+     */
+    public final boolean isRequired() {
+<span class="nc" id="L211">        return option.isRequired();</span>
+    }
+
+    /**
+     * Determine if the enclosed option expects an argument.
+     * @return {@code true} if the enclosed option expects at least one argument.
+     */
+    public final boolean hasArg() {
+<span class="nc" id="L219">        return option.hasArg();</span>
+    }
+
+    /**
+     * Returns {@code true} if the option has multiple arguments.
+     * @return {@code true} if the option has multiple arguments.
+     */
+    public final boolean hasArgs() {
+<span class="nc" id="L227">        return option.hasArgs();</span>
+    }
+
+    /**
+     * The key value for the option.
+     * @return the key value for the CLI argument map.
+     */
+    public final String keyValue() {
+<span class="fc" id="L235">        return StringUtils.defaultIfEmpty(option.getLongOpt(), option.getOpt());</span>
+    }
+
+    /**
+     * Gets the deprecated string if the option is deprecated, or an empty string otherwise.
+     * @return the deprecated string if the option is deprecated, or an empty string otherwise.
+     */
+    public final String getDeprecated() {
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">        return  option.isDeprecated() ? cleanup(StringUtils.defaultIfEmpty(option.getDeprecated().toString(), StringUtils.EMPTY)) : StringUtils.EMPTY;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

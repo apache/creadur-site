@@ -477,7 +477,7 @@ public abstract class AbstractRatMojo extends BaseRatMojo {
 <span class="nc" id="L477">                    log.debug(&quot;End BaseRatMojo Configuration options&quot;);</span>
                 }
 
-<span class="fc bfc" id="L480" title="All 2 branches covered.">                boolean helpLicenses = !getValues(Arg.HELP_LICENSES).isEmpty();</span>
+<span class="pc bpc" id="L480" title="1 of 2 branches missed.">                boolean helpLicenses = !getValues(Arg.HELP_LICENSES).isEmpty();</span>
 <span class="fc" id="L481">                removeKey(Arg.HELP_LICENSES);</span>
 <span class="fc" id="L482">                setIncludeExclude();</span>
 
@@ -545,8 +545,8 @@ public abstract class AbstractRatMojo extends BaseRatMojo {
 <span class="fc" id="L545">                DocumentName dirName = DocumentName.builder(basedir).build();</span>
 <span class="fc" id="L546">                config.addSource(new DirectoryWalker(new FileDocument(dirName, basedir, config.getDocumentExcluder(dirName))));</span>
 
-<span class="fc bfc" id="L548" title="All 2 branches covered.">                if (helpLicenses) {</span>
-<span class="fc" id="L549">                    new org.apache.rat.help.Licenses(config, new PrintWriter(log.asWriter())).printHelp();</span>
+<span class="pc bpc" id="L548" title="1 of 2 branches missed.">                if (helpLicenses) {</span>
+<span class="nc" id="L549">                    new org.apache.rat.help.Licenses(config, new PrintWriter(log.asWriter())).printHelp();</span>
                 }
 <span class="fc" id="L551">                reportConfiguration = config;</span>
 <span class="nc" id="L552">            } catch (IOException e) {</span>

@@ -60,7 +60,7 @@ import org.apache.rat.config.parameters.ConfigComponent;
                 &quot;patterns that are not caught by a standard text matcher. This matcher will match \&quot;(C)\&quot;, \&quot;copyright\&quot;, &quot; +
                 &quot;or \&quot;©\&quot;. (text is not case sensitive). It will also match things like Copyright (c) joe 1995 as well &quot; +
                 &quot;as Copyright (C) 1995 joe and Copyright (C) joe 1995.&quot;)
-public class CopyrightMatcher extends AbstractHeaderMatcher {
+public final class CopyrightMatcher extends AbstractHeaderMatcher {
     /** String to build a pattern to match the various recognized copyright symbols */
     private static final String COPYRIGHT_SYMBOL_DEFN = &quot;\\([Cc]\\)|©|\\&amp;[Cc][Oo][Pp][Yy]\\;&quot;;
     /** String to build a pattern to match symbols or word &quot;copyright&quot; */
@@ -69,7 +69,7 @@ public class CopyrightMatcher extends AbstractHeaderMatcher {
 <span class="fc" id="L69">    private static final Pattern COPYRIGHT_PATTERN = Pattern.compile(COPYRIGHT_PATTERN_DEFN);</span>
     /** The string to build a Pattern to match a copyright with a single part (date or name) */
     private static final String ONE_PART = &quot;\\W+((&quot; + COPYRIGHT_SYMBOL_DEFN + &quot;)\\W+)?%s&quot;;
-    /** The string to build a Pattern to match a copyright iwth both name and date */
+    /** The string to build a Pattern to match a copyright with both name and date */
     private static final String TWO_PART = &quot;\\W+((&quot; + COPYRIGHT_SYMBOL_DEFN + &quot;)\\W+)?%s,?\\W+%s&quot;;
     /** Format string to build a pattern to match two dates */
     private static final String DOUBLE_DATE_FMT = &quot;%s\\W*-\\W*%s&quot;;

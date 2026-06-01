@@ -61,24 +61,20 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
-<li><a href="#%3Cinit%3E(org.apache.commons.cli.Option)" tabindex="0">AntOption(Option)</a></li>
+<li><a href="#%3Cinit%3E(org.apache.rat.ui.UIOptionCollection,org.apache.commons.cli.Option)" tabindex="0">AntOption(UIOptionCollection, Option)</a></li>
 </ol>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
-<li><a href="#getAntOptions()" tabindex="0">getAntOptions()</a></li>
-<li><a href="#getUnsupportedOptions()" tabindex="0">getUnsupportedOptions()</a></li>
-<li><a href="#getFilteredOptions()" tabindex="0">getFilteredOptions()</a></li>
-<li><a href="#getRenameMap()" tabindex="0">getRenameMap()</a></li>
-<li><a href="#createName(org.apache.commons.cli.Option)" tabindex="0">createName(Option)</a></li>
 <li><a href="#isAttribute()" tabindex="0">isAttribute()</a></li>
+<li><a href="#toString()" tabindex="0">toString()</a></li>
 <li><a href="#isElement()" tabindex="0">isElement()</a></li>
 <li><a href="#getActualAntOption()" tabindex="0">getActualAntOption()</a></li>
 <li><a href="#convertedFrom()" tabindex="0">convertedFrom()</a></li>
 <li><a href="#getText()" tabindex="0">getText()</a></li>
 <li><a href="#cleanupName(org.apache.commons.cli.Option)" tabindex="0">cleanupName(Option)</a></li>
-<li><a href="#getComment(boolean)" tabindex="0">getComment(boolean)</a></li>
-<li><a href="#getAttributeFunctionName()" tabindex="0">getAttributeFunctionName()</a></li>
+<li><a href="#cleanupName()" tabindex="0">cleanupName()</a></li>
+<li><a href="#buildType()" tabindex="0">buildType()</a></li>
 <li><a href="#getExample()" tabindex="0">getExample()</a></li>
 </ol>
 </li>
@@ -90,7 +86,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class AntOption" class="title">Class AntOption</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="AbstractOption.html" title="class in org.apache.rat.documentation.options">org.apache.rat.documentation.options.AbstractOption</a>
+<div class="inheritance"><a href="../../ui/UIOption.html" title="class in org.apache.rat.ui">org.apache.rat.ui.UIOption</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;
 <div class="inheritance">org.apache.rat.documentation.options.AntOption</div>
 </div>
 </div>
@@ -98,7 +94,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">AntOption</span>
-<span class="extends-implements">extends <a href="AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></span></div>
+<span class="extends-implements">extends <a href="../../ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</span></div>
 <div class="block">A class that wraps the CLI option and provides Ant specific values.</div>
 </div>
 </section>
@@ -126,8 +122,8 @@ loadScripts(document, 'script');</script>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-org.apache.rat.documentation.options.AbstractOption">Fields inherited from class&nbsp;<a href="AbstractOption.html#field-summary" title="class in org.apache.rat.documentation.options">AbstractOption</a></h3>
-<code><a href="AbstractOption.html#argumentType">argumentType</a>, <a href="AbstractOption.html#name">name</a>, <a href="AbstractOption.html#option">option</a>, <a href="AbstractOption.html#PATTERN">PATTERN</a></code></div>
+<h3 id="fields-inherited-from-class-org.apache.rat.ui.UIOption">Fields inherited from class&nbsp;<a href="../../ui/UIOption.html#field-summary" title="class in org.apache.rat.ui">UIOption</a></h3>
+<code><a href="../../ui/UIOption.html#argumentType">argumentType</a>, <a href="../../ui/UIOption.html#name">name</a>, <a href="../../ui/UIOption.html#option">option</a>, <a href="../../ui/UIOption.html#optionCollection">optionCollection</a>, <a href="../../ui/UIOption.html#PATTERN">PATTERN</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -138,7 +134,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.apache.commons.cli.Option)" class="member-name-link">AntOption</a><wbr>(org.apache.commons.cli.Option&nbsp;option)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.apache.rat.ui.UIOptionCollection,org.apache.commons.cli.Option)" class="member-name-link">AntOption</a><wbr>(<a href="../../ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;&nbsp;collection,
+ org.apache.commons.cli.Option&nbsp;option)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Constructor.</div>
 </div>
@@ -150,89 +147,66 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AntOptionCollection.BuildType.html" title="class in org.apache.rat.documentation.options">AntOptionCollection.BuildType</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#buildType()" class="member-name-link">buildType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cleanupName()" class="member-name-link">cleanupName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#cleanupName(org.apache.commons.cli.Option)" class="member-name-link">cleanupName</a><wbr>(org.apache.commons.cli.Option&nbsp;option)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Provide means to wrap the given option depending on the UI-specific option implementation.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;org.apache.commons.cli.Option&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#convertedFrom()" class="member-name-link">convertedFrom</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the set of options that are mapped to this option.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createName(org.apache.commons.cli.Option)" class="member-name-link">createName</a><wbr>(org.apache.commons.cli.Option&nbsp;option)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getActualAntOption()" class="member-name-link">getActualAntOption</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getActualAntOption()" class="member-name-link">getActualAntOption</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">If this option is converted to another option return that option otherwise
 return this option.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAntOptions()" class="member-name-link">getAntOptions</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the list of all available Ant options.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAttributeFunctionName()" class="member-name-link">getAttributeFunctionName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get the signature of the attribute function.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getComment(boolean)" class="member-name-link">getComment</a><wbr>(boolean&nbsp;addParam)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get the method comment for this option.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExample()" class="member-name-link">getExample</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets an example of how to use this option in the native UI.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;org.apache.commons.cli.Option&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getFilteredOptions()" class="member-name-link">getFilteredOptions</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the set of options that are not supported by Ant either by not being supported or
-by being converted to another argument.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRenameMap()" class="member-name-link">getRenameMap</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getText()" class="member-name-link">getText</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">return a string showing long and short options if they are available.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;org.apache.commons.cli.Option&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getUnsupportedOptions()" class="member-name-link">getUnsupportedOptions</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Gets the list of unsupported options.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAttribute()" class="member-name-link">isAttribute</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAttribute()" class="member-name-link">isAttribute</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns <code>true</code> if the option should be an attribute of the &lt;rat:report&gt; element.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isElement()" class="member-name-link">isElement</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isElement()" class="member-name-link">isElement</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns <code>true</code> if the option should be a child element of the &lt;rat:report&gt; element.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.apache.rat.documentation.options.AbstractOption">Methods inherited from class&nbsp;<a href="AbstractOption.html#method-summary" title="class in org.apache.rat.documentation.options">AbstractOption</a></h3>
-<code><a href="AbstractOption.html#argCount()" title="argCount()">argCount</a>, <a href="AbstractOption.html#cleanup(java.lang.String)" title="cleanup(String)">cleanup</a>, <a href="AbstractOption.html#cleanupName()" title="cleanupName()">cleanupName</a>, <a href="AbstractOption.html#getArgName()" title="getArgName()">getArgName</a>, <a href="AbstractOption.html#getArgType()" title="getArgType()">getArgType</a>, <a href="AbstractOption.html#getDefaultValue()" title="getDefaultValue()">getDefaultValue</a>, <a href="AbstractOption.html#getDeprecated()" title="getDeprecated()">getDeprecated</a>, <a href="AbstractOption.html#getDescription()" title="getDescription()">getDescription</a>, <a href="AbstractOption.html#getName()" title="getName()">getName</a>, <a href="AbstractOption.html#getOption()" title="getOption()">getOption</a>, <a href="AbstractOption.html#getType()" title="getType()">getType</a>, <a href="AbstractOption.html#hasArg()" title="hasArg()">hasArg</a>, <a href="AbstractOption.html#hasArgs()" title="hasArgs()">hasArgs</a>, <a href="AbstractOption.html#isDeprecated()" title="isDeprecated()">isDeprecated</a>, <a href="AbstractOption.html#isRequired()" title="isRequired()">isRequired</a>, <a href="AbstractOption.html#keyValue()" title="keyValue()">keyValue</a></code></div>
+<h3 id="methods-inherited-from-class-org.apache.rat.ui.UIOption">Methods inherited from class&nbsp;<a href="../../ui/UIOption.html#method-summary" title="class in org.apache.rat.ui">UIOption</a></h3>
+<code><a href="../../ui/UIOption.html#cleanup(java.lang.String)" title="cleanup(String)">cleanup</a>, <a href="../../ui/UIOption.html#getArgName()" title="getArgName()">getArgName</a>, <a href="../../ui/UIOption.html#getArgType()" title="getArgType()">getArgType</a>, <a href="../../ui/UIOption.html#getCasedName()" title="getCasedName()">getCasedName</a>, <a href="../../ui/UIOption.html#getDefaultValue()" title="getDefaultValue()">getDefaultValue</a>, <a href="../../ui/UIOption.html#getDeprecated()" title="getDeprecated()">getDeprecated</a>, <a href="../../ui/UIOption.html#getDescription()" title="getDescription()">getDescription</a>, <a href="../../ui/UIOption.html#getName()" title="getName()">getName</a>, <a href="../../ui/UIOption.html#getOption()" title="getOption()">getOption</a>, <a href="../../ui/UIOption.html#getOptionCollection()" title="getOptionCollection()">getOptionCollection</a>, <a href="../../ui/UIOption.html#getType()" title="getType()">getType</a>, <a href="../../ui/UIOption.html#hasArg()" title="hasArg()">hasArg</a>, <a href="../../ui/UIOption.html#hasArgs()" title="hasArgs()">hasArgs</a>, <a href="../../ui/UIOption.html#isDeprecated()" title="isDeprecated()">isDeprecated</a>, <a href="../../ui/UIOption.html#isRequired()" title="isRequired()">isRequired</a>, <a href="../../ui/UIOption.html#keyValue()" title="keyValue()">keyValue</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -245,10 +219,11 @@ by being converted to another argument.</div>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(org.apache.commons.cli.Option)">
+<section class="detail" id="&lt;init&gt;(org.apache.rat.ui.UIOptionCollection,org.apache.commons.cli.Option)">
 <h3>AntOption</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AntOption</span><wbr><span class="parameters">(org.apache.commons.cli.Option&nbsp;option)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AntOption</span><wbr><span class="parameters">(<a href="../../ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;&nbsp;collection,
+ org.apache.commons.cli.Option&nbsp;option)</span></div>
 <div class="block">Constructor.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -266,62 +241,6 @@ by being converted to another argument.</div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getAntOptions()">
-<h3>getAntOptions</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</span>&nbsp;<span class="element-name">getAntOptions</span>()</div>
-<div class="block">Gets the list of all available Ant options.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the list of all available Ant options.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getUnsupportedOptions()">
-<h3>getUnsupportedOptions</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;org.apache.commons.cli.Option&gt;</span>&nbsp;<span class="element-name">getUnsupportedOptions</span>()</div>
-<div class="block">Gets the list of unsupported options.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the list of unsupported options.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getFilteredOptions()">
-<h3>getFilteredOptions</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;org.apache.commons.cli.Option&gt;</span>&nbsp;<span class="element-name">getFilteredOptions</span>()</div>
-<div class="block">Gets the set of options that are not supported by Ant either by not being supported or
-by being converted to another argument.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>The set of options that are not supported by Ant.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getRenameMap()">
-<h3>getRenameMap</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getRenameMap</span>()</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="createName(org.apache.commons.cli.Option)">
-<h3>createName</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">createName</span><wbr><span class="parameters">(org.apache.commons.cli.Option&nbsp;option)</span></div>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="isAttribute()">
 <h3>isAttribute</h3>
 <div class="horizontal-scroll">
@@ -330,6 +249,18 @@ by being converted to another argument.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd><code>true</code> if the option should be an attribute of the &lt;rat:report&gt; element.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="toString()">
+<h3>toString</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span>()</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
 </dl>
 </div>
 </section>
@@ -365,7 +296,7 @@ return this option.</div>
 <section class="detail" id="convertedFrom()">
 <h3>convertedFrom</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;org.apache.commons.cli.Option&gt;</span>&nbsp;<span class="element-name">convertedFrom</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</span>&nbsp;<span class="element-name">convertedFrom</span>()</div>
 <div class="block">Gets the set of options that are mapped to this option.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -379,12 +310,12 @@ return this option.</div>
 <h3>getText</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getText</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="AbstractOption.html#getText()">AbstractOption</a></code></span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../ui/UIOption.html#getText()">UIOption</a></code></span></div>
 <div class="block">return a string showing long and short options if they are available. Will return
 a string.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="AbstractOption.html#getText()">getText</a></code>&nbsp;in class&nbsp;<code><a href="AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></code></dd>
+<dd><code><a href="../../ui/UIOption.html#getText()">getText</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></dd>
 <dt>Returns:</dt>
 <dd>A string showing long and short options if they are available. Never <code>null</code>.</dd>
 </dl>
@@ -396,11 +327,11 @@ a string.</div>
 <h3>cleanupName</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">cleanupName</span><wbr><span class="parameters">(org.apache.commons.cli.Option&nbsp;option)</span></div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="AbstractOption.html#cleanupName(org.apache.commons.cli.Option)">AbstractOption</a></code></span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../ui/UIOption.html#cleanupName(org.apache.commons.cli.Option)">UIOption</a></code></span></div>
 <div class="block">Provide means to wrap the given option depending on the UI-specific option implementation.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="AbstractOption.html#cleanupName(org.apache.commons.cli.Option)">cleanupName</a></code>&nbsp;in class&nbsp;<code><a href="AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></code></dd>
+<dd><code><a href="../../ui/UIOption.html#cleanupName(org.apache.commons.cli.Option)">cleanupName</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>option</code> - The CLI option</dd>
 <dt>Returns:</dt>
@@ -410,30 +341,18 @@ a string.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getComment(boolean)">
-<h3>getComment</h3>
+<section class="detail" id="cleanupName()">
+<h3>cleanupName</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getComment</span><wbr><span class="parameters">(boolean&nbsp;addParam)</span></div>
-<div class="block">Get the method comment for this option.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>addParam</code> - if <code>true</code> the param annotation is added.</dd>
-<dt>Returns:</dt>
-<dd>the Comment block for the function.</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">cleanupName</span>()</div>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="getAttributeFunctionName()">
-<h3>getAttributeFunctionName</h3>
+<section class="detail" id="buildType()">
+<h3>buildType</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getAttributeFunctionName</span>()</div>
-<div class="block">Get the signature of the attribute function.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the signature of the attribute function.</dd>
-</dl>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="AntOptionCollection.BuildType.html" title="class in org.apache.rat.documentation.options">AntOptionCollection.BuildType</a></span>&nbsp;<span class="element-name">buildType</span>()</div>
 </div>
 </section>
 </li>
@@ -442,11 +361,11 @@ a string.</div>
 <h3>getExample</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getExample</span>()</div>
-<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="AbstractOption.html#getExample()">AbstractOption</a></code></span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="../../ui/UIOption.html#getExample()">UIOption</a></code></span></div>
 <div class="block">Gets an example of how to use this option in the native UI.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="AbstractOption.html#getExample()">getExample</a></code>&nbsp;in class&nbsp;<code><a href="AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></code></dd>
+<dd><code><a href="../../ui/UIOption.html#getExample()">getExample</a></code>&nbsp;in class&nbsp;<code><a href="../../ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a>&lt;<a href="AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></dd>
 <dt>Returns:</dt>
 <dd>An example of how to use this option in the native UI.</dd>
 </dl>

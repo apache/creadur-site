@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ArgumentTracker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.ui</a> &gt; <span class="el_source">ArgumentTracker.java</span></div><h1>ArgumentTracker.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.ui;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.BiConsumer;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.utils.CasedString;
+import org.apache.rat.utils.DefaultLog;
+import org.apache.rat.utils.Log;
+
+/**
+ * Tracks Arg values that are set and their values for conversion from native UI to
+ * Apache Commons command line values.
+ */
+public final class ArgumentTracker {
+
+    /**
+     * List of deprecated arguments and their deprecation notice.
+     */
+<span class="fc" id="L46">    private final Map&lt;String, String&gt; deprecatedArgs = new HashMap&lt;&gt;();</span>
+
+    /**
+     * A map of CLI-based arguments to values.
+     */
+<span class="fc" id="L51">    private final Map&lt;String, List&lt;String&gt;&gt; args = new HashMap&lt;&gt;();</span>
+
+    /**
+     * The arguments understood by the UI for the current report execution.
+     * @param optionCollection The AbstractOptionCollection for this UI.
+     */
+<span class="fc" id="L57">    public ArgumentTracker(final UIOptionCollection&lt;?&gt; optionCollection) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        for (UIOption&lt;?&gt; abstractOption : optionCollection.getMappedOptions().toList()) {</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            if (abstractOption.isDeprecated()) {</span>
+<span class="fc" id="L60">                deprecatedArgs.put(abstractOption.getName(),</span>
+<span class="fc" id="L61">                        String.format(&quot;Use of deprecated option '%s'. %s&quot;, abstractOption.getName(), abstractOption.getDeprecated()));</span>
+            }
+<span class="fc" id="L63">        }</span>
+<span class="fc" id="L64">    }</span>
+
+    /**
+     * Extract the core name from the option. This is the {@link Option#getLongOpt()} if defined, otherwise
+     * the {@link Option#getOpt()}.
+     * @param option the commons cli option.
+     * @return the common cli based name.
+     */
+    public static String extractKey(final Option option) {
+<span class="fc" id="L73">        return StringUtils.defaultIfBlank(option.getLongOpt(), option.getOpt());</span>
+    }
+
+    /**
+     * Generates the CasedString for the specified option.
+     * @param option the option to extract the name for.
+     * @return the CasedString in KEBAB format.
+     */
+    public static CasedString extractName(final Option option) {
+<span class="fc" id="L82">        return new CasedString(CasedString.StringCase.KEBAB, ArgumentTracker.extractKey(option));</span>
+    }
+
+    /**
+     * Gets the list of arguments prepared for the CLI code to parse.
+     * @return the List of arguments for the CLI command line.
+     */
+    public List&lt;String&gt; args() {
+<span class="fc" id="L90">        final List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (Map.Entry&lt;String, List&lt;String&gt;&gt; entry : args.entrySet()) {</span>
+<span class="fc" id="L92">            result.add(&quot;--&quot; + entry.getKey());</span>
+<span class="fc" id="L93">            result.addAll(entry.getValue().stream().filter(Objects::nonNull).toList());</span>
+<span class="fc" id="L94">        }</span>
+<span class="fc" id="L95">        return result;</span>
+    }
+
+    /**
+     * Applies the consumer to each arg and list in turn.
+     */
+    public void apply(final BiConsumer&lt;String, List&lt;String&gt;&gt; consumer) {
+<span class="nc" id="L102">        args.forEach((key, value) -&gt; consumer.accept(key, new ArrayList&lt;&gt;(value)));</span>
+<span class="nc" id="L103">    }</span>
+
+    /**
+     * Validate that the option is defined in Args and has not already been set.
+     * This check will verify that only one of the keys in the group can be set.
+     * @param key the key to check
+     * @return {@code true} if the key may be set.
+     */
+    private boolean validateSet(final String key) {
+<span class="fc" id="L112">        final Arg arg = Arg.findArg(key);</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (arg != null) {</span>
+<span class="fc" id="L114">            final Option opt = arg.find(key);</span>
+<span class="fc" id="L115">            final Option main = arg.option();</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (opt.isDeprecated()) {</span>
+<span class="nc" id="L117">                args.remove(extractKey(main));</span>
+                // deprecated options must be explicitly set so let it go.
+<span class="nc" id="L119">                return true;</span>
+            }
+            // non-deprecated options may have default so ignore it if another option has already been set.
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            for (Option o : arg.group().getOptions()) {</span>
+<span class="pc bpc" id="L123" title="1 of 4 branches missed.">                if (!o.equals(main) &amp;&amp; args.containsKey(extractKey(o))) {</span>
+<span class="nc" id="L124">                    return false;</span>
+                }
+<span class="fc" id="L126">            }</span>
+<span class="fc" id="L127">            return true;</span>
+        }
+<span class="fc" id="L129">        return false;</span>
+    }
+
+    /**
+     * Set a key and value into the argument list.
+     * Replaces any existing value.
+     * @param key the key for the map.
+     * @param value the value to set.
+     */
+    public void setArg(final UIOption&lt;?&gt; key, final String value) {
+<span class="fc" id="L139">        setArg(key.keyValue(), value);</span>
+<span class="fc" id="L140">    }</span>
+
+    /**
+     * Set a key and value into the argument list.
+     * Replaces any existing value.
+     * @param trackerKey the key for the map.
+     * @param value the value to set.
+     */
+    public void setArg(final String trackerKey, final String value) {
+<span class="pc bpc" id="L149" title="2 of 4 branches missed.">        if (value == null || StringUtils.isNotBlank(value)) {</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">            if (validateSet(trackerKey)) {</span>
+<span class="fc" id="L151">                Option ratOption = Arg.findArg(trackerKey).find(trackerKey);</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">                if (ratOption.hasArg()) {</span>
+<span class="fc" id="L153">                    List&lt;String&gt; values = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L154" title="1 of 2 branches missed.">                    if (DefaultLog.getInstance().isEnabled(Log.Level.DEBUG)) {</span>
+<span class="nc" id="L155">                        DefaultLog.getInstance().debug(String.format(&quot;Setting %s to '%s'&quot;, trackerKey, value));</span>
+                    }
+<span class="fc" id="L157">                    values.add(value);</span>
+<span class="fc" id="L158">                    args.put(trackerKey, values);</span>
+<span class="fc" id="L159">                } else {</span>
+<span class="nc" id="L160">                    DefaultLog.getInstance().warn(String.format(&quot;Key '%s' does not accept arguments.&quot;, trackerKey));</span>
+                }
+<span class="fc" id="L162">            } else {</span>
+<span class="nc" id="L163">                DefaultLog.getInstance().warn(String.format(&quot;Key '%s' is unknown&quot;, trackerKey));</span>
+            }
+        }
+<span class="fc" id="L166">    }</span>
+
+    /**
+     * Get the list of values for a key.
+     * @param key the key for the map.
+     * @return the list of values for the key or {@code null} if not set.
+     */
+    public Optional&lt;List&lt;String&gt;&gt; getArg(final String key) {
+<span class="fc" id="L174">        return Optional.ofNullable(args.get(key));</span>
+    }
+
+    /**
+     * Add values to the key in the argument list.
+     * empty values are ignored. If no non-empty values are present no change is made.
+     * If the key does not exist, adds it.
+     * @param option the option to add values for.
+     * @param value the array of values to set.
+     */
+    public void addArg(final UIOption&lt;?&gt; option, final String... value) {
+<span class="fc" id="L185">        addArg(option.keyValue(), value);</span>
+<span class="fc" id="L186">    }</span>
+
+    /**
+     * Add values to the key in the argument list.
+     * empty values are ignored. If no non-empty values are present no change is made.
+     * If the key does not exist, adds it.
+     * @param trackerKey the key add values for.
+     * @param value the array of values to set.
+     */
+    public void addArg(final String trackerKey, final String... value) {
+<span class="fc" id="L196">        List&lt;String&gt; newValues = Arrays.stream(value).filter(StringUtils::isNotBlank).toList();</span>
+<span class="pc bpc" id="L197" title="1 of 2 branches missed.">        if (newValues.isEmpty()) {</span>
+<span class="nc" id="L198">            return;</span>
+        }
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        if (!validateSet(trackerKey)) {</span>
+<span class="fc" id="L201">            DefaultLog.getInstance().warn(String.format(&quot;Key '%s' is unknown&quot;, trackerKey));</span>
+<span class="fc" id="L202">            return;</span>
+        }
+<span class="fc" id="L204">        Option ratOption = Arg.findArg(trackerKey).find(trackerKey);</span>
+<span class="pc bpc" id="L205" title="1 of 2 branches missed.">        if (!ratOption.hasArgs()) {</span>
+<span class="nc" id="L206">            DefaultLog.getInstance().warn(String.format(&quot;Key '%s' does not accept %sarguments.&quot;, trackerKey,</span>
+<span class="nc bnc" id="L207" title="All 2 branches missed.">                    ratOption.hasArg() ? &quot;more that one &quot; : &quot;&quot;));</span>
+        }
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">        if (DefaultLog.getInstance().isEnabled(Log.Level.DEBUG)) {</span>
+<span class="nc" id="L210">            DefaultLog.getInstance().debug(String.format(&quot;Adding [%s] to %s&quot;, String.join(&quot;, &quot;, Arrays.asList(value)), trackerKey));</span>
+        }
+<span class="fc" id="L212">        List&lt;String&gt; values = args.computeIfAbsent(trackerKey, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L213">        values.addAll(newValues);</span>
+<span class="fc" id="L214">    }</span>
+
+    /**
+     * Remove a key from the argument list.
+     * @param option the option to remove the key for.
+     */
+    public void removeArg(final UIOption&lt;?&gt; option) {
+<span class="nc" id="L221">        args.remove(option.keyValue());</span>
+<span class="nc" id="L222">    }</span>
+
+    /**
+     * Remove a key from the argument list.
+     * @param trackerKey the key remove.
+     */
+    public void removeArg(final String trackerKey) {
+<span class="nc" id="L229">        args.remove(trackerKey);</span>
+<span class="nc" id="L230">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

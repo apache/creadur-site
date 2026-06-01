@@ -500,7 +500,7 @@ public final class SelectorUtils {
     }
 
     private static boolean isDoubleStar(final char[] patDir) {
-<span class="pc bpc" id="L503" title="2 of 8 branches missed.">        return patDir != null &amp;&amp; patDir.length == 2 &amp;&amp; patDir[0] == '*' &amp;&amp; patDir[1] == '*';</span>
+<span class="pc bpc" id="L503" title="1 of 8 branches missed.">        return patDir != null &amp;&amp; patDir.length == 2 &amp;&amp; patDir[0] == '*' &amp;&amp; patDir[1] == '*';</span>
     }
 
     /**
@@ -663,7 +663,7 @@ public final class SelectorUtils {
         }
 <span class="fc bfc" id="L664" title="All 2 branches covered.">        if (!isCaseSensitive) {</span>
             // NOTE: Try both upper case and lower case as done by String.equalsIgnoreCase()
-<span class="pc bpc" id="L666" title="1 of 2 branches missed.">            return Character.toUpperCase(c1) == Character.toUpperCase(c2)</span>
+<span class="fc bfc" id="L666" title="All 2 branches covered.">            return Character.toUpperCase(c1) == Character.toUpperCase(c2)</span>
 <span class="pc bpc" id="L667" title="1 of 2 branches missed.">                    || Character.toLowerCase(c1) == Character.toLowerCase(c2);</span>
         }
 <span class="fc" id="L669">        return false;</span>

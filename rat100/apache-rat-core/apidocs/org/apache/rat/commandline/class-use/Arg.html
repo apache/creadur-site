@@ -63,6 +63,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Helper classes for command line processing.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#org.apache.rat.ui">org.apache.rat.ui</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Classes that support UI generation and interoperability.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -77,7 +81,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>enum&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../Arg.html" class="type-name-link" title="enum class in org.apache.rat.commandline">Arg</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">An enumeration of options.</div>
+<div class="block">An enumeration of options that are recommended across all UIs.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.commandline</a> that return <a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span></div>
@@ -91,20 +95,47 @@ loadScripts(document, 'script');</script>
 <div class="block">Finds the Arg that contains an Option with the specified key.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Arg.</span><code><a href="../Arg.html#findArg(org.apache.commons.cli.Option)" class="member-name-link">findArg</a><wbr>(org.apache.commons.cli.Option&nbsp;optionToFind)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Arg.</span><code><a href="../Arg.html#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Finds the Arg that an Option is in.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Arg.</span><code><a href="../Arg.html#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color">
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>[]</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Arg.</span><code><a href="../Arg.html#values()" class="member-name-link">values</a>()</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static <a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Arg.</span><code><a href="../Arg.html#values()" class="member-name-link">values</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.apache.rat.ui">
+<h2>Uses of <a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a> in <a href="../../ui/package-summary.html">org.apache.rat.ui</a></h2>
+<div class="caption"><span>Methods in <a href="../../ui/package-summary.html">org.apache.rat.ui</a> with parameters of type <a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../ui/UIOptionCollection.Builder.html#type-param-S" title="type parameter in UIOptionCollection.Builder">S</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UIOptionCollection.Builder.</span><code><a href="../../ui/UIOptionCollection.Builder.html#defaultValue(org.apache.rat.commandline.Arg,java.lang.String)" class="member-name-link">defaultValue</a><wbr>(<a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>&nbsp;arg,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Specify the default values for an Arg.</div>
+</div>
+<div class="col-first odd-row-color"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;org.apache.commons.cli.Option&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UIOptionCollection.</span><code><a href="../../ui/UIOptionCollection.html#getSelected(org.apache.rat.commandline.Arg)" class="member-name-link">getSelected</a><wbr>(<a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Gets the selected Option for the arg.</div>
+</div>
+<div class="col-first even-row-color"><code>final boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">UIOptionCollection.</span><code><a href="../../ui/UIOptionCollection.html#isSelected(org.apache.rat.commandline.Arg)" class="member-name-link">isSelected</a><wbr>(<a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>&nbsp;arg)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Checks if an Arg is selected.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../ui/UIOptionCollection.Builder.html#type-param-S" title="type parameter in UIOptionCollection.Builder">S</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">UIOptionCollection.Builder.</span><code><a href="../../ui/UIOptionCollection.Builder.html#unsupported(org.apache.rat.commandline.Arg)" class="member-name-link">unsupported</a><wbr>(<a href="../Arg.html" title="enum class in org.apache.rat.commandline">Arg</a>&nbsp;arg)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Register multiple options as unsupported.</div>
 </div>
 </div>
 </section>

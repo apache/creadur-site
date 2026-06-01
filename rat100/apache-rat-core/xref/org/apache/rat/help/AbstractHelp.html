@@ -38,9 +38,9 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.cli.Options;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.lang3.StringUtils;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.text.WordUtils;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.OptionCollection;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.VersionInfo;
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.commandline.Arg;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.CLIOptionCollection;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.OptionCollection;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.VersionInfo;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.lang.String.format;
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  
@@ -142,8 +142,8 @@
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>             <strong class="jxr_keyword">final</strong> String lpad = createPadding(leftPad);
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>             <strong class="jxr_keyword">final</strong> String dpad = createPadding(descPad);
 <a class="jxr_linenumber" name="L136" href="#L136">136</a>             <em class="jxr_comment">// first create list containing only &lt;lpad&gt;-a,--aaa where</em>
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>             <em class="jxr_comment">// -a is opt and --aaa is long opt; in parallel look for</em>
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>             <em class="jxr_comment">// the longest opt string; this list will then be used to</em>
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>             <em class="jxr_comment">// -a is option and --aaa is long option; in parallel look for</em>
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>             <em class="jxr_comment">// the longest option string; this list will then be used to</em>
 <a class="jxr_linenumber" name="L139" href="#L139">139</a>             <em class="jxr_comment">// sort options ascending</em>
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>             <strong class="jxr_keyword">int</strong> max = 0;
 <a class="jxr_linenumber" name="L141" href="#L141">141</a>             <strong class="jxr_keyword">final</strong> List&lt;StringBuffer&gt; prefixList = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
@@ -193,20 +193,19 @@
 <a class="jxr_linenumber" name="L185" href="#L185">185</a>                     optBuf.append(END_OF_OPTION_MSG);
 <a class="jxr_linenumber" name="L186" href="#L186">186</a>                 }
 <a class="jxr_linenumber" name="L187" href="#L187">187</a>                 <em class="jxr_comment">// check for default value</em>
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>                 <a name="Arg" href="../../../../org/apache/rat/commandline/Arg.html#Arg">Arg</a> arg = Arg.findArg(option);
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>                 String defaultValue = arg == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">null</strong> : arg.defaultValue();
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>                 <strong class="jxr_keyword">if</strong> (defaultValue != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>                     optBuf.append(format(<span class="jxr_string">" (Default value = %s)"</span>, defaultValue));
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>                 }
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>                 renderWrappedText(sb, width, nextLineTabStop, optBuf.toString());
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>                 <strong class="jxr_keyword">if</strong> (it.hasNext()) {
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>                     sb.append(getNewLine());
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>                 }
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>             }
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>             <strong class="jxr_keyword">return</strong> sb;
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>         }
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>     }
-<a class="jxr_linenumber" name="L201" href="#L201">201</a> }
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>                 String defaultValue = CLIOptionCollection.INSTANCE.defaultValue(option);
+<a class="jxr_linenumber" name="L189" href="#L189">189</a>                 <strong class="jxr_keyword">if</strong> (defaultValue != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>                     optBuf.append(format(<span class="jxr_string">" (Default value = %s)"</span>, defaultValue));
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>                 }
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>                 renderWrappedText(sb, width, nextLineTabStop, optBuf.toString());
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>                 <strong class="jxr_keyword">if</strong> (it.hasNext()) {
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>                     sb.append(getNewLine());
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>                 }
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>             }
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>             <strong class="jxr_keyword">return</strong> sb;
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>         }
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>     }
+<a class="jxr_linenumber" name="L200" href="#L200">200</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>

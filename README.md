@@ -4,7 +4,7 @@ This repository contains our webpage.
 
 Every commit is directly pushed and available on [https://creadur.apache.org/](https://creadur.apache.org/), as its deployment is done via [asf.yaml](./.asf.yaml).
 
-Due to ASF restrictions you need to file a PR for every change as a direct commit to the master branch is forbidden.
+Due to ASF restrictions you need to file a PR for every change as a direct commit to the main asf-site branch is forbidden.
 
 ## Prerequisites for working on the webpage
 

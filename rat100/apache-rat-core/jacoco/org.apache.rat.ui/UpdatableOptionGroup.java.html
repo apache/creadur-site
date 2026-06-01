@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdatableOptionGroup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.ui</a> &gt; <span class="el_source">UpdatableOptionGroup.java</span></div><h1>UpdatableOptionGroup.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.ui;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
+
+/**
+ * An implementation of Apache Commons CLI OptionGroup that allows options to be removed (disabled).
+ */
+public final class UpdatableOptionGroup extends OptionGroup {
+    /** The set of options to remove */
+<span class="fc" id="L34">    private final Set&lt;Option&gt; disabledOptions = new HashSet&lt;&gt;();</span>
+
+    /**
+     * Converts the group into an UpdatableOptionGroup if it is not already an instance
+     * @param group the group to convert.
+     * @return an UpdatableOptionGroup.
+     */
+    public static UpdatableOptionGroup create(final OptionGroup group) {
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">        return group instanceof UpdatableOptionGroup updatableOptionGroup ? updatableOptionGroup : new UpdatableOptionGroup(group);</span>
+    }
+
+<span class="fc" id="L45">    private UpdatableOptionGroup(final OptionGroup group) {</span>
+<span class="fc" id="L46">        group.getOptions().forEach(super::addOption);</span>
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * Disable an option in the group.
+     * @param option The option to disable.
+     */
+    public void disableOption(final Option option) {
+<span class="fc" id="L54">        disabledOptions.add(option);</span>
+<span class="fc" id="L55">    }</span>
+
+    public boolean isEmpty() {
+<span class="nc" id="L58">        return getOptions().isEmpty();</span>
+    }
+
+    /**
+     * Gets the disabled options for this group.
+     * @return the set of disabled options for this group.
+     */
+    public Stream&lt;Option&gt; getDisableOptions() {
+<span class="fc" id="L66">        return disabledOptions.stream();</span>
+    }
+    /**
+     * Reset the group so that all disabled options are re-enabled.
+     */
+    public void reset() {
+<span class="nc" id="L72">        disabledOptions.clear();</span>
+<span class="nc" id="L73">    }</span>
+
+    @Override
+    public Collection&lt;Option&gt; getOptions() {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return super.getOptions().stream().filter(opt -&gt; !disabledOptions.contains(opt)).toList();</span>
+    }
+
+    @Override
+    public UpdatableOptionGroup addOption(final Option option) {
+<span class="nc" id="L82">        super.addOption(option);</span>
+<span class="nc" id="L83">        return this;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -132,10 +132,6 @@ IHeaderMatchers.</div>
 <dd>
 <div class="block">Constructs the abstract matcher container with a unique random id.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html" class="type-name-link" title="class in org.apache.rat.documentation.options">AbstractOption</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
-<dd>
-<div class="block">Abstract class that provides the framework for UI-specific RAT options.</div>
-</dd>
 <dt><a href="org/apache/rat/mp/AbstractRatMojo.html" class="type-name-link" title="class in org.apache.rat.mp">AbstractRatMojo</a> - Class in <a href="org/apache/rat/mp/package-summary.html">org.apache.rat.mp</a></dt>
 <dd>
 <div class="block">Abstract base class for Mojos, which are running Rat.</div>
@@ -153,6 +149,10 @@ IHeaderMatchers.</div>
 <dt><a href="org/apache/rat/Defaults.Builder.html#add(java.net.URI)" class="member-name-link">add(URI)</a> - Method in class org.apache.rat.<a href="org/apache/rat/Defaults.Builder.html" title="class in org.apache.rat">Defaults.Builder</a></dt>
 <dd>
 <div class="block">Adds a URL to a configuration file to be read.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html#add(org.apache.commons.cli.OptionGroup)" class="member-name-link">add(OptionGroup)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html" title="class in org.apache.rat.ui">UpdatableOptionGroupCollection</a></dt>
+<dd>
+<div class="block">Adds an OptionGroup to the collection.</div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/License.html#add(org.apache.rat.analysis.IHeaderMatcher)" class="member-name-link">add(IHeaderMatcher)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/License.html" title="class in org.apache.rat.anttasks">License</a></dt>
 <dd>
@@ -244,27 +244,37 @@ empty values are ignored.</div>
 <div class="block">Add values to the key in the argument list.
 empty values are ignored.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#addArg(java.lang.String,java.lang.String...)" class="member-name-link">addArg(String, String...)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Add values to the key in the argument list.
+empty values are ignored.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#addArg(org.apache.rat.ui.UIOption,java.lang.String...)" class="member-name-link">addArg(UIOption, String...)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Add values to the key in the argument list.
+empty values are ignored.</div>
+</dd>
 <dt><a href="org/apache/rat/configuration/MatcherBuilderTracker.html#addBuilder(java.lang.String,java.lang.String)" class="member-name-link">addBuilder(String, String)</a> - Static method in class org.apache.rat.configuration.<a href="org/apache/rat/configuration/MatcherBuilderTracker.html" title="class in org.apache.rat.configuration">MatcherBuilderTracker</a></dt>
 <dd>
 <div class="block">Adds a builder to the tracker.</div>
 </dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.CounterMax.html#addConfiguredCntr(org.apache.rat.anttasks.BaseAntTask.Cntr)" class="member-name-link">addConfiguredCntr(BaseAntTask.Cntr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.CounterMax.html" title="class in org.apache.rat.anttasks">BaseAntTask.CounterMax</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.CounterMaxs.html#addConfiguredCntr(org.apache.rat.anttasks.BaseAntTask.Cntr)" class="member-name-link">addConfiguredCntr(BaseAntTask.Cntr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.CounterMaxs.html" title="class in org.apache.rat.anttasks">BaseAntTask.CounterMaxs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.CounterMin.html#addConfiguredCntr(org.apache.rat.anttasks.BaseAntTask.Cntr)" class="member-name-link">addConfiguredCntr(BaseAntTask.Cntr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.CounterMin.html" title="class in org.apache.rat.anttasks">BaseAntTask.CounterMin</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.CounterMins.html#addConfiguredCntr(org.apache.rat.anttasks.BaseAntTask.Cntr)" class="member-name-link">addConfiguredCntr(BaseAntTask.Cntr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.CounterMins.html" title="class in org.apache.rat.anttasks">BaseAntTask.CounterMins</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.Exclude.html#addConfiguredExpr(org.apache.rat.anttasks.BaseAntTask.Expr)" class="member-name-link">addConfiguredExpr(BaseAntTask.Expr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.Exclude.html" title="class in org.apache.rat.anttasks">BaseAntTask.Exclude</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.Excludes.html#addConfiguredExpr(org.apache.rat.anttasks.BaseAntTask.Expr)" class="member-name-link">addConfiguredExpr(BaseAntTask.Expr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.Excludes.html" title="class in org.apache.rat.anttasks">BaseAntTask.Excludes</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.Include.html#addConfiguredExpr(org.apache.rat.anttasks.BaseAntTask.Expr)" class="member-name-link">addConfiguredExpr(BaseAntTask.Expr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.Include.html" title="class in org.apache.rat.anttasks">BaseAntTask.Include</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.Includes.html#addConfiguredExpr(org.apache.rat.anttasks.BaseAntTask.Expr)" class="member-name-link">addConfiguredExpr(BaseAntTask.Expr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.Includes.html" title="class in org.apache.rat.anttasks">BaseAntTask.Includes</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExclude.html#addConfiguredExpr(org.apache.rat.anttasks.BaseAntTask.Expr)" class="member-name-link">addConfiguredExpr(BaseAntTask.Expr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExclude.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExclude</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludes.html#addConfiguredExpr(org.apache.rat.anttasks.BaseAntTask.Expr)" class="member-name-link">addConfiguredExpr(BaseAntTask.Expr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExcludes.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludes</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputInclude.html#addConfiguredExpr(org.apache.rat.anttasks.BaseAntTask.Expr)" class="member-name-link">addConfiguredExpr(BaseAntTask.Expr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputInclude.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputInclude</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputIncludes.html#addConfiguredExpr(org.apache.rat.anttasks.BaseAntTask.Expr)" class="member-name-link">addConfiguredExpr(BaseAntTask.Expr)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputIncludes.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputIncludes</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.Config.html#addConfiguredFileset(org.apache.tools.ant.types.FileSet)" class="member-name-link">addConfiguredFileset(FileSet)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.Config.html" title="class in org.apache.rat.anttasks">BaseAntTask.Config</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.Configs.html#addConfiguredFileset(org.apache.tools.ant.types.FileSet)" class="member-name-link">addConfiguredFileset(FileSet)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.Configs.html" title="class in org.apache.rat.anttasks">BaseAntTask.Configs</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExclude.html#addConfiguredFileset(org.apache.tools.ant.types.FileSet)" class="member-name-link">addConfiguredFileset(FileSet)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExclude.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExclude</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludes.html#addConfiguredFileset(org.apache.tools.ant.types.FileSet)" class="member-name-link">addConfiguredFileset(FileSet)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExcludes.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludes</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputInclude.html#addConfiguredFileset(org.apache.tools.ant.types.FileSet)" class="member-name-link">addConfiguredFileset(FileSet)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputInclude.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputInclude</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputIncludes.html#addConfiguredFileset(org.apache.tools.ant.types.FileSet)" class="member-name-link">addConfiguredFileset(FileSet)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputIncludes.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputIncludes</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.LicenseFamiliesApproved.html#addConfiguredFileset(org.apache.tools.ant.types.FileSet)" class="member-name-link">addConfiguredFileset(FileSet)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.LicenseFamiliesApproved.html" title="class in org.apache.rat.anttasks">BaseAntTask.LicenseFamiliesApproved</a></dt>
 <dd>&nbsp;</dd>
@@ -284,11 +294,15 @@ empty values are ignored.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.LicensesDenied.html#addConfiguredLst(org.apache.rat.anttasks.BaseAntTask.Lst)" class="member-name-link">addConfiguredLst(BaseAntTask.Lst)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.LicensesDenied.html" title="class in org.apache.rat.anttasks">BaseAntTask.LicensesDenied</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExclude.html#addConfiguredStd(org.apache.rat.anttasks.BaseAntTask.Std)" class="member-name-link">addConfiguredStd(BaseAntTask.Std)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExclude.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExclude</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeParsedScms.html#addConfiguredStd(org.apache.rat.anttasks.BaseAntTask.Std)" class="member-name-link">addConfiguredStd(BaseAntTask.Std)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeParsedScms.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludeParsedScms</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeParsedScm.html#addConfiguredStd(org.apache.rat.anttasks.BaseAntTask.Std)" class="member-name-link">addConfiguredStd(BaseAntTask.Std)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeParsedScm.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludeParsedScm</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludes.html#addConfiguredStd(org.apache.rat.anttasks.BaseAntTask.Std)" class="member-name-link">addConfiguredStd(BaseAntTask.Std)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExcludes.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludes</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputInclude.html#addConfiguredStd(org.apache.rat.anttasks.BaseAntTask.Std)" class="member-name-link">addConfiguredStd(BaseAntTask.Std)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputInclude.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputInclude</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeStds.html#addConfiguredStd(org.apache.rat.anttasks.BaseAntTask.Std)" class="member-name-link">addConfiguredStd(BaseAntTask.Std)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeStds.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludeStds</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputIncludes.html#addConfiguredStd(org.apache.rat.anttasks.BaseAntTask.Std)" class="member-name-link">addConfiguredStd(BaseAntTask.Std)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputIncludes.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputIncludes</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputIncludeStds.html#addConfiguredStd(org.apache.rat.anttasks.BaseAntTask.Std)" class="member-name-link">addConfiguredStd(BaseAntTask.Std)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.InputIncludeStds.html" title="class in org.apache.rat.anttasks">BaseAntTask.InputIncludeStds</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/configuration/builders/ChildContainerBuilder.html#addEnclosed(java.util.Collection)" class="member-name-link">addEnclosed(Collection)</a> - Method in class org.apache.rat.configuration.builders.<a href="org/apache/rat/configuration/builders/ChildContainerBuilder.html" title="class in org.apache.rat.configuration.builders">ChildContainerBuilder</a></dt>
 <dd>
@@ -405,6 +419,10 @@ exclusion of the same files.</div>
 <dd>
 <div class="block">Add file patterns that are to be included.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#additionalOptions()" class="member-name-link">additionalOptions()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
+<dd>
+<div class="block">Gets the additional options understood by this collection.</div>
+</dd>
 <dt><a href="org/apache/rat/anttasks/Report.html#addLicense(org.apache.rat.anttasks.License)" class="member-name-link">addLicense(License)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Report.html" title="class in org.apache.rat.anttasks">Report</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -463,6 +481,8 @@ exclusion of the same files.</div>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroup.html#addOption(org.apache.commons.cli.Option)" class="member-name-link">addOption(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroup.html" title="class in org.apache.rat.ui">UpdatableOptionGroup</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/Report.html#addRemoveApprovedLicense(java.lang.String)" class="member-name-link">addRemoveApprovedLicense(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Report.html" title="class in org.apache.rat.anttasks">Report</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -609,13 +629,26 @@ collection.</div>
 <dd>
 <div class="block">A class that wraps the CLI option and provides Ant specific values.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#%3Cinit%3E(org.apache.commons.cli.Option)" class="member-name-link">AntOption(Option)</a> - Constructor for class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dt><a href="org/apache/rat/documentation/options/AntOption.html#%3Cinit%3E(org.apache.rat.ui.UIOptionCollection,org.apache.commons.cli.Option)" class="member-name-link">AntOption(UIOptionCollection, Option)</a> - Constructor for class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
 <dd>
 <div class="block">Constructor.</div>
 </dd>
 <dt><a href="org/apache/rat/documentation/options/AntOption.ExampleGenerator.html" class="type-name-link" title="class in org.apache.rat.documentation.options">AntOption.ExampleGenerator</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
 <dd>
 <div class="block">An example code generator for this AntOption.</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.html" class="type-name-link" title="class in org.apache.rat.documentation.options">AntOptionCollection</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
+<dd>
+<div class="block">The collection of AntOptions equivalent to the CLI options
+with any unsupported options removed.</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.Builder.html" class="type-name-link" title="class in org.apache.rat.documentation.options">AntOptionCollection.Builder</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
+<dd>
+<div class="block">The Builder for the AntOptionCollection.</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html" class="type-name-link" title="class in org.apache.rat.documentation.options">AntOptionCollection.BuildType</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
+<dd>
+<div class="block">A mapping of data type of XML format.</div>
 </dd>
 <dt><a href="org/apache/rat/documentation/velocity/RatTool.html#antOptions()" class="member-name-link">antOptions()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/RatTool.html" title="class in org.apache.rat.documentation.velocity">RatTool</a></dt>
 <dd>
@@ -679,6 +712,10 @@ document.</div>
 <dt><a href="org/apache/rat/commandline/Converters.FileConverter.html#apply(java.lang.String)" class="member-name-link">apply(String)</a> - Method in class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Converters.FileConverter.html" title="class in org.apache.rat.commandline">Converters.FileConverter</a></dt>
 <dd>
 <div class="block">Applies the conversion function to the specified file name.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#apply(java.util.function.BiConsumer)" class="member-name-link">apply(BiConsumer)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Applies the consumer to each arg and list in turn.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/XmlElements.Attributes.html#APPROVAL" class="member-name-link">APPROVAL</a> - Enum constant in enum class org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlElements.Attributes.html" title="enum class in org.apache.rat.report.xml">XmlElements.Attributes</a></dt>
 <dd>
@@ -770,7 +807,7 @@ document.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html" class="type-name-link" title="enum class in org.apache.rat.commandline">Arg</a> - Enum Class in <a href="org/apache/rat/commandline/package-summary.html">org.apache.rat.commandline</a></dt>
 <dd>
-<div class="block">An enumeration of options.</div>
+<div class="block">An enumeration of options that are recommended across all UIs.</div>
 </dd>
 <dt><a href="org/apache/rat/OptionCollection.ArgumentType.html#ARG" class="member-name-link">ARG</a> - Enum constant in enum class org.apache.rat.<a href="org/apache/rat/OptionCollection.ArgumentType.html" title="enum class in org.apache.rat">OptionCollection.ArgumentType</a></dt>
 <dd>
@@ -779,10 +816,6 @@ document.</div>
 <dt><a href="org/apache/rat/commandline/Arg.StdMsgs.html" class="type-name-link" title="class in org.apache.rat.commandline">Arg.StdMsgs</a> - Class in <a href="org/apache/rat/commandline/package-summary.html">org.apache.rat.commandline</a></dt>
 <dd>
 <div class="block">Standard messages used in descriptions.</div>
-</dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#argCount()" class="member-name-link">argCount()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
-<dd>
-<div class="block">Returns the number of arguments.</div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#args" class="member-name-link">args</a> - Variable in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
@@ -800,6 +833,10 @@ document.</div>
 <dd>
 <div class="block">Gets the list of arguments prepared for the CLI code to parse.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#args()" class="member-name-link">args()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Gets the list of arguments prepared for the CLI code to parse.</div>
+</dd>
 <dt><a href="org/apache/rat/commandline/ArgumentContext.html" class="type-name-link" title="class in org.apache.rat.commandline">ArgumentContext</a> - Class in <a href="org/apache/rat/commandline/package-summary.html">org.apache.rat.commandline</a></dt>
 <dd>
 <div class="block">Provides the context necessary to process various arguments.</div>
@@ -812,7 +849,16 @@ document.</div>
 <dd>
 <div class="block">Creates a context with the specified configuration.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#argumentType" class="member-name-link">argumentType</a> - Variable in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html" class="type-name-link" title="class in org.apache.rat.ui">ArgumentTracker</a> - Class in <a href="org/apache/rat/ui/package-summary.html">org.apache.rat.ui</a></dt>
+<dd>
+<div class="block">Tracks Arg values that are set and their values for conversion from native UI to
+Apache Commons command line values.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#%3Cinit%3E(org.apache.rat.ui.UIOptionCollection)" class="member-name-link">ArgumentTracker(UIOptionCollection)</a> - Constructor for class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">The arguments understood by the UI for the current report execution.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#argumentType" class="member-name-link">argumentType</a> - Variable in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">The argument type for this option</div>
 </dd>
@@ -921,25 +967,29 @@ document.</div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.Cntr.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Cntr</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.Config.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Config</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.Configs.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Configs</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.CounterMax.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.CounterMax</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.CounterMaxs.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.CounterMaxs</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.CounterMin.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.CounterMin</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.CounterMins.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.CounterMins</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.Exclude.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Exclude</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.Excludes.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Excludes</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.Expr.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Expr</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.Filename.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Filename</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.Include.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Include</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.Includes.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.Includes</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExclude.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputExclude</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeParsedScms.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludeParsedScms</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeParsedScm.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludeParsedScm</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludes.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludes</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputInclude.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputInclude</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputExcludeStds.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputExcludeStds</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputIncludes.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputIncludes</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.InputIncludeStds.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.InputIncludeStds</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.LicenseFamiliesApproved.html" class="type-name-link" title="class in org.apache.rat.anttasks">BaseAntTask.LicenseFamiliesApproved</a> - Class in <a href="org/apache/rat/anttasks/package-summary.html">org.apache.rat.anttasks</a></dt>
 <dd>&nbsp;</dd>
@@ -1066,6 +1116,10 @@ DO NOT EDIT - GENERATED FILE</div>
 <dd>
 <div class="block">Build a DocumentName from this builder.</div>
 </dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.Builder.html#build()" class="member-name-link">build()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.Builder.html" title="class in org.apache.rat.documentation.options">AntOptionCollection.Builder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/MavenOptionCollection.Builder.html#build()" class="member-name-link">build()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOptionCollection.Builder.html" title="class in org.apache.rat.documentation.options">MavenOptionCollection.Builder</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/license/ILicense.Builder.html#build()" class="member-name-link">build()</a> - Method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicense.Builder.html" title="interface in org.apache.rat.license">ILicense.Builder</a></dt>
 <dd>
 <div class="block">Builds the license.</div>
@@ -1096,6 +1150,10 @@ DO NOT EDIT - GENERATED FILE</div>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#build()" class="member-name-link">build()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Build the UIOptionCollection.</div>
+</dd>
 <dt><a href="org/apache/rat/walker/IReportableListWalker.Builder.html#build()" class="member-name-link">build()</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/IReportableListWalker.Builder.html" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a></dt>
 <dd>
 <div class="block">Build the reportable.</div>
@@ -1128,6 +1186,10 @@ DO NOT EDIT - GENERATED FILE</div>
 <dd>
 <div class="block">Creates a Builder with the default file system info.</div>
 </dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.html#builder()" class="member-name-link">builder()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.html" title="class in org.apache.rat.documentation.options">AntOptionCollection</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/MavenOptionCollection.html#builder()" class="member-name-link">builder()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOptionCollection.html" title="class in org.apache.rat.documentation.options">MavenOptionCollection</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/license/ILicense.html#builder()" class="member-name-link">builder()</a> - Static method in interface org.apache.rat.license.<a href="org/apache/rat/license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a></dt>
 <dd>
 <div class="block">Gets a builder for licenses.</div>
@@ -1162,6 +1224,10 @@ DO NOT EDIT - GENERATED FILE</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/license/SimpleLicense.Builder.html#%3Cinit%3E()" class="member-name-link">Builder()</a> - Constructor for class org.apache.rat.license.<a href="org/apache/rat/license/SimpleLicense.Builder.html" title="class in org.apache.rat.license">SimpleLicense.Builder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#%3Cinit%3E(java.util.function.BiFunction)" class="member-name-link">Builder(BiFunction)</a> - Constructor for class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Constructor for the builder.</div>
+</dd>
 <dt><a href="org/apache/rat/BuilderParams.html" class="type-name-link" title="interface in org.apache.rat">BuilderParams</a> - Interface in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
 <dd>
 <div class="block">Parameters that can be set by the BUILDER_PARAM ComponentType.</div>
@@ -1174,6 +1240,8 @@ DO NOT EDIT - GENERATED FILE</div>
 <dd>
 <div class="block">Create an <code>Options</code> object from the list of defined Options.</div>
 </dd>
+<dt><a href="org/apache/rat/documentation/options/AntOption.html#buildType()" class="member-name-link">buildType()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:C">C</h2>
 <dl class="index">
@@ -1193,11 +1261,11 @@ DO NOT EDIT - GENERATED FILE</div>
 </dd>
 <dt><a href="org/apache/rat/utils/CasedString.html#%3Cinit%3E(org.apache.rat.utils.CasedString.StringCase,java.lang.String%5B%5D)" class="member-name-link">CasedString(CasedString.StringCase, String[])</a> - Constructor for class org.apache.rat.utils.<a href="org/apache/rat/utils/CasedString.html" title="class in org.apache.rat.utils">CasedString</a></dt>
 <dd>
-<div class="block">Creates a cased string of the specified case and segments.</div>
+<div class="block">Creates a cased string of the specified case and segments</div>
 </dd>
 <dt><a href="org/apache/rat/utils/CasedString.StringCase.html" class="type-name-link" title="class in org.apache.rat.utils">CasedString.StringCase</a> - Class in <a href="org/apache/rat/utils/package-summary.html">org.apache.rat.utils</a></dt>
 <dd>
-<div class="block">The definition of a string case.</div>
+<div class="block">The definition of a String case.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/writer/IXmlWriter.html#cdata(java.lang.CharSequence)" class="member-name-link">cdata(CharSequence)</a> - Method in interface org.apache.rat.report.xml.writer.<a href="org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></dt>
 <dd>
@@ -1270,29 +1338,31 @@ the report.</div>
 <dd>
 <div class="block">Constructor.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#cleanup(java.lang.String)" class="member-name-link">cleanup(String)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#cleanup(java.lang.String)" class="member-name-link">cleanup(String)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Replaces CLI pattern options with implementation specific pattern options.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#cleanupName()" class="member-name-link">cleanupName()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
-<dd>
-<div class="block">Gets this option's cleaned up name.</div>
-</dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#cleanupName(org.apache.commons.cli.Option)" class="member-name-link">cleanupName(Option)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
-<dd>
-<div class="block">Provide means to wrap the given option depending on the UI-specific option implementation.</div>
-</dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#cleanupName(org.apache.commons.cli.Option)" class="member-name-link">cleanupName(Option)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dt><a href="org/apache/rat/documentation/options/AntOption.html#cleanupName()" class="member-name-link">cleanupName()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/CLIOption.html#cleanupName(org.apache.commons.cli.Option)" class="member-name-link">cleanupName(Option)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/CLIOption.html" title="class in org.apache.rat.documentation.options">CLIOption</a></dt>
+<dt><a href="org/apache/rat/CLIOption.html#cleanupName(org.apache.commons.cli.Option)" class="member-name-link">cleanupName(Option)</a> - Method in class org.apache.rat.<a href="org/apache/rat/CLIOption.html" title="class in org.apache.rat">CLIOption</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOption.html#cleanupName(org.apache.commons.cli.Option)" class="member-name-link">cleanupName(Option)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/options/MavenOption.html#cleanupName(org.apache.commons.cli.Option)" class="member-name-link">cleanupName(Option)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#cleanupName(org.apache.commons.cli.Option)" class="member-name-link">cleanupName(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">Provide means to wrap the given option depending on the UI-specific option implementation.</div>
+</dd>
 <dt><a href="org/apache/rat/utils/ReportingSet.html#clear()" class="member-name-link">clear()</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/CLIOption.html" class="type-name-link" title="class in org.apache.rat.documentation.options">CLIOption</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
+<dt><a href="org/apache/rat/CLIOption.html" class="type-name-link" title="class in org.apache.rat">CLIOption</a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
+<dd>
+<div class="block">The CLI option definition.</div>
+</dd>
+<dt><a href="org/apache/rat/CLIOption.html#%3Cinit%3E(org.apache.rat.ui.UIOptionCollection,org.apache.commons.cli.Option)" class="member-name-link">CLIOption(UIOptionCollection, Option)</a> - Constructor for class org.apache.rat.<a href="org/apache/rat/CLIOption.html" title="class in org.apache.rat">CLIOption</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/CLIOption.html#%3Cinit%3E(org.apache.commons.cli.Option)" class="member-name-link">CLIOption(Option)</a> - Constructor for class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/CLIOption.html" title="class in org.apache.rat.documentation.options">CLIOption</a></dt>
+<dt><a href="org/apache/rat/CLIOptionCollection.html" class="type-name-link" title="class in org.apache.rat">CLIOptionCollection</a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/velocity/RatTool.html#cliOptions()" class="member-name-link">cliOptions()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/RatTool.html" title="class in org.apache.rat.documentation.velocity">RatTool</a></dt>
 <dd>
@@ -1390,11 +1460,11 @@ the report.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#CONFIGURATION" class="member-name-link">CONFIGURATION</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Group of options that read a configuration file</div>
+<div class="block">Group of options that read a configuration file.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#CONFIGURATION_NO_DEFAULTS" class="member-name-link">CONFIGURATION_NO_DEFAULTS</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Group of options that skip the default configuration file</div>
+<div class="block">Group of options that skip the default configuration file.</div>
 </dd>
 <dt><a href="org/apache/rat/ConfigurationException.html" class="type-name-link" title="class in org.apache.rat">ConfigurationException</a> - Exception Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
 <dd>
@@ -1416,6 +1486,10 @@ the report.</div>
 </dd>
 <dt><a href="org/apache/rat/utils/ReportingSet.html#contains(java.lang.Object)" class="member-name-link">contains(Object)</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html#contains(org.apache.commons.cli.Option)" class="member-name-link">contains(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html" title="class in org.apache.rat.ui">UpdatableOptionGroupCollection</a></dt>
+<dd>
+<div class="block">Returns true if the option is in any of the groups.</div>
+</dd>
 <dt><a href="org/apache/rat/utils/ReportingSet.html#containsAll(java.util.Collection)" class="member-name-link">containsAll(Collection)</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/report/xml/writer/IXmlWriter.html#content(java.lang.CharSequence)" class="member-name-link">content(CharSequence)</a> - Method in interface org.apache.rat.report.xml.writer.<a href="org/apache/rat/report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a></dt>
@@ -1424,10 +1498,14 @@ the report.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/writer/XmlWriter.html#content(java.lang.CharSequence)" class="member-name-link">content(CharSequence)</a> - Method in class org.apache.rat.report.xml.writer.<a href="org/apache/rat/report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.Builder.html#convert(org.apache.rat.commandline.Arg,org.apache.rat.commandline.Arg)" class="member-name-link">convert(Arg, Arg)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.Builder.html" title="class in org.apache.rat.documentation.options">AntOptionCollection.Builder</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/options/AntOption.html#convertedFrom()" class="member-name-link">convertedFrom()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
 <dd>
 <div class="block">Gets the set of options that are mapped to this option.</div>
 </dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.html#convertedFrom(org.apache.rat.documentation.options.AntOption)" class="member-name-link">convertedFrom(AntOption)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.html" title="class in org.apache.rat.documentation.options">AntOptionCollection</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/commandline/Converters.html" class="type-name-link" title="class in org.apache.rat.commandline">Converters</a> - Class in <a href="org/apache/rat/commandline/package-summary.html">org.apache.rat.commandline</a></dt>
 <dd>
 <div class="block">Customized converters for Arg processing.</div>
@@ -1518,6 +1596,8 @@ strings.</div>
 <dd>
 <div class="block">A Counter pattern name</div>
 </dd>
+<dt><a href="org/apache/rat/ui/spi/UIProvider.html#create()" class="member-name-link">create()</a> - Method in interface org.apache.rat.ui.spi.<a href="org/apache/rat/ui/spi/UIProvider.html" title="interface in org.apache.rat.ui.spi">UIProvider</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/utils/StandardXmlFactory.html#create()" class="member-name-link">create()</a> - Static method in class org.apache.rat.utils.<a href="org/apache/rat/utils/StandardXmlFactory.html" title="class in org.apache.rat.utils">StandardXmlFactory</a></dt>
 <dd>
 <div class="block">Create a transformer with no stylesheet.</div>
@@ -1538,19 +1618,27 @@ strings.</div>
 <dd>
 <div class="block">Answer an ExtendedIterator wrapped round a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="class or interface in java.util.stream" class="external-link"><code>Stream</code></a>.</div>
 </dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createConfig()" class="member-name-link">createConfig()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroup.html#create(org.apache.commons.cli.OptionGroup)" class="member-name-link">create(OptionGroup)</a> - Static method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroup.html" title="class in org.apache.rat.ui">UpdatableOptionGroup</a></dt>
+<dd>
+<div class="block">Converts the group into an UpdatableOptionGroup if it is not already an instance</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createConfigs()" class="member-name-link">createConfigs()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="block">File names for system configuration.</div>
+</dd>
+<dt><a href="org/apache/rat/OptionCollection.html#createConfiguration(org.apache.rat.commandline.ArgumentContext)" class="member-name-link">createConfiguration(ArgumentContext)</a> - Static method in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Create the report configuration.</div>
 </dd>
 <dt><a href="org/apache/rat/analysis/AnalyserFactory.html#createConfiguredAnalyser(org.apache.rat.ReportConfiguration)" class="member-name-link">createConfiguredAnalyser(ReportConfiguration)</a> - Static method in class org.apache.rat.analysis.<a href="org/apache/rat/analysis/AnalyserFactory.html" title="class in org.apache.rat.analysis">AnalyserFactory</a></dt>
 <dd>
 <div class="block">Creates a DocumentAnalyser from the report configuration.</div>
 </dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createCounterMax()" class="member-name-link">createCounterMax()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createCounterMaxs()" class="member-name-link">createCounterMaxs()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="block">The acceptable maximum number for the specified counter.</div>
 </dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createCounterMin()" class="member-name-link">createCounterMin()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createCounterMins()" class="member-name-link">createCounterMins()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="block">The minimum number for the specified counter.</div>
 </dd>
@@ -1558,29 +1646,37 @@ strings.</div>
 <dd>
 <div class="block">Creates a new instance of the default log.</div>
 </dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createExclude()" class="member-name-link">createExclude()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createExcludes()" class="member-name-link">createExcludes()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputExclude&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputExcludes&gt; instead.</div>
 </div>
 </dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInclude()" class="member-name-link">createInclude()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createIncludes()" class="member-name-link">createIncludes()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputInclude&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputIncludes&gt; instead.</div>
 </div>
 </dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputExclude()" class="member-name-link">createInputExclude()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
-<dd>
-<div class="block">Excludes files matching &lt;Expression&gt;.</div>
-</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputExcludeParsedScm()" class="member-name-link">createInputExcludeParsedScm()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputExcludeParsedScms()" class="member-name-link">createInputExcludeParsedScms()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="block">Parse SCM based exclusion files to exclude specified files and directories.</div>
 </dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputInclude()" class="member-name-link">createInputInclude()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputExcludes()" class="member-name-link">createInputExcludes()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Excludes files matching &lt;Expression&gt;.</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputExcludeStds()" class="member-name-link">createInputExcludeStds()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Excludes files defined in standard collections based on commonly occurring groups.</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputIncludes()" class="member-name-link">createInputIncludes()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="block">Includes files matching &lt;Expression&gt;.</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createInputIncludeStds()" class="member-name-link">createInputIncludeStds()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Includes files defined in standard collections based on commonly occurring groups.</div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createLicenseFamiliesApproved()" class="member-name-link">createLicenseFamiliesApproved()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
@@ -1593,7 +1689,7 @@ strings.</div>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createLicenses()" class="member-name-link">createLicenses()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;config&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;configs&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#createLicensesApproved()" class="member-name-link">createLicensesApproved()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
@@ -1618,10 +1714,6 @@ strings.</div>
 <dd>
 <div class="block">Creates a Maven name from a long option.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#createName(org.apache.commons.cli.Option)" class="member-name-link">createName(Option)</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/CLIOption.html#createName(org.apache.commons.cli.Option)" class="member-name-link">createName(Option)</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/CLIOption.html" title="class in org.apache.rat.documentation.options">CLIOption</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/utils/ExtendedIterator.html#createNoRemove(java.util.Iterator)" class="member-name-link">createNoRemove(Iterator)</a> - Static method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ExtendedIterator.html" title="class in org.apache.rat.utils">ExtendedIterator</a></dt>
 <dd>
 <div class="block">Answer an ExtendedIterator wrapped round <code>it</code>,
@@ -1692,9 +1784,17 @@ information.</div>
 <dd>
 <div class="block">The Defaults builder.</div>
 </dd>
-<dt><a href="org/apache/rat/commandline/Arg.html#defaultValue()" class="member-name-link">defaultValue()</a> - Method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#defaultValue(org.apache.commons.cli.Option)" class="member-name-link">defaultValue(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
 <dd>
-<div class="block">Gets the default value for this arg.</div>
+<div class="block">Gets the default value for the option.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#defaultValue(org.apache.commons.cli.Option,java.lang.String)" class="member-name-link">defaultValue(Option, String)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Specify the default values for an option.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#defaultValue(org.apache.rat.commandline.Arg,java.lang.String)" class="member-name-link">defaultValue(Arg, String)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Specify the default values for an Arg.</div>
 </dd>
 <dt><a href="org/apache/rat/help/AbstractHelp.html#DEPRECATED_MSG" class="member-name-link">DEPRECATED_MSG</a> - Static variable in class org.apache.rat.help.<a href="org/apache/rat/help/AbstractHelp.html" title="class in org.apache.rat.help">AbstractHelp</a></dt>
 <dd>
@@ -1727,7 +1827,9 @@ information.</div>
 <div class="block">Gets the description of the processing type.</div>
 </dd>
 <dt><a href="org/apache/rat/OptionCollection.ArgumentType.html#description()" class="member-name-link">description()</a> - Method in enum class org.apache.rat.<a href="org/apache/rat/OptionCollection.ArgumentType.html" title="enum class in org.apache.rat">OptionCollection.ArgumentType</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the description.</div>
+</dd>
 <dt><a href="org/apache/rat/config/parameters/Description.html" class="type-name-link" title="class in org.apache.rat.config.parameters">Description</a> - Class in <a href="org/apache/rat/config/parameters/package-summary.html">org.apache.rat.config.parameters</a></dt>
 <dd>
 <div class="block">A description of a component.</div>
@@ -1775,6 +1877,10 @@ information.</div>
 <dt><a href="org/apache/rat/document/DocumentName.FSInfo.html#dirSeparator()" class="member-name-link">dirSeparator()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.FSInfo.html" title="class in org.apache.rat.document">DocumentName.FSInfo</a></dt>
 <dd>
 <div class="block">Gets the directory separator.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroup.html#disableOption(org.apache.commons.cli.Option)" class="member-name-link">disableOption(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroup.html" title="class in org.apache.rat.ui">UpdatableOptionGroup</a></dt>
+<dd>
+<div class="block">Disable an option in the group.</div>
 </dd>
 <dt><a href="org/apache/rat/report/claim/ClaimStatistic.Counter.html#displayName()" class="member-name-link">displayName()</a> - Method in enum class org.apache.rat.report.claim.<a href="org/apache/rat/report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a></dt>
 <dd>
@@ -1897,11 +2003,11 @@ information.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#EDIT_ADD" class="member-name-link">EDIT_ADD</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Defines options to add licenses to files</div>
+<div class="block">Defines options to add licenses to files.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#EDIT_COPYRIGHT" class="member-name-link">EDIT_COPYRIGHT</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Defines options to add copyright to files</div>
+<div class="block">Defines options to add copyright to files.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#EDIT_OVERWRITE" class="member-name-link">EDIT_OVERWRITE</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
@@ -1975,7 +2081,7 @@ information.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#EXCLUDE" class="member-name-link">EXCLUDE</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Excludes files by expression</div>
+<div class="block">Excludes files by expression.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#EXCLUDE_FILE" class="member-name-link">EXCLUDE_FILE</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
@@ -2061,6 +2167,14 @@ standalone Mojo.</div>
 <dd>
 <div class="block">An extension</div>
 </dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#extractKey(org.apache.commons.cli.Option)" class="member-name-link">extractKey(Option)</a> - Static method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Extract the core name from the option.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#extractName(org.apache.commons.cli.Option)" class="member-name-link">extractName(Option)</a> - Static method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Generates the CasedString for the specified option.</div>
+</dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/SelectorUtils.html#extractPattern(java.lang.String,java.lang.String)" class="member-name-link">extractPattern(String, String)</a> - Static method in class org.apache.rat.config.exclusion.plexus.<a href="org/apache/rat/config/exclusion/plexus/SelectorUtils.html" title="class in org.apache.rat.config.exclusion.plexus">SelectorUtils</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -2078,11 +2192,11 @@ standalone Mojo.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#FAMILIES_APPROVED" class="member-name-link">FAMILIES_APPROVED</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Option that specifies approved license families</div>
+<div class="block">Option that specifies approved license families.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#FAMILIES_APPROVED_FILE" class="member-name-link">FAMILIES_APPROVED_FILE</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Option that specifies approved license families from a file</div>
+<div class="block">Option that specifies approved license families from a file.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#FAMILIES_DENIED" class="member-name-link">FAMILIES_DENIED</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
@@ -2191,6 +2305,8 @@ internally.</div>
 <dd>
 <div class="block">Gets a filtered collection of the child descriptions.</div>
 </dd>
+<dt><a href="org/apache/rat/analysis/matchers/SimpleTextMatcher.html#finalize()" class="member-name-link">finalize()</a> - Method in class org.apache.rat.analysis.matchers.<a href="org/apache/rat/analysis/matchers/SimpleTextMatcher.html" title="class in org.apache.rat.analysis.matchers">SimpleTextMatcher</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#find(java.lang.String)" class="member-name-link">find(String)</a> - Method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
 <div class="block">Finds the element associated with the key within the element group.</div>
@@ -2199,9 +2315,9 @@ internally.</div>
 <dd>
 <div class="block">Finds the Arg that contains an Option with the specified key.</div>
 </dd>
-<dt><a href="org/apache/rat/commandline/Arg.html#findArg(org.apache.commons.cli.Option)" class="member-name-link">findArg(Option)</a> - Static method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html#findGroups(org.apache.commons.cli.Option)" class="member-name-link">findGroups(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html" title="class in org.apache.rat.ui">UpdatableOptionGroupCollection</a></dt>
 <dd>
-<div class="block">Finds the Arg that an Option is in.</div>
+<div class="block">Gets ll the UpdatableOptionGroups that the option is in.</div>
 </dd>
 <dt><a href="org/apache/rat/tools/xsd/XsdWriter.html#finish()" class="member-name-link">finish()</a> - Method in class org.apache.rat.tools.xsd.<a href="org/apache/rat/tools/xsd/XsdWriter.html" title="class in org.apache.rat.tools.xsd">XsdWriter</a></dt>
 <dd>
@@ -2217,6 +2333,10 @@ Iterator over the next level values.</div>
 <dt><a href="org/apache/rat/config/AddLicenseHeaders.html#FORCED" class="member-name-link">FORCED</a> - Enum constant in enum class org.apache.rat.config.<a href="org/apache/rat/config/AddLicenseHeaders.html" title="enum class in org.apache.rat.config">AddLicenseHeaders</a></dt>
 <dd>
 <div class="block">Add headers and overwrite the existing file.</div>
+</dd>
+<dt><a href="org/apache/rat/OptionCollection.ArgumentType.html#forDisplayName(java.lang.String)" class="member-name-link">forDisplayName(String)</a> - Static method in enum class org.apache.rat.<a href="org/apache/rat/OptionCollection.ArgumentType.html" title="enum class in org.apache.rat">OptionCollection.ArgumentType</a></dt>
+<dd>
+<div class="block">Get the matching Argument type.</div>
 </dd>
 <dt><a href="org/apache/rat/utils/ReportingSet.html#forEach(java.util.function.Consumer)" class="member-name-link">forEach(Consumer)</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
@@ -2312,9 +2432,10 @@ maven-site-plugin.</div>
 <div class="block">If this option is converted to another option return that option otherwise
 return this option.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#getAntOptions()" class="member-name-link">getAntOptions()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.html#getActualAntOption(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getActualAntOption(AntOption)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.html" title="class in org.apache.rat.documentation.options">AntOptionCollection</a></dt>
 <dd>
-<div class="block">Gets the list of all available Ant options.</div>
+<div class="block">If this option is converted to another option return that option otherwise
+return this option.</div>
 </dd>
 <dt><a href="org/apache/rat/license/LicenseSetFactory.html#getApprovedLicensePredicate()" class="member-name-link">getApprovedLicensePredicate()</a> - Method in class org.apache.rat.license.<a href="org/apache/rat/license/LicenseSetFactory.html" title="class in org.apache.rat.license">LicenseSetFactory</a></dt>
 <dd>
@@ -2332,11 +2453,15 @@ return this option.</div>
 <dd>
 <div class="block">Get the list of values for a key.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getArgName()" class="member-name-link">getArgName()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#getArg(java.lang.String)" class="member-name-link">getArg(String)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Get the list of values for a key.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#getArgName()" class="member-name-link">getArgName()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Gets the argument name if there is one.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getArgType()" class="member-name-link">getArgType()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#getArgType()" class="member-name-link">getArgType()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Gets the argument type if there is one.</div>
 </dd>
@@ -2346,7 +2471,7 @@ return this option.</div>
 <div class="deprecation-comment">use <a href="org/apache/rat/OptionCollection.ArgumentType.html" title="enum class in org.apache.rat"><code>OptionCollection.ArgumentType</code></a></div>
 </div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#getAttributeFunctionName()" class="member-name-link">getAttributeFunctionName()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dt><a href="org/apache/rat/tools/AntGenerator.html#getAttributeFunctionName(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getAttributeFunctionName(AntOption)</a> - Static method in class org.apache.rat.tools.<a href="org/apache/rat/tools/AntGenerator.html" title="class in org.apache.rat.tools">AntGenerator</a></dt>
 <dd>
 <div class="block">Get the signature of the attribute function.</div>
 </dd>
@@ -2370,6 +2495,10 @@ return this option.</div>
 </dd>
 <dt><a href="org/apache/rat/config/parameters/DescriptionBuilder.html#getBuiltClass(java.lang.Class)" class="member-name-link">getBuiltClass(Class)</a> - Static method in class org.apache.rat.config.parameters.<a href="org/apache/rat/config/parameters/DescriptionBuilder.html" title="class in org.apache.rat.config.parameters">DescriptionBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#getCasedName()" class="member-name-link">getCasedName()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">Gets the CasedString version of the name for the native UI.</div>
+</dd>
 <dt><a href="org/apache/rat/license/ILicenseFamily.Builder.html#getCategory()" class="member-name-link">getCategory()</a> - Method in class org.apache.rat.license.<a href="org/apache/rat/license/ILicenseFamily.Builder.html" title="class in org.apache.rat.license">ILicenseFamily.Builder</a></dt>
 <dd>
 <div class="block">Gets the category that this builder is building.</div>
@@ -2417,10 +2546,6 @@ return this option.</div>
 <dd>
 <div class="block">Gets the command line.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#getComment(boolean)" class="member-name-link">getComment(boolean)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
-<dd>
-<div class="block">Get the method comment for this option.</div>
-</dd>
 <dt><a href="org/apache/rat/config/parameters/Description.html#getCommonName()" class="member-name-link">getCommonName()</a> - Method in class org.apache.rat.config.parameters.<a href="org/apache/rat/config/parameters/Description.html" title="class in org.apache.rat.config.parameters">Description</a></dt>
 <dd>
 <div class="block">Gets the common name for the matcher.</div>
@@ -2467,13 +2592,11 @@ return this option.</div>
 </dd>
 <dt><a href="org/apache/rat/mp/AbstractRatMojo.html#getDefaultsBuilder()" class="member-name-link">getDefaultsBuilder()</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/AbstractRatMojo.html" title="class in org.apache.rat.mp">AbstractRatMojo</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getDefaultValue()" class="member-name-link">getDefaultValue()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#getDefaultValue()" class="member-name-link">getDefaultValue()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Return default value.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/MavenOption.html#getDefaultValue()" class="member-name-link">getDefaultValue()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getDeprecated()" class="member-name-link">getDeprecated()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#getDeprecated()" class="member-name-link">getDeprecated()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Gets the deprecated string if the option is deprecated, or an empty string otherwise.</div>
 </dd>
@@ -2491,10 +2614,6 @@ return this option.</div>
 <dd>
 <div class="block">Gets the description of descriptive text for the component.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getDescription()" class="member-name-link">getDescription()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
-<dd>
-<div class="block">Gets the description in implementation specific format.</div>
-</dd>
 <dt><a href="org/apache/rat/documentation/velocity/Matcher.Attribute.html#getDescription()" class="member-name-link">getDescription()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/Matcher.Attribute.html" title="class in org.apache.rat.documentation.velocity">Matcher.Attribute</a></dt>
 <dd>
 <div class="block">Gets the description of the attribute or an empty string.</div>
@@ -2507,6 +2626,10 @@ return this option.</div>
 <dd>
 <div class="block">Gets the description of the counter.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#getDescription()" class="member-name-link">getDescription()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">Gets the description in implementation specific format.</div>
+</dd>
 <dt><a href="org/apache/rat/mp/RatReportMojo.html#getDescription(java.util.Locale)" class="member-name-link">getDescription(Locale)</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/RatReportMojo.html" title="class in org.apache.rat.mp">RatReportMojo</a></dt>
 <dd>
 <div class="block">Returns the reports description.</div>
@@ -2515,8 +2638,14 @@ return this option.</div>
 <dd>
 <div class="block">Returns the directory separator.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroup.html#getDisableOptions()" class="member-name-link">getDisableOptions()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroup.html" title="class in org.apache.rat.ui">UpdatableOptionGroup</a></dt>
+<dd>
+<div class="block">Gets the disabled options for this group.</div>
+</dd>
 <dt><a href="org/apache/rat/OptionCollection.ArgumentType.html#getDisplayName()" class="member-name-link">getDisplayName()</a> - Method in enum class org.apache.rat.<a href="org/apache/rat/OptionCollection.ArgumentType.html" title="enum class in org.apache.rat">OptionCollection.ArgumentType</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Gets the display name.</div>
+</dd>
 <dt><a href="org/apache/rat/Reporter.html#getDocument()" class="member-name-link">getDocument()</a> - Method in class org.apache.rat.<a href="org/apache/rat/Reporter.html" title="class in org.apache.rat">Reporter</a></dt>
 <dd>
 <div class="block">Gets the document that was generated during execution.</div>
@@ -2567,16 +2696,20 @@ return this option.</div>
 <dd>
 <div class="block">Gets the end date of the copyright.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getExample()" class="member-name-link">getExample()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
-<dd>
-<div class="block">Gets an example of how to use this option in the native UI.</div>
-</dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#getExample()" class="member-name-link">getExample()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dt><a href="org/apache/rat/CLIOption.html#getExample()" class="member-name-link">getExample()</a> - Method in class org.apache.rat.<a href="org/apache/rat/CLIOption.html" title="class in org.apache.rat">CLIOption</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/CLIOption.html#getExample()" class="member-name-link">getExample()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/CLIOption.html" title="class in org.apache.rat.documentation.options">CLIOption</a></dt>
+<dt><a href="org/apache/rat/documentation/options/AntOption.html#getExample()" class="member-name-link">getExample()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/options/MavenOption.html#getExample()" class="member-name-link">getExample()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#getExample()" class="member-name-link">getExample()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">Gets an example of how to use this option in the native UI.</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/MavenOption.html#getExample(java.lang.String...)" class="member-name-link">getExample(String...)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
+<dd>
+<div class="block">Create example text for the option.</div>
+</dd>
 <dt><a href="org/apache/rat/documentation/options/AntOption.ExampleGenerator.html#getExample(java.lang.String,java.util.Map,java.util.List)" class="member-name-link">getExample(String, Map, List)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.ExampleGenerator.html" title="class in org.apache.rat.documentation.options">AntOption.ExampleGenerator</a></dt>
 <dd>
 <div class="block">Gets an example Ant XML report call using ant option with the specified attributes and child elements.</div>
@@ -2614,15 +2747,6 @@ return this option.</div>
 <dt><a href="org/apache/rat/document/FileDocument.html#getFile()" class="member-name-link">getFile()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/FileDocument.html" title="class in org.apache.rat.document">FileDocument</a></dt>
 <dd>
 <div class="block">Gets the file underlying this document.</div>
-</dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#getFilteredOptions()" class="member-name-link">getFilteredOptions()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
-<dd>
-<div class="block">Gets the set of options that are not supported by Ant either by not being supported or
-by being converted to another argument.</div>
-</dd>
-<dt><a href="org/apache/rat/documentation/options/MavenOption.html#getFilteredOptions()" class="member-name-link">getFilteredOptions()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
-<dd>
-<div class="block">Gets the set of options that are not supported by Maven.</div>
 </dd>
 <dt><a href="org/apache/rat/annotation/AbstractLicenseAppender.html#getFirstLine(int)" class="member-name-link">getFirstLine(int)</a> - Method in class org.apache.rat.annotation.<a href="org/apache/rat/annotation/AbstractLicenseAppender.html" title="class in org.apache.rat.annotation">AbstractLicenseAppender</a></dt>
 <dd>
@@ -2800,6 +2924,14 @@ for the given type of file.</div>
 <dd>
 <div class="block">Creates the consumer that will log usage of deprecated operations to the default log.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#getMappedOption(org.apache.commons.cli.Option)" class="member-name-link">getMappedOption(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
+<dd>
+<div class="block">Gets the UiOption instance for the Option.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#getMappedOptions()" class="member-name-link">getMappedOptions()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
+<dd>
+<div class="block">Gets the Stream of AbstractOption implementations understood by this collection.</div>
+</dd>
 <dt><a href="org/apache/rat/analysis/UnknownLicense.html#getMatcher()" class="member-name-link">getMatcher()</a> - Method in class org.apache.rat.analysis.<a href="org/apache/rat/analysis/UnknownLicense.html" title="class in org.apache.rat.analysis">UnknownLicense</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/velocity/License.html#getMatcher()" class="member-name-link">getMatcher()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/License.html" title="class in org.apache.rat.documentation.velocity">License</a></dt>
@@ -2820,8 +2952,6 @@ for the given type of file.</div>
 <dd>
 <div class="block">Gets the matcher tree associated with this license.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/MavenOption.html#getMavenOptions()" class="member-name-link">getMavenOptions()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/config/results/ClaimValidator.html#getMax(org.apache.rat.report.claim.ClaimStatistic.Counter)" class="member-name-link">getMax(ClaimStatistic.Counter)</a> - Method in class org.apache.rat.config.results.<a href="org/apache/rat/config/results/ClaimValidator.html" title="class in org.apache.rat.config.results">ClaimValidator</a></dt>
 <dd>
 <div class="block">Gets the limit for the specific counter.</div>
@@ -2834,8 +2964,16 @@ for the given type of file.</div>
 <dd>
 <div class="block">Gets data describing this resource.</div>
 </dd>
-<dt><a href="org/apache/rat/tools/AntGenerator.GenerateType.html#getMethodFormat(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getMethodFormat(AntOption)</a> - Method in class org.apache.rat.tools.<a href="org/apache/rat/tools/AntGenerator.GenerateType.html" title="class in org.apache.rat.tools">AntGenerator.GenerateType</a></dt>
+<dt><a href="org/apache/rat/tools/AntGenerator.GenerateType.html#getMethod(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getMethod(AntOption)</a> - Method in class org.apache.rat.tools.<a href="org/apache/rat/tools/AntGenerator.GenerateType.html" title="class in org.apache.rat.tools">AntGenerator.GenerateType</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html#getMethodFormat(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getMethodFormat(AntOption)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html" title="class in org.apache.rat.documentation.options">AntOptionCollection.BuildType</a></dt>
+<dd>
+<div class="block">Gets the method based on how many arguments an Ant option requires.</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/MavenOption.html#getMethodName()" class="member-name-link">getMethodName()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
+<dd>
+<div class="block">Gets the method name for this option.</div>
+</dd>
 <dt><a href="org/apache/rat/documentation/options/MavenOption.html#getMethodSignature(java.lang.String,boolean)" class="member-name-link">getMethodSignature(String, boolean)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/config/results/ClaimValidator.html#getMin(org.apache.rat.report.claim.ClaimStatistic.Counter)" class="member-name-link">getMin(ClaimStatistic.Counter)</a> - Method in class org.apache.rat.config.results.<a href="org/apache/rat/config/results/ClaimValidator.html" title="class in org.apache.rat.config.results">ClaimValidator</a></dt>
@@ -2856,10 +2994,6 @@ for the given type of file.</div>
 <dd>
 <div class="block">Gets the fully qualified name of the document.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getName()" class="member-name-link">getName()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
-<dd>
-<div class="block">Gets the implementation specific name for the CLI option.</div>
-</dd>
 <dt><a href="org/apache/rat/documentation/velocity/Matcher.Attribute.html#getName()" class="member-name-link">getName()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/Matcher.Attribute.html" title="class in org.apache.rat.documentation.velocity">Matcher.Attribute</a></dt>
 <dd>
 <div class="block">Gets the attribute name.</div>
@@ -2877,6 +3011,10 @@ for the given type of file.</div>
 <dt><a href="org/apache/rat/report/IReportable.html#getName()" class="member-name-link">getName()</a> - Method in interface org.apache.rat.report.<a href="org/apache/rat/report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a></dt>
 <dd>
 <div class="block">Returns the DocumentName for the reportable.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#getName()" class="member-name-link">getName()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">Gets the implementation specific name for the native UI.</div>
 </dd>
 <dt><a href="org/apache/rat/walker/FileListWalker.html#getName()" class="member-name-link">getName()</a> - Method in class org.apache.rat.walker.<a href="org/apache/rat/walker/FileListWalker.html" title="class in org.apache.rat.walker">FileListWalker</a></dt>
 <dd>&nbsp;</dd>
@@ -2913,16 +3051,34 @@ document that is excluded.</div>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getOption()" class="member-name-link">getOption()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#getOption()" class="member-name-link">getOption()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Gets the option this abstract option is wrapping.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/UI.html#getOptionCollection()" class="member-name-link">getOptionCollection()</a> - Method in interface org.apache.rat.ui.<a href="org/apache/rat/ui/UI.html" title="interface in org.apache.rat.ui">UI</a></dt>
+<dd>
+<div class="block">Gets the OptionFactory configuration for this UI.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#getOptionCollection()" class="member-name-link">getOptionCollection()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">Gets the AbstractOptionCollection that this option is a member of.</div>
+</dd>
 <dt><a href="org/apache/rat/anttasks/Help.AntHelpFormatter.html#getOptionComparator()" class="member-name-link">getOptionComparator()</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Help.AntHelpFormatter.html" title="class in org.apache.rat.anttasks">Help.AntHelpFormatter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#getOptionMap()" class="member-name-link">getOptionMap()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
+<dd>
+<div class="block">Gets a map client option name to specified AbstractOption implementation.</div>
+</dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#getOptions()" class="member-name-link">getOptions()</a> - Static method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
 <div class="block">Gets the full set of options.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#getOptions()" class="member-name-link">getOptions()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
+<dd>
+<div class="block">Gets an Options that contains the RAT Arg defined Option instances that are understood by this collection.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroup.html#getOptions()" class="member-name-link">getOptions()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroup.html" title="class in org.apache.rat.ui">UpdatableOptionGroup</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#getOutput()" class="member-name-link">getOutput()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Returns the output stream supplier.</div>
@@ -2967,10 +3123,15 @@ document that is excluded.</div>
 <dd>
 <div class="block">Gets the matcher ID that this proxy references.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#getRenameMap()" class="member-name-link">getRenameMap()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.html#getRenameMap()" class="member-name-link">getRenameMap()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.html" title="class in org.apache.rat.documentation.options">AntOptionCollection</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/MavenOption.html#getRenameMap()" class="member-name-link">getRenameMap()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
+<dt><a href="org/apache/rat/documentation/options/MavenOptionCollection.html#getRenameMap()" class="member-name-link">getRenameMap()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOptionCollection.html" title="class in org.apache.rat.documentation.options">MavenOptionCollection</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/OptionCollection.html#getReportable(java.io.File,org.apache.rat.ReportConfiguration)" class="member-name-link">getReportable(File, ReportConfiguration)</a> - Static method in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
+<dd>
+<div class="block">Creates an IReportable object from the directory name and ReportConfiguration
+object.</div>
+</dd>
 <dt><a href="org/apache/rat/mp/RatReportMojo.html#getReportOutputDirectory()" class="member-name-link">getReportOutputDirectory()</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/RatReportMojo.html" title="class in org.apache.rat.mp">RatReportMojo</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/velocity/Matcher.Attribute.html#getRequired()" class="member-name-link">getRequired()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/Matcher.Attribute.html" title="class in org.apache.rat.documentation.velocity">Matcher.Attribute</a></dt>
@@ -2981,6 +3142,8 @@ document that is excluded.</div>
 <dd>
 <div class="block">Gets the required flag.</div>
 </dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.html#getRequiredAttributes(java.lang.String)" class="member-name-link">getRequiredAttributes(String)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.html" title="class in org.apache.rat.documentation.options">AntOptionCollection</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/analysis/matchers/AbstractMatcherContainer.html#getResource()" class="member-name-link">getResource()</a> - Method in class org.apache.rat.analysis.matchers.<a href="org/apache/rat/analysis/matchers/AbstractMatcherContainer.html" title="class in org.apache.rat.analysis.matchers">AbstractMatcherContainer</a></dt>
 <dd>
 <div class="block">Get the resource that was provided in the constructor.</div>
@@ -3001,9 +3164,9 @@ document that is excluded.</div>
 <dd>
 <div class="block">Parses a String into segments.</div>
 </dd>
-<dt><a href="org/apache/rat/commandline/Arg.html#getSelected()" class="member-name-link">getSelected()</a> - Method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#getSelected(org.apache.rat.commandline.Arg)" class="member-name-link">getSelected(Arg)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
 <dd>
-<div class="block">Gets the select element from the group.</div>
+<div class="block">Gets the selected Option for the arg.</div>
 </dd>
 <dt><a href="org/apache/rat/document/DocumentName.html#getShortName()" class="member-name-link">getShortName()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></dt>
 <dd>
@@ -3061,16 +3224,16 @@ document that is excluded.</div>
 <dd>
 <div class="block">Returns the getter for the component in the specified class.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getText()" class="member-name-link">getText()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
-<dd>
-<div class="block">return a string showing long and short options if they are available.</div>
-</dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#getText()" class="member-name-link">getText()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dt><a href="org/apache/rat/CLIOption.html#getText()" class="member-name-link">getText()</a> - Method in class org.apache.rat.<a href="org/apache/rat/CLIOption.html" title="class in org.apache.rat">CLIOption</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/CLIOption.html#getText()" class="member-name-link">getText()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/CLIOption.html" title="class in org.apache.rat.documentation.options">CLIOption</a></dt>
+<dt><a href="org/apache/rat/documentation/options/AntOption.html#getText()" class="member-name-link">getText()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/options/MavenOption.html#getText()" class="member-name-link">getText()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#getText()" class="member-name-link">getText()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">return a string showing long and short options if they are available.</div>
+</dd>
 <dt><a href="org/apache/rat/VersionInfo.html#getTitle()" class="member-name-link">getTitle()</a> - Method in class org.apache.rat.<a href="org/apache/rat/VersionInfo.html" title="class in org.apache.rat">VersionInfo</a></dt>
 <dd>
 <div class="block">Gets the implementation title of the package.</div>
@@ -3083,10 +3246,6 @@ document that is excluded.</div>
 <dd>
 <div class="block">Gets the type of the component.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#getType()" class="member-name-link">getType()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
-<dd>
-<div class="block">Gets the simple class name for the data type for this option.</div>
-</dd>
 <dt><a href="org/apache/rat/documentation/velocity/Matcher.Attribute.html#getType()" class="member-name-link">getType()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/Matcher.Attribute.html" title="class in org.apache.rat.documentation.velocity">Matcher.Attribute</a></dt>
 <dd>
 <div class="block">Get the type of the attribute.</div>
@@ -3095,13 +3254,17 @@ document that is excluded.</div>
 <dd>
 <div class="block">Get the type of the enclosed matcher.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#getType()" class="member-name-link">getType()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">Gets the simple class name for the data type for this option.</div>
+</dd>
 <dt><a href="org/apache/rat/annotation/AbstractLicenseAppender.html#getType(java.io.File)" class="member-name-link">getType(File)</a> - Method in class org.apache.rat.annotation.<a href="org/apache/rat/annotation/AbstractLicenseAppender.html" title="class in org.apache.rat.annotation">AbstractLicenseAppender</a></dt>
 <dd>
 <div class="block">Detect the type of document.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AntOption.html#getUnsupportedOptions()" class="member-name-link">getUnsupportedOptions()</a> - Static method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#getUnsupportedOptions()" class="member-name-link">getUnsupportedOptions()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
 <dd>
-<div class="block">Gets the list of unsupported options.</div>
+<div class="block">Gets the collection of unsupported Options.</div>
 </dd>
 <dt><a href="org/apache/rat/api/EnvVar.html#getValue()" class="member-name-link">getValue()</a> - Method in enum class org.apache.rat.api.<a href="org/apache/rat/api/EnvVar.html" title="enum class in org.apache.rat.api">EnvVar</a></dt>
 <dd>
@@ -3146,6 +3309,12 @@ document that is excluded.</div>
 <dt><a href="org/apache/rat/ReportConfiguration.html#getWriter()" class="member-name-link">getWriter()</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
 <dd>
 <div class="block">Gets a PrintWriter that wraps the output stream.</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html#getXml(org.apache.rat.documentation.options.AntOption,java.lang.String)" class="member-name-link">getXml(AntOption, String)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html" title="class in org.apache.rat.documentation.options">AntOptionCollection.BuildType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html#getXml(org.apache.rat.documentation.options.AntOption,org.apache.rat.documentation.options.AntOption,java.lang.String)" class="member-name-link">getXml(AntOption, AntOption, String)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html" title="class in org.apache.rat.documentation.options">AntOptionCollection.BuildType</a></dt>
+<dd>
+<div class="block">Gets a string comprising the Ant XML pattern for this data type and the number of arguments expected by the Ant option.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/StandardCollection.html#GIT" class="member-name-link">GIT</a> - Enum constant in enum class org.apache.rat.config.exclusion.<a href="org/apache/rat/config/exclusion/StandardCollection.html" title="enum class in org.apache.rat.config.exclusion">StandardCollection</a></dt>
 <dd>
@@ -3198,11 +3367,11 @@ The default implementation does nothing.</div>
 </dd>
 <dt><a href="org/apache/rat/report/claim/ClaimAggregator.html#handleLicenseClaim(org.apache.rat.license.ILicense)" class="member-name-link">handleLicenseClaim(ILicense)</a> - Method in class org.apache.rat.report.claim.<a href="org/apache/rat/report/claim/ClaimAggregator.html" title="class in org.apache.rat.report.claim">ClaimAggregator</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#hasArg()" class="member-name-link">hasArg()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#hasArg()" class="member-name-link">hasArg()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Determine if the enclosed option expects an argument.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#hasArgs()" class="member-name-link">hasArgs()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#hasArgs()" class="member-name-link">hasArgs()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Returns <code>true</code> if the option has multiple arguments.</div>
 </dd>
@@ -3516,7 +3685,7 @@ Call <code>mvn apache-rat:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to 
 </dd>
 <dt><a href="org/apache/rat/tools/AntGenerator.GenerateType.html#innerClass" class="member-name-link">innerClass</a> - Variable in class org.apache.rat.tools.<a href="org/apache/rat/tools/AntGenerator.GenerateType.html" title="class in org.apache.rat.tools">AntGenerator.GenerateType</a></dt>
 <dd>
-<div class="block">the inner class name text</div>
+<div class="block">The inner class name text.</div>
 </dd>
 <dt><a href="org/apache/rat/api/Document.html#inputStream()" class="member-name-link">inputStream()</a> - Method in class org.apache.rat.api.<a href="org/apache/rat/api/Document.html" title="class in org.apache.rat.api">Document</a></dt>
 <dd>
@@ -3539,6 +3708,18 @@ Call <code>mvn apache-rat:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to 
 <dt><a href="org/apache/rat/analysis/UnknownLicense.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in class org.apache.rat.analysis.<a href="org/apache/rat/analysis/UnknownLicense.html" title="class in org.apache.rat.analysis">UnknownLicense</a></dt>
 <dd>
 <div class="block">The single instance of this class.</div>
+</dd>
+<dt><a href="org/apache/rat/CLIOptionCollection.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in class org.apache.rat.<a href="org/apache/rat/CLIOptionCollection.html" title="class in org.apache.rat">CLIOptionCollection</a></dt>
+<dd>
+<div class="block">The instance of the collection</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.html" title="class in org.apache.rat.documentation.options">AntOptionCollection</a></dt>
+<dd>
+<div class="block">The instance of the AntOptionCollection</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/MavenOptionCollection.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOptionCollection.html" title="class in org.apache.rat.documentation.options">MavenOptionCollection</a></dt>
+<dd>
+<div class="block">The instance of the MavenOptionCollection.</div>
 </dd>
 <dt><a href="org/apache/rat/OptionCollection.ArgumentType.html#INTEGER" class="member-name-link">INTEGER</a> - Enum constant in enum class org.apache.rat.<a href="org/apache/rat/OptionCollection.ArgumentType.html" title="enum class in org.apache.rat">OptionCollection.ArgumentType</a></dt>
 <dd>
@@ -3588,6 +3769,8 @@ Call <code>mvn apache-rat:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to 
 <dd>
 <div class="block">Returns <code>true</code> if the option should be an attribute of the &lt;rat:report&gt; element.</div>
 </dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.html#isAttribute(org.apache.rat.documentation.options.AntOption)" class="member-name-link">isAttribute(AntOption)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.html" title="class in org.apache.rat.documentation.options">AntOptionCollection</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/document/DocumentName.FSInfo.html#isCaseSensitive()" class="member-name-link">isCaseSensitive()</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.FSInfo.html" title="class in org.apache.rat.document">DocumentName.FSInfo</a></dt>
 <dd>
 <div class="block">Gets the case-sensitivity flag.</div>
@@ -3606,7 +3789,7 @@ Call <code>mvn apache-rat:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to 
 <dd>
 <div class="block">Returns true if the specified character can be considered content.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#isDeprecated()" class="member-name-link">isDeprecated()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#isDeprecated()" class="member-name-link">isDeprecated()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Determines if the option is deprecated.</div>
 </dd>
@@ -3632,6 +3815,12 @@ Call <code>mvn apache-rat:help -Ddetail=true -Dgoal=&lt;goal-name&gt;</code> to 
 <dd>
 <div class="block">Returns <code>true</code> if the option should be a child element of the &lt;rat:report&gt; element.</div>
 </dd>
+<dt><a href="org/apache/rat/commandline/Arg.html#isEmpty()" class="member-name-link">isEmpty()</a> - Method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
+<dd>
+<div class="block">Determines if all the options have been removed from this argument.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroup.html#isEmpty()" class="member-name-link">isEmpty()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroup.html" title="class in org.apache.rat.ui">UpdatableOptionGroup</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/utils/ReportingSet.html#isEmpty()" class="member-name-link">isEmpty()</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/utils/Log.html#isEnabled(org.apache.rat.utils.Log.Level)" class="member-name-link">isEnabled(Log.Level)</a> - Method in interface org.apache.rat.utils.<a href="org/apache/rat/utils/Log.html" title="interface in org.apache.rat.utils">Log</a></dt>
@@ -3726,13 +3915,13 @@ specification.</div>
 <dd>
 <div class="block">Get the canBeChild flag.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#isRequired()" class="member-name-link">isRequired()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#isRequired()" class="member-name-link">isRequired()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">Determines if the option is required.</div>
 </dd>
-<dt><a href="org/apache/rat/commandline/Arg.html#isSelected()" class="member-name-link">isSelected()</a> - Method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#isSelected(org.apache.rat.commandline.Arg)" class="member-name-link">isSelected(Arg)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
 <dd>
-<div class="block">Determines if the group has a selected element.</div>
+<div class="block">Checks if an Arg is selected.</div>
 </dd>
 <dt><a href="org/apache/rat/api/EnvVar.html#isSet()" class="member-name-link">isSet()</a> - Method in enum class org.apache.rat.api.<a href="org/apache/rat/api/EnvVar.html" title="enum class in org.apache.rat.api">EnvVar</a></dt>
 <dd>
@@ -3791,7 +3980,7 @@ in the XML 1.0 Recommendation</div>
 <dd>
 <div class="block">The Kebab case.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#keyValue()" class="member-name-link">keyValue()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#keyValue()" class="member-name-link">keyValue()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">The key value for the option.</div>
 </dd>
@@ -3930,15 +4119,15 @@ in the XML 1.0 Recommendation</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#LICENSES_APPROVED" class="member-name-link">LICENSES_APPROVED</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Option that adds approved licenses to the list</div>
+<div class="block">Option that adds approved licenses to the list.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#LICENSES_APPROVED_FILE" class="member-name-link">LICENSES_APPROVED_FILE</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Option that adds approved licenses from a file</div>
+<div class="block">Option that adds approved licenses from a file.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#LICENSES_DENIED" class="member-name-link">LICENSES_DENIED</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
-<div class="block">Option to remove licenses from the approved list</div>
+<div class="block">Option to remove licenses from the approved list.</div>
 </dd>
 <dt><a href="org/apache/rat/commandline/Arg.html#LICENSES_DENIED_FILE" class="member-name-link">LICENSES_DENIED_FILE</a> - Enum constant in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
@@ -4136,7 +4325,7 @@ report.</div>
 </dd>
 <dt><a href="org/apache/rat/tools/AntDocumentation.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.apache.rat.tools.<a href="org/apache/rat/tools/AntDocumentation.html" title="class in org.apache.rat.tools">AntDocumentation</a></dt>
 <dd>
-<div class="block">Creates apt documentation files for Ant.</div>
+<div class="block">Creates APT documentation files for Ant.</div>
 </dd>
 <dt><a href="org/apache/rat/tools/AntGenerator.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.apache.rat.tools.<a href="org/apache/rat/tools/AntGenerator.html" title="class in org.apache.rat.tools">AntGenerator</a></dt>
 <dd>
@@ -4188,7 +4377,7 @@ characters either by truncating the string or appending spaces as necessary.</di
 </dd>
 <dt><a href="org/apache/rat/documentation/velocity/RatTool.html#markdownEscape(java.lang.String)" class="member-name-link">markdownEscape(String)</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/RatTool.html" title="class in org.apache.rat.documentation.velocity">RatTool</a></dt>
 <dd>
-<div class="block">Escapes a string for markdown.</div>
+<div class="block">Escapes a string for Markdown.</div>
 </dd>
 <dt><a href="org/apache/rat/analysis/TikaProcessor.html#markSupportedInputStream(java.io.InputStream)" class="member-name-link">markSupportedInputStream(InputStream)</a> - Static method in class org.apache.rat.analysis.<a href="org/apache/rat/analysis/TikaProcessor.html" title="class in org.apache.rat.analysis">TikaProcessor</a></dt>
 <dd>
@@ -4416,11 +4605,16 @@ localised for the fileName.</div>
 </dd>
 <dt><a href="org/apache/rat/documentation/options/MavenOption.html" class="type-name-link" title="class in org.apache.rat.documentation.options">MavenOption</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
 <dd>
-<div class="block">A representation of a CLI option as a Maven option</div>
+<div class="block">A representation of a Maven option based on a CLI option.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/MavenOption.html#%3Cinit%3E(org.apache.commons.cli.Option)" class="member-name-link">MavenOption(Option)</a> - Constructor for class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
+<dt><a href="org/apache/rat/documentation/options/MavenOptionCollection.html" class="type-name-link" title="class in org.apache.rat.documentation.options">MavenOptionCollection</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
 <dd>
-<div class="block">Constructor.</div>
+<div class="block">The collection of MavenOptions equivalent to the CLI options
+with any unsupported options removed.</div>
+</dd>
+<dt><a href="org/apache/rat/documentation/options/MavenOptionCollection.Builder.html" class="type-name-link" title="class in org.apache.rat.documentation.options">MavenOptionCollection.Builder</a> - Class in <a href="org/apache/rat/documentation/options/package-summary.html">org.apache.rat.documentation.options</a></dt>
+<dd>
+<div class="block">The Builder for the MavenOptionCollection.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/XmlElements.Attributes.html#MEDIA_TYPE" class="member-name-link">MEDIA_TYPE</a> - Enum constant in enum class org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlElements.Attributes.html" title="enum class in org.apache.rat.report.xml">XmlElements.Attributes</a></dt>
 <dd>
@@ -4479,7 +4673,7 @@ localised for the fileName.</div>
 <dd>
 <div class="block">The fully qualified name of this document</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#name" class="member-name-link">name</a> - Variable in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#name" class="member-name-link">name</a> - Variable in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">The name for the option</div>
 </dd>
@@ -4490,6 +4684,10 @@ localised for the fileName.</div>
 <dt><a href="org/apache/rat/documentation/velocity/License.html#name()" class="member-name-link">name()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/License.html" title="class in org.apache.rat.documentation.velocity">License</a></dt>
 <dd>
 <div class="block">Gets the name of this license.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UI.html#name()" class="member-name-link">name()</a> - Method in interface org.apache.rat.ui.<a href="org/apache/rat/ui/UI.html" title="interface in org.apache.rat.ui">UI</a></dt>
+<dd>
+<div class="block">Gets the common name of this UI.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/XmlElements.Attributes.html#NAME" class="member-name-link">NAME</a> - Enum constant in enum class org.apache.rat.report.xml.<a href="org/apache/rat/report/xml/XmlElements.Attributes.html" title="enum class in org.apache.rat.report.xml">XmlElements.Attributes</a></dt>
 <dd>
@@ -4635,7 +4833,7 @@ state does not allow the requested operation.</div>
 </dd>
 <dt><a href="org/apache/rat/report/xml/writer/OperationNotAllowedException.html#%3Cinit%3E(java.lang.String)" class="member-name-link">OperationNotAllowedException(String)</a> - Constructor for exception class org.apache.rat.report.xml.writer.<a href="org/apache/rat/report/xml/writer/OperationNotAllowedException.html" title="class in org.apache.rat.report.xml.writer">OperationNotAllowedException</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#option" class="member-name-link">option</a> - Variable in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#option" class="member-name-link">option</a> - Variable in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">The actual UI-specific name for the option</div>
 </dd>
@@ -4645,7 +4843,11 @@ state does not allow the requested operation.</div>
 </dd>
 <dt><a href="org/apache/rat/OptionCollection.html#OPTION_COMPARATOR" class="member-name-link">OPTION_COMPARATOR</a> - Static variable in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
 <dd>
-<div class="block">The Option comparator to sort the help</div>
+<div class="block">The Option comparator to sort the help.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#optionCollection" class="member-name-link">optionCollection</a> - Variable in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">The AbstractOptionCollection associated with this AbstractOption</div>
 </dd>
 <dt><a href="org/apache/rat/OptionCollection.html" class="type-name-link" title="class in org.apache.rat">OptionCollection</a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
 <dd>
@@ -4654,9 +4856,19 @@ ReportConfiguration from the options and an array of arguments.</div>
 </dd>
 <dt><a href="org/apache/rat/OptionCollection.ArgumentType.html" class="type-name-link" title="enum class in org.apache.rat">OptionCollection.ArgumentType</a> - Enum Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/OptionCollectionParser.html" class="type-name-link" title="class in org.apache.rat">OptionCollectionParser</a> - Class in <a href="org/apache/rat/package-summary.html">org.apache.rat</a></dt>
+<dd>
+<div class="block">Uses the AbstractOptionCollection to parse the command line options.</div>
+</dd>
+<dt><a href="org/apache/rat/OptionCollectionParser.html#%3Cinit%3E(org.apache.rat.ui.UIOptionCollection)" class="member-name-link">OptionCollectionParser(UIOptionCollection)</a> - Constructor for class org.apache.rat.<a href="org/apache/rat/OptionCollectionParser.html" title="class in org.apache.rat">OptionCollectionParser</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/velocity/RatTool.html#options()" class="member-name-link">options()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/RatTool.html" title="class in org.apache.rat.documentation.velocity">RatTool</a></dt>
 <dd>
 <div class="block">Gets the list of command line options.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html#options()" class="member-name-link">options()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html" title="class in org.apache.rat.ui">UpdatableOptionGroupCollection</a></dt>
+<dd>
+<div class="block">Gets an Options object from this collection.</div>
 </dd>
 <dt><a href="org/apache/rat/document/DocumentNameMatcher.html#or(java.util.Collection)" class="member-name-link">or(Collection)</a> - Static method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></dt>
 <dd>
@@ -4790,6 +5002,14 @@ ReportConfiguration from the options and an array of arguments.</div>
 <dd>
 <div class="block">Contains XSD file generation tools.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/package-summary.html">org.apache.rat.ui</a> - package org.apache.rat.ui</dt>
+<dd>
+<div class="block">Classes that support UI generation and interoperability.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/spi/package-summary.html">org.apache.rat.ui.spi</a> - package org.apache.rat.ui.spi</dt>
+<dd>
+<div class="block">The SPI implementation for the UIs.</div>
+</dd>
 <dt><a href="org/apache/rat/utils/package-summary.html">org.apache.rat.utils</a> - package org.apache.rat.utils</dt>
 <dd>
 <div class="block">Classes with general utility across the project.</div>
@@ -4869,6 +5089,10 @@ ReportConfiguration from the options and an array of arguments.</div>
 <dd>
 <div class="block">For collections defines the enclosed type.</div>
 </dd>
+<dt><a href="org/apache/rat/OptionCollectionParser.html#parseCommands(java.io.File,java.lang.String%5B%5D)" class="member-name-link">parseCommands(File, String[])</a> - Method in class org.apache.rat.<a href="org/apache/rat/OptionCollectionParser.html" title="class in org.apache.rat">OptionCollectionParser</a></dt>
+<dd>
+<div class="block">Parses the standard options to create a ReportConfiguration.</div>
+</dd>
 <dt><a href="org/apache/rat/OptionCollection.html#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer)" class="member-name-link">parseCommands(File, String[], Consumer)</a> - Static method in class org.apache.rat.<a href="org/apache/rat/OptionCollection.html" title="class in org.apache.rat">OptionCollection</a></dt>
 <dd>
 <div class="block">Parses the standard options to create a ReportConfiguration.</div>
@@ -4881,7 +5105,7 @@ ReportConfiguration from the options and an array of arguments.</div>
 <dd>
 <div class="block">The pascal case.</div>
 </dd>
-<dt><a href="org/apache/rat/documentation/options/AbstractOption.html#PATTERN" class="member-name-link">PATTERN</a> - Static variable in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AbstractOption.html" title="class in org.apache.rat.documentation.options">AbstractOption</a></dt>
+<dt><a href="org/apache/rat/ui/UIOption.html#PATTERN" class="member-name-link">PATTERN</a> - Static variable in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
 <dd>
 <div class="block">The pattern to match CLI options in text</div>
 </dd>
@@ -4942,19 +5166,19 @@ matcherSets.</div>
 <dd>
 <div class="block">Process a directory, ignoring any files/directories set to be ignored.</div>
 </dd>
-<dt><a href="org/apache/rat/commandline/ArgumentContext.html#processArgs()" class="member-name-link">processArgs()</a> - Method in class org.apache.rat.commandline.<a href="org/apache/rat/commandline/ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a></dt>
-<dd>
-<div class="block">Process the arguments specified in this context.</div>
-</dd>
-<dt><a href="org/apache/rat/commandline/Arg.html#processArgs(org.apache.rat.commandline.ArgumentContext)" class="member-name-link">processArgs(ArgumentContext)</a> - Static method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
+<dt><a href="org/apache/rat/commandline/Arg.html#processArgs(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)" class="member-name-link">processArgs(ArgumentContext, UIOptionCollection)</a> - Static method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
 <div class="block">Process the arguments.</div>
+</dd>
+<dt><a href="org/apache/rat/commandline/ArgumentContext.html#processArgs(org.apache.rat.ui.UIOptionCollection)" class="member-name-link">processArgs(UIOptionCollection)</a> - Method in class org.apache.rat.commandline.<a href="org/apache/rat/commandline/ArgumentContext.html" title="class in org.apache.rat.commandline">ArgumentContext</a></dt>
+<dd>
+<div class="block">Process the arguments specified in this context.</div>
 </dd>
 <dt><a href="org/apache/rat/OptionCollection.ArgumentType.html#PROCESSINGTYPE" class="member-name-link">PROCESSINGTYPE</a> - Enum constant in enum class org.apache.rat.<a href="org/apache/rat/OptionCollection.ArgumentType.html" title="enum class in org.apache.rat">OptionCollection.ArgumentType</a></dt>
 <dd>
 <div class="block">A processing type.</div>
 </dd>
-<dt><a href="org/apache/rat/commandline/Arg.html#processLogLevel(org.apache.commons.cli.CommandLine)" class="member-name-link">processLogLevel(CommandLine)</a> - Static method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
+<dt><a href="org/apache/rat/commandline/Arg.html#processLogLevel(org.apache.rat.commandline.ArgumentContext,org.apache.rat.ui.UIOptionCollection)" class="member-name-link">processLogLevel(ArgumentContext, UIOptionCollection)</a> - Static method in enum class org.apache.rat.commandline.<a href="org/apache/rat/commandline/Arg.html" title="enum class in org.apache.rat.commandline">Arg</a></dt>
 <dd>
 <div class="block">Process the log level setting.</div>
 </dd>
@@ -5220,6 +5444,18 @@ by adjusting the pattern to include the basename from the <code>documentName</co
 <dd>
 <div class="block">Remove a key from the argument list.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#removeArg(java.lang.String)" class="member-name-link">removeArg(String)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Remove a key from the argument list.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#removeArg(org.apache.rat.ui.UIOption)" class="member-name-link">removeArg(UIOption)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Remove a key from the argument list.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html#removedOptions()" class="member-name-link">removedOptions()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html" title="class in org.apache.rat.ui">UpdatableOptionGroupCollection</a></dt>
+<dd>
+<div class="block">Gets the set of removed Options from the collection.</div>
+</dd>
 <dt><a href="org/apache/rat/utils/ReportingSet.html#removeIf(java.util.function.Predicate)" class="member-name-link">removeIf(Predicate)</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/anttasks/Report.html#removeKey(org.apache.rat.commandline.Arg)" class="member-name-link">removeKey(Arg)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Report.html" title="class in org.apache.rat.anttasks">Report</a></dt>
@@ -5362,6 +5598,10 @@ use with another document scan.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/license/SimpleLicense.html#reset()" class="member-name-link">reset()</a> - Method in class org.apache.rat.license.<a href="org/apache/rat/license/SimpleLicense.html" title="class in org.apache.rat.license">SimpleLicense</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroup.html#reset()" class="member-name-link">reset()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroup.html" title="class in org.apache.rat.ui">UpdatableOptionGroup</a></dt>
+<dd>
+<div class="block">Reset the group so that all disabled options are re-enabled.</div>
+</dd>
 <dt><a href="org/apache/rat/DeprecationReporter.html#resetLogReporter()" class="member-name-link">resetLogReporter()</a> - Static method in class org.apache.rat.<a href="org/apache/rat/DeprecationReporter.html" title="class in org.apache.rat">DeprecationReporter</a></dt>
 <dd>
 <div class="block">Rests the consumer to the default consumer.</div>
@@ -5429,6 +5669,10 @@ ignoring any files/directories set to be ignored.</div>
 </dd>
 <dt><a href="org/apache/rat/config/exclusion/plexus/SelectorUtils.html" class="type-name-link" title="class in org.apache.rat.config.exclusion.plexus">SelectorUtils</a> - Class in <a href="org/apache/rat/config/exclusion/plexus/package-summary.html">org.apache.rat.config.exclusion.plexus</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#self()" class="member-name-link">self()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Returns this cast to <code>&lt;S&gt;</code> class.</div>
+</dd>
 <dt><a href="org/apache/rat/tools/xsd/XsdWriter.Type.html#SEQUENCE" class="member-name-link">SEQUENCE</a> - Enum constant in enum class org.apache.rat.tools.xsd.<a href="org/apache/rat/tools/xsd/XsdWriter.Type.html" title="enum class in org.apache.rat.tools.xsd">XsdWriter.Type</a></dt>
 <dd>
 <div class="block">A sequence</div>
@@ -5480,7 +5724,7 @@ ignoring any files/directories set to be ignored.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setAddLicense(boolean)" class="member-name-link">setAddLicense(boolean)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;EditLicense&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;editLicense&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/mp/RatCheckMojo.html#setAddLicenseHeaders(java.lang.String)" class="member-name-link">setAddLicenseHeaders(String)</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/RatCheckMojo.html" title="class in org.apache.rat.mp">RatCheckMojo</a></dt>
@@ -5548,6 +5792,14 @@ headers.</div>
 <dd>
 <div class="block">Set a key and value into the argument list.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#setArg(java.lang.String,java.lang.String)" class="member-name-link">setArg(String, String)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Set a key and value into the argument list.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/ArgumentTracker.html#setArg(org.apache.rat.ui.UIOption,java.lang.String)" class="member-name-link">setArg(UIOption, String)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/ArgumentTracker.html" title="class in org.apache.rat.ui">ArgumentTracker</a></dt>
+<dd>
+<div class="block">Set a key and value into the argument list.</div>
+</dd>
 <dt><a href="org/apache/rat/document/DocumentName.Builder.html#setBaseName(java.io.File)" class="member-name-link">setBaseName(File)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentName.Builder.html" title="class in org.apache.rat.document">DocumentName.Builder</a></dt>
 <dd>
 <div class="block">Sets the basename from a File.</div>
@@ -5602,7 +5854,7 @@ headers.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setCopyright(java.lang.String)" class="member-name-link">setCopyright(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;EditCopyright&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;editCopyright&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/mp/All.html#setCopyright(org.apache.rat.mp.Copyright)" class="member-name-link">setCopyright(Copyright)</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/All.html" title="class in org.apache.rat.mp">All</a></dt>
@@ -5712,7 +5964,7 @@ headers.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setExclude(java.lang.String)" class="member-name-link">setExclude(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;InputExclude&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputExclude&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setExcludeFile(java.lang.String)" class="member-name-link">setExcludeFile(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
@@ -5724,13 +5976,13 @@ headers.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setExcludeFile(java.lang.String)" class="member-name-link">setExcludeFile(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;InputExcludeFile&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputExcludeFile&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setExcludes(java.lang.String%5B%5D)" class="member-name-link">setExcludes(String[])</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;InputExclude&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputExclude&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/Regex.html#setExpr(java.lang.String)" class="member-name-link">setExpr(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Regex.html" title="class in org.apache.rat.anttasks">Regex</a></dt>
@@ -5774,7 +6026,7 @@ headers.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setForce(boolean)" class="member-name-link">setForce(boolean)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;EditOverwrite&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;editOverwrite&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/Report.html#setFormat(java.lang.String)" class="member-name-link">setFormat(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/Report.html" title="class in org.apache.rat.anttasks">Report</a></dt>
@@ -5797,10 +6049,6 @@ configuration.</div>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 <div class="block">Sets the header pattern to be matched.</div>
-</dd>
-<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setHelpLicenses(boolean)" class="member-name-link">setHelpLicenses(boolean)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
-<dd>
-<div class="block">Print information about registered licenses.</div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setHelpLicenses(boolean)" class="member-name-link">setHelpLicenses(boolean)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
@@ -5833,13 +6081,13 @@ configuration.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setInclude(java.lang.String)" class="member-name-link">setInclude(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;InputInclude&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputInclude&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setIncludes(java.lang.String%5B%5D)" class="member-name-link">setIncludes(String[])</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;InputInclude&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputInclude&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setIncludesFile(java.lang.String)" class="member-name-link">setIncludesFile(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
@@ -5851,12 +6099,16 @@ configuration.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setIncludesFile(java.lang.String)" class="member-name-link">setIncludesFile(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;InputIncludeFile&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputIncludeFile&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setInputExclude(java.lang.String)" class="member-name-link">setInputExclude(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="block">Excludes files matching &lt;Expression&gt;.</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setInputExcludeFile(java.lang.String)" class="member-name-link">setInputExcludeFile(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Reads &lt;Expression&gt; entries from a file.</div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setInputExcludeFile(java.lang.String)" class="member-name-link">setInputExcludeFile(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
@@ -5897,6 +6149,10 @@ configuration.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setInputInclude(java.lang.String)" class="member-name-link">setInputInclude(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="block">Includes files matching &lt;Expression&gt;.</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setInputIncludeFile(java.lang.String)" class="member-name-link">setInputIncludeFile(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Reads &lt;Expression&gt; entries from a file.</div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setInputIncludeFile(java.lang.String)" class="member-name-link">setInputIncludeFile(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
@@ -5948,6 +6204,10 @@ configuration.</div>
 <dd>
 <div class="block">A comma separated list of approved license family IDs.</div>
 </dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setLicenseFamiliesApprovedFile(java.lang.String)" class="member-name-link">setLicenseFamiliesApprovedFile(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Name of file containing comma separated lists of approved family IDs.</div>
+</dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesApprovedFile(java.lang.String)" class="member-name-link">setLicenseFamiliesApprovedFile(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="block">Name of file containing comma separated lists of approved family IDs.</div>
@@ -5955,6 +6215,10 @@ configuration.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesDenied(java.lang.String)" class="member-name-link">setLicenseFamiliesDenied(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="block">A comma separated list of denied License family IDs.</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setLicenseFamiliesDeniedFile(java.lang.String)" class="member-name-link">setLicenseFamiliesDeniedFile(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Name of file containing comma separated lists of denied license IDs.</div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicenseFamiliesDeniedFile(java.lang.String)" class="member-name-link">setLicenseFamiliesDeniedFile(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
@@ -5985,18 +6249,22 @@ configuration.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicenses(java.lang.String)" class="member-name-link">setLicenses(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;Config&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;config&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicenses(java.lang.String%5B%5D)" class="member-name-link">setLicenses(String[])</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;Config&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;config&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicensesApproved(java.lang.String)" class="member-name-link">setLicensesApproved(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="block">A comma separated list of approved License IDs.</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setLicensesApprovedFile(java.lang.String)" class="member-name-link">setLicensesApprovedFile(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Name of file containing comma separated lists of approved License IDs.</div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicensesApprovedFile(java.lang.String)" class="member-name-link">setLicensesApprovedFile(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
@@ -6005,6 +6273,10 @@ configuration.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicensesDenied(java.lang.String)" class="member-name-link">setLicensesDenied(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="block">A comma separated list of denied License IDs.</div>
+</dd>
+<dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setLicensesDeniedFile(java.lang.String)" class="member-name-link">setLicensesDeniedFile(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
+<dd>
+<div class="block">Name of file containing comma separated lists of the denied license IDs.</div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setLicensesDeniedFile(java.lang.String)" class="member-name-link">setLicensesDeniedFile(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
@@ -6019,7 +6291,7 @@ configuration.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setListFamilies(java.lang.String)" class="member-name-link">setListFamilies(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;OutputFamilies&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;outputFamilies&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setListLicenses(java.lang.String)" class="member-name-link">setListLicenses(String)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
@@ -6031,7 +6303,7 @@ configuration.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setListLicenses(java.lang.String)" class="member-name-link">setListLicenses(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;OutputLicenses&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;outputLicenses&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/utils/ReportingSet.html#setLogLevel(org.apache.rat.utils.Log.Level)" class="member-name-link">setLogLevel(Log.Level)</a> - Method in class org.apache.rat.utils.<a href="org/apache/rat/utils/ReportingSet.html" title="class in org.apache.rat.utils">ReportingSet</a></dt>
@@ -6140,7 +6412,7 @@ if not set the default level is WARN.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setNoDefaultLicenses(boolean)" class="member-name-link">setNoDefaultLicenses(boolean)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;ConfigurationNoDefaults&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;configurationNoDefaults&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/mp/All.html#setNot(org.apache.rat.mp.Not)" class="member-name-link">setNot(Not)</a> - Method in class org.apache.rat.mp.<a href="org/apache/rat/mp/All.html" title="class in org.apache.rat.mp">All</a></dt>
@@ -6188,7 +6460,7 @@ if not set the default level is WARN.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setOut(java.lang.String)" class="member-name-link">setOut(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;OutputFile&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;outputFile&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#setOut(org.apache.commons.io.function.IOSupplier)" class="member-name-link">setOut(IOSupplier)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
@@ -6322,13 +6594,13 @@ if not set the default level is WARN.</div>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#setScanHiddenDirectories(boolean)" class="member-name-link">setScanHiddenDirectories(boolean)</a> - Method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputIncludeStd&gt; with 'HIDDEN_DIR' argument instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputIncludeStds&gt; with 'HIDDEN_DIR' argument instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setScanHiddenDirectories(boolean)" class="member-name-link">setScanHiddenDirectories(boolean)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;InputIncludeStd&gt; with 'HIDDEN_DIR' argument instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;inputIncludeStd&gt; with 'HIDDEN_DIR' argument instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/configuration/builders/TextBuilder.html#setSimpleText(java.lang.String)" class="member-name-link">setSimpleText(String)</a> - Method in class org.apache.rat.configuration.builders.<a href="org/apache/rat/configuration/builders/TextBuilder.html" title="class in org.apache.rat.configuration.builders">TextBuilder</a></dt>
@@ -6378,7 +6650,7 @@ if not set the default level is WARN.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setStylesheet(java.lang.String)" class="member-name-link">setStylesheet(String)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;OutputStyle&gt; instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;outputStyle&gt; instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/ReportConfiguration.html#setStyleSheet(java.io.File)" class="member-name-link">setStyleSheet(File)</a> - Method in class org.apache.rat.<a href="org/apache/rat/ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></dt>
@@ -6440,7 +6712,7 @@ if not set the default level is WARN.</div>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#setXml(boolean)" class="member-name-link">setXml(boolean)</a> - Method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;OutputStyle&gt; with the 'xml' argument instead.</div>
+<div class="deprecation-comment">Deprecated for removal since 0.17: Use &lt;outputStyle&gt; with the 'xml' argument instead.</div>
 </div>
 </dd>
 <dt><a href="org/apache/rat/tools/xsd/XsdWriter.Type.html#SIMPLE" class="member-name-link">SIMPLE</a> - Enum constant in enum class org.apache.rat.tools.xsd.<a href="org/apache/rat/tools/xsd/XsdWriter.Type.html" title="enum class in org.apache.rat.tools.xsd">XsdWriter.Type</a></dt>
@@ -6673,7 +6945,7 @@ license compliance into account.</div>
 </dd>
 <dt><a href="org/apache/rat/documentation/velocity/RatTool.html#stringUtils()" class="member-name-link">stringUtils()</a> - Method in class org.apache.rat.documentation.velocity.<a href="org/apache/rat/documentation/velocity/RatTool.html" title="class in org.apache.rat.documentation.velocity">RatTool</a></dt>
 <dd>
-<div class="block">Gets the <code>StringUtils</code> object in order to work with it in Velocity templates.</div>
+<div class="block">Gets the <code>StringUtils</code> object in order to work with it in RAT Velocity templates.</div>
 </dd>
 <dt><a href="org/apache/rat/OptionCollection.ArgumentType.html#STYLESHEET" class="member-name-link">STYLESHEET</a> - Enum constant in enum class org.apache.rat.<a href="org/apache/rat/OptionCollection.ArgumentType.html" title="enum class in org.apache.rat">OptionCollection.ArgumentType</a></dt>
 <dd>
@@ -6716,6 +6988,8 @@ surrogates.</div>
 <dt><a href="org/apache/rat/document/DocumentNameMatcher.MatchPatternsPredicate.html#test(org.apache.rat.document.DocumentName)" class="member-name-link">test(DocumentName)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.MatchPatternsPredicate.html" title="class in org.apache.rat.document">DocumentNameMatcher.MatchPatternsPredicate</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/document/DocumentNameMatcher.NotPredicate.html#test(org.apache.rat.document.DocumentName)" class="member-name-link">test(DocumentName)</a> - Method in class org.apache.rat.document.<a href="org/apache/rat/document/DocumentNameMatcher.NotPredicate.html" title="class in org.apache.rat.document">DocumentNameMatcher.NotPredicate</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html#testName(org.apache.rat.documentation.options.AntOption)" class="member-name-link">testName(AntOption)</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOptionCollection.BuildType.html" title="class in org.apache.rat.documentation.options">AntOptionCollection.BuildType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/analysis/IHeaderMatcher.Builder.html#text()" class="member-name-link">text()</a> - Static method in interface org.apache.rat.analysis.<a href="org/apache/rat/analysis/IHeaderMatcher.Builder.html" title="interface in org.apache.rat.analysis">IHeaderMatcher.Builder</a></dt>
 <dd>
@@ -6829,6 +7103,10 @@ surrogates.</div>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/documentation/Exporter.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.documentation.<a href="org/apache/rat/documentation/Exporter.html" title="class in org.apache.rat.documentation">Exporter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/AntOption.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/documentation/options/MavenOption.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.documentation.options.<a href="org/apache/rat/documentation/options/MavenOption.html" title="class in org.apache.rat.documentation.options">MavenOption</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/license/SimpleLicense.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.license.<a href="org/apache/rat/license/SimpleLicense.html" title="class in org.apache.rat.license">SimpleLicense</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/license/SimpleLicenseFamily.html#toString()" class="member-name-link">toString()</a> - Method in class org.apache.rat.license.<a href="org/apache/rat/license/SimpleLicenseFamily.html" title="class in org.apache.rat.license">SimpleLicenseFamily</a></dt>
@@ -6881,6 +7159,38 @@ the XML 1.0 specification from both ends of the given string.</div>
 </dl>
 <h2 class="title" id="I:U">U</h2>
 <dl class="index">
+<dt><a href="org/apache/rat/ui/UI.html" class="type-name-link" title="interface in org.apache.rat.ui">UI&lt;T&gt;</a> - Interface in <a href="org/apache/rat/ui/package-summary.html">org.apache.rat.ui</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#uiOption(org.apache.commons.cli.Option)" class="member-name-link">uiOption(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Add a UI option to the collection.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html" class="type-name-link" title="class in org.apache.rat.ui">UIOption&lt;T&gt;</a> - Class in <a href="org/apache/rat/ui/package-summary.html">org.apache.rat.ui</a></dt>
+<dd>
+<div class="block">Abstract class that provides the framework for UI-specific RAT options.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOption.html#%3Cinit%3E(C,org.apache.commons.cli.Option,org.apache.rat.utils.CasedString)" class="member-name-link">UIOption(C, Option, CasedString)</a> - Constructor for class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOption.html" title="class in org.apache.rat.ui">UIOption</a></dt>
+<dd>
+<div class="block">Constructor.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html" class="type-name-link" title="class in org.apache.rat.ui">UIOptionCollection&lt;T&gt;</a> - Class in <a href="org/apache/rat/ui/package-summary.html">org.apache.rat.ui</a></dt>
+<dd>
+<div class="block">A collection of options supported by the UI.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.html#%3Cinit%3E(org.apache.rat.ui.UIOptionCollection.Builder)" class="member-name-link">UIOptionCollection(UIOptionCollection.Builder)</a> - Constructor for class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.html" title="class in org.apache.rat.ui">UIOptionCollection</a></dt>
+<dd>
+<div class="block">Construct the UIOptionCollection from the builder.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html" class="type-name-link" title="class in org.apache.rat.ui">UIOptionCollection.Builder&lt;T,<wbr>S&gt;</a> - Class in <a href="org/apache/rat/ui/package-summary.html">org.apache.rat.ui</a></dt>
+<dd>
+<div class="block">Builder for a BaseOptionCollection.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#uiOptions(org.apache.commons.cli.Option...)" class="member-name-link">uiOptions(Option...)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Add a UI options to the collection.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/spi/UIProvider.html" class="type-name-link" title="interface in org.apache.rat.ui.spi">UIProvider</a> - Interface in <a href="org/apache/rat/ui/spi/package-summary.html">org.apache.rat.ui.spi</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/report/claim/ClaimStatistic.Counter.html#UNAPPROVED" class="member-name-link">UNAPPROVED</a> - Enum constant in enum class org.apache.rat.report.claim.<a href="org/apache/rat/report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a></dt>
 <dd>
 <div class="block">count of unapproved files</div>
@@ -6909,11 +7219,41 @@ the XML 1.0 specification from both ends of the given string.</div>
 <dd>
 <div class="block">An ILicense implementation that represents an unknown license.</div>
 </dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#unsupported(org.apache.commons.cli.Option)" class="member-name-link">unsupported(Option)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Register an option as unsupported.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#unsupported(org.apache.rat.commandline.Arg)" class="member-name-link">unsupported(Arg)</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">Register multiple options as unsupported.</div>
+</dd>
 <dt><a href="org/apache/rat/anttasks/BaseAntTask.html#unsupportedArgs()" class="member-name-link">unsupportedArgs()</a> - Static method in class org.apache.rat.anttasks.<a href="org/apache/rat/anttasks/BaseAntTask.html" title="class in org.apache.rat.anttasks">BaseAntTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/apache/rat/plugin/BaseRatMojo.html#unsupportedArgs()" class="member-name-link">unsupportedArgs()</a> - Static method in class org.apache.rat.plugin.<a href="org/apache/rat/plugin/BaseRatMojo.html" title="class in org.apache.rat.plugin">BaseRatMojo</a></dt>
 <dd>
 <div class="block">Returns the list of unsupported args.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html#unsupportedOptions()" class="member-name-link">unsupportedOptions()</a> - Method in class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html" title="class in org.apache.rat.ui">UpdatableOptionGroupCollection</a></dt>
+<dd>
+<div class="block">Gets the unsupported options
+If multiple options from the a group are disabled they will be added to the
+options in a group together.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UIOptionCollection.Builder.html#unsupportedRatOptions" class="member-name-link">unsupportedRatOptions</a> - Variable in class org.apache.rat.ui.<a href="org/apache/rat/ui/UIOptionCollection.Builder.html" title="class in org.apache.rat.ui">UIOptionCollection.Builder</a></dt>
+<dd>
+<div class="block">The list of unsupported RAT options.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroup.html" class="type-name-link" title="class in org.apache.rat.ui">UpdatableOptionGroup</a> - Class in <a href="org/apache/rat/ui/package-summary.html">org.apache.rat.ui</a></dt>
+<dd>
+<div class="block">An implementation of Apache Commons CLI OptionGroup that allows options to be removed (disabled).</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html" class="type-name-link" title="class in org.apache.rat.ui">UpdatableOptionGroupCollection</a> - Class in <a href="org/apache/rat/ui/package-summary.html">org.apache.rat.ui</a></dt>
+<dd>
+<div class="block">A collection of UpdatableOptionGroups.</div>
+</dd>
+<dt><a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html#%3Cinit%3E()" class="member-name-link">UpdatableOptionGroupCollection()</a> - Constructor for class org.apache.rat.ui.<a href="org/apache/rat/ui/UpdatableOptionGroupCollection.html" title="class in org.apache.rat.ui">UpdatableOptionGroupCollection</a></dt>
+<dd>
+<div class="block">Creates an empty collection.</div>
 </dd>
 <dt><a href="org/apache/rat/DeprecationReporter.Info.html#use()" class="member-name-link">use()</a> - Element in annotation interface org.apache.rat.<a href="org/apache/rat/DeprecationReporter.Info.html" title="annotation interface in org.apache.rat">DeprecationReporter.Info</a></dt>
 <dd>

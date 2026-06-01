@@ -76,6 +76,28 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.apache.rat.documentation.options">
 <h2>Uses of <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a> in <a href="../package-summary.html">org.apache.rat.documentation.options</a></h2>
+<div class="caption"><span>Subclasses with type arguments of type <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a> in <a href="../package-summary.html">org.apache.rat.documentation.options</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../AntOption.html" class="type-name-link" title="class in org.apache.rat.documentation.options">AntOption</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A class that wraps the CLI option and provides Ant specific values.</div>
+</div>
+<div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../AntOptionCollection.html" class="type-name-link" title="class in org.apache.rat.documentation.options">AntOptionCollection</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The collection of AntOptions equivalent to the CLI options
+with any unsupported options removed.</div>
+</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../AntOptionCollection.Builder.html" class="type-name-link" title="class in org.apache.rat.documentation.options">AntOptionCollection.Builder</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The Builder for the AntOptionCollection.</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.documentation.options</a> that return <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -87,16 +109,74 @@ loadScripts(document, 'script');</script>
 <div class="block">If this option is converted to another option return that option otherwise
 return this option.</div>
 </div>
+<div class="col-first odd-row-color"><code><a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AntOptionCollection.</span><code><a href="../AntOptionCollection.html#getActualAntOption(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getActualAntOption</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">If this option is converted to another option return that option otherwise
+return this option.</div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.documentation.options</a> that return types with arguments of type <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AntOption.</span><code><a href="../AntOption.html#getAntOptions()" class="member-name-link">getAntOptions</a>()</code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AntOption.</span><code><a href="../AntOption.html#convertedFrom()" class="member-name-link">convertedFrom</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Gets the list of all available Ant options.</div>
+<div class="block">Gets the set of options that are mapped to this option.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AntOptionCollection.</span><code><a href="../AntOptionCollection.html#convertedFrom(org.apache.rat.documentation.options.AntOption)" class="member-name-link">convertedFrom</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.documentation.options</a> with parameters of type <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AntOptionCollection.</span><code><a href="../AntOptionCollection.html#convertedFrom(org.apache.rat.documentation.options.AntOption)" class="member-name-link">convertedFrom</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AntOptionCollection.</span><code><a href="../AntOptionCollection.html#getActualAntOption(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getActualAntOption</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">If this option is converted to another option return that option otherwise
+return this option.</div>
+</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AntOptionCollection.BuildType.</span><code><a href="../AntOptionCollection.BuildType.html#getMethodFormat(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getMethodFormat</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Gets the method based on how many arguments an Ant option requires.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AntOptionCollection.BuildType.</span><code><a href="../AntOptionCollection.BuildType.html#getXml(org.apache.rat.documentation.options.AntOption,java.lang.String)" class="member-name-link">getXml</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;data)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AntOptionCollection.BuildType.</span><code><a href="../AntOptionCollection.BuildType.html#getXml(org.apache.rat.documentation.options.AntOption,org.apache.rat.documentation.options.AntOption,java.lang.String)" class="member-name-link">getXml</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;delegateOption,
+ <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;data)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Gets a string comprising the Ant XML pattern for this data type and the number of arguments expected by the Ant option.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AntOptionCollection.</span><code><a href="../AntOptionCollection.html#isAttribute(org.apache.rat.documentation.options.AntOption)" class="member-name-link">isAttribute</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AntOptionCollection.BuildType.</span><code><a href="../AntOptionCollection.BuildType.html#testName(org.apache.rat.documentation.options.AntOption)" class="member-name-link">testName</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Constructor parameters in <a href="../package-summary.html">org.apache.rat.documentation.options</a> with type arguments of type <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../AntOption.html#%3Cinit%3E(org.apache.rat.ui.UIOptionCollection,org.apache.commons.cli.Option)" class="member-name-link">AntOption</a><wbr>(<a href="https://creadur.apache.org/rat/apache-rat-core/apidocs/org/apache/rat/ui/UIOptionCollection.html" title="class or interface in org.apache.rat.ui" class="external-link">UIOptionCollection</a>&lt;<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&gt;&nbsp;collection,
+ org.apache.commons.cli.Option&nbsp;option)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructor.</div>
 </div>
 </div>
 </section>
@@ -125,13 +205,18 @@ return this option.</div>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AntGenerator.GenerateType.</span><code><a href="../../../tools/AntGenerator.GenerateType.html#getMethodFormat(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getMethodFormat</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AntGenerator.</span><code><a href="../../../tools/AntGenerator.html#getAttributeFunctionName(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getAttributeFunctionName</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Get the signature of the attribute function.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AntGenerator.GenerateType.</span><code><a href="../../../tools/AntGenerator.GenerateType.html#getPattern(org.apache.rat.documentation.options.AntOption,org.apache.rat.documentation.options.AntOption)" class="member-name-link">getPattern</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;delegateOption,
- <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AntGenerator.GenerateType.</span><code><a href="../../../tools/AntGenerator.GenerateType.html#getMethod(org.apache.rat.documentation.options.AntOption)" class="member-name-link">getMethod</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AntGenerator.GenerateType.</span><code><a href="../../../tools/AntGenerator.GenerateType.html#getPattern(org.apache.rat.documentation.options.AntOption,org.apache.rat.documentation.options.AntOption)" class="member-name-link">getPattern</a><wbr>(<a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;delegateOption,
+ <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a>&nbsp;antOption)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../../tools/package-summary.html">org.apache.rat.tools</a> with type arguments of type <a href="../AntOption.html" title="class in org.apache.rat.documentation.options">AntOption</a></span></div>
 <div class="summary-table three-column-summary">

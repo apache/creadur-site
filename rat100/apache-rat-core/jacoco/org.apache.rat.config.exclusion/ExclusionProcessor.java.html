@@ -163,18 +163,21 @@ public class ExclusionProcessor {
      * @param appendable the appendable object to write to.
      */
     public void reportExclusions(final Appendable appendable) throws IOException {
-<span class="nc" id="L166">        appendable.append(format(&quot;Excluding patterns: %s%n&quot;, String.join(&quot;, &quot;, excludedPatterns)));</span>
-<span class="nc" id="L167">        appendable.append(format(&quot;Including patterns: %s%n&quot;, String.join(&quot;, &quot;, includedPatterns)));</span>
-<span class="nc bnc" id="L168" title="All 2 branches missed.">        for (StandardCollection sc : excludedCollections) {</span>
-<span class="nc" id="L169">            appendable.append(format(&quot;Excluding %s collection.%n&quot;, sc.name()));</span>
-<span class="nc" id="L170">        }</span>
-<span class="nc bnc" id="L171" title="All 2 branches missed.">        for (StandardCollection sc : includedCollections) {</span>
+<span class="fc" id="L166">        appendable.append(format(&quot;Excluding patterns: %s%n&quot;, String.join(&quot;, &quot;, excludedPatterns)));</span>
+<span class="fc" id="L167">        appendable.append(format(&quot;Including patterns: %s%n&quot;, String.join(&quot;, &quot;, includedPatterns)));</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        for (StandardCollection sc : excludedCollections) {</span>
+<span class="fc" id="L169">            appendable.append(format(&quot;Excluding %s collection.%n&quot;, sc.name()));</span>
+<span class="fc" id="L170">        }</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        for (StandardCollection sc : includedCollections) {</span>
 <span class="nc" id="L172">            appendable.append(format(&quot;Including %s collection.%n&quot;, sc.name()));</span>
 <span class="nc" id="L173">        }</span>
-<span class="nc bnc" id="L174" title="All 2 branches missed.">        for (StandardCollection sc : fileProcessors) {</span>
+<span class="pc bpc" id="L174" title="1 of 2 branches missed.">        for (StandardCollection sc : fileProcessors) {</span>
 <span class="nc" id="L175">            appendable.append(format(&quot;Processing exclude file from %s.%n&quot;, sc.name()));</span>
 <span class="nc" id="L176">        }</span>
-<span class="nc" id="L177">    }</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        for (DocumentNameMatcher nameMatcher : excludedPaths) {</span>
+<span class="fc" id="L178">            appendable.append(format(&quot;Excluding %s.%n&quot;, nameMatcher.toString()));</span>
+<span class="fc" id="L179">        }</span>
+<span class="fc" id="L180">    }</span>
 
 
     /**
@@ -183,12 +186,12 @@ public class ExclusionProcessor {
      * @return this
      */
     public ExclusionProcessor addExcludedCollection(final StandardCollection collection) {
-<span class="pc bpc" id="L186" title="1 of 2 branches missed.">        if (collection != null) {</span>
-<span class="fc" id="L187">            DefaultLog.getInstance().debug(format(&quot;Excluding %s collection.&quot;, collection));</span>
-<span class="fc" id="L188">            excludedCollections.add(collection);</span>
-<span class="fc" id="L189">            resetLastMatcher();</span>
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">        if (collection != null) {</span>
+<span class="fc" id="L190">            DefaultLog.getInstance().debug(format(&quot;Excluding %s collection.&quot;, collection));</span>
+<span class="fc" id="L191">            excludedCollections.add(collection);</span>
+<span class="fc" id="L192">            resetLastMatcher();</span>
         }
-<span class="fc" id="L191">        return this;</span>
+<span class="fc" id="L194">        return this;</span>
     }
 
     /**
@@ -199,26 +202,26 @@ public class ExclusionProcessor {
      */
     public DocumentNameMatcher getNameMatcher(final DocumentName basedir) {
         // if lastMatcher is not set or the basedir is not the same as the last one then
-        // we have to regenerate the matching document. Otherwise we can just return the
-        // lastMatcher since there is no change.
-<span class="pc bpc" id="L204" title="1 of 4 branches missed.">        if (lastMatcher == null || !basedir.equals(lastMatcherBaseDir)) {</span>
-<span class="fc" id="L205">            lastMatcherBaseDir = basedir;</span>
+        // we have to regenerate the matching document.
+        // Otherwise we can just return the lastMatcher since there is no change.
+<span class="pc bpc" id="L207" title="1 of 4 branches missed.">        if (lastMatcher == null || !basedir.equals(lastMatcherBaseDir)) {</span>
+<span class="fc" id="L208">            lastMatcherBaseDir = basedir;</span>
 
             // add the file processors
-<span class="fc" id="L208">            final List&lt;MatcherSet&gt; matchers = extractFileProcessors(basedir);</span>
-<span class="fc" id="L209">            final MatcherSet.Builder fromCommandLine = new MatcherSet.Builder();</span>
-<span class="fc" id="L210">            DocumentName.Builder nameBuilder = DocumentName.builder(basedir).setBaseName(basedir);</span>
-<span class="fc" id="L211">            extractPatterns(nameBuilder, fromCommandLine);</span>
-<span class="fc" id="L212">            extractCollectionPatterns(nameBuilder, fromCommandLine);</span>
-<span class="fc" id="L213">            extractCollectionMatchers(fromCommandLine);</span>
-<span class="fc" id="L214">            extractPaths(fromCommandLine);</span>
-<span class="fc" id="L215">            matchers.add(fromCommandLine.build());</span>
+<span class="fc" id="L211">            final List&lt;MatcherSet&gt; matchers = extractFileProcessors(basedir);</span>
+<span class="fc" id="L212">            final MatcherSet.Builder fromCommandLine = new MatcherSet.Builder();</span>
+<span class="fc" id="L213">            DocumentName.Builder nameBuilder = DocumentName.builder(basedir).setBaseName(basedir);</span>
+<span class="fc" id="L214">            extractPatterns(nameBuilder, fromCommandLine);</span>
+<span class="fc" id="L215">            extractCollectionPatterns(nameBuilder, fromCommandLine);</span>
+<span class="fc" id="L216">            extractCollectionMatchers(fromCommandLine);</span>
+<span class="fc" id="L217">            extractPaths(fromCommandLine);</span>
+<span class="fc" id="L218">            matchers.add(fromCommandLine.build());</span>
 
-<span class="fc" id="L217">            lastMatcher = MatcherSet.merge(matchers).createMatcher();</span>
-<span class="fc" id="L218">            DefaultLog.getInstance().debug(format(&quot;Created matcher set for %s%n%s&quot;, basedir.getName(),</span>
+<span class="fc" id="L220">            lastMatcher = MatcherSet.merge(matchers).createMatcher();</span>
+<span class="fc" id="L221">            DefaultLog.getInstance().debug(format(&quot;Created matcher set for %s%n%s&quot;, basedir.getName(),</span>
                     lastMatcher));
         }
-<span class="fc" id="L221">        return lastMatcher;</span>
+<span class="fc" id="L224">        return lastMatcher;</span>
     }
 
     /**
@@ -227,16 +230,16 @@ public class ExclusionProcessor {
      * @return a list of MatcherSets that are created for each {@link #fileProcessors} entry.
      */
     private List&lt;MatcherSet&gt; extractFileProcessors(final DocumentName basedir) {
-<span class="fc" id="L230">        final List&lt;MatcherSet&gt; fileProcessorList = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">        for (StandardCollection sc : fileProcessors) {</span>
-<span class="fc" id="L232">            ExtendedIterator&lt;List&lt;MatcherSet&gt;&gt; iter =  sc.fileProcessorBuilder().map(builder -&gt; builder.build(basedir));</span>
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">            if (iter.hasNext()) {</span>
-<span class="fc" id="L234">                iter.forEachRemaining(fileProcessorList::addAll);</span>
+<span class="fc" id="L233">        final List&lt;MatcherSet&gt; fileProcessorList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L234" title="All 2 branches covered.">        for (StandardCollection sc : fileProcessors) {</span>
+<span class="fc" id="L235">            ExtendedIterator&lt;List&lt;MatcherSet&gt;&gt; iter =  sc.fileProcessorBuilder().map(builder -&gt; builder.build(basedir));</span>
+<span class="pc bpc" id="L236" title="1 of 2 branches missed.">            if (iter.hasNext()) {</span>
+<span class="fc" id="L237">                iter.forEachRemaining(fileProcessorList::addAll);</span>
             } else {
-<span class="nc" id="L236">                DefaultLog.getInstance().debug(String.format(&quot;%s does not have a fileProcessor.&quot;, sc));</span>
+<span class="nc" id="L239">                DefaultLog.getInstance().debug(String.format(&quot;%s does not have a fileProcessor.&quot;, sc));</span>
             }
-<span class="fc" id="L238">        }</span>
-<span class="fc" id="L239">        return fileProcessorList;</span>
+<span class="fc" id="L241">        }</span>
+<span class="fc" id="L242">        return fileProcessorList;</span>
     }
 
     /**
@@ -247,8 +250,8 @@ public class ExclusionProcessor {
      * @return the prepared pattern.
      */
     private String preparePattern(final DocumentName documentName, final String pattern) {
-<span class="fc" id="L250">        return ExclusionUtils.qualifyPattern(documentName,</span>
-<span class="fc" id="L251">                        ExclusionUtils.convertSeparator(pattern, &quot;/&quot;, documentName.getDirectorySeparator()));</span>
+<span class="fc" id="L253">        return ExclusionUtils.qualifyPattern(documentName,</span>
+<span class="fc" id="L254">                        ExclusionUtils.convertSeparator(pattern, &quot;/&quot;, documentName.getDirectorySeparator()));</span>
     }
 
     /**
@@ -257,17 +260,17 @@ public class ExclusionProcessor {
      * @param matcherBuilder the MatcherSet.Builder to add the patterns to.
      */
     private void extractPatterns(final DocumentName.Builder nameBuilder, final MatcherSet.Builder matcherBuilder) {
-<span class="fc" id="L260">        DocumentName name = nameBuilder.setName(&quot;Patterns&quot;).build();</span>
-<span class="fc bfc" id="L261" title="All 2 branches covered.">        if (!excludedPatterns.isEmpty()) {</span>
-<span class="fc" id="L262">            matcherBuilder.addExcluded(name, excludedPatterns.stream()</span>
-<span class="fc" id="L263">                    .map(s -&gt; preparePattern(name, s))</span>
-<span class="fc" id="L264">                    .collect(Collectors.toSet()));</span>
+<span class="fc" id="L263">        DocumentName name = nameBuilder.setName(&quot;Patterns&quot;).build();</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">        if (!excludedPatterns.isEmpty()) {</span>
+<span class="fc" id="L265">            matcherBuilder.addExcluded(name, excludedPatterns.stream()</span>
+<span class="fc" id="L266">                    .map(s -&gt; preparePattern(name, s))</span>
+<span class="fc" id="L267">                    .collect(Collectors.toSet()));</span>
         }
-<span class="fc bfc" id="L266" title="All 2 branches covered.">        if (!includedPatterns.isEmpty()) {</span>
-<span class="fc" id="L267">            matcherBuilder.addIncluded(name, includedPatterns.stream()</span>
-<span class="fc" id="L268">                    .map(s -&gt; preparePattern(name, s)).collect(Collectors.toSet()));</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        if (!includedPatterns.isEmpty()) {</span>
+<span class="fc" id="L270">            matcherBuilder.addIncluded(name, includedPatterns.stream()</span>
+<span class="fc" id="L271">                    .map(s -&gt; preparePattern(name, s)).collect(Collectors.toSet()));</span>
         }
-<span class="fc" id="L270">    }</span>
+<span class="fc" id="L273">    }</span>
 
     /**
      * Extracts {@link #includedCollections} and {@link #excludedCollections} patterns into the specified matcherBuilder.
@@ -275,64 +278,64 @@ public class ExclusionProcessor {
      * @param matcherBuilder the MatcherSet.Builder to add the collections to.
      */
     private void extractCollectionPatterns(final DocumentName.Builder nameBuilder, final MatcherSet.Builder matcherBuilder) {
-<span class="fc" id="L278">        final Set&lt;String&gt; incl = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L279">        final Set&lt;String&gt; excl = new TreeSet&lt;&gt;();</span>
-<span class="fc bfc" id="L280" title="All 2 branches covered.">        for (StandardCollection sc : includedCollections) {</span>
-<span class="fc" id="L281">            Set&lt;String&gt; patterns = sc.patterns();</span>
-<span class="fc bfc" id="L282" title="All 2 branches covered.">            if (patterns.isEmpty()) {</span>
-<span class="fc" id="L283">                DefaultLog.getInstance().debug(String.format(&quot;%s does not have a defined collection for inclusion.&quot;, sc));</span>
+<span class="fc" id="L281">        final Set&lt;String&gt; incl = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L282">        final Set&lt;String&gt; excl = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L283" title="All 2 branches covered.">        for (StandardCollection sc : includedCollections) {</span>
+<span class="fc" id="L284">            Set&lt;String&gt; patterns = sc.patterns();</span>
+<span class="fc bfc" id="L285" title="All 2 branches covered.">            if (patterns.isEmpty()) {</span>
+<span class="fc" id="L286">                DefaultLog.getInstance().debug(String.format(&quot;%s does not have a defined collection for inclusion.&quot;, sc));</span>
             } else {
-<span class="fc" id="L285">                MatcherSet.Builder.segregateList(incl, excl, sc.patterns());</span>
+<span class="fc" id="L288">                MatcherSet.Builder.segregateList(incl, excl, sc.patterns());</span>
             }
-<span class="fc" id="L287">        }</span>
-<span class="fc bfc" id="L288" title="All 2 branches covered.">        for (StandardCollection sc : excludedCollections) {</span>
-<span class="fc" id="L289">            Set&lt;String&gt; patterns = sc.patterns();</span>
-<span class="fc bfc" id="L290" title="All 2 branches covered.">            if (patterns.isEmpty()) {</span>
-<span class="fc" id="L291">                DefaultLog.getInstance().debug(String.format(&quot;%s does not have a defined collection for exclusion.&quot;, sc));</span>
+<span class="fc" id="L290">        }</span>
+<span class="fc bfc" id="L291" title="All 2 branches covered.">        for (StandardCollection sc : excludedCollections) {</span>
+<span class="fc" id="L292">            Set&lt;String&gt; patterns = sc.patterns();</span>
+<span class="fc bfc" id="L293" title="All 2 branches covered.">            if (patterns.isEmpty()) {</span>
+<span class="fc" id="L294">                DefaultLog.getInstance().debug(String.format(&quot;%s does not have a defined collection for exclusion.&quot;, sc));</span>
             } else {
-<span class="fc" id="L293">                MatcherSet.Builder.segregateList(excl, incl, sc.patterns());</span>
+<span class="fc" id="L296">                MatcherSet.Builder.segregateList(excl, incl, sc.patterns());</span>
             }
-<span class="fc" id="L295">        }</span>
-<span class="fc" id="L296">        DocumentName name = nameBuilder.setName(&quot;Collections&quot;).build();</span>
-<span class="fc" id="L297">        matcherBuilder</span>
-<span class="fc" id="L298">                .addExcluded(name, excl.stream().map(s -&gt; preparePattern(name.getBaseDocumentName(), s)).collect(Collectors.toSet()))</span>
-<span class="fc" id="L299">                .addIncluded(name, incl.stream().map(s -&gt; preparePattern(name.getBaseDocumentName(), s)).collect(Collectors.toSet()));</span>
-<span class="fc" id="L300">    }</span>
+<span class="fc" id="L298">        }</span>
+<span class="fc" id="L299">        DocumentName name = nameBuilder.setName(&quot;Collections&quot;).build();</span>
+<span class="fc" id="L300">        matcherBuilder</span>
+<span class="fc" id="L301">                .addExcluded(name, excl.stream().map(s -&gt; preparePattern(name.getBaseDocumentName(), s)).collect(Collectors.toSet()))</span>
+<span class="fc" id="L302">                .addIncluded(name, incl.stream().map(s -&gt; preparePattern(name.getBaseDocumentName(), s)).collect(Collectors.toSet()));</span>
+<span class="fc" id="L303">    }</span>
 
     /**
      * Extracts {@link #includedCollections} and {@link #excludedCollections} matchers into the specified matcherBuilder.
      * @param matcherBuilder the MatcherSet.Builder to add the collections to.
      */
     private void extractCollectionMatchers(final MatcherSet.Builder matcherBuilder) {
-<span class="fc" id="L307">        ExtendedIterator.create(includedCollections.iterator())</span>
-<span class="fc" id="L308">                .map(StandardCollection::staticDocumentNameMatcher)</span>
-<span class="fc" id="L309">                .filter(Objects::nonNull)</span>
-<span class="fc" id="L310">                .forEachRemaining(matcherBuilder::addIncluded);</span>
+<span class="fc" id="L310">        ExtendedIterator.create(includedCollections.iterator())</span>
+<span class="fc" id="L311">                .map(StandardCollection::staticDocumentNameMatcher)</span>
+<span class="fc" id="L312">                .filter(Objects::nonNull)</span>
+<span class="fc" id="L313">                .forEachRemaining(matcherBuilder::addIncluded);</span>
 
-<span class="fc" id="L312">        ExtendedIterator.create(excludedCollections.iterator())</span>
-<span class="fc" id="L313">                .map(StandardCollection::staticDocumentNameMatcher)</span>
-<span class="fc" id="L314">                .filter(Objects::nonNull)</span>
-<span class="fc" id="L315">                .forEachRemaining(matcherBuilder::addExcluded);</span>
-<span class="fc" id="L316">    }</span>
+<span class="fc" id="L315">        ExtendedIterator.create(excludedCollections.iterator())</span>
+<span class="fc" id="L316">                .map(StandardCollection::staticDocumentNameMatcher)</span>
+<span class="fc" id="L317">                .filter(Objects::nonNull)</span>
+<span class="fc" id="L318">                .forEachRemaining(matcherBuilder::addExcluded);</span>
+<span class="fc" id="L319">    }</span>
 
     /**
      * Extracts {@link #includedPaths} and {@link #excludedPaths} patterns into the specified matcherBuilder.
      * @param matcherBuilder the MatcherSet.Builder to add the collections to.
      */
     private void extractPaths(final MatcherSet.Builder matcherBuilder) {
-<span class="pc bpc" id="L323" title="1 of 2 branches missed.">        if (!includedPaths.isEmpty()) {</span>
-<span class="nc bnc" id="L324" title="All 2 branches missed.">            for (DocumentNameMatcher matcher : includedPaths) {</span>
-<span class="nc" id="L325">                DefaultLog.getInstance().debug(format(&quot;Including path matcher %s&quot;, matcher));</span>
-<span class="nc" id="L326">                matcherBuilder.addIncluded(matcher);</span>
-<span class="nc" id="L327">            }</span>
+<span class="pc bpc" id="L326" title="1 of 2 branches missed.">        if (!includedPaths.isEmpty()) {</span>
+<span class="nc bnc" id="L327" title="All 2 branches missed.">            for (DocumentNameMatcher matcher : includedPaths) {</span>
+<span class="nc" id="L328">                DefaultLog.getInstance().debug(format(&quot;Including path matcher %s&quot;, matcher));</span>
+<span class="nc" id="L329">                matcherBuilder.addIncluded(matcher);</span>
+<span class="nc" id="L330">            }</span>
         }
-<span class="fc bfc" id="L329" title="All 2 branches covered.">        if (!excludedPaths.isEmpty()) {</span>
-<span class="fc bfc" id="L330" title="All 2 branches covered.">            for (DocumentNameMatcher matcher : excludedPaths) {</span>
-<span class="fc" id="L331">                DefaultLog.getInstance().debug(format(&quot;Excluding path matcher %s&quot;, matcher));</span>
-<span class="fc" id="L332">                matcherBuilder.addExcluded(matcher);</span>
-<span class="fc" id="L333">            }</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">        if (!excludedPaths.isEmpty()) {</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">            for (DocumentNameMatcher matcher : excludedPaths) {</span>
+<span class="fc" id="L334">                DefaultLog.getInstance().debug(format(&quot;Excluding path matcher %s&quot;, matcher));</span>
+<span class="fc" id="L335">                matcherBuilder.addExcluded(matcher);</span>
+<span class="fc" id="L336">            }</span>
         }
-<span class="fc" id="L335">    }</span>
+<span class="fc" id="L338">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

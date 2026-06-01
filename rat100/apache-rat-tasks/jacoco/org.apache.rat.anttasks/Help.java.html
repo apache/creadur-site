@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
@@ -30,9 +29,10 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rat.commandline.Arg;
 import org.apache.rat.config.exclusion.StandardCollection;
+import org.apache.rat.documentation.options.AntOptionCollection;
 import org.apache.rat.help.AbstractHelp;
-import org.apache.rat.documentation.options.AbstractOption;
 import org.apache.rat.documentation.options.AntOption;
+import org.apache.rat.ui.UIOption;
 import org.apache.rat.utils.DefaultLog;
 import org.apache.rat.utils.Log;
 
@@ -163,7 +163,7 @@ public class Help extends BaseAntTask {
 <span class="fc" id="L163">        }</span>
         @Override
         public Comparator&lt;Option&gt; getOptionComparator() {
-<span class="fc" id="L166">            return Comparator.comparing(Option::getLongOpt);</span>
+<span class="nc" id="L166">            return Comparator.comparing(Option::getLongOpt);</span>
         }
 
         @Override
@@ -178,55 +178,53 @@ public class Help extends BaseAntTask {
 <span class="fc" id="L178">            String descriptionTitle = &quot; -- Description --&quot;;</span>
 <span class="fc" id="L179">            int max = optionTitle.length();</span>
 <span class="fc" id="L180">            int maxExample = exampleTitle.length();</span>
-<span class="fc" id="L181">            final List&lt;AntOption&gt; optList = options.getOptions().stream().filter(Option::hasLongOpt)</span>
-<span class="fc" id="L182">                    .map(AntOption::new).collect(Collectors.toList());</span>
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">            if (getOptionComparator() != null) {</span>
-<span class="fc" id="L184">                optList.sort(Comparator.comparing(AbstractOption::getName));</span>
-            }
-<span class="fc" id="L186">            List&lt;String&gt; exampleList = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">            for (final AntOption option : optList) {</span>
-<span class="fc" id="L188">                String argName = StringUtils.defaultIfEmpty(option.getArgName(), &quot;value&quot;);</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">                String fmt = option.isAttribute() ? &quot;&lt;rat:report %s='%s'&gt;&quot; : &quot;&lt;%1$s&gt;%2$s&lt;/%1$s&gt;&quot;;</span>
-<span class="fc" id="L190">                String example = format(fmt, option.getName(), argName);</span>
-<span class="fc" id="L191">                exampleList.add(example);</span>
-<span class="fc" id="L192">                max = Math.max(option.cleanupName().length(), max);</span>
-<span class="fc" id="L193">                maxExample = Math.max(example.length(), maxExample);</span>
-<span class="fc" id="L194">            }</span>
+<span class="fc" id="L181">            final List&lt;AntOption&gt; optList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L182">            AntOptionCollection.INSTANCE.getMappedOptions().forEach(optList::add);</span>
+<span class="fc" id="L183">            optList.sort(Comparator.comparing(UIOption::getName));</span>
+<span class="fc" id="L184">            List&lt;String&gt; exampleList = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L185" title="All 2 branches covered.">            for (final AntOption option : optList) {</span>
+<span class="fc" id="L186">                String argName = StringUtils.defaultIfEmpty(option.getArgName(), &quot;value&quot;);</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">                String fmt = option.isAttribute() ? &quot;&lt;rat:report %s='%s'&gt;&quot; : &quot;&lt;%1$s&gt;%2$s&lt;/%1$s&gt;&quot;;</span>
+<span class="fc" id="L188">                String example = format(fmt, option.getName(), argName);</span>
+<span class="fc" id="L189">                exampleList.add(example);</span>
+<span class="fc" id="L190">                max = Math.max(option.cleanupName().length(), max);</span>
+<span class="fc" id="L191">                maxExample = Math.max(example.length(), maxExample);</span>
+<span class="fc" id="L192">            }</span>
 
-<span class="fc" id="L196">            sb.append(optionTitle).append(createPadding(max - optionTitle.length()))</span>
+<span class="fc" id="L194">            sb.append(optionTitle).append(createPadding(max - optionTitle.length()))</span>
+<span class="fc" id="L195">                    .append(dpad)</span>
+<span class="fc" id="L196">                    .append(exampleTitle).append(createPadding(maxExample - exampleTitle.length()))</span>
 <span class="fc" id="L197">                    .append(dpad)</span>
-<span class="fc" id="L198">                    .append(exampleTitle).append(createPadding(maxExample - exampleTitle.length()))</span>
-<span class="fc" id="L199">                    .append(dpad)</span>
-<span class="fc" id="L200">                    .append(descriptionTitle)</span>
-<span class="fc" id="L201">                    .append(getNewLine());</span>
+<span class="fc" id="L198">                    .append(descriptionTitle)</span>
+<span class="fc" id="L199">                    .append(getNewLine());</span>
 
-<span class="fc" id="L203">            int x = 0;</span>
-<span class="fc bfc" id="L204" title="All 2 branches covered.">            for (final Iterator&lt;AntOption&gt; it = optList.iterator(); it.hasNext();) {</span>
-<span class="fc" id="L205">                final AntOption option = it.next();</span>
-<span class="fc" id="L206">                String name = option.cleanupName();</span>
-<span class="fc" id="L207">                String example = exampleList.get(x++);</span>
+<span class="fc" id="L201">            int x = 0;</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">            for (final Iterator&lt;AntOption&gt; it = optList.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L203">                final AntOption option = it.next();</span>
+<span class="fc" id="L204">                String name = option.cleanupName();</span>
+<span class="fc" id="L205">                String example = exampleList.get(x++);</span>
 
-<span class="fc" id="L209">                final StringBuilder optBuf = new StringBuilder(name);</span>
-<span class="fc bfc" id="L210" title="All 2 branches covered.">                if (name.length() &lt; max) {</span>
-<span class="fc" id="L211">                    optBuf.append(createPadding(max - name.length()));</span>
+<span class="fc" id="L207">                final StringBuilder optBuf = new StringBuilder(name);</span>
+<span class="fc bfc" id="L208" title="All 2 branches covered.">                if (name.length() &lt; max) {</span>
+<span class="fc" id="L209">                    optBuf.append(createPadding(max - name.length()));</span>
                 }
-<span class="fc" id="L213">                optBuf.append(dpad).append(example);</span>
-<span class="fc bfc" id="L214" title="All 2 branches covered.">                if (example.length() &lt; maxExample) {</span>
-<span class="fc" id="L215">                    optBuf.append(createPadding(maxExample - example.length()));</span>
+<span class="fc" id="L211">                optBuf.append(dpad).append(example);</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">                if (example.length() &lt; maxExample) {</span>
+<span class="fc" id="L213">                    optBuf.append(createPadding(maxExample - example.length()));</span>
                 }
-<span class="fc" id="L217">                optBuf.append(dpad);</span>
-<span class="fc" id="L218">                final int nextLineTabStop = max + maxExample + 2 * descPad;</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">                if (option.isDeprecated()) {</span>
-<span class="fc" id="L220">                    optBuf.append(option.getDeprecated());</span>
-<span class="pc bpc" id="L221" title="1 of 2 branches missed.">                } else if (option.getDescription() != null) {</span>
-<span class="fc" id="L222">                    optBuf.append(option.getDescription());</span>
+<span class="fc" id="L215">                optBuf.append(dpad);</span>
+<span class="fc" id="L216">                final int nextLineTabStop = max + maxExample + 2 * descPad;</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">                if (option.isDeprecated()) {</span>
+<span class="fc" id="L218">                    optBuf.append(option.getDeprecated());</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">                } else if (option.getDescription() != null) {</span>
+<span class="fc" id="L220">                    optBuf.append(option.getDescription());</span>
                 }
-<span class="fc" id="L224">                renderWrappedText(sb, width, nextLineTabStop, optBuf.toString());</span>
-<span class="fc bfc" id="L225" title="All 2 branches covered.">                if (it.hasNext()) {</span>
-<span class="fc" id="L226">                    sb.append(getNewLine());</span>
+<span class="fc" id="L222">                renderWrappedText(sb, width, nextLineTabStop, optBuf.toString());</span>
+<span class="fc bfc" id="L223" title="All 2 branches covered.">                if (it.hasNext()) {</span>
+<span class="fc" id="L224">                    sb.append(getNewLine());</span>
                 }
-<span class="fc" id="L228">            }</span>
-<span class="fc" id="L229">            return sb;</span>
+<span class="fc" id="L226">            }</span>
+<span class="fc" id="L227">            return sb;</span>
         }
     }
 }

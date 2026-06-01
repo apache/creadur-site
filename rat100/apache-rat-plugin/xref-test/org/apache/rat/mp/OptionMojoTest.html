@@ -42,25 +42,25 @@
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.AfterAll;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Assertions;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.BeforeAll;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.io.CleanupMode;
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.io.TempDir;
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.ParameterizedTest;
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.provider.ArgumentsProvider;
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.provider.ArgumentsSource;
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>  
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <strong class="jxr_keyword">import</strong> java.io.File;
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> java.io.FileWriter;
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.Method;
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.StandardCharsets;
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> java.nio.file.Path;
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>  
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.lang.String.format;
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> org.junit.jupiter.api.Assertions.fail;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.Disabled;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.io.CleanupMode;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.api.io.TempDir;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.ParameterizedTest;
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.provider.ArgumentsProvider;
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <strong class="jxr_keyword">import</strong> org.junit.jupiter.params.provider.ArgumentsSource;
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <strong class="jxr_keyword">import</strong> java.io.File;
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">import</strong> java.io.FileWriter;
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>  <strong class="jxr_keyword">import</strong> java.lang.reflect.Method;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>  <strong class="jxr_keyword">import</strong> java.nio.charset.StandardCharsets;
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  <strong class="jxr_keyword">import</strong> java.nio.file.Path;
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>  
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>  <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> java.lang.String.format;
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>  
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  @Disabled(<span class="jxr_string">"Change in Maven requires rework"</span>)
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="OptionMojoTest" href="../../../../org/apache/rat/mp/OptionMojoTest.html#OptionMojoTest">OptionMojoTest</a> {
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>      @TempDir(cleanup = CleanupMode.NEVER)
@@ -141,30 +141,25 @@
 <a class="jxr_linenumber" name="L133" href="#L133">133</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(e.getMessage(), e);
 <a class="jxr_linenumber" name="L134" href="#L134">134</a>             }
 <a class="jxr_linenumber" name="L135" href="#L135">135</a>         }
-<a class="jxr_linenumber" name="L136" href="#L136">136</a> 
-<a class="jxr_linenumber" name="L137" href="#L137">137</a>         @Override
-<a class="jxr_linenumber" name="L138" href="#L138">138</a>         <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> helpTest() {
-<a class="jxr_linenumber" name="L139" href="#L139">139</a>             fail(<span class="jxr_string">"Should not call help"</span>);
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>         }
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>     }
-<a class="jxr_linenumber" name="L142" href="#L142">142</a> 
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> SimpleMojoTestcase <strong class="jxr_keyword">extends</strong> <a name="BetterAbstractMojoTestCase" href="../../../../org/apache/rat/mp/BetterAbstractMojoTestCase.html#BetterAbstractMojoTestCase">BetterAbstractMojoTestCase</a> {
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>         <strong class="jxr_keyword">public</strong> RatCheckMojo getMojo(File pomFile) <strong class="jxr_keyword">throws</strong> Exception {
-<a class="jxr_linenumber" name="L145" href="#L145">145</a>             setUp();
-<a class="jxr_linenumber" name="L146" href="#L146">146</a>             ProjectBuildingRequest buildingRequest = newMavenSession().getProjectBuildingRequest();
-<a class="jxr_linenumber" name="L147" href="#L147">147</a>             ProjectBuilder projectBuilder = lookup(ProjectBuilder.<strong class="jxr_keyword">class</strong>);
-<a class="jxr_linenumber" name="L148" href="#L148">148</a>             MavenProject project = projectBuilder.build(pomFile, buildingRequest).getProject();
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>                 <strong class="jxr_keyword">return</strong> (RatCheckMojo) lookupConfiguredMojo(project, <span class="jxr_string">"check"</span>);
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>             } <strong class="jxr_keyword">catch</strong> (ComponentConfigurationException e) {
-<a class="jxr_linenumber" name="L152" href="#L152">152</a>                 <strong class="jxr_keyword">for</strong> (Method m : RatCheckMojo.<strong class="jxr_keyword">class</strong>.getMethods()) {
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>                     System.out.println( m );
-<a class="jxr_linenumber" name="L154" href="#L154">154</a>                 }
-<a class="jxr_linenumber" name="L155" href="#L155">155</a>                 <strong class="jxr_keyword">throw</strong> e;
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>             }
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>         }
-<a class="jxr_linenumber" name="L158" href="#L158">158</a>     }
-<a class="jxr_linenumber" name="L159" href="#L159">159</a> }
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>     }
+<a class="jxr_linenumber" name="L137" href="#L137">137</a> 
+<a class="jxr_linenumber" name="L138" href="#L138">138</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> SimpleMojoTestcase <strong class="jxr_keyword">extends</strong> <a name="BetterAbstractMojoTestCase" href="../../../../org/apache/rat/mp/BetterAbstractMojoTestCase.html#BetterAbstractMojoTestCase">BetterAbstractMojoTestCase</a> {
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>         <strong class="jxr_keyword">public</strong> RatCheckMojo getMojo(File pomFile) <strong class="jxr_keyword">throws</strong> Exception {
+<a class="jxr_linenumber" name="L140" href="#L140">140</a>             setUp();
+<a class="jxr_linenumber" name="L141" href="#L141">141</a>             ProjectBuildingRequest buildingRequest = newMavenSession().getProjectBuildingRequest();
+<a class="jxr_linenumber" name="L142" href="#L142">142</a>             ProjectBuilder projectBuilder = lookup(ProjectBuilder.<strong class="jxr_keyword">class</strong>);
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>             MavenProject project = projectBuilder.build(pomFile, buildingRequest).getProject();
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>                 <strong class="jxr_keyword">return</strong> (RatCheckMojo) lookupConfiguredMojo(project, <span class="jxr_string">"check"</span>);
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>             } <strong class="jxr_keyword">catch</strong> (ComponentConfigurationException e) {
+<a class="jxr_linenumber" name="L147" href="#L147">147</a>                 <strong class="jxr_keyword">for</strong> (Method m : RatCheckMojo.<strong class="jxr_keyword">class</strong>.getMethods()) {
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>                     System.out.println( m );
+<a class="jxr_linenumber" name="L149" href="#L149">149</a>                 }
+<a class="jxr_linenumber" name="L150" href="#L150">150</a>                 <strong class="jxr_keyword">throw</strong> e;
+<a class="jxr_linenumber" name="L151" href="#L151">151</a>             }
+<a class="jxr_linenumber" name="L152" href="#L152">152</a>         }
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>     }
+<a class="jxr_linenumber" name="L154" href="#L154">154</a> }
 </pre>
 <hr/>
 <div id="footer">© 2007–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>

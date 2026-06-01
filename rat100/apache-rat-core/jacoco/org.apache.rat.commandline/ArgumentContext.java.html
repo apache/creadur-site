@@ -25,6 +25,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.ParseException;
 import org.apache.rat.ReportConfiguration;
 import org.apache.rat.document.DocumentName;
+import org.apache.rat.ui.UIOptionCollection;
 import org.apache.rat.utils.DefaultLog;
 
 import static java.lang.String.format;
@@ -33,7 +34,7 @@ import static java.lang.String.format;
  * Provides the context necessary to process various arguments.
  * @since 0.17
  */
-public class ArgumentContext {
+public final class ArgumentContext {
     /** The report configuration that is being built */
     private final ReportConfiguration configuration;
     /** The command line that is building the configuration */
@@ -47,11 +48,11 @@ public class ArgumentContext {
      * @param configuration The configuration that is being built.
      * @param commandLine The command line that is building the configuration.
      */
-<span class="fc" id="L50">    public ArgumentContext(final File workingDirectory, final ReportConfiguration configuration, final CommandLine commandLine) {</span>
-<span class="fc" id="L51">        this.workingDirectory = DocumentName.builder(workingDirectory).build();</span>
-<span class="fc" id="L52">        this.commandLine = commandLine;</span>
-<span class="fc" id="L53">        this.configuration = configuration;</span>
-<span class="fc" id="L54">    }</span>
+<span class="fc" id="L51">    public ArgumentContext(final File workingDirectory, final ReportConfiguration configuration, final CommandLine commandLine) {</span>
+<span class="fc" id="L52">        this.workingDirectory = DocumentName.builder(workingDirectory).build();</span>
+<span class="fc" id="L53">        this.commandLine = commandLine;</span>
+<span class="fc" id="L54">        this.configuration = configuration;</span>
+<span class="fc" id="L55">    }</span>
 
     /**
      * Creates a context with an empty configuration.
@@ -59,22 +60,22 @@ public class ArgumentContext {
      * @param commandLine The command line.
      */
     public ArgumentContext(final File workingDirectory, final CommandLine commandLine) {
-<span class="fc" id="L62">        this(workingDirectory, new ReportConfiguration(), commandLine);</span>
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L63">        this(workingDirectory, new ReportConfiguration(), commandLine);</span>
+<span class="fc" id="L64">    }</span>
 
     /**
      * Process the arguments specified in this context.
      */
-    public void processArgs() {
-<span class="fc" id="L69">        Arg.processArgs(this);</span>
-<span class="fc" id="L70">    }</span>
+    public void processArgs(final UIOptionCollection&lt;?&gt; uiOptionCollection) {
+<span class="fc" id="L70">        Arg.processArgs(this,  uiOptionCollection);</span>
+<span class="fc" id="L71">    }</span>
 
     /**
      * Gets the configuration.
      * @return The configuration that is being built.
      */
     public ReportConfiguration getConfiguration() {
-<span class="fc" id="L77">        return configuration;</span>
+<span class="fc" id="L78">        return configuration;</span>
     }
 
     /**
@@ -82,7 +83,7 @@ public class ArgumentContext {
      * @return The command line that is driving the configuration.
      */
     public CommandLine getCommandLine() {
-<span class="fc" id="L85">        return commandLine;</span>
+<span class="fc" id="L86">        return commandLine;</span>
     }
 
     /**
@@ -90,7 +91,7 @@ public class ArgumentContext {
      * @return The directory name from which relative file names will be resolved.
      */
     public DocumentName getWorkingDirectory() {
-<span class="fc" id="L93">        return workingDirectory;</span>
+<span class="fc" id="L94">        return workingDirectory;</span>
     }
 
     /**
@@ -100,9 +101,9 @@ public class ArgumentContext {
      * @param defaultValue The default value the option is being set to.
      */
     public void logParseException(final ParseException exception, final Option opt, final Object defaultValue) {
-<span class="nc" id="L103">        DefaultLog.getInstance().warn(format(&quot;Invalid %s specified: %s &quot;, opt, commandLine.getOptionValue(opt)));</span>
-<span class="nc" id="L104">        DefaultLog.getInstance().warn(format(&quot;%s set to: %s&quot;, opt, defaultValue));</span>
-<span class="nc" id="L105">        DefaultLog.getInstance().debug(exception);</span>
-<span class="nc" id="L106">    }</span>
+<span class="nc" id="L104">        DefaultLog.getInstance().warn(format(&quot;Invalid %s specified: %s &quot;, opt, commandLine.getOptionValue(opt)));</span>
+<span class="nc" id="L105">        DefaultLog.getInstance().warn(format(&quot;%s set to: %s&quot;, opt, defaultValue));</span>
+<span class="nc" id="L106">        DefaultLog.getInstance().debug(exception);</span>
+<span class="nc" id="L107">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
