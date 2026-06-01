@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MavenOptionCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Tools</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.documentation.options</a> &gt; <span class="el_source">MavenOptionCollection.java</span></div><h1>MavenOptionCollection.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.documentation.options;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.ui.ArgumentTracker;
+import org.apache.rat.ui.UIOptionCollection;
+import org.apache.rat.utils.CasedString;
+
+/**
+ * The collection of MavenOptions equivalent to the CLI options
+ * with any unsupported options removed.
+ */
+public final class MavenOptionCollection extends UIOptionCollection&lt;MavenOption&gt; {
+    /**
+     * Mapping of standard name to non-conflicting name.
+     */
+    private static final Map&lt;String, String&gt; RENAME_MAP;
+
+    static {
+<span class="fc" id="L44">        Map&lt;String, String&gt; map = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L45">        map.put(&quot;addLicense&quot;, &quot;add-license&quot;);</span>
+<span class="fc" id="L46">        RENAME_MAP = map;</span>
+    }
+
+    /**
+     * The instance of the MavenOptionCollection.
+     */
+<span class="fc" id="L52">    public static final MavenOptionCollection INSTANCE = new Builder().build();</span>
+
+    public static Map&lt;String, String&gt; getRenameMap() {
+<span class="fc" id="L55">        return new TreeMap&lt;&gt;(RENAME_MAP);</span>
+    }
+
+    /**
+     * Create an instance.
+     */
+    private MavenOptionCollection(final Builder builder) {
+<span class="fc" id="L62">        super(builder);</span>
+<span class="fc" id="L63">    }</span>
+
+    public static Builder builder() {
+<span class="nc" id="L66">        return new Builder();</span>
+    }
+
+    /**
+     * Provides a new name for an option if it is renamed in the collection.
+     *
+     * @param name the option name.
+     * @return the collection name, may be the same as the option name.
+     */
+    static String rename(final String name) {
+<span class="fc" id="L76">        return StringUtils.defaultIfEmpty(RENAME_MAP.get(name), name);</span>
+    }
+
+    /**
+     * Creates the name for the option based on rules for conversion of CLI option names.
+     *
+     * @param option the standard option.
+     * @return the new Option name as a CasedString.
+     */
+    static CasedString createName(final Option option) {
+<span class="fc" id="L86">        String name = rename(ArgumentTracker.extractKey(option));</span>
+<span class="fc" id="L87">        return new CasedString(CasedString.StringCase.KEBAB, name).as(CasedString.StringCase.PASCAL);</span>
+    }
+
+    /**
+     * The Builder for the MavenOptionCollection.
+     */
+    public static final class Builder extends UIOptionCollection.Builder&lt;MavenOption, Builder&gt; {
+        private Builder() {
+<span class="fc" id="L95">            super(MavenOption::new);</span>
+<span class="fc" id="L96">            Arg.getOptions().getOptions()</span>
+<span class="fc" id="L97">                    .stream().filter(o -&gt; Objects.isNull(o.getLongOpt()))</span>
+<span class="fc" id="L98">                    .forEach(this::unsupported);</span>
+<span class="fc" id="L99">            unsupported(Arg.DIR).unsupported(Arg.LOG_LEVEL);</span>
+<span class="fc" id="L100">        }</span>
+
+        @Override
+        public MavenOptionCollection build() {
+<span class="fc" id="L104">            return new MavenOptionCollection(this);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

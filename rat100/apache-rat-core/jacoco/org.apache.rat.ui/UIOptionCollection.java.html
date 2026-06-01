@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UIOptionCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.ui</a> &gt; <span class="el_source">UIOptionCollection.java</span></div><h1>UIOptionCollection.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   https://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.ui;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.TreeMap;
+import java.util.function.BiFunction;
+import java.util.stream.Stream;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.rat.Defaults;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.utils.Log;
+
+/**
+ * A collection of options supported by the UI. This includes RAT options and UI specific options.
+ * @param &lt;T&gt; the AbstractOption implementation.
+ */
+public class UIOptionCollection&lt;T extends UIOption&lt;T&gt;&gt; {
+    /** map of ARG to the associated UpdatableOptionGroup */
+    private final Map&lt;Arg, UpdatableOptionGroup&gt; argMap;
+    /** set of RAT OptionGroups with unsupported options for this UI removed */
+    private final UpdatableOptionGroupCollection supportedRatOptions;
+    /** set of UI specific options */
+    private final Map&lt;Option, T&gt; uiOptions;
+    /**
+     * Map of option to overridden default value. Generally applies to supported RAT options but may be
+     * UI-specific options as well.
+     */
+    private final Map &lt;Option, String&gt; defaultValues;
+
+    /**
+     * The function to generate a concrete BaseOption instance.
+     */
+    private final BiFunction&lt;UIOptionCollection&lt;T&gt;, Option, T&gt; mapper;
+
+    /**
+     * Construct the UIOptionCollection from the builder.
+     * @param builder the builder to build from.
+     */
+<span class="fc" id="L64">    protected UIOptionCollection(final Builder&lt;T, ?&gt; builder) {</span>
+<span class="fc" id="L65">        Objects.requireNonNull(builder.mapper, &quot;Builder.mapper&quot;);</span>
+<span class="fc" id="L66">        argMap = new TreeMap&lt;&gt;();</span>
+<span class="fc" id="L67">        mapper = builder.mapper;</span>
+<span class="fc" id="L68">        supportedRatOptions = new UpdatableOptionGroupCollection();</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (Arg arg : Arg.values()) {</span>
+<span class="fc" id="L71">            argMap.put(arg, supportedRatOptions.add(arg.group()));</span>
+        }
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">        for (Option opt : builder.unsupportedRatOptions) {</span>
+<span class="fc" id="L75">            supportedRatOptions.findGroups(opt).forEach(group -&gt; group.disableOption(opt));</span>
+<span class="fc" id="L76">        }</span>
+<span class="fc" id="L77">        uiOptions = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L78">        supportedRatOptions.options().getOptions()</span>
+<span class="fc" id="L79">                .forEach(option -&gt; uiOptions.put(option, mapper.apply(this, option)));</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">        builder.uiOptions.stream().filter(option -&gt; !uiOptions.containsKey(option))</span>
+<span class="fc" id="L81">                .forEach(option -&gt; uiOptions.put(option, mapper.apply(this, option)));</span>
+<span class="fc" id="L82">        defaultValues = new HashMap&lt;&gt;(builder.defaultValues);</span>
+<span class="fc" id="L83">    }</span>
+
+    /**
+     * Checks if an Arg is selected.
+     * @param arg the Arg to check.
+     * @return {@code true} if the arg is selected.
+     */
+    public final boolean isSelected(final Arg arg) {
+<span class="fc" id="L91">        UpdatableOptionGroup group = argMap.get(arg);</span>
+<span class="pc bpc" id="L92" title="1 of 4 branches missed.">        return group != null &amp;&amp; group.getSelected() != null;</span>
+    }
+
+    /**
+     * Gets the selected Option for the arg.
+     * @param arg the arg to check.
+     * @return an Optional containing the selected option, or an empty Optional if none was selected.
+     */
+    public final Optional&lt;Option&gt; getSelected(final Arg arg) {
+<span class="fc" id="L101">        UpdatableOptionGroup group = argMap.get(arg);</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        String s = group == null ? null : group.getSelected();</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">        if (s != null) {</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">            for (Option result : group.getOptions()) {</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                if (result.getKey().equals(s)) {</span>
+<span class="fc" id="L106">                    return Optional.of(result);</span>
+                }
+<span class="fc" id="L108">            }</span>
+        }
+<span class="fc" id="L110">        return Optional.empty();</span>
+    }
+
+    /**
+     * Gets the collection of unsupported Options.
+     * @return the Options comprised for the unsupported options.
+     */
+    public final Options getUnsupportedOptions() {
+<span class="fc" id="L118">        return supportedRatOptions.unsupportedOptions();</span>
+    }
+
+    /**
+     * Gets the UiOption instance for the Option.
+     * @param option the option to find the instance of.
+     * @return a UIOption instance that wraps the option.
+     */
+    public final Optional&lt;T&gt; getMappedOption(final Option option) {
+<span class="fc" id="L127">        return Optional.ofNullable(uiOptions.get(option));</span>
+    }
+
+    /**
+     * Gets an Options that contains the RAT Arg defined Option instances that are understood by this collection.
+     * OptionGroups are registered in the resulting Options object.
+     * @return an Options that contains the RAT Arg defined Option instances that are understood by this collection.
+     */
+    public final Options getOptions() {
+<span class="fc" id="L136">        return supportedRatOptions.options().addOptions(additionalOptions());</span>
+    }
+
+    /**
+     * Gets the Stream of AbstractOption implementations understood by this collection.
+     * @return the Stream of AbstractOption implementations understood by this collection.
+     */
+    public final Stream&lt;T&gt; getMappedOptions() {
+<span class="fc" id="L144">        return uiOptions.values().stream();</span>
+    }
+
+    /**
+     * Gets a map client option name to specified AbstractOption implementation.
+     * @return a map client option name to specified AbstractOption implementation
+     */
+    public final Map&lt;String, T&gt; getOptionMap() {
+<span class="nc" id="L152">        Map&lt;String, T&gt; result = new TreeMap&lt;&gt;();</span>
+<span class="nc" id="L153">        getMappedOptions().forEach(mappedOption -&gt; result.put(ArgumentTracker.extractKey(mappedOption.getOption()), mappedOption));</span>
+<span class="nc" id="L154">        return result;</span>
+    }
+
+    /**
+     * Gets the additional options understood by this collection.
+     * @return the additional options understood by this collection.
+     */
+    public final Options additionalOptions() {
+<span class="fc" id="L162">        Options options = new Options();</span>
+<span class="fc" id="L163">        uiOptions.keySet().stream()</span>
+<span class="fc bfc" id="L164" title="All 2 branches covered.">                .filter(option -&gt; !supportedRatOptions.contains(option))</span>
+<span class="fc" id="L165">                .forEach(options::addOption);</span>
+<span class="fc" id="L166">        return options;</span>
+    }
+
+    /**
+     * Gets the default value for the option.
+     * @param option the option to lookup.
+     * @return the default value or {@code null} if not set.
+     */
+    public final String defaultValue(final Option option) {
+<span class="fc" id="L175">        return defaultValues.get(option);</span>
+    }
+
+    /**
+     * Builder for a BaseOptionCollection.
+     * @param &lt;T&gt; the concreate type of the BaseOption.
+     * @param &lt;S&gt; the concrete type being built.
+     */
+    protected static class Builder&lt;T extends UIOption&lt;T&gt;, S extends Builder&lt;T, S&gt;&gt; {
+        /** set of additional UI specific options */
+        private final List&lt;Option&gt; uiOptions;
+        /**
+         * Map of option to overridden default value. Generally applies to supported RAT options but may be
+         * UI-specific options as well.
+         */
+        private final Map &lt;Option, String&gt; defaultValues;
+        /** The list of unsupported RAT options. */
+        protected final List&lt;Option&gt; unsupportedRatOptions;
+        /** The function to convert an option into a UIOption. */
+        private final BiFunction&lt;UIOptionCollection&lt;T&gt;, Option, T&gt; mapper;
+
+        /**
+         * Constructor for the builder.
+         */
+<span class="fc" id="L199">        protected Builder(final BiFunction&lt;UIOptionCollection&lt;T&gt;, Option, T&gt; mapper) {</span>
+<span class="fc" id="L200">            this.mapper = mapper;</span>
+<span class="fc" id="L201">            uiOptions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L202">            defaultValues = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L203">            unsupportedRatOptions = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L204">            defaultValue(Arg.LOG_LEVEL,  Log.Level.WARN.name());</span>
+<span class="fc" id="L205">            defaultValue(Arg.OUTPUT_ARCHIVE, Defaults.ARCHIVE_PROCESSING.name());</span>
+<span class="fc" id="L206">            defaultValue(Arg.OUTPUT_STANDARD, Defaults.STANDARD_PROCESSING.name());</span>
+<span class="fc" id="L207">            defaultValue(Arg.OUTPUT_LICENSES, Defaults.LIST_LICENSES.name());</span>
+<span class="fc" id="L208">            defaultValue(Arg.OUTPUT_FAMILIES, Defaults.LIST_FAMILIES.name());</span>
+<span class="fc" id="L209">        }</span>
+
+        /**
+         * Build the UIOptionCollection.
+         * @return the UIOptionCollection.
+         */
+        public UIOptionCollection&lt;T&gt; build() {
+<span class="nc" id="L216">            return new UIOptionCollection&lt;&gt;(this);</span>
+        }
+
+        /**
+         * Returns this cast to {@code &lt;S&gt;} class.
+         * @return this as {@code &lt;S&gt;} class.
+         */
+        protected final S self() {
+<span class="fc" id="L224">            return (S) this;</span>
+        }
+
+        /**
+         * Add a UI option to the collection.
+         * @param uiOption the UI Option to add.
+         * @return this
+         */
+        public S uiOption(final Option uiOption) {
+<span class="fc" id="L233">            uiOptions.add(uiOption);</span>
+<span class="fc" id="L234">            return self();</span>
+        }
+
+        /**
+         * Add a UI options to the collection.
+         * @param uiOption the UIOptions ({@code &lt;T&gt;} objects) to add.
+         * @return this
+         */
+        public S uiOptions(final Option... uiOption) {
+<span class="nc" id="L243">            uiOptions.addAll(Arrays.asList(uiOption));</span>
+<span class="nc" id="L244">            return self();</span>
+        }
+
+        /**
+         * Register an option as unsupported.
+         * @param option the option that is not be supported. This should be an option in the
+         * {@link Arg} collection.
+         * @return this
+         */
+        public S unsupported(final Option option) {
+<span class="fc" id="L254">            unsupportedRatOptions.add(option);</span>
+<span class="fc" id="L255">            return self();</span>
+        }
+
+        /**
+         * Register multiple options as unsupported.
+         * Will ignore all the options associated with the specified Arg.
+         * @param arg The Arg to ignore.
+         * @return this
+         */
+        public S unsupported(final Arg arg) {
+<span class="fc" id="L265">            unsupportedRatOptions.addAll(arg.group().getOptions());</span>
+<span class="fc" id="L266">            return self();</span>
+        }
+
+        /**
+         * Specify the default values for an option.
+         * @param option the option to specify the default value for.
+         * @param value the value for the option.
+         * @return this
+         */
+        public S defaultValue(final Option option, final String value) {
+<span class="fc" id="L276">            defaultValues.put(option, value);</span>
+<span class="fc" id="L277">            return self();</span>
+        }
+
+        /**
+         * Specify the default values for an Arg.
+         * @param arg the Arg to specify the default value for.
+         * @param value the value for the option.
+         * @return this
+         */
+        public S defaultValue(final Arg arg, final String value) {
+<span class="fc" id="L287">            return defaultValue(arg.option(), value);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

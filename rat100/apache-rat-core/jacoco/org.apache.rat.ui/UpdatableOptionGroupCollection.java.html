@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UpdatableOptionGroupCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.ui</a> &gt; <span class="el_source">UpdatableOptionGroupCollection.java</span></div><h1>UpdatableOptionGroupCollection.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   https://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.ui;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Stream;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
+import org.apache.commons.cli.Options;
+
+/**
+ * A collection of UpdatableOptionGroups.
+ */
+public class UpdatableOptionGroupCollection {
+    /** the contained UpdatableOptionGroups */
+    private final List&lt;UpdatableOptionGroup&gt; updatableOptionGroups;
+
+    /**
+     * Creates an empty collection.
+     */
+<span class="fc" id="L41">    public UpdatableOptionGroupCollection() {</span>
+<span class="fc" id="L42">        updatableOptionGroups = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L43">    }</span>
+
+    /**
+     * Adds an OptionGroup to the collection.  If the OptionGroup is not an UpdatableOptionGroup
+     * it is converted first.
+     * @param optionGroup an OptionGroup to add.
+     * @return the UpdatableOptionGroup that was added.
+     */
+    public UpdatableOptionGroup add(final OptionGroup optionGroup) {
+<span class="fc" id="L52">        UpdatableOptionGroup uog = UpdatableOptionGroup.create(optionGroup);</span>
+<span class="fc" id="L53">        updatableOptionGroups.add(uog);</span>
+<span class="fc" id="L54">        return uog;</span>
+    }
+
+    /**
+     * Gets an Options object from this collection.
+     * @return an Options object.
+     */
+    public Options options() {
+<span class="fc" id="L62">        Options result = new Options();</span>
+<span class="fc" id="L63">        updatableOptionGroups.forEach(result::addOptionGroup);</span>
+<span class="fc" id="L64">        return result;</span>
+    }
+
+    /**
+     * Gets ll the UpdatableOptionGroups that the option is in.
+     * @param option the option to searhc for.
+     * @return the stream of UpdatableOptionGroups the option is in.
+     */
+    public Stream&lt;UpdatableOptionGroup&gt; findGroups(final Option option) {
+<span class="fc" id="L73">        return updatableOptionGroups.stream().filter(og -&gt; og.getOptions().contains(option));</span>
+    }
+
+    /**
+     * Gets the set of removed Options from the collection.
+     * @return the set of removed options.
+     */
+    public Set&lt;Option&gt; removedOptions() {
+<span class="nc" id="L81">        Set&lt;Option&gt; result = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L82">        updatableOptionGroups.forEach(uog -&gt; uog.getDisableOptions().forEach(result::add));</span>
+<span class="nc" id="L83">        return result;</span>
+    }
+
+    /**
+     * Gets the unsupported options
+     * If multiple options from the a group are disabled they will be added to the
+     * options in a group together.
+     * @return the Options object containing all the unsupported options.
+     */
+    public Options unsupportedOptions() {
+<span class="fc" id="L93">        Options result = new Options();</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (UpdatableOptionGroup uog : updatableOptionGroups) {</span>
+<span class="fc" id="L95">            OptionGroup group = new OptionGroup();</span>
+<span class="fc" id="L96">            uog.getDisableOptions().forEach(group::addOption);</span>
+<span class="fc" id="L97">            result.addOptionGroup(group);</span>
+<span class="fc" id="L98">        }</span>
+<span class="fc" id="L99">        return result;</span>
+    }
+
+    /**
+     * Returns true if the option is in any of the groups.
+     * @param option the option.
+     * @return {@code true} if the option is in any of the groups.
+     */
+    public boolean contains(final Option option) {
+<span class="fc" id="L108">        return updatableOptionGroups.stream().anyMatch(og -&gt; og.getOptions().contains(option));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

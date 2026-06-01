@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AntOptionCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Tools</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.documentation.options</a> &gt; <span class="el_source">AntOptionCollection.java</span></div><h1>AntOptionCollection.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.documentation.options;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
+import org.apache.rat.OptionCollection;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.ui.ArgumentTracker;
+import org.apache.rat.ui.UIOptionCollection;
+import org.apache.rat.utils.CasedString;
+
+import static java.lang.String.format;
+
+/**
+ * The collection of AntOptions equivalent to the CLI options
+ * with any unsupported options removed.
+ */
+public final class AntOptionCollection extends UIOptionCollection&lt;AntOption&gt; {
+    /** mapping of standard name to non-conflicting name. */
+    private static final Map&lt;String, String&gt; RENAME_MAP;
+
+    /**
+     * The format for an XML element
+     */
+    private static final String DEFAULT_XML = &quot;&lt;%1$s&gt;%%s&lt;/%1$s&gt;%n&quot;;
+
+    /** Attributes that are required for example data. */
+<span class="fc" id="L57">    private static final Map&lt;String, Map&lt;String, String&gt;&gt; REQUIRED_ATTRIBUTES = new HashMap&lt;&gt;();</span>
+    /** The list of data types that are specified as XML attributes in Ant build.xml documents */
+<span class="fc" id="L59">    private static final List&lt;Class&lt;?&gt;&gt; ATTRIBUTE_TYPES = new ArrayList&lt;&gt;();</span>
+
+    /** The map of option name conversions. */
+    private final Map&lt;Option, Option&gt; conversionMap;
+
+    static {
+<span class="fc" id="L65">        RENAME_MAP = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L66">        RENAME_MAP.put(&quot;addLicense&quot;, &quot;add-license&quot;);</span>
+
+<span class="fc" id="L68">        Map&lt;String, String&gt; attributes = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L69">        attributes.put(&quot;editLicense&quot;, &quot;true&quot;);</span>
+<span class="fc" id="L70">        REQUIRED_ATTRIBUTES.put(&quot;copyright&quot;, attributes);</span>
+<span class="fc" id="L71">        REQUIRED_ATTRIBUTES.put(&quot;editCopyright&quot;, attributes);</span>
+<span class="fc" id="L72">        REQUIRED_ATTRIBUTES.put(&quot;force&quot;, attributes);</span>
+<span class="fc" id="L73">        REQUIRED_ATTRIBUTES.put(&quot;editOverwrite&quot;, attributes);</span>
+
+        // Types that are specified as XML attributes in Ant.
+<span class="fc" id="L76">        ATTRIBUTE_TYPES.add(String.class);</span>
+<span class="fc" id="L77">        ATTRIBUTE_TYPES.add(String[].class);</span>
+<span class="fc" id="L78">        ATTRIBUTE_TYPES.add(Integer.class);</span>
+<span class="fc" id="L79">        ATTRIBUTE_TYPES.add(Long.class);</span>
+<span class="fc" id="L80">        ATTRIBUTE_TYPES.add(File.class);</span>
+    }
+
+    public static Map&lt;String, String&gt; getRenameMap() {
+<span class="fc" id="L84">        return new TreeMap&lt;&gt;(RENAME_MAP);</span>
+    }
+
+    /** The instance of the AntOptionCollection */
+<span class="fc" id="L88">    public static final AntOptionCollection INSTANCE = new Builder().build();</span>
+
+    /**
+     * Create an instance.
+     */
+    private AntOptionCollection(final Builder builder) {
+<span class="fc" id="L94">        super(builder);</span>
+<span class="fc" id="L95">        conversionMap = builder.conversions;</span>
+<span class="fc" id="L96">    }</span>
+
+    public Set&lt;AntOption&gt; convertedFrom(final AntOption antOption) {
+<span class="fc" id="L99">        return conversionMap.entrySet().stream().filter(e -&gt; e.getValue().equals(antOption.getOption()))</span>
+<span class="fc" id="L100">                .map(e -&gt; getMappedOption(e.getKey()))</span>
+<span class="fc" id="L101">                .filter(Optional::isPresent)</span>
+<span class="fc" id="L102">                .map(Optional::get)</span>
+<span class="fc" id="L103">                .collect(Collectors.toSet());</span>
+    }
+
+    /**
+     * If this option is converted to another option return that option otherwise
+     * return this option.
+     * @return the converted option.
+     */
+    public AntOption getActualAntOption(final AntOption antOption) {
+<span class="fc" id="L112">        Option opt = conversionMap.get(antOption.getOption());</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">        return opt == null ? antOption : getMappedOption(opt).orElse(antOption);</span>
+    }
+
+    public boolean isAttribute(final AntOption antOption) {
+<span class="fc" id="L117">        Option opt = antOption.getOption();</span>
+<span class="fc bfc" id="L118" title="All 6 branches covered.">        return (!opt.hasArg() || opt.getArgs() == 1) &amp;&amp; convertedFrom(antOption).isEmpty() &amp;&amp;</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">                ATTRIBUTE_TYPES.contains(opt.getType());</span>
+    }
+
+    public Map&lt;String, String&gt; getRequiredAttributes(final String name) {
+<span class="fc" id="L123">        return REQUIRED_ATTRIBUTES.get(name);</span>
+    }
+
+    BuildType buildType(final OptionCollection.ArgumentType type) {
+<span class="pc bpc" id="L127" title="2 of 7 branches missed.">        return switch (type) {</span>
+<span class="fc" id="L128">            case FILE, DIRORARCHIVE -&gt; new BuildType(&quot;filename&quot;) {</span>
+                @Override
+                protected String getMethodFormat(final AntOption antOption) {
+<span class="fc" id="L131">                    return &quot;  &lt;fileset file='%s' /&gt;\n&quot;;</span>
+                }
+            };
+<span class="nc" id="L134">            case NONE -&gt; new BuildType(&quot;&quot;);</span>
+<span class="fc" id="L135">            case COUNTERPATTERN -&gt; new BuildType(&quot;cntr&quot;);</span>
+<span class="fc" id="L136">            case EXPRESSION -&gt; new BuildType(&quot;expr&quot;);</span>
+<span class="fc" id="L137">            case STANDARDCOLLECTION -&gt; new BuildType(&quot;std&quot;);</span>
+<span class="fc" id="L138">            case LICENSEID, FAMILYID -&gt; new BuildType(&quot;lst&quot;);</span>
+<span class="nc" id="L139">            default -&gt; new BuildType(type.getDisplayName()) {</span>
+                @Override
+                protected String getMethodFormat(final AntOption antOption) {
+<span class="nc" id="L142">                    return String.format(DEFAULT_XML, WordUtils.uncapitalize(antOption.getArgName()));</span>
+                }
+            };
+        };
+    }
+
+    public static Builder builder() {
+<span class="nc" id="L149">        return new Builder();</span>
+    }
+
+    /**
+     * Provides a new name for an option if it is renamed in the collection.
+     * @param name the option name.
+     * @return the collection name, may be the same as the option name.
+     */
+    static String rename(final String name) {
+<span class="fc" id="L158">        return StringUtils.defaultIfEmpty(RENAME_MAP.get(name), name);</span>
+    }
+
+    /**
+     * Creates the name for the option based on rules for conversion of CLI option names.
+     * @param option the standard option.
+     * @return the new Option name as a CasedString.
+     */
+    static CasedString createName(final Option option) {
+<span class="fc" id="L167">        List&lt;String&gt; pluralEndings = List.of(&quot;approved&quot;, &quot;denied&quot;);</span>
+<span class="fc" id="L168">        String name = rename(ArgumentTracker.extractKey(option));</span>
+<span class="fc" id="L169">        CasedString casedName = new CasedString(CasedString.StringCase.KEBAB, name);</span>
+<span class="fc" id="L170">        String[] segments = casedName.getSegments();</span>
+<span class="fc" id="L171">        String lastSegment = segments[segments.length - 1];</span>
+<span class="pc bpc" id="L172" title="1 of 6 branches missed.">        if (option.hasArgs() &amp;&amp; !lastSegment.endsWith(&quot;s&quot;) &amp;&amp; !pluralEndings.contains(lastSegment)) {</span>
+<span class="fc" id="L173">            segments[segments.length - 1] += &quot;s&quot;;</span>
+<span class="fc" id="L174">            casedName = new CasedString(CasedString.StringCase.KEBAB, segments);</span>
+        }
+<span class="fc" id="L176">        return casedName.as(CasedString.StringCase.PASCAL);</span>
+    }
+
+    /**
+     * The Builder for the AntOptionCollection.
+     */
+    public static final class Builder extends UIOptionCollection.Builder&lt;AntOption, Builder&gt; {
+        /** Convert key to value type when generating code */
+<span class="fc" id="L184">        private final Map&lt;Option, Option&gt; conversions = new HashMap&lt;&gt;();</span>
+
+        private Builder() {
+<span class="fc" id="L187">            super(AntOption::new);</span>
+<span class="fc" id="L188">            Arg.getOptions().getOptions()</span>
+<span class="fc" id="L189">                    .stream().filter(o -&gt; Objects.isNull(o.getLongOpt()))</span>
+<span class="fc" id="L190">                    .forEach(this::unsupported);</span>
+<span class="fc" id="L191">            unsupported(Arg.LOG_LEVEL)</span>
+<span class="fc" id="L192">                    .unsupported(Arg.DIR)</span>
+<span class="fc" id="L193">                    .unsupported(Arg.SOURCE)</span>
+<span class="fc" id="L194">                    .unsupported(Arg.HELP_LICENSES)</span>
+                    // conversions
+<span class="fc" id="L196">                    .convert(Arg.LICENSES_APPROVED_FILE, Arg.LICENSES_APPROVED)</span>
+<span class="fc" id="L197">                    .convert(Arg.LICENSES_DENIED_FILE, Arg.LICENSES_DENIED)</span>
+<span class="fc" id="L198">                    .convert(Arg.FAMILIES_APPROVED_FILE, Arg.FAMILIES_APPROVED)</span>
+<span class="fc" id="L199">                    .convert(Arg.FAMILIES_DENIED_FILE, Arg.FAMILIES_DENIED)</span>
+<span class="fc" id="L200">                    .convert(Arg.INCLUDE_FILE, Arg.INCLUDE)</span>
+<span class="fc" id="L201">                    .convert(Arg.INCLUDE_STD, Arg.INCLUDE)</span>
+<span class="fc" id="L202">                    .convert(Arg.EXCLUDE_FILE, Arg.EXCLUDE)</span>
+<span class="fc" id="L203">                    .convert(Arg.EXCLUDE_STD, Arg.EXCLUDE);</span>
+<span class="fc" id="L204">        }</span>
+
+        @Override
+        public AntOptionCollection build() {
+<span class="fc" id="L208">            return new AntOptionCollection(this);</span>
+        }
+
+        public Builder convert(final Arg from, final Arg to) {
+<span class="fc" id="L212">            Option mapTo = to.option();</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">            for (Option option : from.group().getOptions()) {</span>
+<span class="pc bpc" id="L214" title="1 of 4 branches missed.">                if (!option.equals(mapTo) &amp;&amp; !option.isDeprecated()) {</span>
+<span class="fc" id="L215">                    conversions.put(option, mapTo);</span>
+                }
+<span class="fc" id="L217">            }</span>
+<span class="fc" id="L218">            return self();</span>
+        }
+    }
+
+    /**
+     * A mapping of data type of XML format.
+     */
+    public static class BuildType {
+        /**
+         * The configuration tag for this build type.
+         */
+        private final String tag;
+        /**
+         * If True adds the tag as the test extension.
+         */
+        private final boolean addExt;
+
+        /**
+         * The constructor for the build type.
+         *
+         * @param tag the XML tag for this data type.
+         */
+<span class="fc" id="L240">        BuildType(final String tag) {</span>
+<span class="fc" id="L241">            this.tag = tag;</span>
+<span class="fc" id="L242">            this.addExt = StringUtils.isNotEmpty(tag);</span>
+<span class="fc" id="L243">        }</span>
+
+        /**
+         * Gets the method based on how many arguments an Ant option requires.
+         *
+         * @param antOption the Ant option to check.
+         * @return the method format for the option.
+         */
+        protected String getMethodFormat(final AntOption antOption) {
+<span class="fc" id="L252">            return String.format(DEFAULT_XML, tag);</span>
+        }
+
+        /**
+         * Gets a string comprising the Ant XML pattern for this data type and the number of arguments expected by the Ant option.
+         *
+         * @param delegateOption the Ant option that the call is delegated to.
+         * @param antOption      the actual Ant option.
+         * @param data           the data for the actual Ant option.
+         * @return the Ant XML pattern for this data type.
+         */
+        public String getXml(final AntOption delegateOption, final AntOption antOption, final String data) {
+<span class="fc" id="L264">            String fmt = getMethodFormat(antOption);</span>
+<span class="pc bpc" id="L265" title="1 of 2 branches missed.">            String value = data == null ? WordUtils.uncapitalize(antOption.getArgName()) : data;</span>
+<span class="fc" id="L266">            String inner = format(fmt, value);</span>
+<span class="fc" id="L267">            return format(&quot;&lt;%1$s&gt;%2$s&lt;/%1$s&gt;%n&quot;, delegateOption.getName(), inner);</span>
+        }
+
+        public String getXml(final AntOption antOption, final String data) {
+<span class="nc" id="L271">            AntOption delegateOption = antOption.getActualAntOption();</span>
+<span class="nc bnc" id="L272" title="All 2 branches missed.">            if (delegateOption.isAttribute()) {</span>
+<span class="nc" id="L273">                return &quot;&quot;;</span>
+            } else {
+<span class="nc" id="L275">                return format(getMethodFormat(antOption), data);</span>
+            }
+        }
+
+        public String testName(final AntOption antOption) {
+<span class="nc bnc" id="L280" title="All 2 branches missed.">            return addExt ? format(&quot;%s_%s&quot;, antOption.getName(), antOption.getArgName()) : antOption.getName();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
