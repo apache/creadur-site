@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>VelocityReports.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Output(velocity)</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.out.velocity</a> &gt; <span class="el_source">VelocityReports.java</span></div><h1>VelocityReports.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.out.velocity;
+
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.creadur.whisker.app.Configuration;
+import org.apache.creadur.whisker.app.ResultWriterFactory;
+import org.apache.creadur.whisker.app.analysis.LicenseAnalyst;
+import org.apache.creadur.whisker.model.Descriptor;
+import org.apache.creadur.whisker.scan.Directory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
+
+/**
+ * Wraps velocity engine.
+ */
+public class VelocityReports {
+    /** The logger. */
+<span class="fc" id="L43">    private static final Logger LOGGER = LogManager.getLogger();</span>
+
+    /** XML generation template. */
+<span class="fc" id="L46">    private static final Product[] PRODUCTS_THAT_GENERATE_TEMPLATES</span>
+        = {Product.XML_TEMPLATE};
+    /** Missing license report. */
+<span class="fc" id="L49">    private static final Product[] PRODUCTS_THAT_VALIDATE</span>
+        = {Product.MISSING_LICENSE_REPORT_TEMPLATE};
+    /** Directories report. */
+<span class="fc" id="L52">    private static final Product[] PRODUCTS_THAT_REPORT_ON_DIRECTORIES</span>
+        = {Product.DIRECTORIES_REPORT_TEMPLATE};
+    /** Legal documents. */
+<span class="fc" id="L55">    private static final Product[] PRODUCTS_THAT_GENERATE_LICENSING_MATERIALS</span>
+        = {Product.LICENSE, Product.NOTICE};
+
+    /** Makes writes, not null. */
+    private final ResultWriterFactory writerFactory;
+    /** Merges templates, not null. */
+    private final VelocityEngine engine;
+
+    /**
+     * Constructs a reporter using Apache Velocity.
+     * @param writerFactory not null
+     */
+    public VelocityReports(
+<span class="fc" id="L68">            final ResultWriterFactory writerFactory) {</span>
+<span class="fc" id="L69">        this.writerFactory = writerFactory;</span>
+<span class="fc" id="L70">        engine = new VelocityEngine();</span>
+<span class="fc" id="L71">        engine.setProperty(&quot;resource.loaders&quot;, &quot;class&quot;);</span>
+<span class="fc" id="L72">        engine.setProperty(&quot;resource.loader.class.class&quot;,</span>
+<span class="fc" id="L73">                ClasspathResourceLoader.class.getName());</span>
+<span class="fc" id="L74">        engine.init();</span>
+<span class="fc" id="L75">    }</span>
+
+    /**
+     * Reports on work.
+     * @param work not null
+     * @param configuration not null
+     * @throws Exception when generation fails
+     */
+    public final void generate(final Descriptor work,
+            final Configuration configuration) throws Exception {
+<span class="fc" id="L85">        final List&lt;Product&gt; products = new ArrayList&lt;Product&gt;();</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (Product product: PRODUCTS_THAT_GENERATE_LICENSING_MATERIALS) {</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            switch (product) {</span>
+                case NOTICE:
+<span class="fc bfc" id="L89" title="All 2 branches covered.">                    if (!work.isNoticeRequired()) {</span>
+<span class="fc" id="L90">                        break;</span>
+                    }
+                default:
+<span class="fc" id="L93">                    products.add(product);</span>
+            }
+
+
+        }
+<span class="fc" id="L98">        final Product[] productArray = new Product[products.size()];</span>
+<span class="fc" id="L99">        merge(products.toArray(productArray), context(work, configuration));</span>
+<span class="fc" id="L100">    }</span>
+
+    /**
+     * Merges context with product templates, and writes results.
+     * @param products not null
+     * @param context not null
+     * @throws Exception when merger fails
+     */
+    private void merge(final Product[] products,
+            final VelocityContext context) throws Exception {
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (final Product product : products) {</span>
+<span class="fc" id="L111">            merge(product, context);</span>
+        }
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Merges context with product template, and writes results.
+     * @param product not null
+     * @param context not null
+     * @throws Exception when generate fails
+     */
+    private void merge(
+            final Product product, final VelocityContext context)
+                throws Exception {
+<span class="fc" id="L124">        final Writer writer = product.writerFrom(writerFactory);</span>
+<span class="fc" id="L125">        engine.getTemplate(</span>
+<span class="fc" id="L126">                template(product.getTemplate())).merge(context, writer);</span>
+<span class="fc" id="L127">        IOUtils.closeQuietly(writer);</span>
+<span class="fc" id="L128">    }</span>
+
+    /**
+     * Creates a context, and loads it for descriptor work.
+     * @param work not null
+     * @param configuration not null
+     * @return not null
+     */
+    private VelocityContext context(final Descriptor work,
+            final Configuration configuration) {
+<span class="fc" id="L138">        final VelocityContext context = new VelocityContext();</span>
+<span class="fc" id="L139">        context.put(&quot;work&quot;, work);</span>
+<span class="fc" id="L140">        context.put(&quot;indent&quot;, new Indentation());</span>
+<span class="fc" id="L141">        context.put(&quot;helper&quot;, new RenderingHelper(work, configuration));</span>
+<span class="fc" id="L142">        return context;</span>
+    }
+
+
+    /**
+     * Returns the full template path.
+     * @param name not null
+     * @return not null
+     */
+    private String template(final String name) {
+<span class="fc" id="L152">        return &quot;org/apache/creadur/whisker/template/velocity/&quot;</span>
+<span class="fc" id="L153">                + name.toLowerCase() + &quot;.vm&quot;;</span>
+    }
+
+    /**
+     * Generates a directory report.
+     * @param directories not null
+     * @throws Exception when reporting fails
+     */
+    public final void report(
+            final Collection&lt;Directory&gt; directories) throws Exception {
+<span class="nc" id="L163">        merge(PRODUCTS_THAT_REPORT_ON_DIRECTORIES, context(directories));</span>
+<span class="nc" id="L164">    }</span>
+
+    /**
+     * Creates a content, and loads it with the directories.
+     * @param directories not null
+     * @return not null
+     */
+    private VelocityContext context(
+            final Collection&lt;Directory&gt; directories) {
+<span class="nc" id="L173">        final VelocityContext context = new VelocityContext();</span>
+<span class="nc" id="L174">        context.put(&quot;dirs&quot;, directories);</span>
+<span class="nc" id="L175">        return context;</span>
+    }
+
+    /**
+     * Reports on analysis.
+     * @param analyst not null
+     * @throws Exception when validation fails
+     */
+    public final void validate(
+            final LicenseAnalyst analyst) throws Exception {
+<span class="nc" id="L185">        merge(PRODUCTS_THAT_VALIDATE, context(analyst));</span>
+<span class="nc" id="L186">    }</span>
+
+    /**
+     * Creates a context, and loads it with the analyst.
+     * @param analyst not null
+     * @return not null
+     */
+    private VelocityContext context(final LicenseAnalyst analyst) {
+<span class="nc" id="L194">        final VelocityContext context = new VelocityContext();</span>
+<span class="nc" id="L195">        context.put(&quot;analyst&quot;, analyst);</span>
+<span class="nc" id="L196">        return context;</span>
+    }
+
+    /**
+     * Generates template.
+     * @param withBase not null
+     * @throws Exception when generation fails
+     */
+    public final void generateTemplate(
+            final Collection&lt;Directory&gt; withBase) throws Exception {
+<span class="nc" id="L206">        merge(PRODUCTS_THAT_GENERATE_TEMPLATES, context(withBase));</span>
+<span class="nc" id="L207">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

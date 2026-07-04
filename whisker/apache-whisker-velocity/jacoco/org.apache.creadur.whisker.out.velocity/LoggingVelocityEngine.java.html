@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoggingVelocityEngine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Output(velocity)</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.out.velocity</a> &gt; <span class="el_source">LoggingVelocityEngine.java</span></div><h1>LoggingVelocityEngine.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.out.velocity;
+
+import java.util.Collection;
+
+import org.apache.creadur.whisker.app.AbstractEngine;
+import org.apache.creadur.whisker.app.Configuration;
+import org.apache.creadur.whisker.app.ResultWriterFactory;
+import org.apache.creadur.whisker.app.analysis.LicenseAnalyst;
+import org.apache.creadur.whisker.model.Descriptor;
+import org.apache.creadur.whisker.scan.Directory;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+/**
+ * Uses Apache Velocity to implement {@link AbstractEngine}.
+ *
+ * @see &lt;a href='https://velocity.apache.org'&gt;Apache Velocity&lt;/a&gt;
+ */
+public class LoggingVelocityEngine extends AbstractEngine {
+<span class="fc" id="L37">    private static final Logger LOGGER = LogManager.getLogger();</span>
+
+    /**
+     * Constructs an engine running on Apache Velocity.
+     */
+    public LoggingVelocityEngine() {
+<span class="fc" id="L43">        super();</span>
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Generates a template, and writes result using given factory.
+     * @param withBase not null
+     * @param writerFactory not null
+     * @param configuration not null
+     * @return this engine, not null
+     * @throws Exception when generation fails
+     * @see AbstractEngine#skeleton(Collection, ResultWriterFactory, Configuration)
+     */
+    @Override
+    public final AbstractEngine skeleton(
+            final Collection&lt;Directory&gt; withBase,
+            final ResultWriterFactory writerFactory,
+            final Configuration configuration)
+                throws Exception {
+<span class="nc" id="L61">        reporter(writerFactory).generateTemplate(withBase);</span>
+<span class="nc" id="L62">        return this;</span>
+    }
+
+    /**
+     * Creates a reporter for the given factory.
+     * @param writerFactory not null
+     * @return a reporter, not null
+     */
+    private VelocityReports reporter(final ResultWriterFactory writerFactory) {
+<span class="fc" id="L71">        return new VelocityReports(writerFactory);</span>
+    }
+
+    /**
+     * Generates a validation report, and writes result using given factory.
+     * @param analyst not null
+     * @param writerFactory not null
+     * @param configuration not null
+     * @return this, not null
+     * @throws Exception when validation fails
+     * @see AbstractEngine#validate(LicenseAnalyst, ResultWriterFactory, Configuration)
+     */
+    @Override
+    public final AbstractEngine validate(
+            final LicenseAnalyst analyst,
+            final ResultWriterFactory writerFactory,
+            final Configuration configuration) throws Exception {
+<span class="nc" id="L88">        reporter(writerFactory).validate(analyst);</span>
+<span class="nc" id="L89">        return this;</span>
+    }
+
+    /**
+     * Generates a directories report, and writes result using given factory.
+     * @param directories not null
+     * @param writerFactory not null
+     * @param configuration not null
+     * @return this, not null
+     * @throws Exception when reporting fails
+     * @see AbstractEngine#report(java.util.Collection, ResultWriterFactory, Configuration)
+     */
+    @Override
+    public final AbstractEngine report(
+            final Collection&lt;Directory&gt; directories,
+            final ResultWriterFactory writerFactory,
+            final Configuration configuration) throws Exception {
+<span class="nc" id="L106">        reporter(writerFactory).report(directories);</span>
+<span class="nc" id="L107">        return this;</span>
+    }
+
+    /**
+     * Generates documents, and writes results using given factory.
+     * @param work not null
+     * @param writerFactory not null
+     * @param configuration not null
+     * @return this, not null
+     * @throws Exception when generation fails.
+     * @see AbstractEngine#generate(Descriptor, ResultWriterFactory, Configuration)
+     */
+    @Override
+    public final AbstractEngine generate(
+            final Descriptor work,
+            final ResultWriterFactory writerFactory,
+            final Configuration configuration) throws Exception {
+<span class="fc" id="L124">        reporter(writerFactory).generate(work, configuration);</span>
+<span class="fc" id="L125">        return this;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

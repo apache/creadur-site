@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WriteResultsIntoDirectoryFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::App</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.app.out</a> &gt; <span class="el_source">WriteResultsIntoDirectoryFactory.java</span></div><h1>WriteResultsIntoDirectoryFactory.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.app.out;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.io.Writer;
+
+import org.apache.commons.io.output.FileWriterWithEncoding;
+import org.apache.creadur.whisker.app.Result;
+import org.apache.creadur.whisker.app.ResultWriterFactory;
+
+/**
+ * Writes results as files within a directory.
+ */
+public final class WriteResultsIntoDirectoryFactory
+                       implements ResultWriterFactory  {
+
+    /** Output directory. */
+    private final File directory;
+    /** Output encoding. */
+    private final String encoding;
+
+    /**
+     * Constructs a factory that write reports
+     * into the given directory with the given
+     * encoding.
+     * @param directory not null
+     * @param encoding not null
+     */
+    public WriteResultsIntoDirectoryFactory(
+            final File directory, final String encoding) {
+<span class="nc" id="L50">        super();</span>
+<span class="nc" id="L51">        this.directory = directory;</span>
+<span class="nc" id="L52">        this.encoding = encoding;</span>
+<span class="nc" id="L53">    }</span>
+
+    /**
+     * Creates a suitable write for the given report.
+     * @param result not null
+     * @return not null
+     * @see ResultWriterFactory#writerFor(Result)
+     * @throws IOException when the report cannot be written
+     */
+    public Writer writerFor(final Result result)
+            throws IOException {
+<span class="nc" id="L64">        return new BufferedWriter(</span>
+<span class="nc" id="L65">                FileWriterWithEncoding.builder()</span>
+<span class="nc" id="L66">                        .setFile(result.within(directory))</span>
+<span class="nc" id="L67">                        .setCharset(encoding)</span>
+<span class="nc" id="L68">                        .get());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

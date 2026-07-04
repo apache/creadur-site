@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LicenseAnalyst.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::App</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.app.analysis</a> &gt; <span class="el_source">LicenseAnalyst.java</span></div><h1>LicenseAnalyst.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.app.analysis;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeSet;
+
+
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.creadur.whisker.model.Resource;
+import org.apache.creadur.whisker.model.ResourceNamesCollator;
+import org.apache.creadur.whisker.model.Descriptor;
+import org.apache.creadur.whisker.scan.Directory;
+
+/**
+ * Analyses licenses.
+ */
+public class LicenseAnalyst {
+
+    /**
+     * Maps issues.
+     * @return not null
+     */
+    private static Map&lt;ResourceDefinitionError,
+                        Collection&lt;ResourceDescription&gt;&gt; buildIssueMap() {
+        final Map&lt;ResourceDefinitionError,
+<span class="nc" id="L45">                    Collection&lt;ResourceDescription&gt;&gt; results =</span>
+                    new HashMap&lt;ResourceDefinitionError,
+                        Collection&lt;ResourceDescription&gt;&gt;();
+        for (final ResourceDefinitionError error:
+<span class="nc bnc" id="L49" title="All 2 branches missed.">                ResourceDefinitionError.values()) {</span>
+<span class="nc" id="L50">            initIssues(results, error);</span>
+        }
+<span class="nc" id="L52">        return results;</span>
+    }
+
+    /**
+     * Builds an initial map.
+     * @param results not null
+     * @param error not null
+     */
+    private static void initIssues(
+            final Map&lt;
+                ResourceDefinitionError,
+                Collection&lt;ResourceDescription&gt;&gt; results,
+            ResourceDefinitionError error) {
+<span class="nc" id="L65">        results.put(error, new TreeSet&lt;ResourceDescription&gt;());</span>
+<span class="nc" id="L66">    }</span>
+
+    /** Directories analysed. */
+    private final Collection&lt;Directory&gt; directories;
+    /** Maps resource errors to resources. */
+    private final Map&lt;ResourceDefinitionError,
+                    Collection&lt;ResourceDescription&gt;&gt; issues;
+
+    /**
+     * Constructs empty analyst.
+     */
+    public LicenseAnalyst() {
+<span class="nc" id="L78">        this(null);</span>
+<span class="nc" id="L79">    }</span>
+
+    /**
+     * Analyse the given directories.
+     * @param directories not null
+     */
+    public LicenseAnalyst(final Collection&lt;Directory&gt; directories) {
+<span class="nc" id="L86">        super();</span>
+<span class="nc" id="L87">        this.directories = directories;</span>
+<span class="nc" id="L88">        issues = buildIssueMap();</span>
+<span class="nc" id="L89">    }</span>
+
+    /**
+     * Discover discrepancies between meta-data and source directories.
+     * @param work not null
+     * @return this, not null
+     */
+    public LicenseAnalyst analyse(final Descriptor work) {
+<span class="nc bnc" id="L97" title="All 2 branches missed.">        if (directories == null) {</span>
+<span class="nc" id="L98">            final ResourceNamesCollator collator =</span>
+                    new ResourceNamesCollator();
+<span class="nc" id="L100">            work.traverse(collator);</span>
+<span class="nc" id="L101">            analyseDuplicates(collator);</span>
+
+<span class="nc" id="L103">            final ResourceSourceAuditor sourceAuditor =</span>
+                    new ResourceSourceAuditor();
+<span class="nc" id="L105">            work.traverse(sourceAuditor);</span>
+<span class="nc" id="L106">            analyse(sourceAuditor);</span>
+<span class="nc" id="L107">        } else {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            for (final Directory directory: directories) {</span>
+<span class="nc" id="L109">                final ResourceNamesCollator collator =</span>
+                        new ResourceNamesCollator();
+<span class="nc" id="L111">                work.traverseDirectory(collator, directory.getName());</span>
+<span class="nc" id="L112">                analyseLicenses(directory, collator);</span>
+<span class="nc" id="L113">                analyseDuplicates(collator);</span>
+
+<span class="nc" id="L115">                final ResourceSourceAuditor sourceAuditor = new</span>
+                        ResourceSourceAuditor();
+<span class="nc" id="L117">                work.traverseDirectory(sourceAuditor, directory.getName());</span>
+<span class="nc" id="L118">                analyse(sourceAuditor);</span>
+<span class="nc" id="L119">            }</span>
+        }
+<span class="nc" id="L121">        return this;</span>
+    }
+
+    /**
+     * Analyse the directories with this auditor.
+     * @param sourceAuditor not null
+     */
+    private void analyse(final ResourceSourceAuditor sourceAuditor) {
+<span class="nc" id="L129">        addIssues(sourceAuditor.getResourcesMissingSource(),</span>
+                ResourceDefinitionError.MISSING_SOURCE);
+<span class="nc" id="L131">    }</span>
+
+    /**
+     * Were any errors found?
+     * @return true when the meta-data is valid,
+     * false otherwise
+     */
+    public boolean isValid() {
+        for (final ResourceDefinitionError error:
+<span class="nc bnc" id="L140" title="All 2 branches missed.">                ResourceDefinitionError.values()) {</span>
+<span class="nc bnc" id="L141" title="All 2 branches missed.">            if (!getIssues(error).isEmpty()) {</span>
+<span class="nc" id="L142">                return false;</span>
+            }
+        }
+<span class="nc" id="L145">        return true;</span>
+    }
+
+    /**
+     * Checks the descriptor against the source directories.
+     * @param work not null
+     * @return valid meta-data
+     * @throws ResourceDefinitionException when issues are found
+     */
+    public Descriptor validate(final Descriptor work)
+            throws ResourceDefinitionException {
+<span class="nc" id="L156">        analyse(work);</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">        if (isValid()) {</span>
+<span class="nc" id="L158">            return work;</span>
+        } else {
+<span class="nc" id="L160">            throw new ResourceDefinitionException(issues);</span>
+        }
+
+    }
+
+    /**
+     * Discovers duplicates.
+     * @param collator not null
+     */
+    private void analyseDuplicates(
+            final ResourceNamesCollator collator) {
+<span class="nc" id="L171">        addIssues(collator.getDuplicates(),</span>
+                ResourceDefinitionError.DUPLICATE);
+<span class="nc" id="L173">    }</span>
+
+    /**
+     * Adds the issues to the store.
+     * @param resources not null
+     * @param error not null
+     */
+    private void addIssues(
+            final Collection&lt;Pair&lt;
+                org.apache.creadur.whisker.model.WithinDirectory,
+                Resource&gt;&gt; resources,
+            final ResourceDefinitionError error) {
+        for (Pair&lt;
+                org.apache.creadur.whisker.model.WithinDirectory,
+<span class="nc bnc" id="L187" title="All 2 branches missed.">                Resource&gt; duplicate: resources) {</span>
+<span class="nc" id="L188">            getIssues(error).add(</span>
+                    new ResourceDescription(
+<span class="nc" id="L190">                            duplicate.getLeft().getName(),</span>
+<span class="nc" id="L191">                            duplicate.getRight().getName()));</span>
+<span class="nc" id="L192">        }</span>
+<span class="nc" id="L193">    }</span>
+
+    /**
+     * Checks for too many or few licenses.
+     * @param directory not null
+     * @param collator not null
+     */
+    private void analyseLicenses(final Directory directory,
+            final ResourceNamesCollator collator) {
+<span class="nc" id="L202">        analyseExtraLicenses(directory, collator);</span>
+<span class="nc" id="L203">        analyseMissingLicenses(directory, collator);</span>
+<span class="nc" id="L204">    }</span>
+
+
+    /**
+     * Checks for to many licenses.
+     * @param directory not null
+     * @param collator not null
+     */
+    private void analyseExtraLicenses(final Directory directory,
+            final ResourceNamesCollator collator) {
+<span class="nc" id="L214">        final Collection&lt;String&gt; actualResources = directory.getContents();</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        for (final String resourceLicense: collator.getNames()) {</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">            if (!actualResources.contains(resourceLicense)) {</span>
+<span class="nc" id="L217">                getExtraLicenses().add(</span>
+                        new ResourceDescription(
+<span class="nc" id="L219">                                directory.getName(),</span>
+                                resourceLicense));
+            }
+<span class="nc" id="L222">        }</span>
+<span class="nc" id="L223">    }</span>
+
+    /**
+     * Checks for too few licenses.
+     * @param directory not null
+     * @param collator not null
+     */
+    private void analyseMissingLicenses(final Directory directory,
+            final ResourceNamesCollator collator) {
+<span class="nc" id="L232">        final Collection&lt;String&gt; licensedResources = collator.getNames();</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        for (final String actualResource: directory.getContents()) {</span>
+<span class="nc bnc" id="L234" title="All 2 branches missed.">            if (!licensedResources.contains(actualResource)) {</span>
+<span class="nc" id="L235">                getMissingLicenses().add(</span>
+                        new ResourceDescription(
+<span class="nc" id="L237">                                directory.getName(),</span>
+                                actualResource));
+            }
+<span class="nc" id="L240">        }</span>
+<span class="nc" id="L241">    }</span>
+
+    /**
+     * Gets resources whose sources are missing.
+     * @return not null, possibly empty
+     */
+    public Collection&lt;ResourceDescription&gt; getResourcesMissingSources() {
+<span class="nc" id="L248">        return getIssues(ResourceDefinitionError.MISSING_SOURCE);</span>
+    }
+
+    /**
+     * Gets surplus licenses.
+     * @return not null, possibly empty
+     */
+    public Collection&lt;ResourceDescription&gt; getExtraLicenses() {
+<span class="nc" id="L256">        return getIssues(ResourceDefinitionError.EXTRA_LICENSE);</span>
+    }
+
+    /**
+     * Gets missing license.
+     * @return not null, possibly empty
+     */
+    public Collection&lt;ResourceDescription&gt; getMissingLicenses() {
+<span class="nc" id="L264">        return getIssues(ResourceDefinitionError.MISSING_LICENSE);</span>
+    }
+
+    /**
+     * Gets duplicate resources.
+     * @return the duplicates
+     */
+    public Collection&lt;ResourceDescription&gt; getDuplicates() {
+<span class="nc" id="L272">        return getIssues(ResourceDefinitionError.DUPLICATE);</span>
+    }
+
+    /**
+     * Gets issues by type.
+     * @param ofType not null
+     * @return issues of given type, not null, possibly empty
+     */
+    public Collection&lt;ResourceDescription&gt; getIssues(
+            ResourceDefinitionError ofType) {
+<span class="nc" id="L282">        return issues.get(ofType);</span>
+    }
+
+    /**
+     * Describes suitably for logging.
+     * @return something suitable for logging
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L292">        return &quot;LicenseAnalyst [directories=&quot; + directories + &quot;]&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

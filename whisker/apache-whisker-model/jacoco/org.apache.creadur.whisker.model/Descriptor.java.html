@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Descriptor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">Descriptor.java</span></div><h1>Descriptor.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.model;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * High level description of licensing qualities.
+ */
+public class Descriptor {
+
+    /** Principle license for main work. */
+    private final License primaryLicense;
+    /** Optional additional primary copyright notice*/
+    private final String primaryCopyrightNotice;
+    /** Individual or group with main responsible for main work. */
+    private final String primaryOrganisationId;
+    /** A NOTICE for the main work, for inclusion alongside the LICENSE. */
+    private final String primaryNotice;
+    /** License meta-data, indexed by id. */
+    private final Map&lt;String, License&gt; licenses;
+    /** Organisation meta-data, indexed by id */
+    private final Map&lt;String, Organisation&gt; organisations;
+    /** Notice meta-data, indexed by id. */
+    private final Map&lt;String, String&gt; notices;
+    /** Directories expected to be contained within the release. */
+    private final Collection&lt;WithinDirectory&gt; contents;
+
+
+    /**
+     * Constructs a description of the expected licensing qualities of a
+     * distribution, with no additional primary copyright notice.
+     *
+     * @param primaryLicense
+     *            not null
+     * @param primaryOrganisationId
+     *            not null
+     * @param primaryNotice
+     *            possibly null
+     * @param licenses
+     *            not null, possibly empty
+     * @param notices
+     *            not null, possibly empty
+     * @param organisations
+     *            not null, possibly empty
+     * @param contents
+     *            not null, possibly empty
+     */
+    public Descriptor(final License primaryLicense,
+            final String primaryOrganisationId,
+            final String primaryNotice,
+            final Map&lt;String, License&gt; licenses,
+            final Map&lt;String, String&gt; notices,
+            final Map&lt;String, Organisation&gt; organisations,
+            final Collection&lt;WithinDirectory&gt; contents) {
+<span class="fc" id="L74">        this(   primaryLicense,</span>
+                null,
+                primaryOrganisationId,
+                primaryNotice,
+                licenses,
+                notices,
+                organisations,
+                contents);
+<span class="fc" id="L82">    }</span>
+
+    /**
+     * Constructs a description of the expected licensing qualities of a
+     * distribution, with a primary additional copyright notice.
+     *
+     * @param primaryLicense
+     *            not null
+     * @param primaryCopyrightNotice
+     *            optional primary copyright notice, possibly null
+     *
+     * @param primaryOrganisationId
+     *            not null
+     * @param primaryNotice
+     *            possibly null
+     * @param licenses
+     *            not null, possibly empty
+     * @param notices
+     *            not null, possibly empty
+     * @param organisations
+     *            not null, possibly empty
+     * @param contents
+     *            not null, possibly empty
+     */
+    public Descriptor(final License primaryLicense,
+            final String primaryCopyrightNotice,
+            final String primaryOrganisationId,
+            final String primaryNotice,
+            final Map&lt;String, License&gt; licenses,
+            final Map&lt;String, String&gt; notices,
+            final Map&lt;String, Organisation&gt; organisations,
+            final Collection&lt;WithinDirectory&gt; contents) {
+<span class="fc" id="L114">        super();</span>
+<span class="fc" id="L115">        this.primaryLicense = primaryLicense;</span>
+<span class="fc" id="L116">        this.primaryCopyrightNotice = primaryCopyrightNotice;</span>
+<span class="fc" id="L117">        this.primaryOrganisationId = primaryOrganisationId;</span>
+<span class="fc" id="L118">        this.primaryNotice = primaryNotice;</span>
+<span class="fc" id="L119">        this.licenses = licenses;</span>
+<span class="fc" id="L120">        this.notices = notices;</span>
+<span class="fc" id="L121">        this.organisations = organisations;</span>
+<span class="fc" id="L122">        this.contents = contents;</span>
+<span class="fc" id="L123">    }</span>
+
+    /**
+     * Gets an additional copyright notice needed
+     * for some primary licenses.
+     * @return optional primary copyright notice,
+     * possibly null
+     */
+    public String getPrimaryCopyrightNotice() {
+<span class="nc" id="L132">        return primaryCopyrightNotice;</span>
+    }
+
+    /**
+     * Is there a primary copyright notice?
+     * @return true if a primary copyright notice
+     * has been set, false otherwise
+     */
+    public boolean isPrimaryCopyrightNotice() {
+<span class="nc bnc" id="L141" title="All 2 branches missed.">        return primaryCopyrightNotice != null;</span>
+    }
+
+    /**
+     * Gets the principle NOTICE for the main work.
+     *
+     * @return the primaryNotice
+     */
+    public String getPrimaryNotice() {
+<span class="nc" id="L150">        return this.primaryNotice;</span>
+    }
+
+    /**
+     * Collates NOTICE meta-data for resources.
+     *
+     * @return not null, possibly empty
+     */
+    public Map&lt;String, Collection&lt;Resource&gt;&gt; getResourceNotices() {
+<span class="fc" id="L159">        final NoticeCollator collator = new NoticeCollator();</span>
+<span class="fc" id="L160">        traverse(collator);</span>
+<span class="fc" id="L161">        return collator.resourceNotices(this.notices);</span>
+    }
+
+    /**
+     * Gets the organisations described.
+     * @return organisations indexed by id, not null
+     */
+    public Map&lt;String, Organisation&gt; getOrganisations() {
+<span class="nc" id="L169">        return organisations;</span>
+    }
+
+    /**
+     * Collates NOTICE meta-data not linked to any resource.
+     *
+     * @return not null, possibly empty
+     */
+    public Set&lt;String&gt; getOtherNotices() {
+<span class="nc" id="L178">        final NoticeCollator collator = new NoticeCollator();</span>
+<span class="nc" id="L179">        traverse(collator);</span>
+<span class="nc" id="L180">        return collator.notices(this.notices);</span>
+    }
+
+    /**
+     * Gets the license with the given id.
+     *
+     * @param id
+     *            not null
+     * @return the license with the given id, or null
+     */
+    public License license(final String id) {
+<span class="nc" id="L191">        return this.licenses.get(id);</span>
+    }
+
+    /**
+     * Gets the principle license under which the work is licensed.
+     *
+     * @return the principle license, not null
+     */
+    public License getPrimaryLicense() {
+<span class="fc" id="L200">        return this.primaryLicense;</span>
+    }
+
+    /**
+     * Gets the contents expected in the distribution.
+     *
+     * @return not null, possibly null
+     */
+    public Collection&lt;WithinDirectory&gt; getContents() {
+<span class="fc" id="L209">        return this.contents;</span>
+    }
+
+    /**
+     * Is the given license the principle license for the main work?
+     *
+     * @param license
+     *            not null
+     * @return true when the given license is the primary license, not null
+     */
+    public boolean isPrimary(final License license) {
+<span class="nc" id="L220">        return this.primaryLicense.equals(license);</span>
+    }
+
+    /**
+     * Is the given individual or group the principle organisation with
+     * responsibility for the main work.
+     *
+     * @param byOrganisation
+     *            not null
+     * @return true when the given organisation is primary
+     */
+    public boolean isPrimary(final ByOrganisation byOrganisation) {
+<span class="nc" id="L232">        return byOrganisation.getId().equals(this.primaryOrganisationId);</span>
+    }
+
+    /**
+     * Is this collection of resources expected to contain only material
+     * licensed under the primary license by the
+     * primary organisation with the primary copyright notice?
+     *
+     * @param contentElement
+     *            not null
+     * @return true when the contents are all licensed under the primary license
+     *         by the primary organisation
+     */
+    public boolean isOnlyPrimary(final ContentElement contentElement) {
+<span class="fc" id="L246">        final NoCopyrightNoticeVerifier verifier = new NoCopyrightNoticeVerifier();</span>
+<span class="fc" id="L247">        final LicenseAndOrganisationCollator collator = new LicenseAndOrganisationCollator();</span>
+<span class="fc" id="L248">        contentElement.accept(collator);</span>
+<span class="fc" id="L249">        contentElement.accept(verifier);</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">        return collator.isOnlyLicense(getPrimaryLicense())</span>
+<span class="pc bpc" id="L251" title="1 of 2 branches missed.">                &amp;&amp; collator.isOnlyOrganisation(this.primaryOrganisationId)</span>
+<span class="pc bpc" id="L252" title="1 of 2 branches missed.">                &amp;&amp; !verifier.isCopyrightNoticePresent();</span>
+    }
+
+    /**
+     * Traverses the content directories.
+     *
+     * @param visitor
+     *            possibly null
+     */
+    public void traverse(final Visitor visitor) {
+<span class="fc bfc" id="L262" title="All 2 branches covered.">        for (final WithinDirectory directory : getContents()) {</span>
+<span class="fc" id="L263">            directory.accept(visitor);</span>
+<span class="fc" id="L264">        }</span>
+<span class="fc" id="L265">    }</span>
+
+    /**
+     * Traverses the given directory.
+     *
+     * @param visitor
+     *            possibly null
+     * @param directoryName
+     *            not null
+     */
+    public void traverseDirectory(final Visitor visitor,
+            final String directoryName) {
+<span class="nc bnc" id="L277" title="All 2 branches missed.">        for (final WithinDirectory directory : getContents()) {</span>
+<span class="nc bnc" id="L278" title="All 2 branches missed.">            if (directory.isNamed(directoryName)) {</span>
+<span class="nc" id="L279">                directory.accept(visitor);</span>
+            }
+<span class="nc" id="L281">        }</span>
+<span class="nc" id="L282">    }</span>
+
+    /**
+     * Is a NOTICE document required?
+     *
+     * @return true when a NOTICE is required, false otherwise
+     */
+    public boolean isNoticeRequired() {
+<span class="fc bfc" id="L290" title="All 4 branches covered.">        return primaryNoticeExists() || resourceNoticesExist();</span>
+    }
+
+    /**
+     * Does any resource have a required notice?
+     *
+     * @return true when at least one required third party notice exists, false
+     *         otherwise
+     */
+    public boolean resourceNoticesExist() {
+<span class="fc bfc" id="L300" title="All 2 branches covered.">        return !getResourceNotices().isEmpty();</span>
+    }
+
+    /**
+     * Does the work described have a primary notice?
+     *
+     * @return true unless the primary notice is null or whitespace
+     */
+    public boolean primaryNoticeExists() {
+<span class="fc bfc" id="L309" title="All 2 branches covered.">        return (this.primaryNotice != null)</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">                &amp;&amp; !&quot;&quot;.equals(this.primaryNotice.trim());</span>
+    }
+
+    /**
+     * Is this the work of the primary organisation only?
+     *
+     * @return true when no third party resources are contained, false when
+     *         third party resources exist. In particular, true when
+     *         contents are empty.
+     */
+    public boolean isPrimaryOnly() {
+        final boolean result;
+<span class="fc bfc" id="L322" title="All 2 branches covered.">        if (!contents.isEmpty()) {</span>
+<span class="fc" id="L323">            final LicenseAndOrganisationCollator collator = new LicenseAndOrganisationCollator();</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">            for (final WithinDirectory directory : contents) {</span>
+<span class="fc" id="L325">                directory.accept(collator);</span>
+<span class="fc" id="L326">            }</span>
+<span class="fc" id="L327">            result = collator.isOnlyOrganisation(primaryOrganisationId);</span>
+<span class="fc" id="L328">        } else {</span>
+<span class="fc" id="L329">            result = true;</span>
+        }
+<span class="fc" id="L331">        return result;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

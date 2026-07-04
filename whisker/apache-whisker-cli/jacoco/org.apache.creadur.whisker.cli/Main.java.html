@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Command Line Interface</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.cli</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.cli;
+
+import org.apache.commons.cli.*;
+import org.apache.creadur.whisker.app.Act;
+import org.apache.creadur.whisker.app.Whisker;
+import org.apache.creadur.whisker.app.load.StreamableResourceFactory;
+import org.apache.creadur.whisker.app.out.WriteResultsToSystemOutFactory;
+import org.apache.creadur.whisker.out.velocity.LoggingVelocityEngine;
+
+/**
+ * Command line interface for whisker.
+ */
+public final class Main {
+
+    /**
+     * Prepended to help.
+     */
+    private static final String HELP_HEADER = &quot;\nPass &quot; +
+    		&quot;the descriptor containing license meta-data &quot; +
+    		&quot;and the act to be done.\n&quot;;
+
+    /**
+     * Appended to help.
+     */
+    private static final String HELP_FOOTER =
+        &quot;\nApache Whisker assists assembled applications &quot; +
+        &quot;maintain correct legal documentation. &quot; +
+        &quot;Whisker is part of the &quot; +
+        &quot;Apache Creadur suite of tools for &quot; +
+        &quot;auditing and comprehending software distributions, &quot; +
+        &quot;and is open source community developed software. &quot; +
+        &quot;Get involved at http://www.apache.org.\n\n&quot;;
+
+    /**
+     * Names the application.
+     */
+    private static final String APP_NAME = &quot;apache-whisker-cli&quot;;
+
+    /**
+     * Returns okay to system.
+     */
+    private static final int SYSTEM_EXIT_OK = 0;
+    /** Error code returned to system when parameters cannot be parsed. */
+    private static final int SYSTEM_EXIT_CLI_PARSE_FAILED = 1;
+
+    /**
+     * Bootstraps application.
+     * @param args not null
+     * @throws Exception when application fails unexpectedly
+     */
+    public static void main(final String[] args) throws Exception {
+<span class="nc" id="L70">        System.exit(new Main(app()).run(args));</span>
+<span class="nc" id="L71">    }</span>
+
+    /**
+     * Creates an instance of the application.
+     * @return not null
+     */
+    private static Whisker app() {
+<span class="nc" id="L78">        return new Whisker();</span>
+    }
+
+    /** The application run. */
+    private final Whisker whisker;
+
+    /**
+     * Constructs a wrapper for the given application.
+     * @param whisker not null
+     */
+    public Main(final Whisker whisker) {
+<span class="fc" id="L89">        super();</span>
+<span class="fc" id="L90">        this.whisker = whisker;</span>
+<span class="fc" id="L91">    }</span>
+
+    /**
+     * Creates a parser for command line parameters.
+     * Use GNU-style/default style.
+     * @return not null
+     */
+    private CommandLineParser parser() {
+<span class="fc" id="L99">        return new DefaultParser();</span>
+    }
+
+    /**
+     * Parses a line of arguments.
+     * @param args not null
+     * @return not null
+     * @throws ParseException when parsing fails
+     */
+    public CommandLine parse(final String[] args) throws ParseException {
+<span class="fc" id="L109">        return parser().parse(options(), args);</span>
+    }
+
+    /**
+     * Parses arguments and configures the application.
+     * @param args not null
+     * @return not null
+     * @throws ParseException when arguments cannot be parsed
+     */
+    public Whisker configure(final String[] args) throws ParseException {
+<span class="fc" id="L119">        return configure(parse(args));</span>
+    }
+
+    /**
+     * Configures the application from the command line given.
+     * @param commandLine not null
+     * @return not null
+     * @throws MissingOptionException when a mandatory option
+     * has not been supplied
+     */
+    private Whisker configure(
+            final CommandLine commandLine) throws MissingOptionException {
+<span class="fc" id="L131">        whisker.setEngine(new LoggingVelocityEngine());</span>
+<span class="fc" id="L132">        whisker.setSource(CommandLineOption.SOURCE.getOptionValue(commandLine));</span>
+<span class="fc" id="L133">        whisker.setLicenseDescriptor(</span>
+<span class="fc" id="L134">                new StreamableResourceFactory().streamFromResource(</span>
+<span class="fc" id="L135">                        licenseDescriptorName(commandLine)));</span>
+<span class="fc" id="L136">        whisker.setWriterFactory(new WriteResultsToSystemOutFactory());</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (CommandLineOption.ACT_TO_AUDIT.isSetOn(commandLine)) {</span>
+<span class="fc" id="L138">            whisker.setAct(Act.AUDIT);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        } else if (CommandLineOption.ACT_TO_GENERATE.isSetOn(commandLine)) {</span>
+<span class="fc" id="L140">            whisker.setAct(Act.GENERATE);</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        } else if (CommandLineOption.ACT_TO_SKELETON.isSetOn(commandLine)) {</span>
+<span class="fc" id="L142">            whisker.setAct(Act.SKELETON);</span>
+        }
+
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        if (whisker.getSource() == null</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">                &amp;&amp; whisker.getAct().isSourceRequired()) {</span>
+<span class="fc" id="L147">            throw new MissingOptionException(&quot;-&quot;</span>
+<span class="fc" id="L148">                    + CommandLineOption.SOURCE.getShortName() + &quot; &quot;</span>
+<span class="fc" id="L149">                    + CommandLineOption.SOURCE.getDescription());</span>
+        }
+<span class="fc" id="L151">        return whisker;</span>
+    }
+
+    /**
+     * Extracts the license descriptor name value,
+     * @param commandLine not null
+     * @return the value for the license descriptor name
+     * passed from the command line
+     */
+    private String licenseDescriptorName(final CommandLine commandLine) {
+<span class="fc" id="L161">        return CommandLineOption.LICENSE_DESCRIPTION</span>
+<span class="fc" id="L162">            .getOptionValue(commandLine);</span>
+    }
+
+    /**
+     * Runs Whisker.
+     * @param args not null
+     * @return system return code
+     * @throws Exception when application unexpectedly fails
+     */
+    public int run(final String[] args) throws Exception {
+        try {
+<span class="nc bnc" id="L173" title="All 2 branches missed.">            if (printHelp(args)) {</span>
+<span class="nc" id="L174">                help();</span>
+            } else {
+<span class="nc" id="L176">                configure(args).act();</span>
+            }
+<span class="nc" id="L178">            return SYSTEM_EXIT_OK;</span>
+<span class="nc" id="L179">        } catch (ParseException e) {</span>
+<span class="nc" id="L180">            System.out.println();</span>
+<span class="nc" id="L181">            System.out.println(e.getMessage());</span>
+<span class="nc" id="L182">            System.out.println();</span>
+<span class="nc" id="L183">            help();</span>
+<span class="nc" id="L184">            return SYSTEM_EXIT_CLI_PARSE_FAILED;</span>
+        }
+    }
+
+    /**
+     * Do these command line arguments ask for help?
+     * @param args not null
+     * @return true when command line contains option for help,
+     * false otherwise
+     * @throws ParseException in case options could not be read properly.
+     */
+    public boolean printHelp(String[] args) throws ParseException {
+<span class="fc" id="L196">        final CommandLineOption help = CommandLineOption.PRINT_HELP;</span>
+        try {
+<span class="fc" id="L198">            return help.isSetOn(</span>
+<span class="fc" id="L199">                parser().parse(new Options().addOption(</span>
+<span class="fc" id="L200">                        help.create()), args));</span>
+<span class="fc" id="L201">        } catch (ParseException e) {</span>
+<span class="fc" id="L202">            return false;</span>
+        }
+    }
+
+    /**
+     * Prints out help.
+     */
+    private void help() {
+<span class="nc" id="L210">        final HelpFormatter formatter = new HelpFormatter();</span>
+<span class="nc" id="L211">        formatter.printHelp(APP_NAME, HELP_HEADER, options(), HELP_FOOTER, true);</span>
+<span class="nc" id="L212">    }</span>
+
+    /**
+     * Builds options for the command line.
+     * @return not null
+     */
+    private Options options() {
+<span class="fc" id="L219">        return CommandLineOption.options();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
