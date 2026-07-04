@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NexusClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Tentacles</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.tentacles</a> &gt; <span class="el_source">NexusClient.java</span></div><h1>NexusClient.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.apache.creadur.tentacles;
+
+import org.apache.http.Header;
+import org.apache.http.HttpHeaders;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.logging.log4j.*;
+import org.codehaus.swizzle.stream.StreamLexer;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+public class NexusClient {
+
+<span class="nc" id="L39">    private static final Logger log = LogManager.getLogger(NexusClient.class);</span>
+    private static final String SLASH = &quot;/&quot;;
+    private static final String ONE_UP = &quot;../&quot;;
+    private static final String USER_AGENT_CONTENTS = &quot;Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.10 (maverick) Firefox/3.6.13&quot;;
+
+    private final CloseableHttpClient client;
+    private final FileSystem fileSystem;
+    private final IOSystem ioSystem;
+    private final int retries;
+
+<span class="nc" id="L49">    public NexusClient(final Platform platform) {</span>
+
+<span class="nc" id="L51">        System.setProperty(&quot;http.keepAlive&quot;, &quot;false&quot;);</span>
+<span class="nc" id="L52">        System.setProperty(&quot;http.maxConnections&quot;, &quot;50&quot;);</span>
+
+<span class="nc" id="L54">        this.retries = Integer.parseInt(System.getProperty(&quot;NexusClient.retries&quot;, &quot;5&quot;));</span>
+
+<span class="nc" id="L56">        this.client = HttpClientBuilder.create().disableContentCompression()</span>
+<span class="nc" id="L57">                .build();</span>
+<span class="nc" id="L58">        this.fileSystem = platform.getFileSystem();</span>
+<span class="nc" id="L59">        this.ioSystem = platform.getIoSystem();</span>
+<span class="nc" id="L60">    }</span>
+
+    public File download(final URI uri, final File file) throws IOException {
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (file.exists()) {</span>
+
+<span class="nc" id="L65">            final long length = getContentLength(uri);</span>
+
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            if (file.length() == length) {</span>
+<span class="nc" id="L68">                log.info(&quot;Exists {}&quot;, uri);</span>
+<span class="nc" id="L69">                return file;</span>
+            } else {
+<span class="nc" id="L71">                log.info(&quot;Incomplete {}&quot;, uri);</span>
+            }
+        }
+
+<span class="nc" id="L75">        log.info(&quot;Download {}&quot;, uri);</span>
+
+<span class="nc" id="L77">        try (CloseableHttpResponse response = get(uri); InputStream content = response.getEntity().getContent()) {</span>
+
+<span class="nc" id="L79">            this.fileSystem.mkparent(file);</span>
+
+<span class="nc" id="L81">            this.ioSystem.copy(content, file);</span>
+        }
+
+<span class="nc" id="L84">        return file;</span>
+    }
+
+    private Long getContentLength(final URI uri) throws IOException {
+<span class="nc" id="L88">        final CloseableHttpResponse head = head(uri);</span>
+<span class="nc" id="L89">        final Header[] headers = head.getHeaders(HttpHeaders.CONTENT_LENGTH);</span>
+
+<span class="nc bnc" id="L91" title="All 4 branches missed.">        if (headers != null &amp;&amp; headers.length &gt;= 1) {</span>
+<span class="nc" id="L92">            return Long.valueOf(headers[0].getValue());</span>
+        }
+
+<span class="nc" id="L95">        head.close();</span>
+
+<span class="nc" id="L97">        return (long) -1;</span>
+    }
+
+    private CloseableHttpResponse get(final URI uri) throws IOException {
+<span class="nc" id="L101">        return get(new HttpGet(uri), this.retries);</span>
+    }
+
+    private CloseableHttpResponse head(final URI uri) throws IOException {
+<span class="nc" id="L105">        return get(new HttpHead(uri), this.retries);</span>
+    }
+
+    private CloseableHttpResponse get(final HttpUriRequest request, int tries) throws IOException {
+        try {
+<span class="nc" id="L110">            request.setHeader(HttpHeaders.USER_AGENT, USER_AGENT_CONTENTS);</span>
+<span class="nc" id="L111">            return this.client.execute(request);</span>
+<span class="nc" id="L112">        } catch (final IOException e) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">            if (tries &gt; 0) {</span>
+                try {
+<span class="nc" id="L115">                    Thread.sleep(250);</span>
+<span class="nc" id="L116">                } catch (final InterruptedException ie) {</span>
+<span class="nc" id="L117">                    Thread.interrupted();</span>
+<span class="nc" id="L118">                    throw new IOException(&quot;Interrupted&quot;, ie);</span>
+<span class="nc" id="L119">                }</span>
+<span class="nc" id="L120">                return get(request, tries--);</span>
+            } else {
+<span class="nc" id="L122">                throw e;</span>
+            }
+        }
+    }
+
+    public Set&lt;URI&gt; crawl(final URI index) throws IOException {
+<span class="nc" id="L128">        log.info(&quot;Crawl {}&quot;, index);</span>
+<span class="nc" id="L129">        final Set&lt;URI&gt; resources = new LinkedHashSet&lt;&gt;();</span>
+
+<span class="nc" id="L131">        final CloseableHttpResponse response = get(index);</span>
+
+<span class="nc" id="L133">        final InputStream content = response.getEntity().getContent();</span>
+<span class="nc" id="L134">        final StreamLexer lexer = new StreamLexer(content);</span>
+
+<span class="nc" id="L136">        final Set&lt;URI&gt; crawl = new LinkedHashSet&lt;&gt;();</span>
+
+        // &lt;a
+        // href=&quot;https://repository.apache.org/content/repositories/orgapacheopenejb-094/archetype-catalog.xml&quot;&gt;archetype-catalog.xml&lt;/a&gt;
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        while (lexer.readAndMark(&quot;&lt;a &quot;, &quot;/a&gt;&quot;)) {</span>
+
+            try {
+<span class="nc" id="L143">                final String link = lexer.peek(&quot;href=\&quot;&quot;, &quot;\&quot;&quot;);</span>
+<span class="nc" id="L144">                final String name = lexer.peek(&quot;&gt;&quot;, &quot;&lt;&quot;);</span>
+
+<span class="nc" id="L146">                final URI uri = index.resolve(link);</span>
+
+<span class="nc bnc" id="L148" title="All 2 branches missed.">                if (name.equals(ONE_UP)) {</span>
+                    continue;
+                }
+<span class="nc bnc" id="L151" title="All 2 branches missed.">                if (link.equals(ONE_UP)) {</span>
+                    continue;
+                }
+
+<span class="nc bnc" id="L155" title="All 2 branches missed.">                if (name.endsWith(SLASH)) {</span>
+<span class="nc" id="L156">                    crawl.add(uri);</span>
+                    continue;
+                }
+
+<span class="nc" id="L160">                resources.add(uri);</span>
+
+            } finally {
+<span class="nc" id="L163">                lexer.unmark();</span>
+<span class="nc" id="L164">            }</span>
+        }
+
+<span class="nc" id="L167">        content.close();</span>
+<span class="nc" id="L168">        response.close();</span>
+
+<span class="nc bnc" id="L170" title="All 2 branches missed.">        for (final URI uri : crawl) {</span>
+<span class="nc" id="L171">            resources.addAll(crawl(uri));</span>
+<span class="nc" id="L172">        }</span>
+
+<span class="nc" id="L174">        return resources;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

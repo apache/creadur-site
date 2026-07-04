@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Deauthorize.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Tentacles</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.tentacles</a> &gt; <span class="el_source">Deauthorize.java</span></div><h1>Deauthorize.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.apache.creadur.tentacles;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.codehaus.swizzle.stream.DelimitedTokenReplacementInputStream;
+import org.codehaus.swizzle.stream.ExcludeFilterInputStream;
+import org.codehaus.swizzle.stream.StringTokenHandler;
+
+/**
+ * Little utility that will yank the author comments from java files.
+ * 
+ * If the resulting comment block is effectively empty, it will be yanked too.
+ */
+<span class="nc" id="L35">public class Deauthorize {</span>
+
+	/**
+	 * All input must be valid directories.
+	 * 
+	 * Invalid input is logged to System.err and skipped
+	 * 
+	 * @param args
+	 *            a list of directories to scan and fix
+	 * @throws Exception
+	 *             in case of errors.
+	 */
+	public static void main(final String[] args) throws Exception {
+
+<span class="nc bnc" id="L49" title="All 2 branches missed.">		if (args.length == 0) {</span>
+<span class="nc" id="L50">			throw new IllegalArgumentException(</span>
+					&quot;At least one directory must be specified&quot;);
+		}
+
+<span class="nc" id="L54">		final List&lt;File&gt; dirs = new ArrayList&lt;&gt;();</span>
+
+		// Check the input args upfront
+<span class="nc bnc" id="L57" title="All 2 branches missed.">		for (final String arg : args) {</span>
+<span class="nc" id="L58">			final File dir = new File(arg);</span>
+
+<span class="nc bnc" id="L60" title="All 2 branches missed.">			if (not(dir.exists(), &quot;Does not exist: %s&quot;, arg)) {</span>
+<span class="nc" id="L61">				continue;</span>
+			}
+<span class="nc bnc" id="L63" title="All 2 branches missed.">			if (not(dir.isDirectory(), &quot;Not a directory: %s&quot;, arg)) {</span>
+<span class="nc" id="L64">				continue;</span>
+			}
+
+<span class="nc" id="L67">			dirs.add(dir);</span>
+		}
+
+		// Exit if we got bad input
+<span class="nc bnc" id="L71" title="All 2 branches missed.">		if (dirs.size() != args.length) {</span>
+<span class="nc" id="L72">			System.exit(1);</span>
+		}
+
+		// Go!
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		for (final File dir : dirs) {</span>
+<span class="nc" id="L77">			deauthorize(dir);</span>
+<span class="nc" id="L78">		}</span>
+<span class="nc" id="L79">	}</span>
+
+	/**
+	 * Iterate over all the java files in the given directory
+	 * 
+	 * Read in the file so we can guess the line ending -- if we didn't need to
+	 * do that we could just stream. Run the content through Swizzle Stream and
+	 * filter out any author tags as well as any comment blocks that wind up (or
+	 * already were) empty as a result.
+	 * 
+	 * If that had any effect on the contents of the file, write it back out.
+	 * 
+	 * Should skip any files that are not readable or writable.
+	 * 
+	 * Will log an error on System.err for any files that were updated and were
+	 * not writable. Files that are not writable and don't need updating are
+	 * simply ignored.
+	 * 
+	 * @param dir
+	 * @throws IOException
+	 */
+	private static void deauthorize(final File dir) throws IOException {
+<span class="nc" id="L101">		deauthorize(dir, new IOSystem());</span>
+<span class="nc" id="L102">	}</span>
+
+	private static void deauthorize(final File dir, final IOSystem io)
+			throws IOException {
+<span class="nc bnc" id="L106" title="All 2 branches missed.">		for (final File file : new FileSystem().collect(dir, &quot;.*\\.java&quot;)) {</span>
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">			if (not(file.canRead(), &quot;File not readable: %s&quot;,</span>
+<span class="nc" id="L109">					file.getAbsolutePath())) {</span>
+<span class="nc" id="L110">				continue;</span>
+			}
+
+<span class="nc" id="L113">			final String text = io.slurp(file);</span>
+
+			// You really can't trust text to be in the native line ending
+<span class="nc bnc" id="L116" title="All 2 branches missed.">			final String eol = text.contains(&quot;\r\n&quot;) ? &quot;\r\n&quot; : &quot;\n&quot;;</span>
+<span class="nc" id="L117">			final String startComment = eol + &quot;/*&quot;;</span>
+<span class="nc" id="L118">			final String endComment = &quot;*/&quot; + eol;</span>
+
+<span class="nc" id="L120">			final InputStream baseIn = new ByteArrayInputStream(text.getBytes());</span>
+
+			// Yank author tags
+<span class="nc" id="L123">			InputStream in = new ExcludeFilterInputStream(baseIn, &quot; * @author&quot;,</span>
+					eol);
+
+			// Clean &quot;empty&quot; comments
+<span class="nc" id="L127">			in = new DelimitedTokenReplacementInputStream(in, startComment,</span>
+<span class="nc" id="L128">					endComment, new StringTokenHandler() {</span>
+						@Override
+						public String handleToken(final String commentBlock) {
+
+							// Yank if empty
+<span class="nc bnc" id="L133" title="All 2 branches missed.">							if (commentBlock.replaceAll(&quot;[\\s*]&quot;, &quot;&quot;).isEmpty()) {</span>
+<span class="nc" id="L134">								return eol;</span>
+							}
+
+							// Keep otherwise
+<span class="nc" id="L138">							return startComment + commentBlock + endComment;</span>
+						}
+					});
+
+<span class="nc" id="L142">			final byte[] content = io.read(in);</span>
+
+<span class="nc bnc" id="L144" title="All 2 branches missed.">			if (content.length != file.length()) {</span>
+
+<span class="nc bnc" id="L146" title="All 2 branches missed.">				if (not(file.canWrite(), &quot;File not writable: %s&quot;,</span>
+<span class="nc" id="L147">						file.getAbsolutePath())) {</span>
+<span class="nc" id="L148">					continue;</span>
+				}
+
+<span class="nc" id="L151">				io.copy(content, file);</span>
+			}
+<span class="nc" id="L153">		}</span>
+
+<span class="nc" id="L155">	}</span>
+
+	private static boolean not(boolean b, final String message,
+			final Object... details) {
+<span class="nc bnc" id="L159" title="All 2 branches missed.">		b = !b;</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">		if (b) {</span>
+<span class="nc" id="L161">			System.err.printf(message, details);</span>
+<span class="nc" id="L162">			System.err.println();</span>
+		}
+<span class="nc" id="L164">		return b;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

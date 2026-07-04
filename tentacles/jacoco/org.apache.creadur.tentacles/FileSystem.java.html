@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FileSystem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Tentacles</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.tentacles</a> &gt; <span class="el_source">FileSystem.java</span></div><h1>FileSystem.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.apache.creadur.tentacles;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
+import org.apache.creadur.tentacles.filter.Filters;
+
+<span class="nc" id="L27">public class FileSystem {</span>
+
+    private final Filters filters;
+
+<span class="nc" id="L31">    public FileSystem() {</span>
+<span class="nc" id="L32">        this.filters = new Filters();</span>
+<span class="nc" id="L33">    }</span>
+
+    public List&lt;File&gt; legalDocumentsUndeclaredIn(final File contents) {
+<span class="nc" id="L36">        return collect(contents,</span>
+<span class="nc" id="L37">                this.filters.legalDocumentsUndeclaredIn(contents));</span>
+    }
+
+    public List&lt;File&gt; legalDocumentsDeclaredIn(final File contents) {
+<span class="nc" id="L41">        return collect(contents,</span>
+<span class="nc" id="L42">                this.filters.legalDocumentsDeclaredIn(contents));</span>
+    }
+
+    public List&lt;File&gt; collect(final File dir, final String regex) {
+<span class="nc" id="L46">        return collect(dir, Pattern.compile(regex));</span>
+    }
+
+    private List&lt;File&gt; collect(final File dir, final Pattern pattern) {
+<span class="nc" id="L50">        return collect(dir, file -&gt; pattern.matcher(file.getAbsolutePath()).matches());</span>
+    }
+
+    public List&lt;File&gt; collect(final File dir, final FileFilter filter) {
+<span class="nc" id="L54">        final List&lt;File&gt; accepted = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if (filter.accept(dir)) {</span>
+<span class="nc" id="L56">            accepted.add(dir);</span>
+        }
+
+<span class="nc" id="L59">        final File[] files = dir.listFiles();</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (files != null) {</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">            for (final File file : files) {</span>
+<span class="nc" id="L62">                accepted.addAll(collect(file, filter));</span>
+            }
+        }
+
+<span class="nc" id="L66">        return accepted;</span>
+    }
+
+    public void mkparent(final File file) {
+<span class="nc" id="L70">        mkdirs(file.getParentFile());</span>
+<span class="nc" id="L71">    }</span>
+
+    public void mkdirs(final File file) {
+
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (!file.exists()) {</span>
+
+<span class="nc" id="L77">            final boolean success = file.mkdirs();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">            assert success : &quot;mkdirs failed to create &quot; + file;</span>
+
+<span class="nc" id="L80">            return;</span>
+        }
+
+<span class="nc" id="L83">        final boolean isDirectory = file.isDirectory();</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">        assert isDirectory : &quot;Not a directory: &quot; + file;</span>
+<span class="nc" id="L85">    }</span>
+
+    public List&lt;File&gt; documentsFrom(final File repository) {
+<span class="nc" id="L88">        return collect(repository, this.filters.filesOnly());</span>
+    }
+
+    public List&lt;File&gt; licensesFrom(final File directory) {
+<span class="nc" id="L92">        return collect(directory, this.filters.licensesOnly());</span>
+    }
+
+    public List&lt;File&gt; noticesOnly(final File directory) {
+<span class="nc" id="L96">        return collect(directory, this.filters.noticesOnly());</span>
+    }
+
+    public List&lt;File&gt; licensesDeclaredIn(final File contents) {
+<span class="nc" id="L100">        return collect(contents, this.filters.licensesDeclaredIn(contents));</span>
+    }
+
+    public List&lt;File&gt; noticesDeclaredIn(final File contents) {
+<span class="nc" id="L104">        return collect(contents, this.filters.noticesDeclaredIn(contents));</span>
+    }
+
+    public List&lt;File&gt; archivesInPath(final File file,
+            final String fileRepositoryPathNameFilter) {
+<span class="nc" id="L109">        return collect(file, this.filters.archivesInPath(fileRepositoryPathNameFilter));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
