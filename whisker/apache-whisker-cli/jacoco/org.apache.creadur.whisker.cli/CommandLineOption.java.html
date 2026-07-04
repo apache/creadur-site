@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CommandLineOption.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Command Line Interface</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.cli</a> &gt; <span class="el_source">CommandLineOption.java</span></div><h1>CommandLineOption.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.cli;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.OptionGroup;
+import org.apache.commons.cli.Options;
+
+/**
+ * Describes an option on the command line.
+ */
+<span class="fc" id="L29">public enum CommandLineOption {</span>
+
+    /** License descriptor command line argument. */
+<span class="fc" id="L32">    LICENSE_DESCRIPTION(&quot;license-descriptor&quot;, 'l',</span>
+            &quot;use given license descriptor&quot;, true, &quot;file&quot;, false),
+    /** Application source command line argument. */
+<span class="fc" id="L35">    SOURCE(&quot;source&quot;, 's', &quot;application source&quot;, false, &quot;dir&quot;, false),</span>
+    /** Generation command line argument. */
+<span class="fc" id="L37">    ACT_TO_GENERATE(&quot;generate&quot;, 'g',</span>
+            &quot;generate license and notice&quot;, false, null, true),
+    /** Audit command line argument. */
+<span class="fc" id="L40">    ACT_TO_AUDIT(&quot;audit&quot;, 'a', &quot;report audit details&quot;, false, null, true),</span>
+    /** Generate skeleton mete-data command line argument. */
+<span class="fc" id="L42">    ACT_TO_SKELETON(&quot;skeleton&quot;, 't',</span>
+            &quot;generates skeleton meta-data&quot;, false, null, true),
+    /** Print help then exit, ignoring other options. */
+<span class="fc" id="L45">    PRINT_HELP(&quot;help&quot;, 'h', &quot;print help then exit, ignoring other options.&quot;, false, null, false);</span>
+
+    /**
+     * Creates options for the command line.
+     * @return not null
+     */
+    public static Options options() {
+<span class="fc" id="L52">        final Options options = new Options();</span>
+<span class="fc" id="L53">        final OptionGroup acts = new OptionGroup();</span>
+<span class="fc" id="L54">        acts.setRequired(true);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (final CommandLineOption option : values()) {</span>
+<span class="fc" id="L56">            final Option cliOption = option.create();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            if (option.isAct) {</span>
+<span class="fc" id="L58">                acts.addOption(cliOption);</span>
+            } else {
+<span class="fc" id="L60">                options.addOption(cliOption);</span>
+            }
+        }
+<span class="fc" id="L63">        options.addOptionGroup(acts);</span>
+<span class="fc" id="L64">        return options;</span>
+    }
+
+    /** The long name used for this command line argument. */
+    private final String longName;
+    /** The character short for this command line argument.*/
+    private final char shortName;
+    /** A description of this command line argument suitable for user.*/
+    private final String description;
+    /** Is this a mandatory argument? */
+    private final boolean required;
+    /** The argument name. */
+    private final String argument;
+    /** Is this argument within the act group? */
+    private final boolean isAct;
+
+    /**
+     * Describes one argument.
+     * @param longName not null
+     * @param shortName not null
+     * @param description not null
+     * @param required is this mandatory?
+     * @param argument possibly null
+     * @param isAct is this argument an act?
+     */
+    CommandLineOption(final String longName,
+            final char shortName,
+            final String description,
+            final boolean required,
+            final String argument,
+<span class="fc" id="L94">            final boolean isAct) {</span>
+<span class="fc" id="L95">        this.longName = longName;</span>
+<span class="fc" id="L96">        this.shortName = shortName;</span>
+<span class="fc" id="L97">        this.description = description;</span>
+<span class="fc" id="L98">        this.required = required;</span>
+<span class="fc" id="L99">        this.argument = argument;</span>
+<span class="fc" id="L100">        this.isAct = isAct;</span>
+<span class="fc" id="L101">    }</span>
+
+    /**
+     * Gets the long name of this command line argument.
+     * @return not null
+     */
+    public String getLongName() {
+<span class="fc" id="L108">        return longName;</span>
+    }
+
+    /**
+     * Gets the short name of this command line argument.
+     * @return the character short for this option
+     */
+    public char getShortName() {
+<span class="fc" id="L116">        return shortName;</span>
+    }
+
+    /**
+     * Gets the description for this option.
+     * @return not null
+     */
+    public String getDescription() {
+<span class="fc" id="L124">        return description;</span>
+    }
+
+    /**
+     * Builds a representation.
+     * @return not null
+     */
+    @SuppressWarnings(&quot;static-access&quot;)
+    public Option create() {
+<span class="fc" id="L133">        final Option.Builder builder = Option.builder(String.valueOf(getShortName()));</span>
+<span class="fc" id="L134">            builder.required(required)</span>
+<span class="fc" id="L135">                    .desc(getDescription())</span>
+<span class="fc" id="L136">                    .longOpt(getLongName());</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (argument != null) {</span>
+<span class="fc" id="L138">            builder.hasArg().argName(argument);</span>
+        }
+<span class="fc" id="L140">        return builder.build();</span>
+    }
+
+    /**
+     * Gets an option value from the command line.
+     * @param commandLine not null
+     * @return not null
+     */
+    public String getOptionValue(final CommandLine commandLine) {
+<span class="fc" id="L149">        return commandLine.getOptionValue(getShortName());</span>
+    }
+
+    /**
+     * Is the short name option set?
+     * @param commandLine not null
+     * @return true when the option is present, false otherwise
+     */
+    public boolean isSetOn(final CommandLine commandLine) {
+<span class="fc" id="L158">        return commandLine.hasOption(getShortName());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

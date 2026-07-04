@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NoticeCollator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">NoticeCollator.java</span></div><h1>NoticeCollator.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License. 
+ */
+package org.apache.creadur.whisker.model;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+
+/**
+ * 
+ */
+<span class="fc" id="L31">public class NoticeCollator extends Visitor {</span>
+
+<span class="fc" id="L33">    private final Map&lt;String, Collection&lt;Resource&gt;&gt; resourcesByNoticeId = new HashMap&lt;String, Collection&lt;Resource&gt;&gt;();</span>
+
+    /**
+     * @return the noticeIds
+     */
+    public Set&lt;String&gt; getNoticeIds() {
+<span class="nc" id="L39">        return this.resourcesByNoticeId.keySet();</span>
+    }
+
+    /**
+     * @see Visitor#visit(Resource)
+     */
+    @Override
+    public void visit(final Resource resource) {
+<span class="fc" id="L47">        final String noticeId = resource.getNoticeId();</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (noticeId != null) {</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">            if (!this.resourcesByNoticeId.containsKey(noticeId)) {</span>
+<span class="fc" id="L50">                this.resourcesByNoticeId.put(noticeId, new TreeSet&lt;Resource&gt;());</span>
+            }
+<span class="fc" id="L52">            this.resourcesByNoticeId.get(noticeId).add(resource);</span>
+        }
+<span class="fc" id="L54">    }</span>
+
+    public Map&lt;String, Collection&lt;Resource&gt;&gt; resourceNotices(
+            final Map&lt;String, String&gt; notices) {
+<span class="fc" id="L58">        final Map&lt;String, Collection&lt;Resource&gt;&gt; results = new HashMap&lt;String, Collection&lt;Resource&gt;&gt;();</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for (final Map.Entry&lt;String, Collection&lt;Resource&gt;&gt; entry : this.resourcesByNoticeId</span>
+<span class="fc" id="L60">                .entrySet()) {</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">            if (notices.containsKey(entry.getKey())) {</span>
+<span class="fc" id="L62">                results.put(notices.get(entry.getKey()), new TreeSet&lt;Resource&gt;(</span>
+<span class="fc" id="L63">                        entry.getValue()));</span>
+            } else {
+<span class="nc" id="L65">                throw new IllegalArgumentException(&quot;Notice missing for id &quot;</span>
+<span class="nc" id="L66">                        + entry.getKey());</span>
+            }
+<span class="fc" id="L68">        }</span>
+<span class="fc" id="L69">        return results;</span>
+    }
+
+    /**
+     * @param notices map of notice-id and notices.
+     * @return list of notices.
+     */
+    public Set&lt;String&gt; notices(final Map&lt;String, String&gt; notices) {
+<span class="nc" id="L77">        final Set&lt;String&gt; results = new HashSet&lt;String&gt;();</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        for (final String id : getNoticeIds()) {</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">            if (notices.containsKey(id)) {</span>
+<span class="nc" id="L80">                results.add(notices.get(id));</span>
+            } else {
+<span class="nc" id="L82">                throw new IllegalArgumentException(&quot;Notice missing for id &quot;</span>
+                        + id);
+            }
+<span class="nc" id="L85">        }</span>
+<span class="nc" id="L86">        return results;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

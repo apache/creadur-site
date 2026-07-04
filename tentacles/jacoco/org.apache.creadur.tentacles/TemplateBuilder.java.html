@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TemplateBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Tentacles</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.tentacles</a> &gt; <span class="el_source">TemplateBuilder.java</span></div><h1>TemplateBuilder.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.tentacles;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+
+public class TemplateBuilder {
+<span class="nc" id="L33">    private static final String LOG_TAG_NAME = TemplateBuilder.class.getName();</span>
+
+    private final TentaclesResources tentaclesResources;
+    private final VelocityEngine engine;
+    private final IOSystem ioSystem;
+    private final String templateName;
+<span class="nc" id="L39">    private final Map&lt;String, Object&gt; templateContextMap =</span>
+            new ConcurrentHashMap&lt;&gt;();
+
+    public TemplateBuilder(final String template, final IOSystem ioSystem,
+            final VelocityEngine engine,
+<span class="nc" id="L44">            final TentaclesResources tentaclesResources) {</span>
+<span class="nc" id="L45">        this.templateName = template;</span>
+<span class="nc" id="L46">        this.ioSystem = ioSystem;</span>
+<span class="nc" id="L47">        this.engine = engine;</span>
+<span class="nc" id="L48">        this.tentaclesResources = tentaclesResources;</span>
+<span class="nc" id="L49">    }</span>
+
+    public TemplateBuilder add(final String key, final Object value) {
+<span class="nc" id="L52">        this.templateContextMap.put(key, value);</span>
+<span class="nc" id="L53">        return this;</span>
+    }
+
+    public TemplateBuilder addAll(final Map&lt;String, Object&gt; map) {
+<span class="nc" id="L57">        this.templateContextMap.putAll(map);</span>
+<span class="nc" id="L58">        return this;</span>
+    }
+
+    public String apply() {
+<span class="nc" id="L62">        final StringWriter writer = new StringWriter();</span>
+
+<span class="nc" id="L64">        evaluate(writer);</span>
+
+<span class="nc" id="L66">        return writer.toString();</span>
+    }
+
+    public File write(final File file) throws IOException {
+<span class="nc" id="L70">        this.ioSystem.writeString(file, apply());</span>
+<span class="nc" id="L71">        return file;</span>
+    }
+
+    private void evaluate(final Writer writer) {
+        try {
+<span class="nc" id="L76">            final Reader templateReader =</span>
+<span class="nc" id="L77">                    this.tentaclesResources.read(this.templateName);</span>
+
+<span class="nc" id="L79">            final VelocityContext context =</span>
+                    new VelocityContext(this.templateContextMap);
+<span class="nc" id="L81">            this.engine.evaluate(context, writer, LOG_TAG_NAME, templateReader);</span>
+
+<span class="nc" id="L83">        } catch (final IOException ioe) {</span>
+<span class="nc" id="L84">            throw new RuntimeException(&quot;can't apply template &quot;</span>
+                    + this.templateName, ioe);
+<span class="nc" id="L86">        }</span>
+<span class="nc" id="L87">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

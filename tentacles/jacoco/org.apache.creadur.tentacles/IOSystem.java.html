@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>IOSystem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Tentacles</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.tentacles</a> &gt; <span class="el_source">IOSystem.java</span></div><h1>IOSystem.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.apache.creadur.tentacles;
+
+import org.apache.logging.log4j.*;
+import java.io.*;
+import java.net.URL;
+import java.nio.file.Files;
+import java.util.zip.ZipInputStream;
+
+<span class="nc" id="L25">public class IOSystem {</span>
+<span class="nc" id="L26">	private static final Logger LOG = LogManager.getLogger(IOSystem.class);</span>
+
+	public String slurp(final File file) throws IOException {
+<span class="nc" id="L29">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L30">		copy(file, out);</span>
+<span class="nc" id="L31">		return out.toString();</span>
+	}
+
+	public String slurp(final URL url) throws IOException {
+<span class="nc" id="L35">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L36">		copy(url.openStream(), out);</span>
+<span class="nc" id="L37">		return out.toString();</span>
+	}
+
+	public void writeString(final File file, final String string) throws IOException {
+<span class="nc" id="L41">		final FileWriter out = new FileWriter(file);</span>
+		try {
+<span class="nc" id="L43">			final BufferedWriter bufferedWriter = new BufferedWriter(out);</span>
+			try {
+<span class="nc" id="L45">				bufferedWriter.write(string);</span>
+<span class="nc" id="L46">				bufferedWriter.newLine();</span>
+			} finally {
+<span class="nc" id="L48">				close(bufferedWriter);</span>
+			}
+		} finally {
+<span class="nc" id="L51">			close(out);</span>
+		}
+<span class="nc" id="L53">	}</span>
+
+	private void copy(final File from, final OutputStream to) throws IOException {
+<span class="nc" id="L56">		final InputStream read = read(from);</span>
+		try {
+<span class="nc" id="L58">			copy(read, to);</span>
+		} finally {
+<span class="nc" id="L60">			close(read);</span>
+		}
+<span class="nc" id="L62">	}</span>
+
+	public void copy(final InputStream from, final File to) throws IOException {
+<span class="nc" id="L65">		final OutputStream write = write(to);</span>
+		try {
+<span class="nc" id="L67">			copy(from, write);</span>
+		} finally {
+<span class="nc" id="L69">			close(write);</span>
+		}
+<span class="nc" id="L71">	}</span>
+
+	private void copy(final InputStream from, final OutputStream to) throws IOException {
+<span class="nc" id="L74">		final byte[] buffer = new byte[1024];</span>
+<span class="nc" id="L75">		int length = 0;</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">		while ((length = from.read(buffer)) != -1) {</span>
+<span class="nc" id="L77">			to.write(buffer, 0, length);</span>
+		}
+<span class="nc" id="L79">		to.flush();</span>
+<span class="nc" id="L80">	}</span>
+
+	public void copy(final byte[] from, final File to) throws IOException {
+<span class="nc" id="L83">		copy(new ByteArrayInputStream(from), to);</span>
+<span class="nc" id="L84">	}</span>
+
+	public ZipInputStream unzip(final File file) throws IOException {
+<span class="nc" id="L87">		final InputStream read = read(file);</span>
+<span class="nc" id="L88">		return new ZipInputStream(read);</span>
+	}
+
+	public void close(final Closeable closeable) {
+<span class="nc bnc" id="L92" title="All 2 branches missed.">		if (closeable == null) {</span>
+<span class="nc" id="L93">			return;</span>
+		}
+		try {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">			if (closeable instanceof Flushable) {</span>
+<span class="nc" id="L97">				((Flushable) closeable).flush();</span>
+			}
+<span class="nc" id="L99">		} catch (final IOException e) {</span>
+<span class="nc" id="L100">            LOG.trace(&quot;Error when trying to flush before closing {}&quot;, closeable, e);</span>
+<span class="nc" id="L101">		}</span>
+		try {
+<span class="nc" id="L103">			closeable.close();</span>
+<span class="nc" id="L104">		} catch (final IOException e) {</span>
+<span class="nc" id="L105">            LOG.trace(&quot;Error when trying to close {}&quot;, closeable, e);</span>
+<span class="nc" id="L106">		}</span>
+<span class="nc" id="L107">	}</span>
+
+	public OutputStream write(final File destination) throws IOException {
+<span class="nc" id="L110">		final OutputStream out = Files.newOutputStream(destination.toPath());</span>
+<span class="nc" id="L111">		return new BufferedOutputStream(out, 32768);</span>
+	}
+
+	public InputStream read(final File source) throws IOException {
+<span class="nc" id="L115">		final InputStream in = Files.newInputStream(source.toPath());</span>
+<span class="nc" id="L116">		return new BufferedInputStream(in, 32768);</span>
+	}
+
+	public byte[] read(final InputStream in) throws IOException {
+<span class="nc" id="L120">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L121">		copy(in, out);</span>
+<span class="nc" id="L122">		out.close();</span>
+<span class="nc" id="L123">		return out.toByteArray();</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

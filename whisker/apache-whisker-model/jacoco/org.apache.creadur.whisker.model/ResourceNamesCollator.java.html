@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResourceNamesCollator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">ResourceNamesCollator.java</span></div><h1>ResourceNamesCollator.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.model;
+
+import java.util.Collection;
+import java.util.TreeSet;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+/**
+ * Collates resources within directories, flattening the
+ * model.
+ */
+<span class="nc" id="L31">public class ResourceNamesCollator extends Visitor {</span>
+
+    /** Resources collected. */
+<span class="nc" id="L34">    private final Collection&lt;Pair&lt;WithinDirectory, Resource&gt;&gt; resources </span>
+        = new TreeSet&lt;Pair&lt;WithinDirectory, Resource&gt;&gt;();
+    /** Duplicate resources discovered. */
+<span class="nc" id="L37">    private final Collection&lt;Pair&lt;WithinDirectory, Resource&gt;&gt; duplicates </span>
+        = new TreeSet&lt;Pair&lt;WithinDirectory, Resource&gt;&gt;();
+    /** Last directory visited. */
+    private WithinDirectory lastDirectory;
+
+    /**
+     * Gets the names of the resources collected.
+     * @return not null
+     */
+    public Collection&lt;String&gt; getNames() {
+<span class="nc" id="L47">        final Collection&lt;String&gt; names = new TreeSet&lt;String&gt;();</span>
+<span class="nc bnc" id="L48" title="All 2 branches missed.">        for (final Pair&lt;WithinDirectory, Resource&gt; pair : this.resources) {</span>
+<span class="nc" id="L49">            names.add(pair.getRight().getName());</span>
+<span class="nc" id="L50">        }</span>
+<span class="nc" id="L51">        return names;</span>
+    }
+
+    /**
+     * Gets the duplicate resources discovered.
+     * @return not null
+     */
+    public Collection&lt;Pair&lt;WithinDirectory, Resource&gt;&gt; getDuplicates() {
+<span class="nc" id="L59">        return this.duplicates;</span>
+    }
+
+    /**
+     * Sets the last directory visited.
+     * @see Visitor#visit(WithinDirectory)
+     * @param directory not null
+     */
+    @Override
+    public void visit(final WithinDirectory directory) {
+<span class="nc" id="L69">        this.lastDirectory = directory;</span>
+<span class="nc" id="L70">    }</span>
+
+    /**
+     * Collects this resource.
+     * @see Visitor#visit(Resource)
+     * @param resource not null
+     */
+    @Override
+    public void visit(final Resource resource) {
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (!this.resources.add(new ImmutablePair&lt;WithinDirectory, Resource&gt;(</span>
+                this.lastDirectory, resource))) {
+            // Already added
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            if (this.lastDirectory == null) {</span>
+                // Issue with logic which will result in a null pointer later
+<span class="nc" id="L84">                throw new IllegalArgumentException(</span>
+                        &quot;Expected directory to be present&quot;);
+            }
+<span class="nc" id="L87">            this.duplicates.add(new ImmutablePair&lt;WithinDirectory, Resource&gt;(</span>
+                    this.lastDirectory, resource));
+      }
+<span class="nc" id="L90">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Templates.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Tentacles</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.tentacles</a> &gt; <span class="el_source">Templates.java</span></div><h1>Templates.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.apache.creadur.tentacles;
+
+import org.apache.velocity.app.VelocityEngine;
+
+import java.util.Properties;
+
+public final class Templates {
+    private final IOSystem ioSystem;
+    private final VelocityEngine engine;
+    private final TentaclesResources tentaclesResources;
+
+<span class="nc" id="L28">    public Templates(final Platform platform) {</span>
+<span class="nc" id="L29">        this.ioSystem = platform.getIoSystem();</span>
+<span class="nc" id="L30">        this.tentaclesResources = platform.getTentaclesResources();</span>
+<span class="nc" id="L31">        final Properties properties = new Properties();</span>
+<span class="nc" id="L32">        properties.setProperty(&quot;resource.loader.class.cache&quot;, &quot;true&quot;);</span>
+<span class="nc" id="L33">        properties.setProperty(&quot;resource.loaders&quot;, &quot;class&quot;);</span>
+<span class="nc" id="L34">        properties.setProperty(&quot;resource.loader.class.description&quot;,</span>
+                &quot;Velocity Classpath Resource Loader&quot;);
+<span class="nc" id="L36">        properties</span>
+<span class="nc" id="L37">                .setProperty(&quot;resource.loader.class.class&quot;,</span>
+                        &quot;org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader&quot;);
+<span class="nc" id="L39">        properties.setProperty(&quot;runtime.log.name&quot;,</span>
+<span class="nc" id="L40">                Templates.class.getName());</span>
+
+<span class="nc" id="L42">        this.engine = new VelocityEngine();</span>
+<span class="nc" id="L43">        this.engine.init(properties);</span>
+<span class="nc" id="L44">    }</span>
+
+    public TemplateBuilder template(final String name) {
+<span class="nc" id="L47">        return new TemplateBuilder(name, this.ioSystem, this.engine,</span>
+                this.tentaclesResources);
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

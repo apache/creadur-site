@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WithLicense.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">WithLicense.java</span></div><h1>WithLicense.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.model;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+
+/**
+ * Groups resources sharing a license and claimed copyright.
+ */
+public class WithLicense implements Comparable&lt;WithLicense&gt;, ContentElement {
+
+    /** License shared by contained resources, not null. */
+    private final License license;
+    /** Resources grouped by responsible organisation. */
+    private final Collection&lt;ByOrganisation&gt; organisations;
+    /** Copyright claim shared by contained resources. */
+    private final String copyrightNotice;
+    /** Parameters to specialise the license family template. */
+    private final Map&lt;String, String&gt; parameters;
+
+    /**
+     * Groups resources sharing a license and copyright claim.
+     * @param license License shared by contained resources,
+     * not null
+     * @param copyrightNotice copyright claim
+     * shared by contained resources, possibly null
+     * @param parameters parameters to specialise
+     * the license family template, not null
+     * @param organisations resources grouped by
+     * responsible organisation, not null
+     */
+    public WithLicense(final License license, final String copyrightNotice,
+            final Map&lt;String, String&gt; parameters,
+            final Collection&lt;ByOrganisation&gt; organisations) {
+<span class="fc" id="L53">        super();</span>
+<span class="fc" id="L54">        this.license = license;</span>
+<span class="fc" id="L55">        this.copyrightNotice = copyrightNotice;</span>
+<span class="fc" id="L56">        this.parameters = Collections.unmodifiableMap(parameters);</span>
+<span class="fc" id="L57">        this.organisations = Collections.unmodifiableCollection(organisations);</span>
+<span class="fc" id="L58">    }</span>
+
+    /**
+     * Gets the copyright claim shared
+     * by the resources contained.
+     * @return possibly null
+     */
+    public String getCopyrightNotice() {
+<span class="fc" id="L66">        return this.copyrightNotice;</span>
+    }
+
+
+    /**
+     * Indicates whether a copyright notice
+     * accumpianies this license.
+     * @return true when {@link #getCopyrightNotice()} is not null,
+     * false when {@link #getCopyrightNotice()} is null
+     */
+    public boolean hasCopyrightNotice() {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return getCopyrightNotice() != null;</span>
+    }
+
+    /**
+     * Gets the presentation name for the license
+     * shared by the resources contained.
+     * @return not null
+     */
+    public String getName() {
+<span class="nc" id="L86">        return this.license.getName();</span>
+    }
+
+    /**
+     * Gets a locator for the license
+     * shared by the resources contained.
+     * @return not null
+     */
+    public String getURL() {
+<span class="nc" id="L95">        return this.license.getURL();</span>
+    }
+
+    /**
+     * Gets license meta-data shared by the resources
+     * contained.
+     * @return not null
+     */
+    public License getLicense() {
+<span class="fc" id="L104">        return this.license;</span>
+    }
+
+    /**
+     * Gets the license legalise shared by the resources
+     * contained. Computed by applying the parameters
+     * to the license template.
+     * @return not null
+     * @throws LicenseTemplateException when the license
+     * text cannot be generated from the template
+     */
+    public String getText() throws LicenseTemplateException {
+<span class="nc" id="L116">        return this.license.getText(this.parameters);</span>
+    }
+
+    /**
+     * Gets resources grouped by responsible organisation.
+     * @return not null
+     */
+    public Collection&lt;ByOrganisation&gt; getOrganisations() {
+<span class="fc" id="L124">        return this.organisations;</span>
+    }
+
+    /**
+     * Gets the parameters substituted into the license
+     * template when generating the license legalise.
+     * @return not null
+     */
+    public Map&lt;String, String&gt; getParameters() {
+<span class="nc" id="L133">        return this.parameters;</span>
+    }
+
+    /**
+     * Based on license.
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     * @param other possibly null
+     * @return license comparison
+     */
+    public int compareTo(final WithLicense other) {
+<span class="nc" id="L143">        return this.license.compareTo(other.getLicense());</span>
+    }
+
+    /**
+     * Accepts a visit.
+     * @param visitor possibly null
+     */
+    public void accept(final Visitor visitor) {
+<span class="pc bpc" id="L151" title="2 of 4 branches missed.">        if (visitor != null &amp;&amp; visitor.traverseWithLicense()) {</span>
+<span class="fc" id="L152">            visitor.visit(this);</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">            for (final ByOrganisation organisation : getOrganisations()) {</span>
+<span class="fc" id="L154">                organisation.accept(visitor);</span>
+<span class="fc" id="L155">            }</span>
+        }
+<span class="fc" id="L157">    }</span>
+
+    /**
+     * Should information about the source distribution of
+     * contained resources be included?
+     * @return true when license asks that information
+     * about the source distribution is included,
+     * false otherwise
+     */
+    public boolean isSourceRequired() {
+<span class="nc" id="L167">        return this.license.isSourceRequired();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

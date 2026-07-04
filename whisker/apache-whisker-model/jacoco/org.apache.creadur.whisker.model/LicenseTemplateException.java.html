@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LicenseTemplateException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">LicenseTemplateException.java</span></div><h1>LicenseTemplateException.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License. 
+ */
+package org.apache.creadur.whisker.model;
+
+import java.util.Collection;
+import java.util.Map;
+
+/**
+ * Indicates that generating an instance of a license
+ * from the template (for the license family) has failed.
+ */
+public class LicenseTemplateException extends Exception {
+
+    /** Exception are serializable, so provide a SUID. */
+    private static final long serialVersionUID = -4085365930968672572L;
+    /** Names the erroneous license */
+    private final String licenseName;
+
+    /**
+     * Builds an exception indicating that parameter passed
+     * do not fulfill expectations.
+     * @param expectedParameters not null
+     * @param actualParameters not null
+     * @param licenseName not null
+     * @return not null
+     */
+    public static LicenseTemplateException parameterMismatch(
+            final Collection&lt;String&gt; expectedParameters,
+            final Collection&lt;String&gt; actualParameters,
+            final String licenseName) {
+<span class="nc" id="L47">        final StringBuilder message = new StringBuilder(&quot;Parameter mismatch for license '&quot;);</span>
+<span class="nc" id="L48">        message.append(licenseName);</span>
+<span class="nc" id="L49">        message.append('.');</span>
+<span class="nc" id="L50">        explainDiffs(expectedParameters, actualParameters, message, &quot; Missing parameters: &quot;);</span>
+<span class="nc" id="L51">        explainDiffs(actualParameters, expectedParameters, message, &quot; Unexpected parameters: &quot;);</span>
+<span class="nc" id="L52">        return new LicenseTemplateException(message.toString(), licenseName);</span>
+    }
+
+    /**
+     * Explains the differences between the sample and the base.
+     * @param sample not null
+     * @param base not null
+     * @param message not null
+     * @param preamble not null
+     */
+    private static void explainDiffs(final Collection&lt;String&gt; sample,
+            final Collection&lt;String&gt; base, final StringBuilder message,
+            final String preamble) {
+<span class="nc" id="L65">        boolean first = true;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        for (final String expected:sample) {</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">            if (!base.contains(expected)) {</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                if (first) {</span>
+<span class="nc" id="L69">                    first = false;</span>
+<span class="nc" id="L70">                    message.append(preamble);</span>
+                } else {
+<span class="nc" id="L72">                    message.append(&quot;, &quot;);</span>
+                }
+<span class="nc" id="L74">                message.append(expected);</span>
+            }
+<span class="nc" id="L76">        }</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (!first) {</span>
+<span class="nc" id="L78">            message.append('.');</span>
+        }
+<span class="nc" id="L80">    }</span>
+
+    
+    /**
+     * Builds an instance.
+     * @param parameters not null
+     * @param licenseName not null
+     * @return not null 
+     */
+    public static LicenseTemplateException notLicenseTemplate(
+            final Map&lt;String, String&gt; parameters, final String licenseName) {
+<span class="nc" id="L91">        final StringBuilder message = new StringBuilder(&quot;'&quot;);</span>
+<span class="nc" id="L92">        message.append(licenseName);</span>
+<span class="nc" id="L93">        message.append(&quot;' is not a templated license but parameters were set (&quot;);</span>
+<span class="nc" id="L94">        boolean first = true;</span>
+<span class="nc bnc" id="L95" title="All 2 branches missed.">        for (final String name:parameters.keySet()) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            if (first) {</span>
+<span class="nc" id="L97">                first = false;</span>
+            } else {
+<span class="nc" id="L99">                message.append(&quot;, &quot;);</span>
+            }
+<span class="nc" id="L101">            message.append(name);</span>
+<span class="nc" id="L102">        }</span>
+<span class="nc" id="L103">        message.append(&quot;)&quot;);</span>
+<span class="nc" id="L104">        return new LicenseTemplateException(message.toString(), licenseName);</span>
+    }
+
+    /**
+     * Constructs an instance.
+     * @param message not null
+     * @param parameters parameters passed
+     * @param licenseName license name, not null
+     */
+    private LicenseTemplateException(final String message, final String licenseName) {
+<span class="nc" id="L114">        super(message);</span>
+<span class="nc" id="L115">        this.licenseName = licenseName;</span>
+<span class="nc" id="L116">    }</span>
+
+    /**
+     * Gets the name of the erroneous license.
+     * @return license name, not null
+     */
+    public String getLicenseName() {
+<span class="nc" id="L123">        return licenseName;</span>
+    }
+
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

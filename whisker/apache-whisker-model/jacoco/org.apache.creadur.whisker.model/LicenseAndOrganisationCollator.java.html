@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LicenseAndOrganisationCollator.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">LicenseAndOrganisationCollator.java</span></div><h1>LicenseAndOrganisationCollator.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.model;
+
+import java.util.Set;
+import java.util.TreeSet;
+
+/**
+ * Collates licenses and organisations.
+ */
+<span class="fc" id="L27">public class LicenseAndOrganisationCollator extends Visitor {</span>
+    /** The licenses currently collected. */
+<span class="fc" id="L29">    private final Set&lt;License&gt; licenses = new TreeSet&lt;License&gt;();</span>
+    /** The organisations currently collected. */
+<span class="fc" id="L31">    private final Set&lt;Organisation&gt; organisations = new TreeSet&lt;Organisation&gt;();</span>
+
+    /**
+     * Gets the licenses collected.
+     * @return not null
+     */
+    public Set&lt;License&gt; getLicenses() {
+<span class="nc" id="L38">        return this.licenses;</span>
+    }
+
+    /**
+     * Gets the organisations collected.
+     * @return not null
+     */
+    public Set&lt;Organisation&gt; getOrganisation() {
+<span class="nc" id="L46">        return this.organisations;</span>
+    }
+
+    /**
+     * Don't traverse resources.
+     * @see Visitor#traverseResource()
+     * @return false
+     */
+    @Override
+    public boolean traverseResource() {
+<span class="fc" id="L56">        return false;</span>
+    }
+
+    /**
+     * Visits {@link WithLicense}.
+     * @see Visitor#visit(WithLicense)
+     * @param license not null
+     */
+    @Override
+    public void visit(final WithLicense license) {
+<span class="fc" id="L66">        this.licenses.add(license.getLicense());</span>
+<span class="fc" id="L67">    }</span>
+
+    /**
+     * Was this the only license collected?
+     * @param license not null
+     * @return true when the collection contains just this license,
+     * false when no licenses or any other licenses were collected
+     */
+    public boolean isOnlyLicense(final License license) {
+<span class="pc bpc" id="L76" title="2 of 4 branches missed.">        return (this.licenses.size() == 1) &amp;&amp; this.licenses.contains(license);</span>
+    }
+
+    /**
+     * Visits {@link ByOrganisation}.
+     * @see Visitor#visit(ByOrganisation)
+     * @param byOrganisation not null
+     */
+    @Override
+    public void visit(final ByOrganisation byOrganisation) {
+<span class="fc" id="L86">        this.organisations.add(byOrganisation.getOrganisation());</span>
+<span class="fc" id="L87">    }</span>
+
+    /**
+     * Something useful for logging.
+     * @see java.lang.Object#toString()
+     * @return something for logging
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L96">        return &quot;LicenseAndOrganisationCollator [licenses=&quot; + this.licenses</span>
+                + &quot;, organisations=&quot; + this.organisations + &quot;]&quot;;
+    }
+
+    /**
+     * Is there only one organisation collected with the given id?
+     * @param primaryOrganisationId not null
+     * @return true when only one organisation has been collected
+     * and it has the given id
+     */
+    public boolean isOnlyOrganisation(final String primaryOrganisationId) {
+<span class="fc bfc" id="L107" title="All 2 branches covered.">        return this.organisations.size() == 1</span>
+<span class="fc" id="L108">                &amp;&amp; this.organisations.iterator().next().getId()</span>
+<span class="pc bpc" id="L109" title="1 of 2 branches missed.">                        .equals(primaryOrganisationId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

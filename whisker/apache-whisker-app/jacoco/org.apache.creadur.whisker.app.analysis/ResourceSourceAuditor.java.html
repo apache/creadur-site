@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResourceSourceAuditor.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::App</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.app.analysis</a> &gt; <span class="el_source">ResourceSourceAuditor.java</span></div><h1>ResourceSourceAuditor.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.app.analysis;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.TreeSet;
+
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.apache.creadur.whisker.model.Resource;
+import org.apache.creadur.whisker.model.Visitor;
+import org.apache.creadur.whisker.model.WithLicense;
+import org.apache.creadur.whisker.model.WithinDirectory;
+
+/**
+ * Collects resource source details.
+ */
+<span class="nc" id="L35">public final class ResourceSourceAuditor extends Visitor {</span>
+    /** Last license visited. */
+    private WithLicense lastLicense;
+    /** Last directory visited. */
+    private WithinDirectory lastDirectory;
+    /** Collects resources that are missing source. */
+<span class="nc" id="L41">    private final Collection&lt;</span>
+        Pair&lt;WithinDirectory, Resource&gt;&gt; resourcesMissingSource
+            = new TreeSet&lt;Pair&lt;WithinDirectory, Resource&gt;&gt;();
+    /** Collects resources that match a source. */
+<span class="nc" id="L45">    private final Collection&lt;</span>
+        Pair&lt;WithinDirectory, Resource&gt;&gt; resourcesWithSource
+            = new TreeSet&lt;Pair&lt;WithinDirectory, Resource&gt;&gt;();
+
+    /**
+     * Hook for public domain.
+     * @return false (no need to traverse public domain)
+     * @see Visitor#traversePublicDomain()
+     */
+    @Override
+    public boolean traversePublicDomain() {
+        // no need to traverse public domain
+<span class="nc" id="L57">        return false;</span>
+    }
+
+
+    /**
+     * Gets the resources with source collected during visits.
+     * @return the resourcesWithSource, not null
+     */
+    public Collection&lt;
+            Pair&lt;WithinDirectory, Resource&gt;&gt; getResourcesWithSource() {
+<span class="nc" id="L67">        return resourcesWithSource;</span>
+    }
+
+    /**
+     * Gets the resources missing source collected during visits.
+     * @return the resourcesMissingSource not null
+     */
+    public Collection&lt;
+            Pair&lt;WithinDirectory, Resource&gt;&gt; getResourcesMissingSource() {
+<span class="nc" id="L76">        return resourcesMissingSource;</span>
+    }
+
+    /**
+     * Accepts a directory visit.
+     * @param directory not null
+     * @see Visitor#visit(WithinDirectory)
+     */
+    @Override
+    public void visit(final WithinDirectory directory) {
+<span class="nc" id="L86">        this.lastDirectory = directory;</span>
+<span class="nc" id="L87">    }</span>
+
+
+
+    /**
+     * Accepts a license visit.
+     * @param license not null
+     * @see Visitor#visit(WithLicense)
+     */
+    @Override
+    public void visit(final WithLicense license) {
+<span class="nc" id="L98">        this.lastLicense = license;</span>
+<span class="nc" id="L99">    }</span>
+
+    /**
+     * Accepts a visit to a resource.
+     * @param resource not null
+     * @see Visitor#visit(Resource)
+     */
+    @Override
+    public void visit(final Resource resource) {
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        if (lastLicense == null) {</span>
+<span class="nc" id="L109">            throw new IllegalArgumentException(</span>
+                    &quot;Last license unexpectedly null for resource &quot;
+                            + resource);
+<span class="nc bnc" id="L112" title="All 2 branches missed.">        } else if (lastLicense.isSourceRequired()) {</span>
+<span class="nc" id="L113">            final ImmutablePair&lt;WithinDirectory, Resource&gt; pair =</span>
+                    new ImmutablePair&lt;
+                        WithinDirectory,
+                        Resource&gt;(lastDirectory, resource);
+<span class="nc bnc" id="L117" title="All 2 branches missed.">            if (resource.hasSource()) {</span>
+<span class="nc" id="L118">                resourcesWithSource.add(pair);</span>
+            } else {
+<span class="nc" id="L120">                resourcesMissingSource.add(pair);</span>
+            }
+        }
+<span class="nc" id="L123">    }</span>
+
+
+    /**
+     * Gets those resources visited which require source links.
+     * @return not null, possibly empty
+     */
+    public Collection&lt;Resource&gt; getResourcesRequiringSourceLinks() {
+<span class="nc" id="L131">        final Collection&lt;Resource&gt; results = new ArrayList&lt;Resource&gt;();</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        for (Pair&lt;WithinDirectory, Resource&gt; pair: resourcesWithSource) {</span>
+<span class="nc" id="L133">            results.add(pair.getRight());</span>
+<span class="nc" id="L134">        }</span>
+<span class="nc" id="L135">        return results;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

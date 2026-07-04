@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JDomBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::XML</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.fromxml</a> &gt; <span class="el_source">JDomBuilder.java</span></div><h1>JDomBuilder.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License. 
+ */
+package org.apache.creadur.whisker.fromxml;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.creadur.whisker.model.*;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.*;
+
+/**
+ * Builds a model from xml using JDOM.
+ */
+<span class="fc" id="L35">public class JDomBuilder {</span>
+
+	private static final String COPYRIGHT_NOTICE_NAME = &quot;copyright-notice&quot;;
+	/**
+     * 
+     */
+	private static final String LICENSE_ELEMENT_NAME = &quot;license&quot;;
+	/**
+     * 
+     */
+	private static final String PRIMARY_LICENSE_NAME = &quot;primary-license&quot;;
+	/** Names the element representing an organisation */
+	private static final String ORGANISATION_ELEMENT_NAME = &quot;organisation&quot;;
+	/** Names the element representing a resource */
+	private static final String RESOURCE_ELEMENT_NAME = &quot;resource&quot;;
+
+	/**
+	 * Builds a resource.
+	 * 
+	 * @param element
+	 *            not null
+	 * @return built resource, not null
+	 * @throws UnexpectedElementException
+	 *             when element is not named 'resource'
+	 */
+	public Resource resource(Element element) throws UnexpectedElementException {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (RESOURCE_ELEMENT_NAME.equals(element.getName())) {</span>
+<span class="fc" id="L62">			return new Resource(StringUtils.trim(element</span>
+<span class="fc" id="L63">					.getAttributeValue(&quot;name&quot;)), StringUtils.trim(element</span>
+<span class="fc" id="L64">					.getAttributeValue(&quot;notice&quot;)), StringUtils.trim(element</span>
+<span class="fc" id="L65">					.getAttributeValue(&quot;source&quot;)));</span>
+		} else {
+<span class="fc" id="L67">			throw unexpectedElementException(element, RESOURCE_ELEMENT_NAME);</span>
+		}
+	}
+
+	/**
+	 * Builds a suitable exception when the element name is unexpected.
+	 * 
+	 * @param element
+	 *            , not null
+	 * @param expectedElement
+	 *            , not null
+	 * @return a suitable exception, not null
+	 */
+	private UnexpectedElementException unexpectedElementException(
+			Element element, final String expectedElement) {
+<span class="fc" id="L82">		return new UnexpectedElementException(expectedElement,</span>
+<span class="fc" id="L83">				element.getName());</span>
+	}
+
+	/**
+	 * Builds an organisation model from xml.
+	 * 
+	 * @param element
+	 *            , not null
+	 * @return {@link Organisation} not null
+	 * @throws UnexpectedElementException
+	 *             when element is not named 'organisation'
+	 */
+	public Organisation organisation(Element element)
+			throws UnexpectedElementException {
+<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (ORGANISATION_ELEMENT_NAME.equals(element.getName())) {</span>
+<span class="fc" id="L98">			return new Organisation(element.getAttributeValue(&quot;id&quot;),</span>
+<span class="fc" id="L99">					element.getAttributeValue(&quot;name&quot;),</span>
+<span class="fc" id="L100">					element.getAttributeValue(&quot;url&quot;));</span>
+		} else {
+<span class="fc" id="L102">			throw unexpectedElementException(element, ORGANISATION_ELEMENT_NAME);</span>
+		}
+	}
+
+	/**
+	 * @param element
+	 *            JDOM element to collect.
+	 * @return collected resources.
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public Collection&lt;Resource&gt; collectResources(Element element) {
+<span class="fc" id="L113">		final Collection&lt;Resource&gt; resources = new TreeSet&lt;Resource&gt;();</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">		for (Element resourceElement : (List&lt;Element&gt;) element</span>
+<span class="fc" id="L115">				.getChildren(&quot;resource&quot;)) {</span>
+<span class="fc" id="L116">			resources.add(new JDomBuilder().resource(resourceElement));</span>
+<span class="fc" id="L117">		}</span>
+<span class="fc" id="L118">		return Collections.unmodifiableCollection(resources);</span>
+	}
+
+	/**
+	 * @return Finds the organisation linked by ID from the given element.
+	 * @param element
+	 *            modelled ByOrganisation, not null
+	 * @param organisationsById
+	 *            organisations identified, not null
+	 * @throws MissingIDException
+	 *             when the linked organisation is not found in the given map
+	 */
+	public Organisation organisation(final Element element,
+			final Map&lt;String, Organisation&gt; organisationsById)
+			throws MissingIDException {
+<span class="fc" id="L133">		final String id = element.getAttributeValue(&quot;id&quot;);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (organisationsById.containsKey(id)) {</span>
+<span class="fc" id="L135">			return organisationsById.get(id);</span>
+		} else {
+<span class="fc" id="L137">			throw new MissingIDException(ORGANISATION_ELEMENT_NAME,</span>
+<span class="fc" id="L138">					element.getName(), id);</span>
+		}
+	}
+
+	/**
+	 * Builds a by-organisation model from xml.
+	 * 
+	 * @param element
+	 *            not null
+	 * @param organisation
+	 *            not null
+	 * @return not null
+	 */
+	public ByOrganisation byOrganisation(final Element element,
+			final Organisation organisation) {
+<span class="fc" id="L153">		return new ByOrganisation(organisation, collectResources(element));</span>
+	}
+
+	/**
+	 * Builds a by-organisation model from xml.
+	 * 
+	 * @param byOrganisation
+	 *            not null
+	 * @param organisationsById
+	 *            not null
+	 * @return not null
+	 * @throws MissingIDException
+	 *             when the linked organisation is not found in the given map
+	 */
+	public ByOrganisation byOrganisation(final Element byOrganisation,
+			final Map&lt;String, Organisation&gt; organisationsById)
+			throws MissingIDException {
+<span class="fc" id="L170">		return byOrganisation(byOrganisation,</span>
+<span class="fc" id="L171">				organisation(byOrganisation, organisationsById));</span>
+	}
+
+	/**
+	 * Collects by-organisation children.
+	 * 
+	 * @param parent
+	 *            not null
+	 * @param map
+	 *            not null
+	 * @return unmodifiable set sort by natural order, not null
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public SortedSet&lt;ByOrganisation&gt; collectByOrganisations(
+			final Element parent, final Map&lt;String, Organisation&gt; map) {
+<span class="fc" id="L186">		final SortedSet&lt;ByOrganisation&gt; results = new TreeSet&lt;ByOrganisation&gt;();</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (parent != null) {</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">			for (final Element byOrgElement : (List&lt;Element&gt;) parent</span>
+<span class="fc" id="L189">					.getChildren(&quot;by-organisation&quot;)) {</span>
+<span class="fc" id="L190">				results.add(byOrganisation(byOrgElement, map));</span>
+<span class="fc" id="L191">			}</span>
+		}
+<span class="fc" id="L193">		return Collections.unmodifiableSortedSet(results);</span>
+	}
+
+	/**
+	 * Builds a license model from xml.
+	 * 
+	 * @param element
+	 *            not null
+	 * @return not null
+	 */
+	public License license(Element element) {
+<span class="fc" id="L204">		final Element text = element.getChild(&quot;text&quot;);</span>
+<span class="fc" id="L205">		return new License(&quot;yes&quot;.equalsIgnoreCase(element</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">				.getAttributeValue(&quot;requires-source&quot;)), text == null ? &quot;&quot;</span>
+<span class="fc" id="L207">				: text.getText(), expectedParameters(element),</span>
+<span class="fc" id="L208">				element.getAttributeValue(&quot;id&quot;),</span>
+<span class="fc" id="L209">				element.getAttributeValue(&quot;url&quot;),</span>
+<span class="fc" id="L210">				element.getAttributeValue(&quot;name&quot;));</span>
+	}
+
+	@SuppressWarnings(&quot;unchecked&quot;)
+	private Collection&lt;String&gt; expectedParameters(final Element element) {
+<span class="fc" id="L215">		final Collection&lt;String&gt; results = new HashSet&lt;String&gt;();</span>
+<span class="fc" id="L216">		final Element templateElement = element.getChild(&quot;template&quot;);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (templateElement != null) {</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			for (Element parameterNameElement : (List&lt;Element&gt;) templateElement</span>
+<span class="fc" id="L219">					.getChildren(&quot;parameter-name&quot;)) {</span>
+<span class="fc" id="L220">				results.add(parameterNameElement.getTextTrim());</span>
+<span class="fc" id="L221">			}</span>
+		}
+<span class="fc" id="L223">		return results;</span>
+	}
+
+	/**
+	 * Finds the license with an id matching that referenced by the element.
+	 * 
+	 * @param element
+	 *            not null
+	 * @param licenses
+	 *            not null
+	 * @return not null
+	 * @throws MissingIDException
+	 *             when referenced license isn't found in the collection
+	 */
+	public License license(final Element element,
+			final Map&lt;String, License&gt; licenses) throws MissingIDException {
+<span class="fc" id="L239">		final String id = element.getAttributeValue(&quot;id&quot;);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (licenses.containsKey(id)) {</span>
+<span class="fc" id="L241">			return licenses.get(id);</span>
+		} else {
+<span class="fc" id="L243">			throw new MissingIDException(LICENSE_ELEMENT_NAME,</span>
+<span class="fc" id="L244">					element.getName(), id);</span>
+		}
+	}
+
+	/**
+	 * @return Builds a with-license model from xml.
+	 * @param element
+	 *            not null
+	 * @param licenses
+	 *            not null
+	 * @param organisations
+	 *            not null
+	 * 
+	 * @throws MissingIDException
+	 *             when referenced license isn't found in the collection
+	 */
+	public WithLicense withLicense(Element element,
+			Map&lt;String, License&gt; licenses,
+			Map&lt;String, Organisation&gt; organisations) throws MissingIDException {
+<span class="fc" id="L263">		return new WithLicense(license(element, licenses),</span>
+<span class="fc" id="L264">				copyrightNotice(element), parameters(element),</span>
+<span class="fc" id="L265">				collectByOrganisations(element, organisations));</span>
+	}
+
+	/**
+	 * Extracts copyright notice content from with-license.
+	 * 
+	 * @param element
+	 *            not null
+	 * @return not null
+	 */
+	private String copyrightNotice(final Element element) {
+		final String result;
+<span class="fc" id="L277">		final Element copyrightNoticeElement = element</span>
+<span class="fc" id="L278">				.getChild(COPYRIGHT_NOTICE_NAME);</span>
+<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (copyrightNoticeElement == null) {</span>
+<span class="fc" id="L280">			result = null;</span>
+		} else {
+<span class="fc" id="L282">			result = copyrightNoticeElement.getTextTrim();</span>
+		}
+<span class="fc" id="L284">		return result;</span>
+	}
+
+	/**
+	 * Builds a list of parameter values by name.
+	 * 
+	 * @param element
+	 *            not null
+	 * @return parameter values indexed by value, not null
+	 * @throws DuplicateElementException
+	 *             when two parameters shared the same name
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public Map&lt;String, String&gt; parameters(Element element)
+			throws DuplicateElementException {
+<span class="fc" id="L299">		final Map&lt;String, String&gt; results = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L300">		final Element licenseParametersElement = element</span>
+<span class="fc" id="L301">				.getChild(&quot;license-parameters&quot;);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">		if (licenseParametersElement != null) {</span>
+<span class="fc bfc" id="L303" title="All 2 branches covered.">			for (Element parameterElement : (List&lt;Element&gt;) licenseParametersElement</span>
+<span class="fc" id="L304">					.getChildren(&quot;parameter&quot;)) {</span>
+<span class="fc" id="L305">				final String name = parameterElement.getChild(&quot;name&quot;)</span>
+<span class="fc" id="L306">						.getTextTrim();</span>
+<span class="fc bfc" id="L307" title="All 2 branches covered.">				if (results.containsKey(name)) {</span>
+<span class="fc" id="L308">					throw new DuplicateElementException(&quot;Duplicate parameter '&quot;</span>
+							+ name + &quot;'&quot;);
+				}
+<span class="fc" id="L311">				results.put(name, parameterElement.getChild(&quot;value&quot;)</span>
+<span class="fc" id="L312">						.getTextTrim());</span>
+<span class="fc" id="L313">			}</span>
+		}
+<span class="fc" id="L315">		return results;</span>
+	}
+
+	/**
+	 * Collects child with-licenses.
+	 * 
+	 * @param licenses
+	 *            not null
+	 * @param organisations
+	 *            not null
+	 * @param parent
+	 *            not null
+	 * @return not null, possibly empty
+	 */
+	@SuppressWarnings(&quot;unchecked&quot;)
+	public Collection&lt;WithLicense&gt; withLicenses(Map&lt;String, License&gt; licenses,
+			Map&lt;String, Organisation&gt; organisations, Element parent) {
+<span class="fc" id="L332">		final List&lt;WithLicense&gt; results = new ArrayList&lt;WithLicense&gt;();</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">		for (Element withLicenseElement : (List&lt;Element&gt;) parent</span>
+<span class="fc" id="L334">				.getChildren(&quot;with-license&quot;)) {</span>
+<span class="fc" id="L335">			results.add(new JDomBuilder().withLicense(withLicenseElement,</span>
+					licenses, organisations));
+<span class="fc" id="L337">		}</span>
+<span class="fc" id="L338">		Collections.sort(results);</span>
+<span class="fc" id="L339">		return results;</span>
+	}
+
+	/**
+	 * Collects child organisations of public domain.
+	 * 
+	 * @param organisations
+	 *            not null
+	 * @param parent
+	 *            not null
+	 * @return not null, possibly null
+	 */
+	public Collection&lt;ByOrganisation&gt; publicDomain(
+			final Map&lt;String, Organisation&gt; organisations, final Element parent) {
+<span class="fc" id="L353">		return new JDomBuilder().collectByOrganisations(</span>
+<span class="fc" id="L354">				parent.getChild(&quot;public-domain&quot;), organisations);</span>
+	}
+
+	/**
+	 * Builds a within directory model from XML.
+	 * 
+	 * @param element
+	 *            not null
+	 * @param licenses
+	 *            not null
+	 * @param organisations
+	 *            not null
+	 * @return not null
+	 */
+	public WithinDirectory withinDirectory(Element element,
+			Map&lt;String, License&gt; licenses,
+			Map&lt;String, Organisation&gt; organisations) {
+<span class="fc" id="L371">		return new WithinDirectory(element.getAttributeValue(&quot;dir&quot;),</span>
+<span class="fc" id="L372">				withLicenses(licenses, organisations, element), publicDomain(</span>
+						organisations, element));
+	}
+
+	/**
+	 * Collects organisation definitions within document.
+	 * 
+	 * @param document
+	 *            , not null
+	 * @return organisations indexed by id, not null possibly empty
+	 */
+	public Map&lt;String, Organisation&gt; mapOrganisations(Document document) {
+<span class="fc" id="L384">		final Map&lt;String, Organisation&gt; organisationsById = new HashMap&lt;String, Organisation&gt;();</span>
+
+<span class="fc" id="L386">		final Element childOrganisations = document.getRootElement().getChild(</span>
+				&quot;organisations&quot;);
+<span class="fc bfc" id="L388" title="All 2 branches covered.">		if (childOrganisations != null) {</span>
+			@SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L390">			final List&lt;Element&gt; organisations = (List&lt;Element&gt;) childOrganisations</span>
+<span class="fc" id="L391">					.getChildren(&quot;organisation&quot;);</span>
+<span class="fc bfc" id="L392" title="All 2 branches covered.">			for (final Element element : organisations) {</span>
+<span class="fc" id="L393">				new JDomBuilder().organisation(element).storeIn(</span>
+						organisationsById);
+<span class="fc" id="L395">			}</span>
+		}
+<span class="fc" id="L397">		return Collections.unmodifiableMap(organisationsById);</span>
+	}
+
+	/**
+	 * Collects license definitions within document.
+	 * 
+	 * @param document
+	 *            , not null
+	 * @return licenses, indexed by id, not null, possibly empty
+	 */
+	public Map&lt;String, License&gt; mapLicenses(Document document) {
+<span class="fc" id="L408">		final Map&lt;String, License&gt; results = new HashMap&lt;String, License&gt;();</span>
+<span class="fc" id="L409">		final Element licensesChild = document.getRootElement().getChild(</span>
+				&quot;licenses&quot;);
+<span class="fc bfc" id="L411" title="All 2 branches covered.">		if (licensesChild != null) {</span>
+			@SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L413">			final List&lt;Element&gt; children = (List&lt;Element&gt;) licensesChild</span>
+<span class="fc" id="L414">					.getChildren();</span>
+<span class="fc bfc" id="L415" title="All 2 branches covered.">			for (final Element element : children) {</span>
+<span class="fc" id="L416">				new JDomBuilder().license(element).storeIn(results);</span>
+<span class="fc" id="L417">			}</span>
+		}
+<span class="fc" id="L419">		return Collections.unmodifiableMap(results);</span>
+
+	}
+
+	/**
+	 * Finds the primary license for the given document from the given licenses.
+	 * 
+	 * @param document
+	 *            not null
+	 * @param licenses
+	 *            not null
+	 * @return not null
+	 */
+	public License primaryLicense(Document document,
+			Map&lt;String, License&gt; licenses) {
+<span class="fc" id="L434">		final String idAttributeValue = getPrimaryLicenseElement(document)</span>
+<span class="fc" id="L435">				.getAttributeValue(&quot;id&quot;);</span>
+<span class="fc" id="L436">		final License results = licenses.get(idAttributeValue);</span>
+<span class="fc bfc" id="L437" title="All 2 branches covered.">		if (results == null) {</span>
+<span class="fc" id="L438">			throw new MissingIDException(LICENSE_ELEMENT_NAME,</span>
+					PRIMARY_LICENSE_NAME, idAttributeValue);
+		}
+<span class="fc" id="L441">		return results;</span>
+	}
+
+	/**
+	 * Gets the element representing the primary license.
+	 * 
+	 * @param document
+	 *            not null
+	 * @return not null
+	 */
+	private Element getPrimaryLicenseElement(final Document document) {
+<span class="fc" id="L452">		return document.getRootElement().getChild(PRIMARY_LICENSE_NAME);</span>
+	}
+
+	/**
+	 * Gets the additional primary copyright notice from the document.
+	 * 
+	 * @param document
+	 *            not null
+	 * @return optional primary copyright notice, possibly null
+	 */
+	public String primaryCopyrightNotice(final Document document) {
+		final String result;
+<span class="fc" id="L464">		final Element copyrightElement = getPrimaryLicenseElement(document)</span>
+<span class="fc" id="L465">				.getChild(COPYRIGHT_NOTICE_NAME);</span>
+<span class="fc bfc" id="L466" title="All 2 branches covered.">		if (copyrightElement == null) {</span>
+<span class="fc" id="L467">			result = null;</span>
+		} else {
+<span class="fc" id="L469">			result = copyrightElement.getTextTrim();</span>
+		}
+<span class="fc" id="L471">		return result;</span>
+	}
+
+	/**
+	 * Collects notices in the given documents.
+	 * 
+	 * @param document
+	 *            , not null
+	 * @return notices indexed by id, immutable, not null, possibly empty
+	 */
+	public Map&lt;String, String&gt; mapNotices(Document document) {
+<span class="fc" id="L482">		final Map&lt;String, String&gt; results = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L483">		final Element noticesElement = document.getRootElement().getChild(</span>
+				&quot;notices&quot;);
+<span class="fc bfc" id="L485" title="All 2 branches covered.">		if (noticesElement != null) {</span>
+			@SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L487">			final List&lt;Element&gt; children = (List&lt;Element&gt;) noticesElement</span>
+<span class="fc" id="L488">					.getChildren();</span>
+<span class="fc bfc" id="L489" title="All 2 branches covered.">			for (final Element element : children) {</span>
+<span class="fc" id="L490">				results.put(element.getAttributeValue(&quot;id&quot;),</span>
+<span class="fc" id="L491">						element.getTextTrim());</span>
+<span class="fc" id="L492">			}</span>
+		}
+<span class="fc" id="L494">		return Collections.unmodifiableMap(results);</span>
+
+	}
+
+	/**
+	 * Retrieves the text of the primary notice.
+	 * 
+	 * @param document
+	 *            , not null
+	 * @return the text of the primary notice, or null when there is no primary
+	 *         notice
+	 */
+	public String primaryNotice(Document document) {
+		final String result;
+<span class="fc" id="L508">		final Element primaryNoticeElement = document.getRootElement()</span>
+<span class="fc" id="L509">				.getChild(&quot;primary-notice&quot;);</span>
+<span class="fc bfc" id="L510" title="All 2 branches covered.">		if (primaryNoticeElement == null) {</span>
+<span class="fc" id="L511">			result = null;</span>
+		} else {
+<span class="fc" id="L513">			result = primaryNoticeElement.getText()</span>
+<span class="fc" id="L514">					.replace(</span>
+							&quot;${year}&quot;,
+<span class="fc" id="L516">							Integer.toString(Calendar.getInstance().get(</span>
+									Calendar.YEAR)));
+		}
+<span class="fc" id="L519">		return result;</span>
+	}
+
+	/**
+	 * Retrieves the ID of the primary organisation.
+	 * 
+	 * @param document
+	 *            , not null
+	 * @return the id of the primary organisation when set, otherwise null
+	 */
+	public String primaryOrganisationId(final Document document) {
+		final String result;
+<span class="fc" id="L531">		final Element primaryOrganisationElement = document.getRootElement()</span>
+<span class="fc" id="L532">				.getChild(&quot;primary-organisation&quot;);</span>
+<span class="fc bfc" id="L533" title="All 2 branches covered.">		if (primaryOrganisationElement == null) {</span>
+<span class="fc" id="L534">			result = null;</span>
+		} else {
+<span class="fc" id="L536">			result = primaryOrganisationElement.getAttributeValue(&quot;id&quot;);</span>
+		}
+<span class="fc" id="L538">		return result;</span>
+	}
+
+	private WithinDirectory directory(final Element element,
+			final Map&lt;String, License&gt; licenses,
+			final Map&lt;String, Organisation&gt; organisations) {
+<span class="fc" id="L544">		return new JDomBuilder().withinDirectory(element, licenses,</span>
+				organisations);
+	}
+
+	/**
+	 * Collects contents of the document.
+	 * 
+	 * @param document
+	 *            not null
+	 * @param licenses
+	 *            not null
+	 * @param organisations
+	 *            not null
+	 * @return not null, possibly empty
+	 * @throws DuplicateElementException
+	 *             when directory names are not unique
+	 */
+	public Collection&lt;WithinDirectory&gt; collectContents(final Document document,
+			final Map&lt;String, License&gt; licenses,
+			final Map&lt;String, Organisation&gt; organisations)
+			throws DuplicateElementException {
+<span class="fc" id="L565">		final Collection&lt;WithinDirectory&gt; results = new TreeSet&lt;WithinDirectory&gt;();</span>
+		@SuppressWarnings(&quot;unchecked&quot;)
+<span class="fc" id="L567">		final List&lt;Element&gt; children = document.getRootElement().getChildren(</span>
+				&quot;within&quot;);
+<span class="fc bfc" id="L569" title="All 2 branches covered.">		for (Element element : children) {</span>
+<span class="fc" id="L570">			boolean addedSuccessfully = results.add(directory(element,</span>
+					licenses, organisations));
+
+<span class="fc bfc" id="L573" title="All 2 branches covered.">			if (!addedSuccessfully) {</span>
+<span class="fc" id="L574">				throw new DuplicateElementException(&quot;Duplicate parameter '&quot;</span>
+<span class="fc" id="L575">						+ element.getAttribute(&quot;dir&quot;).getValue() + &quot;'&quot;);</span>
+			}
+<span class="fc" id="L577">		}</span>
+<span class="fc" id="L578">		return results;</span>
+	}
+
+	/**
+	 * Builds work from the given document.
+	 * 
+	 * @param document
+	 *            not null
+	 * @return not null
+	 */
+	public Descriptor build(final Document document) {
+<span class="fc" id="L589">		final Map&lt;String, Organisation&gt; organisations = mapOrganisations(document);</span>
+<span class="fc" id="L590">		final Map&lt;String, License&gt; licenses = mapLicenses(document);</span>
+<span class="fc" id="L591">		final Map&lt;String, String&gt; notices = mapNotices(document);</span>
+<span class="fc" id="L592">		final License primaryLicense = primaryLicense(document, licenses);</span>
+<span class="fc" id="L593">		final String primaryCopyrightNotice = primaryCopyrightNotice(document);</span>
+<span class="fc" id="L594">		final String primaryNotice = primaryNotice(document);</span>
+<span class="fc" id="L595">		final String primaryOrganisationId = primaryOrganisationId(document);</span>
+<span class="fc" id="L596">		final Collection&lt;WithinDirectory&gt; contents = collectContents(document,</span>
+				licenses, organisations);
+<span class="fc" id="L598">		return new Descriptor(primaryLicense, primaryCopyrightNotice,</span>
+				primaryOrganisationId, primaryNotice, licenses, notices,
+				organisations, contents);
+	}
+
+	public Descriptor build(final InputStream xmlStream) throws JDOMException,
+			IOException {
+<span class="nc" id="L605">		return build(new SAXBuilder().build(xmlStream));</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

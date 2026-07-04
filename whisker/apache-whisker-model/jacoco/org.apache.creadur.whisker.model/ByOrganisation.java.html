@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ByOrganisation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">ByOrganisation.java</span></div><h1>ByOrganisation.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.model;
+
+import java.util.Collection;
+
+/**
+ * Relates the responsible group or individual to one
+ * or more resources.
+ */
+public class ByOrganisation implements Comparable&lt;ByOrganisation&gt;, ContentElement {
+
+    /** The responsible group or individual. */
+    private final Organisation organisation;
+    /** The resources for which the group or individual is responsible. */
+    private final Collection&lt;Resource&gt; resources;
+
+    /**
+     * Links an individual or group
+     * to the resources for which they have responsibility.
+     * @param resources
+     *            not null
+     * @param organisation
+     *            not null
+     */
+    public ByOrganisation(final Organisation organisation,
+            final Collection&lt;Resource&gt; resources) {
+<span class="fc" id="L44">        super();</span>
+<span class="fc" id="L45">        this.organisation = organisation;</span>
+<span class="fc" id="L46">        this.resources = resources;</span>
+<span class="fc" id="L47">    }</span>
+
+    /**
+     * Gets the name of the individual or group responsible.
+     * @return not null
+     */
+    public String getName() {
+<span class="nc" id="L54">        return this.organisation.getName();</span>
+    }
+
+    /**
+     * Gets the primary URL for the individual or group responsible.
+     * @return not null
+     */
+    public String getURL() {
+<span class="nc" id="L62">        return this.organisation.getURL();</span>
+    }
+
+    /**
+     * Gets the primary identifier for the individual or group responsible.
+     * @return not null
+     */
+    public String getId() {
+<span class="nc" id="L70">        return this.organisation.getId();</span>
+    }
+
+    /**
+     * Gets the resource for which the linked individual or group is responsible.
+     * @return not null, possibly empty
+     */
+    public Collection&lt;Resource&gt; getResources() {
+<span class="fc" id="L78">        return this.resources;</span>
+    }
+
+    /**
+     * Gets the organisation representing the individual or group responible
+     * for the linked resources.
+     * @return the organisation , not ull
+     */
+    public Organisation getOrganisation() {
+<span class="fc" id="L87">        return this.organisation;</span>
+    }
+
+    /**
+     * Based on organisation.
+     * @see java.lang.Object#hashCode()
+     * @return hash based on organisation
+     */
+    @Override
+    public final int hashCode() {
+<span class="nc" id="L97">        final int prime = 31;</span>
+<span class="nc" id="L98">        int result = 1;</span>
+<span class="nc" id="L99">        result = prime</span>
+                * result
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                + ((this.organisation == null) ? 0 : this.organisation</span>
+<span class="nc" id="L102">                        .hashCode());</span>
+<span class="nc" id="L103">        return result;</span>
+    }
+
+    /**
+     * Equal iff organisations are equal.
+     * @see java.lang.Object#equals(java.lang.Object)
+     * @param obj possibly null
+     * @return true when organisations are equal,
+     * false otherwise
+     */
+    @Override
+    public boolean equals(final Object obj) {
+<span class="nc bnc" id="L115" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L116">            return true;</span>
+        }
+<span class="nc bnc" id="L118" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L119">            return false;</span>
+        }
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L122">            return false;</span>
+        }
+<span class="nc" id="L124">        final ByOrganisation other = (ByOrganisation) obj;</span>
+<span class="nc bnc" id="L125" title="All 2 branches missed.">        if (this.organisation == null) {</span>
+<span class="nc bnc" id="L126" title="All 2 branches missed.">            return other.organisation == null;</span>
+<span class="nc" id="L127">        } else return this.organisation.equals(other.organisation);</span>
+    }
+
+    /**
+     * Delegates to organisation.
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     * @param other possibly null
+     * @return {@link Organisation#compareTo(Organisation)}
+     */
+    public int compareTo(final ByOrganisation other) {
+<span class="nc" id="L137">        return this.organisation.compareTo(other.getOrganisation());</span>
+    }
+
+    /**
+     * Accepts a visitor.
+     * @param visitor possibly null
+     */
+    public void accept(final Visitor visitor) {
+<span class="pc bpc" id="L145" title="2 of 4 branches missed.">        if (visitor != null &amp;&amp; visitor.traverseByOrganisation()) {</span>
+<span class="fc" id="L146">            visitor.visit(this);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">            for (final Resource resource : getResources()) {</span>
+<span class="fc" id="L148">                resource.accept(visitor);</span>
+<span class="fc" id="L149">            }</span>
+        }
+<span class="fc" id="L151">    }</span>
+
+    /**
+     * Describes object suitably for logging.
+     * @return something suitable for logging
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L159">        return &quot;ByOrganisation [organisation=&quot; + this.organisation</span>
+                + &quot;, resources=&quot; + this.resources + &quot;]&quot;;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

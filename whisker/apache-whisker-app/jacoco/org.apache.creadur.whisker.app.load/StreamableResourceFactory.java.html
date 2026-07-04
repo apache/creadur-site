@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StreamableResourceFactory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::App</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.app.load</a> &gt; <span class="el_source">StreamableResourceFactory.java</span></div><h1>StreamableResourceFactory.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.app.load;
+
+import java.io.File;
+
+import org.apache.creadur.whisker.app.StreamableResource;
+
+/**
+ * Conveniently builds {@link StreamableResource} implementations.
+ */
+<span class="fc" id="L28">public final class StreamableResourceFactory {</span>
+
+    /**
+     * Builds instance that streams, on demand,
+     * from resource on the class path.
+     * @param name full name, including path, of the resource not null
+     * @return an instance that streams, on demand, the given resource,
+     * not null
+     */
+    public StreamableResource streamFromClassPathResource(final String name) {
+<span class="nc" id="L38">        return new StreamableClassPathResource(name);</span>
+    }
+
+    /**
+     * Builds instance that streams, on demand,
+     * from resource stored in the file system.
+     * @param fileName full name, including path, of the resource not null
+     * @return an instance that streams, on demand, the given resource,
+     * not null
+     */
+    public StreamableResource streamFromFileResource(final String fileName) {
+<span class="nc" id="L49">        return new StreamableFileNameResource(fileName);</span>
+    }
+
+    /**
+     * Builds instance that streams, on demand,
+     * from resource stored in the file system.
+     * @param file a file storing the resource not null
+     * @return an instance that streams, on demand, the given resource,
+     * not null
+     */
+    public StreamableResource streamFromFileResource(final File file) {
+<span class="nc" id="L60">        return new StreamableFileResource(file);</span>
+    }
+
+    /**
+     * When the resource is found on the classpath,
+     * builds an instance that streams, on demand,
+     * from the classpath. Otherwise, builds an
+     * instances that streams from the file system.
+     * @param resourceName source stream name.
+     * @return not null
+     */
+    public StreamableResource streamFromResource(final String resourceName) {
+<span class="fc" id="L72">        final StreamableClassPathResource streamFromClasspath =</span>
+                new StreamableClassPathResource(resourceName);
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (streamFromClasspath.exists()) {</span>
+<span class="fc" id="L75">            return streamFromClasspath;</span>
+        }
+<span class="nc" id="L77">        return streamFromFileResource(resourceName);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

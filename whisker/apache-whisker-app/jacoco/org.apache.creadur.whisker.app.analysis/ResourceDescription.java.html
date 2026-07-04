@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ResourceDescription.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::App</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.app.analysis</a> &gt; <span class="el_source">ResourceDescription.java</span></div><h1>ResourceDescription.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.app.analysis;
+
+/**
+ * Describes a resource in a software distribution.
+ */
+public class ResourceDescription implements Comparable&lt;ResourceDescription&gt; {
+    /** Containing directory. */
+    private final String directory;
+    /** Resource name. */
+    private final String resource;
+
+    /**
+     * Constructs a description of the given resource.
+     * @param directoryName not null
+     * @param resourceName not null
+     */
+    public ResourceDescription(
+            final String directoryName, final String resourceName) {
+<span class="nc" id="L37">        super();</span>
+<span class="nc" id="L38">        this.directory = directoryName;</span>
+<span class="nc" id="L39">        this.resource = resourceName;</span>
+<span class="nc" id="L40">    }</span>
+
+    /**
+     * Gets the name of the containing directory.
+     * @return the directoryName, not null
+     */
+    public final String getDirectory() {
+<span class="nc" id="L47">        return directory;</span>
+    }
+
+    /**
+     * Gets the resource name.
+     * @return the resourceName, not null
+     */
+    public final String getResource() {
+<span class="nc" id="L55">        return resource;</span>
+    }
+
+    /**
+     * Hash code compatible with equals.
+     * @return a suitable hash code
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L65">        final int prime = 31;</span>
+<span class="nc" id="L66">        int result = 1;</span>
+<span class="nc" id="L67">        result = prime * result</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">                + ((directory == null) ? 0 : directory.hashCode());</span>
+<span class="nc" id="L69">        result = prime * result</span>
+<span class="nc bnc" id="L70" title="All 2 branches missed.">                + ((resource == null) ? 0 : resource.hashCode());</span>
+<span class="nc" id="L71">        return result;</span>
+    }
+
+    /**
+     * Equal means identical name and directory.
+     * @param obj object to be compared against
+     * @return true when equal
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(final Object obj) {
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L83">            return true;</span>
+        }
+<span class="nc bnc" id="L85" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L86">            return false;</span>
+        }
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L89">            return false;</span>
+        }
+<span class="nc" id="L91">        final ResourceDescription other = (ResourceDescription) obj;</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">        if (directory == null) {</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            if (other.directory != null) {</span>
+<span class="nc" id="L94">                return false;</span>
+            }
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        } else if (!directory.equals(other.directory)) {</span>
+<span class="nc" id="L97">            return false;</span>
+        }
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        if (resource == null) {</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            return other.resource == null;</span>
+<span class="nc" id="L101">        } else return resource.equals(other.resource);</span>
+    }
+
+    /**
+     * Suitable for logging.
+     * @return not null
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+<span class="nc" id="L111">        return &quot;ResourceMissingLicense [directoryName=&quot; + directory</span>
+                + &quot;, resourceName=&quot; + resource + &quot;]&quot;;
+    }
+
+    /**
+     * Natural comparison is directory name, then resource name.
+     * @param other possibly null
+     * @return numeric comparison
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     */
+    public int compareTo(final ResourceDescription other) {
+        final int result;
+<span class="nc" id="L123">        final int compareOnDirectoryName = this.getDirectory().compareTo(other.getDirectory());</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (compareOnDirectoryName == 0) {</span>
+<span class="nc" id="L125">            result = this.getResource().compareTo(other.getResource());</span>
+        } else {
+<span class="nc" id="L127">            result = compareOnDirectoryName;</span>
+        }
+<span class="nc" id="L129">        return result;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

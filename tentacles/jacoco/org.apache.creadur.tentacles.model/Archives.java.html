@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Archives.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Tentacles</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.tentacles.model</a> &gt; <span class="el_source">Archives.java</span></div><h1>Archives.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the &quot;License&quot;); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package org.apache.creadur.tentacles.model;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * To be marshalled to json as an archives.json file
+ * Will contain a summary list of the artifacts intended for tabular display
+ */
+@XmlRootElement
+public class Archives {
+
+<span class="fc" id="L30">    private final List&lt;Item&gt; archives = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Required for JAXB
+     */
+<span class="fc" id="L35">    public Archives() {</span>
+<span class="fc" id="L36">    }</span>
+
+    public List&lt;Item&gt; getArchives() {
+<span class="fc" id="L39">        return archives;</span>
+    }
+
+    public void add(Item item) {
+<span class="nc" id="L43">        archives.add(item);</span>
+<span class="nc" id="L44">    }</span>
+
+    public Item addItem() {
+<span class="fc" id="L47">        final Item item = new Item();</span>
+<span class="fc" id="L48">        archives.add(item);</span>
+<span class="fc" id="L49">        return item;</span>
+    }
+
+    public static class Item {
+
+        /**
+         * Required for JAXB
+         */
+<span class="fc" id="L57">        public Item() {</span>
+<span class="fc" id="L58">        }</span>
+
+        /**
+         * The path in the repo, minus the repo portion itself (relative)
+         */
+        private String path;
+
+        /**
+         * Just the file name with no path
+         */
+        private String name;
+
+        /**
+         * Jar, war, zip
+         */
+        private String type;
+
+        /**
+         * Count of how many jars are in this archive
+         */
+        private int jars;
+
+        /**
+         * Unique ID of the license file
+         */
+        private String license;
+
+
+        /**
+         * Unique ID of the notice file
+         */
+        private String notice;
+
+
+        public String getPath() {
+<span class="fc" id="L93">            return path;</span>
+        }
+
+        public void setPath(String path) {
+<span class="nc" id="L97">            this.path = path;</span>
+<span class="nc" id="L98">        }</span>
+
+        public String getName() {
+<span class="fc" id="L101">            return name;</span>
+        }
+
+        public void setName(String name) {
+<span class="nc" id="L105">            this.name = name;</span>
+<span class="nc" id="L106">        }</span>
+
+        public String getType() {
+<span class="fc" id="L109">            return type;</span>
+        }
+
+        public void setType(String type) {
+<span class="nc" id="L113">            this.type = type;</span>
+<span class="nc" id="L114">        }</span>
+
+        public int getJars() {
+<span class="fc" id="L117">            return jars;</span>
+        }
+
+        public void setJars(int jars) {
+<span class="nc" id="L121">            this.jars = jars;</span>
+<span class="nc" id="L122">        }</span>
+
+        public String getLicense() {
+<span class="fc" id="L125">            return license;</span>
+        }
+
+        public void setLicense(String license) {
+<span class="nc" id="L129">            this.license = license;</span>
+<span class="nc" id="L130">        }</span>
+
+        public String getNotice() {
+<span class="fc" id="L133">            return notice;</span>
+        }
+
+        public void setNotice(String notice) {
+<span class="nc" id="L137">            this.notice = notice;</span>
+<span class="nc" id="L138">        }</span>
+
+        public Item path(String path) {
+<span class="fc" id="L141">            this.path = path;</span>
+<span class="fc" id="L142">            return this;</span>
+        }
+
+        public Item name(String name) {
+<span class="fc" id="L146">            this.name = name;</span>
+<span class="fc" id="L147">            return this;</span>
+        }
+
+        public Item type(String type) {
+<span class="nc" id="L151">            this.type = type;</span>
+<span class="nc" id="L152">            return this;</span>
+        }
+
+        public Item jars(int jars) {
+<span class="nc" id="L156">            this.jars = jars;</span>
+<span class="nc" id="L157">            return this;</span>
+        }
+
+        public Item license(String license) {
+<span class="nc" id="L161">            this.license = license;</span>
+<span class="nc" id="L162">            return this;</span>
+        }
+
+        public Item notice(String notice) {
+<span class="nc" id="L166">            this.notice = notice;</span>
+<span class="nc" id="L167">            return this;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

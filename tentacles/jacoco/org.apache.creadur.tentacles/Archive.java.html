@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Archive.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Tentacles</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.tentacles</a> &gt; <span class="el_source">Archive.java</span></div><h1>Archive.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.tentacles;
+
+import java.io.File;
+import java.net.URI;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+
+public class Archive {
+
+    private final Layout layout;
+    private final FileSystem fileSystem;
+    private final URI uri;
+    private final File file;
+    private final Map&lt;URI, URI&gt; map;
+
+<span class="nc" id="L38">    private final Set&lt;License&gt; licenses = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L39">    private final Set&lt;Notice&gt; notices = new HashSet&lt;&gt;();</span>
+
+<span class="nc" id="L41">    private final Set&lt;License&gt; declaredLicenses = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L42">    private final Set&lt;Notice&gt; declaredNotices = new HashSet&lt;&gt;();</span>
+
+<span class="nc" id="L44">    private final Set&lt;License&gt; otherLicenses = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L45">    private final Set&lt;Notice&gt; otherNotices = new HashSet&lt;&gt;();</span>
+    private Map&lt;URI, URI&gt; others;
+
+    public Archive(final File file, final FileSystem fileSystem,
+<span class="nc" id="L49">            final Layout layout) {</span>
+<span class="nc" id="L50">        this.fileSystem = fileSystem;</span>
+<span class="nc" id="L51">        this.layout = layout;</span>
+<span class="nc" id="L52">        this.uri =</span>
+<span class="nc" id="L53">                layout.getRepositoryDirectory().toURI()</span>
+<span class="nc" id="L54">                        .relativize(file.toURI());</span>
+<span class="nc" id="L55">        this.file = file;</span>
+<span class="nc" id="L56">        this.map = map();</span>
+<span class="nc" id="L57">    }</span>
+
+    public Set&lt;License&gt; getDeclaredLicenses() {
+<span class="nc" id="L60">        return this.declaredLicenses;</span>
+    }
+
+    public Set&lt;Notice&gt; getDeclaredNotices() {
+<span class="nc" id="L64">        return this.declaredNotices;</span>
+    }
+
+    public Set&lt;License&gt; getOtherLicenses() {
+<span class="nc" id="L68">        return this.otherLicenses;</span>
+    }
+
+    public Set&lt;Notice&gt; getOtherNotices() {
+<span class="nc" id="L72">        return this.otherNotices;</span>
+    }
+
+    public Set&lt;License&gt; getLicenses() {
+<span class="nc" id="L76">        return this.licenses;</span>
+    }
+
+    public Set&lt;Notice&gt; getNotices() {
+<span class="nc" id="L80">        return this.notices;</span>
+    }
+
+    public URI getUri() {
+<span class="nc" id="L84">        return this.uri;</span>
+    }
+
+    public File getFile() {
+<span class="nc" id="L88">        return this.file;</span>
+    }
+
+    public Map&lt;URI, URI&gt; getLegal() {
+<span class="nc" id="L92">        return this.map;</span>
+    }
+
+    public Map&lt;URI, URI&gt; getOtherLegal() {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        if (this.others == null) {</span>
+<span class="nc" id="L97">            this.others = mapOther();</span>
+        }
+<span class="nc" id="L99">        return this.others;</span>
+    }
+
+    private Map&lt;URI, URI&gt; mapOther() {
+<span class="nc" id="L103">        final File jarContents = contentsDirectory();</span>
+<span class="nc" id="L104">        final List&lt;File&gt; legal =</span>
+<span class="nc" id="L105">                this.fileSystem.legalDocumentsUndeclaredIn(jarContents);</span>
+
+<span class="nc" id="L107">        return buildMapFrom(jarContents, legal);</span>
+    }
+
+    private Map&lt;URI, URI&gt; buildMapFrom(final File jarContents,
+            final List&lt;File&gt; legal) {
+<span class="nc" id="L112">        final Map&lt;URI, URI&gt; map = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">        for (final File file : legal) {</span>
+<span class="nc" id="L114">            final URI name = jarContents.toURI().relativize(file.toURI());</span>
+<span class="nc" id="L115">            final URI link =</span>
+<span class="nc" id="L116">                    this.layout.getLocalRootDirectory().toURI()</span>
+<span class="nc" id="L117">                            .relativize(file.toURI());</span>
+
+<span class="nc" id="L119">            map.put(name, link);</span>
+<span class="nc" id="L120">        }</span>
+<span class="nc" id="L121">        return map;</span>
+    }
+
+    private Map&lt;URI, URI&gt; map() {
+<span class="nc" id="L125">        final File jarContents = contentsDirectory();</span>
+<span class="nc" id="L126">        final List&lt;File&gt; legal =</span>
+<span class="nc" id="L127">                this.fileSystem.legalDocumentsDeclaredIn(jarContents);</span>
+
+<span class="nc" id="L129">        return buildMapFrom(jarContents, legal);</span>
+    }
+
+    public File contentsDirectory() {
+<span class="nc" id="L133">        final File archiveDocument = getFile();</span>
+<span class="nc" id="L134">        String path =</span>
+<span class="nc" id="L135">                archiveDocument.getAbsolutePath().substring(</span>
+<span class="nc" id="L136">                        this.layout.getLocalRootDirectory().getAbsolutePath()</span>
+<span class="nc" id="L137">                                .length() + 1);</span>
+
+<span class="nc bnc" id="L139" title="All 2 branches missed.">        if (path.startsWith(&quot;repo/&quot;)) {</span>
+<span class="nc" id="L140">            path = path.substring(&quot;repo/&quot;.length());</span>
+        }
+<span class="nc bnc" id="L142" title="All 2 branches missed.">        if (path.startsWith(&quot;content/&quot;)) {</span>
+<span class="nc" id="L143">            path = path.substring(&quot;content/&quot;.length());</span>
+        }
+
+<span class="nc" id="L146">        final File contents =</span>
+<span class="nc" id="L147">                new File(this.layout.getContentRootDirectory(), path</span>
+                        + &quot;.contents&quot;);
+<span class="nc" id="L149">        this.fileSystem.mkdirs(contents);</span>
+<span class="nc" id="L150">        return contents;</span>
+    }
+
+    public URI contentsURI() {
+<span class="nc" id="L154">        return contentsDirectory().toURI();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

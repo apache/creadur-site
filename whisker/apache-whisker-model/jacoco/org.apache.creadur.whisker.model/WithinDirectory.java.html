@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WithinDirectory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">WithinDirectory.java</span></div><h1>WithinDirectory.java</h1><pre class="source lang-java linenums">/**
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.creadur.whisker.model;
+
+import java.util.Collection;
+
+/**
+ * Links resources expected within a directory in the distribution
+ * to licensing meta-data.
+ */
+public class WithinDirectory implements Comparable&lt;WithinDirectory&gt;, ContentElement {
+
+    /** Resources grouped by license applicable. */
+    private final Collection&lt;WithLicense&gt; licenses;
+    /** Public domain resources, grouped by responsible organisation. */
+    private final Collection&lt;ByOrganisation&gt; publicDomain;
+    /** The directory name. */
+    private final String name;
+
+    /**
+     * Constructs a description of a directory
+     * @param name directory name, not null
+     * @param licenses resources contained,
+     * grouped by license applicable, not null
+     * @param publicDomain resources in the public domain,
+     * grouped by responsible organisation
+     */
+    public WithinDirectory(final String name,
+            final Collection&lt;WithLicense&gt; licenses,
+            final Collection&lt;ByOrganisation&gt; publicDomain) {
+<span class="fc" id="L47">        super();</span>
+<span class="fc" id="L48">        this.name = name;</span>
+<span class="fc" id="L49">        this.licenses = licenses;</span>
+<span class="fc" id="L50">        this.publicDomain = publicDomain;</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Gets resources in the public domain,
+     * grouped by the organisation responsible.
+     * @return not null
+     */
+    public Collection&lt;ByOrganisation&gt; getPublicDomain() {
+<span class="fc" id="L59">        return this.publicDomain;</span>
+    }
+
+    /**
+     * Gets the name of the directory described.
+     * @return not null
+     */
+    public String getName() {
+<span class="nc" id="L67">        return this.name;</span>
+    }
+
+    /**
+     * Gets resources contained,
+     * grouped by license applicable.
+     * @return not null
+     */
+    public Collection&lt;WithLicense&gt; getLicenses() {
+<span class="fc" id="L76">        return this.licenses;</span>
+    }
+
+    /**
+     * Based on name.
+     * @see java.lang.Object#hashCode()
+     * @return hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="nc" id="L86">        return getName().hashCode();</span>
+    }
+
+    /**
+     * Based on directory name.
+     * @see java.lang.Object#equals(java.lang.Object)
+     * @param obj possibly null
+     * @return true when directory names are equal,
+     * false otherwise
+     */
+    @Override
+    public boolean equals(final Object obj) {
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L99">            return true;</span>
+        }
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L102">            return false;</span>
+        }
+<span class="nc bnc" id="L104" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L105">            return false;</span>
+        }
+<span class="nc" id="L107">        final WithinDirectory other = (WithinDirectory) obj;</span>
+<span class="nc" id="L108">        return getName().equals(other.getName());</span>
+    }
+
+    /**
+     * Based on name.
+     * @see java.lang.Comparable#compareTo(java.lang.Object)
+     * @return based on name
+     */
+    public int compareTo(final WithinDirectory other) {
+<span class="nc" id="L117">        return getName().compareTo(other.getName());</span>
+    }
+
+    /**
+     * Does the directory described have the given name?
+     * @param directoryName not null
+     * @return true when the name match that of this directory,
+     * false otherwise
+     */
+    public boolean isNamed(final String directoryName) {
+<span class="nc" id="L127">        return getName().equals(directoryName);</span>
+    }
+
+    /**
+     * Accepts a visitor.
+     * @param visitor possibly null
+     */
+    public void accept(final Visitor visitor) {
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">        if (visitor != null) {</span>
+<span class="fc" id="L136">            visitor.visit(this);</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">            if (visitor.traversePublicDomain()) {</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">                for (final ByOrganisation organisation : getPublicDomain()) {</span>
+<span class="nc" id="L139">                    organisation.accept(visitor);</span>
+<span class="nc" id="L140">                }</span>
+            }
+
+<span class="fc bfc" id="L143" title="All 2 branches covered.">            for (final ContentElement license : getLicenses()) {</span>
+<span class="fc" id="L144">                license.accept(visitor);</span>
+<span class="fc" id="L145">            }</span>
+        }
+<span class="fc" id="L147">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
