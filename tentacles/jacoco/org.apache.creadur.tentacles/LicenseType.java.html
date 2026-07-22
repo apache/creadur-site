@@ -31,7 +31,7 @@ import java.util.concurrent.ConcurrentHashMap;
 <span class="nc" id="L31">        final Map&lt;String, String&gt; licenses =</span>
                 new ConcurrentHashMap&lt;&gt;();
 <span class="nc bnc" id="L33" title="All 2 branches missed.">        for (final LicenseType type : values()) {</span>
-<span class="nc" id="L34">            type.putTextInto(licenses, platform.getTentaclesResources());</span>
+<span class="nc" id="L34">            type.putTextInto(licenses, platform.tentaclesResources());</span>
         }
 <span class="nc" id="L36">        return new Licenses(licenses, platform);</span>
     }
