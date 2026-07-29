@@ -87,7 +87,6 @@ loadScripts(document, 'script');</script>
 <li><a href="#getOutputEncoding()" tabindex="0">getOutputEncoding()</a></li>
 <li><a href="#closeReport()" tabindex="0">closeReport()</a></li>
 <li><a href="#getSink()" tabindex="0">getSink()</a></li>
-<li><a href="#getSinkFactory()" tabindex="0">getSinkFactory()</a></li>
 <li><a href="#isExternalReport()" tabindex="0">isExternalReport()</a></li>
 <li><a href="#canGenerateReport()" tabindex="0">canGenerateReport()</a></li>
 <li><a href="#executeReport(java.util.Locale)" tabindex="0">executeReport(Locale)</a></li>
@@ -161,7 +160,7 @@ implements org.apache.maven.reporting.MavenMultiPageReport</span></div>
 <div class="col-last odd-row-color">
 <div class="block">The local repository.</div>
 </div>
-<div class="col-first even-row-color"><code>protected org.apache.maven.doxia.siterenderer.Renderer</code></div>
+<div class="col-first even-row-color"><code>protected org.apache.maven.doxia.siterenderer.SiteRenderer</code></div>
 <div class="col-second even-row-color"><code><a href="#siteRenderer" class="member-name-link">siteRenderer</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Doxia Site Renderer component.</div>
@@ -282,18 +281,15 @@ maven-site-plugin.</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.maven.doxia.sink.Sink</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSink()" class="member-name-link">getSink</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.maven.doxia.sink.SinkFactory</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSinkFactory()" class="member-name-link">getSinkFactory</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.apache.maven.doxia.siterenderer.SiteRenderer</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSiteRenderer()" class="member-name-link">getSiteRenderer</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.apache.maven.doxia.siterenderer.Renderer</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSiteRenderer()" class="member-name-link">getSiteRenderer</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isExternalReport()" class="member-name-link">isExternalReport</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isExternalReport()" class="member-name-link">isExternalReport</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setReportOutputDirectory(java.io.File)" class="member-name-link">setReportOutputDirectory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;reportOutputDirectory)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setReportOutputDirectory(java.io.File)" class="member-name-link">setReportOutputDirectory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;reportOutputDirectory)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -382,7 +378,7 @@ in the Maven Site Plugin is used instead.</div>
 <section class="detail" id="siteTool">
 <h3>siteTool</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="annotations">@Component
+<div class="member-signature"><span class="annotations">@Inject
 </span><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.apache.maven.doxia.tools.SiteTool</span>&nbsp;<span class="element-name">siteTool</span></div>
 <div class="block">SiteTool.</div>
 </div>
@@ -392,8 +388,8 @@ in the Maven Site Plugin is used instead.</div>
 <section class="detail" id="siteRenderer">
 <h3>siteRenderer</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="annotations">@Component
-</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.apache.maven.doxia.siterenderer.Renderer</span>&nbsp;<span class="element-name">siteRenderer</span></div>
+<div class="member-signature"><span class="annotations">@Inject
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.apache.maven.doxia.siterenderer.SiteRenderer</span>&nbsp;<span class="element-name">siteRenderer</span></div>
 <div class="block">Doxia Site Renderer component.</div>
 </div>
 </section>
@@ -434,7 +430,7 @@ standalone Mojo.</div>
 <dt>Specified by:</dt>
 <dd><code>execute</code>&nbsp;in interface&nbsp;<code>org.apache.maven.plugin.Mojo</code></dd>
 <dt>Throws:</dt>
-<dd><code>org.apache.maven.plugin.MojoExecutionException</code> - if an error occurs when generating the report</dd>
+<dd><code>org.apache.maven.plugin.MojoExecutionException</code> - if an error occurs when generating the report.</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
@@ -461,7 +457,7 @@ maven-site-plugin.</div>
 <dt>Parameters:</dt>
 <dd><code>sink</code> - the sink to use for the generation.</dd>
 <dd><code>sinkFactory</code> - the sink factory to use for the generation.</dd>
-<dd><code>locale</code> - the wanted locale to generate the report, could be null.</dd>
+<dd><code>locale</code> - the wanted locale to generate the report, could be <code>null</code>.</dd>
 <dt>Throws:</dt>
 <dd><code>org.apache.maven.reporting.MavenReportException</code> - if any</dd>
 </dl>
@@ -485,7 +481,7 @@ maven-site-plugin.</div>
 <dd><code>generate</code>&nbsp;in interface&nbsp;<code>org.apache.maven.reporting.MavenReport</code></dd>
 <dt>Parameters:</dt>
 <dd><code>sink</code> - the sink to use for the generation.</dd>
-<dd><code>locale</code> - the wanted locale to generate the report, could be null.</dd>
+<dd><code>locale</code> - the wanted locale to generate the report, could be <code>null</code>.</dd>
 <dt>Throws:</dt>
 <dd><code>org.apache.maven.reporting.MavenReportException</code> - if any</dd>
 </dl>
@@ -542,7 +538,7 @@ maven-site-plugin.</div>
 <section class="detail" id="getSiteRenderer()">
 <h3>getSiteRenderer</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.apache.maven.doxia.siterenderer.Renderer</span>&nbsp;<span class="element-name">getSiteRenderer</span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.apache.maven.doxia.siterenderer.SiteRenderer</span>&nbsp;<span class="element-name">getSiteRenderer</span>()</div>
 </div>
 </section>
 </li>
@@ -590,18 +586,6 @@ maven-site-plugin.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the sink used</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getSinkFactory()">
-<h3>getSinkFactory</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.apache.maven.doxia.sink.SinkFactory</span>&nbsp;<span class="element-name">getSinkFactory</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the sink factory used</dd>
 </dl>
 </div>
 </section>
@@ -682,7 +666,7 @@ the bundle.</dd>
 <dt>Specified by:</dt>
 <dd><code>getName</code>&nbsp;in interface&nbsp;<code>org.apache.maven.reporting.MavenReport</code></dd>
 <dt>Parameters:</dt>
-<dd><code>locale</code> - Requested locale of the bundle</dd>
+<dd><code>locale</code> - Requested locale of the bundle.</dd>
 <dt>Returns:</dt>
 <dd>Report name, as given by the key "report.rat.name" in the bundle.</dd>
 </dl>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportableListWalker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.walker</a> &gt; <span class="el_source">ReportableListWalker.java</span></div><h1>ReportableListWalker.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.walker;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import org.apache.rat.api.RatException;
+import org.apache.rat.document.DocumentName;
+import org.apache.rat.report.RatReport;
+import org.apache.rat.report.Reportable;
+import org.apache.rat.utils.DefaultLog;
+
+/**
+ * A Reportable that walks a list of Reportables and executes the run on each.
+ */
+public final class ReportableListWalker implements Reportable {
+    /** The document name for this walker. */
+    private final DocumentName documentName;
+    /** The list of reportables for this walker. */
+    private final List&lt;Reportable&gt; reportables;
+
+    /**
+     * Create a builder for the list walker.
+     * @param name the name of the walker.
+     * @return the builder.
+     */
+    public static Builder builder(final DocumentName name) {
+<span class="fc" id="L46">        return new Builder(name);</span>
+    }
+
+    /**
+     * Construct the builder.
+     * @param builder for the reportable.
+     */
+<span class="fc" id="L53">    private ReportableListWalker(final Builder builder) {</span>
+<span class="fc" id="L54">        this.documentName = builder.documentName;</span>
+<span class="fc" id="L55">        this.reportables = builder.reportables;</span>
+<span class="fc" id="L56">    }</span>
+
+    @Override
+    public void run(final RatReport report) {
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (Reportable reportable : reportables) {</span>
+            try {
+<span class="fc" id="L62">                reportable.run(report);</span>
+<span class="fc" id="L63">            } catch (RatException e) {</span>
+<span class="fc" id="L64">                DefaultLog.getInstance().error(&quot;Error processing &quot; + reportable.name(), e);</span>
+<span class="fc" id="L65">            }</span>
+<span class="fc" id="L66">        }</span>
+<span class="fc" id="L67">    }</span>
+
+    @Override
+    public DocumentName name() {
+<span class="fc" id="L71">        return documentName;</span>
+    }
+
+    /**
+     * A Builder for the ListWalker.
+     */
+    public static final class Builder {
+        /** The document name for the walker. */
+        private final DocumentName documentName;
+        /** The list of Reportable objects to execute. */
+<span class="fc" id="L81">        private List&lt;Reportable&gt; reportables = new ArrayList&lt;&gt;();</span>
+
+        /**
+         * Constructs the builder.
+         * @param name the name of the walker being built.
+         */
+<span class="fc" id="L87">        private Builder(final DocumentName name) {</span>
+<span class="fc" id="L88">            Objects.requireNonNull(name, &quot;Document name must not be null&quot;);</span>
+<span class="fc" id="L89">            this.documentName = name;</span>
+<span class="fc" id="L90">        }</span>
+
+        /**
+         * Add a reportable to the list of reportables to run.
+         * @param reportable the reportable to run.
+         * @return this.
+         */
+        public Builder addReportable(final Reportable reportable) {
+<span class="fc" id="L98">            this.reportables.add(reportable);</span>
+<span class="fc" id="L99">            return this;</span>
+        }
+
+        /**
+         * Build the reportable.
+         * @return the reportable.
+         * @throws RatException on error.
+         */
+        public ReportableListWalker build() throws RatException {
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            if (reportables == null) {</span>
+<span class="fc" id="L109">                throw new RatException(&quot;Builder may only be used once&quot;);</span>
+            }
+<span class="fc" id="L111">            ReportableListWalker result = new ReportableListWalker(this);</span>
+<span class="fc" id="L112">            this.reportables = null;</span>
+<span class="fc" id="L113">            return result;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

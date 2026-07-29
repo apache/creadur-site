@@ -67,7 +67,9 @@ loadScripts(document, 'script');</script>
 <li><a href="#addLicenses(java.net.URI)" tabindex="0">addLicenses(URI)</a></li>
 <li><a href="#read(java.io.Reader)" tabindex="0">read(Reader)</a></li>
 <li><a href="#read(java.net.URI...)" tabindex="0">read(URI...)</a></li>
+<li><a href="#nodeListConsumer(org.w3c.dom.NodeList,java.util.function.Consumer)" tabindex="0">nodeListConsumer(NodeList, Consumer)</a></li>
 <li><a href="#add(org.w3c.dom.Document)" tabindex="0">add(Document)</a></li>
+<li><a href="#attributes(org.w3c.dom.Node)" tabindex="0">attributes(Node)</a></li>
 <li><a href="#readLicenses()" tabindex="0">readLicenses()</a></li>
 <li><a href="#readFamilies()" tabindex="0">readFamilies()</a></li>
 <li><a href="#approvedLicenseId()" tabindex="0">approvedLicenseId()</a></li>
@@ -120,7 +122,7 @@ implements <a href="LicenseReader.html" title="interface in org.apache.rat.confi
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -145,6 +147,17 @@ implements <a href="LicenseReader.html" title="interface in org.apache.rat.confi
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#approvedLicenseId()" class="member-name-link">approvedLicenseId</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">/////////////////////////////////////// MatcherReader methods</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#attributes(org.w3c.dom.Node)" class="member-name-link">attributes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/Node.html" title="class or interface in org.w3c.dom" class="external-link">Node</a>&nbsp;node)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Get a map of Node attribute names to values.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#nodeListConsumer(org.w3c.dom.NodeList,java.util.function.Consumer)" class="member-name-link">nodeListConsumer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/NodeList.html" title="class or interface in org.w3c.dom" class="external-link">NodeList</a>&nbsp;list,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/Node.html" title="class or interface in org.w3c.dom" class="external-link">Node</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Applies the <code>consumer</code> to each node in the <code>list</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#read(java.io.Reader)" class="member-name-link">read</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader)</code></div>
@@ -242,7 +255,23 @@ implements <a href="LicenseReader.html" title="interface in org.apache.rat.confi
 <div class="block">Read the uris and extract the DOM information to create new objects.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>uris</code> - The URIs to read.</dd>
+<dd><code>uris</code> - the URIs to read.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="nodeListConsumer(org.w3c.dom.NodeList,java.util.function.Consumer)">
+<h3>nodeListConsumer</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">nodeListConsumer</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/NodeList.html" title="class or interface in org.w3c.dom" class="external-link">NodeList</a>&nbsp;list,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/Node.html" title="class or interface in org.w3c.dom" class="external-link">Node</a>&gt;&nbsp;consumer)</span></div>
+<div class="block">Applies the <code>consumer</code> to each node in the <code>list</code>. Generally used for extracting info from a
+<code>NodeList</code>.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>list</code> - the NodeList to process.</dd>
+<dd><code>consumer</code> - the consumer to apply to each node in the list.</dd>
 </dl>
 </div>
 </section>
@@ -256,6 +285,21 @@ implements <a href="LicenseReader.html" title="interface in org.apache.rat.confi
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>newDoc</code> - the Document to merge.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="attributes(org.w3c.dom.Node)">
+<h3>attributes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">attributes</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/Node.html" title="class or interface in org.w3c.dom" class="external-link">Node</a>&nbsp;node)</span></div>
+<div class="block">Get a map of Node attribute names to values.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>node</code> - the node to process.</dd>
+<dt>Returns:</dt>
+<dd>the map of attributes on the node.</dd>
 </dl>
 </div>
 </section>

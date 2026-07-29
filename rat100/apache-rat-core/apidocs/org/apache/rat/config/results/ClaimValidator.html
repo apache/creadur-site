@@ -123,12 +123,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMax(org.apache.rat.report.claim.ClaimStatistic.Counter)" class="member-name-link">getMax</a><wbr>(<a href="../../report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the limit for the specific counter.</div>
+<div class="block">Gets the max limit for the specific counter.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMin(org.apache.rat.report.claim.ClaimStatistic.Counter)" class="member-name-link">getMin</a><wbr>(<a href="../../report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the limit for the specific counter.</div>
+<div class="block">Gets the min limit for the specific counter.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasErrors()" class="member-name-link">hasErrors</a>()</code></div>
@@ -161,7 +161,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMin(org.apache.rat.report.claim.ClaimStatistic.Counter,int)" class="member-name-link">setMin</a><wbr>(<a href="../../report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
  int&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the max value for the specified counter.</div>
+<div class="block">Sets the min value for the specified counter.</div>
 </div>
 </div>
 </div>
@@ -216,7 +216,8 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMax</span><wbr><span class="parameters">(<a href="../../report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
  int&nbsp;value)</span></div>
-<div class="block">Sets the max value for the specified counter.</div>
+<div class="block">Sets the max value for the specified counter.
+Will adjust the minimum if the minimum is greater than the maximum.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>counter</code> - the counter to set the limit for.</dd>
@@ -231,7 +232,8 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMin</span><wbr><span class="parameters">(<a href="../../report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter,
  int&nbsp;value)</span></div>
-<div class="block">Sets the max value for the specified counter.</div>
+<div class="block">Sets the min value for the specified counter.
+Will adjust the maximum if the maximum is less than the minimum.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>counter</code> - the counter to set the limit for.</dd>
@@ -245,7 +247,7 @@ loadScripts(document, 'script');</script>
 <h3>getMax</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMax</span><wbr><span class="parameters">(<a href="../../report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter)</span></div>
-<div class="block">Gets the limit for the specific counter.</div>
+<div class="block">Gets the max limit for the specific counter.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>counter</code> - the counter to get the limit for.</dd>
@@ -260,12 +262,12 @@ loadScripts(document, 'script');</script>
 <h3>getMin</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMin</span><wbr><span class="parameters">(<a href="../../report/claim/ClaimStatistic.Counter.html" title="enum class in org.apache.rat.report.claim">ClaimStatistic.Counter</a>&nbsp;counter)</span></div>
-<div class="block">Gets the limit for the specific counter.</div>
+<div class="block">Gets the min limit for the specific counter.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>counter</code> - the counter to get the limit for.</dd>
 <dt>Returns:</dt>
-<dd>the limit for the counter or 0 if not set.</dd>
+<dd>the limit for the counter or zero if not set.</dd>
 </dl>
 </div>
 </section>
@@ -279,10 +281,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Determines if the specified count is within the limits for the counter.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>counter</code> - The counter to check.</dd>
+<dd><code>counter</code> - the counter to check.</dd>
 <dd><code>count</code> - the limit to check.</dd>
 <dt>Returns:</dt>
 <dd><code>true</code> if the count is within the limits, <code>false</code> otherwise.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if counter is <code>null</code>.</dd>
 </dl>
 </div>
 </section>
@@ -295,7 +299,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Logs all the invalid values as errors.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>statistic</code> - The statistics that contain the run values.</dd>
+<dd><code>statistic</code> - the statistics that contain the run's values.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if statistic is <code>null</code>.</dd>
 </dl>
 </div>
 </section>
@@ -308,9 +314,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a list of items that have issues.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>statistic</code> - The statistics that contain the run values.</dd>
+<dd><code>statistic</code> - the statistics that contain the run values.</dd>
 <dt>Returns:</dt>
 <dd>a collection of counter names that are invalid.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if statistic is <code>null</code>.</dd>
 </dl>
 </div>
 </section>

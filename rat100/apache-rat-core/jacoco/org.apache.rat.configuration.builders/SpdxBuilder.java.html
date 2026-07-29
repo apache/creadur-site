@@ -27,9 +27,23 @@ import org.apache.rat.config.parameters.MatcherBuilder;
 
 /**
  * A builder for SPDX matchers.
+ * &lt;p&gt;
+ * Uses a {@code ThreadLocal} factory so that each thread in a parallel Maven
+ * build gets its own {@link SPDXMatcherFactory} instance with isolated match
+ * state. This prevents two threads scanning different documents from
+ * cross-contaminating each other's SPDX identifier results.
+ * &lt;/p&gt;
  */
 @MatcherBuilder(SPDXMatcherFactory.Match.class)
-<span class="fc" id="L32">public class SpdxBuilder extends AbstractBuilder {</span>
+<span class="fc" id="L38">public class SpdxBuilder extends AbstractBuilder {</span>
+
+    /**
+     * Per-thread SPDXMatcherFactory. Each thread gets its own factory with
+     * its own matcher map and per-document match state ({@code lastMatch},
+     * {@code checked}).
+     */
+<span class="fc" id="L45">    private static final ThreadLocal&lt;SPDXMatcherFactory&gt; FACTORY = ThreadLocal.withInitial(SPDXMatcherFactory::newInstance);</span>
+
     /** The SPDX name */
     private String name;
 
@@ -41,10 +55,10 @@ import org.apache.rat.config.parameters.MatcherBuilder;
      * @see &lt;a href=&quot;https://spdx.org/licenses/&quot;&gt;SPDX license list&lt;/a&gt;
      */
     public SpdxBuilder setName(final String name) {
-<span class="fc" id="L44">        Objects.requireNonNull(name, &quot;SPDX name must not be null&quot;);</span>
-<span class="fc" id="L45">        this.name = name;</span>
-<span class="fc" id="L46">        super.setId(&quot;SPDX:&quot; + name);</span>
-<span class="fc" id="L47">        return this;</span>
+<span class="fc" id="L58">        Objects.requireNonNull(name, &quot;SPDX name must not be null&quot;);</span>
+<span class="fc" id="L59">        this.name = name;</span>
+<span class="fc" id="L60">        super.setId(&quot;SPDX:&quot; + name);</span>
+<span class="fc" id="L61">        return this;</span>
     }
 
     /**
@@ -55,21 +69,21 @@ import org.apache.rat.config.parameters.MatcherBuilder;
      */
     @Override
     public AbstractBuilder setId(final String id) {
-<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (StringUtils.isNotBlank(id)) {</span>
-<span class="fc" id="L59">            throw new ConfigurationException(&quot;'id' is not supported for SPDX matchers. &quot;</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (StringUtils.isNotBlank(id)) {</span>
+<span class="fc" id="L73">            throw new ConfigurationException(&quot;'id' is not supported for SPDX matchers. &quot;</span>
                     + &quot;SPXD matchers always have 'SPDX:&lt;name&gt;' as their id&quot;);
         }
-<span class="nc" id="L62">        return this;</span>
+<span class="nc" id="L76">        return this;</span>
     }
 
     @Override
     public SPDXMatcherFactory.Match build() {
-<span class="fc" id="L67">        return SPDXMatcherFactory.INSTANCE.create(name);</span>
+<span class="fc" id="L81">        return FACTORY.get().create(name);</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L72">        return &quot;SpdxBuilder: &quot; + name;</span>
+<span class="nc" id="L86">        return &quot;SpdxBuilder: &quot; + name;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

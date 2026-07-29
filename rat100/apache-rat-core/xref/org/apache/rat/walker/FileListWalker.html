@@ -37,15 +37,15 @@
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.DocumentName;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.DocumentNameMatcher;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.document.FileDocument;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.IReportable;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.RatReport;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.RatReport;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.Reportable;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.DefaultLog;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> * Implementation of IReportable that traverses over a resource collection</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment"> * Implementation of Reportable that traverses over a resource collection</em>
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment"> * internally.</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FileListWalker" href="../../../../org/apache/rat/walker/FileListWalker.html#FileListWalker">FileListWalker</a> <strong class="jxr_keyword">implements</strong> <a name="IReportable" href="../../../../org/apache/rat/report/IReportable.html#IReportable">IReportable</a> {
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="FileListWalker" href="../../../../org/apache/rat/walker/FileListWalker.html#FileListWalker">FileListWalker</a> <strong class="jxr_keyword">implements</strong> <a name="Reportable" href="../../../../org/apache/rat/report/Reportable.html#Reportable">Reportable</a> {
 <a class="jxr_linenumber" name="L41" href="#L41">41</a>      <em class="jxr_javadoccomment">/** The source document name. */</em>
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <a name="FileDocument" href="../../../../org/apache/rat/document/FileDocument.html#FileDocument">FileDocument</a> source;
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>      <em class="jxr_javadoccomment">/** The root document name. */</em>
@@ -80,7 +80,7 @@
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>      @Override
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> run(<strong class="jxr_keyword">final</strong> <a name="RatReport" href="../../../../org/apache/rat/report/RatReport.html#RatReport">RatReport</a> report) <strong class="jxr_keyword">throws</strong> <a name="RatException" href="../../../../org/apache/rat/api/RatException.html#RatException">RatException</a> {
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>          DefaultLog.getInstance().debug(String.format(<span class="jxr_string">"Reading file name: %s due to option %s"</span>, source, Arg.SOURCE.option()));
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          <a name="DocumentName" href="../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> sourceName = getName();
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          <a name="DocumentName" href="../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> sourceName = name();
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">try</strong> (Reader reader = source.reader()) {
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>              <strong class="jxr_keyword">for</strong> (String docName : IOUtils.readLines(reader)) {
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>                  <strong class="jxr_keyword">try</strong> {
@@ -101,7 +101,7 @@
 <a class="jxr_linenumber" name="L93" href="#L93">93</a>      }
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>  
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      @Override
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">public</strong> <a name="DocumentName" href="../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> getName() {
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>      <strong class="jxr_keyword">public</strong> <a name="DocumentName" href="../../../../org/apache/rat/document/DocumentName.html#DocumentName">DocumentName</a> name() {
 <a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">return</strong> source.getName();
 <a class="jxr_linenumber" name="L98" href="#L98">98</a>      }
 <a class="jxr_linenumber" name="L99" href="#L99">99</a>  }

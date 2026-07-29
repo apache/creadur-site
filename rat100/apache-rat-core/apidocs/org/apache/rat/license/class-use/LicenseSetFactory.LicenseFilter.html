@@ -119,20 +119,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="../ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#getLicenseFamilies(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseFamilies</a><wbr>(<a href="../LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Gets a sorted set of ILicenseFamily objects based on <code>filter</code>. if
-filter is set:
-
-<code>all</code> - All licenses families will be returned.
-<code>approved</code> - Only approved license families will be returned
-<code>none</code> - No license families will be returned
-</div>
+<div class="block">Gets a sorted set of ILicenseFamily objects based on <code>filter</code>.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#getLicenseIds(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseIds</a><wbr>(<a href="../LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Gets the SortedSet of approved license categories.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-first odd-row-color"><code>org.apache.commons.collections4.set.UnmodifiableSortedSet<wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">ReportConfiguration.</span><code><a href="../../ReportConfiguration.html#getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenses</a><wbr>(<a href="../LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Gets the SortedSet of approved license categories.</div>
@@ -147,11 +141,16 @@ filter is set:
 <div class="col-last odd-row-color">
 <div class="block">Set the level of licenses that should be output in the XML document.</div>
 </div>
-<div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Reporter.</span><code><a href="../../Reporter.html#listLicenses(org.apache.rat.ReportConfiguration,org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listLicenses</a><wbr>(<a href="../../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Reporter.Output.</span><code><a href="../../Reporter.Output.html#listLicenses(java.io.PrintWriter,org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listLicenses</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintWriter.html" title="class or interface in java.io" class="external-link">PrintWriter</a>&nbsp;printWriter,
  <a href="../LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Lists the licenses on the configured output stream.</div>
+<div class="block">Lists the licenses on the print writer.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Reporter.Output.</span><code><a href="../../Reporter.Output.html#listLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listLicenses</a><wbr>(<a href="../LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Lists the licenses on the output specified in the configuration.</div>
 </div>
 </div>
 </section>
@@ -167,7 +166,7 @@ filter is set:
 <div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../LicenseSetFactory.LicenseFilter.html" class="type-name-link" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">An enum that defines the types of Licenses to extract.</div>
+<div class="block">An enum that defines the types of licenses to extract.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.license</a> that return <a href="../LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a></span></div>
@@ -207,7 +206,7 @@ the order they are declared.</div>
 <div class="col-last even-row-color">
 <div class="block">Gets the License ids based on the filter.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-first odd-row-color"><code>org.apache.commons.collections4.set.UnmodifiableSortedSet<wbr>&lt;<a href="../ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">LicenseSetFactory.</span><code><a href="../LicenseSetFactory.html#getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenses</a><wbr>(<a href="../LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Gets the License objects based on the filter.</div>

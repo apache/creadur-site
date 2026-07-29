@@ -27,17 +27,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.CompareToBuilder;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -45,8 +43,8 @@ import org.apache.commons.lang3.tuple.Pair;
  * The name for a document. The {@code DocumentName} is an immutable structure that handles all the intricacies of file
  * naming on various operating systems. DocumentNames have several components:
  * &lt;ul&gt;
- *     &lt;li&gt;{@code root} - where in the file system the name starts (e.g C: on windows). May be empty but not null.&lt;/li&gt;
- *     &lt;li&gt;{@code dirSeparator} - the separator between name segments (e.g. &quot;\\&quot; on windows, &quot;/&quot; on linux). May not be
+ *     &lt;li&gt;{@code root} - where in the file system the name starts (e.g C:\ on Microsoft Windows). May be empty but not null.&lt;/li&gt;
+ *     &lt;li&gt;{@code dirSeparator} - the separator between name segments (e.g. &quot;\&quot; on Microsoft Windows, &quot;/&quot; on linux). May not be
  *     empty or null.&lt;/li&gt;
  *     &lt;li&gt;{@code name} - the name of the file relative to the {@code root}. May not be null. Does NOT begin with a {@code dirSeparator}&lt;/li&gt;
  *     &lt;li&gt;{@code baseName} - the name of a directory or file from which this file is reported. A DocumentName with a
@@ -65,7 +63,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
     private final DocumentName baseName;
     /** The file system info for this document. */
     private final FSInfo fsInfo;
-    /** The root for the DocumentName. May be empty but not null. */
+    /** The root for the DocumentName. May be empty but not null. Must be one of the roots in fsInfo. */
     private final String root;
 
     /**
@@ -74,7 +72,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @see FSInfo
      */
     public static Builder builder() {
-<span class="fc" id="L77">        return new Builder(FSInfo.getDefault());</span>
+<span class="fc" id="L75">        return new Builder(FSInfo.getDefault());</span>
     }
 
     /**
@@ -83,7 +81,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return a new builder.
      */
     public static Builder builder(final FSInfo fsInfo) {
-<span class="fc" id="L86">        return new Builder(fsInfo);</span>
+<span class="fc" id="L84">        return new Builder(fsInfo);</span>
     }
 
     /**
@@ -92,7 +90,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return a new builder.
      */
     public static Builder builder(final FileSystem fileSystem) {
-<span class="nc" id="L95">        return new Builder(fileSystem);</span>
+<span class="fc" id="L93">        return new Builder(fileSystem);</span>
     }
 
     /**
@@ -102,7 +100,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the builder.
      */
     public static Builder builder(final File file) {
-<span class="fc" id="L105">        return new Builder(file);</span>
+<span class="fc" id="L103">        return new Builder(file);</span>
     }
 
     /**
@@ -111,56 +109,88 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the builder.
      */
     public static Builder builder(final DocumentName documentName) {
-<span class="fc" id="L114">        return new Builder(documentName);</span>
+<span class="fc" id="L112">        return new Builder(documentName);</span>
     }
 
     /**
      * Builds the DocumentName from the builder.
      * @param builder the builder to provide the values.
      */
-<span class="fc" id="L121">    DocumentName(final Builder builder) {</span>
-<span class="fc" id="L122">        this.name = builder.name;</span>
-<span class="fc" id="L123">        this.fsInfo = builder.fsInfo;</span>
-<span class="fc" id="L124">        this.root = builder.root;</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">        this.baseName = builder.sameNameFlag ? this : builder.baseName;</span>
-<span class="fc" id="L126">    }</span>
+<span class="fc" id="L119">    DocumentName(final Builder builder) {</span>
+<span class="fc" id="L120">        this.name = builder.name;</span>
+<span class="fc" id="L121">        this.fsInfo = builder.fsInfo;</span>
+<span class="fc" id="L122">        this.root = builder.root;</span>
+<span class="fc bfc" id="L123" title="All 2 branches covered.">        this.baseName = builder.sameNameFlag ? this : builder.baseName;</span>
+<span class="fc" id="L124">    }</span>
 
     /**
-     * Creates a file from the document name.
+     * Creates a file from the fully qualified document name.
      * @return a new File object.
      */
     public File asFile() {
-<span class="fc" id="L133">        return new File(getName());</span>
+<span class="fc" id="L131">        return new File(getName());</span>
     }
 
     /**
-     * Creates a path from the document name.
+     * Creates a path from the document name. This method uses the fully qualified name without the root.
+     * this results in a relative file name from the root.
      * @return a new Path object.
      */
     public Path asPath() {
-<span class="nc" id="L141">        return Paths.get(name);</span>
+<span class="fc" id="L140">        return Paths.get(name);</span>
     }
 
     /**
      * Creates a new DocumentName by adding the child to the current name.
      * Resulting documentName will have the same base name.
+     * Directory separator is normalized to the directory separator for this file system.
+     * If the child string:
+     * &lt;dl&gt;
+     *     &lt;dt&gt;Is blank&lt;/dt&gt;
+     *     &lt;dd&gt;This DocumentName is returned.&lt;/dd&gt;
+     *     &lt;dt&gt;Starts with the file system root&lt;/dt&gt;
+     *     &lt;dd&gt;The root must match the root of this DocumentName and the directory structure
+     *     must start with the directory structure of the basename for this DocumentName.&lt;/dd&gt;
+     *     &lt;dt&gt;Starts with the directory separator character&lt;dt&gt;
+     *     &lt;dd&gt;Result will be a tree starting at the directory specified by the basename.&lt;/dd&gt;
+     *     &lt;dt&gt;Does not start with a directory separator character&lt;/dt&gt;
+     *     &lt;dd&gt;Result will be a tree starting at the directory specified by this DocumentName&lt;/dd&gt;
+     * &lt;/dl&gt;
      * @param child the child to add (must use directory separator from this document name).
      * @return the new document name with the same {@link #baseName}, directory sensitivity and case sensitivity as
      * this one.
+     * @throws IllegalArgumentException if the child specifies a different root from this document name.
      */
     public DocumentName resolve(final String child) {
-<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        if (StringUtils.isBlank(child)) {</span>
-<span class="nc" id="L153">            return this;</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">        if (StringUtils.isBlank(child)) {</span>
+<span class="fc" id="L166">            return this;</span>
         }
-<span class="fc" id="L155">        String separator = getDirectorySeparator();</span>
-<span class="fc bfc" id="L156" title="All 2 branches covered.">        String pattern = separator.equals(&quot;/&quot;) ? child.replace('\\', '/') :</span>
-<span class="fc" id="L157">                child.replace('/', '\\');</span>
+<span class="fc" id="L168">        String separator = getDirectorySeparator();</span>
+<span class="fc bfc" id="L169" title="All 2 branches covered.">        String pattern = separator.equals(&quot;/&quot;) ? child.replace('\\', '/') :</span>
+<span class="fc" id="L170">                child.replace('/', '\\');</span>
 
-<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (!pattern.startsWith(separator)) {</span>
-<span class="fc" id="L160">             pattern = name + separator + pattern;</span>
+<span class="fc" id="L172">        Optional&lt;String&gt; expectedRoot = fsInfo.rootFor(child);</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">        if (expectedRoot.isPresent()) {</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            if (!expectedRoot.get().equals(getRoot())) {</span>
+<span class="fc" id="L175">                throw new IllegalArgumentException(String.format(&quot;%s does not start with %s&quot;, pattern, getName()));</span>
+            }
+<span class="fc bfc" id="L177" title="All 2 branches covered.">            if (!getRoot().equals(separator)) {</span>
+                // we have something like C:\ as the root so convert the pattern to start with the separator.
+<span class="fc" id="L179">                pattern = separator + pattern.substring(getRoot().length());</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">                if (pattern.startsWith(baseName.name)) {</span>
+<span class="fc" id="L181">                    pattern = pattern.substring(baseName.name.length());</span>
+                }
+            }
         }
 
-<span class="fc" id="L163">        return new Builder(this).setName(fsInfo.normalize(pattern)).build();</span>
+        // Patterns with separators either start with the name of this document plus a relative
+        // name, or are just directory off the baseName. In either case the name is correct.
+        // So just handle the relative case.
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (!pattern.startsWith(separator)) {</span>
+<span class="fc" id="L190">            pattern = name + separator + pattern;</span>
+        }
+
+<span class="fc" id="L193">        return new Builder(this).setName(fsInfo.normalize(pattern)).build();</span>
     }
 
     /**
@@ -168,7 +198,15 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the fully qualified name of the document.
      */
     public String getName() {
-<span class="fc" id="L171">        return root + fsInfo.dirSeparator() + name;</span>
+<span class="fc" id="L201">        return root + name;</span>
+    }
+
+    /**
+     * Gets the path of the document. This is the fully qualified name without the root but starting with a path separator.
+     * @return the path of the document.
+     */
+    public String getPath() {
+<span class="nc" id="L209">        return getDirectorySeparator() + name;</span>
     }
 
     /**
@@ -176,7 +214,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the fully qualified basename of the document.
      */
     public String getBaseName() {
-<span class="fc" id="L179">        return baseName.getName();</span>
+<span class="fc" id="L217">        return baseName.getName();</span>
     }
 
     /**
@@ -184,7 +222,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the root for this document.
      */
     public String getRoot() {
-<span class="fc" id="L187">        return root;</span>
+<span class="fc" id="L225">        return root;</span>
     }
 
     /**
@@ -192,7 +230,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the DocumentName for the basename of this document name.
      */
     public DocumentName getBaseDocumentName() {
-<span class="fc" id="L195">        return baseName;</span>
+<span class="fc" id="L233">        return baseName;</span>
     }
 
     /**
@@ -200,7 +238,15 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the directory separator.
      */
     public String getDirectorySeparator() {
-<span class="fc" id="L203">        return fsInfo.dirSeparator();</span>
+<span class="fc" id="L241">        return fsInfo.dirSeparator();</span>
+    }
+
+    /**
+     * Returns the FSInfo for this document name.
+     * @return the FSInfo for this document name.
+     */
+    public FSInfo fsInfo() {
+<span class="fc" id="L249">        return fsInfo;</span>
     }
 
     /**
@@ -210,15 +256,15 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @param separator the separator to check. If blank the check is skipped.
      * @return true if either the root or separator check returned {@code true}.
      */
-    boolean startsWithRootOrSeparator(final String candidate, final String root, final String separator) {
-<span class="fc bfc" id="L214" title="All 2 branches covered.">        if (StringUtils.isBlank(candidate)) {</span>
-<span class="fc" id="L215">            return false;</span>
+    static boolean startsWithRootOrSeparator(final String candidate, final String root, final String separator) {
+<span class="fc bfc" id="L260" title="All 2 branches covered.">        if (StringUtils.isBlank(candidate)) {</span>
+<span class="fc" id="L261">            return false;</span>
         }
-<span class="fc bfc" id="L217" title="All 4 branches covered.">        boolean result = !StringUtils.isBlank(root) &amp;&amp; candidate.startsWith(root);</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">        if (!result) {</span>
-<span class="pc bpc" id="L219" title="1 of 4 branches missed.">            result = !StringUtils.isBlank(separator) &amp;&amp; candidate.startsWith(separator);</span>
+<span class="fc bfc" id="L263" title="All 4 branches covered.">        boolean result = !StringUtils.isBlank(root) &amp;&amp; candidate.startsWith(root);</span>
+<span class="fc bfc" id="L264" title="All 2 branches covered.">        if (!result) {</span>
+<span class="pc bpc" id="L265" title="1 of 4 branches missed.">            result = !StringUtils.isBlank(separator) &amp;&amp; candidate.startsWith(separator);</span>
         }
-<span class="fc" id="L221">        return result;</span>
+<span class="fc" id="L267">        return result;</span>
     }
 
     /**
@@ -227,15 +273,15 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the portion of the name that is not part of the base name.
      */
     public String localized() {
-<span class="fc" id="L230">        String result = getName();</span>
-<span class="fc" id="L231">        String baseNameStr = baseName.getName();</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">        if (result.startsWith(baseNameStr)) {</span>
-<span class="fc" id="L233">            result = result.substring(baseNameStr.length());</span>
+<span class="fc" id="L276">        String result = getName();</span>
+<span class="fc" id="L277">        String baseNameStr = baseName.getName();</span>
+<span class="pc bpc" id="L278" title="1 of 2 branches missed.">        if (result.startsWith(baseNameStr)) {</span>
+<span class="fc" id="L279">            result = result.substring(baseNameStr.length());</span>
         }
-<span class="fc bfc" id="L235" title="All 2 branches covered.">        if (!startsWithRootOrSeparator(result, getRoot(), fsInfo.dirSeparator())) {</span>
-<span class="fc" id="L236">            result = fsInfo.dirSeparator() + result;</span>
+<span class="fc bfc" id="L281" title="All 2 branches covered.">        if (!startsWithRootOrSeparator(result, getRoot(), fsInfo.dirSeparator())) {</span>
+<span class="fc" id="L282">            result = fsInfo.dirSeparator() + result;</span>
         }
-<span class="fc" id="L238">        return result;</span>
+<span class="fc" id="L284">        return result;</span>
     }
 
     /**
@@ -245,18 +291,18 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the portion of the name that is not part of the base name.
      */
     public String localized(final String dirSeparator) {
-<span class="fc" id="L248">        String[] tokens = fsInfo.tokenize(localized());</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">        if (tokens.length == 0) {</span>
-<span class="fc" id="L250">            return dirSeparator;</span>
+<span class="fc" id="L294">        String[] tokens = fsInfo.tokenize(localized());</span>
+<span class="pc bpc" id="L295" title="1 of 2 branches missed.">        if (tokens.length == 0) {</span>
+<span class="nc" id="L296">            return dirSeparator;</span>
         }
-<span class="pc bpc" id="L252" title="1 of 2 branches missed.">        if (tokens.length == 1) {</span>
-<span class="nc" id="L253">            return dirSeparator + tokens[0];</span>
+<span class="pc bpc" id="L298" title="1 of 2 branches missed.">        if (tokens.length == 1) {</span>
+<span class="nc" id="L299">            return dirSeparator + tokens[0];</span>
         }
 
-<span class="fc bfc" id="L256" title="All 2 branches covered.">        String modifiedRoot =  dirSeparator.equals(&quot;/&quot;) ? root.replace('\\', '/') :</span>
-<span class="fc" id="L257">                root.replace('/', '\\');</span>
-<span class="fc" id="L258">        String result = String.join(dirSeparator, tokens);</span>
-<span class="pc bpc" id="L259" title="1 of 2 branches missed.">        return startsWithRootOrSeparator(result, modifiedRoot, dirSeparator) ? result : dirSeparator + result;</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">        String modifiedRoot =  dirSeparator.equals(&quot;/&quot;) ? root.replace('\\', '/') :</span>
+<span class="fc" id="L303">                root.replace('/', '\\');</span>
+<span class="fc" id="L304">        String result = String.join(dirSeparator, tokens);</span>
+<span class="pc bpc" id="L305" title="1 of 2 branches missed.">        return startsWithRootOrSeparator(result, modifiedRoot, dirSeparator) ? result : dirSeparator + result;</span>
     }
 
     /**
@@ -264,8 +310,8 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return the last segment of the name.
      */
     public String getShortName() {
-<span class="fc" id="L267">        int pos = name.lastIndexOf(fsInfo.dirSeparator());</span>
-<span class="fc bfc" id="L268" title="All 2 branches covered.">        return pos == -1 ? name : name.substring(pos + 1);</span>
+<span class="fc" id="L313">        int pos = name.lastIndexOf(fsInfo.dirSeparator());</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">        return pos == -1 ? name : name.substring(pos + 1);</span>
     }
 
     /**
@@ -273,7 +319,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      * @return {@code true} if the name is case-sensitive.
      */
     public boolean isCaseSensitive() {
-<span class="fc" id="L276">        return fsInfo.isCaseSensitive();</span>
+<span class="fc" id="L322">        return fsInfo.isCaseSensitive();</span>
     }
 
     /**
@@ -282,24 +328,35 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
      */
     @Override
     public String toString() {
-<span class="fc" id="L285">        return localized();</span>
+<span class="fc" id="L331">        return localized();</span>
     }
 
     @Override
     public int compareTo(final DocumentName other) {
-<span class="fc" id="L290">        return CompareToBuilder.reflectionCompare(this, other);</span>
+<span class="fc" id="L336">        return new CompareToBuilder()</span>
+<span class="fc" id="L337">                .append(this.root, other.root)</span>
+<span class="fc" id="L338">                .append(this.getBaseName(), other.getBaseName())</span>
+<span class="fc" id="L339">                .append(this.getName(), other.getName()).build();</span>
     }
 
     @Override
-    public boolean equals(final Object other) {
-<span class="fc" id="L295">        return EqualsBuilder.reflectionEquals(this, other);</span>
+    public final boolean equals(final Object other) {
+<span class="pc bpc" id="L344" title="1 of 2 branches missed.">        if (other instanceof DocumentName otherDocumentName) {</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">            return compareTo(otherDocumentName) == 0;</span>
+        }
+<span class="nc" id="L347">        return false;</span>
     }
 
     @Override
-    public int hashCode() {
-<span class="nc" id="L300">        return HashCodeBuilder.reflectionHashCode(this);</span>
+    public final int hashCode() {
+<span class="nc" id="L352">        return getName().hashCode();</span>
     }
 
+    /**
+     * The File System Info Data for a DocumentName.
+     * Use to preserve data across DocumentNames without having to
+     * reconstruct the data for each DocumentName.
+     */
     private static final class FSInfoData {
         /** The case sensitivity flag */
         private final boolean isCaseSensitive;
@@ -314,23 +371,23 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @param isCaseSensitive {@code true} if the file system is cases sensitive.
          * @param roots THe list of roots for the file system.
          */
-<span class="fc" id="L317">        FSInfoData(final String separator, final boolean isCaseSensitive, final List&lt;String&gt; roots) {</span>
-<span class="fc" id="L318">            this.isCaseSensitive = isCaseSensitive;</span>
-<span class="fc" id="L319">            this.roots = roots;</span>
-<span class="fc" id="L320">            this.separator = separator;</span>
-<span class="fc" id="L321">        }</span>
+<span class="fc" id="L374">        FSInfoData(final String separator, final boolean isCaseSensitive, final List&lt;String&gt; roots) {</span>
+<span class="fc" id="L375">            this.isCaseSensitive = isCaseSensitive;</span>
+<span class="fc" id="L376">            this.roots = roots;</span>
+<span class="fc" id="L377">            this.separator = separator;</span>
+<span class="fc" id="L378">        }</span>
 
         /**
          * Constructor for an arbitrary file system.
          * This constructor can be processor intensive as it has to check the file system for case sensitivity.
          * @param fileSystem the file system.
          */
-<span class="fc" id="L328">        FSInfoData(final FileSystem fileSystem) {</span>
-<span class="fc" id="L329">            isCaseSensitive = isCaseSensitive(fileSystem);</span>
-<span class="fc" id="L330">            roots = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L331">            fileSystem.getRootDirectories().forEach(r -&gt; roots.add(r.toString()));</span>
-<span class="fc" id="L332">            separator = fileSystem.getSeparator();</span>
-<span class="fc" id="L333">        }</span>
+<span class="fc" id="L385">        FSInfoData(final FileSystem fileSystem) {</span>
+<span class="fc" id="L386">            isCaseSensitive = isCaseSensitive(fileSystem);</span>
+<span class="fc" id="L387">            roots = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L388">            fileSystem.getRootDirectories().forEach(r -&gt; roots.add(r.toString()));</span>
+<span class="fc" id="L389">            separator = fileSystem.getSeparator();</span>
+<span class="fc" id="L390">        }</span>
 
         /**
          * Determines if the file system is case-sensitive.
@@ -338,36 +395,36 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return {@code true} if the file system is case-sensitive.
          */
         private static boolean isCaseSensitive(final FileSystem fileSystem) {
-<span class="fc" id="L341">            boolean isCaseSensitive = false;</span>
-<span class="fc" id="L342">            Path nameSet = null;</span>
-<span class="fc" id="L343">            Path filea = null;</span>
-<span class="fc" id="L344">            Path fileA = null;</span>
+<span class="fc" id="L398">            boolean isCaseSensitive = false;</span>
+<span class="fc" id="L399">            Path nameSet = null;</span>
+<span class="fc" id="L400">            Path filea = null;</span>
+<span class="fc" id="L401">            Path fileA = null;</span>
             try {
                 try {
-<span class="fc" id="L347">                    Path root = fileSystem.getPath(&quot;&quot;);</span>
-<span class="fc" id="L348">                    nameSet = Files.createTempDirectory(root, &quot;NameSet&quot;);</span>
-<span class="fc" id="L349">                    filea = nameSet.resolve(&quot;a&quot;);</span>
-<span class="fc" id="L350">                    fileA = nameSet.resolve(&quot;A&quot;);</span>
-<span class="fc" id="L351">                    Files.createFile(filea);</span>
-<span class="fc" id="L352">                    Files.createFile(fileA);</span>
-<span class="fc" id="L353">                    isCaseSensitive = true;</span>
-<span class="fc" id="L354">                } catch (IOException e) {</span>
+<span class="fc" id="L404">                    Path root = fileSystem.getPath(&quot;&quot;);</span>
+<span class="fc" id="L405">                    nameSet = Files.createTempDirectory(root, &quot;NameSet&quot;);</span>
+<span class="fc" id="L406">                    filea = nameSet.resolve(&quot;a&quot;);</span>
+<span class="fc" id="L407">                    fileA = nameSet.resolve(&quot;A&quot;);</span>
+<span class="fc" id="L408">                    Files.createFile(filea);</span>
+<span class="fc" id="L409">                    Files.createFile(fileA);</span>
+<span class="fc" id="L410">                    isCaseSensitive = true;</span>
+<span class="fc" id="L411">                } catch (IOException e) {</span>
                     // do nothing
                 } finally {
-<span class="pc bpc" id="L357" title="1 of 2 branches missed.">                    if (filea != null) {</span>
-<span class="fc" id="L358">                        Files.deleteIfExists(filea);</span>
+<span class="pc bpc" id="L414" title="1 of 2 branches missed.">                    if (filea != null) {</span>
+<span class="fc" id="L415">                        Files.deleteIfExists(filea);</span>
                     }
-<span class="pc bpc" id="L360" title="1 of 2 branches missed.">                    if (fileA != null) {</span>
-<span class="fc" id="L361">                        Files.deleteIfExists(fileA);</span>
+<span class="pc bpc" id="L417" title="1 of 2 branches missed.">                    if (fileA != null) {</span>
+<span class="fc" id="L418">                        Files.deleteIfExists(fileA);</span>
                     }
-<span class="pc bpc" id="L363" title="1 of 2 branches missed.">                    if (nameSet != null) {</span>
-<span class="fc" id="L364">                        Files.deleteIfExists(nameSet);</span>
+<span class="pc bpc" id="L420" title="1 of 2 branches missed.">                    if (nameSet != null) {</span>
+<span class="fc" id="L421">                        Files.deleteIfExists(nameSet);</span>
                     }
                 }
-<span class="nc" id="L367">            } catch (IOException e) {</span>
+<span class="nc" id="L424">            } catch (IOException e) {</span>
                 // do nothing.
-<span class="fc" id="L369">            }</span>
-<span class="fc" id="L370">            return isCaseSensitive;</span>
+<span class="fc" id="L426">            }</span>
+<span class="fc" id="L427">            return isCaseSensitive;</span>
         }
 
     }
@@ -378,7 +435,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
         /**
          * The map of FileSystem to FSInfoData used to avoid expensive FileSystem processing.
          */
-<span class="fc" id="L381">        private static final Map&lt;FileSystem, FSInfoData&gt; REGISTRY = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="fc" id="L438">        private static final Map&lt;FileSystem, FSInfoData&gt; REGISTRY = new ConcurrentHashMap&lt;&gt;();</span>
 
         /** The case-sensitivity flag. */
         private final FSInfoData data;
@@ -393,10 +450,10 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return the FSInfo for the default file system.
          */
         public static FSInfo getDefault() {
-<span class="fc" id="L396">            FSInfo result = (FSInfo) System.getProperties().get(&quot;FSInfo&quot;);</span>
-<span class="pc bpc" id="L397" title="1 of 2 branches missed.">            return result == null ?</span>
-<span class="fc" id="L398">                    new FSInfo(FileSystems.getDefault())</span>
-<span class="nc" id="L399">                    : result;</span>
+<span class="fc" id="L453">            FSInfo result = (FSInfo) System.getProperties().get(&quot;FSInfo&quot;);</span>
+<span class="pc bpc" id="L454" title="1 of 2 branches missed.">            return result == null ?</span>
+<span class="fc" id="L455">                    new FSInfo(FileSystems.getDefault())</span>
+<span class="nc" id="L456">                    : result;</span>
         }
 
         /**
@@ -404,18 +461,18 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @param fileSystem the file system to extract data from.
          */
         public FSInfo(final FileSystem fileSystem) {
-<span class="fc" id="L407">            this(&quot;anon&quot;, fileSystem);</span>
-<span class="fc" id="L408">        }</span>
+<span class="fc" id="L464">            this(&quot;anon&quot;, fileSystem);</span>
+<span class="fc" id="L465">        }</span>
 
         /**
          * Constructor. Extracts the necessary data from the file system.
          * @param name the common name for the file system.
          * @param fileSystem the file system to extract data from.
          */
-<span class="fc" id="L415">        FSInfo(final String name, final FileSystem fileSystem) {</span>
-<span class="fc" id="L416">            this.data = REGISTRY.computeIfAbsent(fileSystem, k -&gt; new FSInfoData(fileSystem));</span>
-<span class="fc" id="L417">            this.name = name;</span>
-<span class="fc" id="L418">        }</span>
+<span class="fc" id="L472">        FSInfo(final String name, final FileSystem fileSystem) {</span>
+<span class="fc" id="L473">            this.data = REGISTRY.computeIfAbsent(fileSystem, k -&gt; new FSInfoData(fileSystem));</span>
+<span class="fc" id="L474">            this.name = name;</span>
+<span class="fc" id="L475">        }</span>
 
         /**
          * Constructor for virtual/abstract file systems for example the entry names within an archive.
@@ -424,10 +481,10 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @param isCaseSensitive the case-sensitivity flag.
          * @param roots the roots for the file system.
          */
-<span class="fc" id="L427">        FSInfo(final String name, final String separator, final boolean isCaseSensitive, final List&lt;String&gt; roots) {</span>
-<span class="fc" id="L428">            data = new FSInfoData(separator, isCaseSensitive, roots);</span>
-<span class="fc" id="L429">            this.name = name;</span>
-<span class="fc" id="L430">        }</span>
+<span class="fc" id="L484">        FSInfo(final String name, final String separator, final boolean isCaseSensitive, final List&lt;String&gt; roots) {</span>
+<span class="fc" id="L485">            data = new FSInfoData(separator, isCaseSensitive, roots);</span>
+<span class="fc" id="L486">            this.name = name;</span>
+<span class="fc" id="L487">        }</span>
 
         /**
          * Gets the common name for the underlying file system.
@@ -435,7 +492,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          */
         @Override
         public String toString() {
-<span class="fc" id="L438">            return name;</span>
+<span class="fc" id="L495">            return name;</span>
         }
 
         /**
@@ -443,7 +500,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return The directory separator.
          */
         public String dirSeparator() {
-<span class="fc" id="L446">            return data.separator;</span>
+<span class="fc" id="L503">            return data.separator;</span>
         }
 
         /**
@@ -451,7 +508,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return the case-sensitivity flag.
          */
         public boolean isCaseSensitive() {
-<span class="fc" id="L454">            return data.isCaseSensitive;</span>
+<span class="fc" id="L511">            return data.isCaseSensitive;</span>
         }
 
         /**
@@ -460,12 +517,20 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return an optional containing the root or empty.
          */
         public Optional&lt;String&gt; rootFor(final String name) {
-<span class="fc bfc" id="L463" title="All 2 branches covered.">            for (String sysRoot : data.roots) {</span>
-<span class="fc bfc" id="L464" title="All 2 branches covered.">                if (name.startsWith(sysRoot)) {</span>
-<span class="fc" id="L465">                    return Optional.of(sysRoot);</span>
+<span class="fc bfc" id="L520" title="All 2 branches covered.">            for (String sysRoot : data.roots) {</span>
+<span class="fc bfc" id="L521" title="All 2 branches covered.">                if (name.startsWith(sysRoot)) {</span>
+<span class="fc" id="L522">                    return Optional.of(sysRoot);</span>
                 }
-<span class="fc" id="L467">            }</span>
-<span class="fc" id="L468">            return Optional.empty();</span>
+<span class="fc" id="L524">            }</span>
+<span class="fc" id="L525">            return Optional.empty();</span>
+        }
+
+        /**
+         * Gets the array of roots for this file system.
+         * @return an array of roots for this file system.
+         */
+        public String[] roots() {
+<span class="fc" id="L533">            return data.roots.toArray(new String[0]);</span>
         }
 
         /**
@@ -474,7 +539,7 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return the array of tokenized strings.
          */
         public String[] tokenize(final String source) {
-<span class="fc" id="L477">            return source.split(&quot;\\Q&quot; + dirSeparator() + &quot;\\E&quot;);</span>
+<span class="fc" id="L542">            return source.split(&quot;\\Q&quot; + dirSeparator() + &quot;\\E&quot;);</span>
         }
 
         /**
@@ -483,38 +548,97 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return the normalized file name.
          */
         public String normalize(final String pattern) {
-<span class="fc bfc" id="L486" title="All 2 branches covered.">            if (StringUtils.isBlank(pattern)) {</span>
-<span class="fc" id="L487">                return &quot;&quot;;</span>
+<span class="fc bfc" id="L551" title="All 4 branches covered.">            if (StringUtils.isBlank(pattern) || pattern.trim().equals(&quot;.&quot;)) {</span>
+<span class="fc" id="L552">                return &quot;&quot;;</span>
             }
-<span class="fc" id="L489">            List&lt;String&gt; parts = new ArrayList&lt;&gt;(Arrays.asList(tokenize(pattern)));</span>
-<span class="fc bfc" id="L490" title="All 2 branches covered.">            for (int i = 0; i &lt; parts.size(); i++) {</span>
-<span class="fc" id="L491">                String part = parts.get(i);</span>
-<span class="fc bfc" id="L492" title="All 2 branches covered.">                if (part.equals(&quot;..&quot;)) {</span>
-<span class="pc bpc" id="L493" title="1 of 2 branches missed.">                    if (i == 0) {</span>
-<span class="nc" id="L494">                        throw new IllegalStateException(&quot;Unable to create path before root&quot;);</span>
+<span class="fc bfc" id="L554" title="All 2 branches covered.">            String adjustedPattern = dirSeparator().equals(&quot;/&quot;) ? pattern.replace(&quot;\\&quot;, &quot;/&quot;) : pattern.replace(&quot;/&quot;, &quot;\\&quot;);</span>
+<span class="fc bfc" id="L555" title="All 2 branches covered.">            if (adjustedPattern.trim().equals(dirSeparator())) {</span>
+<span class="fc" id="L556">                return adjustedPattern;</span>
+            }
+<span class="fc" id="L558">            List&lt;String&gt; parts = new ArrayList&lt;&gt;(Arrays.asList(tokenize(adjustedPattern)));</span>
+<span class="fc" id="L559">            int i = 0;</span>
+<span class="fc bfc" id="L560" title="All 2 branches covered.">            while (i &lt; parts.size()) {</span>
+<span class="fc" id="L561">                String part = parts.get(i);</span>
+<span class="fc bfc" id="L562" title="All 2 branches covered.">                if (part.equals(&quot;..&quot;)) {</span>
+<span class="fc bfc" id="L563" title="All 2 branches covered.">                    if (i == 0) {</span>
+<span class="fc" id="L564">                        throw new IllegalStateException(&quot;Unable to create path before root&quot;);</span>
                     }
-<span class="fc" id="L496">                    parts.set(i - 1, null);</span>
-<span class="fc" id="L497">                    parts.set(i, null);</span>
-<span class="fc bfc" id="L498" title="All 2 branches covered.">                } else if (part.equals(&quot;.&quot;)) {</span>
-<span class="fc" id="L499">                    parts.set(i, null);</span>
+<span class="fc" id="L566">                    parts.remove(i);</span>
+<span class="fc" id="L567">                    parts.remove(i - 1);</span>
+<span class="fc" id="L568">                    i--;</span>
+<span class="fc bfc" id="L569" title="All 2 branches covered.">                } else if (part.equals(&quot;.&quot;)) {</span>
+<span class="fc" id="L570">                    parts.remove(i);</span>
+                } else {
+<span class="fc" id="L572">                    i++;</span>
+                }
+<span class="fc" id="L574">            }</span>
+<span class="fc bfc" id="L575" title="All 2 branches covered.">            if (parts.isEmpty()) {</span>
+<span class="fc" id="L576">                throw new IllegalStateException(&quot;Unable to create path before root&quot;);</span>
+            }
+<span class="fc" id="L578">            return String.join(dirSeparator(), parts);</span>
+        }
+
+        /**
+         * Creates a path separated by the directory separator.
+         * Starting with an empty string will cause the directory separator to appear at the beginning.
+         * @param segments the segments that make up the path.
+         * @return the path string.
+         */
+        public String mkPath(final String... segments) {
+<span class="fc" id="L588">            return String.join(dirSeparator(), segments);</span>
+        }
+
+        /**
+         * Determines if the candidate string starts with a root or directory separator as defined in this
+         * FSInfo.
+         * @param candidate the candidate string to test.
+         * @return {@code true} if the candidate starts with a root or a directory separator.
+         */
+        public boolean startsWithRootOrSeparator(final String candidate) {
+<span class="pc bpc" id="L598" title="1 of 2 branches missed.">            if (candidate == null) {</span>
+<span class="nc" id="L599">                return false;</span>
+            }
+<span class="fc" id="L601">            String target = candidate.trim();</span>
+<span class="pc bpc" id="L602" title="1 of 2 branches missed.">            if (StringUtils.isBlank(target)) {</span>
+<span class="nc" id="L603">                return false;</span>
+            }
+<span class="fc bfc" id="L605" title="All 2 branches covered.">            for (String root : roots()) {</span>
+<span class="fc bfc" id="L606" title="All 2 branches covered.">                if (target.startsWith(root)) {</span>
+<span class="fc" id="L607">                    return true;</span>
                 }
             }
-<span class="fc" id="L502">            return parts.stream().filter(Objects::nonNull).collect(Collectors.joining(dirSeparator()));</span>
+<span class="fc" id="L610">            return target.startsWith(dirSeparator());</span>
+        }
+
+        private int compareData(final DocumentName.FSInfoData otherData) {
+<span class="fc" id="L614">            int result = Boolean.compare(this.data.isCaseSensitive, otherData.isCaseSensitive);</span>
+<span class="pc bpc" id="L615" title="1 of 2 branches missed.">            if (result == 0) {</span>
+<span class="fc" id="L616">                result = this.data.separator.compareTo(otherData.separator);</span>
+<span class="pc bpc" id="L617" title="1 of 2 branches missed.">                if (result == 0) {</span>
+<span class="pc bpc" id="L618" title="1 of 2 branches missed.">                    if (new HashSet&lt;&gt;(this.data.roots).containsAll(otherData.roots)) {</span>
+<span class="pc bpc" id="L619" title="1 of 2 branches missed.">                        result = new HashSet&lt;&gt;(otherData.roots).containsAll(this.data.roots) ? 0 : 1;</span>
+                    } else {
+<span class="nc" id="L621">                        result = -1;</span>
+                    }
+                }
+            }
+<span class="fc" id="L625">            return result;</span>
         }
 
         @Override
         public int compareTo(final FSInfo other) {
-<span class="nc" id="L507">            return CompareToBuilder.reflectionCompare(this, other);</span>
+<span class="fc" id="L630">            int result = this.name.compareToIgnoreCase(other.name);</span>
+<span class="fc bfc" id="L631" title="All 2 branches covered.">            return result == 0 ? compareData(other.data) : result;</span>
         }
 
         @Override
         public boolean equals(final Object other) {
-<span class="fc" id="L512">            return EqualsBuilder.reflectionEquals(this, other);</span>
+<span class="pc bpc" id="L636" title="1 of 4 branches missed.">            return other instanceof FSInfo oth &amp;&amp; this.compareTo(oth) == 0;</span>
         }
 
         @Override
         public int hashCode() {
-<span class="nc" id="L517">            return HashCodeBuilder.reflectionHashCode(this);</span>
+<span class="fc" id="L641">            return name.hashCode();</span>
         }
     }
 
@@ -536,26 +660,26 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
         /**
          * Create with default settings.
          */
-<span class="fc" id="L539">        private Builder(final FSInfo fsInfo) {</span>
-<span class="fc" id="L540">            this.fsInfo = fsInfo;</span>
-<span class="fc" id="L541">            root = &quot;&quot;;</span>
-<span class="fc" id="L542">        }</span>
+<span class="fc" id="L663">        private Builder(final FSInfo fsInfo) {</span>
+<span class="fc" id="L664">            this.fsInfo = fsInfo;</span>
+<span class="fc" id="L665">            this.root = &quot;&quot;;</span>
+<span class="fc" id="L666">        }</span>
 
         /**
          * Create with default settings.
          */
         private Builder(final FileSystem fileSystem) {
-<span class="nc" id="L548">            this(new FSInfo(fileSystem));</span>
-<span class="nc" id="L549">        }</span>
+<span class="fc" id="L672">            this(new FSInfo(fileSystem));</span>
+<span class="fc" id="L673">        }</span>
 
         /**
          * Create based on the file provided.
          * @param file the file to base the builder on.
          */
         private Builder(final File file) {
-<span class="fc" id="L556">            this(FSInfo.getDefault());</span>
-<span class="fc" id="L557">            setName(file);</span>
-<span class="fc" id="L558">        }</span>
+<span class="fc" id="L680">            this(FSInfo.getDefault());</span>
+<span class="fc" id="L681">            setName(file);</span>
+<span class="fc" id="L682">        }</span>
 
         /**
          * Used in testing.
@@ -563,41 +687,51 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @param file the file to process.
          */
         Builder(final FSInfo fsInfo, final File file) {
-<span class="fc" id="L566">            this(fsInfo);</span>
-<span class="fc" id="L567">            setName(file);</span>
-<span class="fc" id="L568">        }</span>
+<span class="fc" id="L690">            this(fsInfo);</span>
+<span class="fc" id="L691">            setName(file);</span>
+<span class="fc" id="L692">        }</span>
 
         /**
          * Create a Builder that clones the specified DocumentName.
          * @param documentName the DocumentName to clone.
          */
-<span class="fc" id="L574">        Builder(final DocumentName documentName) {</span>
-<span class="fc" id="L575">            this.root = documentName.root;</span>
-<span class="fc" id="L576">            this.name = documentName.name;</span>
-<span class="fc" id="L577">            this.baseName = documentName.baseName;</span>
-<span class="fc" id="L578">            this.fsInfo = documentName.fsInfo;</span>
-<span class="fc" id="L579">        }</span>
+<span class="fc" id="L698">        Builder(final DocumentName documentName) {</span>
+<span class="fc" id="L699">            this.root = documentName.root;</span>
+<span class="fc" id="L700">            this.name = documentName.name;</span>
+<span class="fc" id="L701">            this.baseName = documentName.baseName;</span>
+<span class="fc" id="L702">            this.fsInfo = documentName.fsInfo;</span>
+<span class="fc" id="L703">        }</span>
 
         /**
          * Get the directory separator for this builder.
          * @return the directory separator fo this builder.
          */
         public String directorySeparator() {
-<span class="fc" id="L586">            return fsInfo.dirSeparator();</span>
+<span class="fc" id="L710">            return fsInfo.dirSeparator();</span>
         }
 
         /**
          * Verify that the builder will build a proper DocumentName.
          */
         private void verify() {
-<span class="fc" id="L593">            Objects.requireNonNull(name, &quot;Name must not be null&quot;);</span>
-<span class="fc bfc" id="L594" title="All 2 branches covered.">            if (name.startsWith(fsInfo.dirSeparator())) {</span>
-<span class="fc" id="L595">                name = name.substring(fsInfo.dirSeparator().length());</span>
+<span class="fc" id="L717">            Objects.requireNonNull(name, &quot;Name must not be null&quot;);</span>
+<span class="fc bfc" id="L718" title="All 2 branches covered.">            if (name.startsWith(fsInfo.dirSeparator())) {</span>
+<span class="fc" id="L719">                name = name.substring(fsInfo.dirSeparator().length());</span>
             }
-<span class="fc bfc" id="L597" title="All 2 branches covered.">            if (!sameNameFlag) {</span>
-<span class="fc" id="L598">                Objects.requireNonNull(baseName, &quot;Basename must not be null&quot;);</span>
+<span class="fc bfc" id="L721" title="All 2 branches covered.">            if (!sameNameFlag) {</span>
+<span class="fc" id="L722">                Objects.requireNonNull(baseName, &quot;Basename must not be null&quot;);</span>
+<span class="fc bfc" id="L723" title="All 2 branches covered.">                if (this.root.isBlank()) {</span>
+<span class="fc" id="L724">                    this.root = this.baseName.getRoot();</span>
+                }
             }
-<span class="fc" id="L600">        }</span>
+<span class="fc bfc" id="L727" title="All 2 branches covered.">            if (this.root.isBlank()) {</span>
+<span class="fc" id="L728">                this.root = this.fsInfo.roots()[0];</span>
+            } else {
+<span class="pc bpc" id="L730" title="1 of 2 branches missed.">                if (!List.of(this.fsInfo.roots()).contains(this.root)) {</span>
+<span class="nc" id="L731">                    throw new IllegalArgumentException(String.format(&quot;'%s' is not a valid root for %s&quot;, this.root, this.fsInfo));</span>
+                }
+            }
+<span class="fc" id="L734">        }</span>
 
         /**
          * Sets the root for the DocumentName.
@@ -605,8 +739,8 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return this.
          */
         public Builder setRoot(final String root) {
-<span class="fc" id="L608">            this.root = StringUtils.defaultIfBlank(root, &quot;&quot;);</span>
-<span class="fc" id="L609">            return this;</span>
+<span class="fc" id="L742">            this.root = StringUtils.defaultIfBlank(root, &quot;&quot;);</span>
+<span class="fc" id="L743">            return this;</span>
         }
 
         /**
@@ -620,18 +754,12 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return this
          */
         public Builder setName(final String name) {
-<span class="fc" id="L623">            Pair&lt;String, String&gt; pair = splitRoot(StringUtils.defaultIfBlank(name, &quot;&quot;));</span>
-<span class="fc bfc" id="L624" title="All 2 branches covered.">            if (this.root.isEmpty()) {</span>
-<span class="fc" id="L625">                this.root = pair.getLeft();</span>
+<span class="fc" id="L757">            Pair&lt;String, String&gt; pair = splitRoot(StringUtils.defaultIfBlank(name, &quot;&quot;));</span>
+<span class="fc bfc" id="L758" title="All 2 branches covered.">            if (this.root.isEmpty()) {</span>
+<span class="fc" id="L759">                setRoot(pair.getLeft());</span>
             }
-<span class="fc" id="L627">            this.name = fsInfo.normalize(pair.getRight());</span>
-<span class="fc bfc" id="L628" title="All 4 branches covered.">            if (this.baseName != null &amp;&amp; !baseName.name.isEmpty()) {</span>
-<span class="fc bfc" id="L629" title="All 2 branches covered.">                if (!this.name.startsWith(baseName.name)) {</span>
-<span class="fc bfc" id="L630" title="All 2 branches covered.">                    this.name = this.name.isEmpty() ? baseName.name :</span>
-<span class="fc" id="L631">                            baseName.name + fsInfo.dirSeparator() + this.name;</span>
-                }
-            }
-<span class="fc" id="L634">            return this;</span>
+<span class="fc" id="L761">            this.name = fsInfo.normalize(pair.getRight());</span>
+<span class="fc" id="L762">            return this;</span>
         }
 
         /**
@@ -643,20 +771,12 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return the root/name pair.
          */
         Pair&lt;String, String&gt; splitRoot(final String name) {
-<span class="fc" id="L646">            String workingName = name;</span>
-<span class="fc" id="L647">            Optional&lt;String&gt; maybeRoot = fsInfo.rootFor(name);</span>
-<span class="fc" id="L648">            String root = maybeRoot.orElse(&quot;&quot;);</span>
-<span class="fc bfc" id="L649" title="All 2 branches covered.">            if (!root.isEmpty()) {</span>
-<span class="pc bpc" id="L650" title="1 of 2 branches missed.">                if (workingName.startsWith(root)) {</span>
-<span class="fc" id="L651">                    workingName = workingName.substring(root.length());</span>
-<span class="fc bfc" id="L652" title="All 2 branches covered.">                    if (!workingName.startsWith(fsInfo.dirSeparator())) {</span>
-<span class="pc bpc" id="L653" title="1 of 2 branches missed.">                        if (root.endsWith(fsInfo.dirSeparator())) {</span>
-<span class="fc" id="L654">                            root = root.substring(0, root.length() - fsInfo.dirSeparator().length());</span>
-                        }
-                    }
-                }
+<span class="fc" id="L774">            String workingName = name;</span>
+<span class="fc" id="L775">            String workingRoot = fsInfo.rootFor(name).orElse(&quot;&quot;);</span>
+<span class="pc bpc" id="L776" title="1 of 4 branches missed.">            if (!workingRoot.isEmpty() &amp;&amp; workingName.startsWith(workingRoot)) {</span>
+<span class="fc" id="L777">                workingName = workingName.substring(workingRoot.length());</span>
             }
-<span class="fc" id="L659">            return ImmutablePair.of(root, workingName);</span>
+<span class="fc" id="L779">            return ImmutablePair.of(workingRoot, workingName);</span>
         }
 
         /**
@@ -664,10 +784,10 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @param root the root to set the builder root to if it is empty.
          */
         private void setEmptyRoot(final String root) {
-<span class="fc bfc" id="L667" title="All 2 branches covered.">            if (this.root.isEmpty()) {</span>
-<span class="fc" id="L668">                this.root = root;</span>
+<span class="pc bpc" id="L787" title="1 of 2 branches missed.">            if (this.root.isEmpty()) {</span>
+<span class="fc" id="L788">                this.root = root;</span>
             }
-<span class="fc" id="L670">        }</span>
+<span class="fc" id="L790">        }</span>
 
         /**
          * Sets the properties from the file. Will reset the baseName appropriately.
@@ -675,22 +795,22 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return this.
          */
         public Builder setName(final File file) {
-<span class="fc" id="L678">            Pair&lt;String, String&gt; pair = splitRoot(file.getAbsolutePath());</span>
-<span class="fc" id="L679">            setEmptyRoot(pair.getLeft());</span>
-<span class="fc" id="L680">            this.name = fsInfo.normalize(pair.getRight());</span>
-<span class="fc bfc" id="L681" title="All 2 branches covered.">            if (file.isDirectory()) {</span>
-<span class="fc" id="L682">                sameNameFlag = true;</span>
+<span class="fc" id="L798">            Pair&lt;String, String&gt; pair = splitRoot(file.getAbsolutePath());</span>
+<span class="fc" id="L799">            setEmptyRoot(pair.getLeft());</span>
+<span class="fc" id="L800">            this.name = fsInfo.normalize(pair.getRight());</span>
+<span class="fc bfc" id="L801" title="All 2 branches covered.">            if (file.isDirectory()) {</span>
+<span class="fc" id="L802">                sameNameFlag = true;</span>
             } else {
-<span class="fc" id="L684">                File p = file.getParentFile();</span>
-<span class="pc bpc" id="L685" title="1 of 2 branches missed.">                if (p != null) {</span>
-<span class="fc" id="L686">                    setBaseName(p);</span>
+<span class="fc" id="L804">                File p = file.getParentFile();</span>
+<span class="pc bpc" id="L805" title="1 of 2 branches missed.">                if (p != null) {</span>
+<span class="fc" id="L806">                    setBaseName(p);</span>
                 } else {
-<span class="nc" id="L688">                    Builder baseBuilder = new Builder(this.fsInfo).setName(this.directorySeparator());</span>
-<span class="nc" id="L689">                    baseBuilder.sameNameFlag = true;</span>
-<span class="nc" id="L690">                    setBaseName(baseBuilder.build());</span>
+<span class="nc" id="L808">                    Builder baseBuilder = new Builder(this.fsInfo).setName(this.directorySeparator());</span>
+<span class="nc" id="L809">                    baseBuilder.sameNameFlag = true;</span>
+<span class="nc" id="L810">                    setBaseName(baseBuilder.build());</span>
                 }
             }
-<span class="fc" id="L693">            return this;</span>
+<span class="fc" id="L813">            return this;</span>
         }
 
         /**
@@ -703,10 +823,10 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return this.
          */
         public Builder setBaseName(final String baseName) {
-<span class="fc" id="L706">            DocumentName.Builder builder = DocumentName.builder(fsInfo).setName(baseName);</span>
-<span class="fc" id="L707">            builder.sameNameFlag = true;</span>
-<span class="fc" id="L708">            setBaseName(builder);</span>
-<span class="fc" id="L709">            return this;</span>
+<span class="fc" id="L826">            DocumentName.Builder builder = DocumentName.builder(fsInfo).setName(baseName);</span>
+<span class="fc" id="L827">            builder.sameNameFlag = true;</span>
+<span class="fc" id="L828">            setBaseName(builder);</span>
+<span class="fc" id="L829">            return this;</span>
         }
 
         /**
@@ -716,11 +836,11 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return this.
          */
         public Builder setBaseName(final DocumentName baseName) {
-<span class="fc" id="L719">            this.baseName = baseName;</span>
-<span class="pc bpc" id="L720" title="1 of 2 branches missed.">            if (!baseName.getRoot().isEmpty()) {</span>
-<span class="nc" id="L721">                this.root = baseName.getRoot();</span>
+<span class="fc" id="L839">            this.baseName = baseName;</span>
+<span class="pc bpc" id="L840" title="1 of 2 branches missed.">            if (!baseName.getRoot().isEmpty()) {</span>
+<span class="fc" id="L841">                this.root = baseName.getRoot();</span>
             }
-<span class="fc" id="L723">            return this;</span>
+<span class="fc" id="L843">            return this;</span>
         }
 
         /**
@@ -728,9 +848,9 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @param builder the builder for the base name.
          */
         private void setBaseName(final DocumentName.Builder builder) {
-<span class="fc" id="L731">            this.baseName = builder.build();</span>
-<span class="fc" id="L732">            this.sameNameFlag = false;</span>
-<span class="fc" id="L733">        }</span>
+<span class="fc" id="L851">            this.baseName = builder.build();</span>
+<span class="fc" id="L852">            this.sameNameFlag = false;</span>
+<span class="fc" id="L853">        }</span>
 
         /**
          * Sets the basename from a File. Sets {@link #root} and the {@link #baseName}
@@ -739,20 +859,46 @@ public class DocumentName implements Comparable&lt;DocumentName&gt; {
          * @return this.
          */
         public Builder setBaseName(final File file) {
-<span class="fc" id="L742">            DocumentName.Builder builder = DocumentName.builder(fsInfo).setName(file);</span>
-<span class="fc" id="L743">            builder.sameNameFlag = true;</span>
-<span class="fc" id="L744">            setBaseName(builder);</span>
-<span class="fc" id="L745">            return this;</span>
+<span class="fc" id="L862">            DocumentName.Builder builder = DocumentName.builder(fsInfo).setName(file);</span>
+<span class="fc" id="L863">            builder.sameNameFlag = true;</span>
+<span class="fc" id="L864">            setBaseName(builder);</span>
+<span class="fc" id="L865">            return this;</span>
         }
+
+        // only called if basName is not null
+        private void verifyBaseName() {
+<span class="fc bfc" id="L870" title="All 2 branches covered.">            if (!this.name.startsWith(baseName.name)) {</span>
+<span class="pc bpc" id="L871" title="1 of 2 branches missed.">                this.name = this.name.isEmpty() ? baseName.name :</span>
+<span class="fc" id="L872">                        baseName.name + fsInfo.dirSeparator() + this.name;</span>
+            }
+<span class="fc bfc" id="L874" title="All 2 branches covered.">            if (!this.baseName.getRoot().equals(root)) {</span>
+<span class="fc" id="L875">                Builder builder = new Builder(baseName).setRoot(root);</span>
+<span class="pc bpc" id="L876" title="2 of 4 branches missed.">                if (baseName.baseName != null &amp;&amp; baseName.baseName != baseName) {</span>
+<span class="nc" id="L877">                    builder.setBaseName(baseName.baseName);</span>
+                } else {
+<span class="fc" id="L879">                    builder.baseName = null;</span>
+<span class="fc" id="L880">                    builder.sameNameFlag = true;</span>
+                }
+<span class="fc" id="L882">                this.baseName = builder.build();</span>
+            }
+
+<span class="fc" id="L885">        }</span>
 
         /**
          * Build a DocumentName from this builder.
          * @return A new DocumentName.
          */
         public DocumentName build() {
-<span class="fc" id="L753">            verify();</span>
-<span class="fc" id="L754">            return new DocumentName(this);</span>
+<span class="fc" id="L892">            verify();</span>
+<span class="fc bfc" id="L893" title="All 2 branches covered.">            if (this.baseName != null) {</span>
+<span class="fc" id="L894">                verifyBaseName();</span>
+            } else {
+<span class="pc bpc" id="L896" title="1 of 2 branches missed.">                if (this.name.startsWith(root)) {</span>
+<span class="nc" id="L897">                    this.name = this.name.substring(root.length());</span>
+                }
+            }
+<span class="fc" id="L900">            return new DocumentName(this);</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

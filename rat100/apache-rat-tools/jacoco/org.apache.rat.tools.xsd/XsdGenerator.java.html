@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -48,17 +47,17 @@ import org.apache.rat.utils.StandardXmlFactory;
 /**
  * Generates the XSD for a configuration.
  */
-<span class="nc" id="L51">public class XsdGenerator {</span>
+<span class="nc" id="L50">public class XsdGenerator {</span>
     /** The XsdWriter being written to. */
     private XsdWriter writer;
     /** A map of component type to XML element name / property type */
-<span class="nc" id="L55">    private static final Map&lt;ComponentType, String&gt; TYPE_MAP = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L54">    private static final Map&lt;ComponentType, String&gt; TYPE_MAP = new HashMap&lt;&gt;();</span>
 
     static {
-<span class="nc" id="L58">        TYPE_MAP.put(ComponentType.MATCHER, XMLConfig.MATCHER);</span>
-<span class="nc" id="L59">        TYPE_MAP.put(ComponentType.PARAMETER, &quot;xs:string&quot;);</span>
-<span class="nc" id="L60">        TYPE_MAP.put(ComponentType.LICENSE, XMLConfig.LICENSE);</span>
-<span class="nc" id="L61">    }</span>
+<span class="nc" id="L57">        TYPE_MAP.put(ComponentType.MATCHER, XMLConfig.MATCHER);</span>
+<span class="nc" id="L58">        TYPE_MAP.put(ComponentType.PARAMETER, &quot;xs:string&quot;);</span>
+<span class="nc" id="L59">        TYPE_MAP.put(ComponentType.LICENSE, XMLConfig.LICENSE);</span>
+<span class="nc" id="L60">    }</span>
 
     /**
      * Command line that accepts standard RAT CLI command line options and generates an XSD from the
@@ -68,15 +67,14 @@ import org.apache.rat.utils.StandardXmlFactory;
      * @throws TransformerException if the XSD can not be pretty printed.
      */
     public static void main(final String[] args) throws IOException, TransformerException {
-<span class="nc" id="L71">        XsdGenerator generator = new XsdGenerator();</span>
+<span class="nc" id="L70">        XsdGenerator generator = new XsdGenerator();</span>
 
-<span class="nc" id="L73">        try (InputStream in = generator.getInputStream();</span>
-<span class="nc" id="L74">             InputStream styleIn = StyleSheets.XML.getStyleSheet().get()) {</span>
-<span class="nc" id="L75">            Transformer transformer = StandardXmlFactory.create(styleIn);</span>
-<span class="nc" id="L76">            transformer.transform(new StreamSource(in),</span>
+<span class="nc" id="L72">        try (InputStream in = generator.getInputStream();</span>
+<span class="nc" id="L73">             InputStream styleIn = StyleSheets.XML.getStyleSheet().ioSupplier().get()) {</span>
+<span class="nc" id="L74">            StandardXmlFactory.createTransformer(styleIn).transform(new StreamSource(in),</span>
                     new StreamResult(new OutputStreamWriter(System.out, StandardCharsets.UTF_8)));
         }
-<span class="nc" id="L79">    }</span>
+<span class="nc" id="L77">    }</span>
 
     /**
      * Create an input stream from the output of the generator.
@@ -84,11 +82,11 @@ import org.apache.rat.utils.StandardXmlFactory;
      * @throws IOException on output errors.
      */
     public InputStream getInputStream() throws IOException {
-<span class="nc" id="L87">        ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="nc" id="L88">        try (Writer otherWriter = new OutputStreamWriter(baos, StandardCharsets.UTF_8)) {</span>
-<span class="nc" id="L89">            write(otherWriter);</span>
+<span class="nc" id="L85">        ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="nc" id="L86">        try (Writer otherWriter = new OutputStreamWriter(baos, StandardCharsets.UTF_8)) {</span>
+<span class="nc" id="L87">            write(otherWriter);</span>
         }
-<span class="nc" id="L91">        return new ByteArrayInputStream(baos.toByteArray());</span>
+<span class="nc" id="L89">        return new ByteArrayInputStream(baos.toByteArray());</span>
     }
 
     /**
@@ -97,141 +95,141 @@ import org.apache.rat.utils.StandardXmlFactory;
      * @throws IOException on write error.
      */
     public void write(final Writer output) throws IOException {
-<span class="nc" id="L100">        writer = new XsdWriter(output).init();</span>
+<span class="nc" id="L98">        writer = new XsdWriter(output).init();</span>
 
-<span class="nc" id="L102">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.ROOT)</span>
-<span class="nc" id="L103">                .open(Type.COMPLEX).open(Type.SEQUENCE);</span>
-<span class="nc" id="L104">        writeFamilies();</span>
-<span class="nc" id="L105">        writeLicenses();</span>
-<span class="nc" id="L106">        writeApproved();</span>
-<span class="nc" id="L107">        writeMatchers();</span>
-<span class="nc" id="L108">        writer.close(Type.ELEMENT);</span>
+<span class="nc" id="L100">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.ROOT)</span>
+<span class="nc" id="L101">                .open(Type.COMPLEX).open(Type.SEQUENCE);</span>
+<span class="nc" id="L102">        writeFamilies();</span>
+<span class="nc" id="L103">        writeLicenses();</span>
+<span class="nc" id="L104">        writeApproved();</span>
+<span class="nc" id="L105">        writeMatchers();</span>
+<span class="nc" id="L106">        writer.close(Type.ELEMENT);</span>
 
-<span class="nc" id="L110">        writeMatcherElements();</span>
+<span class="nc" id="L108">        writeMatcherElements();</span>
 
-<span class="nc" id="L112">        writer.finish();</span>
-<span class="nc" id="L113">    }</span>
+<span class="nc" id="L110">        writer.finish();</span>
+<span class="nc" id="L111">    }</span>
 
     private void writeFamilies() throws IOException {
-<span class="nc" id="L116">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.FAMILIES, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
-<span class="nc" id="L117">                .open(Type.COMPLEX)</span>
-<span class="nc" id="L118">                .open(Type.SEQUENCE)</span>
-<span class="nc" id="L119">                .open(Type.ELEMENT, &quot;name&quot;, XMLConfig.FAMILY, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
-<span class="nc" id="L120">                .open(Type.COMPLEX)</span>
-<span class="nc" id="L121">                .attribute(XMLConfig.ATT_ID, &quot;type&quot;, &quot;xs:string&quot;, &quot;use&quot;, &quot;required&quot;)</span>
-<span class="nc" id="L122">                .attribute(XMLConfig.ATT_NAME, &quot;type&quot;, &quot;xs:string&quot;, &quot;use&quot;, &quot;required&quot;)</span>
-<span class="nc" id="L123">                .close(Type.ELEMENT)</span>
-<span class="nc" id="L124">                .close(Type.ELEMENT); // families</span>
-<span class="nc" id="L125">    }</span>
+<span class="nc" id="L114">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.FAMILIES, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
+<span class="nc" id="L115">                .open(Type.COMPLEX)</span>
+<span class="nc" id="L116">                .open(Type.SEQUENCE)</span>
+<span class="nc" id="L117">                .open(Type.ELEMENT, &quot;name&quot;, XMLConfig.FAMILY, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
+<span class="nc" id="L118">                .open(Type.COMPLEX)</span>
+<span class="nc" id="L119">                .attribute(XMLConfig.ATT_ID, &quot;type&quot;, &quot;xs:string&quot;, &quot;use&quot;, &quot;required&quot;)</span>
+<span class="nc" id="L120">                .attribute(XMLConfig.ATT_NAME, &quot;type&quot;, &quot;xs:string&quot;, &quot;use&quot;, &quot;required&quot;)</span>
+<span class="nc" id="L121">                .close(Type.ELEMENT)</span>
+<span class="nc" id="L122">                .close(Type.ELEMENT); // families</span>
+<span class="nc" id="L123">    }</span>
 
     private void writeLicenses() throws IOException {
-<span class="nc" id="L128">        Description desc = DescriptionBuilder.buildMap(SimpleLicense.class);</span>
-<span class="nc" id="L129">        List&lt;Description&gt; children = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L130">        List&lt;Description&gt; attributes = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L126">        Description desc = DescriptionBuilder.buildMap(SimpleLicense.class);</span>
+<span class="nc" id="L127">        List&lt;Description&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L128">        List&lt;Description&gt; attributes = new ArrayList&lt;&gt;();</span>
 
-<span class="nc bnc" id="L132" title="All 4 branches missed.">        if (desc != null &amp;&amp; desc.getChildren() != null) {</span>
-<span class="nc bnc" id="L133" title="All 2 branches missed.">            for (Description child : desc.getChildren().values()) {</span>
-<span class="nc bnc" id="L134" title="All 2 branches missed.">                if (XMLConfig.isLicenseChild(child.getCommonName())) {</span>
-<span class="nc" id="L135">                    children.add(child);</span>
+<span class="nc bnc" id="L130" title="All 4 branches missed.">        if (desc != null &amp;&amp; desc.getChildren() != null) {</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">            for (Description child : desc.getChildren().values()) {</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">                if (XMLConfig.isLicenseChild(child.getCommonName())) {</span>
+<span class="nc" id="L133">                    children.add(child);</span>
                 } else {
-<span class="nc bnc" id="L137" title="All 2 branches missed.">                    if (child.getType() == ComponentType.PARAMETER) {</span>
-<span class="nc" id="L138">                        attributes.add(child);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                    if (child.getType() == ComponentType.PARAMETER) {</span>
+<span class="nc" id="L136">                        attributes.add(child);</span>
                     }
                 }
-<span class="nc" id="L141">            }</span>
+<span class="nc" id="L139">            }</span>
         }
-<span class="nc" id="L143">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.LICENSES, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
-<span class="nc" id="L144">                .open(Type.COMPLEX).open(Type.SEQUENCE)</span>
-<span class="nc" id="L145">        .open(Type.ELEMENT, &quot;name&quot;, XMLConfig.LICENSE, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
-<span class="nc" id="L146">                .open(Type.COMPLEX).open(Type.CHOICE, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;1&quot;);</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        for (Description child : children) {</span>
-<span class="nc bnc" id="L148" title="All 2 branches missed.">            if (child.getCommonName().equals(&quot;matcher&quot;)) {</span>
-<span class="nc" id="L149">                writer.open(Type.ELEMENT, &quot;ref&quot;, XMLConfig.MATCHER, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;1&quot;).close(Type.ELEMENT);</span>
+<span class="nc" id="L141">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.LICENSES, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
+<span class="nc" id="L142">                .open(Type.COMPLEX).open(Type.SEQUENCE)</span>
+<span class="nc" id="L143">        .open(Type.ELEMENT, &quot;name&quot;, XMLConfig.LICENSE, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
+<span class="nc" id="L144">                .open(Type.COMPLEX).open(Type.CHOICE, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;1&quot;);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">        for (Description child : children) {</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">            if (child.getCommonName().equals(&quot;matcher&quot;)) {</span>
+<span class="nc" id="L147">                writer.open(Type.ELEMENT, &quot;ref&quot;, XMLConfig.MATCHER, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;1&quot;).close(Type.ELEMENT);</span>
             } else {
-<span class="nc" id="L151">                element(child);</span>
+<span class="nc" id="L149">                element(child);</span>
             }
-<span class="nc" id="L153">        }</span>
-<span class="nc" id="L154">        writer.close(Type.CHOICE);</span>
-<span class="nc bnc" id="L155" title="All 2 branches missed.">        for (Description child : attributes) {</span>
-<span class="nc" id="L156">            attribute(child);</span>
-<span class="nc" id="L157">        }</span>
-<span class="nc" id="L158">        writer.close(Type.ELEMENT).close(Type.ELEMENT);</span>
-<span class="nc" id="L159">    }</span>
+<span class="nc" id="L151">        }</span>
+<span class="nc" id="L152">        writer.close(Type.CHOICE);</span>
+<span class="nc bnc" id="L153" title="All 2 branches missed.">        for (Description child : attributes) {</span>
+<span class="nc" id="L154">            attribute(child);</span>
+<span class="nc" id="L155">        }</span>
+<span class="nc" id="L156">        writer.close(Type.ELEMENT).close(Type.ELEMENT);</span>
+<span class="nc" id="L157">    }</span>
 
     private void writeApproved() throws IOException {
-<span class="nc" id="L162">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.APPROVED, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
-<span class="nc" id="L163">                .open(Type.COMPLEX).open(Type.SEQUENCE)</span>
-<span class="nc" id="L164">                .open(Type.ELEMENT, &quot;name&quot;, XMLConfig.FAMILY, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
-<span class="nc" id="L165">                .open(Type.COMPLEX)</span>
-<span class="nc" id="L166">                .attribute(XMLConfig.ATT_LICENSE_REF, &quot;type&quot;, &quot;xs:string&quot;, &quot;use&quot;, &quot;required&quot;)</span>
-<span class="nc" id="L167">                .close(Type.ELEMENT)</span>
-<span class="nc" id="L168">                .close(Type.ELEMENT);</span>
-<span class="nc" id="L169">    }</span>
+<span class="nc" id="L160">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.APPROVED, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
+<span class="nc" id="L161">                .open(Type.COMPLEX).open(Type.SEQUENCE)</span>
+<span class="nc" id="L162">                .open(Type.ELEMENT, &quot;name&quot;, XMLConfig.FAMILY, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
+<span class="nc" id="L163">                .open(Type.COMPLEX)</span>
+<span class="nc" id="L164">                .attribute(XMLConfig.ATT_LICENSE_REF, &quot;type&quot;, &quot;xs:string&quot;, &quot;use&quot;, &quot;required&quot;)</span>
+<span class="nc" id="L165">                .close(Type.ELEMENT)</span>
+<span class="nc" id="L166">                .close(Type.ELEMENT);</span>
+<span class="nc" id="L167">    }</span>
 
     private void writeMatchers() throws IOException {
-<span class="nc" id="L172">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.MATCHERS, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
-<span class="nc" id="L173">                .open(Type.COMPLEX).open(Type.SEQUENCE)</span>
-<span class="nc" id="L174">                .open(Type.ELEMENT, &quot;name&quot;, XMLConfig.MATCHER, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
-<span class="nc" id="L175">                .open(Type.COMPLEX)</span>
-<span class="nc" id="L176">                .attribute(XMLConfig.ATT_CLASS_NAME, &quot;type&quot;, &quot;xs:string&quot;, &quot;use&quot;, &quot;required&quot;)</span>
-<span class="nc" id="L177">                .close(Type.ELEMENT)</span>
-<span class="nc" id="L178">                .close(Type.ELEMENT);</span>
-<span class="nc" id="L179">    }</span>
+<span class="nc" id="L170">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.MATCHERS, &quot;maxOccurs&quot;, &quot;1&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
+<span class="nc" id="L171">                .open(Type.COMPLEX).open(Type.SEQUENCE)</span>
+<span class="nc" id="L172">                .open(Type.ELEMENT, &quot;name&quot;, XMLConfig.MATCHER, &quot;maxOccurs&quot;, &quot;unbounded&quot;, &quot;minOccurs&quot;, &quot;0&quot;)</span>
+<span class="nc" id="L173">                .open(Type.COMPLEX)</span>
+<span class="nc" id="L174">                .attribute(XMLConfig.ATT_CLASS_NAME, &quot;type&quot;, &quot;xs:string&quot;, &quot;use&quot;, &quot;required&quot;)</span>
+<span class="nc" id="L175">                .close(Type.ELEMENT)</span>
+<span class="nc" id="L176">                .close(Type.ELEMENT);</span>
+<span class="nc" id="L177">    }</span>
 
     private void writeMatcherElements() throws IOException {
-<span class="nc" id="L182">        MatcherBuilderTracker tracker = MatcherBuilderTracker.instance();</span>
-<span class="nc" id="L183">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.MATCHER, &quot;abstract&quot;, &quot;true&quot;).close(Type.ELEMENT);</span>
+<span class="nc" id="L180">        MatcherBuilderTracker tracker = MatcherBuilderTracker.instance();</span>
+<span class="nc" id="L181">        writer.open(Type.ELEMENT, &quot;name&quot;, XMLConfig.MATCHER, &quot;abstract&quot;, &quot;true&quot;).close(Type.ELEMENT);</span>
 
         // matchers
-<span class="nc bnc" id="L186" title="All 2 branches missed.">        for (Class&lt;?&gt; clazz : tracker.getClasses()) {</span>
-<span class="nc" id="L187">            Description desc = DescriptionBuilder.buildMap(clazz);</span>
-<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (desc != null) {</span>
-<span class="nc" id="L189">                boolean hasResourceAttr = false;</span>
-<span class="nc" id="L190">                Description inline = null;</span>
-<span class="nc" id="L191">                List&lt;Description&gt; attributes = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L192" title="All 2 branches missed.">                for (Description child : desc.getChildren().values()) {</span>
-<span class="nc bnc" id="L193" title="All 2 branches missed.">                    if (XMLConfig.isInlineNode(desc.getCommonName(), child.getCommonName())) {</span>
-<span class="nc" id="L194">                        inline = child;</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">        for (Class&lt;?&gt; clazz : tracker.getClasses()) {</span>
+<span class="nc" id="L185">            Description desc = DescriptionBuilder.buildMap(clazz);</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">            if (desc != null) {</span>
+<span class="nc" id="L187">                boolean hasResourceAttr = false;</span>
+<span class="nc" id="L188">                Description inline = null;</span>
+<span class="nc" id="L189">                List&lt;Description&gt; attributes = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">                for (Description child : desc.getChildren().values()) {</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">                    if (XMLConfig.isInlineNode(desc.getCommonName(), child.getCommonName())) {</span>
+<span class="nc" id="L192">                        inline = child;</span>
                     } else {
-<span class="nc" id="L196">                        hasResourceAttr |= child.getCommonName().equals(XMLConfig.ATT_RESOURCE);</span>
-<span class="nc" id="L197">                        attributes.add(child);</span>
+<span class="nc" id="L194">                        hasResourceAttr |= child.getCommonName().equals(XMLConfig.ATT_RESOURCE);</span>
+<span class="nc" id="L195">                        attributes.add(child);</span>
                     }
-<span class="nc" id="L199">                }</span>
-<span class="nc" id="L200">                writer.open(Type.ELEMENT, &quot;name&quot;, desc.getCommonName(), &quot;substitutionGroup&quot;, XMLConfig.MATCHER)</span>
-<span class="nc" id="L201">                        .open(Type.COMPLEX);</span>
-<span class="nc bnc" id="L202" title="All 2 branches missed.">                if (inline != null) {</span>
-<span class="nc bnc" id="L203" title="All 2 branches missed.">                    if (&quot;enclosed&quot;.equals(inline.getCommonName())) {</span>
-<span class="nc" id="L204">                        writer.open(Type.CHOICE).open(Type.ELEMENT, &quot;ref&quot;, XMLConfig.MATCHER, &quot;maxOccurs&quot;,</span>
-<span class="nc bnc" id="L205" title="All 4 branches missed.">                                        inline.isCollection() ? &quot;unbounded&quot; : &quot;1&quot;, &quot;minOccurs&quot;, hasResourceAttr ? &quot;0&quot; : &quot;1&quot;)</span>
-<span class="nc" id="L206">                                .close(Type.CHOICE);</span>
+<span class="nc" id="L197">                }</span>
+<span class="nc" id="L198">                writer.open(Type.ELEMENT, &quot;name&quot;, desc.getCommonName(), &quot;substitutionGroup&quot;, XMLConfig.MATCHER)</span>
+<span class="nc" id="L199">                        .open(Type.COMPLEX);</span>
+<span class="nc bnc" id="L200" title="All 2 branches missed.">                if (inline != null) {</span>
+<span class="nc bnc" id="L201" title="All 2 branches missed.">                    if (&quot;enclosed&quot;.equals(inline.getCommonName())) {</span>
+<span class="nc" id="L202">                        writer.open(Type.CHOICE).open(Type.ELEMENT, &quot;ref&quot;, XMLConfig.MATCHER, &quot;maxOccurs&quot;,</span>
+<span class="nc bnc" id="L203" title="All 4 branches missed.">                                        inline.isCollection() ? &quot;unbounded&quot; : &quot;1&quot;, &quot;minOccurs&quot;, hasResourceAttr ? &quot;0&quot; : &quot;1&quot;)</span>
+<span class="nc" id="L204">                                .close(Type.CHOICE);</span>
                     } else {
-<span class="nc" id="L208">                        writer.open(Type.SIMPLE).open(Type.EXTENSION, &quot;base&quot;, &quot;xs:string&quot;);</span>
+<span class="nc" id="L206">                        writer.open(Type.SIMPLE).open(Type.EXTENSION, &quot;base&quot;, &quot;xs:string&quot;);</span>
                     }
                 }
-<span class="nc bnc" id="L211" title="All 2 branches missed.">                for (Description child : attributes) {</span>
-<span class="nc" id="L212">                    attribute(child);</span>
-<span class="nc" id="L213">                }</span>
-<span class="nc" id="L214">                writer.close(Type.ELEMENT);</span>
+<span class="nc bnc" id="L209" title="All 2 branches missed.">                for (Description child : attributes) {</span>
+<span class="nc" id="L210">                    attribute(child);</span>
+<span class="nc" id="L211">                }</span>
+<span class="nc" id="L212">                writer.close(Type.ELEMENT);</span>
             }
-<span class="nc" id="L216">        }</span>
-<span class="nc" id="L217">    }</span>
+<span class="nc" id="L214">        }</span>
+<span class="nc" id="L215">    }</span>
 
     private void element(final Description desc) throws IOException {
-<span class="nc" id="L220">        String typeName = TYPE_MAP.get(desc.getType());</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">        if (typeName != null) {</span>
-<span class="nc" id="L222">            writer.open(Type.ELEMENT,</span>
-<span class="nc" id="L223">                    &quot;name&quot;, desc.getCommonName(),</span>
+<span class="nc" id="L218">        String typeName = TYPE_MAP.get(desc.getType());</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">        if (typeName != null) {</span>
+<span class="nc" id="L220">            writer.open(Type.ELEMENT,</span>
+<span class="nc" id="L221">                    &quot;name&quot;, desc.getCommonName(),</span>
                     &quot;type&quot;, typeName,
-<span class="nc bnc" id="L225" title="All 2 branches missed.">                    &quot;minOccurs&quot;, desc.isRequired() ? &quot;1&quot; : &quot;0&quot;,</span>
-<span class="nc bnc" id="L226" title="All 2 branches missed.">                    &quot;maxOccurs&quot;, desc.isCollection() ? &quot;unbounded&quot; : &quot;1&quot;</span>
-<span class="nc" id="L227">                    ).close(Type.ELEMENT);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">                    &quot;minOccurs&quot;, desc.isRequired() ? &quot;1&quot; : &quot;0&quot;,</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">                    &quot;maxOccurs&quot;, desc.isCollection() ? &quot;unbounded&quot; : &quot;1&quot;</span>
+<span class="nc" id="L225">                    ).close(Type.ELEMENT);</span>
         }
-<span class="nc" id="L229">    }</span>
+<span class="nc" id="L227">    }</span>
 
     private void attribute(final Description attr) throws IOException {
-<span class="nc bnc" id="L232" title="All 2 branches missed.">        if (attr.getType() == ComponentType.PARAMETER) {</span>
-<span class="nc bnc" id="L233" title="All 2 branches missed.">            writer.attribute(attr.getCommonName(), &quot;form&quot;, &quot;unqualified&quot;, &quot;use&quot;, attr.isRequired() ? &quot;required&quot; : &quot;optional&quot;);</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        if (attr.getType() == ComponentType.PARAMETER) {</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">            writer.attribute(attr.getCommonName(), &quot;form&quot;, &quot;unqualified&quot;, &quot;use&quot;, attr.isRequired() ? &quot;required&quot; : &quot;optional&quot;);</span>
         }
-<span class="nc" id="L235">    }</span>
+<span class="nc" id="L233">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

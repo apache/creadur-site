@@ -316,7 +316,7 @@
 <a class="jxr_linenumber" name="L308" href="#L308">308</a>                 <em class="jxr_comment">// for Java just place the license at the front, for XML add</em>
 <a class="jxr_linenumber" name="L309" href="#L309">309</a>                 <em class="jxr_comment">// an XML decl first - don't know how to handle PHP</em>
 <a class="jxr_linenumber" name="L310" href="#L310">310</a>                 <strong class="jxr_keyword">if</strong> (expectsPackage || expectsXMLDecl) {
-<a class="jxr_linenumber" name="L311" href="#L311">311</a>                     <strong class="jxr_keyword">try</strong> (FileWriter writer2  = <strong class="jxr_keyword">new</strong> FileWriter(newDocument)) {
+<a class="jxr_linenumber" name="L311" href="#L311">311</a>                     <strong class="jxr_keyword">try</strong> (FileWriter writer2  = <strong class="jxr_keyword">new</strong> FileWriter(newDocument, StandardCharsets.UTF_8)) {
 <a class="jxr_linenumber" name="L312" href="#L312">312</a>                         <strong class="jxr_keyword">if</strong> (expectsXMLDecl) {
 <a class="jxr_linenumber" name="L313" href="#L313">313</a>                             writer2.write(<span class="jxr_string">"&lt;?xml version='1.0'?&gt;"</span>);
 <a class="jxr_linenumber" name="L314" href="#L314">314</a>                             writer2.write(LINE_SEP);

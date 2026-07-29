@@ -55,6 +55,7 @@ loadScripts(document, 'script');</script>
 <div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
 <li><a href="#constructor-summary" tabindex="0">Constructor Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
@@ -65,12 +66,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
 <li><a href="#execute()" tabindex="0">execute()</a></li>
-<li><a href="#getClaimsStatistic()" tabindex="0">getClaimsStatistic()</a></li>
-<li><a href="#output()" tabindex="0">output()</a></li>
-<li><a href="#output(org.apache.commons.io.function.IOSupplier,org.apache.commons.io.function.IOSupplier)" tabindex="0">output(IOSupplier, IOSupplier)</a></li>
-<li><a href="#listLicenses(org.apache.rat.ReportConfiguration,org.apache.rat.license.LicenseSetFactory.LicenseFilter)" tabindex="0">listLicenses(ReportConfiguration, LicenseSetFactory.LicenseFilter)</a></li>
-<li><a href="#writeSummary(java.lang.Appendable)" tabindex="0">writeSummary(Appendable)</a></li>
-<li><a href="#getDocument()" tabindex="0">getDocument()</a></li>
+<li><a href="#getOutput()" tabindex="0">getOutput()</a></li>
 </ol>
 </li>
 </ol>
@@ -94,6 +90,23 @@ the result for later handling.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="Reporter.Output.html" class="type-name-link" title="class in org.apache.rat">Reporter.Output</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The output from a report run.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -114,48 +127,21 @@ the result for later handling.</div>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Reporter.Output.html" title="class in org.apache.rat">Reporter.Output</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#execute()" class="member-name-link">execute</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Executes the report and builds the output.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClaimsStatistic()" class="member-name-link">getClaimsStatistic</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Reporter.Output.html" title="class in org.apache.rat">Reporter.Output</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutput()" class="member-name-link">getOutput</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get the claim statistics from the run.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDocument()" class="member-name-link">getDocument</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the document that was generated during execution.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#listLicenses(org.apache.rat.ReportConfiguration,org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listLicenses</a><wbr>(<a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration,
- <a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Lists the licenses on the configured output stream.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output()" class="member-name-link">output</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Outputs the report using the stylesheet and output specified in the configuration.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output(org.apache.commons.io.function.IOSupplier,org.apache.commons.io.function.IOSupplier)" class="member-name-link">output</a><wbr>(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;stylesheet,
- org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;output)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Outputs the report to the specified output using the stylesheet.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeSummary(java.lang.Appendable)" class="member-name-link">writeSummary</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Appendable.html" title="class or interface in java.lang" class="external-link">Appendable</a>&nbsp;appendable)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Writes a text summary of issues with the run.</div>
+<div class="block">Gets the output from the last <a href="#execute()"><code>execute()</code></a> call or <code>null</code> if <a href="#execute()"><code>execute()</code></a> has not been called.</div>
 </div>
 </div>
 </div>
@@ -199,15 +185,12 @@ the result for later handling.</div>
 <section class="detail" id="execute()">
 <h3>execute</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></span>&nbsp;<span class="element-name">execute</span>()
-                       throws <span class="exceptions"><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
-<div class="block">Executes the report and builds the output.
-This method will build the internal XML document if it does not already exist.
-If this method or either of the <a href="#output()"><code>output()</code></a> methods have already been called this method will return
-the previous results.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Reporter.Output.html" title="class in org.apache.rat">Reporter.Output</a></span>&nbsp;<span class="element-name">execute</span>()
+                        throws <span class="exceptions"><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
+<div class="block">Executes the report and builds the output.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the claim statistics.</dd>
+<dd>the Output object.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></code> - on error.</dd>
 </dl>
@@ -215,98 +198,14 @@ the previous results.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="getClaimsStatistic()">
-<h3>getClaimsStatistic</h3>
+<section class="detail" id="getOutput()">
+<h3>getOutput</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></span>&nbsp;<span class="element-name">getClaimsStatistic</span>()</div>
-<div class="block">Get the claim statistics from the run.</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Reporter.Output.html" title="class in org.apache.rat">Reporter.Output</a></span>&nbsp;<span class="element-name">getOutput</span>()</div>
+<div class="block">Gets the output from the last <a href="#execute()"><code>execute()</code></a> call or <code>null</code> if <a href="#execute()"><code>execute()</code></a> has not been called.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>the claim statistics.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="output()">
-<h3>output</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></span>&nbsp;<span class="element-name">output</span>()
-                      throws <span class="exceptions"><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
-<div class="block">Outputs the report using the stylesheet and output specified in the configuration.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the Claim statistic from the run.</dd>
-<dt>Throws:</dt>
-<dd><code><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></code> - on error.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="output(org.apache.commons.io.function.IOSupplier,org.apache.commons.io.function.IOSupplier)">
-<h3>output</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></span>&nbsp;<span class="element-name">output</span><wbr><span class="parameters">(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;stylesheet,
- org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;output)</span>
-                      throws <span class="exceptions"><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></span></div>
-<div class="block">Outputs the report to the specified output using the stylesheet. It is safe to call this method more than once
-in order to generate multiple reports from the same run.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>stylesheet</code> - the style sheet to use for XSLT formatting.</dd>
-<dd><code>output</code> - the output stream to write to.</dd>
-<dt>Returns:</dt>
-<dd>the Claim statistic for the run.</dd>
-<dt>Throws:</dt>
-<dd><code><a href="api/RatException.html" title="class in org.apache.rat.api">RatException</a></code> - on error.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="listLicenses(org.apache.rat.ReportConfiguration,org.apache.rat.license.LicenseSetFactory.LicenseFilter)">
-<h3>listLicenses</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">listLicenses</span><wbr><span class="parameters">(<a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration,
- <a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</span>
-                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Lists the licenses on the configured output stream.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>configuration</code> - The configuration for the system</dd>
-<dd><code>filter</code> - the license filter that specifies which licenses to output.</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - if PrintWriter can not be retrieved from configuration.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="writeSummary(java.lang.Appendable)">
-<h3>writeSummary</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeSummary</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Appendable.html" title="class or interface in java.lang" class="external-link">Appendable</a>&nbsp;appendable)</span>
-                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Writes a text summary of issues with the run.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>appendable</code> - the appendable to write to.</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - on error.</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getDocument()">
-<h3>getDocument</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/Document.html" title="class or interface in org.w3c.dom" class="external-link">Document</a></span>&nbsp;<span class="element-name">getDocument</span>()</div>
-<div class="block">Gets the document that was generated during execution.</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>the document that was generated during execution.</dd>
+<dd>the output</dd>
 </dl>
 </div>
 </section>

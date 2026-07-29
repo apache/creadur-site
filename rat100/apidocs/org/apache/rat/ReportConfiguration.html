@@ -56,8 +56,14 @@ loadScripts(document, 'script');</script>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
 <li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
 <li><a href="#constructor-summary" tabindex="0">Constructor Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#SYSTEM_OUT" tabindex="0">SYSTEM_OUT</a></li>
+</ol>
+</li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
 <ol class="toc-list">
 <li><a href="#%3Cinit%3E()" tabindex="0">ReportConfiguration()</a></li>
@@ -65,9 +71,10 @@ loadScripts(document, 'script');</script>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
+<li><a href="#serDes()" tabindex="0">serDes()</a></li>
 <li><a href="#reportExclusions(java.lang.Appendable)" tabindex="0">reportExclusions(Appendable)</a></li>
 <li><a href="#addSource(java.io.File)" tabindex="0">addSource(File)</a></li>
-<li><a href="#addSource(org.apache.rat.report.IReportable)" tabindex="0">addSource(IReportable)</a></li>
+<li><a href="#addSource(org.apache.rat.report.Reportable)" tabindex="0">addSource(Reportable)</a></li>
 <li><a href="#hasSource()" tabindex="0">hasSource()</a></li>
 <li><a href="#getSources()" tabindex="0">getSources()</a></li>
 <li><a href="#getGeneratedMatcher()" tabindex="0">getGeneratedMatcher()</a></li>
@@ -92,17 +99,20 @@ loadScripts(document, 'script');</script>
 <li><a href="#addExcludedPatterns(java.lang.Iterable)" tabindex="0">addExcludedPatterns(Iterable)</a></li>
 <li><a href="#addIncludedCollection(org.apache.rat.config.exclusion.StandardCollection)" tabindex="0">addIncludedCollection(StandardCollection)</a></li>
 <li><a href="#addIncludedFilter(java.io.FileFilter)" tabindex="0">addIncludedFilter(FileFilter)</a></li>
+<li><a href="#addIncludedMatcher(org.apache.rat.document.DocumentNameMatcher)" tabindex="0">addIncludedMatcher(DocumentNameMatcher)</a></li>
 <li><a href="#addIncludedPatterns(java.lang.Iterable)" tabindex="0">addIncludedPatterns(Iterable)</a></li>
 <li><a href="#getDocumentExcluder(org.apache.rat.document.DocumentName)" tabindex="0">getDocumentExcluder(DocumentName)</a></li>
 <li><a href="#getStyleSheet()" tabindex="0">getStyleSheet()</a></li>
-<li><a href="#setStyleSheet(org.apache.commons.io.function.IOSupplier)" tabindex="0">setStyleSheet(IOSupplier)</a></li>
+<li><a href="#getStyleSheetDescriptor()" tabindex="0">getStyleSheetDescriptor()</a></li>
+<li><a href="#setStyleSheet(org.apache.rat.ReportConfiguration.IODescriptor)" tabindex="0">setStyleSheet(ReportConfiguration.IODescriptor)</a></li>
 <li><a href="#setFrom(org.apache.rat.Defaults)" tabindex="0">setFrom(Defaults)</a></li>
 <li><a href="#setStyleSheet(java.io.File)" tabindex="0">setStyleSheet(File)</a></li>
 <li><a href="#setStyleSheet(java.net.URI)" tabindex="0">setStyleSheet(URI)</a></li>
 <li><a href="#setStyleSheet(java.net.URL)" tabindex="0">setStyleSheet(URL)</a></li>
-<li><a href="#setOut(org.apache.commons.io.function.IOSupplier)" tabindex="0">setOut(IOSupplier)</a></li>
+<li><a href="#setOut(org.apache.rat.ReportConfiguration.IODescriptor)" tabindex="0">setOut(ReportConfiguration.IODescriptor)</a></li>
 <li><a href="#setOut(java.io.File)" tabindex="0">setOut(File)</a></li>
 <li><a href="#getOutput()" tabindex="0">getOutput()</a></li>
+<li><a href="#getOutputDescriptor()" tabindex="0">getOutputDescriptor()</a></li>
 <li><a href="#getWriter()" tabindex="0">getWriter()</a></li>
 <li><a href="#addLicense(org.apache.rat.license.ILicense)" tabindex="0">addLicense(ILicense)</a></li>
 <li><a href="#addLicense(org.apache.rat.license.ILicense.Builder)" tabindex="0">addLicense(ILicense.Builder)</a></li>
@@ -165,10 +175,37 @@ configuration and invoke the <a href="Reporter.html" title="class in org.apache.
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ReportConfiguration.Processing.html" class="type-name-link" title="enum class in org.apache.rat">ReportConfiguration.Processing</a></code></div>
+<div class="col-first even-row-color"><code>static final record&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="ReportConfiguration.IODescriptor.html" class="type-name-link" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a>&lt;<a href="ReportConfiguration.IODescriptor.html#type-param-T" title="type parameter in ReportConfiguration.IODescriptor">T</a>&gt;</code></div>
 <div class="col-last even-row-color">
+<div class="block">An IODescriptor comprises a name and an IOSupplier.</div>
+</div>
+<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="ReportConfiguration.Processing.html" class="type-name-link" title="enum class in org.apache.rat">ReportConfiguration.Processing</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">The styles of processing for various categories of documents.</div>
+</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="ReportConfiguration.SerDes.html" class="type-name-link" title="class in org.apache.rat">ReportConfiguration.SerDes</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Serializes the ReportConfiguration into an XML document that can be deserialized by the Serde.</div>
+</div>
+</div>
+</section>
+</li>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="#SYSTEM_OUT" class="member-name-link">SYSTEM_OUT</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The IODescriptor for <code>System.out</code>.</div>
 </div>
 </div>
 </section>
@@ -208,7 +245,7 @@ names.</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addApprovedLicenseCategory(java.lang.String)" class="member-name-link">addApprovedLicenseCategory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds a license family category (id) to the list of approved licenses</div>
+<div class="block">Adds a license family category (id) to the list of approved licenses.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addApprovedLicenseCategory(org.apache.rat.license.ILicenseFamily)" class="member-name-link">addApprovedLicenseCategory</a><wbr>(<a href="license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&nbsp;approvedILicenseFamily)</code></div>
@@ -283,102 +320,106 @@ names.</div>
 exclusion of the same files.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedPatterns(java.lang.Iterable)" class="member-name-link">addIncludedPatterns</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;patterns)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedMatcher(org.apache.rat.document.DocumentNameMatcher)" class="member-name-link">addIncludedMatcher</a><wbr>(<a href="document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;matcher)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Includes files that match a DocumentNameMatcher.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedPatterns(java.lang.Iterable)" class="member-name-link">addIncludedPatterns</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;patterns)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add file patterns that are to be included.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicense(org.apache.rat.license.ILicense)" class="member-name-link">addLicense</a><wbr>(<a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds a license to the list of licenses.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicense(org.apache.rat.license.ILicense.Builder)" class="member-name-link">addLicense</a><wbr>(<a href="license/ILicense.Builder.html" title="interface in org.apache.rat.license">ILicense.Builder</a>&nbsp;builder)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicense(org.apache.rat.license.ILicense)" class="member-name-link">addLicense</a><wbr>(<a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a license to the list of licenses.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicenses(java.util.Collection)" class="member-name-link">addLicenses</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicense(org.apache.rat.license.ILicense.Builder)" class="member-name-link">addLicense</a><wbr>(<a href="license/ILicense.Builder.html" title="interface in org.apache.rat.license">ILicense.Builder</a>&nbsp;builder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a license to the list of licenses.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addLicenses(java.util.Collection)" class="member-name-link">addLicenses</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;&nbsp;licenses)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds multiple licenses to the list of licenses.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addSource(java.io.File)" class="member-name-link">addSource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addSource(java.io.File)" class="member-name-link">addSource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a file as a source of files to scan.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addSource(org.apache.rat.report.IReportable)" class="member-name-link">addSource</a><wbr>(<a href="report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a>&nbsp;reportable)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addSource(org.apache.rat.report.Reportable)" class="member-name-link">addSource</a><wbr>(<a href="report/Reportable.html" title="interface in org.apache.rat.report">Reportable</a>&nbsp;reportable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a Reportable as a source of files to scan.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#familyDuplicateOption(org.apache.rat.utils.ReportingSet.Options)" class="member-name-link">familyDuplicateOption</a><wbr>(<a href="utils/ReportingSet.Options.html" title="enum class in org.apache.rat.utils">ReportingSet.Options</a>&nbsp;state)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#familyDuplicateOption(org.apache.rat.utils.ReportingSet.Options)" class="member-name-link">familyDuplicateOption</a><wbr>(<a href="utils/ReportingSet.Options.html" title="enum class in org.apache.rat.utils">ReportingSet.Options</a>&nbsp;state)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the reporting option for duplicate license families.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ReportConfiguration.Processing.html" title="enum class in org.apache.rat">ReportConfiguration.Processing</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getArchiveProcessing()" class="member-name-link">getArchiveProcessing</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ReportConfiguration.Processing.html" title="enum class in org.apache.rat">ReportConfiguration.Processing</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getArchiveProcessing()" class="member-name-link">getArchiveProcessing</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Retrieves the archive processing type.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="config/results/ClaimValidator.html" title="class in org.apache.rat.config.results">ClaimValidator</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClaimValidator()" class="member-name-link">getClaimValidator</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="config/results/ClaimValidator.html" title="class in org.apache.rat.config.results">ClaimValidator</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getClaimValidator()" class="member-name-link">getClaimValidator</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the ClaimValidator for the configuration.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCopyrightMessage()" class="member-name-link">getCopyrightMessage</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCopyrightMessage()" class="member-name-link">getCopyrightMessage</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the optional license copyright being added if RAT is adding headers.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDocumentExcluder(org.apache.rat.document.DocumentName)" class="member-name-link">getDocumentExcluder</a><wbr>(<a href="document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseDir)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Get the DocumentNameMatcher that excludes files found in the directory tree..</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGeneratedMatcher()" class="member-name-link">getGeneratedMatcher</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDocumentExcluder(org.apache.rat.document.DocumentName)" class="member-name-link">getDocumentExcluder</a><wbr>(<a href="document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseDir)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Get the DocumentNameMatcher that excludes files found in the directory tree.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="analysis/IHeaderMatcher.html" title="interface in org.apache.rat.analysis">IHeaderMatcher</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getGeneratedMatcher()" class="member-name-link">getGeneratedMatcher</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the matcher that matches generated text.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseCategories(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseCategories</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the SortedSet of approved license categories.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseFamilies(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseFamilies</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets a sorted set of ILicenseFamily objects based on <code>filter</code>. if
-filter is set:
-
-<code>all</code> - All licenses families will be returned.
-<code>approved</code> - Only approved license families will be returned
-<code>none</code> - No license families will be returned
-</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseIds(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseIds</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Gets the SortedSet of approved license categories.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenses</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseCategories(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseCategories</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the SortedSet of approved license categories.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/LicenseSetFactory.html" title="class in org.apache.rat.license">LicenseSetFactory</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseSetFactory()" class="member-name-link">getLicenseSetFactory</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseFamilies(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseFamilies</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets a sorted set of ILicenseFamily objects based on <code>filter</code>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseIds(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenseIds</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the SortedSet of approved license categories.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.collections4.set.UnmodifiableSortedSet<wbr>&lt;<a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">getLicenses</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the SortedSet of approved license categories.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/LicenseSetFactory.html" title="class in org.apache.rat.license">LicenseSetFactory</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLicenseSetFactory()" class="member-name-link">getLicenseSetFactory</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the enclosed LicenseSetFactory.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.io.function.IOSupplier<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutput()" class="member-name-link">getOutput</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.io.function.IOSupplier<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutput()" class="member-name-link">getOutput</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the output stream supplier.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="walker/IReportableListWalker.Builder.html" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOutputDescriptor()" class="member-name-link">getOutputDescriptor</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the output IODescriptor.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="walker/ReportableListWalker.Builder.html" title="class in org.apache.rat.walker">ReportableListWalker.Builder</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSources()" class="member-name-link">getSources</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets a builder initialized with any files specified as sources.</div>
@@ -386,98 +427,106 @@ filter is set:
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ReportConfiguration.Processing.html" title="enum class in org.apache.rat">ReportConfiguration.Processing</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStandardProcessing()" class="member-name-link">getStandardProcessing</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieves the archive processing type.</div>
+<div class="block">Retrieves the standard processing type.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.io.function.IOSupplier<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyleSheet()" class="member-name-link">getStyleSheet</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the IOSupplier with the style sheet.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.io.function.IOSupplier<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintWriter.html" title="class or interface in java.io" class="external-link">PrintWriter</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWriter()" class="member-name-link">getWriter</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStyleSheetDescriptor()" class="member-name-link">getStyleSheetDescriptor</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the IODescriptor with the style sheet.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.apache.commons.io.function.IOSupplier<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintWriter.html" title="class or interface in java.io" class="external-link">PrintWriter</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWriter()" class="member-name-link">getWriter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets a PrintWriter that wraps the output stream.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasSource()" class="member-name-link">hasSource</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasSource()" class="member-name-link">hasSource</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns <code>true</code> if the configuration has any sources defined.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAddingLicenses()" class="member-name-link">isAddingLicenses</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAddingLicenses()" class="member-name-link">isAddingLicenses</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the flag that determines if license headers should be added if missing.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAddingLicensesForced()" class="member-name-link">isAddingLicensesForced</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isAddingLicensesForced()" class="member-name-link">isAddingLicensesForced</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the flag that determines if license headers are "forced" overwriting existing files.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDryRun()" class="member-name-link">isDryRun</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDryRun()" class="member-name-link">isDryRun</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the state of the dry run flag.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#licenseDuplicateOption(org.apache.rat.utils.ReportingSet.Options)" class="member-name-link">licenseDuplicateOption</a><wbr>(<a href="utils/ReportingSet.Options.html" title="enum class in org.apache.rat.utils">ReportingSet.Options</a>&nbsp;state)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#licenseDuplicateOption(org.apache.rat.utils.ReportingSet.Options)" class="member-name-link">licenseDuplicateOption</a><wbr>(<a href="utils/ReportingSet.Options.html" title="enum class in org.apache.rat.utils">ReportingSet.Options</a>&nbsp;state)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the reporting option for duplicate licenses.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#listFamilies()" class="member-name-link">listFamilies</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#listFamilies()" class="member-name-link">listFamilies</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Return the current filter that determines which families will be output in the XML document.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#listFamilies(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listFamilies</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#listFamilies(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listFamilies</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the level of license families that should be output in the XML document.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#listLicenses()" class="member-name-link">listLicenses</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#listLicenses()" class="member-name-link">listLicenses</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the selected license filter.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#listLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listLicenses</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#listLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listLicenses</a><wbr>(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the level of licenses that should be output in the XML document.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logFamilyCollisions(org.apache.rat.utils.Log.Level)" class="member-name-link">logFamilyCollisions</a><wbr>(<a href="utils/Log.Level.html" title="enum class in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logFamilyCollisions(org.apache.rat.utils.Log.Level)" class="member-name-link">logFamilyCollisions</a><wbr>(<a href="utils/Log.Level.html" title="enum class in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the log level for reporting collisions in the set of license families.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logLicenseCollisions(org.apache.rat.utils.Log.Level)" class="member-name-link">logLicenseCollisions</a><wbr>(<a href="utils/Log.Level.html" title="enum class in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#logLicenseCollisions(org.apache.rat.utils.Log.Level)" class="member-name-link">logLicenseCollisions</a><wbr>(<a href="utils/Log.Level.html" title="enum class in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the log level for reporting license collisions.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeApprovedLicenseCategories(java.util.Collection)" class="member-name-link">removeApprovedLicenseCategories</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;familyCategory)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Removes a license family category from the list of approved licenses.</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeApprovedLicenseCategory(java.lang.String)" class="member-name-link">removeApprovedLicenseCategory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds a license family category to the list of approved licenses.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeApprovedLicenseId(java.lang.String)" class="member-name-link">removeApprovedLicenseId</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adds a license family category to the list of approved licenses.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeApprovedLicenseIds(java.util.Collection)" class="member-name-link">removeApprovedLicenseIds</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;licenseIds)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeApprovedLicenseCategories(java.util.Collection)" class="member-name-link">removeApprovedLicenseCategories</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;familyCategory)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Removes a license family category from the list of approved licenses.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reportExclusions(java.lang.Appendable)" class="member-name-link">reportExclusions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Appendable.html" title="class or interface in java.lang" class="external-link">Appendable</a>&nbsp;appendable)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeApprovedLicenseCategory(java.lang.String)" class="member-name-link">removeApprovedLicenseCategory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a license family category to the list of approved licenses.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeApprovedLicenseId(java.lang.String)" class="member-name-link">removeApprovedLicenseId</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;licenseId)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a license family category to the list of approved licenses.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeApprovedLicenseIds(java.util.Collection)" class="member-name-link">removeApprovedLicenseIds</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;licenseIds)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes a license family category from the list of approved licenses.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#reportExclusions(java.lang.Appendable)" class="member-name-link">reportExclusions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Appendable.html" title="class or interface in java.lang" class="external-link">Appendable</a>&nbsp;appendable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Report the excluded files to the appendable object.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ReportConfiguration.SerDes.html" title="class in org.apache.rat">ReportConfiguration.SerDes</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serDes()" class="member-name-link">serDes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setAddLicenseHeaders(org.apache.rat.config.AddLicenseHeaders)" class="member-name-link">setAddLicenseHeaders</a><wbr>(<a href="config/AddLicenseHeaders.html" title="enum class in org.apache.rat.config">AddLicenseHeaders</a>&nbsp;addLicenseHeaders)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -511,14 +560,14 @@ configuration.</div>
 <div class="block">Sets the OutputStream supplier to use the specified file.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOut(org.apache.commons.io.function.IOSupplier)" class="member-name-link">setOut</a><wbr>(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;out)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setOut(org.apache.rat.ReportConfiguration.IODescriptor)" class="member-name-link">setOut</a><wbr>(<a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;out)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the supplier for the output stream.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStandardProcessing(org.apache.rat.ReportConfiguration.Processing)" class="member-name-link">setStandardProcessing</a><wbr>(<a href="ReportConfiguration.Processing.html" title="enum class in org.apache.rat">ReportConfiguration.Processing</a>&nbsp;standardProcessing)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Sets the archive processing type.</div>
+<div class="block">Sets the standard processing type.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStyleSheet(java.io.File)" class="member-name-link">setStyleSheet</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;styleSheet)</code></div>
@@ -536,7 +585,7 @@ configuration.</div>
 <div class="block">Sets the style sheet for custom processing.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStyleSheet(org.apache.commons.io.function.IOSupplier)" class="member-name-link">setStyleSheet</a><wbr>(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;styleSheet)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStyleSheet(org.apache.rat.ReportConfiguration.IODescriptor)" class="member-name-link">setStyleSheet</a><wbr>(<a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;styleSheet)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the style sheet for custom processing.</div>
 </div>
@@ -557,6 +606,23 @@ configuration.</div>
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="SYSTEM_OUT">
+<h3>SYSTEM_OUT</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;</span>&nbsp;<span class="element-name">SYSTEM_OUT</span></div>
+<div class="block">The IODescriptor for <code>System.out</code>.</div>
+</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
@@ -580,6 +646,14 @@ configuration.</div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="serDes()">
+<h3>serDes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ReportConfiguration.SerDes.html" title="class in org.apache.rat">ReportConfiguration.SerDes</a></span>&nbsp;<span class="element-name">serDes</span>()</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="reportExclusions(java.lang.Appendable)">
 <h3>reportExclusions</h3>
 <div class="horizontal-scroll">
@@ -600,7 +674,7 @@ configuration.</div>
 <div class="block">Adds a file as a source of files to scan.
 The file must be a text file that lists files to be included.
 File within the file must be in linux format with a
-"/" file separator.</div>
+<code>"/"</code> file separator.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>file</code> - the file to process.</dd>
@@ -609,10 +683,10 @@ File within the file must be in linux format with a
 </section>
 </li>
 <li>
-<section class="detail" id="addSource(org.apache.rat.report.IReportable)">
+<section class="detail" id="addSource(org.apache.rat.report.Reportable)">
 <h3>addSource</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addSource</span><wbr><span class="parameters">(<a href="report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a>&nbsp;reportable)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addSource</span><wbr><span class="parameters">(<a href="report/Reportable.html" title="interface in org.apache.rat.report">Reportable</a>&nbsp;reportable)</span></div>
 <div class="block">Adds a Reportable as a source of files to scan.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -638,7 +712,7 @@ File within the file must be in linux format with a
 <section class="detail" id="getSources()">
 <h3>getSources</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="walker/IReportableListWalker.Builder.html" title="class in org.apache.rat.walker">IReportableListWalker.Builder</a></span>&nbsp;<span class="element-name">getSources</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="walker/ReportableListWalker.Builder.html" title="class in org.apache.rat.walker">ReportableListWalker.Builder</a></span>&nbsp;<span class="element-name">getSources</span>()</div>
 <div class="block">Gets a builder initialized with any files specified as sources.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -668,7 +742,7 @@ File within the file must be in linux format with a
 <div class="block">Retrieves the archive processing type.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>The archive processing type.</dd>
+<dd>the archive processing type.</dd>
 </dl>
 </div>
 </section>
@@ -691,10 +765,10 @@ File within the file must be in linux format with a
 <h3>getStandardProcessing</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ReportConfiguration.Processing.html" title="enum class in org.apache.rat">ReportConfiguration.Processing</a></span>&nbsp;<span class="element-name">getStandardProcessing</span>()</div>
-<div class="block">Retrieves the archive processing type.</div>
+<div class="block">Retrieves the standard processing type.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>The archive processing type.</dd>
+<dd>the standard processing type.</dd>
 </dl>
 </div>
 </section>
@@ -704,10 +778,10 @@ File within the file must be in linux format with a
 <h3>setStandardProcessing</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStandardProcessing</span><wbr><span class="parameters">(<a href="ReportConfiguration.Processing.html" title="enum class in org.apache.rat">ReportConfiguration.Processing</a>&nbsp;standardProcessing)</span></div>
-<div class="block">Sets the archive processing type. If not set will default to NOTIFICATION.</div>
+<div class="block">Sets the standard processing type. If not set will default to NOTIFICATION.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>standardProcessing</code> - the type of processing archives should have.</dd>
+<dd><code>standardProcessing</code> - the type of processing standard files should have.</dd>
 </dl>
 </div>
 </section>
@@ -721,7 +795,7 @@ File within the file must be in linux format with a
 <p>NOTE: should be set before licenses or license families are added.</p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>level</code> - The log level to use.</dd>
+<dd><code>level</code> - the log level to use.</dd>
 </dl>
 </div>
 </section>
@@ -734,7 +808,7 @@ File within the file must be in linux format with a
 <div class="block">Sets the reporting option for duplicate license families.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>state</code> - The ReportingSet.Option to use for reporting.</dd>
+<dd><code>state</code> - the ReportingSet.Option to use for reporting.</dd>
 </dl>
 </div>
 </section>
@@ -747,7 +821,7 @@ File within the file must be in linux format with a
 <div class="block">Sets the log level for reporting license collisions.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>level</code> - The log level.</dd>
+<dd><code>level</code> - the log level.</dd>
 </dl>
 </div>
 </section>
@@ -760,7 +834,7 @@ File within the file must be in linux format with a
 <div class="block">Sets the reporting option for duplicate licenses.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>state</code> - the ReportingSt.Option to use for reporting.</dd>
+<dd><code>state</code> - the ReportingSet.Option to use for reporting.</dd>
 </dl>
 </div>
 </section>
@@ -954,6 +1028,19 @@ exclusion of the same files.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="addIncludedMatcher(org.apache.rat.document.DocumentNameMatcher)">
+<h3>addIncludedMatcher</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addIncludedMatcher</span><wbr><span class="parameters">(<a href="document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a>&nbsp;matcher)</span></div>
+<div class="block">Includes files that match a DocumentNameMatcher.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>matcher</code> - the DocumentNameMatcher to match.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="addIncludedPatterns(java.lang.Iterable)">
 <h3>addIncludedPatterns</h3>
 <div class="horizontal-scroll">
@@ -962,7 +1049,7 @@ exclusion of the same files.</div>
 the same files.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>patterns</code> - The iterable of Strings containing the patterns.</dd>
+<dd><code>patterns</code> - the iterable of Strings containing the patterns.</dd>
 </dl>
 </div>
 </section>
@@ -972,7 +1059,7 @@ the same files.</div>
 <h3>getDocumentExcluder</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></span>&nbsp;<span class="element-name">getDocumentExcluder</span><wbr><span class="parameters">(<a href="document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;baseDir)</span></div>
-<div class="block">Get the DocumentNameMatcher that excludes files found in the directory tree..</div>
+<div class="block">Get the DocumentNameMatcher that excludes files found in the directory tree.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>baseDir</code> - the DocumentName for the base directory.</dd>
@@ -997,11 +1084,25 @@ the report with.</dd>
 </section>
 </li>
 <li>
-<section class="detail" id="setStyleSheet(org.apache.commons.io.function.IOSupplier)">
+<section class="detail" id="getStyleSheetDescriptor()">
+<h3>getStyleSheetDescriptor</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;</span>&nbsp;<span class="element-name">getStyleSheetDescriptor</span>()</div>
+<div class="block">Gets the IODescriptor with the style sheet.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the IODescriptor that describes the XSLT style sheet to style
+the report with.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setStyleSheet(org.apache.rat.ReportConfiguration.IODescriptor)">
 <h3>setStyleSheet</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStyleSheet</span><wbr><span class="parameters">(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;styleSheet)</span></div>
-<div class="block">Sets the style sheet for custom processing. The IOSupplier may be called
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStyleSheet</span><wbr><span class="parameters">(<a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;styleSheet)</span></div>
+<div class="block">Sets the style sheet for custom processing. The IODescriptor may be called
 multiple times, so the input stream must be able to be opened and closed
 multiple times.</div>
 <dl class="notes">
@@ -1021,7 +1122,7 @@ configuration. <em>Side effect:</em> if the report should be styled and no
 style sheet has been set the plain stylesheet from the defaults will be used.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>defaults</code> - The defaults to set.</dd>
+<dd><code>defaults</code> - the defaults to set.</dd>
 </dl>
 </div>
 </section>
@@ -1068,18 +1169,18 @@ multiple times so the URL must be capable of being opened multiple times.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="setOut(org.apache.commons.io.function.IOSupplier)">
+<section class="detail" id="setOut(org.apache.rat.ReportConfiguration.IODescriptor)">
 <h3>setOut</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOut</span><wbr><span class="parameters">(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;out)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOut</span><wbr><span class="parameters">(<a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;out)</span></div>
 <div class="block">Sets the supplier for the output stream. The supplier may be called multiple
 times to provide the stream. Suppliers should prepare streams that are
 appended to and that can be closed. If an <code>OutputStream</code> should not be
 closed consider wrapping it in a <code>CloseShieldOutputStream</code></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>out</code> - The OutputStream supplier that provides the output stream to write
-the report to. A null value will use System.out.</dd>
+<dd><code>out</code> - the OutputStream supplier that provides the output stream to write
+the report to. A <code>null</code> value will use <code>System.out</code>.</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
@@ -1104,7 +1205,7 @@ repeatedly opened in append mode.</div>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="#setOut(org.apache.commons.io.function.IOSupplier)"><code>setOut(IOSupplier)</code></a></li>
+<li><a href="#setOut(org.apache.rat.ReportConfiguration.IODescriptor)"><code>setOut(IODescriptor)</code></a></li>
 </ul>
 </dd>
 </dl>
@@ -1117,10 +1218,24 @@ repeatedly opened in append mode.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;</span>&nbsp;<span class="element-name">getOutput</span>()</div>
 <div class="block">Returns the output stream supplier. If no stream has been set returns a
-supplier for System.out.</div>
+supplier for <code>System.out</code>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>The supplier of the output stream to write the report to.</dd>
+<dd>the supplier of the output stream to write the report to.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getOutputDescriptor()">
+<h3>getOutputDescriptor</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ReportConfiguration.IODescriptor.html" title="class in org.apache.rat">ReportConfiguration.IODescriptor</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;</span>&nbsp;<span class="element-name">getOutputDescriptor</span>()</div>
+<div class="block">Returns the output IODescriptor. If no stream has been set returns a
+descriptor for <code>System.out</code>.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the IODescriptor of the output stream to write the report to.</dd>
 </dl>
 </div>
 </section>
@@ -1133,7 +1248,7 @@ supplier for System.out.</div>
 <div class="block">Gets a PrintWriter that wraps the output stream.</div>
 <dl class="notes">
 <dt>Returns:</dt>
-<dd>A supplier for a PrintWriter that wraps the output stream.</dd>
+<dd>a supplier for a PrintWriter that wraps the output stream.</dd>
 <dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
@@ -1153,7 +1268,7 @@ supplier for System.out.</div>
 of approved licenses.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>license</code> - The license to add to the list of licenses.</dd>
+<dd><code>license</code> - the license to add to the list of licenses.</dd>
 </dl>
 </div>
 </section>
@@ -1167,9 +1282,9 @@ of approved licenses.</div>
 of approved licenses.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>builder</code> - The license builder to build and add to the list of licenses.</dd>
+<dd><code>builder</code> - the license builder to build and add to the list of licenses.</dd>
 <dt>Returns:</dt>
-<dd>The ILicense implementation that was added.</dd>
+<dd>the ILicense implementation that was added.</dd>
 </dl>
 </div>
 </section>
@@ -1183,7 +1298,7 @@ of approved licenses.</div>
 the list of approved licenses.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>licenses</code> - The licenses to add.</dd>
+<dd><code>licenses</code> - the licenses to add.</dd>
 </dl>
 </div>
 </section>
@@ -1197,7 +1312,7 @@ the list of approved licenses.</div>
 list of approved licenses.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>family</code> - The license family to add to the list of license families.</dd>
+<dd><code>family</code> - the license family to add to the list of license families.</dd>
 </dl>
 </div>
 </section>
@@ -1211,7 +1326,7 @@ list of approved licenses.</div>
 list of approved licenses.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>builder</code> - The licenseFamily.Builder to build and add to the list of
+<dd><code>builder</code> - the licenseFamily.Builder to build and add to the list of
 licenses.</dd>
 </dl>
 </div>
@@ -1226,7 +1341,7 @@ licenses.</dd>
 licenses to the list of approved licenses.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>families</code> - The license families to add.</dd>
+<dd><code>families</code> - the license families to add.</dd>
 </dl>
 </div>
 </section>
@@ -1249,7 +1364,7 @@ licenses to the list of approved licenses.</div>
 <h3>addApprovedLicenseCategory</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addApprovedLicenseCategory</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;familyCategory)</span></div>
-<div class="block">Adds a license family category (id) to the list of approved licenses</div>
+<div class="block">Adds a license family category (id) to the list of approved licenses.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>familyCategory</code> - the category to add.</dd>
@@ -1309,7 +1424,7 @@ re-added</em></div>
 been removed from the approved list it cannot be re-added</em></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>filter</code> - The LicenseFilter to filter the categories by.</dd>
+<dd><code>filter</code> - the LicenseFilter to filter the categories by.</dd>
 <dt>Returns:</dt>
 <dd>the Sorted set of approved license categories.</dd>
 </dl>
@@ -1320,12 +1435,12 @@ been removed from the approved list it cannot be re-added</em></div>
 <section class="detail" id="getLicenses(org.apache.rat.license.LicenseSetFactory.LicenseFilter)">
 <h3>getLicenses</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</span>&nbsp;<span class="element-name">getLicenses</span><wbr><span class="parameters">(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.apache.commons.collections4.set.UnmodifiableSortedSet&lt;<a href="license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&gt;</span>&nbsp;<span class="element-name">getLicenses</span><wbr><span class="parameters">(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</span></div>
 <div class="block">Gets the SortedSet of approved license categories. <em>Once a license has
 been removed from the approved list it cannot be re-added</em></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>filter</code> - The LicenseFilter to filter the licenses by.</dd>
+<dd><code>filter</code> - the LicenseFilter to filter the licenses by.</dd>
 <dt>Returns:</dt>
 <dd>the Sorted set of approved license categories.</dd>
 </dl>
@@ -1341,7 +1456,7 @@ been removed from the approved list it cannot be re-added</em></div>
 been removed from the approved list it cannot be re-added</em></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>filter</code> - The LicenseFilter to filter the licenses by.</dd>
+<dd><code>filter</code> - the LicenseFilter to filter the licenses by.</dd>
 <dt>Returns:</dt>
 <dd>the Sorted set of approved license categories.</dd>
 </dl>
@@ -1524,18 +1639,18 @@ headers.</dd>
 <h3>getLicenseFamilies</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/SortedSet.html" title="class or interface in java.util" class="external-link">SortedSet</a>&lt;<a href="license/ILicenseFamily.html" title="interface in org.apache.rat.license">ILicenseFamily</a>&gt;</span>&nbsp;<span class="element-name">getLicenseFamilies</span><wbr><span class="parameters">(<a href="license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</span></div>
-<div class="block">Gets a sorted set of ILicenseFamily objects based on <code>filter</code>. if
-filter is set:
+<div class="block">Gets a sorted set of ILicenseFamily objects based on <code>filter</code>. If
+filter is set to:
 <ul>
 <li><code>all</code> - All licenses families will be returned.</li>
-<li><code>approved</code> - Only approved license families will be returned</li>
-<li><code>none</code> - No license families will be returned</li>
+<li><code>approved</code> - Only approved license families will be returned.</li>
+<li><code>none</code> - No license families will be returned.</li>
 </ul></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>filter</code> - The license filter.</dd>
+<dd><code>filter</code> - the license filter.</dd>
 <dt>Returns:</dt>
-<dd>The set of defined licenses.</dd>
+<dd>the set of defined licenses.</dd>
 </dl>
 </div>
 </section>

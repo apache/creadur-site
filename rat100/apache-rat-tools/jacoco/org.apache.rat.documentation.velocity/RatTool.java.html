@@ -24,11 +24,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import org.apache.commons.cli.Option;
+import org.apache.commons.collections4.set.UnmodifiableSortedSet;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.rat.CLIOption;
 import org.apache.rat.CLIOptionCollection;
@@ -187,13 +187,12 @@ public class RatTool {
      * @return the set of Matchers.
      */
     public Set&lt;Matcher&gt; matchers() {
-<span class="fc" id="L190">        MatcherBuilderTracker tracker = MatcherBuilderTracker.instance();</span>
-<span class="fc" id="L191">        Set&lt;Matcher&gt; documentationSet = new TreeSet&lt;&gt;(Comparator.comparing(Matcher::getName));</span>
-<span class="fc bfc" id="L192" title="All 2 branches covered.">        for (Class&lt;?&gt; clazz : tracker.getClasses()) {</span>
-<span class="fc" id="L193">            Description desc = DescriptionBuilder.buildMap(clazz);</span>
-<span class="fc" id="L194">            documentationSet.add(new Matcher(desc, null));</span>
-<span class="fc" id="L195">        }</span>
-<span class="fc" id="L196">        return documentationSet;</span>
+<span class="fc" id="L190">        Set&lt;Matcher&gt; documentationSet = new TreeSet&lt;&gt;(Comparator.comparing(Matcher::getName));</span>
+<span class="fc bfc" id="L191" title="All 2 branches covered.">        for (Class&lt;?&gt; clazz : MatcherBuilderTracker.instance().getClasses()) {</span>
+<span class="fc" id="L192">            Description desc = DescriptionBuilder.buildMap(clazz);</span>
+<span class="fc" id="L193">            documentationSet.add(new Matcher(desc, null));</span>
+<span class="fc" id="L194">        }</span>
+<span class="fc" id="L195">        return documentationSet;</span>
     }
 
     /**
@@ -201,9 +200,9 @@ public class RatTool {
      * @return the list of standard collections.
      */
     public List&lt;StandardCollection&gt; standardCollections() {
-<span class="fc" id="L204">        return Arrays.stream(org.apache.rat.config.exclusion.StandardCollection.values())</span>
-<span class="fc" id="L205">                .sorted(Comparator.comparing(Enum::name))</span>
-<span class="fc" id="L206">                .collect(Collectors.toList());</span>
+<span class="fc" id="L203">        return Arrays.stream(org.apache.rat.config.exclusion.StandardCollection.values())</span>
+<span class="fc" id="L204">                .sorted(Comparator.comparing(Enum::name))</span>
+<span class="fc" id="L205">                .collect(Collectors.toList());</span>
     }
 
     /**
@@ -211,9 +210,9 @@ public class RatTool {
      * @return the list of stylesheets.
      */
     public List&lt;StyleSheets&gt; styleSheets() {
-<span class="fc" id="L214">        return Arrays.stream(StyleSheets.values())</span>
-<span class="fc" id="L215">                .sorted(Comparator.comparing(StyleSheets::arg))</span>
-<span class="fc" id="L216">                .collect(Collectors.toList());</span>
+<span class="fc" id="L213">        return Arrays.stream(StyleSheets.values())</span>
+<span class="fc" id="L214">                .sorted(Comparator.comparing(StyleSheets::arg))</span>
+<span class="fc" id="L215">                .collect(Collectors.toList());</span>
     }
 
     /**
@@ -222,7 +221,7 @@ public class RatTool {
      * @see org.apache.commons.lang3.StringUtils
      */
     public StringUtils stringUtils() {
-<span class="nc" id="L225">        return new StringUtils();</span>
+<span class="nc" id="L224">        return new StringUtils();</span>
     }
 
     /**
@@ -230,7 +229,7 @@ public class RatTool {
      * @return the tab character.
      */
     public String tab() {
-<span class="nc" id="L233">        return &quot;\t&quot;;</span>
+<span class="nc" id="L232">        return &quot;\t&quot;;</span>
     }
 
     /**
@@ -238,7 +237,7 @@ public class RatTool {
      * @return a string containing two new lines.
      */
     public String doubleLine() {
-<span class="nc" id="L241">        return &quot;\n\n&quot;;</span>
+<span class="nc" id="L240">        return &quot;\n\n&quot;;</span>
     }
 
     /**
@@ -246,11 +245,11 @@ public class RatTool {
      * @return a list of license property descriptions.
      */
     public List&lt;Description&gt; licenseProperties() {
-<span class="fc" id="L249">        SortedSet&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
-<span class="fc" id="L250">        Description licenseDescription = DescriptionBuilder.build(licenses.first());</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">        List&lt;Description&gt; descriptions = new ArrayList&lt;&gt;(licenseDescription.filterChildren(d -&gt; d.getType() == ComponentType.PARAMETER));</span>
-<span class="fc" id="L252">        descriptions.sort(Comparator.comparing(Description::getCommonName));</span>
-<span class="fc" id="L253">        return descriptions;</span>
+<span class="fc" id="L248">        UnmodifiableSortedSet&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
+<span class="fc" id="L249">        Description licenseDescription = DescriptionBuilder.build(licenses.first());</span>
+<span class="fc bfc" id="L250" title="All 2 branches covered.">        List&lt;Description&gt; descriptions = new ArrayList&lt;&gt;(licenseDescription.filterChildren(d -&gt; d.getType() == ComponentType.PARAMETER));</span>
+<span class="fc" id="L251">        descriptions.sort(Comparator.comparing(Description::getCommonName));</span>
+<span class="fc" id="L252">        return descriptions;</span>
     }
 
     /**
@@ -258,8 +257,8 @@ public class RatTool {
      * @return the list of defined licenses.
      */
     public List&lt;License&gt; licenses() {
-<span class="fc" id="L261">        Set&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
-<span class="fc" id="L262">        return licenses.stream().map(License::new).collect(Collectors.toList());</span>
+<span class="fc" id="L260">        UnmodifiableSortedSet&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
+<span class="fc" id="L261">        return licenses.stream().map(License::new).collect(Collectors.toList());</span>
     }
 
     /**
@@ -268,7 +267,7 @@ public class RatTool {
      * @return a string of spaces of the specified length.
      */
     public String pad(final int length) {
-<span class="nc" id="L271">        return AbstractHelp.createPadding(length);</span>
+<span class="nc" id="L270">        return AbstractHelp.createPadding(length);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

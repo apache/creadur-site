@@ -81,24 +81,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.apache.rat.report">
 <h2>Uses of <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a> in <a href="../package-summary.html">org.apache.rat.report</a></h2>
-<div class="caption"><span>Classes in <a href="../package-summary.html">org.apache.rat.report</a> that implement <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Class</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../ConfigurationReport.html" class="type-name-link" title="class in org.apache.rat.report">ConfigurationReport</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">A report that dumps the ReportConfiguration into the XML output.</div>
-</div>
-</div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.apache.rat.report</a> with parameters of type <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IReportable.</span><code><a href="../IReportable.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Reportable.</span><code><a href="../Reportable.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Adds the reportable to the RatReport.</div>
 </div>
@@ -124,38 +113,9 @@ loadScripts(document, 'script');</script>
 <div class="block">The aggregator is used to create a numerical statistic of claims.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../claim/ClaimReporterMultiplexer.html" class="type-name-link" title="class in org.apache.rat.report.claim">ClaimReporterMultiplexer</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Executes a RatReport that multiplexes the running of multiple RatReports</div>
-</div>
-<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../claim/ClaimValidatorReport.html" class="type-name-link" title="class in org.apache.rat.report.claim">ClaimValidatorReport</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">A RatReport that publishes the results of the ClaimValidator.</div>
-</div>
-<div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../claim/LicenseAddingReport.html" class="type-name-link" title="class in org.apache.rat.report.claim">LicenseAddingReport</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">A Report that adds licenses text to files.</div>
-</div>
-<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../claim/SimpleXmlClaimReporter.html" class="type-name-link" title="class in org.apache.rat.report.claim">SimpleXmlClaimReporter</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">A claim reporter to write the XML document.</div>
-</div>
-</div>
-<div class="caption"><span>Constructor parameters in <a href="../claim/package-summary.html">org.apache.rat.report.claim</a> with type arguments of type <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../claim/ClaimReporterMultiplexer.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,boolean,org.apache.rat.document.DocumentAnalyser,java.util.List)" class="member-name-link">ClaimReporterMultiplexer</a><wbr>(<a href="../xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
- boolean&nbsp;dryRun,
- <a href="../../document/DocumentAnalyser.html" title="interface in org.apache.rat.document">DocumentAnalyser</a>&nbsp;analyser,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&gt;&nbsp;reporters)</code></div>
-<div class="col-last even-row-color">
-<div class="block">A multiplexer to run multiple claim reports.</div>
 </div>
 </div>
 </section>
@@ -169,11 +129,51 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../xml/XmlReportFactory.html#createStandardReport(org.apache.rat.report.xml.writer.IXmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">createStandardReport</a><wbr>(<a href="../xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
+<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../xml/XmlReportFactory.html#configuration(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.ReportConfiguration)" class="member-name-link">configuration</a><wbr>(<a href="../xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="../../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a configuration report</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../xml/XmlReportFactory.html#createStandardReport(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">createStandardReport</a><wbr>(<a href="../xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="../claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
+ <a href="../../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a RatReport from the arguments.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../xml/XmlReportFactory.html#multiplexer(org.apache.rat.report.xml.writer.XmlWriter,boolean,org.apache.rat.document.DocumentAnalyser,java.util.List)" class="member-name-link">multiplexer</a><wbr>(<a href="../xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ boolean&nbsp;dryRun,
+ <a href="../../document/DocumentAnalyser.html" title="interface in org.apache.rat.document">DocumentAnalyser</a>&nbsp;analyser,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&gt;&nbsp;reporters)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a RatReport that multiplexes the running of multiple RatReports</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../xml/XmlReportFactory.html#simple(org.apache.rat.report.xml.writer.XmlWriter)" class="member-name-link">simple</a><wbr>(<a href="../xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a simple claim reporter.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../xml/XmlReportFactory.html#validator(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">validator</a><wbr>(<a href="../xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
  <a href="../claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
  <a href="../../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a RatReport from the arguments.</div>
+<div class="block">Creates a simple claim validator reporter</div>
+</div>
+</div>
+<div class="caption"><span>Method parameters in <a href="../xml/package-summary.html">org.apache.rat.report.xml</a> with type arguments of type <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../xml/XmlReportFactory.html#multiplexer(org.apache.rat.report.xml.writer.XmlWriter,boolean,org.apache.rat.document.DocumentAnalyser,java.util.List)" class="member-name-link">multiplexer</a><wbr>(<a href="../xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ boolean&nbsp;dryRun,
+ <a href="../../document/DocumentAnalyser.html" title="interface in org.apache.rat.document">DocumentAnalyser</a>&nbsp;analyser,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&gt;&nbsp;reporters)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a RatReport that multiplexes the running of multiple RatReports</div>
 </div>
 </div>
 </section>
@@ -208,7 +208,7 @@ ignoring any files/directories set to be ignored.</div>
 <div class="col-second odd-row-color"><span class="type-name-label">FileListWalker.</span><code><a href="../../walker/FileListWalker.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IReportableListWalker.</span><code><a href="../../walker/IReportableListWalker.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReportableListWalker.</span><code><a href="../../walker/ReportableListWalker.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>

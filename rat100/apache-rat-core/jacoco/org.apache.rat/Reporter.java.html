@@ -18,34 +18,32 @@
  */
 package org.apache.rat;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
+import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.io.function.IOSupplier;
 import org.apache.rat.api.RatException;
+import org.apache.rat.document.DocumentName;
 import org.apache.rat.license.LicenseSetFactory.LicenseFilter;
 import org.apache.rat.report.RatReport;
 import org.apache.rat.report.claim.ClaimStatistic;
 import org.apache.rat.report.xml.XmlReportFactory;
-import org.apache.rat.report.xml.writer.IXmlWriter;
 import org.apache.rat.report.xml.writer.XmlWriter;
+import org.apache.rat.utils.StandardXmlFactory;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  * Class that executes the report as defined in a {@link ReportConfiguration} and stores
@@ -53,144 +51,264 @@ import org.w3c.dom.Document;
  */
 public class Reporter {
 
-    /**  Format used for listing licenses. */
+    /**
+     * Format used for listing licenses.
+     */
     private static final String LICENSE_FORMAT = &quot;%s:\t%s%n\t\t%s%n&quot;;
 
-    /** The XML output document */
-    private Document document;
-
-    /** Statistics generated as the report was built */
-    private ClaimStatistic statistic;
-
-    /** The configuration for the report */
+    /**
+     * The configuration for the report.
+     */
     private final ReportConfiguration configuration;
+
+    /**
+     * The output from the execution.
+     */
+    private Output output;
 
     /**
      * Create the reporter.
      *
      * @param configuration the configuration to use.
      */
-<span class="fc" id="L73">    public Reporter(final ReportConfiguration configuration) {</span>
-<span class="fc" id="L74">        this.configuration = configuration;</span>
-<span class="fc" id="L75">    }</span>
+<span class="fc" id="L74">    public Reporter(final ReportConfiguration configuration) {</span>
+<span class="fc" id="L75">        this.configuration = configuration;</span>
+<span class="fc" id="L76">    }</span>
 
     /**
      * Executes the report and builds the output.
-     * This method will build the internal XML document if it does not already exist.
-     * If this method or either of the {@link #output()} methods have already been called this method will return
-     * the previous results.
-     * @return the claim statistics.
+     *
+     * @return the Output object.
      * @throws RatException on error.
      */
-    public ClaimStatistic execute() throws RatException  {
-<span class="pc bpc" id="L86" title="3 of 4 branches missed.">        if (document == null || statistic == null) {</span>
-            try {
-<span class="pc bpc" id="L88" title="1 of 2 branches missed.">                if (configuration.hasSource()) {</span>
-<span class="fc" id="L89">                    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();</span>
-<span class="fc" id="L90">                    Writer outputWriter = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8);</span>
-<span class="fc" id="L91">                    try (IXmlWriter writer = new XmlWriter(outputWriter)) {</span>
-<span class="fc" id="L92">                        statistic = new ClaimStatistic();</span>
-<span class="fc" id="L93">                        RatReport report = XmlReportFactory.createStandardReport(writer, statistic, configuration);</span>
-<span class="fc" id="L94">                        report.startReport();</span>
-<span class="fc" id="L95">                        configuration.getSources().build().run(report);</span>
-<span class="fc" id="L96">                        report.endReport();</span>
-                    }
-<span class="fc" id="L98">                    InputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());</span>
-<span class="fc" id="L99">                    document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputStream);</span>
-<span class="fc" id="L100">                } else {</span>
-<span class="nc" id="L101">                    document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();</span>
-<span class="nc" id="L102">                    statistic = new ClaimStatistic();</span>
+    public Output execute() throws RatException {
+        try {
+<span class="fc" id="L86">            Output.Builder builder = Output.builder().configuration(configuration);</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">            if (configuration.hasSource()) {</span>
+<span class="fc" id="L88">                StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L89">                try (XmlWriter writer = new XmlWriter(sb)) {</span>
+<span class="fc" id="L90">                    writer.startDocument();</span>
+<span class="fc" id="L91">                    ClaimStatistic statistic = new ClaimStatistic();</span>
+<span class="fc" id="L92">                    builder.statistic(statistic);</span>
+<span class="fc" id="L93">                    RatReport report = XmlReportFactory.createStandardReport(writer, statistic, configuration);</span>
+<span class="fc" id="L94">                    report.startReport();</span>
+<span class="fc" id="L95">                    configuration.getSources().build().run(report);</span>
+<span class="fc" id="L96">                    report.endReport();</span>
+<span class="fc" id="L97">                    InputSource inputSource = new InputSource(new StringReader(sb.toString()));</span>
+<span class="fc" id="L98">                    builder.document(StandardXmlFactory.documentBuilder().parse(inputSource));</span>
                 }
-<span class="fc" id="L104">            }  catch (Exception e) {</span>
-<span class="fc" id="L105">                throw RatException.makeRatException(e);</span>
-<span class="fc" id="L106">            }</span>
+<span class="fc" id="L100">            } else {</span>
+<span class="fc" id="L101">                builder.document = StandardXmlFactory.documentBuilder().newDocument();</span>
+<span class="fc" id="L102">                builder.statistic(new ClaimStatistic());</span>
+            }
+<span class="fc" id="L104">            this.output = builder.build();</span>
+<span class="fc" id="L105">            return output;</span>
+<span class="fc" id="L106">        } catch (Exception e) {</span>
+<span class="fc" id="L107">            throw RatException.makeRatException(e);</span>
         }
-<span class="fc" id="L108">        return statistic;</span>
     }
 
     /**
-     * Get the claim statistics from the run.
+     * Gets the output from the last {@link #execute} call or {@code null} if {@link #execute} has not been called.
      *
-     * @return the claim statistics.
+     * @return the output
      */
-    public ClaimStatistic getClaimsStatistic() {
-<span class="fc" id="L117">        return statistic;</span>
+    public Output getOutput() {
+<span class="fc" id="L117">        return output;</span>
     }
 
     /**
-     * Outputs the report using the stylesheet and output specified in the configuration.
-     * @return the Claim statistic from the run.
-     * @throws RatException on error.
+     * The output from a report run.
      */
-    public ClaimStatistic output() throws RatException {
-<span class="fc" id="L126">        return output(configuration.getStyleSheet(), configuration.getOutput());</span>
-    }
+    public static final class Output {
+        /**
+         * The XML output document.
+         */
+        private final Document document;
+        /**
+         * The claim statics from the execution that generated the document.
+         * May be empty if the Document was read from disk.
+         */
+        private final ClaimStatistic statistic;
+        /**
+         * The configuration that generated the document.
+         */
+        private final ReportConfiguration configuration;
 
-    /**
-     * Outputs the report to the specified output using the stylesheet. It is safe to call this method more than once
-     * in order to generate multiple reports from the same run.
-     *
-     * @param stylesheet the style sheet to use for XSLT formatting.
-     * @param output the output stream to write to.
-     * @return the Claim statistic for the run.
-     * @throws RatException on error.
-     */
-    public ClaimStatistic output(final IOSupplier&lt;InputStream&gt; stylesheet, final IOSupplier&lt;OutputStream&gt; output) throws RatException {
-<span class="fc" id="L139">        ClaimStatistic result = execute();</span>
-<span class="fc" id="L140">        TransformerFactory tf = TransformerFactory.newInstance();</span>
-        Transformer transformer;
-<span class="fc" id="L142">        try (OutputStream out = output.get();</span>
-<span class="fc" id="L143">             InputStream styleIn = stylesheet.get()) {</span>
-<span class="fc" id="L144">            transformer = tf.newTransformer(new StreamSource(styleIn));</span>
-<span class="fc" id="L145">            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, &quot;yes&quot;);</span>
-<span class="fc" id="L146">            transformer.setOutputProperty(OutputKeys.METHOD, &quot;xml&quot;);</span>
-<span class="fc" id="L147">            transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
-<span class="fc" id="L148">            transformer.setOutputProperty(OutputKeys.ENCODING, &quot;UTF-8&quot;);</span>
-<span class="fc" id="L149">            transformer.setOutputProperty(&quot;{http://xml.apache.org/xslt}indent-amount&quot;, &quot;4&quot;);</span>
-<span class="fc" id="L150">            transformer.transform(new DOMSource(document),</span>
-                    new StreamResult(new OutputStreamWriter(out, StandardCharsets.UTF_8)));
-<span class="fc" id="L152">            return result;</span>
-<span class="nc" id="L153">        } catch (TransformerException | IOException e) {</span>
-<span class="nc" id="L154">            throw new RatException(e);</span>
+        /**
+         * Create an output with statistics.
+         *
+         * @param builder the Builder
+         */
+<span class="fc" id="L143">        private Output(final Builder builder) {</span>
+<span class="fc" id="L144">            this.document = builder.document;</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">            this.statistic = builder.statistic == null ? new ClaimStatistic() : builder.statistic;</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            this.configuration = builder.configuration == null ? new ReportConfiguration() : builder.configuration;</span>
+<span class="fc" id="L147">        }</span>
+
+        public static Builder builder() {
+<span class="fc" id="L150">            return new Builder();</span>
         }
-    }
 
-    /**
-     * Lists the licenses on the configured output stream.
-     * @param configuration The configuration for the system
-     * @param filter the license filter that specifies which licenses to output.
-     * @throws IOException if PrintWriter can not be retrieved from configuration.
-     */
-    public static void listLicenses(final ReportConfiguration configuration, final LicenseFilter filter) throws IOException {
-<span class="nc" id="L165">        try (PrintWriter pw = configuration.getWriter().get()) {</span>
-<span class="nc" id="L166">            pw.format(&quot;Licenses (%s):%n&quot;, filter);</span>
-<span class="nc" id="L167">            configuration.getLicenses(filter)</span>
-<span class="nc" id="L168">                    .forEach(lic -&gt; pw.format(LICENSE_FORMAT, lic.getLicenseFamily().getFamilyCategory(),</span>
-<span class="nc" id="L169">                            lic.getLicenseFamily().getFamilyName(), lic.getNote()));</span>
-<span class="nc" id="L170">            pw.println();</span>
+        /**
+         * Gets the document that was generated during execution.
+         *
+         * @return the document that was generated during execution.
+         */
+        public Document getDocument() {
+<span class="fc" id="L159">            return document;</span>
         }
-<span class="nc" id="L172">    }</span>
 
-    /**
-     * Writes a text summary of issues with the run.
-     * @param appendable the appendable to write to.
-     * @throws IOException on error.
-     */
-    public void writeSummary(final Appendable appendable) throws IOException {
-<span class="fc" id="L180">        appendable.append(&quot;RAT summary:&quot;).append(System.lineSeparator());</span>
-<span class="fc bfc" id="L181" title="All 2 branches covered.">        for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
-<span class="fc" id="L182">            appendable.append(&quot;  &quot;).append(counter.displayName()).append(&quot;:  &quot;)</span>
-<span class="fc" id="L183">                    .append(Integer.toString(getClaimsStatistic().getCounter(counter)))</span>
-<span class="fc" id="L184">                    .append(System.lineSeparator());</span>
+        /**
+         * Get the claim statistics from the run.
+         *
+         * @return the claim statistics.
+         */
+        public ClaimStatistic getStatistic() {
+<span class="fc" id="L168">            return statistic;</span>
         }
-<span class="fc" id="L186">    }</span>
 
-    /**
-     * Gets the document that was generated during execution.
-     * @return the document that was generated during execution.
-     */
-    public Document getDocument() {
-<span class="fc" id="L193">        return document;</span>
+        public ReportConfiguration getConfiguration() {
+<span class="fc" id="L172">            return configuration;</span>
+        }
+
+        /**
+         * Formats the report to the output and using the stylesheet found in the report configuration.
+         *
+         * @param config the RAT report configuration.
+         * @throws RatException on error.
+         */
+        public void format(final ReportConfiguration config) throws RatException {
+<span class="fc" id="L182">            format(config.getStyleSheet(), config.getOutput());</span>
+<span class="fc" id="L183">        }</span>
+
+        /**
+         * Formats the report to the specified output using the stylesheet. It is safe to call this method more than once
+         * in order to generate multiple reports from the same run.
+         *
+         * @param stylesheet the style sheet to use for XSLT formatting.
+         * @param output the output stream to write to.
+         * @throws RatException on error.
+         */
+        public void format(final IOSupplier&lt;InputStream&gt; stylesheet, final IOSupplier&lt;OutputStream&gt; output) throws RatException {
+<span class="fc" id="L194">            try (OutputStream out = output.get();</span>
+<span class="fc" id="L195">                 InputStream styleIn = stylesheet.get()) {</span>
+<span class="fc" id="L196">                StandardXmlFactory.createTransformer(styleIn).transform(new DOMSource(document),</span>
+                        new StreamResult(new OutputStreamWriter(out, StandardCharsets.UTF_8)));
+<span class="fc" id="L198">            } catch (TransformerException | IOException e) {</span>
+<span class="fc" id="L199">                throw new RatException(e);</span>
+<span class="fc" id="L200">            }</span>
+<span class="fc" id="L201">        }</span>
+
+        /**
+         * Lists the licenses on the print writer.
+         *
+         * @param printWriter the print writer to write to.
+         * @param filter the license filter that specifies which licenses to output.
+         */
+        public void listLicenses(final PrintWriter printWriter, final LicenseFilter filter) {
+<span class="fc" id="L210">            printWriter.format(&quot;Licenses (%s):%n&quot;, filter);</span>
+<span class="fc" id="L211">            configuration.getLicenses(filter)</span>
+<span class="fc" id="L212">                    .forEach(lic -&gt; printWriter.format(LICENSE_FORMAT, lic.getLicenseFamily().getFamilyCategory(),</span>
+<span class="fc" id="L213">                            lic.getLicenseFamily().getFamilyName(), lic.getNote()));</span>
+<span class="fc" id="L214">            printWriter.println();</span>
+<span class="fc" id="L215">        }</span>
+
+        /**
+         * Lists the licenses on the output specified in the configuration.
+         *
+         * @param filter the license filter that specifies which licenses to output.
+         * @throws IOException if PrintWriter can not be retrieved from configuration.
+         */
+        public void listLicenses(final LicenseFilter filter) throws IOException {
+<span class="fc" id="L224">            try (PrintWriter pw = configuration.getWriter().get()) {</span>
+<span class="fc" id="L225">                listLicenses(pw, filter);</span>
+            }
+<span class="fc" id="L227">        }</span>
+
+        /**
+         * Writes a text summary of issues with the run.
+         *
+         * @param appendable the appendable to write to.
+         * @throws IOException on error.
+         */
+        public void writeSummary(final Appendable appendable) throws IOException {
+<span class="fc" id="L236">            appendable.append(&quot;RAT summary:&quot;).append(System.lineSeparator());</span>
+<span class="fc bfc" id="L237" title="All 2 branches covered.">            for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
+<span class="fc" id="L238">                appendable.append(&quot;  &quot;).append(counter.displayName()).append(&quot;:  &quot;)</span>
+<span class="fc" id="L239">                        .append(Integer.toString(statistic.getCounter(counter)))</span>
+<span class="fc" id="L240">                        .append(System.lineSeparator());</span>
+            }
+<span class="fc" id="L242">        }</span>
+
+<span class="fc" id="L244">        public static final class Builder {</span>
+            /**
+             * The document that was generated.
+             */
+            private Document document;
+            /**
+             * The claim statistic from the execution that generated the document.
+             * May be empty if the Document was read from disk.
+             */
+            private ClaimStatistic statistic;
+            /**
+             * The configuration that generated the document
+             */
+            private ReportConfiguration configuration;
+
+            public Builder document(final Document document) {
+<span class="fc" id="L260">                this.document = document;</span>
+<span class="fc" id="L261">                return this;</span>
+            }
+
+            public Builder document(final String fileName, final DocumentName workingDirectory) {
+<span class="fc" id="L265">                File inputFile = workingDirectory.resolve(fileName).asFile();</span>
+<span class="fc" id="L266">                try (InputStream inputStream = new FileInputStream(inputFile)) {</span>
+<span class="fc" id="L267">                    this.document = StandardXmlFactory.documentBuilder().parse(inputStream);</span>
+<span class="fc" id="L268">                } catch (SAXException | IOException e) {</span>
+<span class="fc" id="L269">                    throw new ConfigurationException(&quot;Unable to read file: &quot; + inputFile, e);</span>
+<span class="fc" id="L270">                }</span>
+<span class="fc" id="L271">                return this;</span>
+            }
+
+            public Output build() {
+<span class="fc" id="L275">                return new Output(this);</span>
+            }
+
+            public Builder statistic(final ClaimStatistic statistic) {
+<span class="fc" id="L279">                this.statistic = statistic;</span>
+<span class="fc" id="L280">                return this;</span>
+            }
+
+            public Builder statistic(final String fileName, final DocumentName workingDirectory) {
+<span class="fc" id="L284">                File sourceFile = workingDirectory.resolve(fileName).asFile();</span>
+                try {
+<span class="fc" id="L286">                    ClaimStatistic newStatistic = new ClaimStatistic();</span>
+<span class="fc" id="L287">                    newStatistic.serDes().deserialize(() -&gt; new FileInputStream(sourceFile));</span>
+<span class="fc" id="L288">                    this.statistic = newStatistic;</span>
+<span class="fc" id="L289">                    return this;</span>
+<span class="fc" id="L290">                } catch (IOException e) {</span>
+<span class="fc" id="L291">                    throw new ConfigurationException(&quot;Unable to read file: &quot; + sourceFile, e);</span>
+                }
+            }
+
+            public Builder configuration(final ReportConfiguration configuration) {
+<span class="fc" id="L296">                this.configuration = configuration;</span>
+<span class="fc" id="L297">                return this;</span>
+            }
+
+            public Builder configuration(final String fileName, final DocumentName workingDirectory) {
+<span class="fc" id="L301">                File configurationFile = workingDirectory.resolve(fileName).asFile();</span>
+                try {
+<span class="fc" id="L303">                    ReportConfiguration config = new ReportConfiguration();</span>
+<span class="fc" id="L304">                    config.serDes().deserialize(() -&gt; new FileInputStream(configurationFile), workingDirectory);</span>
+<span class="fc" id="L305">                    this.configuration = config;</span>
+<span class="fc" id="L306">                    return this;</span>
+<span class="fc" id="L307">                } catch (IOException e) {</span>
+<span class="fc" id="L308">                    throw new ConfigurationException(&quot;Unable to read file: &quot; + configurationFile, e);</span>
+                }
+            }
+        }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

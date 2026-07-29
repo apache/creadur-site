@@ -308,7 +308,7 @@ public abstract class AbstractLicenseAppender {
                 // for Java just place the license at the front, for XML add
                 // an XML decl first - don't know how to handle PHP
 <span class="pc bpc" id="L310" title="1 of 4 branches missed.">                if (expectsPackage || expectsXMLDecl) {</span>
-<span class="fc" id="L311">                    try (FileWriter writer2  = new FileWriter(newDocument)) {</span>
+<span class="fc" id="L311">                    try (FileWriter writer2  = new FileWriter(newDocument, StandardCharsets.UTF_8)) {</span>
 <span class="fc bfc" id="L312" title="All 2 branches covered.">                        if (expectsXMLDecl) {</span>
 <span class="fc" id="L313">                            writer2.write(&quot;&lt;?xml version='1.0'?&gt;&quot;);</span>
 <span class="fc" id="L314">                            writer2.write(LINE_SEP);</span>
@@ -587,4 +587,4 @@ public abstract class AbstractLicenseAppender {
 <span class="pc bpc" id="L587" title="1 of 2 branches missed.">        return l == null ? &quot;&quot; : l;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

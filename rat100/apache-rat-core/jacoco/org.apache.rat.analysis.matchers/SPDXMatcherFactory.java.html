@@ -40,20 +40,30 @@ import org.apache.rat.config.parameters.ConfigComponent;
  * SPDX identifiers are specified by the Software Package Data Exchange(R) also
  * known as SPDX(R) project from the Linux foundation.
  * &lt;/p&gt;
+ * &lt;p&gt;
+ * Each factory instance maintains its own matcher map and per-document match
+ * state ({@code lastMatch}, {@code checked}). In multi-threaded environments
+ * (e.g. parallel Maven builds), use {@link #newInstance()} or a
+ * {@code ThreadLocal&lt;SPDXMatcherFactory&gt;} to obtain a per-thread factory
+ * instead of the shared {@link #INSTANCE}.
+ * &lt;/p&gt;
  *
  * @see &lt;a href=&quot;https://spdx.dev/ids/&quot;&gt;List of Ids at spdx.dev&lt;/a&gt;
  */
 public final class SPDXMatcherFactory {
 
     /**
-     * The collection of all matchers produced by this factory.
+     * The collection of all matchers produced by this factory instance.
      */
-<span class="fc" id="L51">    private static final Map&lt;String, SPDXMatcherFactory.Match&gt; MATCHER_MAP = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L58">    private final Map&lt;String, SPDXMatcherFactory.Match&gt; matcherMap = new HashMap&lt;&gt;();</span>
 
     /**
-     * The instance of this factory.
+     * The shared instance of this factory.
+     * @deprecated Not thread-safe. Use {@link #newInstance()} to create
+     * per-thread instances instead. Will be removed in 1.0.0.
      */
-<span class="fc" id="L56">    public static final SPDXMatcherFactory INSTANCE = new SPDXMatcherFactory();</span>
+    @Deprecated
+<span class="fc" id="L66">    public static final SPDXMatcherFactory INSTANCE = new SPDXMatcherFactory();</span>
 
     /**
      * The text for the group selector.
@@ -64,7 +74,7 @@ public final class SPDXMatcherFactory {
      * The regular expression to locate the SPDX license identifier in the text
      * stream.
      */
-<span class="fc" id="L67">    private static final Pattern GROUP_SELECTOR = Pattern.compile(&quot;.*&quot; + LICENSE_IDENTIFIER + &quot;\\s([A-Za-z0-9\\.\\-]+)&quot;);</span>
+<span class="fc" id="L77">    private static final Pattern GROUP_SELECTOR = Pattern.compile(&quot;.*&quot; + LICENSE_IDENTIFIER + &quot;\\s([A-Za-z0-9\\.\\-]+)&quot;);</span>
 
     /**
      * The set of SPDX Ids that matched the last text.
@@ -77,19 +87,32 @@ public final class SPDXMatcherFactory {
     private boolean checked;
 
     /**
-     * Constructor.
+     * Constructor. Creates a new factory with its own matcher map and match state.
      */
-<span class="fc" id="L82">    private SPDXMatcherFactory() {</span>
-<span class="fc" id="L83">        lastMatch = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L84">    }</span>
+<span class="fc" id="L92">    private SPDXMatcherFactory() {</span>
+<span class="fc" id="L93">        lastMatch = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Creates a new SPDXMatcherFactory instance.
+     * &lt;p&gt;
+     * Use this method to obtain a per-thread factory for multi-threaded
+     * environments instead of the shared {@link #INSTANCE}.
+     * &lt;/p&gt;
+     *
+     * @return a new SPDXMatcherFactory instance.
+     */
+    public static SPDXMatcherFactory newInstance() {
+<span class="fc" id="L106">        return new SPDXMatcherFactory();</span>
+    }
 
     /**
      * Reset the matching for the next document.
      */
     private void reset() {
-<span class="fc" id="L90">        lastMatch.clear();</span>
-<span class="fc" id="L91">        checked = false;</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L113">        lastMatch.clear();</span>
+<span class="fc" id="L114">        checked = false;</span>
+<span class="fc" id="L115">    }</span>
 
     /**
      * Creates the SPDX matcher.
@@ -98,15 +121,10 @@ public final class SPDXMatcherFactory {
      * @return a SPDX matcher.
      */
     public Match create(final String spdxId) {
-<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (StringUtils.isBlank(spdxId)) {</span>
-<span class="nc" id="L102">            throw new ConfigurationException(&quot;'SPDX' type matcher requires a name&quot;);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (StringUtils.isBlank(spdxId)) {</span>
+<span class="nc" id="L125">            throw new ConfigurationException(&quot;'SPDX' type matcher requires a name&quot;);</span>
         }
-<span class="fc" id="L104">        Match matcher = MATCHER_MAP.get(spdxId);</span>
-<span class="fc bfc" id="L105" title="All 2 branches covered.">        if (matcher == null) {</span>
-<span class="fc" id="L106">            matcher = new Match(spdxId);</span>
-<span class="fc" id="L107">            MATCHER_MAP.put(spdxId, matcher);</span>
-        }
-<span class="fc" id="L109">        return matcher;</span>
+<span class="fc" id="L127">        return matcherMap.computeIfAbsent(spdxId, Match::new);</span>
     }
 
     /**
@@ -121,17 +139,17 @@ public final class SPDXMatcherFactory {
         If the documentText has not been seen yet see if we can extract the SPDX id from the documentText.
         If so then see for each match extract and add the name to lastMatch.
         */
-<span class="fc bfc" id="L124" title="All 2 branches covered.">        if (!checked) {</span>
-<span class="fc" id="L125">            checked = true;</span>
-<span class="fc bfc" id="L126" title="All 2 branches covered.">            if (documentText.contains(LICENSE_IDENTIFIER)) {</span>
-<span class="fc" id="L127">                Matcher matcher = GROUP_SELECTOR.matcher(documentText);</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">                while (matcher.find()) {</span>
-<span class="fc" id="L129">                    lastMatch.add(matcher.group(1));</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (!checked) {</span>
+<span class="fc" id="L143">            checked = true;</span>
+<span class="fc bfc" id="L144" title="All 2 branches covered.">            if (documentText.contains(LICENSE_IDENTIFIER)) {</span>
+<span class="fc" id="L145">                Matcher matcher = GROUP_SELECTOR.matcher(documentText);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">                while (matcher.find()) {</span>
+<span class="fc" id="L147">                    lastMatch.add(matcher.group(1));</span>
                 }
             }
         }
         // see if the caller is in the lastMatch.
-<span class="fc" id="L134">        return lastMatch.contains(caller.spdxId);</span>
+<span class="fc" id="L152">        return lastMatch.contains(caller.spdxId);</span>
     }
 
     /**
@@ -153,7 +171,7 @@ public final class SPDXMatcherFactory {
          * @return name of this matcher, that equals the SPDX identifier.
          */
         public String getName() {
-<span class="fc" id="L156">            return spdxId;</span>
+<span class="fc" id="L174">            return spdxId;</span>
         }
 
         /**
@@ -162,22 +180,22 @@ public final class SPDXMatcherFactory {
          * @param spdxId A regular expression that matches the @{short-name} of the SPDX
          * Identifier.
          */
-<span class="fc" id="L165">        Match(final String spdxId) {</span>
-<span class="fc" id="L166">            super(&quot;SPDX:&quot; + spdxId);</span>
-<span class="fc" id="L167">            Objects.requireNonNull(spdxId, &quot;SpdxId is required&quot;);</span>
-<span class="fc" id="L168">            this.spdxId = spdxId;</span>
-<span class="fc" id="L169">        }</span>
+<span class="fc" id="L183">        Match(final String spdxId) {</span>
+<span class="fc" id="L184">            super(&quot;SPDX:&quot; + spdxId);</span>
+<span class="fc" id="L185">            Objects.requireNonNull(spdxId, &quot;SpdxId is required&quot;);</span>
+<span class="fc" id="L186">            this.spdxId = spdxId;</span>
+<span class="fc" id="L187">        }</span>
 
         @Override
         public boolean matches(final IHeaders headers) {
-<span class="fc" id="L173">            return SPDXMatcherFactory.this.check(headers.raw(), this);</span>
+<span class="fc" id="L191">            return SPDXMatcherFactory.this.check(headers.raw(), this);</span>
         }
 
         @Override
         public void reset() {
-<span class="fc" id="L178">            super.reset();</span>
-<span class="fc" id="L179">            SPDXMatcherFactory.this.reset();</span>
-<span class="fc" id="L180">        }</span>
+<span class="fc" id="L196">            super.reset();</span>
+<span class="fc" id="L197">            SPDXMatcherFactory.this.reset();</span>
+<span class="fc" id="L198">        }</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

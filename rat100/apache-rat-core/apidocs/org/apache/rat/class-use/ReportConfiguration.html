@@ -79,14 +79,6 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Classes to output help and help like information.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.apache.rat.report">org.apache.rat.report</a></div>
-<div class="col-last odd-row-color">
-<div class="block">Classes that generate the RAT report.</div>
-</div>
-<div class="col-first even-row-color"><a href="#org.apache.rat.report.claim">org.apache.rat.report.claim</a></div>
-<div class="col-last even-row-color">
-<div class="block">Classes that manage claims (metrics) about files and categories of files.</div>
-</div>
 <div class="col-first odd-row-color"><a href="#org.apache.rat.report.xml">org.apache.rat.report.xml</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Classes that write the XML output.</div>
@@ -107,19 +99,22 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Create the report configuration.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
+<div class="col-first odd-row-color"><code><a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Reporter.Output.</span><code><a href="../Reporter.Output.html#getConfiguration()" class="member-name-link">getConfiguration</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Parses the standard options to create a ReportConfiguration.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer,boolean)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
+<div class="col-first odd-row-color"><code>static <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#parseCommands(java.io.File,java.lang.String%5B%5D,java.util.function.Consumer,boolean)" class="member-name-link">parseCommands</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;workingDirectory,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd,
  boolean&nbsp;noArgs)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Parses the standard options to create a ReportConfiguration.</div>
 </div>
 </div>
@@ -128,18 +123,20 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a></code></div>
+<div class="col-first even-row-color"><code><a href="../Reporter.Output.Builder.html" title="class in org.apache.rat">Reporter.Output.Builder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Reporter.Output.Builder.</span><code><a href="../Reporter.Output.Builder.html#configuration(org.apache.rat.ReportConfiguration)" class="member-name-link">configuration</a><wbr>(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Reporter.Output.</span><code><a href="../Reporter.Output.html#format(org.apache.rat.ReportConfiguration)" class="member-name-link">format</a><wbr>(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Formats the report to the output and using the stylesheet found in the report configuration.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../report/Reportable.html" title="interface in org.apache.rat.report">Reportable</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">OptionCollection.</span><code><a href="../OptionCollection.html#getReportable(java.io.File,org.apache.rat.ReportConfiguration)" class="member-name-link">getReportable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;base,
  <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates an IReportable object from the directory name and ReportConfiguration
+<div class="block">Creates a Reportable object from the directory name and ReportConfiguration
 object.</div>
-</div>
-<div class="col-first odd-row-color"><code>static void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Reporter.</span><code><a href="../Reporter.html#listLicenses(org.apache.rat.ReportConfiguration,org.apache.rat.license.LicenseSetFactory.LicenseFilter)" class="member-name-link">listLicenses</a><wbr>(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration,
- <a href="../license/LicenseSetFactory.LicenseFilter.html" title="enum class in org.apache.rat.license">LicenseSetFactory.LicenseFilter</a>&nbsp;filter)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Lists the licenses on the configured output stream.</div>
 </div>
 </div>
 <div class="caption"><span>Constructors in <a href="../package-summary.html">org.apache.rat</a> with parameters of type <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span></div>
@@ -234,41 +231,6 @@ object.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="org.apache.rat.report">
-<h2>Uses of <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a> in <a href="../report/package-summary.html">org.apache.rat.report</a></h2>
-<div class="caption"><span>Constructors in <a href="../report/package-summary.html">org.apache.rat.report</a> with parameters of type <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../report/ConfigurationReport.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,org.apache.rat.ReportConfiguration)" class="member-name-link">ConfigurationReport</a><wbr>(<a href="../report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
- <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Constructor.</div>
-</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="org.apache.rat.report.claim">
-<h2>Uses of <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a> in <a href="../report/claim/package-summary.html">org.apache.rat.report.claim</a></h2>
-<div class="caption"><span>Constructors in <a href="../report/claim/package-summary.html">org.apache.rat.report.claim</a> with parameters of type <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier</div>
-<div class="table-header col-second">Constructor</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../report/claim/ClaimValidatorReport.html#%3Cinit%3E(org.apache.rat.report.xml.writer.IXmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">ClaimValidatorReport</a><wbr>(<a href="../report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
- <a href="../report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
- <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Constructor.</div>
-</div>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="org.apache.rat.report.xml">
 <h2>Uses of <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a> in <a href="../report/xml/package-summary.html">org.apache.rat.report.xml</a></h2>
 <div class="caption"><span>Methods in <a href="../report/xml/package-summary.html">org.apache.rat.report.xml</a> with parameters of type <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></span></div>
@@ -277,11 +239,24 @@ object.</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../report/xml/XmlReportFactory.html#createStandardReport(org.apache.rat.report.xml.writer.IXmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">createStandardReport</a><wbr>(<a href="../report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer,
+<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../report/xml/XmlReportFactory.html#configuration(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.ReportConfiguration)" class="member-name-link">configuration</a><wbr>(<a href="../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a configuration report</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../report/xml/XmlReportFactory.html#createStandardReport(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">createStandardReport</a><wbr>(<a href="../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="../report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
+ <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a RatReport from the arguments.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlReportFactory.</span><code><a href="../report/xml/XmlReportFactory.html#validator(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.ReportConfiguration)" class="member-name-link">validator</a><wbr>(<a href="../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
  <a href="../report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
  <a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;configuration)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a RatReport from the arguments.</div>
+<div class="block">Creates a simple claim validator reporter</div>
 </div>
 </div>
 </section>

@@ -98,21 +98,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../../report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
+<div class="col-first even-row-color"><code><a href="../../Reporter.Output.html" title="class in org.apache.rat">Reporter.Output</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Reporter.</span><code><a href="../../Reporter.html#execute()" class="member-name-link">execute</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Executes the report and builds the output.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../../report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Reporter.</span><code><a href="../../Reporter.html#output()" class="member-name-link">output</a>()</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Outputs the report using the stylesheet and output specified in the configuration.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="../../report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Reporter.</span><code><a href="../../Reporter.html#output(org.apache.commons.io.function.IOSupplier,org.apache.commons.io.function.IOSupplier)" class="member-name-link">output</a><wbr>(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;stylesheet,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Reporter.Output.</span><code><a href="../../Reporter.Output.html#format(org.apache.commons.io.function.IOSupplier,org.apache.commons.io.function.IOSupplier)" class="member-name-link">format</a><wbr>(org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&gt;&nbsp;stylesheet,
  org.apache.commons.io.function.IOSupplier&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&gt;&nbsp;output)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Formats the report to the specified output using the stylesheet.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Reporter.Output.</span><code><a href="../../Reporter.Output.html#format(org.apache.rat.ReportConfiguration)" class="member-name-link">format</a><wbr>(<a href="../../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Outputs the report to the specified output using the stylesheet.</div>
+<div class="block">Formats the report to the output and using the stylesheet found in the report configuration.</div>
 </div>
 </div>
 </section>
@@ -147,9 +147,9 @@ loadScripts(document, 'script');</script>
 <div class="block">Writes the configuration to the specified writer.</div>
 </div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XMLConfigurationWriter.</span><code><a href="../../configuration/XMLConfigurationWriter.html#write(org.apache.rat.report.xml.writer.IXmlWriter)" class="member-name-link">write</a><wbr>(<a href="../../report/xml/writer/IXmlWriter.html" title="interface in org.apache.rat.report.xml.writer">IXmlWriter</a>&nbsp;writer)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XMLConfigurationWriter.</span><code><a href="../../configuration/XMLConfigurationWriter.html#write(org.apache.rat.report.xml.writer.XmlWriter)" class="member-name-link">write</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Writes the configuration to an IXmlWriter instance.</div>
+<div class="block">Writes the configuration to an XmlWriter instance.</div>
 </div>
 </div>
 </section>
@@ -173,16 +173,13 @@ loadScripts(document, 'script');</script>
 <div class="block">Performs the actual reporting on the given document.</div>
 </div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IReportable.</span><code><a href="../../report/IReportable.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../../report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Reportable.</span><code><a href="../../report/Reportable.html#run(org.apache.rat.report.RatReport)" class="member-name-link">run</a><wbr>(<a href="../../report/RatReport.html" title="interface in org.apache.rat.report">RatReport</a>&nbsp;report)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Adds the reportable to the RatReport.</div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ConfigurationReport.</span><code><a href="../../report/ConfigurationReport.html#startReport()" class="member-name-link">startReport</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>default void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RatReport.</span><code><a href="../../report/RatReport.html#startReport()" class="member-name-link">startReport</a>()</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>default void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RatReport.</span><code><a href="../../report/RatReport.html#startReport()" class="member-name-link">startReport</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Signals the start of execution for the report.</div>
 </div>
 </div>
@@ -200,23 +197,8 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">ClaimAggregator.</span><code><a href="../../report/claim/ClaimAggregator.html#endReport()" class="member-name-link">endReport</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/ClaimReporterMultiplexer.html#endReport()" class="member-name-link">endReport</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LicenseAddingReport.</span><code><a href="../../report/claim/LicenseAddingReport.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ClaimValidatorReport.</span><code><a href="../../report/claim/ClaimValidatorReport.html#endReport()" class="member-name-link">endReport</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/ClaimReporterMultiplexer.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LicenseAddingReport.</span><code><a href="../../report/claim/LicenseAddingReport.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SimpleXmlClaimReporter.</span><code><a href="../../report/claim/SimpleXmlClaimReporter.html#report(org.apache.rat.api.Document)" class="member-name-link">report</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ClaimReporterMultiplexer.</span><code><a href="../../report/claim/ClaimReporterMultiplexer.html#startReport()" class="member-name-link">startReport</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -228,68 +210,65 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#closeElement()" class="member-name-link">closeElement</a>()</code></div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#document(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.api.Document)" class="member-name-link">document</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Closes the currently open element.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#document(org.apache.rat.api.Document)" class="member-name-link">document</a><wbr>(<a href="../Document.html" title="class in org.apache.rat.api">Document</a>&nbsp;document)</code></div>
-<div class="col-last odd-row-color">
 <div class="block">Creates a document element with attributes.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#documentType(java.lang.String,int)" class="member-name-link">documentType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#documentType(org.apache.rat.report.xml.writer.XmlWriter,java.lang.String,int)" class="member-name-link">documentType</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  int&nbsp;count)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a statistic element.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#license(org.apache.rat.license.ILicense,boolean)" class="member-name-link">license</a><wbr>(<a href="../../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license,
- boolean&nbsp;approved)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Creates a document type element.</div>
+</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#license(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.license.ILicense,boolean)" class="member-name-link">license</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="../../license/ILicense.html" title="interface in org.apache.rat.license">ILicense</a>&nbsp;license,
+ boolean&nbsp;approved)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Creates a license element.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#licenseCategory(java.lang.String,int)" class="member-name-link">licenseCategory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- int&nbsp;count)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a statistic element.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#licenseName(java.lang.String,int)" class="member-name-link">licenseName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#licenseCategory(org.apache.rat.report.xml.writer.XmlWriter,java.lang.String,int)" class="member-name-link">licenseCategory</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  int&nbsp;count)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Creates a statistic element.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#ratReport()" class="member-name-link">ratReport</a>()</code></div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#licenseName(org.apache.rat.report.xml.writer.XmlWriter,java.lang.String,int)" class="member-name-link">licenseName</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;count)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Creates a statistic element.</div>
+</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#ratReport(org.apache.rat.report.xml.writer.XmlWriter)" class="member-name-link">ratReport</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Create the RAT report element.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#statistic(java.lang.String,int,java.lang.String,boolean)" class="member-name-link">statistic</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#statistic(org.apache.rat.report.xml.writer.XmlWriter,java.lang.String,int,java.lang.String,boolean)" class="member-name-link">statistic</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  int&nbsp;count,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
  boolean&nbsp;isOk)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Creates a statistic element.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#statistics()" class="member-name-link">statistics</a>()</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#statistics(org.apache.rat.report.xml.writer.XmlWriter,org.apache.rat.report.claim.ClaimStatistic,org.apache.rat.config.results.ClaimValidator)" class="member-name-link">statistics</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer,
+ <a href="../../report/claim/ClaimStatistic.html" title="class in org.apache.rat.report.claim">ClaimStatistic</a>&nbsp;statistic,
+ <a href="../../config/results/ClaimValidator.html" title="class in org.apache.rat.config.results">ClaimValidator</a>&nbsp;validator)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates a statistics element.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#version()" class="member-name-link">version</a>()</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates the version element with all version attributes populated.</div>
-</div>
-<div class="col-first even-row-color"><code><a href="../../report/xml/XmlElements.html" title="class in org.apache.rat.report.xml">XmlElements</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#write(org.apache.rat.report.xml.XmlElements.Attributes,java.lang.String)" class="member-name-link">write</a><wbr>(<a href="../../report/xml/XmlElements.Attributes.html" title="enum class in org.apache.rat.report.xml">XmlElements.Attributes</a>&nbsp;attribute,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">XmlElements.</span><code><a href="../../report/xml/XmlElements.html#version(org.apache.rat.report.xml.writer.XmlWriter)" class="member-name-link">version</a><wbr>(<a href="../../report/xml/writer/XmlWriter.html" title="class in org.apache.rat.report.xml.writer">XmlWriter</a>&nbsp;writer)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Write an attribute.</div>
+<div class="block">Creates the version element with all version attributes populated.</div>
 </div>
 </div>
 </section>
@@ -302,8 +281,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../../report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IReportableListWalker.Builder.</span><code><a href="../../walker/IReportableListWalker.Builder.html#build()" class="member-name-link">build</a>()</code></div>
+<div class="col-first even-row-color"><code><a href="../../walker/ReportableListWalker.html" title="class in org.apache.rat.walker">ReportableListWalker</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReportableListWalker.Builder.</span><code><a href="../../walker/ReportableListWalker.Builder.html#build()" class="member-name-link">build</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Build the reportable.</div>
 </div>

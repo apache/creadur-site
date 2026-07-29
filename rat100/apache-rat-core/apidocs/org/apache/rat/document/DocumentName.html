@@ -68,10 +68,12 @@ loadScripts(document, 'script');</script>
 <li><a href="#asPath()" tabindex="0">asPath()</a></li>
 <li><a href="#resolve(java.lang.String)" tabindex="0">resolve(String)</a></li>
 <li><a href="#getName()" tabindex="0">getName()</a></li>
+<li><a href="#getPath()" tabindex="0">getPath()</a></li>
 <li><a href="#getBaseName()" tabindex="0">getBaseName()</a></li>
 <li><a href="#getRoot()" tabindex="0">getRoot()</a></li>
 <li><a href="#getBaseDocumentName()" tabindex="0">getBaseDocumentName()</a></li>
 <li><a href="#getDirectorySeparator()" tabindex="0">getDirectorySeparator()</a></li>
+<li><a href="#fsInfo()" tabindex="0">fsInfo()</a></li>
 <li><a href="#localized()" tabindex="0">localized()</a></li>
 <li><a href="#localized(java.lang.String)" tabindex="0">localized(String)</a></li>
 <li><a href="#getShortName()" tabindex="0">getShortName()</a></li>
@@ -109,8 +111,8 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="block">The name for a document. The <code>DocumentName</code> is an immutable structure that handles all the intricacies of file
 naming on various operating systems. DocumentNames have several components:
 <ul>
-    <li><code>root</code> - where in the file system the name starts (e.g C: on windows). May be empty but not null.</li>
-    <li><code>dirSeparator</code> - the separator between name segments (e.g. "\\" on windows, "/" on linux). May not be
+    <li><code>root</code> - where in the file system the name starts (e.g C:\ on Microsoft Windows). May be empty but not null.</li>
+    <li><code>dirSeparator</code> - the separator between name segments (e.g. "\" on Microsoft Windows, "/" on linux). May not be
     empty or null.</li>
     <li><code>name</code> - the name of the file relative to the <code>root</code>. May not be null. Does NOT begin with a <code>dirSeparator</code></li>
     <li><code>baseName</code> - the name of a directory or file from which this file is reported. A DocumentName with a
@@ -161,7 +163,7 @@ naming on various operating systems. DocumentNames have several components:
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asFile()" class="member-name-link">asFile</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Creates a file from the document name.</div>
+<div class="block">Creates a file from the fully qualified document name.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#asPath()" class="member-name-link">asPath</a>()</code></div>
@@ -196,28 +198,38 @@ naming on various operating systems. DocumentNames have several components:
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#compareTo(org.apache.rat.document.DocumentName)" class="member-name-link">compareTo</a><wbr>(<a href="DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;other)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#equals(java.lang.Object)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;other)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBaseDocumentName()" class="member-name-link">getBaseDocumentName</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DocumentName.FSInfo.html" title="class in org.apache.rat.document">DocumentName.FSInfo</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#fsInfo()" class="member-name-link">fsInfo</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the FSInfo for this document name.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBaseDocumentName()" class="member-name-link">getBaseDocumentName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the DocumentName for the basename of this DocumentName.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBaseName()" class="member-name-link">getBaseName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBaseName()" class="member-name-link">getBaseName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the fully qualified basename of the document.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDirectorySeparator()" class="member-name-link">getDirectorySeparator</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDirectorySeparator()" class="member-name-link">getDirectorySeparator</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the directory separator.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the fully qualified name of the document.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPath()" class="member-name-link">getPath</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the path of the document.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRoot()" class="member-name-link">getRoot</a>()</code></div>
@@ -229,7 +241,7 @@ naming on various operating systems. DocumentNames have several components:
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the last segment of the name.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hashCode()" class="member-name-link">hashCode</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
@@ -359,7 +371,7 @@ it is set to the directory containing the file.</div>
 <h3>asFile</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">asFile</span>()</div>
-<div class="block">Creates a file from the document name.</div>
+<div class="block">Creates a file from the fully qualified document name.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a new File object.</dd>
@@ -372,7 +384,8 @@ it is set to the directory containing the file.</div>
 <h3>asPath</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/file/Path.html" title="class or interface in java.nio.file" class="external-link">Path</a></span>&nbsp;<span class="element-name">asPath</span>()</div>
-<div class="block">Creates a path from the document name.</div>
+<div class="block">Creates a path from the document name. This method uses the fully qualified name without the root.
+this results in a relative file name from the root.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a new Path object.</dd>
@@ -386,13 +399,28 @@ it is set to the directory containing the file.</div>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DocumentName.html" title="class in org.apache.rat.document">DocumentName</a></span>&nbsp;<span class="element-name">resolve</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;child)</span></div>
 <div class="block">Creates a new DocumentName by adding the child to the current name.
-Resulting documentName will have the same base name.</div>
+Resulting documentName will have the same base name.
+Directory separator is normalized to the directory separator for this file system.
+If the child string:
+<dl>
+    <dt>Is blank</dt>
+    <dd>This DocumentName is returned.</dd>
+    <dt>Starts with the file system root</dt>
+    <dd>The root must match the root of this DocumentName and the directory structure
+    must start with the directory structure of the basename for this DocumentName.</dd>
+    <dt>Starts with the directory separator character<dt>
+    <dd>Result will be a tree starting at the directory specified by the basename.</dd>
+    <dt>Does not start with a directory separator character</dt>
+    <dd>Result will be a tree starting at the directory specified by this DocumentName</dd>
+</dl></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>child</code> - the child to add (must use directory separator from this document name).</dd>
 <dt>Returns:</dt>
 <dd>the new document name with the same <code>baseName</code>, directory sensitivity and case sensitivity as
 this one.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the child specifies a different root from this document name.</dd>
 </dl>
 </div>
 </section>
@@ -406,6 +434,19 @@ this one.</dd>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the fully qualified name of the document.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPath()">
+<h3>getPath</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getPath</span>()</div>
+<div class="block">Gets the path of the document. This is the fully qualified name without the root but starting with a path separator.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the path of the document.</dd>
 </dl>
 </div>
 </section>
@@ -458,6 +499,19 @@ this one.</dd>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the directory separator.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="fsInfo()">
+<h3>fsInfo</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DocumentName.FSInfo.html" title="class in org.apache.rat.document">DocumentName.FSInfo</a></span>&nbsp;<span class="element-name">fsInfo</span>()</div>
+<div class="block">Returns the FSInfo for this document name.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the FSInfo for this document name.</dd>
 </dl>
 </div>
 </section>
@@ -549,7 +603,7 @@ The resulting name will always start with the directory separator.</div>
 <section class="detail" id="equals(java.lang.Object)">
 <h3>equals</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;other)</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;other)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
@@ -561,7 +615,7 @@ The resulting name will always start with the directory separator.</div>
 <section class="detail" id="hashCode()">
 <h3>hashCode</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">hashCode</span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">hashCode</span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>

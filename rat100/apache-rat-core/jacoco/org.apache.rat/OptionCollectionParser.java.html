@@ -21,6 +21,7 @@ package org.apache.rat;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.util.Comparator;
@@ -34,7 +35,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.rat.commandline.Arg;
 import org.apache.rat.commandline.ArgumentContext;
 import org.apache.rat.help.Licenses;
-import org.apache.rat.report.IReportable;
+import org.apache.rat.report.Reportable;
 import org.apache.rat.ui.UIOptionCollection;
 import org.apache.rat.utils.DefaultLog;
 
@@ -51,9 +52,9 @@ public final class OptionCollectionParser {
      */
     private final UIOptionCollection&lt;?&gt; uiOptionCollection;
 
-<span class="fc" id="L54">    public OptionCollectionParser(final UIOptionCollection&lt;?&gt; optionCollection) {</span>
-<span class="fc" id="L55">        this.uiOptionCollection = optionCollection;</span>
-<span class="fc" id="L56">    }</span>
+<span class="fc" id="L55">    public OptionCollectionParser(final UIOptionCollection&lt;?&gt; optionCollection) {</span>
+<span class="fc" id="L56">        this.uiOptionCollection = optionCollection;</span>
+<span class="fc" id="L57">    }</span>
 
     /**
      * Parses the standard options to create a ReportConfiguration.
@@ -66,7 +67,7 @@ public final class OptionCollectionParser {
      */
     public ArgumentContext parseCommands(final File workingDirectory, final String[] args)
             throws IOException, ParseException {
-<span class="fc" id="L69">        return parseCommands(workingDirectory, args, uiOptionCollection.getOptions());</span>
+<span class="fc" id="L70">        return parseCommands(workingDirectory, args, uiOptionCollection.getOptions());</span>
     }
 
     /**
@@ -79,12 +80,12 @@ public final class OptionCollectionParser {
     //@VisibleForTesting
     CommandLine parseCommandLine(final Options opts, final String[] args) throws ParseException {
         try {
-<span class="fc" id="L82">            return DefaultParser.builder().setDeprecatedHandler(DeprecationReporter.getLogReporter())</span>
-<span class="fc" id="L83">                    .setAllowPartialMatching(true).build().parse(opts, args);</span>
-<span class="nc" id="L84">        } catch (ParseException e) {</span>
-<span class="nc" id="L85">            DefaultLog.getInstance().error(e.getMessage());</span>
-<span class="nc" id="L86">            DefaultLog.getInstance().error(&quot;Please use the \&quot;--help\&quot; option to see a list of valid commands and options.&quot;, e);</span>
-<span class="nc" id="L87">            throw e;</span>
+<span class="fc" id="L83">            return DefaultParser.builder().setDeprecatedHandler(DeprecationReporter.getLogReporter())</span>
+<span class="fc" id="L84">                    .setAllowPartialMatching(true).build().parse(opts, args);</span>
+<span class="nc" id="L85">        } catch (ParseException e) {</span>
+<span class="nc" id="L86">            DefaultLog.getInstance().error(e.getMessage());</span>
+<span class="nc" id="L87">            DefaultLog.getInstance().error(&quot;Please use the \&quot;--help\&quot; option to see a list of valid commands and options.&quot;, e);</span>
+<span class="nc" id="L88">            throw e;</span>
         }
     }
 
@@ -100,17 +101,17 @@ public final class OptionCollectionParser {
      */
     private ArgumentContext parseCommands(final File workingDirectory, final String[] args,
                                                                        final Options options) throws IOException, ParseException {
-<span class="fc" id="L103">        CommandLine commandLine = parseCommandLine(options, args);</span>
-<span class="fc" id="L104">        ArgumentContext argumentContext = new ArgumentContext(workingDirectory, commandLine);</span>
-<span class="fc" id="L105">        Arg.processLogLevel(argumentContext, uiOptionCollection);</span>
-<span class="fc" id="L106">        populateConfiguration(argumentContext);</span>
-<span class="pc bpc" id="L107" title="1 of 2 branches missed.">        if (uiOptionCollection.isSelected(Arg.HELP_LICENSES)) {</span>
-<span class="nc" id="L108">            new Licenses(argumentContext.getConfiguration(),</span>
-<span class="nc" id="L109">                    new PrintWriter(argumentContext.getConfiguration().getOutput().get(),</span>
-<span class="nc" id="L110">                            false, StandardCharsets.UTF_8)).printHelp();</span>
+<span class="fc" id="L104">        CommandLine commandLine = parseCommandLine(options, args);</span>
+<span class="fc" id="L105">        ArgumentContext argumentContext = new ArgumentContext(workingDirectory, commandLine);</span>
+<span class="fc" id="L106">        Arg.processLogLevel(argumentContext, uiOptionCollection);</span>
+<span class="fc" id="L107">        populateConfiguration(argumentContext);</span>
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">        if (uiOptionCollection.isSelected(Arg.HELP_LICENSES)) {</span>
+<span class="nc" id="L109">            new Licenses(argumentContext.getConfiguration(),</span>
+<span class="nc" id="L110">                    new PrintWriter(argumentContext.getConfiguration().getOutput().get(),</span>
+<span class="nc" id="L111">                            false, StandardCharsets.UTF_8)).printHelp();</span>
         }
 
-<span class="fc" id="L113">        return argumentContext;</span>
+<span class="fc" id="L114">        return argumentContext;</span>
     }
 
     /**
@@ -121,18 +122,18 @@ public final class OptionCollectionParser {
      * @return a ReportConfiguration
      */
     private ReportConfiguration populateConfiguration(final ArgumentContext argumentContext) {
-<span class="fc" id="L124">        argumentContext.processArgs(uiOptionCollection);</span>
-<span class="fc" id="L125">        final ReportConfiguration configuration = argumentContext.getConfiguration();</span>
-<span class="fc" id="L126">        final CommandLine commandLine = argumentContext.getCommandLine();</span>
-<span class="pc bpc" id="L127" title="1 of 2 branches missed.">        if (!configuration.hasSource()) {</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">            for (String s : commandLine.getArgs()) {</span>
-<span class="fc" id="L129">                IReportable reportable = OptionCollection.getReportable(new File(s), configuration);</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">                if (reportable != null) {</span>
-<span class="nc" id="L131">                    configuration.addSource(reportable);</span>
+<span class="fc" id="L125">        argumentContext.processArgs(uiOptionCollection);</span>
+<span class="fc" id="L126">        final ReportConfiguration configuration = argumentContext.getConfiguration();</span>
+<span class="fc" id="L127">        final CommandLine commandLine = argumentContext.getCommandLine();</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        if (!configuration.hasSource()) {</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">            for (String s : commandLine.getArgs()) {</span>
+<span class="fc" id="L130">                Reportable reportable = OptionCollection.getReportable(new File(s), configuration);</span>
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">                if (reportable != null) {</span>
+<span class="nc" id="L132">                    configuration.addSource(reportable);</span>
                 }
             }
         }
-<span class="fc" id="L135">        return configuration;</span>
+<span class="fc" id="L136">        return configuration;</span>
     }
 
     /**
@@ -140,10 +141,11 @@ public final class OptionCollectionParser {
      */
     private static final class OptionComparator implements Comparator&lt;Option&gt;, Serializable {
         /** The serial version UID.  */
+        @Serial
         private static final long serialVersionUID = 5305467873966684014L;
 
         private String getKey(final Option opt) {
-<span class="nc" id="L146">            return StringUtils.defaultIfBlank(opt.getOpt(), opt.getLongOpt());</span>
+<span class="nc" id="L148">            return StringUtils.defaultIfBlank(opt.getOpt(), opt.getLongOpt());</span>
         }
 
         /**
@@ -158,8 +160,8 @@ public final class OptionCollectionParser {
          */
         @Override
         public int compare(final Option opt1, final Option opt2) {
-<span class="nc" id="L161">            return getKey(opt1).compareToIgnoreCase(getKey(opt2));</span>
+<span class="nc" id="L163">            return getKey(opt1).compareToIgnoreCase(getKey(opt2));</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -29,15 +29,15 @@ import org.apache.rat.config.exclusion.ExclusionUtils;
 import org.apache.rat.document.DocumentName;
 import org.apache.rat.document.DocumentNameMatcher;
 import org.apache.rat.document.FileDocument;
-import org.apache.rat.report.IReportable;
 import org.apache.rat.report.RatReport;
+import org.apache.rat.report.Reportable;
 import org.apache.rat.utils.DefaultLog;
 
 /**
- * Implementation of IReportable that traverses over a resource collection
+ * Implementation of Reportable that traverses over a resource collection
  * internally.
  */
-public class FileListWalker implements IReportable {
+public class FileListWalker implements Reportable {
     /** The source document name. */
     private final FileDocument source;
     /** The root document name. */
@@ -72,7 +72,7 @@ public class FileListWalker implements IReportable {
     @Override
     public void run(final RatReport report) throws RatException {
 <span class="fc" id="L74">        DefaultLog.getInstance().debug(String.format(&quot;Reading file name: %s due to option %s&quot;, source, Arg.SOURCE.option()));</span>
-<span class="fc" id="L75">        DocumentName sourceName = getName();</span>
+<span class="fc" id="L75">        DocumentName sourceName = name();</span>
 <span class="fc" id="L76">        try (Reader reader = source.reader()) {</span>
 <span class="fc bfc" id="L77" title="All 2 branches covered.">            for (String docName : IOUtils.readLines(reader)) {</span>
                 try {
@@ -93,8 +93,8 @@ public class FileListWalker implements IReportable {
 <span class="fc" id="L93">    }</span>
 
     @Override
-    public DocumentName getName() {
+    public DocumentName name() {
 <span class="fc" id="L97">        return source.getName();</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

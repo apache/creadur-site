@@ -86,14 +86,14 @@
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>              FileUtils.writeFile(testDir, <span class="jxr_string">"foo.md"</span>);
 <a class="jxr_linenumber" name="L79" href="#L79">79</a>              ReportConfiguration config = OptionCollection.parseCommands(testDir, args, o -&gt; fail(<span class="jxr_string">"Help called"</span>), <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L80" href="#L80">80</a>              Reporter reporter = <strong class="jxr_keyword">new</strong> Reporter(config);
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>              ClaimStatistic claimStatistic = reporter.execute();
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>              XmlUtils.printDocument(System.out, reporter.getDocument());
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>              Reporter.Output output = reporter.execute();
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>              XmlUtils.printDocument(System.out, output.getDocument());
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>              XPath xpath = XPathFactory.newInstance().newXPath();
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>              XmlUtils.assertIsPresent(reporter.getDocument(), xpath, <span class="jxr_string">"/rat-report/resource[@name='/foo.md']"</span>);
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>              XmlUtils.assertAttributes(reporter.getDocument(), xpath, <span class="jxr_string">"/rat-report/resource[@name='/foo.md']"</span>,
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>              XmlUtils.assertIsPresent(output.getDocument(), xpath, <span class="jxr_string">"/rat-report/resource[@name='/foo.md']"</span>);
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>              XmlUtils.assertAttributes(output.getDocument(), xpath, <span class="jxr_string">"/rat-report/resource[@name='/foo.md']"</span>,
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>                      XmlUtils.mapOf(<span class="jxr_string">"type"</span>, <span class="jxr_string">"IGNORED"</span>));
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>              assertThat(claimStatistic.getCounter(ClaimStatistic.Counter.STANDARDS)).isEqualTo(0);
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>              assertThat(claimStatistic.getCounter(ClaimStatistic.Counter.IGNORED)).isEqualTo(2);
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>              assertThat(output.getStatistic().getCounter(ClaimStatistic.Counter.STANDARDS)).isEqualTo(0);
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>              assertThat(output.getStatistic().getCounter(ClaimStatistic.Counter.IGNORED)).isEqualTo(2);
 <a class="jxr_linenumber" name="L89" href="#L89">89</a>          } <strong class="jxr_keyword">catch</strong> (IOException | RatException | XPathExpressionException e) {
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>              fail(e);
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>          }

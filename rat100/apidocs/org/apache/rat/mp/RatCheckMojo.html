@@ -71,7 +71,7 @@ loadScripts(document, 'script');</script>
 <li><a href="#setCopyrightMessage(java.lang.String)" tabindex="0">setCopyrightMessage(String)</a></li>
 <li><a href="#getConfiguration()" tabindex="0">getConfiguration()</a></li>
 <li><a href="#execute()" tabindex="0">execute()</a></li>
-<li><a href="#check(org.apache.rat.ReportConfiguration)" tabindex="0">check(ReportConfiguration)</a></li>
+<li><a href="#check(org.apache.rat.Reporter.Output)" tabindex="0">check(Reporter.Output)</a></li>
 <li><a href="#getRatTxtFile()" tabindex="0">getRatTxtFile()</a></li>
 </ol>
 </li>
@@ -151,7 +151,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#check(org.apache.rat.ReportConfiguration)" class="member-name-link">check</a><wbr>(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#check(org.apache.rat.Reporter.Output)" class="member-name-link">check</a><wbr>(<a href="../Reporter.Output.html" title="class in org.apache.rat">Reporter.Output</a>&nbsp;output)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#execute()" class="member-name-link">execute</a>()</code></div>
@@ -191,7 +191,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#setReportStyle(java.lang.String)" class="member-name-link">setReportStyle</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use setStyleSheet or xml instead.</div>
+<div class="deprecation-comment">Use setStyleSheet or "xml" instead.</div>
 </div>
 </div>
 </div>
@@ -258,7 +258,7 @@ loadScripts(document, 'script');</script>
 @Parameter(property="rat.outputStyle")
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setReportStyle</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;value)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use setStyleSheet or xml instead.</div>
+<div class="deprecation-comment">Use setStyleSheet or "xml" instead.</div>
 </div>
 <div class="block">Output style of the report. Use "plain" (the default) for a plain text report
 or "xml" for the raw XML report. Alternatively you can give the path of an
@@ -330,10 +330,10 @@ plugin.</dd>
 </section>
 </li>
 <li>
-<section class="detail" id="check(org.apache.rat.ReportConfiguration)">
+<section class="detail" id="check(org.apache.rat.Reporter.Output)">
 <h3>check</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">check</span><wbr><span class="parameters">(<a href="../ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</span>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">check</span><wbr><span class="parameters">(<a href="../Reporter.Output.html" title="class in org.apache.rat">Reporter.Output</a>&nbsp;output)</span>
               throws <span class="exceptions">org.apache.maven.plugin.MojoFailureException</span></div>
 <dl class="notes">
 <dt>Throws:</dt>

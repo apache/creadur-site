@@ -627,17 +627,17 @@ public void addConfiguredExpr(Expr expression) {
     }
 
 public class LicenseFamiliesDenied {
-<span class="fc" id="L630">    LicenseFamiliesDenied() { }</span>
+<span class="nc" id="L630">    LicenseFamiliesDenied() { }</span>
 public void addConfiguredLst(Lst familyID) {
-<span class="fc" id="L632">   addArg(&quot;license-families-denied&quot;, familyID.value);</span>
-<span class="fc" id="L633">}</span>
+<span class="nc" id="L632">   addArg(&quot;license-families-denied&quot;, familyID.value);</span>
+<span class="nc" id="L633">}</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="fc bfc" id="L635" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
-<span class="pc bpc" id="L636" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="fc" id="L637">                    addArg(&quot;license-families-denied-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="nc bnc" id="L635" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
+<span class="nc bnc" id="L636" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="nc" id="L637">                    addArg(&quot;license-families-denied-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="fc" id="L639">            }</span>
-<span class="fc" id="L640">        }</span>
+<span class="nc" id="L639">            }</span>
+<span class="nc" id="L640">        }</span>
     }
     /**
      * Includes files defined in standard collections based on commonly occurring groups. Includes any path matcher actions but DOES NOT include any file processor actions.
@@ -673,20 +673,20 @@ public void addConfiguredCntr(Cntr counterPattern) {
     }
 
 public class InputExcludes {
-<span class="nc" id="L676">    InputExcludes() { }</span>
-public void addConfiguredExpr(Expr expression) {
-<span class="nc" id="L678">   addArg(&quot;input-exclude&quot;, expression.value);</span>
-<span class="nc" id="L679">}</span>
+<span class="fc" id="L676">    InputExcludes() { }</span>
 public void addConfiguredStd(Std standardCollection) {
-<span class="nc" id="L681">   addArg(&quot;input-exclude-std&quot;, standardCollection.value);</span>
-<span class="nc" id="L682">}</span>
+<span class="fc" id="L678">   addArg(&quot;input-exclude-std&quot;, standardCollection.value);</span>
+<span class="fc" id="L679">}</span>
+public void addConfiguredExpr(Expr expression) {
+<span class="fc" id="L681">   addArg(&quot;input-exclude&quot;, expression.value);</span>
+<span class="fc" id="L682">}</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="nc bnc" id="L684" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
-<span class="nc bnc" id="L685" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="nc" id="L686">                    addArg(&quot;input-exclude-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L684" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L685" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L686">                    addArg(&quot;input-exclude-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="nc" id="L688">            }</span>
-<span class="nc" id="L689">        }</span>
+<span class="fc" id="L688">            }</span>
+<span class="fc" id="L689">        }</span>
     }
     /**
      * A comma separated list of approved license family IDs. These license families will be added to the list of approved license families.
@@ -697,16 +697,16 @@ public void addConfiguredStd(Std standardCollection) {
 
 public class LicenseFamiliesApproved {
 <span class="fc" id="L699">    LicenseFamiliesApproved() { }</span>
-public void addConfiguredLst(Lst familyID) {
-<span class="fc" id="L701">   addArg(&quot;license-families-approved&quot;, familyID.value);</span>
-<span class="fc" id="L702">}</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="fc bfc" id="L704" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
-<span class="pc bpc" id="L705" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="fc" id="L706">                    addArg(&quot;license-families-approved-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L701" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L702" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L703">                    addArg(&quot;license-families-approved-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="fc" id="L708">            }</span>
-<span class="fc" id="L709">        }</span>
+<span class="fc" id="L705">            }</span>
+<span class="fc" id="L706">        }</span>
+public void addConfiguredLst(Lst familyID) {
+<span class="fc" id="L708">   addArg(&quot;license-families-approved&quot;, familyID.value);</span>
+<span class="fc" id="L709">}</span>
     }
     /**
      * A comma separated list of denied License IDs. These licenses will be removed from the list of approved licenses. Once licenses are removed they can not be added back.
@@ -808,4 +808,4 @@ public void addConfiguredExpr(Expr expression) {
 <span class="fc" id="L808">        public Lst() { }</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
