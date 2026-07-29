@@ -18,9 +18,8 @@
  */
 package org.apache.rat.commandline;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.apache.commons.cli.Converter;
 import org.apache.commons.lang3.tuple.Pair;
@@ -42,47 +41,48 @@ public final class Converters {
     /**
      * Creates a File with fully qualified name.
      */
-<span class="fc" id="L45">    public static final FileConverter FILE_CONVERTER = new FileConverter();</span>
+<span class="fc" id="L44">    public static final FileConverter FILE_CONVERTER = new FileConverter();</span>
 
     /**
      * Converts the Converter pattern into a Converter, count pair.
      */
-<span class="fc" id="L50">    public static final Converter&lt;Pair&lt;ClaimStatistic.Counter, Integer&gt;, ConfigurationException&gt; COUNTER_CONVERTER = arg -&gt; {</span>
-<span class="fc" id="L51">        String[] parts = arg.split(&quot;:&quot;);</span>
+<span class="fc" id="L49">    public static final Converter&lt;Pair&lt;ClaimStatistic.Counter, Integer&gt;, ConfigurationException&gt; COUNTER_CONVERTER = arg -&gt; {</span>
+<span class="fc" id="L50">        String[] parts = arg.split(&quot;:&quot;);</span>
         try {
-<span class="fc" id="L53">            ClaimStatistic.Counter counter = ClaimStatistic.Counter.valueOf(parts[0].toUpperCase());</span>
-<span class="fc" id="L54">            Integer limit = Integer.parseInt(parts[1]);</span>
-<span class="fc" id="L55">            return Pair.of(counter, limit);</span>
-<span class="nc" id="L56">        } catch (NumberFormatException e) {</span>
-<span class="nc" id="L57">            throw new ConfigurationException(format(&quot;'%s' is not a valid integer&quot;, parts[1]), e);</span>
-<span class="nc" id="L58">        } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L59">            throw new ConfigurationException(format(&quot;'%s' is not a valid Counter&quot;, parts[0]), e);</span>
+<span class="fc" id="L52">            ClaimStatistic.Counter counter = ClaimStatistic.Counter.valueOf(parts[0].toUpperCase());</span>
+<span class="fc" id="L53">            Integer limit = Integer.parseInt(parts[1]);</span>
+<span class="fc" id="L54">            return Pair.of(counter, limit);</span>
+<span class="nc" id="L55">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L56">            throw new ConfigurationException(format(&quot;'%s' is not a valid integer&quot;, parts[1]), e);</span>
+<span class="nc" id="L57">        } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L58">            throw new ConfigurationException(format(&quot;'%s' is not a valid Counter&quot;, parts[0]), e);</span>
         }
     };
 
     /**
      * Converts a comma separated list into an array of strings.
      */
-<span class="fc" id="L66">    public static final Converter&lt;String[], ConfigurationException&gt; TEXT_LIST_CONVERTER = arg -&gt; {</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        if (arg == null) {</span>
-<span class="nc" id="L68">            return null;</span>
+<span class="fc" id="L65">    public static final Converter&lt;String[], ConfigurationException&gt; TEXT_LIST_CONVERTER = arg -&gt; {</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">        if (arg == null) {</span>
+<span class="nc" id="L67">            return null;</span>
         }
-<span class="fc" id="L70">        return Arrays.stream(arg.split(&quot;,&quot;)).map(String::trim).toArray(String[]::new);</span>
+<span class="fc" id="L69">        return Arrays.stream(arg.split(&quot;,&quot;)).map(String::trim).toArray(String[]::new);</span>
     };
 
     /**
      * A converter that can handle relative or absolute files.
      */
-    public static final class FileConverter implements Converter&lt;File, NullPointerException&gt; {
+    public static final class FileConverter implements Converter&lt;DocumentName, NullPointerException&gt; {
         /** The working directory to resolve relative files against. */
         private DocumentName workingDirectory;
 
         /**
          * The constructor.
+         * visible for testing
          */
-        private FileConverter() {
+<span class="fc" id="L83">        FileConverter() {</span>
             // private construction only.
-        }
+<span class="fc" id="L85">        }</span>
 
         /**
          * Sets the working directory for the conversion.
@@ -95,25 +95,28 @@ public final class Converters {
         /**
          * Applies the conversion function to the specified file name.
          * @param fileName the file name to create a file from.
-         * @return a File.
+         * @return the DocumentName
          * @throws NullPointerException if {@code fileName} is null.
          */
-        public File apply(final String fileName) throws NullPointerException {
-<span class="fc" id="L102">            File file = new File(fileName);</span>
-            // is this a relative file?
-<span class="fc bfc" id="L104" title="All 2 branches covered.">            if (!fileName.startsWith(File.separator)) {</span>
-                // check for a root provided (e.g. C:\\)&quot;
-<span class="pc bpc" id="L106" title="1 of 2 branches missed.">                if (!DocumentName.FSInfo.getDefault().rootFor(fileName).isPresent()) {</span>
-                    // no root, resolve against workingDirectory
-<span class="fc" id="L108">                    file = new File(workingDirectory.resolve(fileName).getName()).getAbsoluteFile();</span>
+        public DocumentName apply(final String fileName) throws NullPointerException {
+<span class="fc" id="L102">            DocumentName.FSInfo fsInfo = workingDirectory.fsInfo();</span>
+<span class="fc" id="L103">            DocumentName.Builder builder = DocumentName.builder(fsInfo);</span>
+<span class="fc" id="L104">            String normalizedFileName = fsInfo.normalize(fileName.trim());</span>
+
+<span class="fc" id="L106">            Optional&lt;String&gt; root = fsInfo.rootFor(normalizedFileName);</span>
+<span class="fc" id="L107">            builder.setRoot(root.orElse(workingDirectory.getRoot()));</span>
+<span class="fc bfc" id="L108" title="All 2 branches covered.">            if (fsInfo.startsWithRootOrSeparator(normalizedFileName)) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">                if (normalizedFileName.startsWith(workingDirectory.getName()) ||</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">                        normalizedFileName.startsWith(workingDirectory.getName().substring(workingDirectory.getRoot().length()))) {</span>
+<span class="fc" id="L111">                    builder.setBaseName(workingDirectory.getBaseDocumentName());</span>
+                } else {
+<span class="fc" id="L113">                    builder.setBaseName(fsInfo.dirSeparator());</span>
                 }
+            } else {
+<span class="fc" id="L116">                builder.setBaseName(workingDirectory);</span>
             }
-            try {
-<span class="fc" id="L112">                return file.getCanonicalFile();</span>
-<span class="nc" id="L113">            } catch (IOException e) {</span>
-<span class="nc" id="L114">                return file.getAbsoluteFile();</span>
-            }
+<span class="fc" id="L118">            return  builder.setName(normalizedFileName).build();</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

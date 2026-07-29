@@ -70,8 +70,11 @@ loadScripts(document, 'script');</script>
 <li><a href="#dirSeparator()" tabindex="0">dirSeparator()</a></li>
 <li><a href="#isCaseSensitive()" tabindex="0">isCaseSensitive()</a></li>
 <li><a href="#rootFor(java.lang.String)" tabindex="0">rootFor(String)</a></li>
+<li><a href="#roots()" tabindex="0">roots()</a></li>
 <li><a href="#tokenize(java.lang.String)" tabindex="0">tokenize(String)</a></li>
 <li><a href="#normalize(java.lang.String)" tabindex="0">normalize(String)</a></li>
+<li><a href="#mkPath(java.lang.String...)" tabindex="0">mkPath(String...)</a></li>
+<li><a href="#startsWithRootOrSeparator(java.lang.String)" tabindex="0">startsWithRootOrSeparator(String)</a></li>
 <li><a href="#compareTo(org.apache.rat.document.DocumentName.FSInfo)" tabindex="0">compareTo(DocumentName.FSInfo)</a></li>
 <li><a href="#equals(java.lang.Object)" tabindex="0">equals(Object)</a></li>
 <li><a href="#hashCode()" tabindex="0">hashCode()</a></li>
@@ -157,23 +160,39 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="block">Gets the case-sensitivity flag.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#normalize(java.lang.String)" class="member-name-link">normalize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pattern)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mkPath(java.lang.String...)" class="member-name-link">mkPath</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;segments)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Removes <code>.</code> and <code>..</code> from filenames.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rootFor(java.lang.String)" class="member-name-link">rootFor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Retrieves the root extracted from the name.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tokenize(java.lang.String)" class="member-name-link">tokenize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;source)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Tokenizes the string based on the directory separator of this DocumentName.</div>
+<div class="block">Creates a path separated by the directory separator.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#normalize(java.lang.String)" class="member-name-link">normalize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pattern)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Removes <code>.</code> and <code>..</code> from filenames.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Optional.html" title="class or interface in java.util" class="external-link">Optional</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rootFor(java.lang.String)" class="member-name-link">rootFor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retrieves the root extracted from the name.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#roots()" class="member-name-link">roots</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the array of roots for this file system.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#startsWithRootOrSeparator(java.lang.String)" class="member-name-link">startsWithRootOrSeparator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;candidate)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Determines if the candidate string starts with a root or directory separator as defined in this
+FSInfo.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tokenize(java.lang.String)" class="member-name-link">tokenize</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;source)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Tokenizes the string based on the directory separator of this DocumentName.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the common name for the underlying file system.</div>
 </div>
 </div>
@@ -286,6 +305,19 @@ the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/n
 </section>
 </li>
 <li>
+<section class="detail" id="roots()">
+<h3>roots</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">roots</span>()</div>
+<div class="block">Gets the array of roots for this file system.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an array of roots for this file system.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="tokenize(java.lang.String)">
 <h3>tokenize</h3>
 <div class="horizontal-scroll">
@@ -311,6 +343,38 @@ the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/n
 <dd><code>pattern</code> - the file name pattern</dd>
 <dt>Returns:</dt>
 <dd>the normalized file name.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="mkPath(java.lang.String...)">
+<h3>mkPath</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">mkPath</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;segments)</span></div>
+<div class="block">Creates a path separated by the directory separator.
+Starting with an empty string will cause the directory separator to appear at the beginning.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>segments</code> - the segments that make up the path.</dd>
+<dt>Returns:</dt>
+<dd>the path string.</dd>
+</dl>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="startsWithRootOrSeparator(java.lang.String)">
+<h3>startsWithRootOrSeparator</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">startsWithRootOrSeparator</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;candidate)</span></div>
+<div class="block">Determines if the candidate string starts with a root or directory separator as defined in this
+FSInfo.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>candidate</code> - the candidate string to test.</dd>
+<dt>Returns:</dt>
+<dd><code>true</code> if the candidate starts with a root or a directory separator.</dd>
 </dl>
 </div>
 </section>

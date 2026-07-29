@@ -20,6 +20,7 @@ package org.apache.rat.analysis.license;
 
 import java.util.Arrays;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.rat.DeprecationReporter;
 import org.apache.rat.configuration.builders.AbstractBuilder;
 import org.apache.rat.configuration.builders.AnyBuilder;
@@ -31,40 +32,41 @@ import org.apache.rat.license.ILicense;
  * @since Rat 0.8
  * @deprecated Use new configuration options
  */
+@SuppressFBWarnings(&quot;EI_EXPOSE_REP2&quot;)
 @Deprecated // Since 0.16
 @DeprecationReporter.Info(since = &quot;0.16&quot;, forRemoval = true, use = &quot;new configuration options&quot;)
 public class SimplePatternBasedLicense  extends BaseLicense {
     private String[] patterns;
 
-<span class="nc" id="L39">    public SimplePatternBasedLicense() {</span>
-<span class="nc" id="L40">        DeprecationReporter.logDeprecated(SimplePatternBasedLicense.class);</span>
-<span class="nc" id="L41">    }</span>
+<span class="nc" id="L41">    public SimplePatternBasedLicense() {</span>
+<span class="nc" id="L42">        DeprecationReporter.logDeprecated(SimplePatternBasedLicense.class);</span>
+<span class="nc" id="L43">    }</span>
 
     public String[] getPatterns() {
-<span class="nc" id="L44">        return patterns;</span>
+<span class="nc" id="L46">        return patterns;</span>
     }
 
     public void setPatterns(String[] pPatterns) {
-<span class="nc" id="L48">        patterns = pPatterns;</span>
-<span class="nc" id="L49">    }</span>
+<span class="nc" id="L50">        patterns = pPatterns;</span>
+<span class="nc" id="L51">    }</span>
 
     private AbstractBuilder getMatcher() {
-<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (patterns.length == 1) {</span>
-<span class="nc" id="L53">            return new TextBuilder().setSimpleText(patterns[0]);</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (patterns.length == 1) {</span>
+<span class="nc" id="L55">            return new TextBuilder().setSimpleText(patterns[0]);</span>
         } else {
-<span class="nc" id="L55">            AnyBuilder any = new AnyBuilder();</span>
-<span class="nc" id="L56">            Arrays.stream(patterns).map(s -&gt; new TextBuilder().setSimpleText(s)).forEach(any::addEnclosed);</span>
-<span class="nc" id="L57">            return any;</span>
+<span class="nc" id="L57">            AnyBuilder any = new AnyBuilder();</span>
+<span class="nc" id="L58">            Arrays.stream(patterns).map(s -&gt; new TextBuilder().setSimpleText(s)).forEach(any::addEnclosed);</span>
+<span class="nc" id="L59">            return any;</span>
         }
     }
 
     @Override
     public ILicense.Builder getLicense() {
-<span class="nc" id="L63">        return ILicense.builder()</span>
-<span class="nc" id="L64">        .setFamily(getLicenseFamilyCategory())</span>
-<span class="nc" id="L65">        .setName(getLicenseFamilyName())</span>
-<span class="nc" id="L66">        .setMatcher(getMatcher())</span>
-<span class="nc" id="L67">        .setNote(getNotes());</span>
+<span class="nc" id="L65">        return ILicense.builder()</span>
+<span class="nc" id="L66">        .setFamily(getLicenseFamilyCategory())</span>
+<span class="nc" id="L67">        .setName(getLicenseFamilyName())</span>
+<span class="nc" id="L68">        .setMatcher(getMatcher())</span>
+<span class="nc" id="L69">        .setNote(getNotes());</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

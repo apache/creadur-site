@@ -27,6 +27,8 @@ import org.apache.rat.config.parameters.ComponentType;
 import org.apache.rat.config.parameters.ConfigComponent;
 import org.apache.rat.config.parameters.MatcherBuilder;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * A reference matching Matcher builder.
  * &lt;p&gt;
@@ -38,7 +40,7 @@ import org.apache.rat.config.parameters.MatcherBuilder;
  * later configuration construction phase.
  */
 @MatcherBuilder(MatcherRefBuilder.IHeaderMatcherProxy.class)
-<span class="fc" id="L41">public class MatcherRefBuilder extends AbstractBuilder {</span>
+<span class="fc" id="L43">public class MatcherRefBuilder extends AbstractBuilder {</span>
     /** The matcher id that this builder references */
     private String referenceId;
     /** The map of matcher id to matcher maintained by the system. Used for lookup. */
@@ -52,8 +54,8 @@ import org.apache.rat.config.parameters.MatcherBuilder;
      */
     public MatcherRefBuilder setRefId(final String refId) {
         // this method is called by reflection
-<span class="fc" id="L55">        this.referenceId = refId;</span>
-<span class="fc" id="L56">        return this;</span>
+<span class="fc" id="L57">        this.referenceId = refId;</span>
+<span class="fc" id="L58">        return this;</span>
     }
 
     /**
@@ -62,24 +64,25 @@ import org.apache.rat.config.parameters.MatcherBuilder;
      * @param matchers the Map of ids to instances.
      * @return this builder for chaining.
      */
+    @SuppressFBWarnings(value = &quot;EI_EXPOSE_REP2&quot;, justification = &quot;Expected external update of matchers.&quot;)
     public MatcherRefBuilder setMatcherMap(final Map&lt;String, IHeaderMatcher&gt; matchers) {
         // this method is called by reflection
-<span class="fc" id="L67">        this.matchers = matchers;</span>
-<span class="fc" id="L68">        return this;</span>
+<span class="fc" id="L70">        this.matchers = matchers;</span>
+<span class="fc" id="L71">        return this;</span>
     }
 
     @Override
     public IHeaderMatcher build() {
-<span class="pc bpc" id="L73" title="1 of 2 branches missed.">        if (matchers == null) {</span>
-<span class="nc" id="L74">            throw new ConfigurationException(&quot;'matchers' not set&quot;);</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (matchers == null) {</span>
+<span class="nc" id="L77">            throw new ConfigurationException(&quot;'matchers' not set&quot;);</span>
         }
-<span class="fc" id="L76">        IHeaderMatcher result = matchers.get(referenceId);</span>
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        return result != null ? result : new IHeaderMatcherProxy(referenceId, matchers);</span>
+<span class="fc" id="L79">        IHeaderMatcher result = matchers.get(referenceId);</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        return result != null ? result : new IHeaderMatcherProxy(referenceId, matchers);</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L82">        return &quot;MatcherRefBuilder: &quot; + referenceId;</span>
+<span class="nc" id="L85">        return &quot;MatcherRefBuilder: &quot; + referenceId;</span>
     }
 
     /**
@@ -109,37 +112,38 @@ import org.apache.rat.config.parameters.MatcherBuilder;
          * @param proxyId the id of the matcher to find.
          * @param matchers a mapping of matchers that have been found.
          */
-<span class="fc" id="L112">        public IHeaderMatcherProxy(final String proxyId, final Map&lt;String, IHeaderMatcher&gt; matchers) {</span>
-<span class="fc" id="L113">            this.proxyId = proxyId;</span>
-<span class="fc" id="L114">            this.matchers = matchers;</span>
-<span class="fc" id="L115">        }</span>
+        @SuppressFBWarnings(value = &quot;EI_EXPOSE_REP2&quot;, justification = &quot;Expected external update of matchers.&quot;)
+<span class="fc" id="L116">        public IHeaderMatcherProxy(final String proxyId, final Map&lt;String, IHeaderMatcher&gt; matchers) {</span>
+<span class="fc" id="L117">            this.proxyId = proxyId;</span>
+<span class="fc" id="L118">            this.matchers = matchers;</span>
+<span class="fc" id="L119">        }</span>
 
         private void checkProxy() {
-<span class="fc bfc" id="L118" title="All 2 branches covered.">            if (wrapped == null) {</span>
-<span class="fc" id="L119">                wrapped = matchers.get(proxyId);</span>
-<span class="pc bpc" id="L120" title="1 of 2 branches missed.">                if (wrapped == null) {</span>
-<span class="nc" id="L121">                    throw new IllegalStateException(String.format(&quot;%s is not a valid matcher id&quot;, proxyId));</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">            if (wrapped == null) {</span>
+<span class="fc" id="L123">                wrapped = matchers.get(proxyId);</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">                if (wrapped == null) {</span>
+<span class="nc" id="L125">                    throw new IllegalStateException(String.format(&quot;%s is not a valid matcher id&quot;, proxyId));</span>
                 }
-<span class="fc" id="L123">                matchers = null;</span>
+<span class="fc" id="L127">                matchers = null;</span>
             }
-<span class="fc" id="L125">        }</span>
+<span class="fc" id="L129">        }</span>
 
         @Override
         public String getId() {
-<span class="nc" id="L129">            checkProxy();</span>
-<span class="nc" id="L130">            return wrapped.getId();</span>
+<span class="nc" id="L133">            checkProxy();</span>
+<span class="nc" id="L134">            return wrapped.getId();</span>
         }
 
         @Override
         public void reset() {
-<span class="fc" id="L135">            checkProxy();</span>
-<span class="fc" id="L136">            wrapped.reset();</span>
-<span class="fc" id="L137">        }</span>
+<span class="fc" id="L139">            checkProxy();</span>
+<span class="fc" id="L140">            wrapped.reset();</span>
+<span class="fc" id="L141">        }</span>
 
         @Override
         public boolean matches(final IHeaders header) {
-<span class="fc" id="L141">            checkProxy();</span>
-<span class="fc" id="L142">            return wrapped.matches(header);</span>
+<span class="fc" id="L145">            checkProxy();</span>
+<span class="fc" id="L146">            return wrapped.matches(header);</span>
         }
 
         /**
@@ -148,8 +152,8 @@ import org.apache.rat.config.parameters.MatcherBuilder;
          */
         public String getRefId() {
             // called by introspection
-<span class="fc" id="L151">            return proxyId;</span>
+<span class="fc" id="L155">            return proxyId;</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

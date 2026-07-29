@@ -21,6 +21,7 @@ package org.apache.rat.report.xml.writer;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Objects;
@@ -36,9 +37,6 @@ import org.w3c.dom.Document;
 
 /**
  * &lt;p&gt;
- * Lightweight {@link IXmlWriter} implementation.
- * &lt;/p&gt;
- * &lt;p&gt;
  * Requires a wrapper to be used safely in a multithreaded environment.
  * &lt;/p&gt;
  * &lt;p&gt;
@@ -46,10 +44,10 @@ import org.w3c.dom.Document;
  * &lt;/p&gt;
  */
 @SuppressWarnings({&quot;checkstyle:MagicNumber&quot;, &quot;checkstyle:JavadocVariable&quot;})
-public final class XmlWriter implements IXmlWriter {
+public final class XmlWriter implements AutoCloseable {
     private final Appendable appendable;
     private final ArrayDeque&lt;CharSequence&gt; elementNames;
-<span class="fc" id="L52">    private final Set&lt;CharSequence&gt; currentAttributes = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L50">    private final Set&lt;CharSequence&gt; currentAttributes = new HashSet&lt;&gt;();</span>
 
     private boolean elementsWritten;
     private boolean inElement;
@@ -59,23 +57,23 @@ public final class XmlWriter implements IXmlWriter {
      * Constructs an XmlWriter with the specified writer for output.
      * @param writer the writer to write to.
      */
-<span class="fc" id="L62">    public XmlWriter(final Appendable writer) {</span>
-<span class="fc" id="L63">        this.appendable = writer;</span>
-<span class="fc" id="L64">        this.elementNames = new ArrayDeque&lt;&gt;();</span>
-<span class="fc" id="L65">    }</span>
+<span class="fc" id="L60">    public XmlWriter(final Appendable writer) {</span>
+<span class="fc" id="L61">        this.appendable = writer;</span>
+<span class="fc" id="L62">        this.elementNames = new ArrayDeque&lt;&gt;();</span>
+<span class="fc" id="L63">    }</span>
 
     private void validateRootOpen() throws IOException {
-<span class="fc bfc" id="L68" title="All 4 branches covered.">        if (elementsWritten &amp;&amp; elementNames.isEmpty()) {</span>
-<span class="fc" id="L69">            throw new OperationNotAllowedException(&quot;Root element already closed. Cannot open new element.&quot;);</span>
+<span class="fc bfc" id="L66" title="All 4 branches covered.">        if (elementsWritten &amp;&amp; elementNames.isEmpty()) {</span>
+<span class="fc" id="L67">            throw new OperationNotAllowedException(&quot;Root element already closed. Cannot open new element.&quot;);</span>
         }
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L69">    }</span>
 
     private void maybeCloseElement() throws IOException {
-<span class="fc bfc" id="L74" title="All 2 branches covered.">        if (inElement) {</span>
-<span class="fc" id="L75">            appendable.append('&gt;');</span>
-<span class="fc" id="L76">            inElement = false;</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">        if (inElement) {</span>
+<span class="fc" id="L73">            appendable.append('&gt;');</span>
+<span class="fc" id="L74">            inElement = false;</span>
         }
-<span class="fc" id="L78">    }</span>
+<span class="fc" id="L76">    }</span>
 
     /**
      * Starts a document by writing a prolog. Calling this method is optional. When
@@ -85,17 +83,16 @@ public final class XmlWriter implements IXmlWriter {
      * @throws OperationNotAllowedException if called after the first element has
      * been written or once a prolog has already been written
      */
-    @Override
-    public IXmlWriter startDocument() throws IOException {
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (elementsWritten) {</span>
-<span class="fc" id="L91">            throw new OperationNotAllowedException(&quot;Document already started&quot;);</span>
+    public XmlWriter startDocument() throws IOException {
+<span class="fc bfc" id="L87" title="All 2 branches covered.">        if (elementsWritten) {</span>
+<span class="fc" id="L88">            throw new OperationNotAllowedException(&quot;Document already started&quot;);</span>
         }
-<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (prologWritten) {</span>
-<span class="fc" id="L94">            throw new OperationNotAllowedException(&quot;Only one prolog allowed&quot;);</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (prologWritten) {</span>
+<span class="fc" id="L91">            throw new OperationNotAllowedException(&quot;Only one prolog allowed&quot;);</span>
         }
-<span class="fc" id="L96">        appendable.append(&quot;&lt;?xml version='1.0'?&gt;&quot;);</span>
-<span class="fc" id="L97">        prologWritten = true;</span>
-<span class="fc" id="L98">        return this;</span>
+<span class="fc" id="L93">        appendable.append(&quot;&lt;?xml version='1.0'?&gt;&quot;);</span>
+<span class="fc" id="L94">        prologWritten = true;</span>
+<span class="fc" id="L95">        return this;</span>
     }
 
     /**
@@ -107,34 +104,40 @@ public final class XmlWriter implements IXmlWriter {
      * @throws OperationNotAllowedException if called after the first element has
      * been closed
      */
-    @Override
-    public IXmlWriter openElement(final CharSequence elementName) throws IOException {
-<span class="fc" id="L112">        validateRootOpen();</span>
-<span class="fc bfc" id="L113" title="All 2 branches covered.">        if (!XMLChar.isValidName(elementName.toString())) {</span>
-<span class="fc" id="L114">            throw new InvalidXmlException(&quot;'&quot; + elementName + &quot;' is not a valid element name&quot;);</span>
+    public XmlWriter startElement(final CharSequence elementName) throws IOException {
+<span class="fc" id="L108">        validateRootOpen();</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">        if (!XMLChar.isValidName(elementName.toString())) {</span>
+<span class="fc" id="L110">            throw new InvalidXmlException(&quot;'&quot; + elementName + &quot;' is not a valid element name&quot;);</span>
         }
-<span class="fc" id="L116">        elementsWritten = true;</span>
-<span class="fc" id="L117">        maybeCloseElement();</span>
-<span class="fc" id="L118">        appendable.append('&lt;');</span>
-<span class="fc" id="L119">        appendable.append(elementName);</span>
-<span class="fc" id="L120">        inElement = true;</span>
-<span class="fc" id="L121">        elementNames.push(elementName);</span>
-<span class="fc" id="L122">        currentAttributes.clear();</span>
-<span class="fc" id="L123">        return this;</span>
+<span class="fc" id="L112">        elementsWritten = true;</span>
+<span class="fc" id="L113">        maybeCloseElement();</span>
+<span class="fc" id="L114">        appendable.append('&lt;');</span>
+<span class="fc" id="L115">        appendable.append(elementName);</span>
+<span class="fc" id="L116">        inElement = true;</span>
+<span class="fc" id="L117">        elementNames.push(elementName);</span>
+<span class="fc" id="L118">        currentAttributes.clear();</span>
+<span class="fc" id="L119">        return this;</span>
     }
 
-    @Override
-    public IXmlWriter comment(final CharSequence text) throws IOException {
-<span class="fc" id="L128">        maybeCloseElement();</span>
-<span class="fc" id="L129">        appendable.append(&quot;&lt;!-- &quot;);</span>
-<span class="fc" id="L130">        writeEscaped(text, false);</span>
-<span class="fc" id="L131">        appendable.append(&quot; --&gt;&quot;);</span>
-<span class="fc" id="L132">        return this;</span>
+    /**
+     * Writes a comment.
+     *
+     * @param text the comment text
+     * @return this object
+     * @throws OperationNotAllowedException
+     * if called after the first element has been closed
+     */
+    public XmlWriter comment(final CharSequence text) throws IOException {
+<span class="fc" id="L131">        maybeCloseElement();</span>
+<span class="fc" id="L132">        appendable.append(&quot;&lt;!-- &quot;);</span>
+<span class="fc" id="L133">        writeEscaped(text, false);</span>
+<span class="fc" id="L134">        appendable.append(&quot; --&gt;&quot;);</span>
+<span class="fc" id="L135">        return this;</span>
     }
 
     /**
      * Writes an attribute of an element. Note that this is only allowed directly
-     * after {@link #openElement(CharSequence)} or a previous {@code attribute} call.
+     * after {@link #startElement(CharSequence)} or a previous {@code attribute} call.
      *
      * @param name the attribute name, not null
      * @param value the attribute value, not null
@@ -143,120 +146,137 @@ public final class XmlWriter implements IXmlWriter {
      * if a value for the attribute has already been written
      * @throws OperationNotAllowedException if called after
      * {@link #content(CharSequence)} or {@link #closeElement()} or before any call
-     * to {@link #openElement(CharSequence)}
+     * to {@link #startElement(CharSequence)}
      */
-    @Override
-    public IXmlWriter attribute(final CharSequence name, final CharSequence value) throws IOException {
-<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (elementNames.isEmpty()) {</span>
-<span class="fc" id="L151">            validateRootOpen();</span>
-<span class="fc" id="L152">            throw new OperationNotAllowedException(&quot;Close called before an element has been opened.&quot;);</span>
+    public XmlWriter attribute(final CharSequence name, final CharSequence value) throws IOException {
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (elementNames.isEmpty()) {</span>
+<span class="fc" id="L153">            validateRootOpen();</span>
+<span class="fc" id="L154">            throw new OperationNotAllowedException(&quot;Close called before an element has been opened.&quot;);</span>
         }
-<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (!XMLChar.isValidName(name.toString())) {</span>
-<span class="fc" id="L155">            throw new InvalidXmlException(&quot;'&quot; + name + &quot;' is not a valid attribute name.&quot;);</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (!XMLChar.isValidName(name.toString())) {</span>
+<span class="fc" id="L157">            throw new InvalidXmlException(&quot;'&quot; + name + &quot;' is not a valid attribute name.&quot;);</span>
         }
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (!inElement) {</span>
-<span class="fc" id="L158">            throw new InvalidXmlException(&quot;Attributes can only be written in elements&quot;);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (!inElement) {</span>
+<span class="fc" id="L160">            throw new InvalidXmlException(&quot;Attributes can only be written in elements&quot;);</span>
         }
-<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (currentAttributes.contains(name)) {</span>
-<span class="fc" id="L161">            throw new InvalidXmlException(&quot;Each attribute can only be written once&quot;);</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        if (currentAttributes.contains(name)) {</span>
+<span class="fc" id="L163">            throw new InvalidXmlException(&quot;Each attribute can only be written once&quot;);</span>
         }
-<span class="fc" id="L163">        appendable.append(' ');</span>
-<span class="fc" id="L164">        appendable.append(name);</span>
-<span class="fc" id="L165">        appendable.append(&quot;='&quot;);</span>
-<span class="fc" id="L166">        writeAttributeContent(value);</span>
-<span class="fc" id="L167">        appendable.append(&quot;'&quot;);</span>
-<span class="fc" id="L168">        currentAttributes.add(name);</span>
-<span class="fc" id="L169">        return this;</span>
+<span class="fc" id="L165">        appendable.append(' ');</span>
+<span class="fc" id="L166">        appendable.append(name);</span>
+<span class="fc" id="L167">        appendable.append(&quot;='&quot;);</span>
+<span class="fc" id="L168">        writeAttributeContent(value);</span>
+<span class="fc" id="L169">        appendable.append(&quot;'&quot;);</span>
+<span class="fc" id="L170">        currentAttributes.add(name);</span>
+<span class="fc" id="L171">        return this;</span>
     }
 
     private void writeAttributeContent(final CharSequence content) throws IOException {
-<span class="fc" id="L173">        writeEscaped(content, true);</span>
-<span class="fc" id="L174">    }</span>
+<span class="fc" id="L175">        writeEscaped(content, true);</span>
+<span class="fc" id="L176">    }</span>
 
     private void prepareForData() throws IOException {
-<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (elementNames.isEmpty()) {</span>
-<span class="fc" id="L178">            validateRootOpen();</span>
-<span class="fc" id="L179">            throw new OperationNotAllowedException(&quot;An element must be opened before content can be written.&quot;);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (elementNames.isEmpty()) {</span>
+<span class="fc" id="L180">            validateRootOpen();</span>
+<span class="fc" id="L181">            throw new OperationNotAllowedException(&quot;An element must be opened before content can be written.&quot;);</span>
         }
-<span class="fc" id="L181">        maybeCloseElement();</span>
-<span class="fc" id="L182">    }</span>
+<span class="fc" id="L183">        maybeCloseElement();</span>
+<span class="fc" id="L184">    }</span>
 
-    @Override
-    public IXmlWriter content(final CharSequence content) throws IOException {
-<span class="fc" id="L186">        prepareForData();</span>
-<span class="fc" id="L187">        writeEscaped(content, false);</span>
-<span class="fc" id="L188">        return this;</span>
+    /**
+     * Writes content.
+     * Note that this method does not support CDATA.
+     * This method automatically escapes characters.
+     *
+     * @param content the content to write
+     * @return this object
+     * @throws OperationNotAllowedException
+     * if called before any call to {@link #startElement(CharSequence)}
+     * or after the first element has been closed
+     */public XmlWriter content(final CharSequence content) throws IOException {
+<span class="fc" id="L197">        prepareForData();</span>
+<span class="fc" id="L198">        writeEscaped(content, false);</span>
+<span class="fc" id="L199">        return this;</span>
     }
 
-    @Override
-    public IXmlWriter cdata(final CharSequence content) throws IOException {
-<span class="fc" id="L193">        prepareForData();</span>
-<span class="fc" id="L194">        StringBuilder sb = new StringBuilder(content);</span>
+    /**
+     * Writes CDATA content.
+     * This method DOES NOT automatically escape characters.
+     * It will remove enclosed CDATA closing strings (e.g. {@code ]]&gt;})
+     *
+     * @param content the content to write
+     * @return this object
+     * @throws OperationNotAllowedException
+     * if called before any call to {@link #startElement(CharSequence)}
+     * or after the first element has been closed
+     */
+    public XmlWriter cdata(final CharSequence content) throws IOException {
+<span class="fc" id="L214">        prepareForData();</span>
+<span class="fc" id="L215">        StringBuilder sb = new StringBuilder(content);</span>
         int found;
-<span class="fc bfc" id="L196" title="All 2 branches covered.">        while (-1 != (found = sb.indexOf(&quot;]]&gt;&quot;))) {</span>
-<span class="fc" id="L197">            sb.replace(found, found + 3, &quot;{rat:CDATA close}&quot;);</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        while (-1 != (found = sb.indexOf(&quot;]]&gt;&quot;))) {</span>
+<span class="fc" id="L218">            sb.replace(found, found + 3, &quot;{rat:CDATA close}&quot;);</span>
         }
 
-<span class="fc" id="L200">        appendable.append(&quot;&lt;![CDATA[ &quot;);</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">        for (int i = 0; i &lt; sb.length(); i++) {</span>
-<span class="fc" id="L202">            char c = sb.charAt(i);</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">            if (!XMLChar.isContent(c)) {</span>
-<span class="fc" id="L204">                appendable.append(String.format(&quot;\\u%X&quot;, (int) c));</span>
+<span class="fc" id="L221">        appendable.append(&quot;&lt;![CDATA[ &quot;);</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        for (int i = 0; i &lt; sb.length(); i++) {</span>
+<span class="fc" id="L223">            char c = sb.charAt(i);</span>
+<span class="fc bfc" id="L224" title="All 2 branches covered.">            if (!XMLChar.isContent(c)) {</span>
+<span class="fc" id="L225">                appendable.append(String.format(&quot;\\u%X&quot;, (int) c));</span>
             } else {
-<span class="fc" id="L206">                appendable.append(c);</span>
+<span class="fc" id="L227">                appendable.append(c);</span>
             }
         }
-<span class="fc" id="L209">        appendable.append(&quot; ]]&gt;&quot;);</span>
+<span class="fc" id="L230">        appendable.append(&quot; ]]&gt;&quot;);</span>
 
-<span class="fc" id="L211">        inElement = false;</span>
-<span class="fc" id="L212">        return this;</span>
+<span class="fc" id="L232">        inElement = false;</span>
+<span class="fc" id="L233">        return this;</span>
     }
 
     private void writeEscaped(final CharSequence content, final boolean isAttributeContent) throws IOException {
-<span class="fc" id="L216">        final int length = content.length();</span>
-<span class="fc bfc" id="L217" title="All 2 branches covered.">        for (int i = 0; i &lt; length; i++) {</span>
-<span class="fc" id="L218">            char character = content.charAt(i);</span>
-<span class="fc bfc" id="L219" title="All 2 branches covered.">            if (character == '&amp;') {</span>
-<span class="fc" id="L220">                appendable.append(&quot;&amp;amp;&quot;);</span>
-<span class="fc bfc" id="L221" title="All 2 branches covered.">            } else if (character == '&lt;') {</span>
-<span class="fc" id="L222">                appendable.append(&quot;&amp;lt;&quot;);</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">            } else if (character == '&gt;') {</span>
-<span class="fc" id="L224">                appendable.append(&quot;&amp;gt;&quot;);</span>
-<span class="fc bfc" id="L225" title="All 4 branches covered.">            } else if (isAttributeContent &amp;&amp; character == '\'') {</span>
-<span class="fc" id="L226">                appendable.append(&quot;&amp;apos;&quot;);</span>
-<span class="fc bfc" id="L227" title="All 4 branches covered.">            } else if (isAttributeContent &amp;&amp; character == '\&quot;') {</span>
-<span class="fc" id="L228">                appendable.append(&quot;&amp;quot;&quot;);</span>
-<span class="fc bfc" id="L229" title="All 4 branches covered.">            } else if (!(XMLChar.isContent(character) || XMLChar.isSpace(character))) {</span>
-<span class="fc" id="L230">                appendable.append(String.format(&quot;\\u%X&quot;, (int) character));</span>
+<span class="fc" id="L237">        final int length = content.length();</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">        for (int i = 0; i &lt; length; i++) {</span>
+<span class="fc" id="L239">            char character = content.charAt(i);</span>
+<span class="fc bfc" id="L240" title="All 2 branches covered.">            if (character == '&amp;') {</span>
+<span class="fc" id="L241">                appendable.append(&quot;&amp;amp;&quot;);</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">            } else if (character == '&lt;') {</span>
+<span class="fc" id="L243">                appendable.append(&quot;&amp;lt;&quot;);</span>
+<span class="fc bfc" id="L244" title="All 2 branches covered.">            } else if (character == '&gt;') {</span>
+<span class="fc" id="L245">                appendable.append(&quot;&amp;gt;&quot;);</span>
+<span class="fc bfc" id="L246" title="All 4 branches covered.">            } else if (isAttributeContent &amp;&amp; character == '\'') {</span>
+<span class="fc" id="L247">                appendable.append(&quot;&amp;apos;&quot;);</span>
+<span class="fc bfc" id="L248" title="All 4 branches covered.">            } else if (isAttributeContent &amp;&amp; character == '\&quot;') {</span>
+<span class="fc" id="L249">                appendable.append(&quot;&amp;quot;&quot;);</span>
+<span class="fc bfc" id="L250" title="All 4 branches covered.">            } else if (!(XMLChar.isContent(character) || XMLChar.isSpace(character))) {</span>
+<span class="fc" id="L251">                appendable.append(String.format(&quot;\\u%X&quot;, (int) character));</span>
             } else {
-<span class="fc" id="L232">                appendable.append(character);</span>
+<span class="fc" id="L253">                appendable.append(character);</span>
             }
         }
-<span class="fc" id="L235">    }</span>
+<span class="fc" id="L256">    }</span>
 
     /**
      * Closes the last element written.
      *
      * @return this object
      * @throws OperationNotAllowedException if called before any call to
-     * {@link #openElement} or after the first element has been closed
+     * {@link #startElement} or after the first element has been closed
      */
-    @Override
-    public IXmlWriter closeElement() throws IOException {
-<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (elementNames.isEmpty()) {</span>
-<span class="fc" id="L247">            validateRootOpen();</span>
-<span class="fc" id="L248">            throw new OperationNotAllowedException(&quot;Close called before an element has been opened.&quot;);</span>
+    public XmlWriter closeElement() throws IOException {
+<span class="fc bfc" id="L266" title="All 2 branches covered.">        if (elementNames.isEmpty()) {</span>
+<span class="fc" id="L267">            validateRootOpen();</span>
+<span class="fc" id="L268">            throw new OperationNotAllowedException(&quot;Close called before an element has been opened.&quot;);</span>
         }
-<span class="fc" id="L250">        final CharSequence elementName = elementNames.pop();</span>
-<span class="fc bfc" id="L251" title="All 2 branches covered.">        if (inElement) {</span>
-<span class="fc" id="L252">            appendable.append(&quot;/&gt;&quot;);</span>
+<span class="fc" id="L270">        final CharSequence elementName = elementNames.pop();</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">        if (inElement) {</span>
+<span class="fc" id="L272">            appendable.append(&quot;/&gt;&quot;);</span>
         } else {
-<span class="fc" id="L254">            appendable.append(&quot;&lt;/&quot;);</span>
-<span class="fc" id="L255">            appendable.append(elementName);</span>
-<span class="fc" id="L256">            appendable.append('&gt;');</span>
+<span class="fc" id="L274">            appendable.append(&quot;&lt;/&quot;);</span>
+<span class="fc" id="L275">            appendable.append(elementName);</span>
+<span class="fc" id="L276">            appendable.append('&gt;');</span>
         }
-<span class="fc" id="L258">        inElement = false;</span>
-<span class="fc" id="L259">        return this;</span>
+<span class="fc" id="L278">        inElement = false;</span>
+<span class="fc" id="L279">        return this;</span>
     }
 
     /**
@@ -264,28 +284,27 @@ public final class XmlWriter implements IXmlWriter {
      * @param name The name of the element to close.  Must not be {@code null}.
      * @return this object
      * @throws OperationNotAllowedException if called before any call to
-     * {@link #openElement} or after the first element has been closed
+     * {@link #startElement} or after the first element has been closed
      */
-    @Override
-    public IXmlWriter closeElement(final CharSequence name) throws IOException {
-<span class="fc" id="L271">        Objects.requireNonNull(name);</span>
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">        if (elementNames.isEmpty()) {</span>
-<span class="nc" id="L273">            validateRootOpen();</span>
-<span class="nc" id="L274">            throw new OperationNotAllowedException(&quot;Close called before an element has been opened.&quot;);</span>
+    public XmlWriter closeElement(final CharSequence name) throws IOException {
+<span class="fc" id="L290">        Objects.requireNonNull(name);</span>
+<span class="pc bpc" id="L291" title="1 of 2 branches missed.">        if (elementNames.isEmpty()) {</span>
+<span class="nc" id="L292">            validateRootOpen();</span>
+<span class="nc" id="L293">            throw new OperationNotAllowedException(&quot;Close called before an element has been opened.&quot;);</span>
         }
-<span class="fc" id="L276">        CharSequence elementName = null;</span>
-<span class="fc bfc" id="L277" title="All 2 branches covered.">        while (!name.equals(elementName)) {</span>
-<span class="fc" id="L278">            elementName = elementNames.pop();</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">            if (inElement) {</span>
-<span class="fc" id="L280">                appendable.append(&quot;/&gt;&quot;);</span>
+<span class="fc" id="L295">        CharSequence elementName = null;</span>
+<span class="fc bfc" id="L296" title="All 2 branches covered.">        while (!name.equals(elementName)) {</span>
+<span class="fc" id="L297">            elementName = elementNames.pop();</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">            if (inElement) {</span>
+<span class="fc" id="L299">                appendable.append(&quot;/&gt;&quot;);</span>
             } else {
-<span class="fc" id="L282">                appendable.append(&quot;&lt;/&quot;);</span>
-<span class="fc" id="L283">                appendable.append(elementName);</span>
-<span class="fc" id="L284">                appendable.append('&gt;');</span>
+<span class="fc" id="L301">                appendable.append(&quot;&lt;/&quot;);</span>
+<span class="fc" id="L302">                appendable.append(elementName);</span>
+<span class="fc" id="L303">                appendable.append('&gt;');</span>
             }
-<span class="fc" id="L286">            inElement = false;</span>
+<span class="fc" id="L305">            inElement = false;</span>
         }
-<span class="fc" id="L288">        return this;</span>
+<span class="fc" id="L307">        return this;</span>
     }
 
     /**
@@ -295,43 +314,57 @@ public final class XmlWriter implements IXmlWriter {
      *
      * @return this object
      * @throws OperationNotAllowedException if called before any call to
-     * {@link #openElement}
+     * {@link #startElement}
      */
-    @Override
-    public IXmlWriter closeDocument() throws IOException {
-<span class="fc bfc" id="L302" title="All 4 branches covered.">        if (elementNames.isEmpty() &amp;&amp; !elementsWritten) {</span>
-<span class="fc" id="L303">            throw new OperationNotAllowedException(&quot;Close called before an element has been opened.&quot;);</span>
+    public XmlWriter closeDocument() throws IOException {
+<span class="fc bfc" id="L320" title="All 4 branches covered.">        if (elementNames.isEmpty() &amp;&amp; !elementsWritten) {</span>
+<span class="fc" id="L321">            throw new OperationNotAllowedException(&quot;Close called before an element has been opened.&quot;);</span>
         }
-<span class="fc bfc" id="L305" title="All 2 branches covered.">        while (!elementNames.isEmpty()) {</span>
-<span class="fc" id="L306">            closeElement();</span>
+<span class="fc bfc" id="L323" title="All 2 branches covered.">        while (!elementNames.isEmpty()) {</span>
+<span class="fc" id="L324">            closeElement();</span>
         }
-<span class="fc" id="L308">        return this;</span>
+<span class="fc" id="L326">        return this;</span>
     }
 
     @Override
     public void close() throws IOException {
-<span class="fc" id="L313">        closeDocument();</span>
-<span class="pc bpc" id="L314" title="1 of 2 branches missed.">        if (appendable instanceof Closeable closeable) {</span>
-<span class="fc" id="L315">            closeable.close();</span>
-        }
-<span class="fc" id="L317">    }</span>
-
-    public IXmlWriter append(final Document document) throws IOException {
-<span class="fc" id="L320">        validateRootOpen();</span>
-<span class="fc" id="L321">        elementsWritten = true;</span>
-<span class="fc" id="L322">        maybeCloseElement();</span>
-<span class="fc" id="L323">        appendable.append(System.lineSeparator());</span>
-<span class="fc" id="L324">        currentAttributes.clear();</span>
+<span class="fc" id="L331">        IOException thrown = null;</span>
         try {
-<span class="fc" id="L326">            Transformer transformer = StandardXmlFactory.create();</span>
-<span class="fc" id="L327">            ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="fc" id="L328">            transformer.transform(new DOMSource(document),</span>
+<span class="fc" id="L333">            closeDocument();</span>
+<span class="fc" id="L334">        } catch (IOException e) {</span>
+<span class="fc" id="L335">            thrown = e;</span>
+        } finally {
+<span class="fc bfc" id="L337" title="All 2 branches covered.">            if (appendable instanceof Closeable closeable) {</span>
+                try {
+<span class="fc" id="L339">                    closeable.close();</span>
+<span class="nc" id="L340">                } catch (IOException e) {</span>
+<span class="nc bnc" id="L341" title="All 2 branches missed.">                    if (thrown == null) {</span>
+<span class="nc" id="L342">                        thrown = e;</span>
+                    }
+<span class="fc" id="L344">                }</span>
+            }
+        }
+<span class="fc bfc" id="L347" title="All 2 branches covered.">        if (thrown != null) {</span>
+<span class="fc" id="L348">            throw thrown;</span>
+        }
+<span class="fc" id="L350">    }</span>
+
+    public XmlWriter append(final Document document) throws IOException {
+<span class="fc" id="L353">        validateRootOpen();</span>
+<span class="fc" id="L354">        elementsWritten = true;</span>
+<span class="fc" id="L355">        maybeCloseElement();</span>
+<span class="fc" id="L356">        appendable.append(System.lineSeparator());</span>
+<span class="fc" id="L357">        currentAttributes.clear();</span>
+        try {
+<span class="fc" id="L359">            Transformer transformer = StandardXmlFactory.createTransformer();</span>
+<span class="fc" id="L360">            ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L361">            transformer.transform(new DOMSource(document),</span>
                     new StreamResult(baos));
-<span class="fc" id="L330">            appendable.append(baos.toString());</span>
-<span class="nc" id="L331">        } catch (TransformerException e) {</span>
-<span class="nc" id="L332">            throw new IOException(e);</span>
-<span class="fc" id="L333">        }</span>
-<span class="fc" id="L334">        return this;</span>
+<span class="fc" id="L363">            appendable.append(baos.toString(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L364">        } catch (TransformerException e) {</span>
+<span class="nc" id="L365">            throw new IOException(e);</span>
+<span class="fc" id="L366">        }</span>
+<span class="fc" id="L367">        return this;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

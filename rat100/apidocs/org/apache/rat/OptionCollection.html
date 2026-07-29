@@ -160,11 +160,11 @@ ReportConfiguration from the options and an array of arguments.</div>
 <div class="deprecation-comment">use <a href="OptionCollection.ArgumentType.html" title="enum class in org.apache.rat"><code>OptionCollection.ArgumentType</code></a></div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="report/Reportable.html" title="interface in org.apache.rat.report">Reportable</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getReportable(java.io.File,org.apache.rat.ReportConfiguration)" class="member-name-link">getReportable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;base,
  <a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates an IReportable object from the directory name and ReportConfiguration
+<div class="block">Creates a Reportable object from the directory name and ReportConfiguration
 object.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a></code></div>
@@ -273,7 +273,17 @@ object.</div>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.apache.commons.cli.Options&gt;&nbsp;helpCmd,
  boolean&nbsp;noArgs)</span>
                                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Parses the standard options to create a ReportConfiguration.</div>
+<div class="block">Parses the standard options to create a ReportConfiguration.
+<p>
+This method is <code>synchronized</code> because it uses shared mutable state:
+the <a href="commandline/Arg.html" title="enum class in org.apache.rat.commandline"><code>Arg</code></a> enum's <code>OptionGroup</code> instances (whose <code>selected</code>
+field is mutated by <code>DefaultParser.parse(Options, String[])</code>), and
+<a href="commandline/Converters.html#FILE_CONVERTER"><code>Converters.FILE_CONVERTER</code></a> (whose
+<code>workingDirectory</code> field is set during argument processing).
+Without synchronization, parallel Maven reactor threads (e.g. <code>mvn -T4</code>)
+corrupt each other's parse state, causing options like <code>--input-exclude</code>
+to be silently skipped.
+</p></div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>workingDirectory</code> - The directory to resolve relative file names against.</dd>
@@ -330,16 +340,16 @@ Mutually exclusive options must be listed in an OptionGroup.</div>
 <section class="detail" id="getReportable(java.io.File,org.apache.rat.ReportConfiguration)">
 <h3>getReportable</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="report/IReportable.html" title="interface in org.apache.rat.report">IReportable</a></span>&nbsp;<span class="element-name">getReportable</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;base,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="report/Reportable.html" title="interface in org.apache.rat.report">Reportable</a></span>&nbsp;<span class="element-name">getReportable</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;base,
  <a href="ReportConfiguration.html" title="class in org.apache.rat">ReportConfiguration</a>&nbsp;config)</span></div>
-<div class="block">Creates an IReportable object from the directory name and ReportConfiguration
+<div class="block">Creates a Reportable object from the directory name and ReportConfiguration
 object.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>base</code> - the directory that contains the files to report on.</dd>
 <dd><code>config</code> - the ReportConfiguration.</dd>
 <dt>Returns:</dt>
-<dd>the IReportable instance containing the files.</dd>
+<dd>the Reportable instance containing the files.</dd>
 </dl>
 </div>
 </section>

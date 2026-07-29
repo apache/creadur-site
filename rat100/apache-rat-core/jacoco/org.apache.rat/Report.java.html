@@ -51,22 +51,22 @@ public final class Report {
 <span class="fc" id="L51">        ReportConfiguration configuration = OptionCollection.parseCommands(new File(&quot;.&quot;), args, Report::printUsage);</span>
 <span class="fc bfc" id="L52" title="All 2 branches covered.">        if (configuration != null) {</span>
 <span class="fc" id="L53">            configuration.validate(DefaultLog.getInstance()::error);</span>
-<span class="fc" id="L54">            Reporter reporter = new Reporter(configuration);</span>
-<span class="fc" id="L55">            reporter.output();</span>
-<span class="fc" id="L56">            reporter.writeSummary(DefaultLog.getInstance().asWriter());</span>
+<span class="fc" id="L54">            Reporter.Output output = new Reporter(configuration).execute();</span>
+<span class="fc" id="L55">            output.format(configuration);</span>
+<span class="fc" id="L56">            output.writeSummary(DefaultLog.getInstance().asWriter());</span>
 
 <span class="fc bfc" id="L58" title="All 2 branches covered.">            if (configuration.getClaimValidator().hasErrors()) {</span>
-<span class="fc" id="L59">                configuration.getClaimValidator().logIssues(reporter.getClaimsStatistic());</span>
+<span class="fc" id="L59">                configuration.getClaimValidator().logIssues(output.getStatistic());</span>
 <span class="fc" id="L60">                throw new RatDocumentAnalysisException(format(&quot;Issues with %s&quot;,</span>
 <span class="fc" id="L61">                        String.join(&quot;, &quot;,</span>
-<span class="fc" id="L62">                                configuration.getClaimValidator().listIssues(reporter.getClaimsStatistic()))));</span>
+<span class="fc" id="L62">                                configuration.getClaimValidator().listIssues(output.getStatistic()))));</span>
             }
         }
 <span class="fc" id="L65">    }</span>
 
     /**
      * Prints the usage message on {@code System.out}.
-     * @param opts The defined options.
+     * @param opts the defined options.
      */
     private static void printUsage(final Options opts) {
 <span class="fc" id="L72">        new Help(System.out).printUsage(opts);</span>
@@ -76,4 +76,4 @@ public final class Report {
         // do not instantiate
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

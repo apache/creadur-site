@@ -55,6 +55,7 @@ loadScripts(document, 'script');</script>
 <div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
 <li><a href="#constructor-summary" tabindex="0">Constructor Summary</a></li>
 <li><a href="#method-summary" tabindex="0">Method Summary</a></li>
 <li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
@@ -64,6 +65,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
+<li><a href="#serDes()" tabindex="0">serDes()</a></li>
 <li><a href="#addIncludedPatterns(java.lang.Iterable)" tabindex="0">addIncludedPatterns(Iterable)</a></li>
 <li><a href="#addIncludedMatcher(org.apache.rat.document.DocumentNameMatcher)" tabindex="0">addIncludedMatcher(DocumentNameMatcher)</a></li>
 <li><a href="#addFileProcessor(org.apache.rat.config.exclusion.StandardCollection)" tabindex="0">addFileProcessor(StandardCollection)</a></li>
@@ -91,11 +93,28 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ExclusionProcessor</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Processes the include and exclude patterns and applies the result against a base directory
-to return an IReportable that contains all the reportable objects.</div>
+to return a Reportable that contains all the reportable objects.</div>
 </div>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="ExclusionProcessor.SerDes.html" class="type-name-link" title="class in org.apache.rat.config.exclusion">ExclusionProcessor.SerDes</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Serializes and deserializes the ExclusionProcessor to an XML document.</div>
+</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -155,7 +174,7 @@ to return an IReportable that contains all the reportable objects.</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIncludedPatterns(java.lang.Iterable)" class="member-name-link">addIncludedPatterns</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;patterns)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Add the Iterable of strings to the collection of file/directory patters to ignore.</div>
+<div class="block">Add the iterable of strings to the collection of file/directory patters to ignore.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../document/DocumentNameMatcher.html" title="class in org.apache.rat.document">DocumentNameMatcher</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNameMatcher(org.apache.rat.document.DocumentName)" class="member-name-link">getNameMatcher</a><wbr>(<a href="../../document/DocumentName.html" title="class in org.apache.rat.document">DocumentName</a>&nbsp;basedir)</code></div>
@@ -168,6 +187,9 @@ document that is excluded.</div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Report the excluded files to the appendable object.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ExclusionProcessor.SerDes.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor.SerDes</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serDes()" class="member-name-link">serDes</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -203,14 +225,22 @@ document that is excluded.</div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="serDes()">
+<h3>serDes</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExclusionProcessor.SerDes.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor.SerDes</a></span>&nbsp;<span class="element-name">serDes</span>()</div>
+</div>
+</section>
+</li>
+<li>
 <section class="detail" id="addIncludedPatterns(java.lang.Iterable)">
 <h3>addIncludedPatterns</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ExclusionProcessor.html" title="class in org.apache.rat.config.exclusion">ExclusionProcessor</a></span>&nbsp;<span class="element-name">addIncludedPatterns</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;patterns)</span></div>
-<div class="block">Add the Iterable of strings to the collection of file/directory patters to ignore.</div>
+<div class="block">Add the iterable of strings to the collection of file/directory patters to ignore.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>patterns</code> - the patterns to add</dd>
+<dd><code>patterns</code> - the patterns to add.</dd>
 <dt>Returns:</dt>
 <dd>this</dd>
 </dl>

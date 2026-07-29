@@ -76,7 +76,7 @@ public class XsdWriter {
      */
     public XsdWriter init() throws IOException {
 <span class="nc" id="L78">        writer.startDocument()</span>
-<span class="nc" id="L79">        .openElement(&quot;xs:schema&quot;)</span>
+<span class="nc" id="L79">        .startElement(&quot;xs:schema&quot;)</span>
 <span class="nc" id="L80">        .attribute(&quot;attributeFormDefault&quot;, &quot;unqualified&quot;)</span>
 <span class="nc" id="L81">                .attribute(&quot;xmlns:xs&quot;, &quot;http://www.w3.org/2001/XMLSchema&quot;);</span>
 <span class="nc" id="L82">        return this;</span>
@@ -111,7 +111,7 @@ public class XsdWriter {
      * @throws IOException on error.
      */
     public XsdWriter open(final Type type, final String... attributeMap) throws IOException {
-<span class="nc" id="L114">        writer.openElement(type.elementName);</span>
+<span class="nc" id="L114">        writer.startElement(type.elementName);</span>
 <span class="nc" id="L115">        writeAttributes(attributeMap);</span>
 <span class="nc" id="L116">        return this;</span>
     }
@@ -124,7 +124,7 @@ public class XsdWriter {
      * @throws IOException on error.
      */
     public XsdWriter attribute(final String name, final String... attributeMap) throws IOException {
-<span class="nc" id="L127">        writer.openElement(&quot;xs:attribute&quot;).attribute(&quot;name&quot;, name);</span>
+<span class="nc" id="L127">        writer.startElement(&quot;xs:attribute&quot;).attribute(&quot;name&quot;, name);</span>
 <span class="nc" id="L128">        writeAttributes(attributeMap);</span>
 <span class="nc" id="L129">        writer.closeElement();</span>
 <span class="nc" id="L130">        return this;</span>
@@ -141,4 +141,4 @@ public class XsdWriter {
 <span class="nc" id="L141">        return this;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

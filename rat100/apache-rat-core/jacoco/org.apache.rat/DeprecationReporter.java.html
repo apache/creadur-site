@@ -42,27 +42,32 @@ public final class DeprecationReporter {
     }
 
     /**
-     * The consumer that is used for deprecation reporting.
+     * The per-thread consumer that is used for deprecation reporting.
+     * &lt;p&gt;
+     * Stored in a {@link ThreadLocal} so that each thread (e.g. parallel Maven
+     * reactor threads) gets its own reporter and does not interfere with
+     * reporters set by other threads.
+     * &lt;/p&gt;
      */
-<span class="fc" id="L47">    private static Consumer&lt;Option&gt; consumer = getDefault();</span>
+<span class="fc" id="L52">    private static final ThreadLocal&lt;Consumer&lt;Option&gt;&gt; CONSUMER = ThreadLocal.withInitial(DeprecationReporter::getDefault);</span>
 
     /**
      * Get the default reporter.
      * @return The default reporter.
      */
     public static Consumer&lt;Option&gt; getDefault() {
-<span class="fc" id="L54">        return  o -&gt; {</span>
-<span class="fc" id="L55">            StringBuilder buff = new StringBuilder();</span>
-<span class="fc bfc" id="L56" title="All 2 branches covered.">            if (o.getOpt() != null) {</span>
-<span class="fc" id="L57">                buff.append(&quot;-&quot;).append(o.getOpt());</span>
-<span class="fc bfc" id="L58" title="All 2 branches covered.">                if (o.getLongOpt() != null) {</span>
-<span class="fc" id="L59">                    buff.append(&quot;, --&quot;).append(o.getLongOpt());</span>
+<span class="fc" id="L59">        return  o -&gt; {</span>
+<span class="fc" id="L60">            StringBuilder buff = new StringBuilder();</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">            if (o.getOpt() != null) {</span>
+<span class="fc" id="L62">                buff.append(&quot;-&quot;).append(o.getOpt());</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">                if (o.getLongOpt() != null) {</span>
+<span class="fc" id="L64">                    buff.append(&quot;, --&quot;).append(o.getLongOpt());</span>
                 }
             } else {
-<span class="fc" id="L62">                buff.append(&quot;--&quot;).append(o.getLongOpt());</span>
+<span class="fc" id="L67">                buff.append(&quot;--&quot;).append(o.getLongOpt());</span>
             }
-<span class="fc" id="L64">            DefaultLog.getInstance().warn(format(&quot;Option [%s] used. %s&quot;, buff, o.getDeprecated().toString()));</span>
-<span class="fc" id="L65">        };</span>
+<span class="fc" id="L69">            DefaultLog.getInstance().warn(format(&quot;Option [%s] used. %s&quot;, buff, o.getDeprecated().toString()));</span>
+<span class="fc" id="L70">        };</span>
     }
 
     /**
@@ -70,7 +75,7 @@ public final class DeprecationReporter {
      * @return The consumer that will log usage of deprecated operations to the default log.
      */
     public static Consumer&lt;Option&gt; getLogReporter() {
-<span class="fc" id="L73">        return consumer;</span>
+<span class="fc" id="L78">        return CONSUMER.get();</span>
     }
 
     /**
@@ -78,47 +83,47 @@ public final class DeprecationReporter {
      * @param consumer The consumer that will do the reporting.
      */
     public static void setLogReporter(final Consumer&lt;Option&gt; consumer) {
-<span class="nc" id="L81">        DeprecationReporter.consumer = consumer;</span>
-<span class="nc" id="L82">    }</span>
+<span class="nc" id="L86">        CONSUMER.set(consumer);</span>
+<span class="nc" id="L87">    }</span>
 
     /**
-     * Rests the consumer to the default consumer.
+     * Resets the consumer to the default consumer.
      */
     public static void resetLogReporter() {
-<span class="nc" id="L88">        DeprecationReporter.consumer = getDefault();</span>
-<span class="nc" id="L89">    }</span>
+<span class="nc" id="L93">        CONSUMER.set(getDefault());</span>
+<span class="nc" id="L94">    }</span>
 
     /**
      * Log Deprecated class use.
      * @param clazz the Deprecated class to log
      */
     public static void logDeprecated(final Class&lt;?&gt; clazz) {
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">        if (clazz.getAnnotation(Deprecated.class) != null) {</span>
-<span class="fc" id="L97">            String name = format(&quot;class used: %s &quot;, clazz);</span>
-<span class="fc" id="L98">            Info info = clazz.getAnnotation(Info.class);</span>
-<span class="pc bpc" id="L99" title="1 of 2 branches missed.">            if (info == null) {</span>
-<span class="nc" id="L100">                DefaultLog.getInstance().warn(formatEntry(name, &quot;&quot;, false, &quot;&quot;));</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (clazz.getAnnotation(Deprecated.class) != null) {</span>
+<span class="fc" id="L102">            String name = format(&quot;class used: %s &quot;, clazz);</span>
+<span class="fc" id="L103">            Info info = clazz.getAnnotation(Info.class);</span>
+<span class="pc bpc" id="L104" title="1 of 2 branches missed.">            if (info == null) {</span>
+<span class="nc" id="L105">                DefaultLog.getInstance().warn(formatEntry(name, &quot;&quot;, false, &quot;&quot;));</span>
             } else {
-<span class="fc" id="L102">                DefaultLog.getInstance().warn(formatEntry(format(name, clazz), info.since(), info.forRemoval(), info.use()));</span>
+<span class="fc" id="L107">                DefaultLog.getInstance().warn(formatEntry(format(name, clazz), info.since(), info.forRemoval(), info.use()));</span>
             }
         }
-<span class="fc" id="L105">    }</span>
+<span class="fc" id="L110">    }</span>
 
     private static String formatEntry(final String prefix, final String since, final boolean forRemoval, final String use) {
-<span class="fc" id="L108">        StringBuilder sb = new StringBuilder(&quot;Deprecated &quot; + prefix);</span>
-<span class="pc bpc" id="L109" title="1 of 2 branches missed.">        if (forRemoval) {</span>
-<span class="fc" id="L110">            sb.append(&quot; Scheduled for removal&quot;);</span>
-<span class="pc bpc" id="L111" title="1 of 2 branches missed.">            if (!since.isEmpty()) {</span>
-<span class="fc" id="L112">                sb.append(&quot; since &quot;).append(since);</span>
+<span class="fc" id="L113">        StringBuilder sb = new StringBuilder(&quot;Deprecated &quot; + prefix);</span>
+<span class="pc bpc" id="L114" title="1 of 2 branches missed.">        if (forRemoval) {</span>
+<span class="fc" id="L115">            sb.append(&quot; Scheduled for removal&quot;);</span>
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (!since.isEmpty()) {</span>
+<span class="fc" id="L117">                sb.append(&quot; since &quot;).append(since);</span>
             }
-<span class="fc" id="L114">            sb.append(&quot;.&quot;);</span>
-<span class="nc bnc" id="L115" title="All 2 branches missed.">        } else if (!since.isEmpty()) {</span>
-<span class="nc" id="L116">            sb.append(&quot; Deprecated since &quot;).append(since).append(&quot;.&quot;);</span>
+<span class="fc" id="L119">            sb.append(&quot;.&quot;);</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        } else if (!since.isEmpty()) {</span>
+<span class="nc" id="L121">            sb.append(&quot; Deprecated since &quot;).append(since).append(&quot;.&quot;);</span>
         }
-<span class="pc bpc" id="L118" title="1 of 2 branches missed.">        if (!use.isEmpty()) {</span>
-<span class="nc" id="L119">            sb.append(&quot; Use &quot;).append(use).append(&quot; instead.&quot;);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (!use.isEmpty()) {</span>
+<span class="nc" id="L124">            sb.append(&quot; Use &quot;).append(use).append(&quot; instead.&quot;);</span>
         }
-<span class="fc" id="L121">        return sb.toString();</span>
+<span class="fc" id="L126">        return sb.toString();</span>
     }
 
     /**
@@ -129,8 +134,8 @@ public final class DeprecationReporter {
      * @param use What to use instead.
      */
     public static void logDeprecated(final String name, final String since, final boolean forRemoval, final String use) {
-<span class="nc" id="L132">        DefaultLog.getInstance().warn(formatEntry(name, since, forRemoval, use));</span>
-<span class="nc" id="L133">    }</span>
+<span class="nc" id="L137">        DefaultLog.getInstance().warn(formatEntry(name, since, forRemoval, use));</span>
+<span class="nc" id="L138">    }</span>
 
     /**
      * Annotation to provide deprecation information for Java8.
@@ -157,4 +162,4 @@ public final class DeprecationReporter {
         String use() default &quot;&quot;;
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -18,14 +18,30 @@
  */
 package org.apache.rat.utils;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
+import org.apache.commons.lang3.StringUtils;
+import org.w3c.dom.Document;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
  * Factory to create standard XML objects. The intention of this class is to resolve in a consistent manner the
@@ -33,16 +49,24 @@ import javax.xml.transform.stream.StreamSource;
  */
 public final class StandardXmlFactory {
 
+    /**
+     This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all
+     XML entity attacks are prevented.
+     */
+     //Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl
+    private static final String FEATURE  = &quot;http://apache.org/xml/features/disallow-doctype-decl&quot;;
+
     private StandardXmlFactory() {
         // do not instantiate.
     }
+
     /**
      * Create a transformer with no stylesheet.
      * @return the transformer.
      * @throws TransformerConfigurationException on error.
      */
-    public static Transformer create() throws TransformerConfigurationException {
-<span class="fc" id="L45">        return create(null);</span>
+    public static Transformer createTransformer() throws TransformerConfigurationException {
+<span class="fc" id="L69">        return createTransformer(null);</span>
     }
 
     /**
@@ -51,18 +75,63 @@ public final class StandardXmlFactory {
      * @return the transformer.
      * @throws TransformerConfigurationException on error.
      */
-    public static Transformer create(final InputStream styleIn) throws TransformerConfigurationException {
-<span class="fc" id="L55">        TransformerFactory factory = TransformerFactory.newInstance();</span>
-<span class="fc" id="L56">        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);</span>
-<span class="fc" id="L57">        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, &quot;&quot;);</span>
-<span class="fc" id="L58">        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, &quot;&quot;);</span>
-<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        Transformer transformer = styleIn == null ? factory.newTransformer() : factory.newTransformer(new StreamSource(styleIn));</span>
-<span class="fc" id="L60">        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, &quot;yes&quot;);</span>
-<span class="fc" id="L61">        transformer.setOutputProperty(OutputKeys.METHOD, &quot;xml&quot;);</span>
-<span class="fc" id="L62">        transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
-<span class="fc" id="L63">        transformer.setOutputProperty(OutputKeys.ENCODING, &quot;UTF-8&quot;);</span>
-<span class="fc" id="L64">        transformer.setOutputProperty(&quot;{http://xml.apache.org/xslt}indent-amount&quot;, &quot;4&quot;);</span>
-<span class="fc" id="L65">        return transformer;</span>
+    @SuppressFBWarnings(&quot;MALICIOUS_XSLT&quot;)
+    public static Transformer createTransformer(final InputStream styleIn) throws TransformerConfigurationException {
+<span class="fc" id="L80">        TransformerFactory factory = TransformerFactory.newInstance(); // NOSONAR</span>
+<span class="fc" id="L81">        factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);</span>
+<span class="fc" id="L82">        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, &quot;&quot;);</span>
+<span class="fc" id="L83">        factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, &quot;&quot;);</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        Transformer transformer = styleIn == null ? factory.newTransformer() : factory.newTransformer(new StreamSource(styleIn));</span>
+<span class="fc" id="L85">        transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, &quot;yes&quot;);</span>
+<span class="fc" id="L86">        transformer.setOutputProperty(OutputKeys.METHOD, &quot;xml&quot;);</span>
+<span class="fc" id="L87">        transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);</span>
+<span class="fc" id="L88">        transformer.setOutputProperty(OutputKeys.ENCODING, &quot;UTF-8&quot;);</span>
+<span class="fc" id="L89">        transformer.setOutputProperty(&quot;{http://xml.apache.org/xslt}indent-amount&quot;, &quot;4&quot;);</span>
+<span class="fc" id="L90">        return transformer;</span>
+    }
+
+    /**
+     * Creates a DocumentBuilder with reasonable security settings.
+     * @return a DocumentBuilder.
+     */
+    public static DocumentBuilder documentBuilder() {
+        try {
+<span class="fc" id="L99">            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();</span>
+<span class="fc" id="L100">            factory.setFeature(FEATURE, true);</span>
+
+            // and these as well, per Timothy Morgan's 2014 paper: &quot;XML Schema, DTD, and Entity Attacks&quot;
+<span class="fc" id="L103">            factory.setXIncludeAware(false);</span>
+
+            // remaining parser logic
+<span class="fc" id="L106">            return factory.newDocumentBuilder();</span>
+<span class="fc" id="L107">        } catch (ParserConfigurationException e) {</span>
+<span class="fc" id="L108">            throw new IllegalStateException(&quot;No XML parser defined&quot;, e);</span>
+        }
+    }
+
+    /**
+     * Write an XML document to a file.
+     * @param document the document to write.
+     * @param file the file to write to.
+     */
+    public static void writeDocument(final Document document, final File file) throws IOException, TransformerException {
+<span class="fc" id="L118">        DOMSource source = new DOMSource(document);</span>
+<span class="fc" id="L119">        FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8);</span>
+<span class="fc" id="L120">        StreamResult result = new StreamResult(writer);</span>
+<span class="fc" id="L121">        createTransformer().transform(source, result);</span>
+<span class="fc" id="L122">    }</span>
+
+    /**
+     * Write an XML document to a file.
+     * @param document the document to write.
+     */
+    public static String serializeDocument(final Document document) throws TransformerException {
+<span class="fc" id="L129">        DOMSource source = new DOMSource(document);</span>
+<span class="fc" id="L130">        StringWriter writer = new StringWriter();</span>
+<span class="fc" id="L131">        StreamResult sink = new StreamResult(writer);</span>
+<span class="fc" id="L132">        createTransformer().transform(source, sink);</span>
+<span class="fc" id="L133">        String result = writer.toString();</span>
+<span class="fc" id="L134">        return StringUtils.defaultIfBlank(result, &quot;&quot;);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

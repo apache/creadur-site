@@ -21,9 +21,9 @@ package org.apache.rat.configuration;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
@@ -88,7 +88,7 @@ public final class MatcherBuilderTracker {
     }
 
 <span class="fc" id="L90">    private MatcherBuilderTracker() {</span>
-<span class="fc" id="L91">        matcherBuilders = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L91">        matcherBuilders = new ConcurrentHashMap&lt;&gt;();</span>
 <span class="fc" id="L92">    }</span>
 
     /**
@@ -130,4 +130,4 @@ public final class MatcherBuilderTracker {
         }
 <span class="fc" id="L131">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

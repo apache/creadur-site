@@ -91,7 +91,13 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SpdxBuilder</span>
 <span class="extends-implements">extends <a href="AbstractBuilder.html" title="class in org.apache.rat.configuration.builders">AbstractBuilder</a></span></div>
-<div class="block">A builder for SPDX matchers.</div>
+<div class="block">A builder for SPDX matchers.
+<p>
+Uses a <code>ThreadLocal</code> factory so that each thread in a parallel Maven
+build gets its own <a href="../../analysis/matchers/SPDXMatcherFactory.html" title="class in org.apache.rat.analysis.matchers"><code>SPDXMatcherFactory</code></a> instance with isolated match
+state. This prevents two threads scanning different documents from
+cross-contaminating each other's SPDX identifier results.
+</p></div>
 </div>
 </section>
 <section class="summary">

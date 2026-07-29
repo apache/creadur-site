@@ -27,277 +27,387 @@
 <a class="jxr_linenumber" name="L19" href="#L19">19</a>  
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  <strong class="jxr_keyword">package</strong> org.apache.rat.report.claim;
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  
-<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
-<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.util.Comparator;
-<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.util.List;
-<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
-<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.ConcurrentHashMap;
-<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
-<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.lang3.StringUtils;
-<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.api.Document;
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.io.IOException;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <strong class="jxr_keyword">import</strong> java.io.InputStream;
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <strong class="jxr_keyword">import</strong> java.util.Comparator;
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <strong class="jxr_keyword">import</strong> java.util.concurrent.ConcurrentHashMap;
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> * This class provides a numerical overview about</em>
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <em class="jxr_javadoccomment"> * the report.</em>
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ClaimStatistic" href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#ClaimStatistic">ClaimStatistic</a> {
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>      <em class="jxr_comment">// keep the counter types in alphabetical order</em>
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>      <em class="jxr_javadoccomment">/** The counter types */</em>
-<a class="jxr_linenumber" name="L38" href="#L38">38</a>      <strong class="jxr_keyword">public</strong> enum Counter {
-<a class="jxr_linenumber" name="L39" href="#L39">39</a>          <em class="jxr_javadoccomment">/** count of approved files */</em>
-<a class="jxr_linenumber" name="L40" href="#L40">40</a>          APPROVED(<span class="jxr_string">"A count of approved licenses."</span>, -1, 0),
-<a class="jxr_linenumber" name="L41" href="#L41">41</a>          <em class="jxr_javadoccomment">/** count of archive files */</em>
-<a class="jxr_linenumber" name="L42" href="#L42">42</a>          ARCHIVES(<span class="jxr_string">"A count of archive files."</span>, -1, 0),
-<a class="jxr_linenumber" name="L43" href="#L43">43</a>          <em class="jxr_javadoccomment">/** count of binary  files */</em>
-<a class="jxr_linenumber" name="L44" href="#L44">44</a>          BINARIES(<span class="jxr_string">"A count of binary files."</span>, -1, 0),
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>          <em class="jxr_javadoccomment">/** count of distinct document types */</em>
-<a class="jxr_linenumber" name="L46" href="#L46">46</a>          DOCUMENT_TYPES(<span class="jxr_string">"A count of distinct document types."</span>, -1, 1),
-<a class="jxr_linenumber" name="L47" href="#L47">47</a>          <em class="jxr_javadoccomment">/** count of generated/ignored files */</em>
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          IGNORED(<span class="jxr_string">"A count of ignored files."</span>, -1, 0),
-<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <em class="jxr_javadoccomment">/** count of license categories */</em>
-<a class="jxr_linenumber" name="L50" href="#L50">50</a>          LICENSE_CATEGORIES(<span class="jxr_string">"A count of distinct license categories."</span>, -1, 1),
-<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <em class="jxr_javadoccomment">/** count of distinct license names */</em>
-<a class="jxr_linenumber" name="L52" href="#L52">52</a>          LICENSE_NAMES(<span class="jxr_string">"A count of distinct license names."</span>, -1, 1),
-<a class="jxr_linenumber" name="L53" href="#L53">53</a>          <em class="jxr_javadoccomment">/** count of note files */</em>
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>          NOTICES(<span class="jxr_string">"A count of notice files."</span>, -1, 0),
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          <em class="jxr_javadoccomment">/** count of standard files */</em>
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          STANDARDS(<span class="jxr_string">"A count of standard files."</span>, -1, 1),
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <em class="jxr_javadoccomment">/** count of unapproved files */</em>
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          UNAPPROVED(<span class="jxr_string">"A count of unapproved licenses."</span>, 0, 0),
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <em class="jxr_javadoccomment">/** count of unknown files */</em>
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          UNKNOWN(<span class="jxr_string">"A count of unknown file types."</span>, -1, 0);
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>  
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>          <em class="jxr_javadoccomment">/** The description of the counter */</em>
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String description;
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>          <em class="jxr_javadoccomment">/** The default max value for the counter */</em>
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMaxValue;
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          <em class="jxr_javadoccomment">/** The default minimum value for the counter */</em>
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMinValue;
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>  
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          Counter(<strong class="jxr_keyword">final</strong> String description, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMaxValue, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMinValue) {
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>              <strong class="jxr_keyword">this</strong>.description = description;
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>              <strong class="jxr_keyword">this</strong>.defaultMaxValue = defaultMaxValue;
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>              <strong class="jxr_keyword">this</strong>.defaultMinValue = defaultMinValue;
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>          }
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>  
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L76" href="#L76">76</a>  <em class="jxr_javadoccomment">         * Gets the description of the counter.</em>
-<a class="jxr_linenumber" name="L77" href="#L77">77</a>  <em class="jxr_javadoccomment">         * @return The description of the counter.</em>
-<a class="jxr_linenumber" name="L78" href="#L78">78</a>  <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L79" href="#L79">79</a>          <strong class="jxr_keyword">public</strong> String getDescription() {
-<a class="jxr_linenumber" name="L80" href="#L80">80</a>              <strong class="jxr_keyword">return</strong> description;
-<a class="jxr_linenumber" name="L81" href="#L81">81</a>          }
-<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
-<a class="jxr_linenumber" name="L83" href="#L83">83</a>          <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>  <em class="jxr_javadoccomment">         * Gets the default maximum value for the counter.</em>
-<a class="jxr_linenumber" name="L85" href="#L85">85</a>  <em class="jxr_javadoccomment">         * @return the default maximum value for the counter.</em>
-<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L87" href="#L87">87</a>          <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getDefaultMaxValue() {
-<a class="jxr_linenumber" name="L88" href="#L88">88</a>              <strong class="jxr_keyword">return</strong> defaultMaxValue;
-<a class="jxr_linenumber" name="L89" href="#L89">89</a>          }
-<a class="jxr_linenumber" name="L90" href="#L90">90</a>          <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">         * Gets the default minimum value for the counter.</em>
-<a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">         * @return the default maximum value for the counter.</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>  <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getDefaultMinValue() {
-<a class="jxr_linenumber" name="L95" href="#L95">95</a>              <strong class="jxr_keyword">return</strong> defaultMinValue;
-<a class="jxr_linenumber" name="L96" href="#L96">96</a>          }
-<a class="jxr_linenumber" name="L97" href="#L97">97</a>  
-<a class="jxr_linenumber" name="L98" href="#L98">98</a>          <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L99" href="#L99">99</a>  <em class="jxr_javadoccomment">         * Display name is capitalized and any underscores are replaced by spaces.</em>
-<a class="jxr_linenumber" name="L100" href="#L100">100</a> <em class="jxr_javadoccomment">         * @return displayName of the counter, capitalized and without underscores.</em>
-<a class="jxr_linenumber" name="L101" href="#L101">101</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L102" href="#L102">102</a>         <strong class="jxr_keyword">public</strong> String displayName() {
-<a class="jxr_linenumber" name="L103" href="#L103">103</a>             <strong class="jxr_keyword">return</strong> StringUtils.capitalize(name().replaceAll(<span class="jxr_string">"_"</span>, <span class="jxr_string">" "</span>).toLowerCase(Locale.ROOT));
-<a class="jxr_linenumber" name="L104" href="#L104">104</a>         }
-<a class="jxr_linenumber" name="L105" href="#L105">105</a>     }
-<a class="jxr_linenumber" name="L106" href="#L106">106</a> 
-<a class="jxr_linenumber" name="L107" href="#L107">107</a>     <em class="jxr_javadoccomment">/** Count of license family name to counter */</em>
-<a class="jxr_linenumber" name="L108" href="#L108">108</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> ConcurrentHashMap&lt;String, IntCounter&gt; licenseNameMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
-<a class="jxr_linenumber" name="L109" href="#L109">109</a>     <em class="jxr_javadoccomment">/** Map of license family category to counter */</em>
-<a class="jxr_linenumber" name="L110" href="#L110">110</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> ConcurrentHashMap&lt;String, IntCounter&gt; licenseFamilyCategoryMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
-<a class="jxr_linenumber" name="L111" href="#L111">111</a>     <em class="jxr_javadoccomment">/** Map of document type to counter */</em>
-<a class="jxr_linenumber" name="L112" href="#L112">112</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> ConcurrentHashMap&lt;Document.Type, IntCounter&gt; documentTypeMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
-<a class="jxr_linenumber" name="L113" href="#L113">113</a>     <em class="jxr_javadoccomment">/** Map of counter type to value */</em>
-<a class="jxr_linenumber" name="L114" href="#L114">114</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> ConcurrentHashMap&lt;ClaimStatistic.Counter, IntCounter&gt; counterMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
-<a class="jxr_linenumber" name="L115" href="#L115">115</a> 
-<a class="jxr_linenumber" name="L116" href="#L116">116</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L117" href="#L117">117</a> <em class="jxr_javadoccomment">     * Converts null counter to 0.</em>
-<a class="jxr_linenumber" name="L118" href="#L118">118</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L119" href="#L119">119</a> <em class="jxr_javadoccomment">     * @param counter the Counter to retrieve the value from.</em>
-<a class="jxr_linenumber" name="L120" href="#L120">120</a> <em class="jxr_javadoccomment">     * @return 0 if counter is {@code null} or counter value otherwise.</em>
-<a class="jxr_linenumber" name="L121" href="#L121">121</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L122" href="#L122">122</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> getValue(<strong class="jxr_keyword">final</strong> IntCounter counter) {
-<a class="jxr_linenumber" name="L123" href="#L123">123</a>         <strong class="jxr_keyword">return</strong> counter == <strong class="jxr_keyword">null</strong> ? 0 : counter.value();
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>     }
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> javax.xml.parsers.DocumentBuilder;
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.function.IOSupplier;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.lang3.StringUtils;
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.api.Document;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.configuration.XMLConfigurationReader;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.xml.writer.XmlWriter;
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.StandardXmlFactory;
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.xml.sax.SAXException;
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>  <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment"> * This class provides a numerical overview about</em>
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment"> * the report.</em>
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="ClaimStatistic" href="../../../../../org/apache/rat/report/claim/ClaimStatistic.html#ClaimStatistic">ClaimStatistic</a> {
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>      <em class="jxr_comment">// keep the counter types in alphabetical order</em>
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>      <em class="jxr_javadoccomment">/** The counter types */</em>
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">public</strong> enum Counter {
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>          <em class="jxr_javadoccomment">/** count of approved files */</em>
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          APPROVED(<span class="jxr_string">"A count of approved licenses."</span>, -1, 0),
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>          <em class="jxr_javadoccomment">/** count of archive files */</em>
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>          ARCHIVES(<span class="jxr_string">"A count of archive files."</span>, -1, 0),
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>          <em class="jxr_javadoccomment">/** count of binary  files */</em>
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>          BINARIES(<span class="jxr_string">"A count of binary files."</span>, -1, 0),
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          <em class="jxr_javadoccomment">/** count of distinct document types */</em>
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          DOCUMENT_TYPES(<span class="jxr_string">"A count of distinct document types."</span>, -1, 1),
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          <em class="jxr_javadoccomment">/** count of generated/ignored files */</em>
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          IGNORED(<span class="jxr_string">"A count of ignored files."</span>, -1, 0),
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          <em class="jxr_javadoccomment">/** count of license categories */</em>
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          LICENSE_CATEGORIES(<span class="jxr_string">"A count of distinct license categories."</span>, -1, 1),
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          <em class="jxr_javadoccomment">/** count of distinct license names */</em>
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>          LICENSE_NAMES(<span class="jxr_string">"A count of distinct license names."</span>, -1, 1),
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>          <em class="jxr_javadoccomment">/** count of note files */</em>
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>          NOTICES(<span class="jxr_string">"A count of notice files."</span>, -1, 0),
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>          <em class="jxr_javadoccomment">/** count of standard files */</em>
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>          STANDARDS(<span class="jxr_string">"A count of standard files."</span>, -1, 1),
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          <em class="jxr_javadoccomment">/** count of unapproved files */</em>
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          UNAPPROVED(<span class="jxr_string">"A count of unapproved licenses."</span>, 0, 0),
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          <em class="jxr_javadoccomment">/** count of unknown files */</em>
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          UNKNOWN(<span class="jxr_string">"A count of unknown file types."</span>, -1, 0);
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>  
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          <em class="jxr_javadoccomment">/** The description of the counter */</em>
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> String description;
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>          <em class="jxr_javadoccomment">/** The default max value for the counter */</em>
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMaxValue;
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>          <em class="jxr_javadoccomment">/** The default minimum value for the counter */</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>          <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMinValue;
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>  
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>          Counter(<strong class="jxr_keyword">final</strong> String description, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMaxValue, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> defaultMinValue) {
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>              <strong class="jxr_keyword">this</strong>.description = description;
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>              <strong class="jxr_keyword">this</strong>.defaultMaxValue = defaultMaxValue;
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>              <strong class="jxr_keyword">this</strong>.defaultMinValue = defaultMinValue;
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          }
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>  
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>          <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  <em class="jxr_javadoccomment">         * Gets the description of the counter.</em>
+<a class="jxr_linenumber" name="L87" href="#L87">87</a>  <em class="jxr_javadoccomment">         * @return The description of the counter.</em>
+<a class="jxr_linenumber" name="L88" href="#L88">88</a>  <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L89" href="#L89">89</a>          <strong class="jxr_keyword">public</strong> String getDescription() {
+<a class="jxr_linenumber" name="L90" href="#L90">90</a>              <strong class="jxr_keyword">return</strong> description;
+<a class="jxr_linenumber" name="L91" href="#L91">91</a>          }
+<a class="jxr_linenumber" name="L92" href="#L92">92</a>  
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>          <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L94" href="#L94">94</a>  <em class="jxr_javadoccomment">         * Gets the default maximum value for the counter.</em>
+<a class="jxr_linenumber" name="L95" href="#L95">95</a>  <em class="jxr_javadoccomment">         * @return the default maximum value for the counter.</em>
+<a class="jxr_linenumber" name="L96" href="#L96">96</a>  <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L97" href="#L97">97</a>          <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getDefaultMaxValue() {
+<a class="jxr_linenumber" name="L98" href="#L98">98</a>              <strong class="jxr_keyword">return</strong> defaultMaxValue;
+<a class="jxr_linenumber" name="L99" href="#L99">99</a>          }
+<a class="jxr_linenumber" name="L100" href="#L100">100</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L101" href="#L101">101</a> <em class="jxr_javadoccomment">         * Gets the default minimum value for the counter.</em>
+<a class="jxr_linenumber" name="L102" href="#L102">102</a> <em class="jxr_javadoccomment">         * @return the default maximum value for the counter.</em>
+<a class="jxr_linenumber" name="L103" href="#L103">103</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L104" href="#L104">104</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getDefaultMinValue() {
+<a class="jxr_linenumber" name="L105" href="#L105">105</a>             <strong class="jxr_keyword">return</strong> defaultMinValue;
+<a class="jxr_linenumber" name="L106" href="#L106">106</a>         }
+<a class="jxr_linenumber" name="L107" href="#L107">107</a> 
+<a class="jxr_linenumber" name="L108" href="#L108">108</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L109" href="#L109">109</a> <em class="jxr_javadoccomment">         * Display name is capitalized and any underscores are replaced by spaces.</em>
+<a class="jxr_linenumber" name="L110" href="#L110">110</a> <em class="jxr_javadoccomment">         * @return displayName of the counter, capitalized and without underscores.</em>
+<a class="jxr_linenumber" name="L111" href="#L111">111</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L112" href="#L112">112</a>         <strong class="jxr_keyword">public</strong> String displayName() {
+<a class="jxr_linenumber" name="L113" href="#L113">113</a>             <strong class="jxr_keyword">return</strong> StringUtils.capitalize(name().replace(<span class="jxr_string">"_"</span>, <span class="jxr_string">" "</span>).toLowerCase(Locale.ROOT));
+<a class="jxr_linenumber" name="L114" href="#L114">114</a>         }
+<a class="jxr_linenumber" name="L115" href="#L115">115</a>     }
+<a class="jxr_linenumber" name="L116" href="#L116">116</a> 
+<a class="jxr_linenumber" name="L117" href="#L117">117</a>     <em class="jxr_javadoccomment">/** Count of license family name to counter */</em>
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> ConcurrentHashMap&lt;String, IntCounter&gt; licenseNameMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
+<a class="jxr_linenumber" name="L119" href="#L119">119</a>     <em class="jxr_javadoccomment">/** Map of license family category to counter */</em>
+<a class="jxr_linenumber" name="L120" href="#L120">120</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> ConcurrentHashMap&lt;String, IntCounter&gt; licenseFamilyCategoryMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
+<a class="jxr_linenumber" name="L121" href="#L121">121</a>     <em class="jxr_javadoccomment">/** Map of document type to counter */</em>
+<a class="jxr_linenumber" name="L122" href="#L122">122</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> ConcurrentHashMap&lt;Document.Type, IntCounter&gt; documentTypeMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
+<a class="jxr_linenumber" name="L123" href="#L123">123</a>     <em class="jxr_javadoccomment">/** Map of counter type to value */</em>
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> ConcurrentHashMap&lt;ClaimStatistic.Counter, IntCounter&gt; counterMap = <strong class="jxr_keyword">new</strong> ConcurrentHashMap&lt;&gt;();
 <a class="jxr_linenumber" name="L125" href="#L125">125</a> 
-<a class="jxr_linenumber" name="L126" href="#L126">126</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L127" href="#L127">127</a> <em class="jxr_javadoccomment">     * Returns the counts for the counter.</em>
-<a class="jxr_linenumber" name="L128" href="#L128">128</a> <em class="jxr_javadoccomment">     * @param counter the counter to get the value for.</em>
-<a class="jxr_linenumber" name="L129" href="#L129">129</a> <em class="jxr_javadoccomment">     * @return the number times the counter type was seen.</em>
-<a class="jxr_linenumber" name="L130" href="#L130">130</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L131" href="#L131">131</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getCounter(<strong class="jxr_keyword">final</strong> Counter counter) {
-<a class="jxr_linenumber" name="L132" href="#L132">132</a>         <strong class="jxr_keyword">return</strong> getValue(counterMap.get(counter));
-<a class="jxr_linenumber" name="L133" href="#L133">133</a>     }
-<a class="jxr_linenumber" name="L134" href="#L134">134</a> 
-<a class="jxr_linenumber" name="L135" href="#L135">135</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L136" href="#L136">136</a> <em class="jxr_javadoccomment">     * Increments the counts for the counter.</em>
-<a class="jxr_linenumber" name="L137" href="#L137">137</a> <em class="jxr_javadoccomment">     * @param counter the counter to increment.</em>
-<a class="jxr_linenumber" name="L138" href="#L138">138</a> <em class="jxr_javadoccomment">     * @param value the value to increment the counter by.</em>
-<a class="jxr_linenumber" name="L139" href="#L139">139</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L140" href="#L140">140</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> incCounter(<strong class="jxr_keyword">final</strong> Counter counter, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
-<a class="jxr_linenumber" name="L141" href="#L141">141</a>         counterMap.compute(counter, (k, v) -&gt; v == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">new</strong> IntCounter().increment(value) : v.increment(value));
-<a class="jxr_linenumber" name="L142" href="#L142">142</a>     }
-<a class="jxr_linenumber" name="L143" href="#L143">143</a> 
-<a class="jxr_linenumber" name="L144" href="#L144">144</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L145" href="#L145">145</a> <em class="jxr_javadoccomment">     * Gets the counts for the Document.Type.</em>
-<a class="jxr_linenumber" name="L146" href="#L146">146</a> <em class="jxr_javadoccomment">     * @param documentType the Document.Type to get the counter for.</em>
-<a class="jxr_linenumber" name="L147" href="#L147">147</a> <em class="jxr_javadoccomment">     * @return the number times the Document.Type was seen.</em>
-<a class="jxr_linenumber" name="L148" href="#L148">148</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L149" href="#L149">149</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getCounter(<strong class="jxr_keyword">final</strong> Document.Type documentType) {
-<a class="jxr_linenumber" name="L150" href="#L150">150</a>         <strong class="jxr_keyword">return</strong> getValue(documentTypeMap.get(documentType));
-<a class="jxr_linenumber" name="L151" href="#L151">151</a>     }
-<a class="jxr_linenumber" name="L152" href="#L152">152</a> 
-<a class="jxr_linenumber" name="L153" href="#L153">153</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L154" href="#L154">154</a> <em class="jxr_javadoccomment">     * Gets the list of Document.Types seen in the run.</em>
-<a class="jxr_linenumber" name="L155" href="#L155">155</a> <em class="jxr_javadoccomment">     * @return the list of Document.Types seen in the run.</em>
-<a class="jxr_linenumber" name="L156" href="#L156">156</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L157" href="#L157">157</a>     <strong class="jxr_keyword">public</strong> List&lt;Document.Type&gt; getDocumentTypes() {
-<a class="jxr_linenumber" name="L158" href="#L158">158</a>         List&lt;Document.Type&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(documentTypeMap.keySet());
-<a class="jxr_linenumber" name="L159" href="#L159">159</a>         result.sort(Comparator.comparing(Enum::name));
-<a class="jxr_linenumber" name="L160" href="#L160">160</a>         <strong class="jxr_keyword">return</strong> result;
-<a class="jxr_linenumber" name="L161" href="#L161">161</a>     }
-<a class="jxr_linenumber" name="L162" href="#L162">162</a> 
-<a class="jxr_linenumber" name="L163" href="#L163">163</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L164" href="#L164">164</a> <em class="jxr_javadoccomment">     * Increments the number of times the Document.Type was seen.</em>
-<a class="jxr_linenumber" name="L165" href="#L165">165</a> <em class="jxr_javadoccomment">     * @param documentType the Document.Type to increment.</em>
-<a class="jxr_linenumber" name="L166" href="#L166">166</a> <em class="jxr_javadoccomment">     * @param value the value to increment the counter by.</em>
-<a class="jxr_linenumber" name="L167" href="#L167">167</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L168" href="#L168">168</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> incCounter(<strong class="jxr_keyword">final</strong> Document.Type documentType, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
-<a class="jxr_linenumber" name="L169" href="#L169">169</a>         documentTypeMap.compute(documentType, (k, v) -&gt; updateCounter(Counter.DOCUMENT_TYPES, v, value));
-<a class="jxr_linenumber" name="L170" href="#L170">170</a>         <strong class="jxr_keyword">switch</strong> (documentType) {
-<a class="jxr_linenumber" name="L171" href="#L171">171</a>             <strong class="jxr_keyword">case</strong> STANDARD:
-<a class="jxr_linenumber" name="L172" href="#L172">172</a>                 incCounter(Counter.STANDARDS, value);
-<a class="jxr_linenumber" name="L173" href="#L173">173</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L174" href="#L174">174</a>             <strong class="jxr_keyword">case</strong> ARCHIVE:
-<a class="jxr_linenumber" name="L175" href="#L175">175</a>                 incCounter(Counter.ARCHIVES, value);
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L177" href="#L177">177</a>             <strong class="jxr_keyword">case</strong> BINARY:
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>                 incCounter(Counter.BINARIES, value);
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>             <strong class="jxr_keyword">case</strong> NOTICE:
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>                 incCounter(Counter.NOTICES, value);
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>             <strong class="jxr_keyword">case</strong> UNKNOWN:
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>                 incCounter(Counter.UNKNOWN, value);
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>             <strong class="jxr_keyword">case</strong> IGNORED:
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>                 incCounter(Counter.IGNORED, value);
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>         }
-<a class="jxr_linenumber" name="L190" href="#L190">190</a>     }
-<a class="jxr_linenumber" name="L191" href="#L191">191</a> 
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L193" href="#L193">193</a> <em class="jxr_javadoccomment">     * Gets the counts for the license category.</em>
-<a class="jxr_linenumber" name="L194" href="#L194">194</a> <em class="jxr_javadoccomment">     * @param licenseFamilyCategory the license family category to get the count for.</em>
-<a class="jxr_linenumber" name="L195" href="#L195">195</a> <em class="jxr_javadoccomment">     * @return the number of times the license family category was seen.</em>
-<a class="jxr_linenumber" name="L196" href="#L196">196</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getLicenseCategoryCount(<strong class="jxr_keyword">final</strong> String licenseFamilyCategory) {
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>         <strong class="jxr_keyword">return</strong> getValue(licenseFamilyCategoryMap.get(licenseFamilyCategory));
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>     }
-<a class="jxr_linenumber" name="L200" href="#L200">200</a> 
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L202" href="#L202">202</a> <em class="jxr_javadoccomment">     * Gets the counts for the license name.</em>
-<a class="jxr_linenumber" name="L203" href="#L203">203</a> <em class="jxr_javadoccomment">     * @param licenseName the license name to get the count for.</em>
-<a class="jxr_linenumber" name="L204" href="#L204">204</a> <em class="jxr_javadoccomment">     * @return the number of times the license family category was seen.</em>
-<a class="jxr_linenumber" name="L205" href="#L205">205</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getLicenseNameCount(<strong class="jxr_keyword">final</strong> String licenseName) {
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>         <strong class="jxr_keyword">return</strong> getValue(licenseNameMap.get(licenseName));
-<a class="jxr_linenumber" name="L208" href="#L208">208</a>     }
-<a class="jxr_linenumber" name="L209" href="#L209">209</a> 
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L211" href="#L211">211</a> <em class="jxr_javadoccomment">     * Updates the intCounter with the value and if the intCounter was null creates a new one and registers the</em>
-<a class="jxr_linenumber" name="L212" href="#L212">212</a> <em class="jxr_javadoccomment">     * creation as a counter type.</em>
-<a class="jxr_linenumber" name="L213" href="#L213">213</a> <em class="jxr_javadoccomment">     * @param counter the Type of the counter.</em>
-<a class="jxr_linenumber" name="L214" href="#L214">214</a> <em class="jxr_javadoccomment">     * @param intCounter the IntCounter to update. May be null.</em>
-<a class="jxr_linenumber" name="L215" href="#L215">215</a> <em class="jxr_javadoccomment">     * @param value the value to add to the int counter.</em>
-<a class="jxr_linenumber" name="L216" href="#L216">216</a> <em class="jxr_javadoccomment">     * @return the intCounter if it was not {@code null}, a new IntCounter otherwise.</em>
-<a class="jxr_linenumber" name="L217" href="#L217">217</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L218" href="#L218">218</a>     <strong class="jxr_keyword">private</strong> IntCounter updateCounter(<strong class="jxr_keyword">final</strong> Counter counter, <strong class="jxr_keyword">final</strong> IntCounter intCounter, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>         <strong class="jxr_keyword">if</strong> (intCounter == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L220" href="#L220">220</a>             incCounter(counter, 1);
-<a class="jxr_linenumber" name="L221" href="#L221">221</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> IntCounter().increment(value);
-<a class="jxr_linenumber" name="L222" href="#L222">222</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>             <strong class="jxr_keyword">return</strong> intCounter.increment(value);
-<a class="jxr_linenumber" name="L224" href="#L224">224</a>         }
-<a class="jxr_linenumber" name="L225" href="#L225">225</a>     }
-<a class="jxr_linenumber" name="L226" href="#L226">226</a> 
-<a class="jxr_linenumber" name="L227" href="#L227">227</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L228" href="#L228">228</a> <em class="jxr_javadoccomment">     * Increments the number of times a license family category was seen.</em>
-<a class="jxr_linenumber" name="L229" href="#L229">229</a> <em class="jxr_javadoccomment">     * @param licenseFamilyCategory the License family category to increment.</em>
-<a class="jxr_linenumber" name="L230" href="#L230">230</a> <em class="jxr_javadoccomment">     * @param value the value to increment the count by.</em>
-<a class="jxr_linenumber" name="L231" href="#L231">231</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> incLicenseCategoryCount(<strong class="jxr_keyword">final</strong> String licenseFamilyCategory, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
-<a class="jxr_linenumber" name="L233" href="#L233">233</a>         licenseFamilyCategoryMap.compute(licenseFamilyCategory, (k, v) -&gt; updateCounter(Counter.LICENSE_CATEGORIES, v, value));
-<a class="jxr_linenumber" name="L234" href="#L234">234</a>     }
-<a class="jxr_linenumber" name="L235" href="#L235">235</a> 
-<a class="jxr_linenumber" name="L236" href="#L236">236</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L237" href="#L237">237</a> <em class="jxr_javadoccomment">     * Gets the set of license family categories that were seen.</em>
-<a class="jxr_linenumber" name="L238" href="#L238">238</a> <em class="jxr_javadoccomment">     * @return A set of license family categories.</em>
-<a class="jxr_linenumber" name="L239" href="#L239">239</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L240" href="#L240">240</a>     <strong class="jxr_keyword">public</strong> List&lt;String&gt; getLicenseFamilyCategories() {
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>         List&lt;String&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(licenseFamilyCategoryMap.keySet());
-<a class="jxr_linenumber" name="L242" href="#L242">242</a>         result.sort(String::compareTo);
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>         <strong class="jxr_keyword">return</strong> result;
+<a class="jxr_linenumber" name="L126" href="#L126">126</a>     <strong class="jxr_keyword">public</strong> SerDes serDes() {
+<a class="jxr_linenumber" name="L127" href="#L127">127</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> SerDes();
+<a class="jxr_linenumber" name="L128" href="#L128">128</a>     }
+<a class="jxr_linenumber" name="L129" href="#L129">129</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L130" href="#L130">130</a> <em class="jxr_javadoccomment">     * Converts {@code null} counter to 0.</em>
+<a class="jxr_linenumber" name="L131" href="#L131">131</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L132" href="#L132">132</a> <em class="jxr_javadoccomment">     * @param counter the Counter to retrieve the value from.</em>
+<a class="jxr_linenumber" name="L133" href="#L133">133</a> <em class="jxr_javadoccomment">     * @return 0 if counter is {@code null} or counter value otherwise.</em>
+<a class="jxr_linenumber" name="L134" href="#L134">134</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L135" href="#L135">135</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> getValue(<strong class="jxr_keyword">final</strong> IntCounter counter) {
+<a class="jxr_linenumber" name="L136" href="#L136">136</a>         <strong class="jxr_keyword">return</strong> counter == <strong class="jxr_keyword">null</strong> ? 0 : counter.value();
+<a class="jxr_linenumber" name="L137" href="#L137">137</a>     }
+<a class="jxr_linenumber" name="L138" href="#L138">138</a> 
+<a class="jxr_linenumber" name="L139" href="#L139">139</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L140" href="#L140">140</a> <em class="jxr_javadoccomment">     * Returns the counts for the counter.</em>
+<a class="jxr_linenumber" name="L141" href="#L141">141</a> <em class="jxr_javadoccomment">     * @param counter the counter to get the value for.</em>
+<a class="jxr_linenumber" name="L142" href="#L142">142</a> <em class="jxr_javadoccomment">     * @return the number times the counter type was seen.</em>
+<a class="jxr_linenumber" name="L143" href="#L143">143</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L144" href="#L144">144</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getCounter(<strong class="jxr_keyword">final</strong> Counter counter) {
+<a class="jxr_linenumber" name="L145" href="#L145">145</a>         <strong class="jxr_keyword">return</strong> getValue(counterMap.get(counter));
+<a class="jxr_linenumber" name="L146" href="#L146">146</a>     }
+<a class="jxr_linenumber" name="L147" href="#L147">147</a> 
+<a class="jxr_linenumber" name="L148" href="#L148">148</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L149" href="#L149">149</a> <em class="jxr_javadoccomment">     * Increments the counts for the counter.</em>
+<a class="jxr_linenumber" name="L150" href="#L150">150</a> <em class="jxr_javadoccomment">     * @param counter the counter to increment.</em>
+<a class="jxr_linenumber" name="L151" href="#L151">151</a> <em class="jxr_javadoccomment">     * @param value the value to increment the counter by.</em>
+<a class="jxr_linenumber" name="L152" href="#L152">152</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L153" href="#L153">153</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> incCounter(<strong class="jxr_keyword">final</strong> Counter counter, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
+<a class="jxr_linenumber" name="L154" href="#L154">154</a>         counterMap.compute(counter, (k, v) -&gt; v == <strong class="jxr_keyword">null</strong> ? <strong class="jxr_keyword">new</strong> IntCounter().increment(value) : v.increment(value));
+<a class="jxr_linenumber" name="L155" href="#L155">155</a>     }
+<a class="jxr_linenumber" name="L156" href="#L156">156</a> 
+<a class="jxr_linenumber" name="L157" href="#L157">157</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L158" href="#L158">158</a> <em class="jxr_javadoccomment">     * Increments the counts for the counter.</em>
+<a class="jxr_linenumber" name="L159" href="#L159">159</a> <em class="jxr_javadoccomment">     * @param counter the counter to increment.</em>
+<a class="jxr_linenumber" name="L160" href="#L160">160</a> <em class="jxr_javadoccomment">     * @param value the value to increment the counter by.</em>
+<a class="jxr_linenumber" name="L161" href="#L161">161</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L162" href="#L162">162</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setCounter(<strong class="jxr_keyword">final</strong> Counter counter, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
+<a class="jxr_linenumber" name="L163" href="#L163">163</a>         counterMap.put(counter, <strong class="jxr_keyword">new</strong> IntCounter().increment(value));
+<a class="jxr_linenumber" name="L164" href="#L164">164</a>     }
+<a class="jxr_linenumber" name="L165" href="#L165">165</a> 
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L167" href="#L167">167</a> <em class="jxr_javadoccomment">     * Gets the counts for the Document.Type.</em>
+<a class="jxr_linenumber" name="L168" href="#L168">168</a> <em class="jxr_javadoccomment">     * @param documentType the Document.Type to get the counter for.</em>
+<a class="jxr_linenumber" name="L169" href="#L169">169</a> <em class="jxr_javadoccomment">     * @return the number times the Document.Type was seen.</em>
+<a class="jxr_linenumber" name="L170" href="#L170">170</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L171" href="#L171">171</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getCounter(<strong class="jxr_keyword">final</strong> Document.Type documentType) {
+<a class="jxr_linenumber" name="L172" href="#L172">172</a>         <strong class="jxr_keyword">return</strong> getValue(documentTypeMap.get(documentType));
+<a class="jxr_linenumber" name="L173" href="#L173">173</a>     }
+<a class="jxr_linenumber" name="L174" href="#L174">174</a> 
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> <em class="jxr_javadoccomment">     * Gets the list of Document.Types seen in the run.</em>
+<a class="jxr_linenumber" name="L177" href="#L177">177</a> <em class="jxr_javadoccomment">     * @return the list of Document.Types seen in the run.</em>
+<a class="jxr_linenumber" name="L178" href="#L178">178</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>     <strong class="jxr_keyword">public</strong> List&lt;Document.Type&gt; getDocumentTypes() {
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         List&lt;Document.Type&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(documentTypeMap.keySet());
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         result.sort(Comparator.comparing(Enum::name));
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         <strong class="jxr_keyword">return</strong> result;
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>     }
+<a class="jxr_linenumber" name="L184" href="#L184">184</a> 
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L186" href="#L186">186</a> <em class="jxr_javadoccomment">     * Increments the number of times the Document.Type was seen.</em>
+<a class="jxr_linenumber" name="L187" href="#L187">187</a> <em class="jxr_javadoccomment">     * @param documentType the Document.Type to increment.</em>
+<a class="jxr_linenumber" name="L188" href="#L188">188</a> <em class="jxr_javadoccomment">     * @param value the value to increment the counter by.</em>
+<a class="jxr_linenumber" name="L189" href="#L189">189</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> incCounter(<strong class="jxr_keyword">final</strong> Document.Type documentType, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>         documentTypeMap.compute(documentType, (k, v) -&gt; updateCounter(Counter.DOCUMENT_TYPES, v, value));
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         <strong class="jxr_keyword">switch</strong> (documentType) {
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>             <strong class="jxr_keyword">case</strong> STANDARD -&gt; incCounter(Counter.STANDARDS, value);
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>             <strong class="jxr_keyword">case</strong> ARCHIVE -&gt; incCounter(Counter.ARCHIVES, value);
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>             <strong class="jxr_keyword">case</strong> BINARY -&gt; incCounter(Counter.BINARIES, value);
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>             <strong class="jxr_keyword">case</strong> NOTICE -&gt; incCounter(Counter.NOTICES, value);
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>             <strong class="jxr_keyword">case</strong> UNKNOWN -&gt; incCounter(Counter.UNKNOWN, value);
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>             <strong class="jxr_keyword">case</strong> IGNORED -&gt; incCounter(Counter.IGNORED, value);
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>         }
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>     }
+<a class="jxr_linenumber" name="L201" href="#L201">201</a> 
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L203" href="#L203">203</a> <em class="jxr_javadoccomment">     * Gets the counts for the license category.</em>
+<a class="jxr_linenumber" name="L204" href="#L204">204</a> <em class="jxr_javadoccomment">     * @param licenseFamilyCategory the license family category to get the count for.</em>
+<a class="jxr_linenumber" name="L205" href="#L205">205</a> <em class="jxr_javadoccomment">     * @return the number of times the license family category was seen.</em>
+<a class="jxr_linenumber" name="L206" href="#L206">206</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getLicenseCategoryCount(<strong class="jxr_keyword">final</strong> String licenseFamilyCategory) {
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>         <strong class="jxr_keyword">return</strong> getValue(licenseFamilyCategoryMap.get(licenseFamilyCategory));
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>     }
+<a class="jxr_linenumber" name="L210" href="#L210">210</a> 
+<a class="jxr_linenumber" name="L211" href="#L211">211</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L212" href="#L212">212</a> <em class="jxr_javadoccomment">     * Gets the counts for the license name.</em>
+<a class="jxr_linenumber" name="L213" href="#L213">213</a> <em class="jxr_javadoccomment">     * @param licenseName the license name to get the count for.</em>
+<a class="jxr_linenumber" name="L214" href="#L214">214</a> <em class="jxr_javadoccomment">     * @return the number of times the license family category was seen.</em>
+<a class="jxr_linenumber" name="L215" href="#L215">215</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> getLicenseNameCount(<strong class="jxr_keyword">final</strong> String licenseName) {
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>         <strong class="jxr_keyword">return</strong> getValue(licenseNameMap.get(licenseName));
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>     }
+<a class="jxr_linenumber" name="L219" href="#L219">219</a> 
+<a class="jxr_linenumber" name="L220" href="#L220">220</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L221" href="#L221">221</a> <em class="jxr_javadoccomment">     * Updates the intCounter with the value and if the intCounter was {@code null} creates a new one and registers the</em>
+<a class="jxr_linenumber" name="L222" href="#L222">222</a> <em class="jxr_javadoccomment">     * creation as a counter type.</em>
+<a class="jxr_linenumber" name="L223" href="#L223">223</a> <em class="jxr_javadoccomment">     * @param counter the Type of the counter.</em>
+<a class="jxr_linenumber" name="L224" href="#L224">224</a> <em class="jxr_javadoccomment">     * @param intCounter the IntCounter to update. May be {@code null}.</em>
+<a class="jxr_linenumber" name="L225" href="#L225">225</a> <em class="jxr_javadoccomment">     * @param value the value to add to the int counter.</em>
+<a class="jxr_linenumber" name="L226" href="#L226">226</a> <em class="jxr_javadoccomment">     * @return the intCounter if it was not {@code null}, a new IntCounter otherwise.</em>
+<a class="jxr_linenumber" name="L227" href="#L227">227</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>     <strong class="jxr_keyword">private</strong> IntCounter updateCounter(<strong class="jxr_keyword">final</strong> Counter counter, <strong class="jxr_keyword">final</strong> IntCounter intCounter, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
+<a class="jxr_linenumber" name="L229" href="#L229">229</a>         <strong class="jxr_keyword">if</strong> (intCounter == <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>             incCounter(counter, 1);
+<a class="jxr_linenumber" name="L231" href="#L231">231</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">new</strong> IntCounter().increment(value);
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L233" href="#L233">233</a>             <strong class="jxr_keyword">return</strong> intCounter.increment(value);
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>         }
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>     }
+<a class="jxr_linenumber" name="L236" href="#L236">236</a> 
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L238" href="#L238">238</a> <em class="jxr_javadoccomment">     * Increments the number of times a license family category was seen.</em>
+<a class="jxr_linenumber" name="L239" href="#L239">239</a> <em class="jxr_javadoccomment">     * @param licenseFamilyCategory the License family category to increment.</em>
+<a class="jxr_linenumber" name="L240" href="#L240">240</a> <em class="jxr_javadoccomment">     * @param value the value to increment the count by.</em>
+<a class="jxr_linenumber" name="L241" href="#L241">241</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> incLicenseCategoryCount(<strong class="jxr_keyword">final</strong> String licenseFamilyCategory, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
+<a class="jxr_linenumber" name="L243" href="#L243">243</a>         licenseFamilyCategoryMap.compute(licenseFamilyCategory, (k, v) -&gt; updateCounter(Counter.LICENSE_CATEGORIES, v, value));
 <a class="jxr_linenumber" name="L244" href="#L244">244</a>     }
 <a class="jxr_linenumber" name="L245" href="#L245">245</a> 
 <a class="jxr_linenumber" name="L246" href="#L246">246</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">     * Gets the license names sorted by name.</em>
-<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">     * @return sorted list of license names.</em>
+<a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">     * Gets the set of license family categories that were seen.</em>
+<a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">     * @return A set of license family categories.</em>
 <a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>     <strong class="jxr_keyword">public</strong> List&lt;String&gt; getLicenseNames() {
-<a class="jxr_linenumber" name="L251" href="#L251">251</a>         List&lt;String&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(licenseNameMap.keySet());
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>     <strong class="jxr_keyword">public</strong> List&lt;String&gt; getLicenseFamilyCategories() {
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>         List&lt;String&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(licenseFamilyCategoryMap.keySet());
 <a class="jxr_linenumber" name="L252" href="#L252">252</a>         result.sort(String::compareTo);
 <a class="jxr_linenumber" name="L253" href="#L253">253</a>         <strong class="jxr_keyword">return</strong> result;
 <a class="jxr_linenumber" name="L254" href="#L254">254</a>     }
 <a class="jxr_linenumber" name="L255" href="#L255">255</a> 
 <a class="jxr_linenumber" name="L256" href="#L256">256</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">     * Increments the license family name count.</em>
-<a class="jxr_linenumber" name="L258" href="#L258">258</a> <em class="jxr_javadoccomment">     * @param licenseName the license name to increment.</em>
-<a class="jxr_linenumber" name="L259" href="#L259">259</a> <em class="jxr_javadoccomment">     * @param value the value to increment the count by.</em>
-<a class="jxr_linenumber" name="L260" href="#L260">260</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L261" href="#L261">261</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> incLicenseNameCount(<strong class="jxr_keyword">final</strong> String licenseName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
-<a class="jxr_linenumber" name="L262" href="#L262">262</a>         licenseNameMap.compute(licenseName, (k, v) -&gt; updateCounter(Counter.LICENSE_NAMES, v, value));
-<a class="jxr_linenumber" name="L263" href="#L263">263</a>     }
-<a class="jxr_linenumber" name="L264" href="#L264">264</a> 
-<a class="jxr_linenumber" name="L265" href="#L265">265</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L266" href="#L266">266</a> <em class="jxr_javadoccomment">     * A class that wraps an int and allows easy increment and retrieval.</em>
-<a class="jxr_linenumber" name="L267" href="#L267">267</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L268" href="#L268">268</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> IntCounter {
-<a class="jxr_linenumber" name="L269" href="#L269">269</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L270" href="#L270">270</a> <em class="jxr_javadoccomment">         * The value of the counter</em>
-<a class="jxr_linenumber" name="L271" href="#L271">271</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L272" href="#L272">272</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> value;
-<a class="jxr_linenumber" name="L273" href="#L273">273</a> 
-<a class="jxr_linenumber" name="L274" href="#L274">274</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L275" href="#L275">275</a> <em class="jxr_javadoccomment">         * Increment the count.</em>
-<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">         * @param count the count to increment by (can be negative).</em>
-<a class="jxr_linenumber" name="L277" href="#L277">277</a> <em class="jxr_javadoccomment">         * @return this.</em>
-<a class="jxr_linenumber" name="L278" href="#L278">278</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L279" href="#L279">279</a>         <strong class="jxr_keyword">public</strong> IntCounter increment(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> count) {
-<a class="jxr_linenumber" name="L280" href="#L280">280</a>             value += count;
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
-<a class="jxr_linenumber" name="L282" href="#L282">282</a>         }
+<a class="jxr_linenumber" name="L257" href="#L257">257</a> <em class="jxr_javadoccomment">     * Gets the license names sorted by name.</em>
+<a class="jxr_linenumber" name="L258" href="#L258">258</a> <em class="jxr_javadoccomment">     * @return sorted list of license names.</em>
+<a class="jxr_linenumber" name="L259" href="#L259">259</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>     <strong class="jxr_keyword">public</strong> List&lt;String&gt; getLicenseNames() {
+<a class="jxr_linenumber" name="L261" href="#L261">261</a>         List&lt;String&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;(licenseNameMap.keySet());
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>         result.sort(String::compareTo);
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>         <strong class="jxr_keyword">return</strong> result;
+<a class="jxr_linenumber" name="L264" href="#L264">264</a>     }
+<a class="jxr_linenumber" name="L265" href="#L265">265</a> 
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L267" href="#L267">267</a> <em class="jxr_javadoccomment">     * Increments the license family name count.</em>
+<a class="jxr_linenumber" name="L268" href="#L268">268</a> <em class="jxr_javadoccomment">     * @param licenseName the license name to increment.</em>
+<a class="jxr_linenumber" name="L269" href="#L269">269</a> <em class="jxr_javadoccomment">     * @param value the value to increment the count by.</em>
+<a class="jxr_linenumber" name="L270" href="#L270">270</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> incLicenseNameCount(<strong class="jxr_keyword">final</strong> String licenseName, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> value) {
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>         licenseNameMap.compute(licenseName, (k, v) -&gt; updateCounter(Counter.LICENSE_NAMES, v, value));
+<a class="jxr_linenumber" name="L273" href="#L273">273</a>     }
+<a class="jxr_linenumber" name="L274" href="#L274">274</a> 
+<a class="jxr_linenumber" name="L275" href="#L275">275</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L276" href="#L276">276</a> <em class="jxr_javadoccomment">     * A class that wraps an int and allows easy increment and retrieval.</em>
+<a class="jxr_linenumber" name="L277" href="#L277">277</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>     <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> IntCounter {
+<a class="jxr_linenumber" name="L279" href="#L279">279</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L280" href="#L280">280</a> <em class="jxr_javadoccomment">         * The value of the counter</em>
+<a class="jxr_linenumber" name="L281" href="#L281">281</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> value;
 <a class="jxr_linenumber" name="L283" href="#L283">283</a> 
 <a class="jxr_linenumber" name="L284" href="#L284">284</a>         <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L285" href="#L285">285</a> <em class="jxr_javadoccomment">         * Retrieves the count.</em>
-<a class="jxr_linenumber" name="L286" href="#L286">286</a> <em class="jxr_javadoccomment">         * @return the count contained by this counter.</em>
-<a class="jxr_linenumber" name="L287" href="#L287">287</a> <em class="jxr_javadoccomment">         */</em>
-<a class="jxr_linenumber" name="L288" href="#L288">288</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> value() {
-<a class="jxr_linenumber" name="L289" href="#L289">289</a>             <strong class="jxr_keyword">return</strong> value;
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>         }
-<a class="jxr_linenumber" name="L291" href="#L291">291</a>     }
-<a class="jxr_linenumber" name="L292" href="#L292">292</a> }
+<a class="jxr_linenumber" name="L285" href="#L285">285</a> <em class="jxr_javadoccomment">         * Increment the count.</em>
+<a class="jxr_linenumber" name="L286" href="#L286">286</a> <em class="jxr_javadoccomment">         * @param count the count to increment by (can be negative).</em>
+<a class="jxr_linenumber" name="L287" href="#L287">287</a> <em class="jxr_javadoccomment">         * @return this.</em>
+<a class="jxr_linenumber" name="L288" href="#L288">288</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L289" href="#L289">289</a>         <strong class="jxr_keyword">public</strong> IntCounter increment(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> count) {
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>             value += count;
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>             <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>         }
+<a class="jxr_linenumber" name="L293" href="#L293">293</a> 
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L295" href="#L295">295</a> <em class="jxr_javadoccomment">         * Retrieves the count.</em>
+<a class="jxr_linenumber" name="L296" href="#L296">296</a> <em class="jxr_javadoccomment">         * @return the count contained by this counter.</em>
+<a class="jxr_linenumber" name="L297" href="#L297">297</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L298" href="#L298">298</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> value() {
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>             <strong class="jxr_keyword">return</strong> value;
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>         }
+<a class="jxr_linenumber" name="L301" href="#L301">301</a> 
+<a class="jxr_linenumber" name="L302" href="#L302">302</a>         @Override
+<a class="jxr_linenumber" name="L303" href="#L303">303</a>         <strong class="jxr_keyword">public</strong> String toString() {
+<a class="jxr_linenumber" name="L304" href="#L304">304</a>             <strong class="jxr_keyword">return</strong> String.valueOf(value);
+<a class="jxr_linenumber" name="L305" href="#L305">305</a>         }
+<a class="jxr_linenumber" name="L306" href="#L306">306</a>     }
+<a class="jxr_linenumber" name="L307" href="#L307">307</a> 
+<a class="jxr_linenumber" name="L308" href="#L308">308</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L309" href="#L309">309</a> <em class="jxr_javadoccomment">     * Serialize and deserialize the claim Statistic.</em>
+<a class="jxr_linenumber" name="L310" href="#L310">310</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L311" href="#L311">311</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> SerDes {
+<a class="jxr_linenumber" name="L312" href="#L312">312</a>         <em class="jxr_javadoccomment">/** The count attribute string. */</em>
+<a class="jxr_linenumber" name="L313" href="#L313">313</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String COUNT = <span class="jxr_string">"count"</span>;
+<a class="jxr_linenumber" name="L314" href="#L314">314</a>         <em class="jxr_javadoccomment">/** The name attribute string. */</em>
+<a class="jxr_linenumber" name="L315" href="#L315">315</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> String NAME = <span class="jxr_string">"name"</span>;
+<a class="jxr_linenumber" name="L316" href="#L316">316</a> 
+<a class="jxr_linenumber" name="L317" href="#L317">317</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L318" href="#L318">318</a> <em class="jxr_javadoccomment">         * Serializes the claim statistic into an appendable.</em>
+<a class="jxr_linenumber" name="L319" href="#L319">319</a> <em class="jxr_javadoccomment">         * @param appendable the appendable to write to.</em>
+<a class="jxr_linenumber" name="L320" href="#L320">320</a> <em class="jxr_javadoccomment">         * @throws IOException on error.</em>
+<a class="jxr_linenumber" name="L321" href="#L321">321</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L322" href="#L322">322</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> serialize(<strong class="jxr_keyword">final</strong> Appendable appendable) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L323" href="#L323">323</a>             <strong class="jxr_keyword">try</strong> (XmlWriter writer = <strong class="jxr_keyword">new</strong> XmlWriter(appendable)) {
+<a class="jxr_linenumber" name="L324" href="#L324">324</a>                 writer.startDocument().startElement(<span class="jxr_string">"ClaimStatistic"</span>)
+<a class="jxr_linenumber" name="L325" href="#L325">325</a>                         .startElement(<span class="jxr_string">"licenseNameMap"</span>);
+<a class="jxr_linenumber" name="L326" href="#L326">326</a>                 <strong class="jxr_keyword">for</strong> (Map.Entry&lt;String, IntCounter&gt; entry : licenseNameMap.entrySet()) {
+<a class="jxr_linenumber" name="L327" href="#L327">327</a>                     <strong class="jxr_keyword">if</strong> (entry.getValue().value &gt; 0) {
+<a class="jxr_linenumber" name="L328" href="#L328">328</a>                         writer.startElement(<span class="jxr_string">"licenseName"</span>)
+<a class="jxr_linenumber" name="L329" href="#L329">329</a>                                 .attribute(COUNT, entry.getValue().toString())
+<a class="jxr_linenumber" name="L330" href="#L330">330</a>                                 .attribute(NAME, entry.getKey()).closeElement();
+<a class="jxr_linenumber" name="L331" href="#L331">331</a>                     }
+<a class="jxr_linenumber" name="L332" href="#L332">332</a>                 }
+<a class="jxr_linenumber" name="L333" href="#L333">333</a>                 writer.closeElement()
+<a class="jxr_linenumber" name="L334" href="#L334">334</a>                         .startElement(<span class="jxr_string">"licenseFamilyCategoryMap"</span>);
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>                 <strong class="jxr_keyword">for</strong> (Map.Entry&lt;String, IntCounter&gt; entry : licenseFamilyCategoryMap.entrySet()) {
+<a class="jxr_linenumber" name="L336" href="#L336">336</a>                     <strong class="jxr_keyword">if</strong> (entry.getValue().value &gt; 0) {
+<a class="jxr_linenumber" name="L337" href="#L337">337</a>                         writer.startElement(<span class="jxr_string">"familyCategory"</span>)
+<a class="jxr_linenumber" name="L338" href="#L338">338</a>                                 .attribute(COUNT, entry.getValue().toString())
+<a class="jxr_linenumber" name="L339" href="#L339">339</a>                                 .attribute(NAME, entry.getKey()).closeElement();
+<a class="jxr_linenumber" name="L340" href="#L340">340</a>                     }
+<a class="jxr_linenumber" name="L341" href="#L341">341</a>                 }
+<a class="jxr_linenumber" name="L342" href="#L342">342</a>                 writer.closeElement()
+<a class="jxr_linenumber" name="L343" href="#L343">343</a>                         .startElement(<span class="jxr_string">"documentTypeMap"</span>);
+<a class="jxr_linenumber" name="L344" href="#L344">344</a>                 <strong class="jxr_keyword">for</strong> (Map.Entry&lt;Document.Type, IntCounter&gt; entry : documentTypeMap.entrySet()) {
+<a class="jxr_linenumber" name="L345" href="#L345">345</a>                     <strong class="jxr_keyword">if</strong> (entry.getValue().value &gt; 0) {
+<a class="jxr_linenumber" name="L346" href="#L346">346</a>                         writer.startElement(<span class="jxr_string">"documentType"</span>)
+<a class="jxr_linenumber" name="L347" href="#L347">347</a>                                 .attribute(COUNT, entry.getValue().toString())
+<a class="jxr_linenumber" name="L348" href="#L348">348</a>                                 .attribute(NAME, entry.getKey().name()).closeElement();
+<a class="jxr_linenumber" name="L349" href="#L349">349</a>                     }
+<a class="jxr_linenumber" name="L350" href="#L350">350</a>                 }
+<a class="jxr_linenumber" name="L351" href="#L351">351</a>                 writer.closeElement()
+<a class="jxr_linenumber" name="L352" href="#L352">352</a>                         .startElement(<span class="jxr_string">"counterMap"</span>);
+<a class="jxr_linenumber" name="L353" href="#L353">353</a>                 <strong class="jxr_keyword">for</strong> (Map.Entry&lt;ClaimStatistic.Counter, IntCounter&gt; entry : counterMap.entrySet()) {
+<a class="jxr_linenumber" name="L354" href="#L354">354</a>                     <strong class="jxr_keyword">if</strong> (entry.getValue().value &gt; 0) {
+<a class="jxr_linenumber" name="L355" href="#L355">355</a>                         writer.startElement(<span class="jxr_string">"counter"</span>)
+<a class="jxr_linenumber" name="L356" href="#L356">356</a>                                 .attribute(COUNT, entry.getValue().toString())
+<a class="jxr_linenumber" name="L357" href="#L357">357</a>                                 .attribute(NAME, entry.getKey().name()).closeElement();
+<a class="jxr_linenumber" name="L358" href="#L358">358</a>                     }
+<a class="jxr_linenumber" name="L359" href="#L359">359</a>                 }
+<a class="jxr_linenumber" name="L360" href="#L360">360</a>                 writer.closeElement();
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>             }
+<a class="jxr_linenumber" name="L362" href="#L362">362</a>         }
+<a class="jxr_linenumber" name="L363" href="#L363">363</a> 
+<a class="jxr_linenumber" name="L364" href="#L364">364</a>         <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L365" href="#L365">365</a> <em class="jxr_javadoccomment">         * Deserializes a ClaimStatistic from an input stream.</em>
+<a class="jxr_linenumber" name="L366" href="#L366">366</a> <em class="jxr_javadoccomment">         * @param inputStreamSupplier the supplier of the input stream to deserialize from.</em>
+<a class="jxr_linenumber" name="L367" href="#L367">367</a> <em class="jxr_javadoccomment">         * @throws IOException on error.</em>
+<a class="jxr_linenumber" name="L368" href="#L368">368</a> <em class="jxr_javadoccomment">         */</em>
+<a class="jxr_linenumber" name="L369" href="#L369">369</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> deserialize(<strong class="jxr_keyword">final</strong> IOSupplier&lt;InputStream&gt; inputStreamSupplier) <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L370" href="#L370">370</a>             DocumentBuilder builder = StandardXmlFactory.documentBuilder();
+<a class="jxr_linenumber" name="L371" href="#L371">371</a>             org.w3c.dom.Document document;
+<a class="jxr_linenumber" name="L372" href="#L372">372</a> 
+<a class="jxr_linenumber" name="L373" href="#L373">373</a>             <strong class="jxr_keyword">try</strong> (InputStream stream = inputStreamSupplier.get()) {
+<a class="jxr_linenumber" name="L374" href="#L374">374</a>                 document = builder.parse(stream);
+<a class="jxr_linenumber" name="L375" href="#L375">375</a>             } <strong class="jxr_keyword">catch</strong> (SAXException e) {
+<a class="jxr_linenumber" name="L376" href="#L376">376</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IOException(<span class="jxr_string">"Unable to read input"</span>, e);
+<a class="jxr_linenumber" name="L377" href="#L377">377</a>             }
+<a class="jxr_linenumber" name="L378" href="#L378">378</a> 
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>             XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(<span class="jxr_string">"licenseName"</span>), node -&gt; {
+<a class="jxr_linenumber" name="L380" href="#L380">380</a>                 Map&lt;String, String&gt; attributes = XMLConfigurationReader.attributes(node);
+<a class="jxr_linenumber" name="L381" href="#L381">381</a>                 incLicenseNameCount(attributes.get(NAME), Integer.parseInt(attributes.get(COUNT)));
+<a class="jxr_linenumber" name="L382" href="#L382">382</a>             });
+<a class="jxr_linenumber" name="L383" href="#L383">383</a> 
+<a class="jxr_linenumber" name="L384" href="#L384">384</a>             XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(<span class="jxr_string">"familyCategory"</span>), node -&gt; {
+<a class="jxr_linenumber" name="L385" href="#L385">385</a>                 Map&lt;String, String&gt; attributes = XMLConfigurationReader.attributes(node);
+<a class="jxr_linenumber" name="L386" href="#L386">386</a>                 incLicenseCategoryCount(attributes.get(NAME), Integer.parseInt(attributes.get(COUNT)));
+<a class="jxr_linenumber" name="L387" href="#L387">387</a>             });
+<a class="jxr_linenumber" name="L388" href="#L388">388</a> 
+<a class="jxr_linenumber" name="L389" href="#L389">389</a>             XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(<span class="jxr_string">"documentType"</span>), node -&gt; {
+<a class="jxr_linenumber" name="L390" href="#L390">390</a>                 Map&lt;String, String&gt; attributes = XMLConfigurationReader.attributes(node);
+<a class="jxr_linenumber" name="L391" href="#L391">391</a>                 Document.Type type = Document.Type.valueOf(attributes.get(NAME));
+<a class="jxr_linenumber" name="L392" href="#L392">392</a>                 incCounter(type, Integer.parseInt(attributes.get(COUNT)));
+<a class="jxr_linenumber" name="L393" href="#L393">393</a>             });
+<a class="jxr_linenumber" name="L394" href="#L394">394</a> 
+<a class="jxr_linenumber" name="L395" href="#L395">395</a>             XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(<span class="jxr_string">"counter"</span>), node -&gt; {
+<a class="jxr_linenumber" name="L396" href="#L396">396</a>                 Map&lt;String, String&gt; attributes = XMLConfigurationReader.attributes(node);
+<a class="jxr_linenumber" name="L397" href="#L397">397</a>                 Counter type = Counter.valueOf(attributes.get(NAME));
+<a class="jxr_linenumber" name="L398" href="#L398">398</a>                 setCounter(type, Integer.parseInt(attributes.get(COUNT)));
+<a class="jxr_linenumber" name="L399" href="#L399">399</a>             });
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>         }
+<a class="jxr_linenumber" name="L401" href="#L401">401</a>     }
+<a class="jxr_linenumber" name="L402" href="#L402">402</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>

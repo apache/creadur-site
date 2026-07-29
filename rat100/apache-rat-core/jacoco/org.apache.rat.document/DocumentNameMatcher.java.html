@@ -57,7 +57,7 @@ public final class DocumentNameMatcher {
     /**
      * A matcher that matches no documents.
      */
-<span class="fc" id="L60">    public static final DocumentNameMatcher MATCHES_NONE = new DocumentNameMatcher(&quot;FALSE&quot;, (Predicate&lt;DocumentName&gt;) x -&gt; false);</span>
+<span class="pc" id="L60">    public static final DocumentNameMatcher MATCHES_NONE = new DocumentNameMatcher(&quot;FALSE&quot;, (Predicate&lt;DocumentName&gt;) x -&gt; false);</span>
 
     /**
      * Constructs a DocumentNameMatcher from a name and a DocumentName predicate.
@@ -217,8 +217,8 @@ public final class DocumentNameMatcher {
 <span class="fc bfc" id="L217" title="All 2 branches covered.">        if (nameMatcher == MATCHES_ALL) {</span>
 <span class="fc" id="L218">            return MATCHES_NONE;</span>
         }
-<span class="fc bfc" id="L220" title="All 2 branches covered.">        if (nameMatcher == MATCHES_NONE) {</span>
-<span class="fc" id="L221">            return MATCHES_ALL;</span>
+<span class="pc bpc" id="L220" title="1 of 2 branches missed.">        if (nameMatcher == MATCHES_NONE) {</span>
+<span class="nc" id="L221">            return MATCHES_ALL;</span>
         }
 
 <span class="fc" id="L224">        return new DocumentNameMatcher(format(&quot;not(%s)&quot;, nameMatcher), new NotPredicate(nameMatcher));</span>
@@ -289,8 +289,8 @@ public final class DocumentNameMatcher {
      */
     public static DocumentNameMatcher and(final Collection&lt;DocumentNameMatcher&gt; matchers) {
 <span class="fc" id="L291">        Optional&lt;DocumentNameMatcher&gt; opt = standardCollectionCheck(matchers, MATCHES_NONE);</span>
-<span class="fc bfc" id="L292" title="All 2 branches covered.">        if (opt.isPresent()) {</span>
-<span class="fc" id="L293">            return opt.get();</span>
+<span class="pc bpc" id="L292" title="1 of 2 branches missed.">        if (opt.isPresent()) {</span>
+<span class="nc" id="L293">            return opt.get();</span>
         }
 
         // preserve order
@@ -546,4 +546,4 @@ public final class DocumentNameMatcher {
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

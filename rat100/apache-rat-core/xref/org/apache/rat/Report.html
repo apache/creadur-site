@@ -59,22 +59,22 @@
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>          <a name="ReportConfiguration" href="../../../org/apache/rat/ReportConfiguration.html#ReportConfiguration">ReportConfiguration</a> configuration = OptionCollection.parseCommands(<strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"."</span>), args, Report::printUsage);
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>          <strong class="jxr_keyword">if</strong> (configuration != <strong class="jxr_keyword">null</strong>) {
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>              configuration.validate(DefaultLog.getInstance()::error);
-<a class="jxr_linenumber" name="L54" href="#L54">54</a>              <a name="Reporter" href="../../../org/apache/rat/Reporter.html#Reporter">Reporter</a> reporter = <strong class="jxr_keyword">new</strong> <a name="Reporter" href="../../../org/apache/rat/Reporter.html#Reporter">Reporter</a>(configuration);
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>              reporter.output();
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>              reporter.writeSummary(DefaultLog.getInstance().asWriter());
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>              Reporter.Output output = <strong class="jxr_keyword">new</strong> <a name="Reporter" href="../../../org/apache/rat/Reporter.html#Reporter">Reporter</a>(configuration).execute();
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>              output.format(configuration);
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>              output.writeSummary(DefaultLog.getInstance().asWriter());
 <a class="jxr_linenumber" name="L57" href="#L57">57</a>  
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>              <strong class="jxr_keyword">if</strong> (configuration.getClaimValidator().hasErrors()) {
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  configuration.getClaimValidator().logIssues(reporter.getClaimsStatistic());
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  configuration.getClaimValidator().logIssues(output.getStatistic());
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>                  <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="RatDocumentAnalysisException" href="../../../org/apache/rat/document/RatDocumentAnalysisException.html#RatDocumentAnalysisException">RatDocumentAnalysisException</a>(format(<span class="jxr_string">"Issues with %s"</span>,
 <a class="jxr_linenumber" name="L61" href="#L61">61</a>                          String.join(<span class="jxr_string">", "</span>,
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>                                  configuration.getClaimValidator().listIssues(reporter.getClaimsStatistic()))));
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                                  configuration.getClaimValidator().listIssues(output.getStatistic()))));
 <a class="jxr_linenumber" name="L63" href="#L63">63</a>              }
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>          }
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      }
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  
 <a class="jxr_linenumber" name="L67" href="#L67">67</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  <em class="jxr_javadoccomment">     * Prints the usage message on {@code System.out}.</em>
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * @param opts The defined options.</em>
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>  <em class="jxr_javadoccomment">     * @param opts the defined options.</em>
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>  <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> printUsage(<strong class="jxr_keyword">final</strong> Options opts) {
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">new</strong> <a name="Help" href="../../../org/apache/rat/help/Help.html#Help">Help</a>(System.out).printUsage(opts);

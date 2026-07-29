@@ -34,11 +34,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -54,6 +51,7 @@ import org.apache.rat.configuration.builders.AbstractBuilder;
 import org.apache.rat.license.ILicense;
 import org.apache.rat.license.ILicenseFamily;
 import org.apache.rat.utils.DefaultLog;
+import org.apache.rat.utils.StandardXmlFactory;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -93,223 +91,207 @@ public final class XMLConfigurationReader implements LicenseReader, MatcherReade
     /**
      * Constructs the XML configuration reader.
      */
-<span class="fc" id="L96">    public XMLConfigurationReader() {</span>
-        try {
-<span class="fc" id="L98">            document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();</span>
-<span class="nc" id="L99">        } catch (ParserConfigurationException e) {</span>
-<span class="nc" id="L100">            throw new IllegalStateException(&quot;No XML parser defined&quot;, e);</span>
-<span class="fc" id="L101">        }</span>
-<span class="fc" id="L102">        rootElement = document.createElement(XMLConfig.ROOT);</span>
-<span class="fc" id="L103">        document.appendChild(rootElement);</span>
-<span class="fc" id="L104">        familiesElement = document.createElement(XMLConfig.FAMILIES);</span>
-<span class="fc" id="L105">        rootElement.appendChild(familiesElement);</span>
-<span class="fc" id="L106">        licensesElement = document.createElement(XMLConfig.LICENSES);</span>
-<span class="fc" id="L107">        rootElement.appendChild(licensesElement);</span>
-<span class="fc" id="L108">        approvedElement = document.createElement(XMLConfig.APPROVED);</span>
-<span class="fc" id="L109">        rootElement.appendChild(approvedElement);</span>
-<span class="fc" id="L110">        matchersElement = document.createElement(XMLConfig.MATCHERS);</span>
-<span class="fc" id="L111">        rootElement.appendChild(matchersElement);</span>
-<span class="fc" id="L112">        licenses = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L113">        licenseFamilies = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L114">        approvedFamilies = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L115">        matchers = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L116">        builderParams = new BuilderParams() {</span>
+<span class="fc" id="L94">    public XMLConfigurationReader() {</span>
+<span class="fc" id="L95">        document = StandardXmlFactory.documentBuilder().newDocument();</span>
+<span class="fc" id="L96">        rootElement = document.createElement(XMLConfig.ROOT);</span>
+<span class="fc" id="L97">        document.appendChild(rootElement);</span>
+<span class="fc" id="L98">        familiesElement = document.createElement(XMLConfig.FAMILIES);</span>
+<span class="fc" id="L99">        rootElement.appendChild(familiesElement);</span>
+<span class="fc" id="L100">        licensesElement = document.createElement(XMLConfig.LICENSES);</span>
+<span class="fc" id="L101">        rootElement.appendChild(licensesElement);</span>
+<span class="fc" id="L102">        approvedElement = document.createElement(XMLConfig.APPROVED);</span>
+<span class="fc" id="L103">        rootElement.appendChild(approvedElement);</span>
+<span class="fc" id="L104">        matchersElement = document.createElement(XMLConfig.MATCHERS);</span>
+<span class="fc" id="L105">        rootElement.appendChild(matchersElement);</span>
+<span class="fc" id="L106">        licenses = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L107">        licenseFamilies = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L108">        approvedFamilies = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L109">        matchers = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L110">        builderParams = new BuilderParams() {</span>
             @Override
             public Map&lt;String, IHeaderMatcher&gt; matcherMap() {
-<span class="fc" id="L119">                return matchers;</span>
+<span class="fc" id="L113">                return matchers;</span>
             }
 
             @Override
             public SortedSet&lt;ILicenseFamily&gt; licenseFamilies() {
-<span class="fc" id="L124">                return licenseFamilies;</span>
+<span class="fc" id="L118">                return licenseFamilies;</span>
             }
         };
-<span class="fc" id="L127">    }</span>
+<span class="fc" id="L121">    }</span>
 
     /**
      * Creates textual representation of a node for display.
      * @param node the node to create the textual representation of.
-     * @return The textual representation of the node for display.
+     * @return the textual representation of the node for display.
      */
     private String nodeText(final Node node) {
-<span class="fc" id="L135">        StringBuilder stringBuilder = new StringBuilder().append(&quot;&lt;&quot;).append(node.getNodeName());</span>
-<span class="fc" id="L136">        NamedNodeMap attr = node.getAttributes();</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">        for (int i = 0; i &lt; attr.getLength(); i++) {</span>
-<span class="fc" id="L138">            Node n = attr.item(i);</span>
-<span class="fc" id="L139">            stringBuilder.append(String.format(&quot; %s='%s'&quot;, n.getNodeName(), n.getNodeValue()));</span>
+<span class="fc" id="L129">        StringBuilder stringBuilder = new StringBuilder().append(&quot;&lt;&quot;).append(node.getNodeName());</span>
+<span class="fc" id="L130">        NamedNodeMap attr = node.getAttributes();</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        for (int i = 0; i &lt; attr.getLength(); i++) {</span>
+<span class="fc" id="L132">            Node n = attr.item(i);</span>
+<span class="fc" id="L133">            stringBuilder.append(String.format(&quot; %s='%s'&quot;, n.getNodeName(), n.getNodeValue()));</span>
         }
-<span class="fc" id="L141">        return stringBuilder.append(&quot;&gt;&quot;).toString();</span>
+<span class="fc" id="L135">        return stringBuilder.append(&quot;&gt;&quot;).toString();</span>
     }
 
     @Override
     public void addLicenses(final URI uri) {
-<span class="fc" id="L146">        read(uri);</span>
-<span class="fc" id="L147">    }</span>
+<span class="fc" id="L140">        read(uri);</span>
+<span class="fc" id="L141">    }</span>
 
     /**
      * Read xml from a reader.
      * @param reader the reader to read XML from.
      */
     public void read(final Reader reader) {
-        DocumentBuilder builder;
         try {
-<span class="fc" id="L156">            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span>
-<span class="nc" id="L157">        } catch (ParserConfigurationException e) {</span>
-<span class="nc" id="L158">            throw new ConfigurationException(&quot;Unable to create DOM builder&quot;, e);</span>
-<span class="fc" id="L159">        }</span>
-
-        try {
-<span class="fc" id="L162">            add(builder.parse(new InputSource(reader)));</span>
-<span class="nc" id="L163">        } catch (SAXException | IOException e) {</span>
-<span class="nc" id="L164">            throw new ConfigurationException(&quot;Unable to read inputSource&quot;, e);</span>
-<span class="fc" id="L165">        }</span>
-<span class="fc" id="L166">    }</span>
+<span class="fc" id="L149">            add(StandardXmlFactory.documentBuilder().parse(new InputSource(reader)));</span>
+<span class="fc" id="L150">        } catch (SAXException | IOException e) {</span>
+<span class="fc" id="L151">            throw new ConfigurationException(&quot;Unable to read inputSource&quot;, e);</span>
+<span class="fc" id="L152">        }</span>
+<span class="fc" id="L153">    }</span>
 
     /**
      * Read the uris and extract the DOM information to create new objects.
-     * @param uris The URIs to read.
+     * @param uris the URIs to read.
      */
     public void read(final URI... uris) {
-        DocumentBuilder builder;
-        try {
-<span class="fc" id="L175">            builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();</span>
-<span class="nc" id="L176">        } catch (ParserConfigurationException e) {</span>
-<span class="nc" id="L177">            throw new ConfigurationException(&quot;Unable to create DOM builder&quot;, e);</span>
-<span class="fc" id="L178">        }</span>
-<span class="fc bfc" id="L179" title="All 2 branches covered.">        for (URI uri : uris) {</span>
-<span class="fc" id="L180">            try (InputStream inputStream = uri.toURL().openStream()) {</span>
-<span class="fc" id="L181">                add(builder.parse(inputStream));</span>
-<span class="nc" id="L182">            } catch (SAXException | IOException e) {</span>
-<span class="nc" id="L183">                throw new ConfigurationException(&quot;Unable to read uri: &quot; + uri, e);</span>
-<span class="fc" id="L184">            }</span>
+<span class="fc" id="L160">        DocumentBuilder builder = StandardXmlFactory.documentBuilder();</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        for (URI uri : uris) {</span>
+<span class="fc" id="L162">            try (InputStream inputStream = uri.toURL().openStream()) {</span>
+<span class="fc" id="L163">                add(builder.parse(inputStream));</span>
+<span class="nc" id="L164">            } catch (SAXException | IOException e) {</span>
+<span class="nc" id="L165">                throw new ConfigurationException(&quot;Unable to read uri: &quot; + uri, e);</span>
+<span class="fc" id="L166">            }</span>
         }
-<span class="fc" id="L186">    }</span>
+<span class="fc" id="L168">    }</span>
 
     /**
      * Applies the {@code consumer} to each node in the {@code list}. Generally used for extracting info from a
      * {@code NodeList}.
-     * @param list the NodeList to process
+     * @param list the NodeList to process.
      * @param consumer the consumer to apply to each node in the list.
      */
-    private void nodeListConsumer(final NodeList list, final Consumer&lt;Node&gt; consumer) {
-<span class="fc bfc" id="L195" title="All 2 branches covered.">        for (int i = 0; i &lt; list.getLength(); i++) {</span>
-<span class="fc" id="L196">            consumer.accept(list.item(i));</span>
+    public static void nodeListConsumer(final NodeList list, final Consumer&lt;Node&gt; consumer) {
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        for (int i = 0; i &lt; list.getLength(); i++) {</span>
+<span class="fc" id="L178">            consumer.accept(list.item(i));</span>
         }
-<span class="fc" id="L198">    }</span>
+<span class="fc" id="L180">    }</span>
 
     /**
      * Merge the new document into the document that this reader processes is building.
      * @param newDoc the Document to merge.
      */
     public void add(final Document newDoc) {
-<span class="fc" id="L205">        nodeListConsumer(newDoc.getElementsByTagName(XMLConfig.FAMILIES), nl -&gt; nodeListConsumer(nl.getChildNodes(),</span>
-<span class="fc" id="L206">                n -&gt; familiesElement.appendChild(rootElement.getOwnerDocument().adoptNode(n.cloneNode(true)))));</span>
-<span class="fc" id="L207">        nodeListConsumer(newDoc.getElementsByTagName(XMLConfig.LICENSE),</span>
-<span class="fc" id="L208">                n -&gt; licensesElement.appendChild(rootElement.getOwnerDocument().adoptNode(n.cloneNode(true))));</span>
-<span class="fc" id="L209">        nodeListConsumer(newDoc.getElementsByTagName(XMLConfig.APPROVED), nl -&gt; nodeListConsumer(nl.getChildNodes(),</span>
-<span class="fc" id="L210">                n -&gt; approvedElement.appendChild(rootElement.getOwnerDocument().adoptNode(n.cloneNode(true)))));</span>
-<span class="fc" id="L211">        nodeListConsumer(newDoc.getElementsByTagName(XMLConfig.MATCHERS),</span>
-<span class="fc" id="L212">                n -&gt; matchersElement.appendChild(rootElement.getOwnerDocument().adoptNode(n.cloneNode(true))));</span>
-<span class="fc" id="L213">    }</span>
+<span class="fc" id="L187">        nodeListConsumer(newDoc.getElementsByTagName(XMLConfig.FAMILIES), nl -&gt; nodeListConsumer(nl.getChildNodes(),</span>
+<span class="fc" id="L188">                n -&gt; familiesElement.appendChild(rootElement.getOwnerDocument().adoptNode(n.cloneNode(true)))));</span>
+<span class="fc" id="L189">        nodeListConsumer(newDoc.getElementsByTagName(XMLConfig.LICENSE),</span>
+<span class="fc" id="L190">                n -&gt; licensesElement.appendChild(rootElement.getOwnerDocument().adoptNode(n.cloneNode(true))));</span>
+<span class="fc" id="L191">        nodeListConsumer(newDoc.getElementsByTagName(XMLConfig.APPROVED), nl -&gt; nodeListConsumer(nl.getChildNodes(),</span>
+<span class="fc" id="L192">                n -&gt; approvedElement.appendChild(rootElement.getOwnerDocument().adoptNode(n.cloneNode(true)))));</span>
+<span class="fc" id="L193">        nodeListConsumer(newDoc.getElementsByTagName(XMLConfig.MATCHERS),</span>
+<span class="fc" id="L194">                n -&gt; matchersElement.appendChild(rootElement.getOwnerDocument().adoptNode(n.cloneNode(true))));</span>
+<span class="fc" id="L195">    }</span>
 
     /**
      * Get a map of Node attribute names to values.
-     * @param node The node to process
+     * @param node the node to process.
      * @return the map of attributes on the node.
      */
-    private Map&lt;String, String&gt; attributes(final Node node) {
-<span class="fc" id="L221">        NamedNodeMap nnm = node.getAttributes();</span>
-<span class="fc" id="L222">        Map&lt;String, String&gt; result = new HashMap&lt;&gt;();</span>
-<span class="fc bfc" id="L223" title="All 2 branches covered.">        for (int i = 0; i &lt; nnm.getLength(); i++) {</span>
-<span class="fc" id="L224">            Node n = nnm.item(i);</span>
-<span class="fc" id="L225">            result.put(n.getNodeName(), n.getNodeValue());</span>
+    public static Map&lt;String, String&gt; attributes(final Node node) {
+<span class="fc" id="L203">        NamedNodeMap nnm = node.getAttributes();</span>
+<span class="fc" id="L204">        Map&lt;String, String&gt; result = new HashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">        for (int i = 0; i &lt; nnm.getLength(); i++) {</span>
+<span class="fc" id="L206">            Node n = nnm.item(i);</span>
+<span class="fc" id="L207">            result.put(n.getNodeName(), n.getNodeValue());</span>
         }
-<span class="fc" id="L227">        return result;</span>
+<span class="fc" id="L209">        return result;</span>
     }
 
     /**
      * Finds the setter description property in the builder and set it with the value.
-     * @param desc The description for the setter.
-     * @param builder The builder to set the value in.
-     * @param value The value to set.
+     * @param desc the description for the setter.
+     * @param builder the builder to set the value in.
+     * @param value the value to set.
      */
     private void callSetter(final Description desc, final IHeaderMatcher.Builder builder, final Object value) {
         try {
-<span class="fc" id="L238">            desc.setter(builder.getClass()).invoke(builder, value);</span>
-<span class="nc" id="L239">        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException</span>
+<span class="fc" id="L220">            desc.setter(builder.getClass()).invoke(builder, value);</span>
+<span class="nc" id="L221">        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException</span>
                 | SecurityException e) {
-<span class="nc" id="L241">            throw new ConfigurationException(e.getMessage(), e);</span>
-<span class="fc" id="L242">        }</span>
-<span class="fc" id="L243">    }</span>
+<span class="nc" id="L223">            throw new ConfigurationException(e.getMessage(), e);</span>
+<span class="fc" id="L224">        }</span>
+<span class="fc" id="L225">    }</span>
 
     /**
      * For any children of description that are BUILD_PARAMETERS set the builder property.
-     * @param description The description for the builder.
+     * @param description the description for the builder.
      * @param builder the builder to set the properties in.
      */
     private void processBuilderParams(final Description description, final IHeaderMatcher.Builder builder) {
-<span class="fc bfc" id="L251" title="All 2 branches covered.">        for (Description desc : description.childrenOfType(ComponentType.BUILD_PARAMETER)) {</span>
-<span class="fc" id="L252">            Method m = builderParams.get(desc.getCommonName());</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        for (Description desc : description.childrenOfType(ComponentType.BUILD_PARAMETER)) {</span>
+<span class="fc" id="L234">            Method m = builderParams.get(desc.getCommonName());</span>
             try {
-<span class="fc" id="L254">                callSetter(desc, builder, m.invoke(builderParams));</span>
-<span class="nc" id="L255">            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {</span>
-<span class="nc" id="L256">                throw ImplementationException.makeInstance(e);</span>
-<span class="fc" id="L257">            }</span>
-<span class="fc" id="L258">        }</span>
-<span class="fc" id="L259">    }</span>
+<span class="fc" id="L236">                callSetter(desc, builder, m.invoke(builderParams));</span>
+<span class="nc" id="L237">            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {</span>
+<span class="nc" id="L238">                throw ImplementationException.makeInstance(e);</span>
+<span class="fc" id="L239">            }</span>
+<span class="fc" id="L240">        }</span>
+<span class="fc" id="L241">    }</span>
 
     /**
      * Processes a list of children by passing each child node and the description
      * of the child (if any) to the BiPredicate. If there is not a child description
      * for the node it is ignored. If the node is processed it is removed from list
      * of children.
-     * @param description the Description of the node being processed
+     * @param description the description of the node being processed.
      * @param children the child nodes of that node.
      * @param childProcessor the function that handles the processing of the child
      * node.
      */
     private void processChildren(final Description description, final List&lt;Node&gt; children,
                                  final BiPredicate&lt;Node, Description&gt; childProcessor) {
-<span class="fc" id="L273">        Iterator&lt;Node&gt; iter = children.iterator();</span>
-<span class="fc bfc" id="L274" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
-<span class="fc" id="L275">            Node child = iter.next();</span>
-<span class="fc" id="L276">            Description childDescription = description.getChildren().get(child.getNodeName());</span>
-<span class="fc bfc" id="L277" title="All 2 branches covered.">            if (childDescription != null) {</span>
-<span class="pc bpc" id="L278" title="1 of 2 branches missed.">                if (childProcessor.test(child, childDescription)) {</span>
-<span class="fc" id="L279">                    iter.remove();</span>
+<span class="fc" id="L255">        Iterator&lt;Node&gt; iter = children.iterator();</span>
+<span class="fc bfc" id="L256" title="All 2 branches covered.">        while (iter.hasNext()) {</span>
+<span class="fc" id="L257">            Node child = iter.next();</span>
+<span class="fc" id="L258">            Description childDescription = description.getChildren().get(child.getNodeName());</span>
+<span class="fc bfc" id="L259" title="All 2 branches covered.">            if (childDescription != null) {</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">                if (childProcessor.test(child, childDescription)) {</span>
+<span class="fc" id="L261">                    iter.remove();</span>
                 }
             }
-<span class="fc" id="L282">        }</span>
-<span class="fc" id="L283">    }</span>
+<span class="fc" id="L264">        }</span>
+<span class="fc" id="L265">    }</span>
 
     /**
      * Creates a child node processor for the builder described by the description.
-     * @param builder The builder to set properties in.
+     * @param builder the builder to set properties in.
      * @param description the description of the builder.
      * @return child node.
      */
     private BiPredicate&lt;Node, Description&gt; matcherChildNodeProcessor(final AbstractBuilder builder, final Description description) {
-<span class="fc" id="L292">        return (child, childDescription) -&gt; {</span>
-<span class="nc bnc" id="L293" title="All 4 branches missed.">            switch (childDescription.getType()) {</span>
+<span class="fc" id="L274">        return (child, childDescription) -&gt; {</span>
+<span class="nc bnc" id="L275" title="All 4 branches missed.">            switch (childDescription.getType()) {</span>
             case LICENSE:
             case BUILD_PARAMETER:
-<span class="nc" id="L296">                throw new ConfigurationException(String.format(</span>
-<span class="nc" id="L297">                        &quot;%s may not be used as an enclosed matcher.  %s '%s' found in '%s'&quot;, childDescription.getType(),</span>
-<span class="nc" id="L298">                        childDescription.getType(), childDescription.getCommonName(), description.getCommonName()));</span>
+<span class="nc" id="L278">                throw new ConfigurationException(String.format(</span>
+<span class="nc" id="L279">                        &quot;%s may not be used as an enclosed matcher.  %s '%s' found in '%s'&quot;, childDescription.getType(),</span>
+<span class="nc" id="L280">                        childDescription.getType(), childDescription.getCommonName(), description.getCommonName()));</span>
             case MATCHER:
-<span class="nc" id="L300">                AbstractBuilder b = parseMatcher(child);</span>
-<span class="nc" id="L301">                callSetter(b.getDescription(), builder, b);</span>
-<span class="nc" id="L302">                return true;</span>
+<span class="nc" id="L282">                AbstractBuilder b = parseMatcher(child);</span>
+<span class="nc" id="L283">                callSetter(b.getDescription(), builder, b);</span>
+<span class="nc" id="L284">                return true;</span>
             case PARAMETER:
-<span class="nc bnc" id="L304" title="All 2 branches missed.">                if (!XMLConfig.isInlineNode(description.getCommonName(), childDescription.getCommonName())</span>
-<span class="nc bnc" id="L305" title="All 2 branches missed.">                        || childDescription.getChildType() == String.class) {</span>
-<span class="nc" id="L306">                    callSetter(childDescription, builder, child.getTextContent());</span>
+<span class="nc bnc" id="L286" title="All 2 branches missed.">                if (!XMLConfig.isInlineNode(description.getCommonName(), childDescription.getCommonName())</span>
+<span class="nc bnc" id="L287" title="All 2 branches missed.">                        || childDescription.getChildType() == String.class) {</span>
+<span class="nc" id="L288">                    callSetter(childDescription, builder, child.getTextContent());</span>
                 } else {
-<span class="nc" id="L308">                    callSetter(childDescription, builder, parseMatcher(child));</span>
+<span class="nc" id="L290">                    callSetter(childDescription, builder, parseMatcher(child));</span>
                 }
-<span class="nc" id="L310">                return true;</span>
+<span class="nc" id="L292">                return true;</span>
             }
-<span class="nc" id="L312">            return false;</span>
+<span class="nc" id="L294">            return false;</span>
         };
     }
 
@@ -322,141 +304,139 @@ public final class XMLConfigurationReader implements LicenseReader, MatcherReade
      */
     private void setValue(final Description description, final Description childDescription, final IHeaderMatcher.Builder builder,
             final Node child) {
-<span class="nc bnc" id="L325" title="All 2 branches missed.">        if (childDescription.getChildType() == String.class) {</span>
-<span class="nc" id="L326">            callSetter(description, builder, child.getTextContent());</span>
+<span class="nc bnc" id="L307" title="All 2 branches missed.">        if (childDescription.getChildType() == String.class) {</span>
+<span class="nc" id="L308">            callSetter(description, builder, child.getTextContent());</span>
         } else {
-<span class="nc" id="L328">            callSetter(description, builder, parseMatcher(child));</span>
+<span class="nc" id="L310">            callSetter(description, builder, parseMatcher(child));</span>
         }
-<span class="nc" id="L330">    }</span>
+<span class="nc" id="L312">    }</span>
 
     /**
      * Process the ELEMENT_NODEs children of the parent whose names match child
      * descriptions. All children of children are processed with the childProcessor. If
      * the childProcessor handles the node it is not included in the resulting list.
-     * @param description the Description of the parent node.
-     * @param parent the node being processed
+     * @param description the description of the parent node.
+     * @param parent the node being processed.
      * @param childProcessor the BiProcessor to handle process each child. If the
      * processor handles the child it must return {@code true}.
-     * @return A Pair comprising a boolean flag indicating children were found, and
+     * @return a Pair comprising a boolean flag indicating children were found, and
      * a list of all child nodes that were not processed by the childProcessor.
      */
     private Pair&lt;Boolean, List&lt;Node&gt;&gt; processChildNodes(final Description description, final Node parent,
             final BiPredicate&lt;Node, Description&gt; childProcessor) {
         try {
-<span class="fc" id="L346">            boolean foundChildren = false;</span>
-<span class="fc" id="L347">            List&lt;Node&gt; children = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L328">            boolean foundChildren = false;</span>
+<span class="fc" id="L329">            List&lt;Node&gt; children = new ArrayList&lt;&gt;();</span>
             // check XML child nodes.
-<span class="fc bfc" id="L349" title="All 2 branches covered.">            if (parent.hasChildNodes()) {</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">            if (parent.hasChildNodes()) {</span>
 
-<span class="fc" id="L351">                nodeListConsumer(parent.getChildNodes(), n -&gt; {</span>
-<span class="fc bfc" id="L352" title="All 2 branches covered.">                    if (n.getNodeType() == Node.ELEMENT_NODE) {</span>
-<span class="fc" id="L353">                        children.add(n);</span>
+<span class="fc" id="L333">                nodeListConsumer(parent.getChildNodes(), n -&gt; {</span>
+<span class="fc bfc" id="L334" title="All 2 branches covered.">                    if (n.getNodeType() == Node.ELEMENT_NODE) {</span>
+<span class="fc" id="L335">                        children.add(n);</span>
                     }
-<span class="fc" id="L355">                });</span>
-<span class="fc bfc" id="L356" title="All 2 branches covered.">                foundChildren = !children.isEmpty();</span>
-<span class="fc bfc" id="L357" title="All 2 branches covered.">                if (foundChildren) {</span>
-<span class="fc" id="L358">                    processChildren(description, children, childProcessor);</span>
+<span class="fc" id="L337">                });</span>
+<span class="fc bfc" id="L338" title="All 2 branches covered.">                foundChildren = !children.isEmpty();</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">                if (foundChildren) {</span>
+<span class="fc" id="L340">                    processChildren(description, children, childProcessor);</span>
                 }
             }
-<span class="fc" id="L361">            return new ImmutablePair&lt;&gt;(foundChildren, children);</span>
-<span class="nc" id="L362">        } catch (RuntimeException exception) {</span>
-<span class="nc" id="L363">            DefaultLog.getInstance().error(String.format(&quot;Child node extraction error in: '%s'&quot;, nodeText(parent)));</span>
-<span class="nc" id="L364">            throw exception;</span>
+<span class="fc" id="L343">            return new ImmutablePair&lt;&gt;(foundChildren, children);</span>
+<span class="nc" id="L344">        } catch (RuntimeException exception) {</span>
+<span class="nc" id="L345">            DefaultLog.getInstance().error(String.format(&quot;Child node extraction error in: '%s'&quot;, nodeText(parent)));</span>
+<span class="nc" id="L346">            throw exception;</span>
         }
     }
 
     /**
      * Creates a Builder from a Matcher node.
      * @param matcherNode the Matcher node to parse.
-     * @return The Builder for the matcher described by the node.
+     * @return the Builder for the matcher described by the node.
      */
     private AbstractBuilder parseMatcher(final Node matcherNode) {
-<span class="fc" id="L374">        final AbstractBuilder builder = MatcherBuilderTracker.getMatcherBuilder(matcherNode.getNodeName());</span>
+<span class="fc" id="L356">        final AbstractBuilder builder = MatcherBuilderTracker.getMatcherBuilder(matcherNode.getNodeName());</span>
 
         try {
-<span class="fc" id="L377">            final Description description = DescriptionBuilder.buildMap(builder.getClass());</span>
-<span class="pc bpc" id="L378" title="1 of 2 branches missed.">            if (description == null) {</span>
-<span class="nc" id="L379">                throw new ConfigurationException(String.format(&quot;Unable to build description for %s&quot;, builder.getClass()));</span>
+<span class="fc" id="L359">            final Description description = DescriptionBuilder.buildMap(builder.getClass());</span>
+<span class="pc bpc" id="L360" title="1 of 2 branches missed.">            if (description == null) {</span>
+<span class="nc" id="L361">                throw new ConfigurationException(String.format(&quot;Unable to build description for %s&quot;, builder.getClass()));</span>
             }
-<span class="fc" id="L381">            processBuilderParams(description, builder);</span>
+<span class="fc" id="L363">            processBuilderParams(description, builder);</span>
 
             // process the attributes
-<span class="fc" id="L384">            description.setChildren(builder, attributes(matcherNode));</span>
+<span class="fc" id="L366">            description.setChildren(builder, attributes(matcherNode));</span>
 
             // check XML child nodes.
-<span class="fc" id="L387">            Pair&lt;Boolean, List&lt;Node&gt;&gt; pair = processChildNodes(description, matcherNode,</span>
-<span class="fc" id="L388">                    matcherChildNodeProcessor(builder, description));</span>
-<span class="fc" id="L389">            boolean foundChildren = pair.getLeft();</span>
-<span class="fc" id="L390">            List&lt;Node&gt; children = pair.getRight();</span>
+<span class="fc" id="L369">            Pair&lt;Boolean, List&lt;Node&gt;&gt; pair = processChildNodes(description, matcherNode,</span>
+<span class="fc" id="L370">                    matcherChildNodeProcessor(builder, description));</span>
+<span class="fc" id="L371">            boolean foundChildren = pair.getLeft();</span>
+<span class="fc" id="L372">            List&lt;Node&gt; children = pair.getRight();</span>
 
             // check for inline nodes that can accept child nodes.
-<span class="fc" id="L393">            List&lt;Description&gt; childDescriptions = description.getChildren().values().stream()</span>
-<span class="fc" id="L394">                    .filter(d -&gt; XMLConfig.isInlineNode(description.getCommonName(), d.getCommonName()))</span>
-<span class="fc" id="L395">                    .collect(Collectors.toList());</span>
+<span class="fc" id="L375">            List&lt;Description&gt; childDescriptions = description.getChildren().values().stream()</span>
+<span class="fc" id="L376">                    .filter(d -&gt; XMLConfig.isInlineNode(description.getCommonName(), d.getCommonName()))</span>
+<span class="fc" id="L377">                    .toList();</span>
 
-<span class="fc bfc" id="L397" title="All 2 branches covered.">            for (Description childDescription : childDescriptions) {</span>
-<span class="pc bpc" id="L398" title="1 of 2 branches missed.">                if (XMLConfig.isInlineNode(description.getCommonName(), childDescription.getCommonName())) {</span>
+<span class="fc bfc" id="L379" title="All 2 branches covered.">            for (Description childDescription : childDescriptions) {</span>
+<span class="pc bpc" id="L380" title="1 of 2 branches missed.">                if (XMLConfig.isInlineNode(description.getCommonName(), childDescription.getCommonName())) {</span>
                     // can only process text inline if there were no child nodes.
-<span class="fc bfc" id="L400" title="All 2 branches covered.">                    if (childDescription.getChildType() == String.class) {</span>
-<span class="pc bpc" id="L401" title="1 of 2 branches missed.">                        if (!foundChildren) {</span>
-<span class="fc" id="L402">                            callSetter(childDescription, builder, matcherNode.getTextContent());</span>
+<span class="fc bfc" id="L382" title="All 2 branches covered.">                    if (childDescription.getChildType() == String.class) {</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">                        if (!foundChildren) {</span>
+<span class="fc" id="L384">                            callSetter(childDescription, builder, matcherNode.getTextContent());</span>
                         }
                     } else {
-<span class="fc" id="L405">                        Iterator&lt;Node&gt; iter = children.iterator();</span>
-<span class="fc bfc" id="L406" title="All 2 branches covered.">                        while (iter.hasNext()) {</span>
-<span class="fc" id="L407">                            Node child = iter.next();</span>
-<span class="fc" id="L408">                            callSetter(childDescription, builder, parseMatcher(child));</span>
-<span class="fc" id="L409">                            iter.remove();</span>
-<span class="fc" id="L410">                        }</span>
-<span class="fc" id="L411">                    }</span>
-
+<span class="fc" id="L387">                        Iterator&lt;Node&gt; iter = children.iterator();</span>
+<span class="fc bfc" id="L388" title="All 2 branches covered.">                        while (iter.hasNext()) {</span>
+<span class="fc" id="L389">                            Node child = iter.next();</span>
+<span class="fc" id="L390">                            callSetter(childDescription, builder, parseMatcher(child));</span>
+<span class="fc" id="L391">                            iter.remove();</span>
+<span class="fc" id="L392">                        }</span>
+<span class="fc" id="L393">                    }</span>
                 } else {
-<span class="nc" id="L414">                    processChildren(description, children, (child, childD) -&gt; {</span>
-<span class="nc bnc" id="L415" title="All 2 branches missed.">                        if (childD.getChildType().equals(description.getChildType())) {</span>
-<span class="nc" id="L416">                            setValue(childDescription, childD, builder, child);</span>
-<span class="nc" id="L417">                            return true;</span>
+<span class="nc" id="L395">                    processChildren(description, children, (child, childD) -&gt; {</span>
+<span class="nc bnc" id="L396" title="All 2 branches missed.">                        if (childD.getChildType().equals(description.getChildType())) {</span>
+<span class="nc" id="L397">                            setValue(childDescription, childD, builder, child);</span>
+<span class="nc" id="L398">                            return true;</span>
                         }
-<span class="nc" id="L419">                        return false;</span>
+<span class="nc" id="L400">                        return false;</span>
                     });
                 }
+<span class="fc" id="L403">            }</span>
 
-<span class="fc" id="L423">            }</span>
-
-<span class="pc bpc" id="L425" title="1 of 2 branches missed.">            if (!children.isEmpty()) {</span>
-<span class="nc" id="L426">                children.forEach(n -&gt; DefaultLog.getInstance().warn(String.format(&quot;unrecognised child node '%s' in node '%s'%n&quot;,</span>
-<span class="nc" id="L427">                        n.getNodeName(), matcherNode.getNodeName())));</span>
+<span class="pc bpc" id="L405" title="1 of 2 branches missed.">            if (!children.isEmpty()) {</span>
+<span class="nc" id="L406">                children.forEach(n -&gt; DefaultLog.getInstance().warn(String.format(&quot;unrecognised child node '%s' in node '%s'%n&quot;,</span>
+<span class="nc" id="L407">                        n.getNodeName(), matcherNode.getNodeName())));</span>
             }
 
-<span class="nc" id="L430">        } catch (DOMException e) {</span>
-<span class="nc" id="L431">            DefaultLog.getInstance().error(String.format(&quot;Matcher error in: '%s'&quot;, nodeText(matcherNode)));</span>
-<span class="nc" id="L432">            throw new ConfigurationException(e);</span>
-<span class="fc" id="L433">        }</span>
-<span class="fc bfc" id="L434" title="All 2 branches covered.">        return builder.hasId() ? new IDRecordingBuilder(matchers, builder) : builder;</span>
+<span class="nc" id="L410">        } catch (DOMException e) {</span>
+<span class="nc" id="L411">            DefaultLog.getInstance().error(String.format(&quot;Matcher error in: '%s'&quot;, nodeText(matcherNode)));</span>
+<span class="nc" id="L412">            throw new ConfigurationException(e);</span>
+<span class="fc" id="L413">        }</span>
+<span class="fc bfc" id="L414" title="All 2 branches covered.">        return builder.hasId() ? new IDRecordingBuilder(matchers, builder) : builder;</span>
     }
 
     private BiPredicate&lt;Node, Description&gt; licenseChildNodeProcessor(final ILicense.Builder builder, final Description description) {
-<span class="fc" id="L438">        return (child, childDescription) -&gt; {</span>
-<span class="pc bpc" id="L439" title="4 of 5 branches missed.">            switch (childDescription.getType()) {</span>
+<span class="fc" id="L418">        return (child, childDescription) -&gt; {</span>
+<span class="pc bpc" id="L419" title="4 of 5 branches missed.">            switch (childDescription.getType()) {</span>
             case LICENSE:
-<span class="nc" id="L441">                throw new ConfigurationException(String.format(</span>
-<span class="nc" id="L442">                        &quot;%s may not be enclosed in another license.  %s '%s' found in '%s'&quot;, childDescription.getType(),</span>
-<span class="nc" id="L443">                        childDescription.getType(), childDescription.getCommonName(), description.getCommonName()));</span>
+<span class="nc" id="L421">                throw new ConfigurationException(String.format(</span>
+<span class="nc" id="L422">                        &quot;%s may not be enclosed in another license. %s '%s' found in '%s'&quot;, childDescription.getType(),</span>
+<span class="nc" id="L423">                        childDescription.getType(), childDescription.getCommonName(), description.getCommonName()));</span>
             case BUILD_PARAMETER:
-<span class="nc" id="L445">                break;</span>
+<span class="nc" id="L425">                break;</span>
             case MATCHER:
-<span class="nc" id="L447">                AbstractBuilder b = parseMatcher(child);</span>
-<span class="nc" id="L448">                callSetter(b.getDescription(), builder, b);</span>
-<span class="nc" id="L449">                return true;</span>
+<span class="nc" id="L427">                AbstractBuilder b = parseMatcher(child);</span>
+<span class="nc" id="L428">                callSetter(b.getDescription(), builder, b);</span>
+<span class="nc" id="L429">                return true;</span>
             case PARAMETER:
-<span class="pc bpc" id="L451" title="1 of 2 branches missed.">                if (!XMLConfig.isLicenseChild(childDescription.getCommonName())</span>
-<span class="pc bpc" id="L452" title="1 of 2 branches missed.">                        || childDescription.getChildType() == String.class) {</span>
-<span class="fc" id="L453">                    callSetter(childDescription, builder, child.getTextContent());</span>
+<span class="pc bpc" id="L431" title="1 of 2 branches missed.">                if (!XMLConfig.isLicenseChild(childDescription.getCommonName())</span>
+<span class="pc bpc" id="L432" title="1 of 2 branches missed.">                        || childDescription.getChildType() == String.class) {</span>
+<span class="fc" id="L433">                    callSetter(childDescription, builder, child.getTextContent());</span>
                 } else {
-<span class="nc" id="L455">                    callSetter(childDescription, builder, parseMatcher(child));</span>
+<span class="nc" id="L435">                    callSetter(childDescription, builder, parseMatcher(child));</span>
                 }
-<span class="fc" id="L457">                return true;</span>
+<span class="fc" id="L437">                return true;</span>
             }
-<span class="nc" id="L459">            return false;</span>
+<span class="nc" id="L439">            return false;</span>
         };
     }
 
@@ -467,62 +447,62 @@ public final class XMLConfigurationReader implements LicenseReader, MatcherReade
      */
     private ILicense parseLicense(final Node licenseNode) {
         try {
-<span class="fc" id="L470">            ILicense.Builder builder = ILicense.builder();</span>
+<span class="fc" id="L450">            ILicense.Builder builder = ILicense.builder();</span>
             // get the description for the builder
-<span class="fc" id="L472">            Description description = builder.getDescription();</span>
+<span class="fc" id="L452">            Description description = builder.getDescription();</span>
             // set the BUILDER_PARAM options from the description
-<span class="fc" id="L474">            processBuilderParams(description, builder);</span>
+<span class="fc" id="L454">            processBuilderParams(description, builder);</span>
             // set the children from attributes.
-<span class="fc" id="L476">            description.setChildren(builder, attributes(licenseNode));</span>
+<span class="fc" id="L456">            description.setChildren(builder, attributes(licenseNode));</span>
             // set children from the child nodes
-<span class="fc" id="L478">            Pair&lt;Boolean, List&lt;Node&gt;&gt; pair = processChildNodes(description, licenseNode,</span>
-<span class="fc" id="L479">                    licenseChildNodeProcessor(builder, description));</span>
-<span class="fc" id="L480">            List&lt;Node&gt; children = pair.getRight();</span>
+<span class="fc" id="L458">            Pair&lt;Boolean, List&lt;Node&gt;&gt; pair = processChildNodes(description, licenseNode,</span>
+<span class="fc" id="L459">                    licenseChildNodeProcessor(builder, description));</span>
+<span class="fc" id="L460">            List&lt;Node&gt; children = pair.getRight();</span>
 
             // check for inline nodes that can accept child nodes.
-<span class="fc" id="L483">            List&lt;Description&gt; childDescriptions = description.getChildren().values().stream()</span>
-<span class="fc" id="L484">                    .filter(d -&gt; XMLConfig.isLicenseInline(d.getCommonName())).collect(Collectors.toList());</span>
-<span class="fc bfc" id="L485" title="All 2 branches covered.">            for (Description childDescription : childDescriptions) {</span>
-<span class="fc" id="L486">                Iterator&lt;Node&gt; iter = children.iterator();</span>
-<span class="fc bfc" id="L487" title="All 2 branches covered.">                while (iter.hasNext()) {</span>
-<span class="fc" id="L488">                    callSetter(childDescription, builder, parseMatcher(iter.next()));</span>
-<span class="fc" id="L489">                    iter.remove();</span>
+<span class="fc" id="L463">            List&lt;Description&gt; childDescriptions = description.getChildren().values().stream()</span>
+<span class="fc" id="L464">                    .filter(d -&gt; XMLConfig.isLicenseInline(d.getCommonName())).toList();</span>
+<span class="fc bfc" id="L465" title="All 2 branches covered.">            for (Description childDescription : childDescriptions) {</span>
+<span class="fc" id="L466">                Iterator&lt;Node&gt; iter = children.iterator();</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">                while (iter.hasNext()) {</span>
+<span class="fc" id="L468">                    callSetter(childDescription, builder, parseMatcher(iter.next()));</span>
+<span class="fc" id="L469">                    iter.remove();</span>
                 }
-<span class="fc" id="L491">            }</span>
+<span class="fc" id="L471">            }</span>
 
-<span class="pc bpc" id="L493" title="1 of 2 branches missed.">            if (!children.isEmpty()) {</span>
-<span class="nc" id="L494">                children.forEach(n -&gt; DefaultLog.getInstance().warn(String.format(&quot;unrecognised child node '%s' in node '%s'%n&quot;,</span>
-<span class="nc" id="L495">                        n.getNodeName(), licenseNode.getNodeName())));</span>
+<span class="pc bpc" id="L473" title="1 of 2 branches missed.">            if (!children.isEmpty()) {</span>
+<span class="nc" id="L474">                children.forEach(n -&gt; DefaultLog.getInstance().warn(String.format(&quot;unrecognised child node '%s' in node '%s'%n&quot;,</span>
+<span class="nc" id="L475">                        n.getNodeName(), licenseNode.getNodeName())));</span>
             }
-<span class="fc" id="L497">            return builder.build();</span>
-<span class="fc" id="L498">        } catch (RuntimeException exception) {</span>
-<span class="fc" id="L499">            DefaultLog.getInstance().error(String.format(&quot;License error in: '%s'&quot;, nodeText(licenseNode)));</span>
-<span class="fc" id="L500">            throw exception;</span>
+<span class="fc" id="L477">            return builder.build();</span>
+<span class="fc" id="L478">        } catch (RuntimeException exception) {</span>
+<span class="fc" id="L479">            DefaultLog.getInstance().error(String.format(&quot;License error in: '%s'&quot;, nodeText(licenseNode)));</span>
+<span class="fc" id="L480">            throw exception;</span>
         }
     }
 
     @Override
     public SortedSet&lt;ILicense&gt; readLicenses() {
-<span class="pc bpc" id="L506" title="1 of 2 branches missed.">        if (this.document != null) {</span>
-<span class="fc" id="L507">            readFamilies();</span>
-<span class="fc" id="L508">            readMatcherBuilders();</span>
-<span class="pc bpc" id="L509" title="1 of 2 branches missed.">            if (licenses.isEmpty()) {</span>
-<span class="fc" id="L510">                nodeListConsumer(document.getElementsByTagName(XMLConfig.LICENSE), x -&gt; licenses.add(parseLicense(x)));</span>
-<span class="fc" id="L511">                document = null;</span>
+<span class="pc bpc" id="L486" title="1 of 2 branches missed.">        if (this.document != null) {</span>
+<span class="fc" id="L487">            readFamilies();</span>
+<span class="fc" id="L488">            readMatcherBuilders();</span>
+<span class="pc bpc" id="L489" title="1 of 2 branches missed.">            if (licenses.isEmpty()) {</span>
+<span class="fc" id="L490">                nodeListConsumer(document.getElementsByTagName(XMLConfig.LICENSE), x -&gt; licenses.add(parseLicense(x)));</span>
+<span class="fc" id="L491">                document = null;</span>
             }
         }
-<span class="fc" id="L514">        return Collections.unmodifiableSortedSet(licenses);</span>
+<span class="fc" id="L494">        return Collections.unmodifiableSortedSet(licenses);</span>
     }
 
     @Override
     public SortedSet&lt;ILicenseFamily&gt; readFamilies() {
-<span class="pc bpc" id="L519" title="1 of 2 branches missed.">        if (licenseFamilies.isEmpty()) {</span>
-<span class="fc" id="L520">            nodeListConsumer(document.getElementsByTagName(XMLConfig.FAMILIES),</span>
-<span class="fc" id="L521">                    x -&gt; nodeListConsumer(x.getChildNodes(), this::parseFamily));</span>
-<span class="fc" id="L522">            nodeListConsumer(document.getElementsByTagName(XMLConfig.APPROVED),</span>
-<span class="fc" id="L523">                    x -&gt; nodeListConsumer(x.getChildNodes(), this::parseApproved));</span>
+<span class="pc bpc" id="L499" title="1 of 2 branches missed.">        if (licenseFamilies.isEmpty()) {</span>
+<span class="fc" id="L500">            nodeListConsumer(document.getElementsByTagName(XMLConfig.FAMILIES),</span>
+<span class="fc" id="L501">                    x -&gt; nodeListConsumer(x.getChildNodes(), this::parseFamily));</span>
+<span class="fc" id="L502">            nodeListConsumer(document.getElementsByTagName(XMLConfig.APPROVED),</span>
+<span class="fc" id="L503">                    x -&gt; nodeListConsumer(x.getChildNodes(), this::parseApproved));</span>
         }
-<span class="fc" id="L525">        return Collections.unmodifiableSortedSet(licenseFamilies);</span>
+<span class="fc" id="L505">        return Collections.unmodifiableSortedSet(licenseFamilies);</span>
     }
 
     /**
@@ -531,14 +511,14 @@ public final class XMLConfigurationReader implements LicenseReader, MatcherReade
      * @return the license family defined in the map.
      */
     private ILicenseFamily parseFamily(final Map&lt;String, String&gt; attributes) {
-<span class="pc bpc" id="L534" title="1 of 2 branches missed.">        if (attributes.containsKey(XMLConfig.ATT_ID)) {</span>
-<span class="fc" id="L535">            ILicenseFamily.Builder builder = ILicenseFamily.builder();</span>
-<span class="fc" id="L536">            builder.setLicenseFamilyCategory(attributes.get(XMLConfig.ATT_ID));</span>
-<span class="fc" id="L537">            builder.setLicenseFamilyName(</span>
-<span class="fc" id="L538">                    StringUtils.defaultIfBlank(attributes.get(XMLConfig.ATT_NAME), attributes.get(XMLConfig.ATT_ID)));</span>
-<span class="fc" id="L539">            return builder.build();</span>
+<span class="pc bpc" id="L514" title="1 of 2 branches missed.">        if (attributes.containsKey(XMLConfig.ATT_ID)) {</span>
+<span class="fc" id="L515">            ILicenseFamily.Builder builder = ILicenseFamily.builder();</span>
+<span class="fc" id="L516">            builder.setLicenseFamilyCategory(attributes.get(XMLConfig.ATT_ID));</span>
+<span class="fc" id="L517">            builder.setLicenseFamilyName(</span>
+<span class="fc" id="L518">                    StringUtils.defaultIfBlank(attributes.get(XMLConfig.ATT_NAME), attributes.get(XMLConfig.ATT_ID)));</span>
+<span class="fc" id="L519">            return builder.build();</span>
         }
-<span class="nc" id="L541">        return null;</span>
+<span class="nc" id="L521">        return null;</span>
     }
 
     /**
@@ -546,20 +526,20 @@ public final class XMLConfigurationReader implements LicenseReader, MatcherReade
      * @param familyNode the node to parse.
      */
     private void parseFamily(final Node familyNode) {
-<span class="fc bfc" id="L549" title="All 2 branches covered.">        if (XMLConfig.FAMILY.equals(familyNode.getNodeName())) {</span>
+<span class="fc bfc" id="L529" title="All 2 branches covered.">        if (XMLConfig.FAMILY.equals(familyNode.getNodeName())) {</span>
             try {
-<span class="fc" id="L551">                ILicenseFamily result = parseFamily(attributes(familyNode));</span>
-<span class="pc bpc" id="L552" title="1 of 2 branches missed.">                if (result == null) {</span>
-<span class="nc" id="L553">                    throw new ConfigurationException(</span>
-<span class="nc" id="L554">                            String.format(&quot;families/family tag requires %s attribute&quot;, XMLConfig.ATT_ID));</span>
+<span class="fc" id="L531">                ILicenseFamily result = parseFamily(attributes(familyNode));</span>
+<span class="pc bpc" id="L532" title="1 of 2 branches missed.">                if (result == null) {</span>
+<span class="nc" id="L533">                    throw new ConfigurationException(</span>
+<span class="nc" id="L534">                            String.format(&quot;families/family tag requires %s attribute&quot;, XMLConfig.ATT_ID));</span>
                 }
-<span class="fc" id="L556">                licenseFamilies.add(result);</span>
-<span class="nc" id="L557">            } catch (RuntimeException exception) {</span>
-<span class="nc" id="L558">                DefaultLog.getInstance().error(String.format(&quot;Family error in: '%s'&quot;, nodeText(familyNode)));</span>
-<span class="nc" id="L559">                throw exception;</span>
-<span class="fc" id="L560">            }</span>
+<span class="fc" id="L536">                licenseFamilies.add(result);</span>
+<span class="nc" id="L537">            } catch (RuntimeException exception) {</span>
+<span class="nc" id="L538">                DefaultLog.getInstance().error(String.format(&quot;Family error in: '%s'&quot;, nodeText(familyNode)));</span>
+<span class="nc" id="L539">                throw exception;</span>
+<span class="fc" id="L540">            }</span>
         }
-<span class="fc" id="L562">    }</span>
+<span class="fc" id="L542">    }</span>
 
     /**
      * Parse an approved License family and adds it to the set of license families as well as the
@@ -567,67 +547,67 @@ public final class XMLConfigurationReader implements LicenseReader, MatcherReade
      * @param approvedNode the node to parse.
      */
     private void parseApproved(final Node approvedNode) {
-<span class="fc bfc" id="L570" title="All 2 branches covered.">        if (XMLConfig.FAMILY.equals(approvedNode.getNodeName())) {</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">        if (XMLConfig.FAMILY.equals(approvedNode.getNodeName())) {</span>
             try {
-<span class="fc" id="L572">                Map&lt;String, String&gt; attributes = attributes(approvedNode);</span>
-<span class="pc bpc" id="L573" title="1 of 2 branches missed.">                if (attributes.containsKey(XMLConfig.ATT_LICENSE_REF)) {</span>
-<span class="fc" id="L574">                    approvedFamilies.add(attributes.get(XMLConfig.ATT_LICENSE_REF));</span>
-<span class="nc bnc" id="L575" title="All 2 branches missed.">                } else if (attributes.containsKey(XMLConfig.ATT_ID)) {</span>
-<span class="nc" id="L576">                    ILicenseFamily target = parseFamily(attributes);</span>
-<span class="nc bnc" id="L577" title="All 2 branches missed.">                    if (target != null) {</span>
-<span class="nc" id="L578">                        licenseFamilies.add(target);</span>
-<span class="nc" id="L579">                        String familyCategory = target.getFamilyCategory();</span>
-<span class="nc bnc" id="L580" title="All 2 branches missed.">                        if (StringUtils.isNotBlank(familyCategory)) {</span>
-<span class="nc" id="L581">                            approvedFamilies.add(familyCategory);</span>
+<span class="fc" id="L552">                Map&lt;String, String&gt; attributes = attributes(approvedNode);</span>
+<span class="pc bpc" id="L553" title="1 of 2 branches missed.">                if (attributes.containsKey(XMLConfig.ATT_LICENSE_REF)) {</span>
+<span class="fc" id="L554">                    approvedFamilies.add(attributes.get(XMLConfig.ATT_LICENSE_REF));</span>
+<span class="nc bnc" id="L555" title="All 2 branches missed.">                } else if (attributes.containsKey(XMLConfig.ATT_ID)) {</span>
+<span class="nc" id="L556">                    ILicenseFamily target = parseFamily(attributes);</span>
+<span class="nc bnc" id="L557" title="All 2 branches missed.">                    if (target != null) {</span>
+<span class="nc" id="L558">                        licenseFamilies.add(target);</span>
+<span class="nc" id="L559">                        String familyCategory = target.getFamilyCategory();</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">                        if (StringUtils.isNotBlank(familyCategory)) {</span>
+<span class="nc" id="L561">                            approvedFamilies.add(familyCategory);</span>
                         }
                     }
-<span class="nc" id="L584">                } else {</span>
-<span class="nc" id="L585">                    throw new ConfigurationException(String.format(&quot;family tag requires %s or %s attribute&quot;,</span>
+<span class="nc" id="L564">                } else {</span>
+<span class="nc" id="L565">                    throw new ConfigurationException(String.format(&quot;family tag requires %s or %s attribute&quot;,</span>
                             XMLConfig.ATT_LICENSE_REF, XMLConfig.ATT_ID));
                 }
-<span class="nc" id="L588">            } catch (RuntimeException exception) {</span>
-<span class="nc" id="L589">                DefaultLog.getInstance().error(String.format(&quot;Approved error in: '%s'&quot;, nodeText(approvedNode)));</span>
-<span class="nc" id="L590">                throw exception;</span>
-<span class="fc" id="L591">            }</span>
+<span class="nc" id="L568">            } catch (RuntimeException exception) {</span>
+<span class="nc" id="L569">                DefaultLog.getInstance().error(String.format(&quot;Approved error in: '%s'&quot;, nodeText(approvedNode)));</span>
+<span class="nc" id="L570">                throw exception;</span>
+<span class="fc" id="L571">            }</span>
         }
-<span class="fc" id="L593">    }</span>
+<span class="fc" id="L573">    }</span>
 
     ////////////////////////////////////////// MatcherReader methods
     @Override
     public SortedSet&lt;String&gt; approvedLicenseId() {
-<span class="fc bfc" id="L598" title="All 2 branches covered.">        if (licenses.isEmpty()) {</span>
-<span class="fc" id="L599">            this.readLicenses();</span>
+<span class="fc bfc" id="L578" title="All 2 branches covered.">        if (licenses.isEmpty()) {</span>
+<span class="fc" id="L579">            this.readLicenses();</span>
         }
-<span class="fc bfc" id="L601" title="All 2 branches covered.">        if (approvedFamilies.isEmpty()) {</span>
-<span class="fc" id="L602">            SortedSet&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L603">            licenses.stream().map(x -&gt; x.getLicenseFamily().getFamilyCategory()).forEach(result::add);</span>
-<span class="fc" id="L604">            return result;</span>
+<span class="fc bfc" id="L581" title="All 2 branches covered.">        if (approvedFamilies.isEmpty()) {</span>
+<span class="fc" id="L582">            SortedSet&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L583">            licenses.stream().map(x -&gt; x.getLicenseFamily().getFamilyCategory()).forEach(result::add);</span>
+<span class="fc" id="L584">            return result;</span>
         }
-<span class="fc" id="L606">        return Collections.unmodifiableSortedSet(approvedFamilies);</span>
+<span class="fc" id="L586">        return Collections.unmodifiableSortedSet(approvedFamilies);</span>
     }
 
     private void parseMatcherBuilder(final Node classNode) {
         try {
-<span class="fc" id="L611">            Map&lt;String, String&gt; attributes = attributes(classNode);</span>
-<span class="pc bpc" id="L612" title="1 of 2 branches missed.">            if (attributes.get(XMLConfig.ATT_CLASS_NAME) == null) {</span>
-<span class="nc" id="L613">                throw new ConfigurationException(&quot;matcher must have a &quot; + XMLConfig.ATT_CLASS_NAME + &quot; attribute&quot;);</span>
+<span class="fc" id="L591">            Map&lt;String, String&gt; attributes = attributes(classNode);</span>
+<span class="pc bpc" id="L592" title="1 of 2 branches missed.">            if (attributes.get(XMLConfig.ATT_CLASS_NAME) == null) {</span>
+<span class="nc" id="L593">                throw new ConfigurationException(&quot;matcher must have a &quot; + XMLConfig.ATT_CLASS_NAME + &quot; attribute&quot;);</span>
             }
-<span class="fc" id="L615">            MatcherBuilderTracker.addBuilder(attributes.get(XMLConfig.ATT_CLASS_NAME), attributes.get(XMLConfig.ATT_NAME));</span>
-<span class="nc" id="L616">        } catch (RuntimeException exception) {</span>
-<span class="nc" id="L617">            DefaultLog.getInstance().error(String.format(&quot;Matcher error in: '%s'&quot;, nodeText(classNode)));</span>
-<span class="nc" id="L618">            throw exception;</span>
-<span class="fc" id="L619">        }</span>
-<span class="fc" id="L620">    }</span>
+<span class="fc" id="L595">            MatcherBuilderTracker.addBuilder(attributes.get(XMLConfig.ATT_CLASS_NAME), attributes.get(XMLConfig.ATT_NAME));</span>
+<span class="nc" id="L596">        } catch (RuntimeException exception) {</span>
+<span class="nc" id="L597">            DefaultLog.getInstance().error(String.format(&quot;Matcher error in: '%s'&quot;, nodeText(classNode)));</span>
+<span class="nc" id="L598">            throw exception;</span>
+<span class="fc" id="L599">        }</span>
+<span class="fc" id="L600">    }</span>
 
     @Override
     public void readMatcherBuilders() {
-<span class="fc" id="L624">        nodeListConsumer(document.getElementsByTagName(XMLConfig.MATCHER), this::parseMatcherBuilder);</span>
-<span class="fc" id="L625">    }</span>
+<span class="fc" id="L604">        nodeListConsumer(document.getElementsByTagName(XMLConfig.MATCHER), this::parseMatcherBuilder);</span>
+<span class="fc" id="L605">    }</span>
 
     @Override
     public void addMatchers(final URI uri) {
-<span class="fc" id="L629">        read(uri);</span>
-<span class="fc" id="L630">    }</span>
+<span class="fc" id="L609">        read(uri);</span>
+<span class="fc" id="L610">    }</span>
 
     /**
      * An abstract builder that delegates to another abstract builder.
@@ -641,23 +621,23 @@ public final class XMLConfigurationReader implements LicenseReader, MatcherReade
          */
         private final Map&lt;String, IHeaderMatcher&gt; matchers;
 
-<span class="fc" id="L644">        IDRecordingBuilder(final Map&lt;String, IHeaderMatcher&gt; matchers, final AbstractBuilder delegate) {</span>
-<span class="fc" id="L645">            this.delegate = delegate;</span>
-<span class="fc" id="L646">            this.matchers = matchers;</span>
-<span class="fc" id="L647">            setId(delegate.getId());</span>
-<span class="fc" id="L648">        }</span>
+<span class="fc" id="L624">        IDRecordingBuilder(final Map&lt;String, IHeaderMatcher&gt; matchers, final AbstractBuilder delegate) {</span>
+<span class="fc" id="L625">            this.delegate = delegate;</span>
+<span class="fc" id="L626">            this.matchers = matchers;</span>
+<span class="fc" id="L627">            setId(delegate.getId());</span>
+<span class="fc" id="L628">        }</span>
 
         @Override
         public IHeaderMatcher build() {
-<span class="fc" id="L652">            IHeaderMatcher result = delegate.build();</span>
-<span class="fc" id="L653">            matchers.put(result.getId(), result);</span>
-<span class="fc" id="L654">            return result;</span>
+<span class="fc" id="L632">            IHeaderMatcher result = delegate.build();</span>
+<span class="fc" id="L633">            matchers.put(result.getId(), result);</span>
+<span class="fc" id="L634">            return result;</span>
         }
 
         @Override
         public Description getDescription() {
-<span class="nc" id="L659">            return delegate.getDescription();</span>
+<span class="nc" id="L639">            return delegate.getDescription();</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

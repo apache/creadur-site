@@ -20,8 +20,8 @@ package org.apache.rat.analysis;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Collection;
 
+import org.apache.commons.collections4.set.UnmodifiableSortedSet;
 import org.apache.rat.api.Document;
 import org.apache.rat.document.DocumentAnalyser;
 import org.apache.rat.license.ILicense;
@@ -35,15 +35,15 @@ import static java.lang.String.format;
 class DocumentHeaderAnalyser implements DocumentAnalyser {
 
     /** The license to analyse */
-    private final Collection&lt;ILicense&gt; licenses;
+    private final UnmodifiableSortedSet&lt;ILicense&gt; licenses;
     /** The matcher for generated headers */
     private final IHeaderMatcher generatedMatcher;
 
     /**
      * Constructs the HeaderAnalyser for the specific license.
-     * @param licenses The licenses to analyse
+     * @param licenses the licenses to analyse.
      */
-    DocumentHeaderAnalyser(final IHeaderMatcher generatedMatcher, final Collection&lt;ILicense&gt; licenses) {
+    DocumentHeaderAnalyser(final IHeaderMatcher generatedMatcher, final UnmodifiableSortedSet&lt;ILicense&gt; licenses) {
 <span class="fc" id="L47">        super();</span>
 <span class="fc" id="L48">        this.generatedMatcher = generatedMatcher;</span>
 <span class="fc" id="L49">        this.licenses = licenses;</span>
@@ -66,4 +66,4 @@ class DocumentHeaderAnalyser implements DocumentAnalyser {
         }
 <span class="fc" id="L67">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

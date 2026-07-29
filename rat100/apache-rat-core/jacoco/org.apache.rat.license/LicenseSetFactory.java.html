@@ -20,13 +20,19 @@ package org.apache.rat.license;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.set.UnmodifiableSortedSet;
+import org.apache.rat.ConfigurationException;
 import org.apache.rat.analysis.IHeaderMatcher;
 import org.apache.rat.analysis.IHeaders;
+import org.apache.rat.utils.DefaultLog;
 import org.apache.rat.utils.Log;
 import org.apache.rat.utils.ReportingSet;
 
@@ -38,37 +44,37 @@ public class LicenseSetFactory {
 
     /**
      * Search a SortedSet of ILicenseFamily instances looking for a matching instance.
-     * @param target The instance to search for.
+     * @param target the instance to search for.
      * @param licenseFamilies the license families to search.
      * @return the matching instance of the target given.
      */
     public static ILicenseFamily familySearch(final String target, final SortedSet&lt;ILicenseFamily&gt; licenseFamilies) {
-<span class="nc" id="L46">        ILicenseFamily family = ILicenseFamily.builder().setLicenseFamilyCategory(target).setLicenseFamilyName(&quot;Searching family&quot;)</span>
-<span class="nc" id="L47">                .build();</span>
-<span class="nc" id="L48">        return familySearch(family, licenseFamilies);</span>
+<span class="fc" id="L52">        ILicenseFamily family = ILicenseFamily.builder().setLicenseFamilyCategory(target).setLicenseFamilyName(&quot;Searching family&quot;)</span>
+<span class="fc" id="L53">                .build();</span>
+<span class="fc" id="L54">        return familySearch(family, licenseFamilies);</span>
     }
 
     /**
      * Search a SortedSet of ILicenseFamily instances looking for a matching instance.
-     * @param target The instance to search for.
+     * @param target the instance to search for.
      * @param licenseFamilies the license families to search.
      * @return the matching instance of the target given.
      */
     public static ILicenseFamily familySearch(final ILicenseFamily target, final SortedSet&lt;ILicenseFamily&gt; licenseFamilies) {
-<span class="nc" id="L58">        SortedSet&lt;ILicenseFamily&gt; part = licenseFamilies.tailSet(target);</span>
-<span class="nc bnc" id="L59" title="All 4 branches missed.">        return (!part.isEmpty() &amp;&amp; part.first().compareTo(target) == 0) ? part.first() : null;</span>
+<span class="fc" id="L64">        SortedSet&lt;ILicenseFamily&gt; part = licenseFamilies.tailSet(target);</span>
+<span class="fc bfc" id="L65" title="All 4 branches covered.">        return (!part.isEmpty() &amp;&amp; part.first().compareTo(target) == 0) ? part.first() : null;</span>
     }
 
     /**
-     * An enum that defines the types of Licenses to extract.
+     * An enum that defines the types of licenses to extract.
      */
-<span class="fc" id="L65">    public enum LicenseFilter {</span>
+<span class="fc" id="L71">    public enum LicenseFilter {</span>
         /** All defined licenses are returned. */
-<span class="fc" id="L67">        ALL,</span>
+<span class="fc" id="L73">        ALL,</span>
         /** Only approved licenses are returned. */
-<span class="fc" id="L69">        APPROVED,</span>
+<span class="fc" id="L75">        APPROVED,</span>
         /** No licenses are returned. */
-<span class="fc" id="L71">        NONE</span>
+<span class="fc" id="L77">        NONE</span>
     }
 
     /** The set of defined families. */
@@ -98,17 +104,17 @@ public class LicenseSetFactory {
      * Constructs a factory with the specified set of Licenses and the approved
      * license collection.
      */
-<span class="fc" id="L101">    public LicenseSetFactory() {</span>
-<span class="fc" id="L102">        families = new ReportingSet&lt;&gt;(new TreeSet&lt;ILicenseFamily&gt;())</span>
-<span class="fc" id="L103">                .setMsgFormat(s -&gt; String.format(&quot;Duplicate LicenseFamily category: %s&quot;, s.getFamilyCategory()));</span>
-<span class="fc" id="L104">        licenses = new ReportingSet&lt;&gt;(new TreeSet&lt;ILicense&gt;())</span>
-<span class="fc" id="L105">                .setMsgFormat(s -&gt; String.format(&quot;Duplicate License %s (%s) of type %s&quot;, s.getName(), s.getId(), s.getLicenseFamily().getFamilyCategory()));</span>
+<span class="fc" id="L107">    public LicenseSetFactory() {</span>
+<span class="fc" id="L108">        families = new ReportingSet&lt;&gt;(new TreeSet&lt;ILicenseFamily&gt;())</span>
+<span class="fc" id="L109">                .setMsgFormat(s -&gt; String.format(&quot;Duplicate LicenseFamily category: %s&quot;, s.getFamilyCategory()));</span>
+<span class="fc" id="L110">        licenses = new ReportingSet&lt;&gt;(new TreeSet&lt;ILicense&gt;())</span>
+<span class="fc" id="L111">                .setMsgFormat(s -&gt; String.format(&quot;Duplicate License %s (%s) of type %s&quot;, s.getName(), s.getId(), s.getLicenseFamily().getFamilyCategory()));</span>
 
-<span class="fc" id="L107">        approvedLicenseCategories = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L108">        removedLicenseCategories = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L109">        approvedLicenseIds = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L110">        removedLicenseIds = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L111">    }</span>
+<span class="fc" id="L113">        approvedLicenseCategories = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L114">        removedLicenseCategories = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L115">        approvedLicenseIds = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L116">        removedLicenseIds = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L117">    }</span>
 
     /**
      * Constructs a factory with the specified set of Licenses and the approved
@@ -116,52 +122,77 @@ public class LicenseSetFactory {
      * @param licenses the set of defined licenses. Families will be extracted from the licenses.
      */
     public LicenseSetFactory(final SortedSet&lt;ILicense&gt; licenses) {
-<span class="fc" id="L119">        this();</span>
-<span class="fc" id="L120">        this.licenses.addAll(licenses);</span>
-<span class="fc" id="L121">        licenses.forEach(l -&gt; families.addIfNotPresent(l.getLicenseFamily()));</span>
-<span class="fc" id="L122">    }</span>
+<span class="fc" id="L125">        this();</span>
+<span class="fc" id="L126">        this.licenses.addAll(licenses);</span>
+<span class="fc" id="L127">        licenses.forEach(l -&gt; families.addIfNotPresent(l.getLicenseFamily()));</span>
+<span class="fc" id="L128">    }</span>
+
+    public void validate() {
+<span class="fc" id="L131">        Log log = DefaultLog.getInstance();</span>
+
+        // verify license definitions exist
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (getLicenses(LicenseFilter.ALL).isEmpty()) {</span>
+<span class="fc" id="L135">            String msg = &quot;At least one license must be defined&quot;;</span>
+<span class="fc" id="L136">            log.error(msg);</span>
+<span class="fc" id="L137">            throw new ConfigurationException(msg);</span>
+        }
+
+        // verify that all approved license families exist
+<span class="fc" id="L141">        Set&lt;String&gt; exists = getLicenseFamilies(LicenseFilter.ALL)</span>
+<span class="fc" id="L142">                .stream().map(ILicenseFamily::getFamilyCategory).collect(Collectors.toSet());</span>
+<span class="fc" id="L143">        Set&lt;String&gt; approved = new HashSet&lt;&gt;(approvedLicenseCategories);</span>
+<span class="fc" id="L144">        approved.removeIf(exists::contains);</span>
+<span class="pc" id="L145">        approved.forEach(name -&gt; log.warn(String.format(&quot;License category '%s' was approved but does not exist.&quot;, name)));</span>
+
+        // verify that all approved licenses exist
+<span class="fc" id="L148">        exists = getLicenses(LicenseFilter.ALL)</span>
+<span class="fc" id="L149">                .stream().map(ILicense::getId).collect(Collectors.toSet());</span>
+<span class="fc" id="L150">        approved = new HashSet&lt;&gt;(approvedLicenseIds);</span>
+<span class="fc" id="L151">        approved.removeIf(exists::contains);</span>
+<span class="pc" id="L152">        approved.forEach(name -&gt; log.warn(String.format(&quot;License '%s' was approved but does not exist.&quot;, name)));</span>
+<span class="fc" id="L153">    }</span>
 
     public void add(final LicenseSetFactory other) {
-<span class="fc" id="L125">        this.families.addAll(other.families);</span>
-<span class="fc" id="L126">        this.licenses.addAll(other.licenses);</span>
-<span class="fc" id="L127">        this.approvedLicenseCategories.addAll(other.approvedLicenseCategories);</span>
-<span class="fc" id="L128">        this.removedLicenseCategories.addAll(other.removedLicenseCategories);</span>
-<span class="fc" id="L129">        this.approvedLicenseIds.addAll(other.approvedLicenseIds);</span>
-<span class="fc" id="L130">        this.removedLicenseIds.addAll(other.removedLicenseIds);</span>
-<span class="fc" id="L131">    }</span>
+<span class="fc" id="L156">        this.families.addAll(other.families);</span>
+<span class="fc" id="L157">        this.licenses.addAll(other.licenses);</span>
+<span class="fc" id="L158">        this.approvedLicenseCategories.addAll(other.approvedLicenseCategories);</span>
+<span class="fc" id="L159">        this.removedLicenseCategories.addAll(other.removedLicenseCategories);</span>
+<span class="fc" id="L160">        this.approvedLicenseIds.addAll(other.approvedLicenseIds);</span>
+<span class="fc" id="L161">        this.removedLicenseIds.addAll(other.removedLicenseIds);</span>
+<span class="fc" id="L162">    }</span>
 
     /**
      * Set the log level for reporting collisions in the set of license families.
      * &lt;p&gt;NOTE: should be set before licenses or license families are added.&lt;/p&gt;
-     * @param level The log level to use.
+     * @param level the log level to use.
      */
     public void logFamilyCollisions(final Log.Level level) {
-<span class="fc" id="L139">        families.setLogLevel(level);</span>
-<span class="fc" id="L140">    }</span>
+<span class="fc" id="L170">        families.setLogLevel(level);</span>
+<span class="fc" id="L171">    }</span>
 
     /**
      * Sets the reporting option for duplicate license families.
-     * @param state The ReportingSet.Option to use for reporting.
+     * @param state the ReportingSet.Option to use for reporting.
      */
     public void familyDuplicateOption(final ReportingSet.Options state) {
-<span class="fc" id="L147">        families.setDuplicateOption(state);</span>
-<span class="fc" id="L148">    }</span>
+<span class="fc" id="L178">        families.setDuplicateOption(state);</span>
+<span class="fc" id="L179">    }</span>
 
     /**
      * Sets the log level for reporting license collisions.
-     * @param level The log level.
+     * @param level the log level.
      */
     public void logLicenseCollisions(final Log.Level level) {
-<span class="fc" id="L155">        licenses.setLogLevel(level);</span>
-<span class="fc" id="L156">    }</span>
+<span class="fc" id="L186">        licenses.setLogLevel(level);</span>
+<span class="fc" id="L187">    }</span>
 
     /**
      * Sets the reporting option for duplicate licenses.
      * @param state the ReportingSt.Option to use for reporting.
      */
     public void licenseDuplicateOption(final ReportingSet.Options state) {
-<span class="fc" id="L163">        licenses.setDuplicateOption(state);</span>
-<span class="fc" id="L164">    }</span>
+<span class="fc" id="L194">        licenses.setDuplicateOption(state);</span>
+<span class="fc" id="L195">    }</span>
 
     /**
      * Create a sorted set of licenses families from the collection.
@@ -169,110 +200,110 @@ public class LicenseSetFactory {
      * @return a SortedSet of license families from the collection.
      */
     private static SortedSet&lt;ILicenseFamily&gt; extractFamily(final Collection&lt;ILicense&gt; licenses) {
-<span class="fc" id="L172">        SortedSet&lt;ILicenseFamily&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L173">        licenses.stream().map(ILicense::getLicenseFamily).forEach(result::add);</span>
-<span class="fc" id="L174">        return result;</span>
+<span class="fc" id="L203">        SortedSet&lt;ILicenseFamily&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L204">        licenses.stream().map(ILicense::getLicenseFamily).forEach(result::add);</span>
+<span class="fc" id="L205">        return result;</span>
     }
 
     /**
      * Adds a license to the list of licenses. Does not add the license to the list
      * of approved licenses.
-     * @param license The license to add to the list of licenses.
+     * @param license the license to add to the list of licenses.
      */
     public void addLicense(final ILicense license) {
-<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (license != null) {</span>
-<span class="fc" id="L184">            this.licenses.add(license);</span>
-<span class="fc" id="L185">            this.families.addIfNotPresent(license.getLicenseFamily());</span>
+<span class="fc bfc" id="L214" title="All 2 branches covered.">        if (license != null) {</span>
+<span class="fc" id="L215">            this.licenses.add(license);</span>
+<span class="fc" id="L216">            this.families.addIfNotPresent(license.getLicenseFamily());</span>
         }
-<span class="fc" id="L187">    }</span>
+<span class="fc" id="L218">    }</span>
 
     /**
      * Adds a license to the list of licenses. Does not add the license to the list
      * of approved licenses.
-     * @param builder The license builder to build and add to the list of licenses.
-     * @return The ILicense implementation that was added.
+     * @param builder the license builder to build and add to the list of licenses.
+     * @return the ILicense implementation that was added.
      */
     public ILicense addLicense(final ILicense.Builder builder) {
-<span class="pc bpc" id="L196" title="1 of 2 branches missed.">        if (builder != null) {</span>
-<span class="fc" id="L197">            ILicense license = builder.setLicenseFamilies(families).build();</span>
-<span class="fc" id="L198">            this.licenses.add(license);</span>
-<span class="fc" id="L199">            return license;</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (builder != null) {</span>
+<span class="fc" id="L228">            ILicense license = builder.setLicenseFamilies(families).build();</span>
+<span class="fc" id="L229">            this.licenses.add(license);</span>
+<span class="fc" id="L230">            return license;</span>
         }
-<span class="nc" id="L201">        return null;</span>
+<span class="fc" id="L232">        return null;</span>
     }
 
     /**
      * Adds multiple licenses to the list of licenses. Does not add the licenses to
      * the list of approved licenses.
-     * @param licenses The licenses to add.
+     * @param licenses the licenses to add.
      */
     public void addLicenses(final Collection&lt;ILicense&gt; licenses) {
-<span class="fc" id="L210">        this.licenses.addAll(licenses);</span>
-<span class="fc" id="L211">        licenses.stream().map(ILicense::getLicenseFamily).forEach(families::add);</span>
-<span class="fc" id="L212">    }</span>
-
-    /**
-     * Adds a license family to the list of families. Does not add the family to the
-     * list of approved licenses.
-     * @param family The license family to add to the list of license families.
-     */
-    public void addFamily(final ILicenseFamily family) {
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">        if (family != null) {</span>
-<span class="fc" id="L221">            this.families.add(family);</span>
-        }
-<span class="fc" id="L223">    }</span>
-
-    /**
-     * Adds a license family to the list of families. Does not add the family to the
-     * list of approved licenses.
-     * @param builder The licenseFamily.Builder to build and add to the list of
-     * licenses.
-     */
-    public void addFamily(final ILicenseFamily.Builder builder) {
-<span class="pc bpc" id="L232" title="1 of 2 branches missed.">        if (builder != null) {</span>
-<span class="fc" id="L233">            this.families.add(builder.build());</span>
-        }
-<span class="fc" id="L235">    }</span>
-
-    /**
-     * Adds a license family category (id) to the list of approved licenses
-     * @param familyCategory the category to add.
-     */
-    public void approveLicenseCategory(final String familyCategory) {
-<span class="fc" id="L242">        approvedLicenseCategories.add(ILicenseFamily.makeCategory(familyCategory));</span>
+<span class="fc" id="L241">        this.licenses.addAll(licenses);</span>
+<span class="fc" id="L242">        licenses.stream().map(ILicense::getLicenseFamily).forEach(families::add);</span>
 <span class="fc" id="L243">    }</span>
 
     /**
-     * Adds a license family category (id) to the list of approved licenses
+     * Adds a license family to the list of families. Does not add the family to the
+     * list of approved licenses.
+     * @param family the license family to add to the list of license families.
+     */
+    public void addFamily(final ILicenseFamily family) {
+<span class="fc bfc" id="L251" title="All 2 branches covered.">        if (family != null) {</span>
+<span class="fc" id="L252">            this.families.add(family);</span>
+        }
+<span class="fc" id="L254">    }</span>
+
+    /**
+     * Adds a license family to the list of families. Does not add the family to the
+     * list of approved licenses.
+     * @param builder the licenseFamily.Builder to build and add to the list of
+     * licenses.
+     */
+    public void addFamily(final ILicenseFamily.Builder builder) {
+<span class="fc bfc" id="L263" title="All 2 branches covered.">        if (builder != null) {</span>
+<span class="fc" id="L264">            this.families.add(builder.build());</span>
+        }
+<span class="fc" id="L266">    }</span>
+
+    /**
+     * Adds a license family category (id) to the list of approved licenses.
      * @param familyCategory the category to add.
      */
+    public void approveLicenseCategory(final String familyCategory) {
+<span class="fc" id="L273">        approvedLicenseCategories.add(ILicenseFamily.makeCategory(familyCategory));</span>
+<span class="fc" id="L274">    }</span>
+
+    /**
+     * Removes a license family category (id) from the list of approved licenses.
+     * @param familyCategory the category to remove.
+     */
     public void removeLicenseCategory(final String familyCategory) {
-<span class="fc" id="L250">        removedLicenseCategories.add(ILicenseFamily.makeCategory(familyCategory));</span>
-<span class="fc" id="L251">    }</span>
+<span class="fc" id="L281">        removedLicenseCategories.add(ILicenseFamily.makeCategory(familyCategory));</span>
+<span class="fc" id="L282">    }</span>
 
     /**
      * Adds a license family category (id) to the list of approved licenses
      * @param licenseId the license ID to add.
      */
     public void approveLicenseId(final String licenseId) {
-<span class="fc" id="L258">        approvedLicenseIds.add(licenseId);</span>
-<span class="fc" id="L259">    }</span>
+<span class="fc" id="L289">        approvedLicenseIds.add(licenseId);</span>
+<span class="fc" id="L290">    }</span>
 
     /**
      * Removes a license ID from the list of approved licenses.
      * @param licenseId the license ID to remove.
      */
     public void removeLicenseId(final String licenseId) {
-<span class="fc" id="L266">        removedLicenseIds.add(licenseId);</span>
-<span class="fc" id="L267">    }</span>
+<span class="fc" id="L297">        removedLicenseIds.add(licenseId);</span>
+<span class="fc" id="L298">    }</span>
 
     /**
      * Test for approved family category.
      * @param family the license family to test, must be in category format.
-     * @return return {@code true} if the category is approved.
+     * @return {@code true} if the category is approved.
      */
     private boolean isApprovedCategory(final ILicenseFamily family) {
-<span class="fc bfc" id="L275" title="All 4 branches covered.">        return approvedLicenseCategories.contains(family.getFamilyCategory()) &amp;&amp; !removedLicenseCategories.contains(family.getFamilyCategory());</span>
+<span class="fc bfc" id="L306" title="All 4 branches covered.">        return approvedLicenseCategories.contains(family.getFamilyCategory()) &amp;&amp; !removedLicenseCategories.contains(family.getFamilyCategory());</span>
     }
 
     /**
@@ -280,8 +311,8 @@ public class LicenseSetFactory {
      * @return a predicate that returns {@code true} if the license is approved.
      */
     public Predicate&lt;ILicense&gt; getApprovedLicensePredicate() {
-<span class="fc bfc" id="L283" title="All 4 branches covered.">        return lic -&gt; !removedLicenseIds.contains(lic.getId()) &amp;&amp; (approvedLicenseIds.contains(lic.getId()) ||</span>
-<span class="fc bfc" id="L284" title="All 2 branches covered.">                isApprovedCategory(lic.getLicenseFamily()));</span>
+<span class="fc bfc" id="L314" title="All 4 branches covered.">        return lic -&gt; !removedLicenseIds.contains(lic.getId()) &amp;&amp; (approvedLicenseIds.contains(lic.getId()) ||</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">                isApprovedCategory(lic.getLicenseFamily()));</span>
     }
 
     /**
@@ -289,18 +320,21 @@ public class LicenseSetFactory {
      * @param filter the types of LicenseFamily objects to return.
      * @return a SortedSet of ILicense objects.
      */
-    public SortedSet&lt;ILicense&gt; getLicenses(final LicenseFilter filter) {
-<span class="fc bfc" id="L293" title="All 3 branches covered.">        switch (filter) {</span>
+    public UnmodifiableSortedSet&lt;ILicense&gt; getLicenses(final LicenseFilter filter) {
+        SortedSet&lt;ILicense&gt; result;
+<span class="fc bfc" id="L325" title="All 3 branches covered.">        switch (filter) {</span>
         case ALL:
-<span class="fc" id="L295">            return Collections.unmodifiableSortedSet(licenses);</span>
+<span class="fc" id="L327">            result = licenses;</span>
+<span class="fc" id="L328">            break;</span>
         case APPROVED:
-<span class="fc" id="L297">            SortedSet&lt;ILicense&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L298">            licenses.stream().filter(getApprovedLicensePredicate()).forEach(result::add);</span>
-<span class="fc" id="L299">            return result;</span>
+<span class="fc" id="L330">            result = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L331">            licenses.stream().filter(getApprovedLicensePredicate()).forEach(result::add);</span>
+<span class="fc" id="L332">            break;</span>
         case NONE:
         default:
-<span class="fc" id="L302">            return Collections.emptySortedSet();</span>
+<span class="fc" id="L335">            result = Collections.emptySortedSet();</span>
         }
+<span class="fc" id="L337">        return (UnmodifiableSortedSet&lt;ILicense&gt;) UnmodifiableSortedSet.unmodifiableSortedSet(result);</span>
     }
 
     /**
@@ -310,18 +344,18 @@ public class LicenseSetFactory {
      */
     public SortedSet&lt;ILicenseFamily&gt; getLicenseFamilies(final LicenseFilter filter) {
         SortedSet&lt;ILicenseFamily&gt; result;
-<span class="fc bfc" id="L313" title="All 3 branches covered.">        switch (filter) {</span>
+<span class="fc bfc" id="L347" title="All 3 branches covered.">        switch (filter) {</span>
         case ALL:
-<span class="fc" id="L315">            result = extractFamily(licenses);</span>
-<span class="fc" id="L316">            result.addAll(families);</span>
-<span class="fc" id="L317">            return result;</span>
+<span class="fc" id="L349">            result = extractFamily(licenses);</span>
+<span class="fc" id="L350">            result.addAll(families);</span>
+<span class="fc" id="L351">            return result;</span>
         case APPROVED:
-<span class="fc" id="L319">            result = new TreeSet&lt;&gt;();</span>
-<span class="fc" id="L320">            licenses.stream().map(ILicense::getLicenseFamily).filter(this::isApprovedCategory).forEach(result::add);</span>
-<span class="fc" id="L321">            return result;</span>
+<span class="fc" id="L353">            result = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L354">            licenses.stream().map(ILicense::getLicenseFamily).filter(this::isApprovedCategory).forEach(result::add);</span>
+<span class="fc" id="L355">            return result;</span>
         case NONE:
         default:
-<span class="fc" id="L324">            return Collections.emptySortedSet();</span>
+<span class="fc" id="L358">            return Collections.emptySortedSet();</span>
         }
     }
 
@@ -329,24 +363,24 @@ public class LicenseSetFactory {
      * Gets the License ids based on the filter.
      *
      * @param filter the types of License Ids to return.
-     * @return The list of all licenses in the category regardless of whether or not it is used by an ILicense implementation.
+     * @return a set of all licenses in the category regardless of whether it is used by an ILicense implementation.
      */
     public SortedSet&lt;String&gt; getLicenseCategories(final LicenseFilter filter) {
-<span class="fc" id="L335">        SortedSet&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="fc bfc" id="L336" title="All 3 branches covered.">        switch (filter) {</span>
+<span class="fc" id="L369">        SortedSet&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L370" title="All 3 branches covered.">        switch (filter) {</span>
             case ALL:
-<span class="fc" id="L338">                licenses.forEach(l -&gt; result.add(l.getLicenseFamily().getFamilyCategory()));</span>
-<span class="fc" id="L339">                families.forEach(f -&gt; result.add(f.getFamilyCategory()));</span>
-<span class="fc" id="L340">                result.addAll(approvedLicenseCategories);</span>
-<span class="fc" id="L341">                result.addAll(removedLicenseCategories);</span>
-<span class="fc" id="L342">                return result;</span>
+<span class="fc" id="L372">                licenses.forEach(l -&gt; result.add(l.getLicenseFamily().getFamilyCategory()));</span>
+<span class="fc" id="L373">                families.forEach(f -&gt; result.add(f.getFamilyCategory()));</span>
+<span class="fc" id="L374">                result.addAll(approvedLicenseCategories);</span>
+<span class="fc" id="L375">                result.addAll(removedLicenseCategories);</span>
+<span class="fc" id="L376">                return result;</span>
             case APPROVED:
-<span class="fc bfc" id="L344" title="All 2 branches covered.">                approvedLicenseCategories.stream().filter(s -&gt; !removedLicenseCategories.contains(s)).forEach(result::add);</span>
-<span class="fc" id="L345">                families.stream().filter(this::isApprovedCategory).forEach(f -&gt; result.add(f.getFamilyCategory()));</span>
-<span class="fc" id="L346">                return result;</span>
+<span class="fc bfc" id="L378" title="All 2 branches covered.">                approvedLicenseCategories.stream().filter(s -&gt; !removedLicenseCategories.contains(s)).forEach(result::add);</span>
+<span class="fc" id="L379">                families.stream().filter(this::isApprovedCategory).forEach(f -&gt; result.add(f.getFamilyCategory()));</span>
+<span class="fc" id="L380">                return result;</span>
             case NONE:
             default:
-<span class="fc" id="L349">                return Collections.emptySortedSet();</span>
+<span class="fc" id="L383">                return Collections.emptySortedSet();</span>
         }
     }
 
@@ -354,28 +388,28 @@ public class LicenseSetFactory {
      * Gets the License ids based on the filter.
      *
      * @param filter the types of License Ids to return.
-     * @return The list of all licenses in the category regardless of whether or not it is used by an ILicense implementation.
+     * @return a set of all licenses in the category regardless of whether it is used by an ILicense implementation.
      */
     public SortedSet&lt;String&gt; getLicenseIds(final LicenseFilter filter) {
-<span class="fc bfc" id="L360" title="All 2 branches covered.">        Predicate&lt;ILicense&gt; approved =  l -&gt; (isApprovedCategory(l.getLicenseFamily()) ||</span>
-<span class="fc bfc" id="L361" title="All 4 branches covered.">                approvedLicenseIds.contains(l.getId())) &amp;&amp; !removedLicenseIds.contains(l.getId());</span>
-<span class="fc" id="L362">        SortedSet&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
-<span class="pc bpc" id="L363" title="1 of 3 branches missed.">        switch (filter) {</span>
+<span class="fc bfc" id="L394" title="All 2 branches covered.">        Predicate&lt;ILicense&gt; approved =  l -&gt; (isApprovedCategory(l.getLicenseFamily()) ||</span>
+<span class="fc bfc" id="L395" title="All 4 branches covered.">                approvedLicenseIds.contains(l.getId())) &amp;&amp; !removedLicenseIds.contains(l.getId());</span>
+<span class="fc" id="L396">        SortedSet&lt;String&gt; result = new TreeSet&lt;&gt;();</span>
+<span class="pc bpc" id="L397" title="1 of 3 branches missed.">        switch (filter) {</span>
             case ALL:
-<span class="fc" id="L365">                licenses.forEach(l -&gt; result.add(l.getId()));</span>
-<span class="fc" id="L366">                result.addAll(approvedLicenseCategories);</span>
-<span class="fc" id="L367">                result.addAll(removedLicenseCategories);</span>
-<span class="fc" id="L368">                result.addAll(approvedLicenseIds);</span>
-<span class="fc" id="L369">                result.addAll(removedLicenseIds);</span>
-<span class="fc" id="L370">                return result;</span>
+<span class="fc" id="L399">                licenses.forEach(l -&gt; result.add(l.getId()));</span>
+<span class="fc" id="L400">                result.addAll(approvedLicenseCategories);</span>
+<span class="fc" id="L401">                result.addAll(removedLicenseCategories);</span>
+<span class="fc" id="L402">                result.addAll(approvedLicenseIds);</span>
+<span class="fc" id="L403">                result.addAll(removedLicenseIds);</span>
+<span class="fc" id="L404">                return result;</span>
             case APPROVED:
-<span class="fc" id="L372">                licenses.stream().filter(approved).forEach(l -&gt; result.add(l.getId()));</span>
-<span class="fc" id="L373">                families.stream().filter(this::isApprovedCategory).forEach(f -&gt; result.add(f.getFamilyCategory()));</span>
-<span class="fc bfc" id="L374" title="All 2 branches covered.">                approvedLicenseIds.stream().filter(s -&gt; !removedLicenseIds.contains(s)).forEach(result::add);</span>
-<span class="fc" id="L375">                return result;</span>
+<span class="fc" id="L406">                licenses.stream().filter(approved).forEach(l -&gt; result.add(l.getId()));</span>
+<span class="fc" id="L407">                families.stream().filter(this::isApprovedCategory).forEach(f -&gt; result.add(f.getFamilyCategory()));</span>
+<span class="fc bfc" id="L408" title="All 2 branches covered.">                approvedLicenseIds.stream().filter(s -&gt; !removedLicenseIds.contains(s)).forEach(result::add);</span>
+<span class="fc" id="L409">                return result;</span>
             case NONE:
             default:
-<span class="nc" id="L378">                return Collections.emptySortedSet();</span>
+<span class="nc" id="L412">                return Collections.emptySortedSet();</span>
         }
     }
 
@@ -387,57 +421,56 @@ public class LicenseSetFactory {
      * @return the matching license or {@code null} if not found.
      */
     public static Optional&lt;ILicense&gt; search(final String familyId, final String licenseId, final SortedSet&lt;ILicense&gt; licenses) {
-<span class="fc" id="L390">        ILicenseFamily searchFamily = ILicenseFamily.builder().setLicenseFamilyCategory(familyId)</span>
-<span class="fc" id="L391">                .setLicenseFamilyName(&quot;searching proxy&quot;).build();</span>
-<span class="fc" id="L392">        ILicense target = new ILicense() {</span>
-
+<span class="fc" id="L424">        ILicenseFamily searchFamily = ILicenseFamily.builder().setLicenseFamilyCategory(familyId)</span>
+<span class="fc" id="L425">                .setLicenseFamilyName(&quot;searching proxy&quot;).build();</span>
+<span class="fc" id="L426">        ILicense target = new ILicense() {</span>
             @Override
             public String getId() {
-<span class="fc" id="L396">                return licenseId;</span>
+<span class="fc" id="L429">                return licenseId;</span>
             }
 
             @Override
             public void reset() {
                 // do nothing
-<span class="nc" id="L402">            }</span>
+<span class="nc" id="L435">            }</span>
 
             @Override
             public boolean matches(final IHeaders headers) {
-<span class="nc" id="L406">                return false;</span>
+<span class="nc" id="L439">                return false;</span>
             }
 
             @Override
             public boolean equals(final Object o) {
-<span class="nc" id="L411">                return ILicense.equals(this, o);</span>
+<span class="nc" id="L444">                return ILicense.equals(this, o);</span>
             }
 
             @Override
             public int hashCode() {
-<span class="nc" id="L416">                return ILicense.hash(this);</span>
+<span class="nc" id="L449">                return ILicense.hash(this);</span>
             }
 
             @Override
             public ILicenseFamily getLicenseFamily() {
-<span class="fc" id="L421">                return searchFamily;</span>
+<span class="fc" id="L454">                return searchFamily;</span>
             }
 
             @Override
             public String getNote() {
-<span class="nc" id="L426">                return null;</span>
+<span class="nc" id="L459">                return null;</span>
             }
 
             @Override
             public String getName() {
-<span class="nc" id="L431">                return searchFamily.getFamilyName();</span>
+<span class="nc" id="L464">                return searchFamily.getFamilyName();</span>
             }
 
             @Override
             public IHeaderMatcher getMatcher() {
-<span class="nc" id="L436">                return null;</span>
+<span class="nc" id="L469">                return null;</span>
             }
 
         };
-<span class="fc" id="L440">        return search(target, licenses);</span>
+<span class="fc" id="L473">        return search(target, licenses);</span>
     }
 
     /**
@@ -449,8 +482,11 @@ public class LicenseSetFactory {
      * @return the matching license or {@code null} if not found.
      */
     public static Optional&lt;ILicense&gt; search(final ILicense target, final SortedSet&lt;ILicense&gt; licenses) {
-<span class="fc" id="L452">        SortedSet&lt;ILicense&gt; part = licenses.tailSet(target);</span>
-<span class="pc bpc" id="L453" title="2 of 4 branches missed.">        return Optional.ofNullable((!part.isEmpty() &amp;&amp; part.first().compareTo(target) == 0) ? part.first() : null);</span>
+<span class="fc bfc" id="L485" title="All 2 branches covered.">        if (licenses == null) {</span>
+<span class="fc" id="L486">            return Optional.empty();</span>
+        }
+<span class="fc" id="L488">        SortedSet&lt;ILicense&gt; part = licenses.tailSet(target);</span>
+<span class="fc bfc" id="L489" title="All 4 branches covered.">        return Optional.ofNullable((!part.isEmpty() &amp;&amp; part.first().compareTo(target) == 0) ? part.first() : null);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

@@ -28,310 +28,346 @@ import org.apache.rat.VersionInfo;
 import org.apache.rat.api.Document;
 import org.apache.rat.api.MetaData;
 import org.apache.rat.api.RatException;
+import org.apache.rat.config.results.ClaimValidator;
 import org.apache.rat.license.ILicense;
-import org.apache.rat.report.xml.writer.IXmlWriter;
+import org.apache.rat.report.claim.ClaimStatistic;
+import org.apache.rat.report.xml.writer.XmlWriter;
 import org.apache.rat.utils.CasedString;
 
 /**
  * Creates the elements in the XML report.
  */
-public class XmlElements {
+public final class XmlElements {
+    private XmlElements() {
+        // do not instantiate
+    }
+
     /**
-     * Converts an enum name to snake case.
-     * @param name the enum name to convert.
-     * @return a camel cased name.
+     * Converts an enum name to pascal case.
+     *
+     * @param name the attribute to normalize
+     * @return a pascal cased name.
      */
     private static String normalizeName(final String name) {
-<span class="fc" id="L45">        CasedString casedName = new CasedString(CasedString.StringCase.SNAKE, name.toLowerCase(Locale.ROOT));</span>
-<span class="fc" id="L46">       return casedName.toCase(CasedString.StringCase.PASCAL);</span>
+<span class="fc" id="L52">        CasedString casedName = new CasedString(CasedString.StringCase.SNAKE, name.toLowerCase(Locale.ROOT));</span>
+<span class="fc" id="L53">        return casedName.toCase(CasedString.StringCase.PASCAL);</span>
     }
+
+    /**
+     * Create the RAT report element. Includes the timestamp and the version element.
+     * Does not close the report.
+     *
+     * @throws RatException on error
+     */
+    public static void ratReport(final XmlWriter writer) throws RatException {
+        try {
+<span class="fc" id="L64">            writer.startElement(Elements.RAT_REPORT.elementName)</span>
+<span class="fc" id="L65">                    .attribute(Attributes.TIMESTAMP.attributeName(),</span>
+<span class="fc" id="L66">                            DateFormatUtils.ISO_8601_EXTENDED_DATETIME_TIME_ZONE_FORMAT.format(Calendar.getInstance()));</span>
+<span class="fc" id="L67">            version(writer);</span>
+<span class="nc" id="L68">        } catch (IOException e) {</span>
+<span class="nc" id="L69">            throw new RatException(e);</span>
+<span class="fc" id="L70">        }</span>
+<span class="fc" id="L71">    }</span>
+
+    /**
+     * Creates the version element with all version attributes populated. Closes the version element.
+     *
+     * @throws RatException on error
+     */
+    public static void version(final XmlWriter writer) throws RatException {
+<span class="fc" id="L79">        VersionInfo versionInfo = new VersionInfo();</span>
+        try {
+<span class="fc" id="L81">            writer.startElement(Elements.VERSION.elementName)</span>
+<span class="fc" id="L82">                    .attribute(Attributes.PRODUCT.attributeName(), versionInfo.getTitle())</span>
+<span class="fc" id="L83">                    .attribute(Attributes.VENDOR.attributeName(), versionInfo.getVendor())</span>
+<span class="fc" id="L84">                    .attribute(Attributes.VERSION.attributeName(), versionInfo.getVersion())</span>
+<span class="fc" id="L85">                    .closeElement();</span>
+<span class="nc" id="L86">        } catch (IOException e) {</span>
+<span class="nc" id="L87">            throw new RatException(e);</span>
+<span class="fc" id="L88">        }</span>
+<span class="fc" id="L89">    }</span>
+
+    /**
+     * Creates a license element. Closes the element before exit.
+     *
+     * @param license  the license for the element.
+     * @param approved {@code true} if the license is approved.
+     * @throws RatException on error.
+     */
+    public static void license(final XmlWriter writer, final ILicense license, final boolean approved) throws RatException {
+        try {
+<span class="fc" id="L100">            writer.startElement(Elements.LICENSE.elementName)</span>
+<span class="fc" id="L101">                    .attribute(Attributes.ID.attributeName(), license.getId())</span>
+<span class="fc" id="L102">                    .attribute(Attributes.NAME.attributeName(), license.getName())</span>
+<span class="fc" id="L103">                    .attribute(Attributes.APPROVAL.attributeName(), Boolean.toString(approved))</span>
+<span class="fc" id="L104">                    .attribute(Attributes.FAMILY.attributeName(), license.getLicenseFamily().getFamilyCategory());</span>
+
+<span class="fc bfc" id="L106" title="All 2 branches covered.">            if (StringUtils.isNotBlank(license.getNote())) {</span>
+<span class="fc" id="L107">                writer.startElement(Elements.NOTES.elementName).cdata(license.getNote()).closeElement();</span>
+            }
+<span class="fc" id="L109">            writer.closeElement();</span>
+<span class="nc" id="L110">        } catch (IOException e) {</span>
+<span class="nc" id="L111">            throw new RatException(e);</span>
+<span class="fc" id="L112">        }</span>
+<span class="fc" id="L113">    }</span>
+
+    /**
+     * Creates a document element with attributes. Does &lt;strong&gt;NOT&lt;/strong&gt; close the document element.
+     *
+     * @param document the document to write.
+     * @throws RatException on error.
+     */
+    public static void document(final XmlWriter writer, final Document document) throws RatException {
+<span class="fc" id="L122">        final MetaData metaData = document.getMetaData();</span>
+        try {
+<span class="fc" id="L124">            writer.startElement(Elements.RESOURCE.elementName)</span>
+<span class="fc" id="L125">                    .attribute(Attributes.NAME.attributeName(), document.getName().localized(&quot;/&quot;))</span>
+<span class="fc" id="L126">                    .attribute(Attributes.TYPE.attributeName(), metaData.getDocumentType().toString())</span>
+<span class="fc" id="L127">                    .attribute(Attributes.MEDIA_TYPE.attributeName(), metaData.getMediaType().toString());</span>
+<span class="fc bfc" id="L128" title="All 4 branches covered.">            if (Document.Type.STANDARD == metaData.getDocumentType() || metaData.hasCharset()) {</span>
+<span class="fc" id="L129">                writer.attribute(Attributes.ENCODING.attributeName(), metaData.getCharset().displayName());</span>
+            }
+<span class="fc bfc" id="L131" title="All 2 branches covered.">            if (document.isIgnored()) {</span>
+<span class="fc" id="L132">                writer.attribute(Attributes.IS_DIRECTORY.attributeName(), Boolean.toString(document.isDirectory()));</span>
+            }
+<span class="nc" id="L134">        } catch (IOException e) {</span>
+<span class="nc" id="L135">            throw new RatException(e);</span>
+<span class="fc" id="L136">        }</span>
+<span class="fc" id="L137">    }</span>
+
+    /**
+     * Creates a statistics element.
+     *
+     * @throws RatException on error.
+     */
+    public static void statistics(final XmlWriter writer, final ClaimStatistic statistic, final ClaimValidator validator) throws RatException {
+        try {
+<span class="fc" id="L146">            writer.startElement(Elements.STATISTICS.elementName);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">            for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
+<span class="fc" id="L148">                int count = statistic.getCounter(counter);</span>
+<span class="fc" id="L149">                XmlElements.statistic(writer, counter.displayName(), count, counter.getDescription(), validator.isValid(counter, count));</span>
+            }
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            for (String category : statistic.getLicenseFamilyCategories()) {</span>
+<span class="fc" id="L152">                XmlElements.licenseCategory(writer, category, statistic.getLicenseCategoryCount(category));</span>
+<span class="fc" id="L153">            }</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            for (String category : statistic.getLicenseNames()) {</span>
+<span class="fc" id="L155">                XmlElements.licenseName(writer, category, statistic.getLicenseNameCount(category));</span>
+<span class="fc" id="L156">            }</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">            for (Document.Type type : statistic.getDocumentTypes()) {</span>
+<span class="fc" id="L158">                XmlElements.documentType(writer, type.name(), statistic.getCounter(type));</span>
+<span class="fc" id="L159">            }</span>
+
+<span class="fc" id="L161">            writer.closeElement();</span>
+<span class="nc" id="L162">        } catch (IOException e) {</span>
+<span class="nc" id="L163">            throw new RatException(e);</span>
+<span class="fc" id="L164">        }</span>
+<span class="fc" id="L165">    }</span>
+
+    /**
+     * Creates a statistic element. Closes the element before returning.
+     *
+     * @param name        the name of the statistics element.
+     * @param count       the count for the element.
+     * @param description description of this statistic.
+     * @param isOk        if {@code true} the count is within limits.
+     * @throws RatException on error.
+     */
+    public static void statistic(final XmlWriter writer, final String name, final int count, final String description, final boolean isOk) throws RatException {
+        try {
+<span class="fc" id="L178">            writer.startElement(Elements.STATISTIC.elementName)</span>
+<span class="fc" id="L179">                    .attribute(Attributes.NAME.attributeName(), name)</span>
+<span class="fc" id="L180">                    .attribute(Attributes.COUNT.attributeName(), Integer.toString(count))</span>
+<span class="fc" id="L181">                    .attribute(Attributes.APPROVAL.attributeName(), Boolean.toString(isOk))</span>
+<span class="fc" id="L182">                    .attribute(Attributes.DESCRIPTION.attributeName(), description)</span>
+<span class="fc" id="L183">                    .closeElement();</span>
+<span class="nc" id="L184">        } catch (IOException e) {</span>
+<span class="nc" id="L185">            throw new RatException(e);</span>
+<span class="fc" id="L186">        }</span>
+<span class="fc" id="L187">    }</span>
+
+    /**
+     * Creates a statistic element. Closes the element before returning.
+     *
+     * @param name  the name of the statistics element.
+     * @param count the count for the element.
+     * @throws RatException on error.
+     */
+    public static void licenseCategory(final XmlWriter writer, final String name, final int count) throws RatException {
+        try {
+<span class="fc" id="L198">            writer.startElement(Elements.LICENSE_CATEGORY.elementName)</span>
+<span class="fc" id="L199">                    .attribute(Attributes.NAME.attributeName(), name)</span>
+<span class="fc" id="L200">                    .attribute(Attributes.COUNT.attributeName(), Integer.toString(count))</span>
+<span class="fc" id="L201">                    .closeElement();</span>
+<span class="nc" id="L202">        } catch (IOException e) {</span>
+<span class="nc" id="L203">            throw new RatException(e);</span>
+<span class="fc" id="L204">        }</span>
+<span class="fc" id="L205">    }</span>
+
+    /**
+     * Creates a statistic element. Closes the element before returning.
+     *
+     * @param name  the name of the statistics element.
+     * @param count the count for the element.
+     * @throws RatException on error.
+     */
+    public static void licenseName(final XmlWriter writer, final String name, final int count) throws RatException {
+        try {
+<span class="fc" id="L216">            writer.startElement(Elements.LICENSE_NAME.elementName)</span>
+<span class="fc" id="L217">                    .attribute(Attributes.NAME.attributeName(), name)</span>
+<span class="fc" id="L218">                    .attribute(Attributes.COUNT.attributeName(), Integer.toString(count))</span>
+<span class="fc" id="L219">                    .closeElement();</span>
+<span class="nc" id="L220">        } catch (IOException e) {</span>
+<span class="nc" id="L221">            throw new RatException(e);</span>
+<span class="fc" id="L222">        }</span>
+<span class="fc" id="L223">    }</span>
+
+    /**
+     * Creates a document type element. Closes the element before returning.
+     *
+     * @param name  the name of the document type element.
+     * @param count the count for the element.
+     * @throws RatException on error.
+     */
+    public static void documentType(final XmlWriter writer, final String name, final int count) throws RatException {
+        try {
+<span class="fc" id="L234">            writer.startElement(Elements.DOCUMENT_TYPE.elementName)</span>
+<span class="fc" id="L235">                    .attribute(Attributes.NAME.attributeName(), name)</span>
+<span class="fc" id="L236">                    .attribute(Attributes.COUNT.attributeName(), Integer.toString(count))</span>
+<span class="fc" id="L237">                    .closeElement();</span>
+<span class="nc" id="L238">        } catch (IOException e) {</span>
+<span class="nc" id="L239">            throw new RatException(e);</span>
+<span class="fc" id="L240">        }</span>
+<span class="fc" id="L241">    }</span>
 
     /**
      * The elements in the report.
      */
-<span class="fc" id="L52">    public enum Elements {</span>
-        /** The start of the RAT report */
-<span class="fc" id="L54">        RAT_REPORT(&quot;rat-report&quot;),</span>
-        /** The version of RAT being run */
-<span class="fc" id="L56">        VERSION(),</span>
-        /** A resource element */
-<span class="fc" id="L58">        RESOURCE(),</span>
-        /** A license element */
-<span class="fc" id="L60">        LICENSE(),</span>
-        /** A notes element */
-<span class="fc" id="L62">        NOTES(),</span>
-        /** A statistics element */
-<span class="fc" id="L64">        STATISTICS(),</span>
-        /** A statistic entry */
-<span class="fc" id="L66">        STATISTIC(),</span>
-        /** A license name entry */
-<span class="fc" id="L68">        LICENSE_NAME(),</span>
-        /** A license category entry */
-<span class="fc" id="L70">        LICENSE_CATEGORY(),</span>
-        /** A document type entry */
-<span class="fc" id="L72">        DOCUMENT_TYPE();</span>
+<span class="fc" id="L246">    public enum Elements {</span>
+        /**
+         * The start of the RAT report.
+         */
+<span class="fc" id="L250">        RAT_REPORT(&quot;rat-report&quot;),</span>
+        /**
+         * The version of RAT being run.
+         */
+<span class="fc" id="L254">        VERSION(),</span>
+        /**
+         * A resource element.
+         */
+<span class="fc" id="L258">        RESOURCE(),</span>
+        /**
+         * A license element.
+         */
+<span class="fc" id="L262">        LICENSE(),</span>
+        /**
+         * A notes element.
+         */
+<span class="fc" id="L266">        NOTES(),</span>
+        /**
+         * A statistics element.
+         */
+<span class="fc" id="L270">        STATISTICS(),</span>
+        /**
+         * A statistic entry.
+         */
+<span class="fc" id="L274">        STATISTIC(),</span>
+        /**
+         * A license name entry.
+         */
+<span class="fc" id="L278">        LICENSE_NAME(),</span>
+        /**
+         * A license category entry.
+         */
+<span class="fc" id="L282">        LICENSE_CATEGORY(),</span>
+        /**
+         * A document type entry.
+         */
+<span class="fc" id="L286">        DOCUMENT_TYPE();</span>
 
-        /** The XML name for the element */
+        /**
+         * The XML name for the element
+         */
         private final String elementName;
 
         /**
          * Constructor.
+         *
          * @param elementName the XML name for the element.
          */
-<span class="fc" id="L81">        Elements(final String elementName) {</span>
-<span class="fc" id="L82">            this.elementName = elementName;</span>
-<span class="fc" id="L83">        }</span>
+<span class="fc" id="L298">        Elements(final String elementName) {</span>
+<span class="fc" id="L299">            this.elementName = elementName;</span>
+<span class="fc" id="L300">        }</span>
 
-<span class="fc" id="L85">        Elements() {</span>
-<span class="fc" id="L86">            this.elementName = normalizeName(name());</span>
-<span class="fc" id="L87">        }</span>
-
-        /**
-         * Gets the XML element name.
-         * @return the XML element name.
-         */
-        public String getElementName() {
-<span class="fc" id="L94">            return elementName;</span>
-        }
+<span class="fc" id="L302">        Elements() {</span>
+<span class="fc" id="L303">            this.elementName = normalizeName(name());</span>
+<span class="fc" id="L304">        }</span>
     }
 
     /**
      * The attributes of elements in the report.
      */
-<span class="fc" id="L101">    public enum Attributes {</span>
-        /** A timestamp */
-<span class="fc" id="L103">        TIMESTAMP,</span>
-        /** A version string */
-<span class="fc" id="L105">        VERSION,</span>
-        /** The product identifier */
-<span class="fc" id="L107">        PRODUCT,</span>
-        /** The vendor identifier */
-<span class="fc" id="L109">        VENDOR,</span>
-        /** The approval flag */
-<span class="fc" id="L111">        APPROVAL,</span>
-        /** The family category */
-<span class="fc" id="L113">        FAMILY,</span>
-        /** The document type */
-<span class="fc" id="L115">        TYPE,</span>
-        /** The id */
-<span class="fc" id="L117">        ID,</span>
-        /** The name */
-<span class="fc" id="L119">        NAME,</span>
-        /** A counter */
-<span class="fc" id="L121">        COUNT,</span>
-        /** A description */
-<span class="fc" id="L123">        DESCRIPTION,</span>
-        /** The media type for a document */
-<span class="fc" id="L125">        MEDIA_TYPE,</span>
-        /** The encoding for a text document */
-<span class="fc" id="L127">        ENCODING,</span>
-        /** Denotes a skipped directory */
-<span class="fc" id="L129">        IS_DIRECTORY</span>
-    }
+<span class="fc" id="L310">    public enum Attributes {</span>
+        /**
+         * A timestamp.
+         */
+<span class="fc" id="L314">        TIMESTAMP,</span>
+        /**
+         * A version string.
+         */
+<span class="fc" id="L318">        VERSION,</span>
+        /**
+         * The product identifier.
+         */
+<span class="fc" id="L322">        PRODUCT,</span>
+        /**
+         * The vendor identifier.
+         */
+<span class="fc" id="L326">        VENDOR,</span>
+        /**
+         * The approval flag.
+         */
+<span class="fc" id="L330">        APPROVAL,</span>
+        /**
+         * The family category.
+         */
+<span class="fc" id="L334">        FAMILY,</span>
+        /**
+         * The document type.
+         */
+<span class="fc" id="L338">        TYPE,</span>
+        /**
+         * The id.
+         */
+<span class="fc" id="L342">        ID,</span>
+        /**
+         * The name.
+         */
+<span class="fc" id="L346">        NAME,</span>
+        /**
+         * A counter.
+         */
+<span class="fc" id="L350">        COUNT,</span>
+        /**
+         * A description.
+         */
+<span class="fc" id="L354">        DESCRIPTION,</span>
+        /**
+         * The media type for a document.
+         */
+<span class="fc" id="L358">        MEDIA_TYPE,</span>
+        /**
+         * The encoding for a text document.
+         */
+<span class="fc" id="L362">        ENCODING,</span>
+        /**
+         * Denotes a skipped directory.
+         */
+<span class="fc" id="L366">        IS_DIRECTORY;</span>
 
-    /** The XMLWriter that we write to */
-    private final IXmlWriter writer;
-
-    /**
-     * Constructor.
-     * @param xmlWriter The writer to use.
-     */
-<span class="fc" id="L139">    public XmlElements(final IXmlWriter xmlWriter) {</span>
-<span class="fc" id="L140">        this.writer = xmlWriter;</span>
-<span class="fc" id="L141">    }</span>
-
-    /**
-     * Create the RAT report element. Includes the timestamp and the version element.
-     * @return this.
-     * @throws RatException on error
-     */
-    public XmlElements ratReport() throws RatException {
-<span class="fc" id="L149">        return write(Elements.RAT_REPORT).</span>
-<span class="fc" id="L150">                write(Attributes.TIMESTAMP, DateFormatUtils.ISO_8601_EXTENDED_DATETIME_TIME_ZONE_FORMAT.format(Calendar.getInstance()))</span>
-<span class="fc" id="L151">                .version();</span>
-    }
-
-    /**
-     * Creates the version element with all version attributes populated. Closes the version element.
-     * @return this.
-     * @throws RatException on error
-     */
-    public XmlElements version() throws RatException {
-<span class="fc" id="L160">        VersionInfo versionInfo = new VersionInfo();</span>
-<span class="fc" id="L161">        return write(Elements.VERSION)</span>
-<span class="fc" id="L162">                .write(Attributes.PRODUCT, versionInfo.getTitle())</span>
-<span class="fc" id="L163">                .write(Attributes.VENDOR, versionInfo.getVendor())</span>
-<span class="fc" id="L164">                .write(Attributes.VERSION, versionInfo.getVersion())</span>
-<span class="fc" id="L165">                .closeElement();</span>
-    }
-
-    /**
-     * Creates a license element. Closes the element before exit.
-     * @param license the license for the element.
-     * @param approved {@code true} if the license is approved.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements license(final ILicense license, final boolean approved) throws RatException {
-<span class="fc" id="L176">        write(Elements.LICENSE).write(Attributes.ID, license.getId())</span>
-<span class="fc" id="L177">                .write(Attributes.NAME, license.getName())</span>
-<span class="fc" id="L178">                .write(Attributes.APPROVAL, Boolean.valueOf(approved).toString())</span>
-<span class="fc" id="L179">                .write(Attributes.FAMILY, license.getLicenseFamily().getFamilyCategory());</span>
-<span class="fc bfc" id="L180" title="All 2 branches covered.">        if (StringUtils.isNotBlank(license.getNote())) {</span>
-            try {
-<span class="fc" id="L182">                write(Elements.NOTES).cdata(license.getNote()).closeElement();</span>
-<span class="nc" id="L183">            } catch (IOException e) {</span>
-<span class="nc" id="L184">                throw new RatException(&quot;Can not write CDATA for 'notes' element&quot;, e);</span>
-<span class="fc" id="L185">            }</span>
-        }
-<span class="fc" id="L187">        return closeElement();</span>
-    }
-
-    /**
-     * Writes a CDATA block
-     * @param data the data to write.
-     * @return this
-     * @throws IOException on error.
-     */
-    private XmlElements cdata(final String data) throws IOException {
-<span class="fc" id="L197">        writer.cdata(data);</span>
-<span class="fc" id="L198">        return this;</span>
-    }
-
-    /**
-     * Creates a document element with attributes. Does NOT close the document element.
-     * @param document the document to write.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements document(final Document document) throws RatException {
-<span class="fc" id="L208">        final MetaData metaData = document.getMetaData();</span>
-<span class="fc" id="L209">        XmlElements result = write(Elements.RESOURCE)</span>
-<span class="fc" id="L210">                .write(Attributes.NAME, document.getName().localized(&quot;/&quot;))</span>
-<span class="fc" id="L211">                .write(Attributes.TYPE, metaData.getDocumentType().toString())</span>
-<span class="fc" id="L212">                .write(Attributes.MEDIA_TYPE, metaData.getMediaType().toString());</span>
-<span class="fc bfc" id="L213" title="All 4 branches covered.">        if (Document.Type.STANDARD == metaData.getDocumentType() || metaData.hasCharset()) {</span>
-<span class="fc" id="L214">            result = result.write(Attributes.ENCODING, metaData.getCharset().displayName());</span>
-        }
-<span class="fc bfc" id="L216" title="All 2 branches covered.">        if (document.isIgnored()) {</span>
-<span class="fc" id="L217">            result = result.write(Attributes.IS_DIRECTORY, Boolean.toString(document.isDirectory()));</span>
-        }
-<span class="fc" id="L219">        return result;</span>
-    }
-
-    /**
-     * Creates a statistics element.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements statistics() throws RatException {
-<span class="fc" id="L228">        return write(Elements.STATISTICS);</span>
-    }
-
-    /**
-     * Creates a statistic element. Closes the element before returning.
-     * @param name the name of the statistics element.
-     * @param count the count for the element.
-     * @param description description of this statistic.
-     * @param isOk if {@code true} the count is within limits.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements statistic(final String name, final int count, final String description, final boolean isOk) throws RatException {
-<span class="fc" id="L241">        return write(Elements.STATISTIC)</span>
-<span class="fc" id="L242">                .write(Attributes.NAME, name)</span>
-<span class="fc" id="L243">                .write(Attributes.COUNT, Integer.toString(count))</span>
-<span class="fc" id="L244">                .write(Attributes.APPROVAL, Boolean.toString(isOk))</span>
-<span class="fc" id="L245">                .write(Attributes.DESCRIPTION, description)</span>
-<span class="fc" id="L246">                .closeElement();</span>
-    }
-
-    /**
-     * Creates a statistic element. Closes the element before returning.
-     * @param name the name of the statistics element.
-     * @param count the count for the element.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements licenseCategory(final String name, final int count) throws RatException {
-<span class="fc" id="L257">        return write(Elements.LICENSE_CATEGORY)</span>
-<span class="fc" id="L258">                .write(Attributes.NAME, name)</span>
-<span class="fc" id="L259">                .write(Attributes.COUNT, Integer.toString(count))</span>
-<span class="fc" id="L260">                .closeElement();</span>
-    }
-
-    /**
-     * Creates a statistic element. Closes the element before returning.
-     * @param name the name of the statistics element.
-     * @param count the count for the element.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements licenseName(final String name, final int count) throws RatException {
-<span class="fc" id="L271">        return write(Elements.LICENSE_NAME)</span>
-<span class="fc" id="L272">                .write(Attributes.NAME, name)</span>
-<span class="fc" id="L273">                .write(Attributes.COUNT, Integer.toString(count))</span>
-<span class="fc" id="L274">                .closeElement();</span>
-    }
-
-    /**
-     * Creates a statistic element. Closes the element before returning.
-     * @param name the name of the statistics element.
-     * @param count the count for the element.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements documentType(final String name, final int count) throws RatException {
-<span class="fc" id="L285">        return write(Elements.DOCUMENT_TYPE)</span>
-<span class="fc" id="L286">                .write(Attributes.NAME, name)</span>
-<span class="fc" id="L287">                .write(Attributes.COUNT, Integer.toString(count))</span>
-<span class="fc" id="L288">                .closeElement();</span>
-    }
-
-    /**
-     * Closes the currently open element.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements closeElement() throws RatException {
-        try {
-<span class="fc" id="L298">            writer.closeElement();</span>
-<span class="fc" id="L299">            return this;</span>
-<span class="nc" id="L300">        } catch (IOException e) {</span>
-<span class="nc" id="L301">            throw new RatException(&quot;Cannot close currently open element&quot;, e);</span>
-        }
-
-    }
-
-    /**
-     * Write an element. The element is not closed.
-     * @param element the element to write.
-     * @return this
-     * @throws RatException on error.
-     */
-    private XmlElements write(final Elements element) throws RatException {
-        try {
-<span class="fc" id="L314">            writer.openElement(element.getElementName());</span>
-<span class="fc" id="L315">            return this;</span>
-<span class="nc" id="L316">        } catch (IOException e) {</span>
-<span class="nc" id="L317">            throw new RatException(&quot;Cannot open start element: &quot; + element.elementName, e);</span>
-        }
-    }
-
-    /**
-     * Write an attribute.
-     * @param attribute the attribute name.
-     * @param value the attribute value.
-     * @return this
-     * @throws RatException on error.
-     */
-    public XmlElements write(final Attributes attribute, final String value) throws RatException {
-        try {
-<span class="fc" id="L330">            writer.attribute(normalizeName(attribute.name()), value);</span>
-<span class="fc" id="L331">            return this;</span>
-<span class="nc" id="L332">        } catch (IOException e) {</span>
-<span class="nc" id="L333">            throw new RatException(&quot;Cannot open add attribute: &quot; + attribute, e);</span>
+        String attributeName() {
+<span class="fc" id="L369">            return normalizeName(this.name());</span>
         }
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

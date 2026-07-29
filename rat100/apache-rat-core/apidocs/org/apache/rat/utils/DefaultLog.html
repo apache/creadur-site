@@ -87,7 +87,12 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">DefaultLog</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="Log.html" title="interface in org.apache.rat.utils">Log</a></span></div>
-<div class="block">A default implementation of Log that writes to <code>System.out</code> and <code>System.err</code>.</div>
+<div class="block">A default implementation of Log that writes to <code>System.out</code> and <code>System.err</code>.
+<p>
+The singleton instance is stored in a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/ThreadLocal.html" title="class or interface in java.lang" class="external-link"><code>ThreadLocal</code></a> so that each thread
+(e.g. parallel Maven reactor threads) gets its own logger and does not
+interfere with loggers set by other threads.
+</p></div>
 </div>
 </section>
 <section class="summary">
@@ -120,7 +125,7 @@ implements <a href="Log.html" title="interface in org.apache.rat.utils">Log</a><
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Log.html" title="interface in org.apache.rat.utils">Log</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getInstance()" class="member-name-link">getInstance</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Retrieves the DefaultLog instance.</div>
+<div class="block">Retrieves the DefaultLog instance for the current thread.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Log.Level.html" title="enum class in org.apache.rat.utils">Log.Level</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLevel()" class="member-name-link">getLevel</a>()</code></div>
@@ -136,7 +141,7 @@ implements <a href="Log.html" title="interface in org.apache.rat.utils">Log</a><
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="Log.html" title="interface in org.apache.rat.utils">Log</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setInstance(org.apache.rat.utils.Log)" class="member-name-link">setInstance</a><wbr>(<a href="Log.html" title="interface in org.apache.rat.utils">Log</a>&nbsp;newInstance)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Sets the default log instance.</div>
+<div class="block">Sets the default log instance for the current thread.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLevel(org.apache.rat.utils.Log.Level)" class="member-name-link">setLevel</a><wbr>(<a href="Log.Level.html" title="enum class in org.apache.rat.utils">Log.Level</a>&nbsp;level)</code></div>
@@ -168,7 +173,7 @@ implements <a href="Log.html" title="interface in org.apache.rat.utils">Log</a><
 <h3>getInstance</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Log.html" title="interface in org.apache.rat.utils">Log</a></span>&nbsp;<span class="element-name">getInstance</span>()</div>
-<div class="block">Retrieves the DefaultLog instance.</div>
+<div class="block">Retrieves the DefaultLog instance for the current thread.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the Default log instance.</dd>
@@ -181,8 +186,8 @@ implements <a href="Log.html" title="interface in org.apache.rat.utils">Log</a><
 <h3>setInstance</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Log.html" title="interface in org.apache.rat.utils">Log</a></span>&nbsp;<span class="element-name">setInstance</span><wbr><span class="parameters">(<a href="Log.html" title="interface in org.apache.rat.utils">Log</a>&nbsp;newInstance)</span></div>
-<div class="block">Sets the default log instance.
-If not set an instance of DefaultLog will be returned</div>
+<div class="block">Sets the default log instance for the current thread.
+If not set an instance of DefaultLog will be returned.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>newInstance</code> - a Log to use as the default.</dd>

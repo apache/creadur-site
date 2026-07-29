@@ -43,6 +43,8 @@ import org.apache.rat.license.ILicense;
 import org.apache.rat.license.ILicenseFamily;
 import org.apache.rat.license.LicenseSetFactory.LicenseFilter;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import static java.lang.String.format;
 
 /**
@@ -64,12 +66,13 @@ public final class Licenses extends AbstractHelp {
      * @param config The configuration that contains the license information.
      * @param writer the writer to write the report to.
      */
-<span class="fc" id="L67">    public Licenses(final ReportConfiguration config, final Writer writer) {</span>
-<span class="fc" id="L68">        this.config = config;</span>
-<span class="fc" id="L69">        this.licenses = config.getLicenses(LicenseFilter.ALL);</span>
-<span class="fc" id="L70">        printWriter = new PrintWriter(writer);</span>
-<span class="fc" id="L71">        formatter = HelpFormatter.builder().setShowDeprecated(false).setPrintWriter(printWriter).get();</span>
-<span class="fc" id="L72">    }</span>
+    @SuppressFBWarnings(&quot;EI_EXPOSE_REP2&quot;)
+<span class="fc" id="L70">    public Licenses(final ReportConfiguration config, final Writer writer) {</span>
+<span class="fc" id="L71">        this.config = config;</span>
+<span class="fc" id="L72">        this.licenses = config.getLicenses(LicenseFilter.ALL);</span>
+<span class="fc" id="L73">        printWriter = new PrintWriter(writer);</span>
+<span class="fc" id="L74">        formatter = HelpFormatter.builder().setShowDeprecated(false).setPrintWriter(printWriter).get();</span>
+<span class="fc" id="L75">    }</span>
 
     /**
      * Prints the text indented and wrapped.
@@ -77,19 +80,19 @@ public final class Licenses extends AbstractHelp {
      * @param text the text to write.
      */
     void print(final int indent, final String text) {
-<span class="fc" id="L80">        int leftMargin = indent * HELP_PADDING;</span>
-<span class="fc" id="L81">        int tabStop = leftMargin + (HELP_PADDING / 2);</span>
-<span class="fc" id="L82">        formatter.printWrapped(printWriter, HELP_WIDTH, tabStop, createPadding(leftMargin) + text);</span>
-<span class="fc" id="L83">    }</span>
+<span class="fc" id="L83">        int leftMargin = indent * HELP_PADDING;</span>
+<span class="fc" id="L84">        int tabStop = leftMargin + (HELP_PADDING / 2);</span>
+<span class="fc" id="L85">        formatter.printWrapped(printWriter, HELP_WIDTH, tabStop, createPadding(leftMargin) + text);</span>
+<span class="fc" id="L86">    }</span>
 
     /**
      * Print the help text with the version information.
      * @throws IOException on output error.
      */
     public void printHelp() throws IOException {
-<span class="fc" id="L90">        print(0, format(&quot;Listing of licenses for %s&quot;, versionInfo));</span>
-<span class="fc" id="L91">        output();</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L93">        print(0, format(&quot;Listing of licenses for %s&quot;, versionInfo));</span>
+<span class="fc" id="L94">        output();</span>
+<span class="fc" id="L95">    }</span>
 
     /**
      * Output the License information without the version information.
@@ -97,59 +100,59 @@ public final class Licenses extends AbstractHelp {
      */
     public void output() throws IOException {
 
-<span class="fc" id="L100">        print(0, header(&quot;LICENSES&quot;));</span>
+<span class="fc" id="L103">        print(0, header(&quot;LICENSES&quot;));</span>
 
-<span class="pc bpc" id="L102" title="1 of 2 branches missed.">        if (licenses.isEmpty()) {</span>
-<span class="nc" id="L103">            print(0, &quot;No licenses defined&quot;);</span>
+<span class="pc bpc" id="L105" title="1 of 2 branches missed.">        if (licenses.isEmpty()) {</span>
+<span class="nc" id="L106">            print(0, &quot;No licenses defined&quot;);</span>
         } else {
-<span class="fc" id="L105">            Description licenseDescription = DescriptionBuilder.build(licenses.first());</span>
-<span class="fc bfc" id="L106" title="All 2 branches covered.">            Collection&lt;Description&gt; licenseParams = licenseDescription.filterChildren(d -&gt; d.getType() == ComponentType.PARAMETER);</span>
+<span class="fc" id="L108">            Description licenseDescription = DescriptionBuilder.build(licenses.first());</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            Collection&lt;Description&gt; licenseParams = licenseDescription.filterChildren(d -&gt; d.getType() == ComponentType.PARAMETER);</span>
 
-<span class="fc" id="L108">            print(0, format(&quot;Licenses have the following properties:%n&quot;));</span>
+<span class="fc" id="L111">            print(0, format(&quot;Licenses have the following properties:%n&quot;));</span>
 
-<span class="fc bfc" id="L110" title="All 2 branches covered.">            for (Description param : licenseParams) {</span>
-<span class="fc" id="L111">                print(1, format(&quot;%s: %s%n&quot;, param.getCommonName(), param.getDescription()));</span>
-<span class="fc" id="L112">            }</span>
+<span class="fc bfc" id="L113" title="All 2 branches covered.">            for (Description param : licenseParams) {</span>
+<span class="fc" id="L114">                print(1, format(&quot;%s: %s%n&quot;, param.getCommonName(), param.getDescription()));</span>
+<span class="fc" id="L115">            }</span>
 
-<span class="fc" id="L114">            print(0, format(&quot;%nThe defined licenses are:%n&quot;));</span>
-<span class="fc bfc" id="L115" title="All 2 branches covered.">            for (ILicense l : licenses) {</span>
-<span class="fc" id="L116">                print(0, System.lineSeparator());</span>
-<span class="fc" id="L117">                printObject(0, l);</span>
-<span class="fc" id="L118">            }</span>
+<span class="fc" id="L117">            print(0, format(&quot;%nThe defined licenses are:%n&quot;));</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">            for (ILicense l : licenses) {</span>
+<span class="fc" id="L119">                print(0, System.lineSeparator());</span>
+<span class="fc" id="L120">                printObject(0, l);</span>
+<span class="fc" id="L121">            }</span>
         }
-<span class="fc" id="L120">        print(0, header(&quot;DEFINED MATCHERS&quot;));</span>
-<span class="fc" id="L121">        SortedSet&lt;Description&gt; matchers = new TreeSet&lt;&gt;(Comparator.comparing(Description::getCommonName));</span>
-<span class="fc bfc" id="L122" title="All 2 branches covered.">        for (Class&lt;? extends AbstractBuilder&gt; mClazz : MatcherBuilderTracker.instance().getClasses()) {</span>
+<span class="fc" id="L123">        print(0, header(&quot;DEFINED MATCHERS&quot;));</span>
+<span class="fc" id="L124">        SortedSet&lt;Description&gt; matchers = new TreeSet&lt;&gt;(Comparator.comparing(Description::getCommonName));</span>
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        for (Class&lt;? extends AbstractBuilder&gt; mClazz : MatcherBuilderTracker.instance().getClasses()) {</span>
             try {
-<span class="fc" id="L124">                AbstractBuilder builder = mClazz.getConstructor().newInstance();</span>
-<span class="fc" id="L125">                matchers.add(builder.getDescription());</span>
-<span class="nc" id="L126">            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException</span>
+<span class="fc" id="L127">                AbstractBuilder builder = mClazz.getConstructor().newInstance();</span>
+<span class="fc" id="L128">                matchers.add(builder.getDescription());</span>
+<span class="nc" id="L129">            } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException</span>
                      | IllegalArgumentException | InvocationTargetException e) {
-<span class="nc" id="L128">                throw new ConfigurationException(</span>
-<span class="nc" id="L129">                        format(&quot;Can not instantiate matcher builder  %s &quot;, mClazz.getName()), e);</span>
-<span class="fc" id="L130">            }</span>
-<span class="fc" id="L131">        }</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">        for (Description description : matchers) {</span>
-<span class="fc" id="L133">            print(0, format(&quot;%n%s: %s%n&quot;, description.getCommonName(), description.getDescription()));</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">            for (Description child : description.getChildren().values()) {</span>
-<span class="fc bfc" id="L135" title="All 2 branches covered.">                if (IHeaderMatcher.class.isAssignableFrom(child.getChildType())) {</span>
-<span class="fc bfc" id="L136" title="All 2 branches covered.">                    if (child.isCollection()) {</span>
-<span class="fc" id="L137">                        print(2, &quot;Encloses multiple matchers&quot;);</span>
+<span class="nc" id="L131">                throw new ConfigurationException(</span>
+<span class="nc" id="L132">                        format(&quot;Can not instantiate matcher builder  %s &quot;, mClazz.getName()), e);</span>
+<span class="fc" id="L133">            }</span>
+<span class="fc" id="L134">        }</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        for (Description description : matchers) {</span>
+<span class="fc" id="L136">            print(0, format(&quot;%n%s: %s%n&quot;, description.getCommonName(), description.getDescription()));</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            for (Description child : description.getChildren().values()) {</span>
+<span class="fc bfc" id="L138" title="All 2 branches covered.">                if (IHeaderMatcher.class.isAssignableFrom(child.getChildType())) {</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">                    if (child.isCollection()) {</span>
+<span class="fc" id="L140">                        print(2, &quot;Encloses multiple matchers&quot;);</span>
                     } else {
-<span class="fc" id="L139">                        print(2, &quot;Wraps a single matcher&quot;);</span>
+<span class="fc" id="L142">                        print(2, &quot;Wraps a single matcher&quot;);</span>
                     }
                 } else {
-<span class="fc bfc" id="L142" title="All 2 branches covered.">                    print(1, format(&quot;%s: %s%s&quot;, child.getCommonName(), child.isRequired() ? &quot;(required) &quot; : &quot;&quot;, child.getDescription()));</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">                    print(1, format(&quot;%s: %s%s&quot;, child.getCommonName(), child.isRequired() ? &quot;(required) &quot; : &quot;&quot;, child.getDescription()));</span>
                 }
-<span class="fc" id="L144">            }</span>
-<span class="fc" id="L145">        }</span>
+<span class="fc" id="L147">            }</span>
+<span class="fc" id="L148">        }</span>
 
-<span class="fc" id="L147">        print(0, header(&quot;DEFINED FAMILIES&quot;));</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">        for (ILicenseFamily family : config.getLicenseFamilies(LicenseFilter.ALL)) {</span>
-<span class="fc" id="L149">            print(1, format(&quot;%s - %s%n&quot;, family.getFamilyCategory(), family.getFamilyName()));</span>
-<span class="fc" id="L150">        }</span>
-<span class="fc" id="L151">        printWriter.flush();</span>
-<span class="fc" id="L152">    }</span>
+<span class="fc" id="L150">        print(0, header(&quot;DEFINED FAMILIES&quot;));</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        for (ILicenseFamily family : config.getLicenseFamilies(LicenseFilter.ALL)) {</span>
+<span class="fc" id="L152">            print(1, format(&quot;%s - %s%n&quot;, family.getFamilyCategory(), family.getFamilyName()));</span>
+<span class="fc" id="L153">        }</span>
+<span class="fc" id="L154">        printWriter.flush();</span>
+<span class="fc" id="L155">    }</span>
 
     /**
      * Print the description of an object.
@@ -158,17 +161,17 @@ public final class Licenses extends AbstractHelp {
      * @throws IOException on output error.
      */
     private void printObject(final int indent, final Object object) throws IOException {
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (object == null) {</span>
-<span class="nc" id="L162">            return;</span>
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">        if (object == null) {</span>
+<span class="nc" id="L165">            return;</span>
         }
-<span class="fc" id="L164">        Description description = DescriptionBuilder.build(object);</span>
-<span class="pc bpc" id="L165" title="1 of 2 branches missed.">        if (description == null) {</span>
-<span class="nc" id="L166">            print(indent, format(&quot;Unknown Object of class: %s%n&quot;, object.getClass().getName()));</span>
+<span class="fc" id="L167">        Description description = DescriptionBuilder.build(object);</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">        if (description == null) {</span>
+<span class="nc" id="L169">            print(indent, format(&quot;Unknown Object of class: %s%n&quot;, object.getClass().getName()));</span>
         } else {
-<span class="fc" id="L168">            print(indent, format(&quot;%s (%s)%n&quot;, description.getCommonName(), description.getDescription()));</span>
-<span class="fc" id="L169">            printChildren(indent + 1, object, description.getChildren());</span>
+<span class="fc" id="L171">            print(indent, format(&quot;%s (%s)%n&quot;, description.getCommonName(), description.getDescription()));</span>
+<span class="fc" id="L172">            printChildren(indent + 1, object, description.getChildren());</span>
         }
-<span class="fc" id="L171">    }</span>
+<span class="fc" id="L174">    }</span>
 
     /**
      * Returns {@code true} if the string is a UUID.
@@ -177,10 +180,10 @@ public final class Licenses extends AbstractHelp {
      */
     private boolean isUUID(final String s) {
         try {
-<span class="fc" id="L180">            UUID.fromString(s);</span>
-<span class="fc" id="L181">            return true;</span>
-<span class="fc" id="L182">        } catch (IllegalArgumentException expected) {</span>
-<span class="fc" id="L183">           return false;</span>
+<span class="fc" id="L183">            UUID.fromString(s);</span>
+<span class="fc" id="L184">            return true;</span>
+<span class="fc" id="L185">        } catch (IllegalArgumentException expected) {</span>
+<span class="fc" id="L186">           return false;</span>
         }
     }
 
@@ -192,46 +195,46 @@ public final class Licenses extends AbstractHelp {
      * @throws IOException on write error.
      */
     private void printChildren(final int indent, final Object parent, final Map&lt;String, Description&gt; children) throws IOException {
-<span class="fc bfc" id="L195" title="All 2 branches covered.">        for (Description d : children.values()) {</span>
-<span class="pc bpc" id="L196" title="2 of 4 branches missed.">            switch (d.getType()) {</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">        for (Description d : children.values()) {</span>
+<span class="pc bpc" id="L199" title="2 of 4 branches missed.">            switch (d.getType()) {</span>
                 case PARAMETER:
-<span class="fc bfc" id="L198" title="All 2 branches covered.">                    if (d.isCollection()) {</span>
-<span class="fc" id="L199">                        print(indent, format(&quot;%s: %n&quot;, d.getCommonName()));</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">                    if (d.isCollection()) {</span>
+<span class="fc" id="L202">                        print(indent, format(&quot;%s: %n&quot;, d.getCommonName()));</span>
                         try {
-<span class="fc" id="L201">                            Collection&lt;?&gt; result = (Collection&lt;?&gt;) d.getter(parent.getClass()).invoke(parent);</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">                            for (Object o : result) {</span>
-<span class="fc" id="L203">                                printObject(indent + 1, o);</span>
-<span class="fc" id="L204">                            }</span>
-<span class="fc" id="L205">                            return;</span>
-<span class="nc" id="L206">                        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {</span>
-<span class="nc" id="L207">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L204">                            Collection&lt;?&gt; result = (Collection&lt;?&gt;) d.getter(parent.getClass()).invoke(parent);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">                            for (Object o : result) {</span>
+<span class="fc" id="L206">                                printObject(indent + 1, o);</span>
+<span class="fc" id="L207">                            }</span>
+<span class="fc" id="L208">                            return;</span>
+<span class="nc" id="L209">                        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {</span>
+<span class="nc" id="L210">                            throw new RuntimeException(e);</span>
                         }
                     }
-<span class="fc bfc" id="L210" title="All 2 branches covered.">                    if (IHeaderMatcher.class.isAssignableFrom(d.getChildType())) {</span>
-<span class="fc" id="L211">                        print(indent, format(&quot;%s: %n&quot;, d.getCommonName()));</span>
+<span class="fc bfc" id="L213" title="All 2 branches covered.">                    if (IHeaderMatcher.class.isAssignableFrom(d.getChildType())) {</span>
+<span class="fc" id="L214">                        print(indent, format(&quot;%s: %n&quot;, d.getCommonName()));</span>
                         // is a matcher.
                         try {
-<span class="fc" id="L214">                            Object matcher = d.getter(parent.getClass()).invoke(parent);</span>
-<span class="fc" id="L215">                            printObject(indent + 1, matcher);</span>
-<span class="nc" id="L216">                        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {</span>
-<span class="nc" id="L217">                            throw new RuntimeException(e);</span>
-<span class="fc" id="L218">                        }</span>
+<span class="fc" id="L217">                            Object matcher = d.getter(parent.getClass()).invoke(parent);</span>
+<span class="fc" id="L218">                            printObject(indent + 1, matcher);</span>
+<span class="nc" id="L219">                        } catch (InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {</span>
+<span class="nc" id="L220">                            throw new RuntimeException(e);</span>
+<span class="fc" id="L221">                        }</span>
                     } else {
-<span class="fc" id="L220">                        String txt = StringUtils.defaultIfBlank(d.getParamValue(parent), &quot;&quot;).replaceAll(&quot;\\s{2,}&quot;, &quot; &quot;);</span>
-<span class="fc bfc" id="L221" title="All 6 branches covered.">                        if (!txt.isEmpty() &amp;&amp; !(d.getCommonName().equals(&quot;id&quot;) &amp;&amp; isUUID(txt))) {</span>
-<span class="fc" id="L222">                               print(indent, format(&quot;%s: %s%n&quot;, d.getCommonName(), txt.replaceAll(&quot;\\s{2,}&quot;, &quot; &quot;)));</span>
+<span class="fc" id="L223">                        String txt = StringUtils.defaultIfBlank(d.getParamValue(parent), &quot;&quot;).replaceAll(&quot;\\s{2,}&quot;, &quot; &quot;);</span>
+<span class="fc bfc" id="L224" title="All 6 branches covered.">                        if (!txt.isEmpty() &amp;&amp; !(d.getCommonName().equals(&quot;id&quot;) &amp;&amp; isUUID(txt))) {</span>
+<span class="fc" id="L225">                               print(indent, format(&quot;%s: %s%n&quot;, d.getCommonName(), txt.replaceAll(&quot;\\s{2,}&quot;, &quot; &quot;)));</span>
                         }
                     }
-<span class="fc" id="L225">                    break;</span>
+<span class="fc" id="L228">                    break;</span>
                 case BUILD_PARAMETER:
                 case LICENSE:
                     // do nothing
-<span class="fc" id="L229">                    break;</span>
+<span class="fc" id="L232">                    break;</span>
                 case MATCHER:
-<span class="nc" id="L231">                    printChildren(indent + 1, parent, d.getChildren());</span>
+<span class="nc" id="L234">                    printChildren(indent + 1, parent, d.getChildren());</span>
                     break;
             }
-<span class="fc" id="L234">        }</span>
-<span class="fc" id="L235">    }</span>
+<span class="fc" id="L237">        }</span>
+<span class="fc" id="L238">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

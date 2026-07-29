@@ -65,6 +65,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li><a href="#method-detail" tabindex="0">Method Details</a>
 <ol class="toc-list">
+<li><a href="#newInstance()" tabindex="0">newInstance()</a></li>
 <li><a href="#create(java.lang.String)" tabindex="0">create(String)</a></li>
 </ol>
 </li>
@@ -89,6 +90,13 @@ matches the regex pattern [A-Za-z0-9\.\-]+
 <p>
 SPDX identifiers are specified by the Software Package Data Exchange(R) also
 known as SPDX(R) project from the Linux foundation.
+</p>
+<p>
+Each factory instance maintains its own matcher map and per-document match
+state (<code>lastMatch</code>, <code>checked</code>). In multi-threaded environments
+(e.g. parallel Maven builds), use <a href="#newInstance()"><code>newInstance()</code></a> or a
+<code>ThreadLocal&lt;SPDXMatcherFactory&gt;</code> to obtain a per-thread factory
+instead of the shared <a href="#INSTANCE"><code>INSTANCE</code></a>.
 </p></div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -131,7 +139,9 @@ known as SPDX(R) project from the Linux foundation.
 <div class="col-first even-row-color"><code>static final <a href="SPDXMatcherFactory.html" title="class in org.apache.rat.analysis.matchers">SPDXMatcherFactory</a></code></div>
 <div class="col-second even-row-color"><code><a href="#INSTANCE" class="member-name-link">INSTANCE</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">The instance of this factory.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not thread-safe.</div>
+</div>
 </div>
 </div>
 </section>
@@ -141,7 +151,7 @@ known as SPDX(R) project from the Linux foundation.
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -151,6 +161,11 @@ known as SPDX(R) project from the Linux foundation.
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create(java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;spdxId)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Creates the SPDX matcher.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SPDXMatcherFactory.html" title="class in org.apache.rat.analysis.matchers">SPDXMatcherFactory</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#newInstance()" class="member-name-link">newInstance</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a new SPDXMatcherFactory instance.</div>
 </div>
 </div>
 </div>
@@ -173,8 +188,13 @@ known as SPDX(R) project from the Linux foundation.
 <section class="detail" id="INSTANCE">
 <h3>INSTANCE</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="SPDXMatcherFactory.html" title="class in org.apache.rat.analysis.matchers">SPDXMatcherFactory</a></span>&nbsp;<span class="element-name">INSTANCE</span></div>
-<div class="block">The instance of this factory.</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="SPDXMatcherFactory.html" title="class in org.apache.rat.analysis.matchers">SPDXMatcherFactory</a></span>&nbsp;<span class="element-name">INSTANCE</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not thread-safe. Use <a href="#newInstance()"><code>newInstance()</code></a> to create
+per-thread instances instead. Will be removed in 1.0.0.</div>
+</div>
+<div class="block">The shared instance of this factory.</div>
 </div>
 </section>
 </li>
@@ -186,6 +206,23 @@ known as SPDX(R) project from the Linux foundation.
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="newInstance()">
+<h3>newInstance</h3>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SPDXMatcherFactory.html" title="class in org.apache.rat.analysis.matchers">SPDXMatcherFactory</a></span>&nbsp;<span class="element-name">newInstance</span>()</div>
+<div class="block">Creates a new SPDXMatcherFactory instance.
+<p>
+Use this method to obtain a per-thread factory for multi-threaded
+environments instead of the shared <a href="#INSTANCE"><code>INSTANCE</code></a>.
+</p></div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>a new SPDXMatcherFactory instance.</dd>
+</dl>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="create(java.lang.String)">
 <h3>create</h3>

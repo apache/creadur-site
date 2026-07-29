@@ -25,8 +25,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-import org.apache.commons.io.function.IOSupplier;
 import org.apache.rat.ConfigurationException;
+import org.apache.rat.ReportConfiguration;
 
 import static java.lang.String.format;
 
@@ -39,19 +39,20 @@ import static java.lang.String.format;
      */
 <span class="fc" id="L40">    PLAIN(&quot;plain-rat&quot;, &quot;The default style.&quot;),</span>
     /**
-     * The missing header report style sheet
+     * The missing header report style sheet.
      */
 <span class="fc" id="L44">    MISSING_HEADERS(&quot;missing-headers&quot;, &quot;Produces a report of files that are missing headers.&quot;),</span>
     /**
-     * The unapproved licenses report
+     * The unapproved licenses report.
      */
 <span class="fc" id="L48">    UNAPPROVED_LICENSES(&quot;unapproved-licenses&quot;, &quot;Produces a report of the files with unapproved licenses.&quot;),</span>
     /**
-     * The plain style sheet. The current default.
+     * The pretty-printed XML style sheet.
      */
 <span class="fc" id="L52">    XML(&quot;xml&quot;, &quot;Produces output in pretty-printed XML.&quot;);</span>
+
     /**
-     * The name of the style sheet. Must map to bundled resource xslt file
+     * The name of the style sheet. Must map to bundled resource XSLT file
      */
     private final String name;
     /**
@@ -61,54 +62,55 @@ import static java.lang.String.format;
 
     /**
      * Constructor.
-     * @param name the name of the xslt file.
-     * @param description What this xslt produces.
+     * @param name the name of the XSLT file.
+     * @param description what this XSLT produces.
      */
-<span class="fc" id="L67">    StyleSheets(final String name, final String description) {</span>
-<span class="fc" id="L68">        this.name = name;</span>
-<span class="fc" id="L69">        this.desc = description;</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L68">    StyleSheets(final String name, final String description) {</span>
+<span class="fc" id="L69">        this.name = name;</span>
+<span class="fc" id="L70">        this.desc = description;</span>
+<span class="fc" id="L71">    }</span>
 
     /**
-     * Gets the IOSupplier for a style sheet.
-     * @return an IOSupplier for the sheet.
+     * Gets the IODescriptor for a style sheet.
+     * @return an IODescriptor for the sheet.
      */
-    public IOSupplier&lt;InputStream&gt; getStyleSheet() {
-<span class="fc" id="L77">        return Objects.requireNonNull(StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name)),</span>
-                &quot;missing stylesheet: &quot; + name)::openStream;
+    public ReportConfiguration.IODescriptor&lt;InputStream&gt; getStyleSheet() {
+<span class="fc" id="L78">        URL url = StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name));</span>
+<span class="fc" id="L79">        Objects.requireNonNull(url, &quot;missing stylesheet: &quot; + name);</span>
+<span class="fc" id="L80">        return new ReportConfiguration.IODescriptor&lt;&gt;(name, url::openStream);</span>
     }
 
     /**
-     * Gets the IOSupplier for a style sheet.
+     * Gets the IODescriptor for a style sheet.
      * @param name the short name for or the path to a style sheet.
-     * @return the IOSupplier for the style sheet.
+     * @return the IODescriptor for the style sheet.
      */
-    public static IOSupplier&lt;InputStream&gt; getStyleSheet(final String name) {
-<span class="fc" id="L87">        URL url = StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name));</span>
-<span class="fc bfc" id="L88" title="All 2 branches covered.">        if (url != null) {</span>
-<span class="fc" id="L89">            return url::openStream;</span>
+    public static ReportConfiguration.IODescriptor&lt;InputStream&gt; getStyleSheet(final String name) {
+<span class="fc" id="L89">        URL url = StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name));</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (url != null) {</span>
+<span class="fc" id="L91">            return new ReportConfiguration.IODescriptor&lt;&gt;(name, url::openStream);</span>
         }
-<span class="fc" id="L91">        Path p = Paths.get(name);</span>
-<span class="pc bpc" id="L92" title="1 of 2 branches missed.">        if (p.toFile().exists()) {</span>
-<span class="fc" id="L93">            return () -&gt; Files.newInputStream(p);</span>
+<span class="fc" id="L93">        Path p = Paths.get(name);</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (p.toFile().exists()) {</span>
+<span class="fc" id="L95">            return new ReportConfiguration.IODescriptor&lt;&gt;(name, () -&gt; Files.newInputStream(p));</span>
         }
-<span class="nc" id="L95">        throw new ConfigurationException(format(&quot;Stylesheet file '%s' not found&quot;, name));</span>
+<span class="nc" id="L97">        throw new ConfigurationException(format(&quot;Stylesheet file '%s' not found&quot;, name));</span>
     }
 
     /**
-     * Gets the name of the xslt file.
-     * @return the name of the xslt file, without the extension.
+     * Gets the name of the XSLT file.
+     * @return the name of the XSLT file, without the extension.
      */
     public String arg() {
-<span class="fc" id="L103">        return name;</span>
+<span class="fc" id="L105">        return name;</span>
     }
 
     /**
-     * Gets the description of the xslt file.
-     * @return the description of the xslt file.
+     * Gets the description of the XSLT file.
+     * @return the description of the XSLT file.
      */
     public String desc() {
-<span class="fc" id="L111">        return desc;</span>
+<span class="fc" id="L113">        return desc;</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

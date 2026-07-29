@@ -21,17 +21,17 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
 
+import org.apache.commons.collections4.set.UnmodifiableSortedSet;
 import org.apache.rat.ConfigurationException;
 import org.apache.rat.analysis.matchers.FullTextMatcher;
 import org.apache.rat.api.Document;
 import org.apache.rat.license.ILicense;
 
 /**
- * Reads from a stream to check license.
+ * Reads from a stream to check for a license.
  * &lt;p&gt;
  * &lt;strong&gt;Note&lt;/strong&gt; that this class is not thread safe.
  * &lt;/p&gt;
@@ -54,47 +54,46 @@ public final class HeaderCheckWorker {
     /** The BufferedReader used to read the lines */
     private final BufferedReader reader;
     /** The licenses to check for match */
-    private final Collection&lt;ILicense&gt; licenses;
+    private final UnmodifiableSortedSet&lt;ILicense&gt; licenses;
     /** The document being processed */
     private final Document document;
     /**  The matcher for generated headers */
     private final IHeaderMatcher generatedMatcher;
 
-
     /**
      * Read the input and perform the header check.
      * &lt;p&gt;
-     * The number of lines indicates how many lines from the top of the file will be read for processing
+     * The number of lines indicates how many lines from the top of the file will be read for processing.
      *
-     * @param reader The reader for the document.
+     * @param reader the reader for the document.
      * @param numberOfLines the number of lines to read from the header.
-     * @return The IHeaders instance for the header.
+     * @return the IHeaders instance for the header.
      * @throws IOException on input failure
      */
     public static IHeaders readHeader(final BufferedReader reader, final int numberOfLines) throws IOException {
-<span class="fc" id="L75">        final StringBuilder headers = new StringBuilder();</span>
-<span class="fc" id="L76">        int headerLinesRead = 0;</span>
+<span class="fc" id="L74">        final StringBuilder headers = new StringBuilder();</span>
+<span class="fc" id="L75">        int headerLinesRead = 0;</span>
         String line;
 
-<span class="pc bpc" id="L79" title="1 of 4 branches missed.">        while (headerLinesRead &lt; numberOfLines &amp;&amp; (line = reader.readLine()) != null) {</span>
-<span class="fc" id="L80">            headers.append(line).append(System.lineSeparator());</span>
+<span class="pc bpc" id="L78" title="1 of 4 branches missed.">        while (headerLinesRead &lt; numberOfLines &amp;&amp; (line = reader.readLine()) != null) {</span>
+<span class="fc" id="L79">            headers.append(line).append(System.lineSeparator());</span>
         }
-<span class="fc" id="L82">        final String raw = headers.toString();</span>
-<span class="fc" id="L83">        final String pruned = FullTextMatcher.prune(raw).toLowerCase(Locale.ENGLISH);</span>
-<span class="fc" id="L84">        return new IHeaders() {</span>
+<span class="fc" id="L81">        final String raw = headers.toString();</span>
+<span class="fc" id="L82">        final String pruned = FullTextMatcher.prune(raw).toLowerCase(Locale.ENGLISH);</span>
+<span class="fc" id="L83">        return new IHeaders() {</span>
             @Override
             public String raw() {
-<span class="fc" id="L87">                return raw;</span>
+<span class="fc" id="L86">                return raw;</span>
             }
 
             @Override
             public String pruned() {
-<span class="fc" id="L92">                return pruned;</span>
+<span class="fc" id="L91">                return pruned;</span>
             }
 
             @Override
             public String toString() {
-<span class="nc" id="L97">                return this.getClass().getSimpleName();</span>
+<span class="nc" id="L96">                return this.getClass().getSimpleName();</span>
             }
         };
     }
@@ -103,14 +102,14 @@ public final class HeaderCheckWorker {
      * Convenience constructor wraps given &lt;code&gt;Reader&lt;/code&gt; in a
      * &lt;code&gt;BufferedReader&lt;/code&gt;.
      *
-     * @param generatedMatcher The matcher for generated headers.
-     * @param reader The reader on the document. Not null.
-     * @param licenses The licenses to check against. Not null.
-     * @param name The document that is being checked. Possibly null.
+     * @param generatedMatcher the matcher for generated headers.
+     * @param reader the reader on the document. Not null.
+     * @param licenses the licenses to check against. Not null.
+     * @param name the document that is being checked. Possibly null.
      */
-    public HeaderCheckWorker(final IHeaderMatcher generatedMatcher, final Reader reader, final Collection&lt;ILicense&gt; licenses, final Document name) {
-<span class="fc" id="L112">        this(generatedMatcher, reader, DEFAULT_NUMBER_OF_RETAINED_HEADER_LINES, licenses, name);</span>
-<span class="fc" id="L113">    }</span>
+    public HeaderCheckWorker(final IHeaderMatcher generatedMatcher, final Reader reader, final UnmodifiableSortedSet&lt;ILicense&gt; licenses, final Document name) {
+<span class="fc" id="L111">        this(generatedMatcher, reader, DEFAULT_NUMBER_OF_RETAINED_HEADER_LINES, licenses, name);</span>
+<span class="fc" id="L112">    }</span>
 
     /**
      * Constructs a check worker for the license against the specified document.
@@ -123,41 +122,41 @@ public final class HeaderCheckWorker {
      * @param document The document that is being checked. Possibly null.
      */
     public HeaderCheckWorker(final IHeaderMatcher generatedMatcher, final Reader reader,
-                             final int numberOfRetainedHeaderLine, final Collection&lt;ILicense&gt; licenses,
-<span class="fc" id="L127">                             final Document document) {</span>
-<span class="fc" id="L128">        Objects.requireNonNull(reader, &quot;Reader may not be null&quot;);</span>
-<span class="fc" id="L129">        Objects.requireNonNull(licenses, &quot;Licenses may not be null&quot;);</span>
-<span class="pc bpc" id="L130" title="1 of 2 branches missed.">        if (numberOfRetainedHeaderLine &lt; 0) {</span>
-<span class="nc" id="L131">            throw new ConfigurationException(&quot;numberOfRetainedHeaderLine may not be less than zero&quot;);</span>
+                             final int numberOfRetainedHeaderLine, final UnmodifiableSortedSet&lt;ILicense&gt; licenses,
+<span class="fc" id="L126">                             final Document document) {</span>
+<span class="fc" id="L127">        Objects.requireNonNull(reader, &quot;Reader may not be null&quot;);</span>
+<span class="fc" id="L128">        Objects.requireNonNull(licenses, &quot;Licenses may not be null&quot;);</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">        if (numberOfRetainedHeaderLine &lt; 0) {</span>
+<span class="nc" id="L130">            throw new ConfigurationException(&quot;numberOfRetainedHeaderLine may not be less than zero&quot;);</span>
         }
-<span class="pc bpc" id="L133" title="1 of 2 branches missed.">        this.reader = reader instanceof BufferedReader ? (BufferedReader) reader : new BufferedReader(reader);</span>
-<span class="fc" id="L134">        this.numberOfRetainedHeaderLines = numberOfRetainedHeaderLine;</span>
-<span class="fc" id="L135">        this.licenses = licenses;</span>
-<span class="fc" id="L136">        this.document = document;</span>
-<span class="fc" id="L137">        this.generatedMatcher = generatedMatcher;</span>
-<span class="fc" id="L138">    }</span>
+<span class="pc bpc" id="L132" title="1 of 2 branches missed.">        this.reader = reader instanceof BufferedReader ? (BufferedReader) reader : new BufferedReader(reader);</span>
+<span class="fc" id="L133">        this.numberOfRetainedHeaderLines = numberOfRetainedHeaderLine;</span>
+<span class="fc" id="L134">        this.licenses = licenses;</span>
+<span class="fc" id="L135">        this.document = document;</span>
+<span class="fc" id="L136">        this.generatedMatcher = generatedMatcher;</span>
+<span class="fc" id="L137">    }</span>
 
     /**
      * Read the input and perform the header check.
      *
-     * @throws RatHeaderAnalysisException on IO exception.
+     * @throws RatHeaderAnalysisException in case of I/O exceptions.
      */
     public void read() throws RatHeaderAnalysisException {
         try {
-<span class="fc" id="L147">            final IHeaders headers = readHeader(reader, numberOfRetainedHeaderLines);</span>
-<span class="fc bfc" id="L148" title="All 2 branches covered.">            if (generatedMatcher.matches(headers)) {</span>
-<span class="fc" id="L149">                document.getMetaData().setDocumentType(Document.Type.IGNORED);</span>
+<span class="fc" id="L146">            final IHeaders headers = readHeader(reader, numberOfRetainedHeaderLines);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">            if (generatedMatcher.matches(headers)) {</span>
+<span class="fc" id="L148">                document.getMetaData().setDocumentType(Document.Type.IGNORED);</span>
             } else {
-<span class="fc" id="L151">                licenses.stream().filter(lic -&gt; lic.matches(headers)).forEach(document.getMetaData()::reportOnLicense);</span>
-<span class="fc bfc" id="L152" title="All 2 branches covered.">                if (!document.getMetaData().detectedLicense()) {</span>
-<span class="fc" id="L153">                    document.getMetaData().reportOnLicense(UnknownLicense.INSTANCE);</span>
+<span class="fc" id="L150">                licenses.stream().filter(lic -&gt; lic.matches(headers)).forEach(document.getMetaData()::reportOnLicense);</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">                if (!document.getMetaData().detectedLicense()) {</span>
+<span class="fc" id="L152">                    document.getMetaData().reportOnLicense(UnknownLicense.INSTANCE);</span>
                 }
             }
-<span class="nc" id="L156">        } catch (IOException e) {</span>
-<span class="nc" id="L157">            throw new RatHeaderAnalysisException(&quot;Cannot read header for &quot; + document, e);</span>
+<span class="nc" id="L155">        } catch (IOException e) {</span>
+<span class="nc" id="L156">            throw new RatHeaderAnalysisException(&quot;Cannot read header for &quot; + document, e);</span>
         } finally {
-<span class="fc" id="L159">            licenses.forEach(ILicense::reset);</span>
+<span class="fc" id="L158">            licenses.forEach(ILicense::reset);</span>
         }
-<span class="fc" id="L161">    }</span>
+<span class="fc" id="L160">    }</span>
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
