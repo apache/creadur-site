@@ -21,6 +21,8 @@ drwxrwxr-x 16 user user 4096 Okt  9 17:17 creadur-whisker
 
 ## How to generate new page versions for Creadur subprojects
 
+It is recommended to use JDK17 to generate the site as there are problems with some of the site plugins within Creadur with newer JDK versions!
+
 ## RAT - SNAPSHOT
 
 The current SNAPSHOT version of RAT can be found in [rat100](https://creadur.apache.org/rat100/) and is generated manually.
