@@ -49,7 +49,7 @@ public final class DeprecationReporter {
      * reporters set by other threads.
      * &lt;/p&gt;
      */
-<span class="fc" id="L52">    private static final ThreadLocal&lt;Consumer&lt;Option&gt;&gt; CONSUMER = ThreadLocal.withInitial(DeprecationReporter::getDefault);</span>
+<span class="fc" id="L52">    private static final ThreadLocal&lt;Consumer&lt;Option&gt;&gt; CONSUMER = ThreadLocal.withInitial(DeprecationReporter::getDefault); // NOSONAR</span>
 
     /**
      * Get the default reporter.

@@ -170,8 +170,8 @@ public class Help extends BaseAntTask {
         protected StringBuffer renderOptions(final StringBuffer sb, final int width, final Options options, final int leftPad, final int descPad) {
 <span class="fc" id="L171">            final String dpad = createPadding(descPad);</span>
             // first create list containing only &lt;lpad&gt;-a,--aaa where
-            // -a is opt and --aaa is long opt; in parallel look for
-            // the longest opt string this list will then be used to
+            // -a is option and --aaa is long option; in parallel look for
+            // the longest option string this list will then be used to
             // sort options ascending
 <span class="fc" id="L176">            String optionTitle = &quot; -- Option --&quot;;</span>
 <span class="fc" id="L177">            String exampleTitle = &quot; -- Example --&quot;;</span>
@@ -179,7 +179,7 @@ public class Help extends BaseAntTask {
 <span class="fc" id="L179">            int max = optionTitle.length();</span>
 <span class="fc" id="L180">            int maxExample = exampleTitle.length();</span>
 <span class="fc" id="L181">            final List&lt;AntOption&gt; optList = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L182">            AntOptionCollection.INSTANCE.getMappedOptions().forEach(optList::add);</span>
+<span class="fc" id="L182">            new AntOptionCollection().getMappedOptions().forEach(optList::add);</span>
 <span class="fc" id="L183">            optList.sort(Comparator.comparing(UIOption::getName));</span>
 <span class="fc" id="L184">            List&lt;String&gt; exampleList = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L185" title="All 2 branches covered.">            for (final AntOption option : optList) {</span>

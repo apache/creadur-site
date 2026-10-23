@@ -80,28 +80,28 @@ public class Report extends BaseAntTask {
 <span class="fc" id="L80">    @Deprecated</span>
     private final List&lt;Family&gt; families = new ArrayList&lt;&gt;();
     /**
-     * the options that are deprecated.  TODO remove this.
+     * The options that are deprecated. TODO remove this.
      */
 <span class="fc" id="L85">    private final DeprecatedConfig deprecatedConfig = new DeprecatedConfig();</span>
     /**
-     * will hold any nested resource collection
+     * will hold any nested resource collection.
      */
     private Union nestedResources;
 
     /**
-     * Collection of objects that support Ant specific deprecated options
+     * Collection of objects that support Ant specific deprecated options.
      */
 <span class="fc" id="L94">    private static final class DeprecatedConfig {</span>
         /**
-         * The input file filter
+         * The input file filter.
          */
         private IOFileFilter inputFileFilter;
         /**
-         * the set of approved license categories
+         * The set of approved license categories.
          */
 <span class="fc" id="L102">        private final Set&lt;String&gt; approvedLicenseCategories = new HashSet&lt;&gt;();</span>
         /**
-         * the set of removed (unapproved) license categories
+         * The set of removed (unapproved) license categories.
          */
 <span class="fc" id="L106">        private final Set&lt;String&gt; removedLicenseCategories = new HashSet&lt;&gt;();</span>
     }
@@ -146,7 +146,7 @@ public class Report extends BaseAntTask {
      * Sets the report file.
      *
      * @param reportFile the report file.
-     * @deprecated use outputFile element
+     * @deprecated use outputFile element.
      */
     @Deprecated
     public void setReportFile(final File reportFile) {
@@ -155,7 +155,7 @@ public class Report extends BaseAntTask {
 <span class="fc" id="L155">    }</span>
 
     /**
-     * Adds an inline License definition to the system.
+     * Adds an inline license definition to the system.
      *
      * @param license the license to add.
      * @deprecated Create a custom configuration file and use the config option.
@@ -201,7 +201,7 @@ public class Report extends BaseAntTask {
 <span class="nc" id="L201">    }</span>
 
     /**
-     * Styles the report or deliver xml document.
+     * Styles the report or deliver XML document.
      *
      * @param styleReport true to use the plain-rat style
      * @deprecated use {@link #setOutputStyle(String)} and pass &quot;xml&quot; or &quot;plain-rat&quot;.
@@ -214,7 +214,7 @@ public class Report extends BaseAntTask {
     /**
      * Determines if the output should be styled.
      *
-     * @param style the name of the style sheet ot use, or &quot;styled&quot; for plain-rat style
+     * @param style the name of the style sheet ot use, or &quot;styled&quot; for plain-rat style.
      * @deprecated use {@link #setStylesheet(String)}
      */
     @Deprecated
@@ -243,7 +243,7 @@ public class Report extends BaseAntTask {
      * Specifies whether to add the default list of license matchers.
      *
      * @param useDefaultLicenses if {@code true} use the default licenses.
-     * @deprecated use noDefaultLicenses attribute
+     * @deprecated use noDefaultLicenses attribute.
      */
     @Deprecated
     public void setUseDefaultLicenses(final boolean useDefaultLicenses) {
@@ -266,8 +266,8 @@ public class Report extends BaseAntTask {
     /**
      * Adds a family category to the list of approved licenses.
      *
-     * @param familyCategory the category to add
-     * @deprecated use licensesFamiliesApproved child element
+     * @param familyCategory the category to add.
+     * @deprecated use licensesFamiliesApproved child element.
      */
     @Deprecated
     public void addAddApprovedLicense(final String familyCategory) {
@@ -279,7 +279,7 @@ public class Report extends BaseAntTask {
      * Removes a family category to the list of approved licenses.
      *
      * @param familyCategory the category to add.
-     * @deprecated use licensesFamiliesDenied child element
+     * @deprecated use licensesFamiliesDenied child element.
      */
     @Deprecated
     public void setRemoveApprovedLicense(final String familyCategory) {
@@ -291,7 +291,7 @@ public class Report extends BaseAntTask {
      * Removes a family category to the list of approved licenses.
      *
      * @param familyCategory the category to add.
-     * @deprecated use licensesFamiliesDenied child element
+     * @deprecated use licensesFamiliesDenied child element.
      */
     @Deprecated
     public void addRemoveApprovedLicense(final String familyCategory) {
@@ -302,8 +302,8 @@ public class Report extends BaseAntTask {
     /**
      * Removes a family category to the list of approved licenses.
      *
-     * @param familyCategory the category to remove
-     * @deprecated use licenseFamiliesDenied element
+     * @param familyCategory the category to remove.
+     * @deprecated use licenseFamiliesDenied element.
      */
     @Deprecated
     public void setRemoveApprovedLicense(final String[] familyCategory) {
@@ -315,7 +315,7 @@ public class Report extends BaseAntTask {
      * Removes a family category to the list of approved licenses.
      *
      * @param familyCategory the category to remove.
-     * @deprecated use licenseFamilyDenied element
+     * @deprecated use licenseFamilyDenied element.
      */
     @Deprecated
     public void addRemoveApprovedLicense(final String[] familyCategory) {
@@ -326,8 +326,8 @@ public class Report extends BaseAntTask {
     /**
      * Sets the copyright message.
      *
-     * @param copyrightMessage the copyright message
-     * @deprecated use copyright attribute
+     * @param copyrightMessage the copyright message.
+     * @deprecated use copyright attribute.
      */
     @Deprecated
     public void setCopyrightMessage(final String copyrightMessage) {
@@ -338,7 +338,7 @@ public class Report extends BaseAntTask {
      * Determines if license headers should be added.
      *
      * @param setting the setting.
-     * @deprecated use editLicense and editOverwrite attributes
+     * @deprecated use editLicense and editOverwrite attributes.
      */
     @Deprecated
     public void setAddLicenseHeaders(final AddLicenseHeaders setting) {
@@ -360,8 +360,8 @@ public class Report extends BaseAntTask {
     /**
      * Adds definition information.
      *
-     * @param fileName the file to add
-     * @deprecated Use Config child element
+     * @param fileName the file to add.
+     * @deprecated Use Config child element.
      */
     @Deprecated
     public void setAddDefaultDefinitions(final File fileName) {
@@ -410,29 +410,30 @@ public class Report extends BaseAntTask {
         try {
 <span class="pc bpc" id="L411" title="1 of 2 branches missed.">            boolean helpLicenses = !getValues(Arg.HELP_LICENSES).isEmpty();</span>
 <span class="fc" id="L412">            removeKey(Arg.HELP_LICENSES);</span>
-
-<span class="fc" id="L414">            final ReportConfiguration configuration = OptionCollection.parseCommands(new File(&quot;.&quot;), args().toArray(new String[0]),</span>
-<span class="nc" id="L415">                    o -&gt; DefaultLog.getInstance().warn(&quot;Help option not supported&quot;),</span>
+<span class="fc" id="L413">            File antFileDir = new File(getProject().getProperty(&quot;ant.file&quot;)).getParentFile();</span>
+<span class="fc" id="L414">            DocumentName name = DocumentName.builder(antFileDir).build();</span>
+<span class="fc" id="L415">            final ReportConfiguration configuration = OptionCollection.parseCommands(antFileDir, args().toArray(new String[0]),</span>
+<span class="nc" id="L416">                    o -&gt; DefaultLog.getInstance().warn(&quot;Help option not supported&quot;),</span>
                     true);
-<span class="fc bfc" id="L417" title="All 2 branches covered.">            if (getValues(Arg.OUTPUT_FILE).isEmpty()) {</span>
-<span class="fc" id="L418">                configuration.setOut(new ReportConfiguration.IODescriptor&lt;&gt;(&quot;RAT output&quot;, () -&gt; new LogOutputStream(this, Project.MSG_INFO)));</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">            if (getValues(Arg.OUTPUT_FILE).isEmpty()) {</span>
+<span class="fc" id="L419">                configuration.setOutput(new ReportConfiguration.IODescriptor&lt;&gt;(&quot;RAT output&quot;, () -&gt; new LogOutputStream(this, Project.MSG_INFO)));</span>
             }
-<span class="fc" id="L420">            DocumentName name = DocumentName.builder(getProject().getBaseDir()).build();</span>
-<span class="fc" id="L421">            configuration.addSource(new ResourceCollectionContainer(name, configuration, nestedResources));</span>
-<span class="fc" id="L422">            configuration.addApprovedLicenseCategories(deprecatedConfig.approvedLicenseCategories);</span>
-<span class="fc" id="L423">            configuration.removeApprovedLicenseCategories(deprecatedConfig.removedLicenseCategories);</span>
-<span class="pc bpc" id="L424" title="1 of 2 branches missed.">            if (deprecatedConfig.inputFileFilter != null) {</span>
-<span class="nc" id="L425">                configuration.addExcludedFilter(deprecatedConfig.inputFileFilter);</span>
+
+<span class="fc" id="L422">            configuration.addSource(new ResourceCollectionContainer(name, configuration, nestedResources));</span>
+<span class="fc" id="L423">            configuration.addApprovedLicenseCategories(deprecatedConfig.approvedLicenseCategories);</span>
+<span class="fc" id="L424">            configuration.removeApprovedLicenseCategories(deprecatedConfig.removedLicenseCategories);</span>
+<span class="pc bpc" id="L425" title="1 of 2 branches missed.">            if (deprecatedConfig.inputFileFilter != null) {</span>
+<span class="nc" id="L426">                configuration.addExcludedFilter(deprecatedConfig.inputFileFilter);</span>
             }
-<span class="fc" id="L427">            families.stream().map(Family::build).forEach(configuration::addFamily);</span>
-<span class="fc" id="L428">            licenses.stream().map(License::asBuilder)</span>
-<span class="fc" id="L429">                    .forEach(l -&gt; configuration.addApprovedLicenseCategory(configuration.addLicense(l).getLicenseFamily()));</span>
-<span class="pc bpc" id="L430" title="1 of 2 branches missed.">            if (helpLicenses) {</span>
-<span class="nc" id="L431">                new org.apache.rat.help.Licenses(configuration, new PrintWriter(DefaultLog.getInstance().asWriter())).printHelp();</span>
+<span class="fc" id="L428">            families.stream().map(Family::build).forEach(configuration::addFamily);</span>
+<span class="fc" id="L429">            licenses.stream().map(License::asBuilder)</span>
+<span class="fc" id="L430">                    .forEach(l -&gt; configuration.addApprovedLicenseCategory(configuration.addLicense(l).getLicenseFamily()));</span>
+<span class="pc bpc" id="L431" title="1 of 2 branches missed.">            if (helpLicenses) {</span>
+<span class="nc" id="L432">                new org.apache.rat.help.Licenses(configuration, new PrintWriter(DefaultLog.getInstance().asWriter())).printHelp();</span>
             }
-<span class="fc" id="L433">            return configuration;</span>
-<span class="nc" id="L434">        } catch (IOException | ImplementationException e) {</span>
-<span class="nc" id="L435">            throw new BuildException(e.getMessage(), e);</span>
+<span class="fc" id="L434">            return configuration;</span>
+<span class="nc" id="L435">        } catch (IOException | ImplementationException e) {</span>
+<span class="nc" id="L436">            throw new BuildException(e.getMessage(), e);</span>
         }
     }
 
@@ -442,31 +443,31 @@ public class Report extends BaseAntTask {
     @Override
     public void execute() {
         try {
-<span class="fc" id="L445">            ReportConfiguration config = validate(getConfiguration());</span>
-<span class="fc" id="L446">            Reporter r = new Reporter(config);</span>
-<span class="fc" id="L447">            Reporter.Output output = r.execute();</span>
-<span class="fc" id="L448">            output.format(StyleSheets.PLAIN.getStyleSheet().ioSupplier(), ReportConfiguration.SYSTEM_OUT.ioSupplier());</span>
-<span class="fc" id="L449">            output.format(config);</span>
-<span class="fc" id="L450">        } catch (BuildException e) {</span>
-<span class="fc" id="L451">            throw e;</span>
-<span class="nc" id="L452">        } catch (Exception ioex) {</span>
-<span class="nc" id="L453">            throw new BuildException(ioex);</span>
-<span class="fc" id="L454">        }</span>
-<span class="fc" id="L455">    }</span>
+<span class="fc" id="L446">            ReportConfiguration config = validate(getConfiguration());</span>
+<span class="fc" id="L447">            Reporter r = new Reporter(config);</span>
+<span class="fc" id="L448">            Reporter.Output output = r.execute();</span>
+<span class="fc" id="L449">            output.format(StyleSheets.PLAIN.getStyleSheet().ioSupplier(), ReportConfiguration.SYSTEM_OUT.ioSupplier());</span>
+<span class="fc" id="L450">            output.format(config);</span>
+<span class="fc" id="L451">        } catch (BuildException e) {</span>
+<span class="fc" id="L452">            throw e;</span>
+<span class="nc" id="L453">        } catch (Exception ioex) {</span>
+<span class="nc" id="L454">            throw new BuildException(ioex);</span>
+<span class="fc" id="L455">        }</span>
+<span class="fc" id="L456">    }</span>
 
     /**
      * Validates the task's configuration.
      */
     protected ReportConfiguration validate(final ReportConfiguration cfg) {
         try {
-<span class="fc" id="L462">            cfg.validate(s -&gt; log(s, Project.MSG_WARN));</span>
-<span class="fc" id="L463">        } catch (ConfigurationException e) {</span>
-<span class="fc" id="L464">            throw new BuildException(e.getMessage(), e.getCause());</span>
-<span class="fc" id="L465">        }</span>
-<span class="fc bfc" id="L466" title="All 2 branches covered.">        if (nestedResources == null) {</span>
-<span class="fc" id="L467">            throw new BuildException(&quot;You must specify at least one file to create the report for.&quot;);</span>
+<span class="fc" id="L463">            cfg.validate(s -&gt; log(s, Project.MSG_WARN));</span>
+<span class="fc" id="L464">        } catch (ConfigurationException e) {</span>
+<span class="fc" id="L465">            throw new BuildException(e.getMessage(), e.getCause());</span>
+<span class="fc" id="L466">        }</span>
+<span class="fc bfc" id="L467" title="All 2 branches covered.">        if (nestedResources == null) {</span>
+<span class="fc" id="L468">            throw new BuildException(&quot;You must specify at least one file to create the report for.&quot;);</span>
         }
-<span class="fc" id="L469">        return cfg;</span>
+<span class="fc" id="L470">        return cfg;</span>
     }
 
     /**
@@ -475,34 +476,34 @@ public class Report extends BaseAntTask {
      * @deprecated use &amp;lt;editCopyright&amp;gt; amd &amp;lt;editOverwrite&amp;gt; instead.
      */
     @Deprecated
-    public static class AddLicenseHeaders extends EnumeratedAttribute {
+    public static final class AddLicenseHeaders extends EnumeratedAttribute {
         /**
-         * add license headers and create *.new file
+         * Add license headers and create *.new files.
          */
         static final String TRUE = &quot;true&quot;;
         /**
-         * do not add license headers
+         * Do not add license headers.
          */
         static final String FALSE = &quot;false&quot;;
         /**
-         * add license headers and overwrite existing files
+         * Add license headers and overwrite existing files.
          */
         static final String FORCED = &quot;forced&quot;;
 
-<span class="fc" id="L492">        public AddLicenseHeaders() {</span>
-<span class="fc" id="L493">        }</span>
+<span class="fc" id="L493">        public AddLicenseHeaders() {</span>
+<span class="fc" id="L494">        }</span>
 
-<span class="nc" id="L495">        public AddLicenseHeaders(final String s) {</span>
-<span class="nc" id="L496">            setValue(s);</span>
-<span class="nc" id="L497">        }</span>
+<span class="nc" id="L496">        public AddLicenseHeaders(final String s) {</span>
+<span class="nc" id="L497">            setValue(s);</span>
+<span class="nc" id="L498">        }</span>
 
         @Override
         public String[] getValues() {
-<span class="fc" id="L501">            return new String[]{TRUE, FALSE, FORCED};</span>
+<span class="fc" id="L502">            return new String[]{TRUE, FALSE, FORCED};</span>
         }
 
         public org.apache.rat.config.AddLicenseHeaders getNative() {
-<span class="fc" id="L505">            return org.apache.rat.config.AddLicenseHeaders.valueOf(getValue().toUpperCase());</span>
+<span class="fc" id="L506">            return org.apache.rat.config.AddLicenseHeaders.valueOf(getValue().toUpperCase());</span>
         }
     }
 
@@ -514,41 +515,41 @@ public class Report extends BaseAntTask {
     @Deprecated
     public static class ApprovalFilter extends EnumeratedAttribute {
 
-<span class="nc" id="L517">        public ApprovalFilter() {</span>
-<span class="nc" id="L518">        }</span>
+<span class="nc" id="L518">        public ApprovalFilter() {</span>
+<span class="nc" id="L519">        }</span>
 
-<span class="nc" id="L520">        public ApprovalFilter(final String s) {</span>
-<span class="nc" id="L521">            setValue(s);</span>
-<span class="nc" id="L522">        }</span>
+<span class="nc" id="L521">        public ApprovalFilter(final String s) {</span>
+<span class="nc" id="L522">            setValue(s);</span>
+<span class="nc" id="L523">        }</span>
 
         @Override
         public String[] getValues() {
-<span class="nc" id="L526">            return Arrays.stream(LicenseSetFactory.LicenseFilter.values()).map(LicenseSetFactory.LicenseFilter::name)</span>
-<span class="nc" id="L527">                    .toList().toArray(new String[LicenseSetFactory.LicenseFilter.values().length]);</span>
+<span class="nc" id="L527">            return Arrays.stream(LicenseSetFactory.LicenseFilter.values()).map(LicenseSetFactory.LicenseFilter::name)</span>
+<span class="nc" id="L528">                    .toList().toArray(new String[LicenseSetFactory.LicenseFilter.values().length]);</span>
         }
 
         public LicenseSetFactory.LicenseFilter internalFilter() {
-<span class="nc" id="L531">            return LicenseSetFactory.LicenseFilter.valueOf(getValue());</span>
+<span class="nc" id="L532">            return LicenseSetFactory.LicenseFilter.valueOf(getValue());</span>
         }
     }
 
     @Override
     public void log(final String msg, final int msgLevel) {
-<span class="fc bfc" id="L537" title="All 2 branches covered.">        if (getProject() != null) {</span>
-<span class="fc" id="L538">            getProject().log(msg, msgLevel);</span>
+<span class="fc bfc" id="L538" title="All 2 branches covered.">        if (getProject() != null) {</span>
+<span class="fc" id="L539">            getProject().log(msg, msgLevel);</span>
         } else {
-<span class="fc" id="L540">            DefaultLog.createDefault().log(fromProjectLevel(msgLevel), msg);</span>
+<span class="fc" id="L541">            DefaultLog.createDefault().log(fromProjectLevel(msgLevel), msg);</span>
         }
-<span class="fc" id="L542">    }</span>
+<span class="fc" id="L543">    }</span>
 
     @Override
     public void log(final String msg, final Throwable t, final int msgLevel) {
-<span class="nc bnc" id="L546" title="All 2 branches missed.">        if (getProject() == null) {</span>
-<span class="nc" id="L547">            log(Log.formatLogEntry(msg, t), msgLevel);</span>
+<span class="nc bnc" id="L547" title="All 2 branches missed.">        if (getProject() == null) {</span>
+<span class="nc" id="L548">            log(Log.formatLogEntry(msg, t), msgLevel);</span>
         } else {
-<span class="nc" id="L549">            getProject().log(this, msg, t, msgLevel);</span>
+<span class="nc" id="L550">            getProject().log(this, msg, t, msgLevel);</span>
         }
-<span class="nc" id="L551">    }</span>
+<span class="nc" id="L552">    }</span>
 
     /**
      * Converts to RAT log level from Ant Project log level.
@@ -556,12 +557,12 @@ public class Report extends BaseAntTask {
      * @return the equivalent RAT log level.
      */
     public static Log.Level fromProjectLevel(final int level) {
-<span class="pc bpc" id="L559" title="2 of 5 branches missed.">        return switch (level) {</span>
-<span class="fc" id="L560">            case Project.MSG_DEBUG, Project.MSG_VERBOSE -&gt; Log.Level.DEBUG;</span>
-<span class="fc" id="L561">            case Project.MSG_INFO -&gt; Log.Level.INFO;</span>
-<span class="fc" id="L562">            case Project.MSG_WARN -&gt; Log.Level.WARN;</span>
-<span class="nc" id="L563">            case Project.MSG_ERR -&gt; Log.Level.ERROR;</span>
-<span class="nc" id="L564">            default -&gt; Log.Level.OFF;</span>
+<span class="pc bpc" id="L560" title="2 of 5 branches missed.">        return switch (level) {</span>
+<span class="fc" id="L561">            case Project.MSG_DEBUG, Project.MSG_VERBOSE -&gt; Log.Level.DEBUG;</span>
+<span class="fc" id="L562">            case Project.MSG_INFO -&gt; Log.Level.INFO;</span>
+<span class="fc" id="L563">            case Project.MSG_WARN -&gt; Log.Level.WARN;</span>
+<span class="nc" id="L564">            case Project.MSG_ERR -&gt; Log.Level.ERROR;</span>
+<span class="nc" id="L565">            default -&gt; Log.Level.OFF;</span>
         };
     }
 
@@ -571,33 +572,33 @@ public class Report extends BaseAntTask {
      * @return the equivalent Ant Project log level.
      */
     static int toProjectLevel(final Log.Level level) {
-<span class="pc bpc" id="L574" title="2 of 5 branches missed.">        return switch (level) {</span>
-<span class="fc" id="L575">            case DEBUG -&gt; Project.MSG_DEBUG;</span>
-<span class="fc" id="L576">            case INFO -&gt; Project.MSG_INFO;</span>
-<span class="fc" id="L577">            case WARN -&gt; Project.MSG_WARN;</span>
-<span class="nc" id="L578">            case ERROR -&gt; Project.MSG_ERR;</span>
-<span class="nc" id="L579">            default -&gt; -1;</span>
+<span class="pc bpc" id="L575" title="2 of 5 branches missed.">        return switch (level) {</span>
+<span class="fc" id="L576">            case DEBUG -&gt; Project.MSG_DEBUG;</span>
+<span class="fc" id="L577">            case INFO -&gt; Project.MSG_INFO;</span>
+<span class="fc" id="L578">            case WARN -&gt; Project.MSG_WARN;</span>
+<span class="nc" id="L579">            case ERROR -&gt; Project.MSG_ERR;</span>
+<span class="nc" id="L580">            default -&gt; -1;</span>
         };
     }
 
     /**
      * A facade for the Logger provided by Ant.
      */
-<span class="fc" id="L586">    private final class Logger implements Log {</span>
+<span class="fc" id="L587">    private final class Logger implements Log {</span>
         @Override
         public Level getLevel() {
-<span class="fc" id="L589">            return Level.DEBUG;</span>
+<span class="fc" id="L590">            return Level.DEBUG;</span>
         }
 
         @Override
         public void log(final Log.Level level, final String message, final Throwable throwable) {
-<span class="nc" id="L594">            log(level, Log.formatLogEntry(message, throwable));</span>
-<span class="nc" id="L595">        }</span>
+<span class="nc" id="L595">            log(level, Log.formatLogEntry(message, throwable));</span>
+<span class="nc" id="L596">        }</span>
 
         @Override
         public void log(final Level level, final String msg) {
-<span class="fc" id="L599">            Report.this.log(msg, toProjectLevel(level));</span>
-<span class="fc" id="L600">        }</span>
+<span class="fc" id="L600">            Report.this.log(msg, toProjectLevel(level));</span>
+<span class="fc" id="L601">        }</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

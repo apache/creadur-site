@@ -22,26 +22,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.apache.commons.cli.Option;
 import org.apache.rat.ui.UIOption;
 import org.apache.rat.ui.UIOptionCollection;
+import org.apache.rat.utils.CasedString;
 
 import static java.lang.String.format;
 
 /**
  * A class that wraps the CLI option and provides Ant specific values.
  */
-public class AntOption extends UIOption&lt;AntOption&gt; {
+public final class AntOption extends UIOption&lt;AntOption&gt; {
 
     /**
      * Constructor.
      *
-     * @param option the option to wrap.
+     * @param builder the AntOptionBuilder
      */
-    public AntOption(final UIOptionCollection&lt;AntOption&gt; collection, final Option option) {
-<span class="fc" id="L43">        super(collection, option, AntOptionCollection.createName(option));</span>
-<span class="fc" id="L44">    }</span>
+    private AntOption(final AntOptionBuilder builder) {
+<span class="fc" id="L45">        super(builder);</span>
+<span class="fc" id="L46">    }</span>
 
     /**
      * Returns {@code true} if the option should be an attribute of the &amp;lt;rat:report&amp;gt; element.
@@ -49,12 +51,12 @@ public class AntOption extends UIOption&lt;AntOption&gt; {
      * @return {@code true} if the option should be an attribute of the &amp;lt;rat:report&amp;gt; element.
      */
     public boolean isAttribute() {
-<span class="fc" id="L52">        return getAntCollection().isAttribute(this);</span>
+<span class="fc" id="L54">        return getAntCollection().isAttribute(this);</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L57">        return getName();</span>
+<span class="nc" id="L59">        return getName();</span>
     }
 
     /**
@@ -63,7 +65,7 @@ public class AntOption extends UIOption&lt;AntOption&gt; {
      * @return {@code true} if the option should be a child element of the &amp;lt;rat:report&amp;gt; element.
      */
     public boolean isElement() {
-<span class="fc bfc" id="L66" title="All 2 branches covered.">        return !isAttribute();</span>
+<span class="fc bfc" id="L68" title="All 2 branches covered.">        return !isAttribute();</span>
     }
 
     /**
@@ -72,54 +74,68 @@ public class AntOption extends UIOption&lt;AntOption&gt; {
      * @return the converted option.
      */
     public AntOption getActualAntOption() {
-<span class="fc" id="L75">        return getAntCollection().getActualAntOption(this);</span>
+<span class="fc" id="L77">        return getAntCollection().getActualAntOption(this);</span>
     }
 
     /**
-     * Gets the set of options that are mapped to this option.
+     * Gets the set of options that are mapped to this option. This is used to allow one implementation to answer for
+     * multiple options.
      * @return the set of options that are mapped to this option.
      */
     public Set&lt;AntOption&gt; convertedFrom() {
-<span class="fc" id="L83">        return getAntCollection().convertedFrom(this);</span>
+<span class="fc" id="L86">        return getAntCollection().convertedFrom(this);</span>
     }
 
     @Override
     public String getText() {
-<span class="nc" id="L88">        return cleanupName(option);</span>
+<span class="nc" id="L91">        return cleanupName(option);</span>
     }
 
     @Override
     protected String cleanupName(final Option option) {
         AntOption antOption;
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (getOption().equals(option)) {</span>
-<span class="nc" id="L95">            antOption = this;</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (getOption().equals(option)) {</span>
+<span class="nc" id="L98">            antOption = this;</span>
         } else {
-<span class="fc" id="L97">            Optional&lt;AntOption&gt; optAntOption = getOptionCollection().getMappedOption(option);</span>
-<span class="pc bpc" id="L98" title="1 of 2 branches missed.">            if (optAntOption.isPresent()) {</span>
-<span class="fc" id="L99">                antOption = optAntOption.get();</span>
+<span class="fc" id="L100">            Optional&lt;AntOption&gt; optAntOption = getOptionCollection().getMappedOption(option);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">            if (optAntOption.isPresent()) {</span>
+<span class="fc" id="L102">                antOption = optAntOption.get();</span>
             } else {
-<span class="nc" id="L101">                return &quot;&quot;;</span>
+<span class="nc" id="L104">                return &quot;&quot;;</span>
             }
         }
-<span class="fc" id="L104">        return antOption.cleanupName();</span>
+<span class="fc" id="L107">        return antOption.cleanupName();</span>
     }
 
+    /**
+     * Cleans up the name of this AntOption. Used in documentation.
+     * Returns either {@code &lt;name&gt;} or {@code name attribute}.
+     * @return the cleaned up name.
+     */
     public String cleanupName() {
-<span class="fc bfc" id="L108" title="All 2 branches covered.">        String fmt = isAttribute() ? &quot;%s attribute&quot; : &quot;&lt;%s&gt;&quot;;</span>
-<span class="fc" id="L109">        return format(fmt, name);</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        String fmt = isAttribute() ? &quot;%s attribute&quot; : &quot;&lt;%s&gt;&quot;;</span>
+<span class="fc" id="L117">        return format(fmt, name);</span>
     }
 
+    /**
+     * Gets the AntOptionCollection this AntOption is associated with.
+     * @return the AntOptionCollection this AntOption is associated with.
+     */
     AntOptionCollection getAntCollection() {
-<span class="fc" id="L113">        return getOptionCollection();</span>
+<span class="fc" id="L125">        return getOptionCollection();</span>
     }
 
+    /**
+     * Gets the Ant build type for this option.
+     * @return the Ant build type for this option.
+     */
     public AntOptionCollection.BuildType buildType() {
-<span class="nc" id="L117">        return getAntCollection().buildType(this.getArgType());</span>
+<span class="nc" id="L133">        return getAntCollection().buildType(this.getArgType());</span>
     }
 
     @Override
     public String getExample() {
-<span class="fc" id="L122">        return new ExampleGenerator().getExample();</span>
+<span class="fc" id="L138">        return new ExampleGenerator().getExample();</span>
     }
 
     /**
@@ -130,48 +146,48 @@ public class AntOption extends UIOption&lt;AntOption&gt; {
         /**
          * The constructor.
          */
-<span class="fc" id="L133">        public ExampleGenerator() {</span>
-<span class="fc" id="L134">        }</span>
+<span class="fc" id="L149">        public ExampleGenerator() {</span>
+<span class="fc" id="L150">        }</span>
 
         /**
          * Gets an example Ant XML report call using ant option.
          * @return the example of this ant option.
          */
         String getExample() {
-<span class="fc" id="L141">                return getExample(&quot;data&quot;, getAntCollection().getRequiredAttributes(getName()), null);</span>
+<span class="fc" id="L157">                return getExample(&quot;data&quot;, getAntCollection().getRequiredAttributes(getName()), null);</span>
         }
 
         /**
          * Gets an example Ant XML report call using ant option with the specified attributes and child elements.
-         * @param data The data value for this option.
-         * @param attributes A map of attribute keys and values.
+         * @param data the data value for this option.
+         * @param attributes a map of attribute keys and values.
          * @param childElements a list of child elements for the example
-         * @return example Ant XML report call using ant option with the specified attributes and child elements.
+         * @return example Ant XML report call using Ant option with the specified attributes and child elements.
          */
         public String getExample(final String data, final Map&lt;String, String&gt; attributes, final List&lt;String&gt; childElements) {
-<span class="fc" id="L152">            return &quot;&lt;rat:report&quot; +</span>
-<span class="fc" id="L153">                    getExampleAttributes(data, attributes) +</span>
+<span class="fc" id="L168">            return &quot;&lt;rat:report&quot; +</span>
+<span class="fc" id="L169">                    getExampleAttributes(data, attributes) +</span>
                     &quot;&gt; \n&quot; +
-<span class="fc" id="L155">                    getChildElements(data, childElements) +</span>
+<span class="fc" id="L171">                    getChildElements(data, childElements) +</span>
                     &quot;&lt;/rat:report&gt;\n&quot;;
         }
 
         /**
          * Creates a string comprising the attributes for the Ant XML report call.
-         * @param data The data value for this option.
-         * @param attributes A map of attribute keys and values.
+         * @param data the data value for this option.
+         * @param attributes a map of attribute keys and values.
          * @return a string comprising all the attribute keys and values for the Ant XML report element.
          */
         public String getExampleAttributes(final String data, final Map&lt;String, String&gt; attributes) {
-<span class="fc" id="L166">            AntOption actualOption = getActualAntOption();</span>
-<span class="fc" id="L167">            StringBuilder result = new StringBuilder();</span>
-<span class="fc bfc" id="L168" title="All 2 branches covered.">            if (attributes != null) {</span>
-<span class="fc" id="L169">                attributes.forEach((k, v) -&gt; result.append(format(&quot; %s=\&quot;%s\&quot;&quot;, k, v)));</span>
+<span class="fc" id="L182">            AntOption actualOption = getActualAntOption();</span>
+<span class="fc" id="L183">            StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">            if (attributes != null) {</span>
+<span class="fc" id="L185">                attributes.forEach((k, v) -&gt; result.append(format(&quot; %s=\&quot;%s\&quot;&quot;, k, v)));</span>
             }
-<span class="fc bfc" id="L171" title="All 2 branches covered.">            if (actualOption.isAttribute()) {</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">                result.append(format(&quot; %s=\&quot;%s\&quot;&quot;, actualOption.getName(), actualOption.hasArg() ? data : &quot;true&quot;));</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">            if (actualOption.isAttribute()) {</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">                result.append(format(&quot; %s=\&quot;%s\&quot;&quot;, actualOption.getName(), actualOption.hasArg() ? data : &quot;true&quot;));</span>
             }
-<span class="fc" id="L174">            return result.toString();</span>
+<span class="fc" id="L190">            return result.toString();</span>
         }
 
         /**
@@ -181,17 +197,68 @@ public class AntOption extends UIOption&lt;AntOption&gt; {
          * @return A string comprising the child elements for the Ant XML report call.
          */
         public String getChildElements(final String data, final List&lt;String&gt; childElements) {
-<span class="fc" id="L184">            AntOption baseOption = AntOption.this;</span>
-<span class="fc" id="L185">            AntOption actualOption = getActualAntOption();</span>
-<span class="fc" id="L186">            StringBuilder result = new StringBuilder();</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">            if (!actualOption.isAttribute()) {</span>
-<span class="fc" id="L188">                String inner = getAntCollection().buildType(getArgType()).getXml(actualOption, baseOption, data);</span>
-<span class="fc" id="L189">                result.append(inner);</span>
+<span class="fc" id="L200">            AntOption baseOption = AntOption.this;</span>
+<span class="fc" id="L201">            AntOption actualOption = getActualAntOption();</span>
+<span class="fc" id="L202">            StringBuilder result = new StringBuilder();</span>
+<span class="fc bfc" id="L203" title="All 2 branches covered.">            if (!actualOption.isAttribute()) {</span>
+<span class="fc" id="L204">                String inner = getAntCollection().buildType(getArgType()).getXml(actualOption, baseOption, data);</span>
+<span class="fc" id="L205">                result.append(inner);</span>
             }
-<span class="pc bpc" id="L191" title="1 of 2 branches missed.">            if (childElements != null) {</span>
-<span class="nc" id="L192">                childElements.forEach(x -&gt; result.append(x).append(&quot;\n&quot;));</span>
+<span class="pc bpc" id="L207" title="1 of 2 branches missed.">            if (childElements != null) {</span>
+<span class="nc" id="L208">                childElements.forEach(x -&gt; result.append(x).append(&quot;\n&quot;));</span>
             }
-<span class="fc" id="L194">            return result.toString();</span>
+<span class="fc" id="L210">            return result.toString();</span>
+        }
+    }
+
+    /**
+     * The Builder for AntOptions.
+     */
+    public static class AntOptionBuilder extends UIOption.Builder&lt;AntOption, AntOptionBuilder&gt; {
+
+        public AntOptionBuilder() {
+<span class="fc" id="L220">            super();</span>
+<span class="fc" id="L221">        }</span>
+
+        /**
+         * returns the function to convert an Option to its Ant based cased name.
+         * @return the function to convert an Option to its Ant based cased name.
+         */
+        protected Function&lt;Option, CasedString&gt; getNameFactory() {
+<span class="fc" id="L228">            return this::createName;</span>
+        }
+
+        @Override
+        public AntOptionBuilder optionCollection(final UIOptionCollection&lt;AntOption&gt; optionCollection) {
+<span class="pc bpc" id="L233" title="1 of 2 branches missed.">            if (optionCollection instanceof AntOptionCollection) {</span>
+<span class="fc" id="L234">                return super.optionCollection(optionCollection);</span>
+            }
+<span class="nc" id="L236">            throw new IllegalArgumentException(&quot;Option collection must be instance of AntOptionCollection&quot;);</span>
+        }
+
+        @Override
+        protected AntOption doBuild() {
+<span class="fc" id="L241">            return new AntOption(this);</span>
+        }
+
+        /**
+         * Creates the name for the option based on rules for conversion of Option names.
+         * Ant names are in PASCAL format.
+         * @param option the standard option.
+         * @return a new CasedString comprising the name of the AntOption.
+         * @see CasedString.StringCase#PASCAL
+         */
+        CasedString createName(final Option option) {
+<span class="fc" id="L252">            List&lt;String&gt; pluralEndings = List.of(&quot;approved&quot;, &quot;denied&quot;);</span>
+<span class="fc" id="L253">            String name = optionCollection().rename(option);</span>
+<span class="fc" id="L254">            CasedString casedName = new CasedString(CasedString.StringCase.KEBAB, name);</span>
+<span class="fc" id="L255">            String[] segments = casedName.getSegments();</span>
+<span class="fc" id="L256">            String lastSegment = segments[segments.length - 1];</span>
+<span class="pc bpc" id="L257" title="1 of 6 branches missed.">            if (option.hasArgs() &amp;&amp; !lastSegment.endsWith(&quot;s&quot;) &amp;&amp; !pluralEndings.contains(lastSegment)) {</span>
+<span class="fc" id="L258">                segments[segments.length - 1] += &quot;s&quot;;</span>
+<span class="fc" id="L259">                casedName = new CasedString(CasedString.StringCase.KEBAB, segments);</span>
+            }
+<span class="fc" id="L261">            return casedName.as(CasedString.StringCase.PASCAL);</span>
         }
     }
 }

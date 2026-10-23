@@ -20,13 +20,14 @@ package org.apache.rat.api;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.charset.Charset;
 import java.util.SortedSet;
 
 import org.apache.rat.analysis.TikaProcessor;
 import org.apache.rat.document.DocumentName;
 import org.apache.rat.document.DocumentNameMatcher;
-import org.apache.tika.parser.txt.CharsetDetector;
 
 /**
  * The representation of a document being scanned.
@@ -36,19 +37,19 @@ public abstract class Document implements Comparable&lt;Document&gt; {
     /**
      * An enumeration of document types.
      */
-<span class="fc" id="L39">    public enum Type {</span>
+<span class="fc" id="L40">    public enum Type {</span>
         /** An archive type document. */
-<span class="fc" id="L41">        ARCHIVE,</span>
+<span class="fc" id="L42">        ARCHIVE,</span>
         /** A binary file. */
-<span class="fc" id="L43">        BINARY,</span>
+<span class="fc" id="L44">        BINARY,</span>
         /** A generated document that is ignored. */
-<span class="fc" id="L45">        IGNORED,</span>
+<span class="fc" id="L46">        IGNORED,</span>
         /** A notice document (e.g. LICENSE file). */
-<span class="fc" id="L47">        NOTICE,</span>
+<span class="fc" id="L48">        NOTICE,</span>
         /** A standard document. */
-<span class="fc" id="L49">        STANDARD,</span>
+<span class="fc" id="L50">        STANDARD,</span>
         /** An unknown document type. */
-<span class="fc" id="L51">        UNKNOWN</span>
+<span class="fc" id="L52">        UNKNOWN</span>
     }
 
     /** The path matcher used by this document */
@@ -63,18 +64,18 @@ public abstract class Document implements Comparable&lt;Document&gt; {
      * @param name the native NameSet of the resource.
      * @param nameMatcher the document name matcher to filter directories/files.
      */
-<span class="fc" id="L66">    protected Document(final DocumentName name, final DocumentNameMatcher nameMatcher) {</span>
-<span class="fc" id="L67">        this.name = name;</span>
-<span class="fc" id="L68">        this.nameMatcher = nameMatcher;</span>
-<span class="fc" id="L69">        this.metaData = new MetaData();</span>
-<span class="fc" id="L70">    }</span>
+<span class="fc" id="L67">    protected Document(final DocumentName name, final DocumentNameMatcher nameMatcher) {</span>
+<span class="fc" id="L68">        this.name = name;</span>
+<span class="fc" id="L69">        this.nameMatcher = nameMatcher;</span>
+<span class="fc" id="L70">        this.metaData = new MetaData();</span>
+<span class="fc" id="L71">    }</span>
 
     /**
      * Gets the name of the current document.
      * @return the name of the current document.
      */
     public final DocumentName getName() {
-<span class="fc" id="L77">        return name;</span>
+<span class="fc" id="L78">        return name;</span>
     }
 
     /**
@@ -82,41 +83,46 @@ public abstract class Document implements Comparable&lt;Document&gt; {
      * @return the file filter this document was created with.
      */
     public final DocumentNameMatcher getNameMatcher() {
-<span class="fc" id="L85">        return nameMatcher;</span>
+<span class="fc" id="L86">        return nameMatcher;</span>
     }
 
     @Override
     public int compareTo(final Document doc) {
-<span class="fc" id="L90">        return name.compareTo(doc.name);</span>
+<span class="fc" id="L91">        return name.compareTo(doc.name);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="nc" id="L95">        return name.hashCode();</span>
+<span class="nc" id="L96">        return name.hashCode();</span>
     }
 
     @Override
     public boolean equals(final Object obj) {
-<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        if (!(obj instanceof Document)) {</span>
-<span class="nc" id="L101">            return false;</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (!(obj instanceof Document)) {</span>
+<span class="nc" id="L102">            return false;</span>
         }
-<span class="fc" id="L103">        return name.equals(((Document) obj).name);</span>
+<span class="fc" id="L104">        return name.equals(((Document) obj).name);</span>
     }
 
     /**
-     * Reads the contents of this document.
+     * Reads the contents of this document and
+     * relies on the charset detection of the underlying Tika processor.
+     *
      * @return &lt;code&gt;Reader&lt;/code&gt; not null
      * @throws IOException if this document cannot be read.
      */
     public Reader reader() throws IOException {
-<span class="fc" id="L112">        final int bytesForCharsetDetection = 256;</span>
-<span class="fc" id="L113">        CharsetDetector charsetDetector = new CharsetDetector(bytesForCharsetDetection);</span>
-        // RAT-494: Tika's CharsetDetector.getReader() may return null if the read can not be constructed due to I/O or encoding errors
-<span class="fc" id="L115">        Reader result = charsetDetector.getReader(TikaProcessor.markSupportedInputStream(inputStream()), getMetaData().getCharset().name());</span>
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if (result == null) {</span>
-<span class="nc" id="L117">            throw new IOException(String.format(&quot;Can not read document `%s`&quot;, getName()));</span>
+<span class="fc" id="L115">        final Charset charset = getMetaData().getCharset();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        if (charset == null) {</span>
+<span class="fc" id="L117">            throw new IOException(</span>
+<span class="fc" id="L118">                    String.format(</span>
+                            &quot;No charset detected for document `%s`&quot;,
+<span class="fc" id="L120">                            getName()));</span>
         }
-<span class="fc" id="L119">        return result;</span>
+
+<span class="fc" id="L123">        return new InputStreamReader(</span>
+<span class="fc" id="L124">                TikaProcessor.markSupportedInputStream(inputStream()),</span>
+                charset);
     }
 
     /**
@@ -131,7 +137,7 @@ public abstract class Document implements Comparable&lt;Document&gt; {
      * @return a non-null MetaData object.
      */
     public final MetaData getMetaData() {
-<span class="fc" id="L134">        return metaData;</span>
+<span class="fc" id="L140">        return metaData;</span>
     }
 
     /**
@@ -139,7 +145,7 @@ public abstract class Document implements Comparable&lt;Document&gt; {
      * @return {@code true} if the document is of type {@code IGNORED}.
      */
     public final boolean isIgnored() {
-<span class="fc bfc" id="L142" title="All 2 branches covered.">        return Type.IGNORED == metaData.getDocumentType();</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        return Type.IGNORED == metaData.getDocumentType();</span>
     }
 
     /**
@@ -149,7 +155,7 @@ public abstract class Document implements Comparable&lt;Document&gt; {
      */
     @Override
     public String toString() {
-<span class="fc" id="L152">        return String.format(&quot;%s( name = %s metaData = %s )&quot;, this.getClass().getSimpleName(), getName().localized(), getMetaData());</span>
+<span class="fc" id="L158">        return String.format(&quot;%s( name = %s metaData = %s )&quot;, this.getClass().getSimpleName(), getName().localized(), getMetaData());</span>
     }
 
     /**

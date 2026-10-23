@@ -104,16 +104,20 @@ public class ReportConfiguration {
          */
         private final String description;
 
-<span class="fc" id="L107">        Processing(final String description) {</span>
-<span class="fc" id="L108">            this.description = description;</span>
-<span class="fc" id="L109">        }</span>
+        /**
+         * Constructor.
+         * @param description the description for this processing strategy
+         */
+<span class="fc" id="L111">        Processing(final String description) {</span>
+<span class="fc" id="L112">            this.description = description;</span>
+<span class="fc" id="L113">        }</span>
 
         /**
          * Gets the description of the processing type.
          * @return the description of the processing type.
          */
         public String desc() {
-<span class="fc" id="L116">            return description;</span>
+<span class="fc" id="L120">            return description;</span>
         }
     }
 
@@ -139,7 +143,7 @@ public class ReportConfiguration {
     /**
      * The IODescriptor that provides the output stream to write the report to.
      */
-    private IODescriptor&lt;OutputStream&gt; out;
+    private IODescriptor&lt;OutputStream&gt; outputDescriptor;
 
     /**
      * The IODescriptor that provides the stylesheet to style the XML output.
@@ -194,19 +198,23 @@ public class ReportConfiguration {
     /**
      * Constructor
      */
-<span class="fc" id="L197">    public ReportConfiguration() {</span>
-<span class="fc" id="L198">        licenseSetFactory = new LicenseSetFactory();</span>
-<span class="fc" id="L199">        listFamilies = Defaults.LIST_FAMILIES;</span>
-<span class="fc" id="L200">        listLicenses = Defaults.LIST_LICENSES;</span>
-<span class="fc" id="L201">        dryRun = false;</span>
-<span class="fc" id="L202">        exclusionProcessor = new ExclusionProcessor();</span>
-<span class="fc" id="L203">        claimValidator = new ClaimValidator();</span>
-<span class="fc" id="L204">        sources = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L205">        reportables = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L206">    }</span>
+<span class="fc" id="L201">    public ReportConfiguration() {</span>
+<span class="fc" id="L202">        licenseSetFactory = new LicenseSetFactory();</span>
+<span class="fc" id="L203">        listFamilies = Defaults.LIST_FAMILIES;</span>
+<span class="fc" id="L204">        listLicenses = Defaults.LIST_LICENSES;</span>
+<span class="fc" id="L205">        dryRun = false;</span>
+<span class="fc" id="L206">        exclusionProcessor = new ExclusionProcessor();</span>
+<span class="fc" id="L207">        claimValidator = new ClaimValidator();</span>
+<span class="fc" id="L208">        sources = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L209">        reportables = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L210">    }</span>
 
+    /**
+     * A serializer/deserializer for a ReportConfiguration.
+     * @return the serializer/deserializer for a ReportConfiguration.
+     */
     public SerDes serDes() {
-<span class="fc" id="L209">        return new SerDes();</span>
+<span class="fc" id="L217">        return new SerDes();</span>
     }
 
     /**
@@ -215,11 +223,11 @@ public class ReportConfiguration {
      */
     public void reportExclusions(final Appendable appendable) {
         try {
-<span class="fc" id="L218">            exclusionProcessor.reportExclusions(appendable);</span>
-<span class="fc" id="L219">        } catch (IOException e) {</span>
-<span class="fc" id="L220">            DefaultLog.getInstance().warn(&quot;Unable to report exclusions&quot;, e);</span>
-<span class="fc" id="L221">        }</span>
-<span class="fc" id="L222">    }</span>
+<span class="fc" id="L226">            exclusionProcessor.reportExclusions(appendable);</span>
+<span class="fc" id="L227">        } catch (IOException e) {</span>
+<span class="fc" id="L228">            DefaultLog.getInstance().warn(&quot;Unable to report exclusions&quot;, e);</span>
+<span class="fc" id="L229">        }</span>
+<span class="fc" id="L230">    }</span>
 
     /**
      * Adds a file as a source of files to scan.
@@ -227,55 +235,63 @@ public class ReportConfiguration {
      * File within the file must be in linux format with a
      * {@code &quot;/&quot;} file separator.
      * @param file the file to process.
+     * @throws ConfigurationException if the file is {@code null}.
      */
     public void addSource(final File file) {
-<span class="fc" id="L232">        notNull(file, &quot;File may not be null.&quot;);</span>
-<span class="fc" id="L233">        sources.add(file);</span>
-<span class="fc" id="L234">    }</span>
+<span class="fc" id="L241">        notNull(file, &quot;File may not be null.&quot;);</span>
+<span class="fc" id="L242">        sources.add(file);</span>
+<span class="fc" id="L243">    }</span>
 
-    private void notNull(final Object o, final String msg) {
-<span class="fc bfc" id="L237" title="All 2 branches covered.">        if (o == null) {</span>
-<span class="fc" id="L238">            throw new ConfigurationException(msg);</span>
+    /**
+     * Throws ConfigurationException if the object is {@code null}.
+     * @param object the object to test.
+     * @param msg the message to create the exception with.
+     * @throws ConfigurationException if the object is {@code null}.
+     */
+    private void notNull(final Object object, final String msg) {
+<span class="fc bfc" id="L252" title="All 2 branches covered.">        if (object == null) {</span>
+<span class="fc" id="L253">            throw new ConfigurationException(msg);</span>
         }
-<span class="fc" id="L240">    }</span>
+<span class="fc" id="L255">    }</span>
 
     /**
      * Adds a Reportable as a source of files to scan.
      * @param reportable the reportable to process.
+     * @throws ConfigurationException if the reportable is {@code null}.
      */
     public void addSource(final Reportable reportable) {
-<span class="fc" id="L247">        notNull(reportable, &quot;Reportable may not be null.&quot;);</span>
-<span class="fc" id="L248">        reportables.add(reportable);</span>
-<span class="fc" id="L249">    }</span>
+<span class="fc" id="L263">        notNull(reportable, &quot;Reportable may not be null.&quot;);</span>
+<span class="fc" id="L264">        reportables.add(reportable);</span>
+<span class="fc" id="L265">    }</span>
 
     /**
      * Returns {@code true} if the configuration has any sources defined.
      * @return {@code true} if the configuration has any sources defined.
      */
     public boolean hasSource() {
-<span class="fc bfc" id="L256" title="All 4 branches covered.">        return !reportables.isEmpty() || !sources.isEmpty();</span>
+<span class="fc bfc" id="L272" title="All 4 branches covered.">        return !reportables.isEmpty() || !sources.isEmpty();</span>
     }
 
     /**
-     * Gets a builder initialized with any files specified as sources.
-     * @return a configured builder.
+     * Gets a ReportListWalker.Builder initialized with any files specified as sources.
+     * @return a configured ReportListWalker.Builder.
      */
     public ReportableListWalker.Builder getSources() {
-<span class="fc" id="L264">        DocumentName name = DocumentName.builder(new File(&quot;.&quot;)).build();</span>
-<span class="fc" id="L265">        ReportableListWalker.Builder builder = ReportableListWalker.builder(name);</span>
-<span class="fc" id="L266">        sources.forEach(file -&gt; builder.addReportable(new FileListWalker(new FileDocument(file, DocumentNameMatcher.MATCHES_ALL))));</span>
-<span class="fc" id="L267">        reportables.forEach(builder::addReportable);</span>
-<span class="fc" id="L268">        return builder;</span>
+<span class="fc" id="L280">        DocumentName name = DocumentName.builder(new File(&quot;.&quot;)).build();</span>
+<span class="fc" id="L281">        ReportableListWalker.Builder builder = ReportableListWalker.builder(name);</span>
+<span class="fc" id="L282">        sources.forEach(file -&gt; builder.addReportable(new FileListWalker(new FileDocument(file, DocumentNameMatcher.MATCHES_ALL))));</span>
+<span class="fc" id="L283">        reportables.forEach(builder::addReportable);</span>
+<span class="fc" id="L284">        return builder;</span>
     }
 
     // for testing access
     Iterable&lt;File&gt; sources() {
-<span class="fc" id="L273">        return sources;</span>
+<span class="fc" id="L289">        return sources;</span>
     }
 
     // for testing access
     Stream&lt;DocumentName&gt; reportables() {
-<span class="fc" id="L278">        return reportables.stream().map(Reportable::name);</span>
+<span class="fc" id="L294">        return reportables.stream().map(Reportable::name);</span>
     }
 
     /**
@@ -283,7 +299,7 @@ public class ReportConfiguration {
      * @return the matcher that matches generated text.
      */
     public IHeaderMatcher getGeneratedMatcher() {
-<span class="fc" id="L286">        return new AnyBuilder().setResource(&quot;/org/apache/rat/generation-keywords.txt&quot;).build();</span>
+<span class="fc" id="L302">        return new AnyBuilder().setResource(&quot;/org/apache/rat/generation-keywords.txt&quot;).build();</span>
     }
 
     /**
@@ -291,7 +307,7 @@ public class ReportConfiguration {
      * @return the archive processing type.
      */
     public Processing getArchiveProcessing() {
-<span class="fc bfc" id="L294" title="All 2 branches covered.">        return archiveProcessing == null ? Defaults.ARCHIVE_PROCESSING : archiveProcessing;</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        return archiveProcessing == null ? Defaults.ARCHIVE_PROCESSING : archiveProcessing;</span>
     }
 
     /**
@@ -299,15 +315,15 @@ public class ReportConfiguration {
      * @param archiveProcessing the type of processing archives should have.
      */
     public void setArchiveProcessing(final Processing archiveProcessing) {
-<span class="fc" id="L302">        this.archiveProcessing = archiveProcessing;</span>
-<span class="fc" id="L303">    }</span>
+<span class="fc" id="L318">        this.archiveProcessing = archiveProcessing;</span>
+<span class="fc" id="L319">    }</span>
 
     /**
      * Retrieves the standard processing type.
      * @return the standard processing type.
      */
     public Processing getStandardProcessing() {
-<span class="fc bfc" id="L310" title="All 2 branches covered.">        return standardProcessing == null ? Defaults.STANDARD_PROCESSING : standardProcessing;</span>
+<span class="fc bfc" id="L326" title="All 2 branches covered.">        return standardProcessing == null ? Defaults.STANDARD_PROCESSING : standardProcessing;</span>
     }
 
     /**
@@ -315,8 +331,8 @@ public class ReportConfiguration {
      * @param standardProcessing the type of processing standard files should have.
      */
     public void setStandardProcessing(final Processing standardProcessing) {
-<span class="fc" id="L318">        this.standardProcessing = standardProcessing;</span>
-<span class="fc" id="L319">    }</span>
+<span class="fc" id="L334">        this.standardProcessing = standardProcessing;</span>
+<span class="fc" id="L335">    }</span>
 
     /**
      * Set the log level for reporting collisions in the set of license families.
@@ -324,47 +340,47 @@ public class ReportConfiguration {
      * @param level the log level to use.
      */
     public void logFamilyCollisions(final Level level) {
-<span class="fc" id="L327">        licenseSetFactory.logFamilyCollisions(level);</span>
-<span class="fc" id="L328">    }</span>
+<span class="fc" id="L343">        licenseSetFactory.logFamilyCollisions(level);</span>
+<span class="fc" id="L344">    }</span>
 
     /**
      * Sets the reporting option for duplicate license families.
      * @param state the ReportingSet.Option to use for reporting.
      */
     public void familyDuplicateOption(final ReportingSet.Options state) {
-<span class="fc" id="L335">        licenseSetFactory.familyDuplicateOption(state);</span>
-<span class="fc" id="L336">    }</span>
+<span class="fc" id="L351">        licenseSetFactory.familyDuplicateOption(state);</span>
+<span class="fc" id="L352">    }</span>
 
     /**
      * Sets the log level for reporting license collisions.
      * @param level the log level.
      */
     public void logLicenseCollisions(final Level level) {
-<span class="fc" id="L343">        licenseSetFactory.logLicenseCollisions(level);</span>
-<span class="fc" id="L344">    }</span>
+<span class="fc" id="L359">        licenseSetFactory.logLicenseCollisions(level);</span>
+<span class="fc" id="L360">    }</span>
 
     /**
      * Sets the reporting option for duplicate licenses.
      * @param state the ReportingSet.Option to use for reporting.
      */
     public void licenseDuplicateOption(final ReportingSet.Options state) {
-<span class="fc" id="L351">        licenseSetFactory.licenseDuplicateOption(state);</span>
-<span class="fc" id="L352">    }</span>
+<span class="fc" id="L367">        licenseSetFactory.licenseDuplicateOption(state);</span>
+<span class="fc" id="L368">    }</span>
 
     /**
      * Set the level of license families that should be output in the XML document.
      * @param filter the license families to list.
      */
     public void listFamilies(final LicenseFilter filter) {
-<span class="fc" id="L359">        listFamilies = filter;</span>
-<span class="fc" id="L360">    }</span>
+<span class="fc" id="L375">        listFamilies = filter;</span>
+<span class="fc" id="L376">    }</span>
 
     /**
      * Return the current filter that determines which families will be output in the XML document.
      * @return the filter that defines the families to list.
      */
     public LicenseFilter listFamilies() {
-<span class="fc" id="L367">        return listFamilies;</span>
+<span class="fc" id="L383">        return listFamilies;</span>
     }
 
     /**
@@ -372,15 +388,15 @@ public class ReportConfiguration {
      * @param filter the licenses to list.
      */
     public void listLicenses(final LicenseFilter filter) {
-<span class="fc" id="L375">        listLicenses = filter;</span>
-<span class="fc" id="L376">    }</span>
+<span class="fc" id="L391">        listLicenses = filter;</span>
+<span class="fc" id="L392">    }</span>
 
     /**
      * Gets the selected license filter.
      * @return the filter to limit license display.
      */
     public LicenseFilter listLicenses() {
-<span class="fc" id="L383">        return listLicenses;</span>
+<span class="fc" id="L399">        return listLicenses;</span>
     }
 
     /**
@@ -388,15 +404,15 @@ public class ReportConfiguration {
      * @param state the state for the dry run flag.
      */
     public void setDryRun(final boolean state) {
-<span class="fc" id="L391">        dryRun = state;</span>
-<span class="fc" id="L392">    }</span>
+<span class="fc" id="L407">        dryRun = state;</span>
+<span class="fc" id="L408">    }</span>
 
     /**
      * Returns the state of the dry run flag.
      * @return the state of the dry run flag.
      */
     public boolean isDryRun() {
-<span class="fc" id="L399">        return dryRun;</span>
+<span class="fc" id="L415">        return dryRun;</span>
     }
 
     /**
@@ -405,8 +421,8 @@ public class ReportConfiguration {
      * @see ExclusionProcessor#addExcludedCollection(StandardCollection)
      */
     public void addExcludedCollection(final StandardCollection collection) {
-<span class="fc" id="L408">        exclusionProcessor.addExcludedCollection(collection);</span>
-<span class="fc" id="L409">    }</span>
+<span class="fc" id="L424">        exclusionProcessor.addExcludedCollection(collection);</span>
+<span class="fc" id="L425">    }</span>
 
     /**
      * Excludes the file processor defined in the StandardCollection.
@@ -414,24 +430,24 @@ public class ReportConfiguration {
      * @see ExclusionProcessor#addFileProcessor(StandardCollection)
      */
     public void addExcludedFileProcessor(final StandardCollection collection) {
-<span class="fc" id="L417">        exclusionProcessor.addFileProcessor(collection);</span>
-<span class="fc" id="L418">    }</span>
+<span class="fc" id="L433">        exclusionProcessor.addFileProcessor(collection);</span>
+<span class="fc" id="L434">    }</span>
 
     /**
      * Excludes files that match a FileFilter.
      * @param fileFilter the file filter to match.
      */
     public void addExcludedFilter(final FileFilter fileFilter) {
-<span class="fc" id="L425">        exclusionProcessor.addExcludedMatcher(new DocumentNameMatcher(fileFilter));</span>
-<span class="fc" id="L426">    }</span>
+<span class="fc" id="L441">        exclusionProcessor.addExcludedMatcher(new DocumentNameMatcher(fileFilter));</span>
+<span class="fc" id="L442">    }</span>
 
     /**
      * Excludes files that match a DocumentNameMatcher.
      * @param matcher the DocumentNameMatcher to match.
      */
     public void addExcludedMatcher(final DocumentNameMatcher matcher) {
-<span class="fc" id="L433">        exclusionProcessor.addExcludedMatcher(matcher);</span>
-<span class="fc" id="L434">    }</span>
+<span class="fc" id="L449">        exclusionProcessor.addExcludedMatcher(matcher);</span>
+<span class="fc" id="L450">    }</span>
 
     /**
      * Excludes files that match the pattern.
@@ -440,16 +456,16 @@ public class ReportConfiguration {
      * @see ExclusionProcessor#addIncludedPatterns(Iterable)
      */
     public void addExcludedPatterns(final Iterable&lt;String&gt; patterns) {
-<span class="fc" id="L443">        exclusionProcessor.addExcludedPatterns(patterns);</span>
-<span class="fc" id="L444">    }</span>
+<span class="fc" id="L459">        exclusionProcessor.addExcludedPatterns(patterns);</span>
+<span class="fc" id="L460">    }</span>
 
     /**
      * Adds the patterns from the standard collection as included patterns.
      * @param collection the standard collection to include.
      */
     public void addIncludedCollection(final StandardCollection collection) {
-<span class="fc" id="L451">        exclusionProcessor.addIncludedCollection(collection);</span>
-<span class="fc" id="L452">    }</span>
+<span class="fc" id="L467">        exclusionProcessor.addIncludedCollection(collection);</span>
+<span class="fc" id="L468">    }</span>
 
     /**
      * Adds the fileFilter to filter files that should be included, this overrides any
@@ -457,16 +473,16 @@ public class ReportConfiguration {
      * @param fileFilter the filter to identify files that should be included.
      */
     public void addIncludedFilter(final FileFilter fileFilter) {
-<span class="fc" id="L460">        exclusionProcessor.addIncludedMatcher(new DocumentNameMatcher(fileFilter));</span>
-<span class="fc" id="L461">    }</span>
+<span class="fc" id="L476">        exclusionProcessor.addIncludedMatcher(new DocumentNameMatcher(fileFilter));</span>
+<span class="fc" id="L477">    }</span>
 
     /**
      * Includes files that match a DocumentNameMatcher.
      * @param matcher the DocumentNameMatcher to match.
      */
     public void addIncludedMatcher(final DocumentNameMatcher matcher) {
-<span class="fc" id="L468">        exclusionProcessor.addIncludedMatcher(matcher);</span>
-<span class="fc" id="L469">    }</span>
+<span class="fc" id="L484">        exclusionProcessor.addIncludedMatcher(matcher);</span>
+<span class="fc" id="L485">    }</span>
 
     /**
      * Add file patterns that are to be included. These patterns override any exclusion of
@@ -474,8 +490,8 @@ public class ReportConfiguration {
      * @param patterns the iterable of Strings containing the patterns.
      */
     public void addIncludedPatterns(final Iterable&lt;String&gt; patterns) {
-<span class="fc" id="L477">        exclusionProcessor.addIncludedPatterns(patterns);</span>
-<span class="fc" id="L478">    }</span>
+<span class="fc" id="L493">        exclusionProcessor.addIncludedPatterns(patterns);</span>
+<span class="fc" id="L494">    }</span>
 
     /**
      * Get the DocumentNameMatcher that excludes files found in the directory tree.
@@ -483,12 +499,12 @@ public class ReportConfiguration {
      * @return the DocumentNameMatcher for the base directory.
      */
     public DocumentNameMatcher getDocumentExcluder(final DocumentName baseDir) {
-<span class="fc" id="L486">        return exclusionProcessor.getNameMatcher(baseDir);</span>
+<span class="fc" id="L502">        return exclusionProcessor.getNameMatcher(baseDir);</span>
     }
 
     // visible for testing.
     ExclusionProcessor getExclusionProcessor() {
-<span class="fc" id="L491">        return exclusionProcessor;</span>
+<span class="fc" id="L507">        return exclusionProcessor;</span>
     }
 
     /**
@@ -497,7 +513,7 @@ public class ReportConfiguration {
      * the report with.
      */
     public IOSupplier&lt;InputStream&gt; getStyleSheet() {
-<span class="fc bfc" id="L500" title="All 2 branches covered.">        return styleSheet == null ? null : styleSheet.ioSupplier();</span>
+<span class="fc bfc" id="L516" title="All 2 branches covered.">        return styleSheet == null ? null : styleSheet.ioSupplier();</span>
     }
 
     /**
@@ -506,7 +522,7 @@ public class ReportConfiguration {
      * the report with.
      */
     public IODescriptor&lt;InputStream&gt; getStyleSheetDescriptor() {
-<span class="fc bfc" id="L509" title="All 2 branches covered.">        return styleSheet == null ? null : styleSheet;</span>
+<span class="fc bfc" id="L525" title="All 2 branches covered.">        return styleSheet == null ? null : styleSheet;</span>
     }
 
     /**
@@ -516,8 +532,8 @@ public class ReportConfiguration {
      * @param styleSheet the XSLT style sheet to style the report with.
      */
     public void setStyleSheet(final IODescriptor&lt;InputStream&gt; styleSheet) {
-<span class="fc" id="L519">        this.styleSheet = styleSheet;</span>
-<span class="fc" id="L520">    }</span>
+<span class="fc" id="L535">        this.styleSheet = styleSheet;</span>
+<span class="fc" id="L536">    }</span>
 
     /**
      * Adds the licenses and approved licenses from the defaults object to the
@@ -526,21 +542,21 @@ public class ReportConfiguration {
      * @param defaults the defaults to set.
      */
     public void setFrom(final Defaults defaults) {
-<span class="fc" id="L529">        licenseSetFactory.add(defaults.getLicenseSetFactory());</span>
-<span class="fc bfc" id="L530" title="All 2 branches covered.">        if (getStyleSheet() == null) {</span>
-<span class="fc" id="L531">            setStyleSheet(StyleSheets.PLAIN.getStyleSheet());</span>
+<span class="fc" id="L545">        licenseSetFactory.add(defaults.getLicenseSetFactory());</span>
+<span class="fc bfc" id="L546" title="All 2 branches covered.">        if (getStyleSheetDescriptor() == null) {</span>
+<span class="fc" id="L547">            setStyleSheet(StyleSheets.PLAIN.getStyleSheet());</span>
         }
-<span class="fc" id="L533">        defaults.getStandardExclusion().forEach(this::addExcludedCollection);</span>
-<span class="fc" id="L534">    }</span>
+<span class="fc" id="L549">        defaults.getStandardExclusion().forEach(this::addExcludedCollection);</span>
+<span class="fc" id="L550">    }</span>
 
     /**
      * Sets the style sheet.
      * @param styleSheet the XSLT style sheet file to style the report with.
      */
     public void setStyleSheet(final File styleSheet) {
-<span class="fc" id="L541">        Objects.requireNonNull(styleSheet, &quot;styleSheet file should not be null&quot;);</span>
-<span class="fc" id="L542">        setStyleSheet(styleSheet.toURI());</span>
-<span class="fc" id="L543">    }</span>
+<span class="fc" id="L557">        Objects.requireNonNull(styleSheet, &quot;styleSheet file should not be null&quot;);</span>
+<span class="fc" id="L558">        setStyleSheet(styleSheet.toURI());</span>
+<span class="fc" id="L559">    }</span>
 
     /**
      * Sets the style sheet for custom processing. The stylesheet may be opened
@@ -548,13 +564,13 @@ public class ReportConfiguration {
      * @param styleSheet the URI of the XSLT style sheet to style the report with.
      */
     public void setStyleSheet(final URI styleSheet) {
-<span class="fc" id="L551">        Objects.requireNonNull(styleSheet, &quot;Stylesheet file must not be null&quot;);</span>
+<span class="fc" id="L567">        Objects.requireNonNull(styleSheet, &quot;Stylesheet file must not be null&quot;);</span>
         try {
-<span class="fc" id="L553">            setStyleSheet(styleSheet.toURL());</span>
-<span class="nc" id="L554">        } catch (MalformedURLException e) {</span>
-<span class="nc" id="L555">            throw new ConfigurationException(&quot;Unable to process stylesheet&quot;, e);</span>
-<span class="fc" id="L556">        }</span>
-<span class="fc" id="L557">    }</span>
+<span class="fc" id="L569">            setStyleSheet(styleSheet.toURL());</span>
+<span class="nc" id="L570">        } catch (MalformedURLException e) {</span>
+<span class="nc" id="L571">            throw new ConfigurationException(&quot;Unable to process stylesheet&quot;, e);</span>
+<span class="fc" id="L572">        }</span>
+<span class="fc" id="L573">    }</span>
 
     /**
      * Sets the style sheet for custom processing. The stylesheet may be opened
@@ -562,46 +578,46 @@ public class ReportConfiguration {
      * @param styleSheet the URL of the XSLT style sheet to style the report with.
      */
     public void setStyleSheet(final URL styleSheet) {
-<span class="fc" id="L565">        Objects.requireNonNull(styleSheet, &quot;Stylesheet file must not be null&quot;);</span>
-<span class="fc" id="L566">        setStyleSheet(new IODescriptor&lt;&gt;(styleSheet.toString(), styleSheet::openStream));</span>
-<span class="fc" id="L567">    }</span>
+<span class="fc" id="L581">        Objects.requireNonNull(styleSheet, &quot;Stylesheet file must not be null&quot;);</span>
+<span class="fc" id="L582">        setStyleSheet(new IODescriptor&lt;&gt;(styleSheet.toString(), styleSheet::openStream));</span>
+<span class="fc" id="L583">    }</span>
 
     /**
      * Sets the supplier for the output stream. The supplier may be called multiple
      * times to provide the stream. Suppliers should prepare streams that are
      * appended to and that can be closed. If an {@code OutputStream} should not be
      * closed consider wrapping it in a {@code CloseShieldOutputStream}
-     * @param out the OutputStream supplier that provides the output stream to write
+     * @param outputDescriptor the OutputStream supplier that provides the output stream to write.
      * the report to. A {@code null} value will use {@code System.out}.
      * @see CloseShieldOutputStream
      */
-    public void setOut(final IODescriptor&lt;OutputStream&gt; out) {
-<span class="fc" id="L579">        this.out = out;</span>
-<span class="fc" id="L580">    }</span>
+    public void setOutput(final IODescriptor&lt;OutputStream&gt; outputDescriptor) {
+<span class="fc" id="L595">        this.outputDescriptor = outputDescriptor;</span>
+<span class="fc" id="L596">    }</span>
 
     /**
      * Sets the OutputStream supplier to use the specified file. The file may be
      * opened and closed several times. File is deleted first and then may be
      * repeatedly opened in append mode.
-     * @see #setOut(IODescriptor)
+     * @see #setOutput(IODescriptor)
      * @param file The file to create the supplier with.
      */
-    public void setOut(final File file) {
-<span class="fc" id="L590">        Objects.requireNonNull(file, &quot;output file should not be null&quot;);</span>
-<span class="fc bfc" id="L591" title="All 2 branches covered.">        if (file.exists()) {</span>
+    public void setOutput(final File file) {
+<span class="fc" id="L606">        Objects.requireNonNull(file, &quot;output file should not be null&quot;);</span>
+<span class="fc bfc" id="L607" title="All 2 branches covered.">        if (file.exists()) {</span>
             try {
-<span class="fc" id="L593">                Files.delete(file.toPath());</span>
-<span class="nc" id="L594">            } catch (IOException e) {</span>
-<span class="nc" id="L595">                DefaultLog.getInstance().warn(&quot;Unable to delete file: &quot; + file);</span>
-<span class="fc" id="L596">            }</span>
+<span class="fc" id="L609">                Files.delete(file.toPath());</span>
+<span class="nc" id="L610">            } catch (IOException e) {</span>
+<span class="nc" id="L611">                DefaultLog.getInstance().warn(&quot;Unable to delete file: &quot; + file);</span>
+<span class="fc" id="L612">            }</span>
         }
 
-<span class="fc" id="L599">        File parent = file.getParentFile();</span>
-<span class="pc bpc" id="L600" title="1 of 4 branches missed.">        if (!parent.mkdirs() &amp;&amp; !parent.isDirectory()) {</span>
-<span class="fc" id="L601">            DefaultLog.getInstance().warn(&quot;Unable to create directory: &quot; + file.getParentFile());</span>
+<span class="fc" id="L615">        File parent = file.getParentFile();</span>
+<span class="pc bpc" id="L616" title="1 of 4 branches missed.">        if (!parent.mkdirs() &amp;&amp; !parent.isDirectory()) {</span>
+<span class="fc" id="L617">            DefaultLog.getInstance().warn(&quot;Unable to create directory: &quot; + file.getParentFile());</span>
         }
-<span class="fc" id="L603">        setOut(IODescriptor.output(file));</span>
-<span class="fc" id="L604">    }</span>
+<span class="fc" id="L619">        setOutput(IODescriptor.output(file));</span>
+<span class="fc" id="L620">    }</span>
 
     /**
      * Returns the output stream supplier. If no stream has been set returns a
@@ -609,7 +625,7 @@ public class ReportConfiguration {
      * @return the supplier of the output stream to write the report to.
      */
     public IOSupplier&lt;OutputStream&gt; getOutput() {
-<span class="fc" id="L612">        return getOutputDescriptor().ioSupplier();</span>
+<span class="fc" id="L628">        return getOutputDescriptor().ioSupplier();</span>
     }
 
     /**
@@ -618,7 +634,7 @@ public class ReportConfiguration {
      * @return the IODescriptor of the output stream to write the report to.
      */
     public IODescriptor&lt;OutputStream&gt; getOutputDescriptor() {
-<span class="fc bfc" id="L621" title="All 2 branches covered.">        return out == null ? SYSTEM_OUT : out;</span>
+<span class="fc bfc" id="L637" title="All 2 branches covered.">        return outputDescriptor == null ? SYSTEM_OUT : outputDescriptor;</span>
     }
 
     /**
@@ -627,7 +643,7 @@ public class ReportConfiguration {
      * @see #getOutput()
      */
     public IOSupplier&lt;PrintWriter&gt; getWriter() {
-<span class="fc" id="L630">        return () -&gt; new PrintWriter(new OutputStreamWriter(getOutput().get(), StandardCharsets.UTF_8));</span>
+<span class="fc" id="L646">        return () -&gt; new PrintWriter(new OutputStreamWriter(getOutput().get(), StandardCharsets.UTF_8));</span>
     }
 
     /**
@@ -636,8 +652,8 @@ public class ReportConfiguration {
      * @param license the license to add to the list of licenses.
      */
     public void addLicense(final ILicense license) {
-<span class="fc" id="L639">        licenseSetFactory.addLicense(license);</span>
-<span class="fc" id="L640">    }</span>
+<span class="fc" id="L655">        licenseSetFactory.addLicense(license);</span>
+<span class="fc" id="L656">    }</span>
 
     /**
      * Adds a license to the list of licenses. Does not add the license to the list
@@ -646,7 +662,7 @@ public class ReportConfiguration {
      * @return the ILicense implementation that was added.
      */
     public ILicense addLicense(final ILicense.Builder builder) {
-<span class="fc" id="L649">        return licenseSetFactory.addLicense(builder);</span>
+<span class="fc" id="L665">        return licenseSetFactory.addLicense(builder);</span>
     }
 
     /**
@@ -655,8 +671,8 @@ public class ReportConfiguration {
      * @param licenses the licenses to add.
      */
     public void addLicenses(final Collection&lt;ILicense&gt; licenses) {
-<span class="fc" id="L658">        licenseSetFactory.addLicenses(licenses);</span>
-<span class="fc" id="L659">    }</span>
+<span class="fc" id="L674">        licenseSetFactory.addLicenses(licenses);</span>
+<span class="fc" id="L675">    }</span>
 
     /**
      * Adds a license family to the list of families. Does not add the family to the
@@ -664,8 +680,8 @@ public class ReportConfiguration {
      * @param family the license family to add to the list of license families.
      */
     public void addFamily(final ILicenseFamily family) {
-<span class="fc" id="L667">       licenseSetFactory.addFamily(family);</span>
-<span class="fc" id="L668">    }</span>
+<span class="fc" id="L683">       licenseSetFactory.addFamily(family);</span>
+<span class="fc" id="L684">    }</span>
 
     /**
      * Adds a license family to the list of families. Does not add the family to the
@@ -674,8 +690,8 @@ public class ReportConfiguration {
      * licenses.
      */
     public void addFamily(final ILicenseFamily.Builder builder) {
-<span class="fc" id="L677">        licenseSetFactory.addFamily(builder);</span>
-<span class="fc" id="L678">    }</span>
+<span class="fc" id="L693">        licenseSetFactory.addFamily(builder);</span>
+<span class="fc" id="L694">    }</span>
 
     /**
      * Adds multiple families to the list of license families. Does not add the
@@ -683,24 +699,24 @@ public class ReportConfiguration {
      * @param families the license families to add.
      */
     public void addFamilies(final Collection&lt;ILicenseFamily&gt; families) {
-<span class="fc" id="L686">        families.forEach(this::addApprovedLicenseCategory);</span>
-<span class="fc" id="L687">    }</span>
+<span class="fc" id="L702">        families.forEach(this::addApprovedLicenseCategory);</span>
+<span class="fc" id="L703">    }</span>
 
     /**
      * Adds an ILicenseFamily to the list of approved licenses.
      * @param approvedILicenseFamily the LicenseFamily to add.
      */
     public void addApprovedLicenseCategory(final ILicenseFamily approvedILicenseFamily) {
-<span class="fc" id="L694">        addApprovedLicenseCategory(approvedILicenseFamily.getFamilyCategory());</span>
-<span class="fc" id="L695">    }</span>
+<span class="fc" id="L710">        addApprovedLicenseCategory(approvedILicenseFamily.getFamilyCategory());</span>
+<span class="fc" id="L711">    }</span>
 
     /**
      * Adds a license family category (id) to the list of approved licenses.
      * @param familyCategory the category to add.
      */
     public void addApprovedLicenseCategory(final String familyCategory) {
-<span class="fc" id="L702">        licenseSetFactory.approveLicenseCategory(familyCategory);</span>
-<span class="fc" id="L703">    }</span>
+<span class="fc" id="L718">        licenseSetFactory.approveLicenseCategory(familyCategory);</span>
+<span class="fc" id="L719">    }</span>
 
     /**
      * Adds a collection of license family categories to the set of approved license
@@ -708,8 +724,8 @@ public class ReportConfiguration {
      * @param approvedLicenseCategories set of approved license categories.
      */
     public void addApprovedLicenseCategories(final Collection&lt;String&gt; approvedLicenseCategories) {
-<span class="fc" id="L711">        approvedLicenseCategories.forEach(this::addApprovedLicenseCategory);</span>
-<span class="fc" id="L712">    }</span>
+<span class="fc" id="L727">        approvedLicenseCategories.forEach(this::addApprovedLicenseCategory);</span>
+<span class="fc" id="L728">    }</span>
 
     /**
      * Adds a license family category to the list of approved licenses. &lt;em&gt;Once a
@@ -717,8 +733,8 @@ public class ReportConfiguration {
      * @param familyCategory the category to add.
      */
     public void removeApprovedLicenseCategory(final String familyCategory) {
-<span class="fc" id="L720">        licenseSetFactory.removeLicenseCategory(ILicenseFamily.makeCategory(familyCategory));</span>
-<span class="fc" id="L721">    }</span>
+<span class="fc" id="L736">        licenseSetFactory.removeLicenseCategory(ILicenseFamily.makeCategory(familyCategory));</span>
+<span class="fc" id="L737">    }</span>
 
     /**
      * Removes a license family category from the list of approved licenses.
@@ -727,8 +743,8 @@ public class ReportConfiguration {
      * @param familyCategory the family category to remove.
      */
     public void removeApprovedLicenseCategories(final Collection&lt;String&gt; familyCategory) {
-<span class="fc" id="L730">        familyCategory.forEach(this::removeApprovedLicenseCategory);</span>
-<span class="fc" id="L731">    }</span>
+<span class="fc" id="L746">        familyCategory.forEach(this::removeApprovedLicenseCategory);</span>
+<span class="fc" id="L747">    }</span>
 
     /**
      * Gets the SortedSet of approved license categories. &lt;em&gt;Once a license has
@@ -737,7 +753,7 @@ public class ReportConfiguration {
      * @return the Sorted set of approved license categories.
      */
     public SortedSet&lt;String&gt; getLicenseCategories(final LicenseFilter filter) {
-<span class="fc" id="L740">        return licenseSetFactory.getLicenseCategories(filter);</span>
+<span class="fc" id="L756">        return licenseSetFactory.getLicenseCategories(filter);</span>
     }
 
     /**
@@ -747,7 +763,7 @@ public class ReportConfiguration {
      * @return the Sorted set of approved license categories.
      */
     public UnmodifiableSortedSet&lt;ILicense&gt; getLicenses(final LicenseFilter filter) {
-<span class="fc" id="L750">        return licenseSetFactory.getLicenses(filter);</span>
+<span class="fc" id="L766">        return licenseSetFactory.getLicenses(filter);</span>
     }
 
     /**
@@ -757,7 +773,7 @@ public class ReportConfiguration {
      * @return the Sorted set of approved license categories.
      */
     public SortedSet&lt;String&gt; getLicenseIds(final LicenseFilter filter) {
-<span class="fc" id="L760">        return licenseSetFactory.getLicenseIds(filter);</span>
+<span class="fc" id="L776">        return licenseSetFactory.getLicenseIds(filter);</span>
     }
 
     /**
@@ -765,16 +781,16 @@ public class ReportConfiguration {
      * @param approvedLicense the License to add.
      */
     public void addApprovedLicenseId(final ILicense approvedLicense) {
-<span class="nc" id="L768">        addApprovedLicenseId(approvedLicense.getId());</span>
-<span class="nc" id="L769">    }</span>
+<span class="nc" id="L784">        addApprovedLicenseId(approvedLicense.getId());</span>
+<span class="nc" id="L785">    }</span>
 
     /**
      * Adds a license family category (id) to the list of approved licenses
      * @param licenseId the license id to add.
      */
     public void addApprovedLicenseId(final String licenseId) {
-<span class="fc" id="L776">        licenseSetFactory.approveLicenseId(licenseId);</span>
-<span class="fc" id="L777">    }</span>
+<span class="fc" id="L792">        licenseSetFactory.approveLicenseId(licenseId);</span>
+<span class="fc" id="L793">    }</span>
 
     /**
      * Adds a collection of license family categories to the set of approved license
@@ -782,8 +798,8 @@ public class ReportConfiguration {
      * @param approvedLicenseIds set of approved license IDs.
      */
     public void addApprovedLicenseIds(final Collection&lt;String&gt; approvedLicenseIds) {
-<span class="fc" id="L785">        approvedLicenseIds.forEach(this::addApprovedLicenseId);</span>
-<span class="fc" id="L786">    }</span>
+<span class="fc" id="L801">        approvedLicenseIds.forEach(this::addApprovedLicenseId);</span>
+<span class="fc" id="L802">    }</span>
 
     /**
      * Adds a license family category to the list of approved licenses. &lt;em&gt;Once a
@@ -791,8 +807,8 @@ public class ReportConfiguration {
      * @param licenseId the license ID to add.
      */
     public void removeApprovedLicenseId(final String licenseId) {
-<span class="fc" id="L794">        licenseSetFactory.removeLicenseId(licenseId);</span>
-<span class="fc" id="L795">    }</span>
+<span class="fc" id="L810">        licenseSetFactory.removeLicenseId(licenseId);</span>
+<span class="fc" id="L811">    }</span>
 
     /**
      * Removes a license family category from the list of approved licenses.
@@ -801,8 +817,8 @@ public class ReportConfiguration {
      * @param licenseIds the license IDs to remove.
      */
     public void removeApprovedLicenseIds(final Collection&lt;String&gt; licenseIds) {
-<span class="fc" id="L804">        licenseIds.forEach(this::removeApprovedLicenseId);</span>
-<span class="fc" id="L805">    }</span>
+<span class="fc" id="L820">        licenseIds.forEach(this::removeApprovedLicenseId);</span>
+<span class="fc" id="L821">    }</span>
 
     /**
      * Returns the optional license copyright being added if RAT is adding headers.
@@ -811,7 +827,7 @@ public class ReportConfiguration {
      * @see #isAddingLicenses()
      */
     public String getCopyrightMessage() {
-<span class="fc" id="L814">        return copyrightMessage;</span>
+<span class="fc" id="L830">        return copyrightMessage;</span>
     }
 
     /**
@@ -821,8 +837,8 @@ public class ReportConfiguration {
      * @see #isAddingLicenses()
      */
     public void setCopyrightMessage(final String copyrightMessage) {
-<span class="fc" id="L824">        this.copyrightMessage = copyrightMessage;</span>
-<span class="fc" id="L825">    }</span>
+<span class="fc" id="L840">        this.copyrightMessage = copyrightMessage;</span>
+<span class="fc" id="L841">    }</span>
 
     /**
      * Gets the flag that determines if license headers are &quot;forced&quot; overwriting existing files.
@@ -831,7 +847,7 @@ public class ReportConfiguration {
      * @see #isAddingLicenses()
      */
     public boolean isAddingLicensesForced() {
-<span class="fc" id="L834">        return addingLicensesForced;</span>
+<span class="fc" id="L850">        return addingLicensesForced;</span>
     }
 
     /**
@@ -841,7 +857,7 @@ public class ReportConfiguration {
      * @see #getCopyrightMessage()
      */
     public boolean isAddingLicenses() {
-<span class="fc" id="L844">        return addingLicenses;</span>
+<span class="fc" id="L860">        return addingLicenses;</span>
     }
 
     /**
@@ -853,21 +869,21 @@ public class ReportConfiguration {
      * @see #setCopyrightMessage(String)
      */
     public void setAddLicenseHeaders(final AddLicenseHeaders addLicenseHeaders) {
-<span class="fc" id="L856">        addingLicenses = false;</span>
-<span class="fc" id="L857">        addingLicensesForced = false;</span>
-<span class="pc bpc" id="L858" title="1 of 4 branches missed.">        switch (addLicenseHeaders) {</span>
+<span class="fc" id="L872">        addingLicenses = false;</span>
+<span class="fc" id="L873">        addingLicensesForced = false;</span>
+<span class="pc bpc" id="L874" title="1 of 4 branches missed.">        switch (addLicenseHeaders) {</span>
         case FALSE:
             // do nothing
-<span class="fc" id="L861">            break;</span>
+<span class="fc" id="L877">            break;</span>
         case FORCED:
-<span class="fc" id="L863">            addingLicensesForced = true;</span>
-<span class="fc" id="L864">            addingLicenses = true;</span>
-<span class="fc" id="L865">            break;</span>
+<span class="fc" id="L879">            addingLicensesForced = true;</span>
+<span class="fc" id="L880">            addingLicenses = true;</span>
+<span class="fc" id="L881">            break;</span>
         case TRUE:
-<span class="fc" id="L867">            addingLicenses = true;</span>
+<span class="fc" id="L883">            addingLicenses = true;</span>
             break;
         }
-<span class="fc" id="L870">    }</span>
+<span class="fc" id="L886">    }</span>
 
     /**
      * Gets a sorted set of ILicenseFamily objects based on {@code filter}. If
@@ -881,7 +897,7 @@ public class ReportConfiguration {
      * @return the set of defined licenses.
      */
     public SortedSet&lt;ILicenseFamily&gt; getLicenseFamilies(final LicenseFilter filter) {
-<span class="fc" id="L884">        return licenseSetFactory.getLicenseFamilies(filter);</span>
+<span class="fc" id="L900">        return licenseSetFactory.getLicenseFamilies(filter);</span>
     }
 
     /**
@@ -889,7 +905,7 @@ public class ReportConfiguration {
      * @return the ClaimValidator.
      */
     public ClaimValidator getClaimValidator() {
-<span class="fc" id="L892">        return claimValidator;</span>
+<span class="fc" id="L908">        return claimValidator;</span>
     }
 
     /**
@@ -897,7 +913,7 @@ public class ReportConfiguration {
      * @return the license set factory.
      */
     public LicenseSetFactory getLicenseSetFactory() {
-<span class="fc" id="L900">        return licenseSetFactory;</span>
+<span class="fc" id="L916">        return licenseSetFactory;</span>
     }
 
     /**
@@ -906,17 +922,17 @@ public class ReportConfiguration {
      * @throws ConfigurationException on configuration error.
      */
     public void validate(final Consumer&lt;String&gt; logger) {
-<span class="fc bfc" id="L909" title="All 2 branches covered.">        if (!hasSource()) {</span>
-<span class="fc" id="L910">            String msg = &quot;At least one source must be specified&quot;;</span>
-<span class="fc" id="L911">            logger.accept(msg);</span>
-<span class="fc" id="L912">            throw new ConfigurationException(msg);</span>
+<span class="fc bfc" id="L925" title="All 2 branches covered.">        if (!hasSource()) {</span>
+<span class="fc" id="L926">            String msg = &quot;At least one source must be specified&quot;;</span>
+<span class="fc" id="L927">            logger.accept(msg);</span>
+<span class="fc" id="L928">            throw new ConfigurationException(msg);</span>
         }
-<span class="fc bfc" id="L914" title="All 2 branches covered.">        if (licenseSetFactory.getLicenses(LicenseFilter.ALL).isEmpty()) {</span>
-<span class="fc" id="L915">            String msg = &quot;You must specify at least one license&quot;;</span>
-<span class="fc" id="L916">            logger.accept(msg);</span>
-<span class="fc" id="L917">            throw new ConfigurationException(msg);</span>
+<span class="fc bfc" id="L930" title="All 2 branches covered.">        if (licenseSetFactory.getLicenses(LicenseFilter.ALL).isEmpty()) {</span>
+<span class="fc" id="L931">            String msg = &quot;You must specify at least one license&quot;;</span>
+<span class="fc" id="L932">            logger.accept(msg);</span>
+<span class="fc" id="L933">            throw new ConfigurationException(msg);</span>
         }
-<span class="fc" id="L919">    }</span>
+<span class="fc" id="L935">    }</span>
 
     /**
      * An IODescriptor comprises a name and an IOSupplier. The name should identify the contents of the stream.
@@ -924,7 +940,7 @@ public class ReportConfiguration {
      * @param ioSupplier the IOSupplier that provides either an InputStream or an OutputStream.
      * @param &lt;T&gt; either InputStream or OutputStream.
      */
-<span class="fc" id="L927">    public record IODescriptor&lt;T&gt;(String name, IOSupplier&lt;T&gt; ioSupplier) {</span>
+<span class="fc" id="L943">    public record IODescriptor&lt;T&gt;(String name, IOSupplier&lt;T&gt; ioSupplier) {</span>
 
         // OUTPUT CONSTRUCTORS
         /**
@@ -934,8 +950,8 @@ public class ReportConfiguration {
          * @return the Output IODescriptor.
          */
         static IODescriptor&lt;OutputStream&gt; output(final String name, final DocumentName workingDirectory) {
-<span class="fc" id="L937">            DocumentName docName = workingDirectory.resolve(name);</span>
-<span class="pc" id="L938">            return new IODescriptor&lt;&gt;(name, () -&gt; new FileOutputStream(docName.asFile()));</span>
+<span class="fc" id="L953">            DocumentName docName = workingDirectory.resolve(name);</span>
+<span class="pc" id="L954">            return new IODescriptor&lt;&gt;(name, () -&gt; new FileOutputStream(docName.asFile()));</span>
         }
 
         /**
@@ -944,7 +960,7 @@ public class ReportConfiguration {
          * @return the Output IODescriptor.
          */
         static IODescriptor&lt;OutputStream&gt; output(final File file) {
-<span class="fc" id="L947">            return new IODescriptor&lt;&gt;(file.toString(), () -&gt; new FileOutputStream(file, true));</span>
+<span class="fc" id="L963">            return new IODescriptor&lt;&gt;(file.toString(), () -&gt; new FileOutputStream(file, true));</span>
         }
 
         // INPUT CONSTRUCTORS
@@ -954,7 +970,7 @@ public class ReportConfiguration {
          * @return the Input IODescriptor.
          */
         static IODescriptor&lt;InputStream&gt; input(final File file) {
-<span class="nc" id="L957">            return new IODescriptor&lt;&gt;(file.toString(), () -&gt; new FileInputStream(file));</span>
+<span class="nc" id="L973">            return new IODescriptor&lt;&gt;(file.toString(), () -&gt; new FileInputStream(file));</span>
         }
     }
 
@@ -964,7 +980,7 @@ public class ReportConfiguration {
      * and do not have access to the original object.
      */
     @SuppressFBWarnings(&quot;EI_EXPOSE_REP2&quot;)
-<span class="fc" id="L967">    public class SerDes {</span>
+<span class="fc" id="L983">    public class SerDes {</span>
         /**
          * Writes the configuration as an XML document to the appendable.
          *
@@ -972,116 +988,123 @@ public class ReportConfiguration {
          * @throws IOException on error.
          */
         public void serialize(final Appendable appendable) throws IOException {
-<span class="fc" id="L975">            try (XmlWriter writer = new XmlWriter(appendable)) {</span>
-<span class="fc" id="L976">                writer.startElement(&quot;ReportConfiguration&quot;)</span>
-<span class="fc" id="L977">                        .attribute(&quot;addingLicenses&quot;, Boolean.toString(addingLicenses))</span>
-<span class="fc" id="L978">                        .attribute(&quot;addingLicensesForced&quot;, Boolean.toString(addingLicensesForced))</span>
-<span class="fc" id="L979">                        .attribute(&quot;listFamilies&quot;, listFamilies.name())</span>
-<span class="fc" id="L980">                        .attribute(&quot;listLicenses&quot;, listLicenses.name())</span>
-<span class="fc" id="L981">                        .attribute(&quot;dryRun&quot;, Boolean.toString(dryRun))</span>
-<span class="fc" id="L982">                        .attribute(&quot;archiveProcessing&quot;, getArchiveProcessing().name())</span>
-<span class="fc" id="L983">                        .attribute(&quot;standardProcessing&quot;, getStandardProcessing().name())</span>
-<span class="fc" id="L984">                        .attribute(&quot;stylesheet&quot;, styleSheet.name())</span>
-<span class="fc" id="L985">                        .attribute(&quot;output&quot;, out.name());</span>
-<span class="pc bpc" id="L986" title="1 of 2 branches missed.">                if (StringUtils.isNotEmpty(copyrightMessage)) {</span>
-<span class="fc" id="L987">                    writer.startElement(&quot;copyrightMessage&quot;).content(copyrightMessage).closeElement();</span>
+<span class="fc" id="L991">            try (XmlWriter writer = new XmlWriter(appendable)) {</span>
+<span class="fc" id="L992">                writer.startElement(&quot;ReportConfiguration&quot;)</span>
+<span class="fc" id="L993">                        .attribute(&quot;addingLicenses&quot;, Boolean.toString(addingLicenses))</span>
+<span class="fc" id="L994">                        .attribute(&quot;addingLicensesForced&quot;, Boolean.toString(addingLicensesForced))</span>
+<span class="fc" id="L995">                        .attribute(&quot;listFamilies&quot;, listFamilies.name())</span>
+<span class="fc" id="L996">                        .attribute(&quot;listLicenses&quot;, listLicenses.name())</span>
+<span class="fc" id="L997">                        .attribute(&quot;dryRun&quot;, Boolean.toString(dryRun))</span>
+<span class="fc" id="L998">                        .attribute(&quot;archiveProcessing&quot;, getArchiveProcessing().name())</span>
+<span class="fc" id="L999">                        .attribute(&quot;standardProcessing&quot;, getStandardProcessing().name())</span>
+<span class="fc" id="L1000">                        .attribute(&quot;stylesheet&quot;, styleSheet.name())</span>
+<span class="fc" id="L1001">                        .attribute(&quot;output&quot;, outputDescriptor.name());</span>
+<span class="pc bpc" id="L1002" title="1 of 2 branches missed.">                if (StringUtils.isNotEmpty(copyrightMessage)) {</span>
+<span class="fc" id="L1003">                    writer.startElement(&quot;copyrightMessage&quot;).content(copyrightMessage).closeElement();</span>
                 }
-<span class="fc" id="L989">                writer.startElement(&quot;sources&quot;);</span>
-<span class="fc bfc" id="L990" title="All 2 branches covered.">                for (File f : sources) {</span>
-<span class="fc" id="L991">                    writer.startElement(&quot;source&quot;).attribute(&quot;name&quot;, f.toString()).closeElement();</span>
-<span class="fc" id="L992">                }</span>
-<span class="fc" id="L993">                writer.closeElement(&quot;sources&quot;).startElement(&quot;reportables&quot;);</span>
-<span class="fc bfc" id="L994" title="All 2 branches covered.">                for (Reportable reportable : reportables) {</span>
-<span class="fc" id="L995">                    writer.startElement(&quot;reportable&quot;)</span>
-<span class="fc" id="L996">                            .attribute(&quot;baseName&quot;, reportable.name().getBaseName())</span>
-<span class="fc" id="L997">                            .attribute(&quot;name&quot;, reportable.name().toString())</span>
-<span class="fc" id="L998">                            .attribute(&quot;class&quot;, reportable.getClass().getName()).closeElement();</span>
-<span class="fc" id="L999">                }</span>
-<span class="fc" id="L1000">                writer.closeElement();</span>
+<span class="fc" id="L1005">                writer.startElement(&quot;sources&quot;);</span>
+<span class="fc bfc" id="L1006" title="All 2 branches covered.">                for (File f : sources) {</span>
+<span class="fc" id="L1007">                    writer.startElement(&quot;source&quot;).attribute(&quot;name&quot;, f.toString()).closeElement();</span>
+<span class="fc" id="L1008">                }</span>
+<span class="fc" id="L1009">                writer.closeElement(&quot;sources&quot;).startElement(&quot;reportables&quot;);</span>
+<span class="fc bfc" id="L1010" title="All 2 branches covered.">                for (Reportable reportable : reportables) {</span>
+<span class="fc" id="L1011">                    writer.startElement(&quot;reportable&quot;)</span>
+<span class="fc" id="L1012">                            .attribute(&quot;baseName&quot;, reportable.name().getBaseName())</span>
+<span class="fc" id="L1013">                            .attribute(&quot;name&quot;, reportable.name().toString())</span>
+<span class="fc" id="L1014">                            .attribute(&quot;class&quot;, reportable.getClass().getName()).closeElement();</span>
+<span class="fc" id="L1015">                }</span>
+<span class="fc" id="L1016">                writer.closeElement();</span>
 
-<span class="fc" id="L1002">                exclusionProcessor.serDes().serialize(writer);</span>
+<span class="fc" id="L1018">                exclusionProcessor.serDes().serialize(writer);</span>
 
-<span class="fc" id="L1004">                writer.startElement(&quot;claimValidator&quot;);</span>
-<span class="fc bfc" id="L1005" title="All 2 branches covered.">                for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
-<span class="fc" id="L1006">                    writer.startElement(&quot;claimCounter&quot;)</span>
-<span class="fc" id="L1007">                            .attribute(&quot;name&quot;, counter.name()).attribute(&quot;min&quot;, Integer.toString(claimValidator.getMin(counter)))</span>
-<span class="fc" id="L1008">                            .attribute(&quot;max&quot;, Integer.toString(claimValidator.getMax(counter))).closeElement();</span>
+<span class="fc" id="L1020">                writer.startElement(&quot;claimValidator&quot;);</span>
+<span class="fc bfc" id="L1021" title="All 2 branches covered.">                for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
+<span class="fc" id="L1022">                    writer.startElement(&quot;claimCounter&quot;)</span>
+<span class="fc" id="L1023">                            .attribute(&quot;name&quot;, counter.name()).attribute(&quot;min&quot;, Integer.toString(claimValidator.getMin(counter)))</span>
+<span class="fc" id="L1024">                            .attribute(&quot;max&quot;, Integer.toString(claimValidator.getMax(counter))).closeElement();</span>
                 }
-<span class="fc" id="L1010">                writer.closeElement();</span>
-<span class="nc" id="L1011">            } catch (IOException e) {</span>
-<span class="nc" id="L1012">                throw e;</span>
-<span class="nc" id="L1013">            } catch (Exception e) {</span>
-<span class="nc" id="L1014">                throw new IOException(e);</span>
-<span class="fc" id="L1015">            }</span>
-<span class="fc" id="L1016">        }</span>
+<span class="fc" id="L1026">                writer.closeElement();</span>
+<span class="nc" id="L1027">            } catch (IOException e) {</span>
+<span class="nc" id="L1028">                throw e;</span>
+<span class="nc" id="L1029">            } catch (Exception e) {</span>
+<span class="nc" id="L1030">                throw new IOException(e);</span>
+<span class="fc" id="L1031">            }</span>
+<span class="fc" id="L1032">        }</span>
 
+        /**
+         * Reads an input stream as an XML document and parses the report configuration from that.
+         * &lt;em&gt;Note:&lt;/em&gt; The reportable objects (Files) in a deserialized ReportConfigurations are not executable.
+         * @param inputStreamSupplier The XML document written by {@link #serialize(Appendable)}
+         * @param workingDirectory the directory to resolve short XSLT and output names from.
+         * @throws IOException on parse error.
+         */
         public void deserialize(final IOSupplier&lt;InputStream&gt; inputStreamSupplier, final DocumentName workingDirectory) throws IOException {
             org.w3c.dom.Document document;
-<span class="fc" id="L1020">            try (InputStream stream = inputStreamSupplier.get()) {</span>
-<span class="fc" id="L1021">                document = StandardXmlFactory.documentBuilder().parse(stream);</span>
-<span class="nc" id="L1022">            } catch (SAXException e) {</span>
-<span class="nc" id="L1023">                throw new IOException(&quot;Unable to read input&quot;, e);</span>
-<span class="fc" id="L1024">            }</span>
-<span class="fc" id="L1025">            Node node = document.getDocumentElement();</span>
-<span class="pc bpc" id="L1026" title="1 of 2 branches missed.">            if (!node.getNodeName().equals(&quot;ReportConfiguration&quot;)) {</span>
-<span class="nc" id="L1027">                throw new IOException(&quot;Invalid ReportConfiguration&quot;);</span>
+<span class="fc" id="L1043">            try (InputStream stream = inputStreamSupplier.get()) {</span>
+<span class="fc" id="L1044">                document = StandardXmlFactory.documentBuilder().parse(stream);</span>
+<span class="nc" id="L1045">            } catch (SAXException e) {</span>
+<span class="nc" id="L1046">                throw new IOException(&quot;Unable to read input&quot;, e);</span>
+<span class="fc" id="L1047">            }</span>
+<span class="fc" id="L1048">            Node node = document.getDocumentElement();</span>
+<span class="pc bpc" id="L1049" title="1 of 2 branches missed.">            if (!node.getNodeName().equals(&quot;ReportConfiguration&quot;)) {</span>
+<span class="nc" id="L1050">                throw new IOException(&quot;Invalid ReportConfiguration&quot;);</span>
             }
-<span class="fc" id="L1029">            Map&lt;String, String&gt; attributes = XMLConfigurationReader.attributes(node);</span>
-<span class="fc" id="L1030">            addingLicenses = Boolean.parseBoolean(attributes.get(&quot;addingLicenses&quot;));</span>
-<span class="fc" id="L1031">            addingLicensesForced = Boolean.parseBoolean(attributes.get(&quot;addingLicensesForced&quot;));</span>
-<span class="fc" id="L1032">            listFamilies = LicenseFilter.valueOf(attributes.get(&quot;listFamilies&quot;));</span>
-<span class="fc" id="L1033">            listLicenses = LicenseFilter.valueOf(attributes.get(&quot;listLicenses&quot;));</span>
-<span class="fc" id="L1034">            dryRun = Boolean.parseBoolean(attributes.get(&quot;dryRun&quot;));</span>
-<span class="fc" id="L1035">            archiveProcessing = Processing.valueOf(attributes.get(&quot;archiveProcessing&quot;));</span>
-<span class="fc" id="L1036">            standardProcessing = Processing.valueOf(attributes.get(&quot;standardProcessing&quot;));</span>
-<span class="fc" id="L1037">            String styleName = attributes.get(&quot;stylesheet&quot;);</span>
-<span class="pc bpc" id="L1038" title="1 of 2 branches missed.">            if (styleName != null) {</span>
-<span class="fc" id="L1039">                styleSheet = StyleSheets.getStyleSheet(styleName);</span>
+<span class="fc" id="L1052">            Map&lt;String, String&gt; attributes = XMLConfigurationReader.attributes(node);</span>
+<span class="fc" id="L1053">            addingLicenses = Boolean.parseBoolean(attributes.get(&quot;addingLicenses&quot;));</span>
+<span class="fc" id="L1054">            addingLicensesForced = Boolean.parseBoolean(attributes.get(&quot;addingLicensesForced&quot;));</span>
+<span class="fc" id="L1055">            listFamilies = LicenseFilter.valueOf(attributes.get(&quot;listFamilies&quot;));</span>
+<span class="fc" id="L1056">            listLicenses = LicenseFilter.valueOf(attributes.get(&quot;listLicenses&quot;));</span>
+<span class="fc" id="L1057">            dryRun = Boolean.parseBoolean(attributes.get(&quot;dryRun&quot;));</span>
+<span class="fc" id="L1058">            archiveProcessing = Processing.valueOf(attributes.get(&quot;archiveProcessing&quot;));</span>
+<span class="fc" id="L1059">            standardProcessing = Processing.valueOf(attributes.get(&quot;standardProcessing&quot;));</span>
+<span class="fc" id="L1060">            String styleName = attributes.get(&quot;stylesheet&quot;);</span>
+<span class="pc bpc" id="L1061" title="1 of 2 branches missed.">            if (styleName != null) {</span>
+<span class="fc" id="L1062">                styleSheet = StyleSheets.getStyleSheet(styleName, workingDirectory);</span>
             }
-<span class="fc" id="L1041">            String outputName = attributes.get(&quot;output&quot;);</span>
-<span class="pc bpc" id="L1042" title="1 of 2 branches missed.">            if (outputName != null) {</span>
-<span class="pc bpc" id="L1043" title="1 of 2 branches missed.">                if (outputName.equals(ReportConfiguration.SYSTEM_OUT.name())) {</span>
-<span class="nc" id="L1044">                    out = ReportConfiguration.SYSTEM_OUT;</span>
+<span class="fc" id="L1064">            String outputName = attributes.get(&quot;output&quot;);</span>
+<span class="pc bpc" id="L1065" title="1 of 2 branches missed.">            if (outputName != null) {</span>
+<span class="pc bpc" id="L1066" title="1 of 2 branches missed.">                if (outputName.equals(ReportConfiguration.SYSTEM_OUT.name())) {</span>
+<span class="nc" id="L1067">                    outputDescriptor = ReportConfiguration.SYSTEM_OUT;</span>
                 } else {
-<span class="fc" id="L1046">                    out = IODescriptor.output(outputName, workingDirectory);</span>
+<span class="fc" id="L1069">                    outputDescriptor = IODescriptor.output(outputName, workingDirectory);</span>
                 }
             }
 
-<span class="fc" id="L1050">            XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(&quot;copyrightMessage&quot;),</span>
-<span class="fc" id="L1051">                    lNode -&gt; setCopyrightMessage(lNode.getTextContent()));</span>
+<span class="fc" id="L1073">            XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(&quot;copyrightMessage&quot;),</span>
+<span class="fc" id="L1074">                    lNode -&gt; setCopyrightMessage(lNode.getTextContent()));</span>
 
-<span class="fc" id="L1053">            XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(&quot;source&quot;), lNode -&gt; {</span>
-<span class="fc" id="L1054">                Map&lt;String, String&gt; nAttributes = XMLConfigurationReader.attributes(lNode);</span>
-<span class="fc" id="L1055">                addSource(new File(nAttributes.get(&quot;name&quot;)));</span>
-<span class="fc" id="L1056">            });</span>
+<span class="fc" id="L1076">            XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(&quot;source&quot;), lNode -&gt; {</span>
+<span class="fc" id="L1077">                Map&lt;String, String&gt; nAttributes = XMLConfigurationReader.attributes(lNode);</span>
+<span class="fc" id="L1078">                addSource(new File(nAttributes.get(&quot;name&quot;)));</span>
+<span class="fc" id="L1079">            });</span>
 
             // Deserialize the reportables.
-<span class="fc" id="L1059">            XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(&quot;reportable&quot;), lNode -&gt; {</span>
-<span class="fc" id="L1060">                Map&lt;String, String&gt; nAttributes = XMLConfigurationReader.attributes(lNode);</span>
-<span class="fc" id="L1061">                DocumentName documentName = DocumentName.builder().setBaseName(nAttributes.get(&quot;baseName&quot;))</span>
-<span class="fc" id="L1062">                        .setName(nAttributes.get(&quot;name&quot;)).build();</span>
-<span class="fc" id="L1063">                addSource(new DeserializedReportable(documentName));</span>
-<span class="fc" id="L1064">            });</span>
+<span class="fc" id="L1082">            XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(&quot;reportable&quot;), lNode -&gt; {</span>
+<span class="fc" id="L1083">                Map&lt;String, String&gt; nAttributes = XMLConfigurationReader.attributes(lNode);</span>
+<span class="fc" id="L1084">                DocumentName documentName = DocumentName.builder().setBaseName(nAttributes.get(&quot;baseName&quot;))</span>
+<span class="fc" id="L1085">                        .setName(nAttributes.get(&quot;name&quot;)).build();</span>
+<span class="fc" id="L1086">                addSource(new DeserializedReportable(documentName));</span>
+<span class="fc" id="L1087">            });</span>
 
-<span class="fc" id="L1066">            exclusionProcessor.serDes().deserialize(document.getElementsByTagName(&quot;ExclusionProcessor&quot;).item(0));</span>
+<span class="fc" id="L1089">            exclusionProcessor.serDes().deserialize(document.getElementsByTagName(&quot;ExclusionProcessor&quot;).item(0));</span>
 
-<span class="fc" id="L1068">            XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(&quot;claimCounter&quot;), lNode -&gt; {</span>
-<span class="fc" id="L1069">                Map&lt;String, String&gt; nAttributes = XMLConfigurationReader.attributes(lNode);</span>
-<span class="fc" id="L1070">                ClaimStatistic.Counter counter = ClaimStatistic.Counter.valueOf(nAttributes.get(&quot;name&quot;));</span>
-<span class="fc" id="L1071">                claimValidator.setMin(counter, Integer.parseInt(nAttributes.get(&quot;min&quot;)));</span>
-<span class="fc" id="L1072">                claimValidator.setMax(counter, Integer.parseInt(nAttributes.get(&quot;max&quot;)));</span>
-<span class="fc" id="L1073">            });</span>
-<span class="fc" id="L1074">        }</span>
+<span class="fc" id="L1091">            XMLConfigurationReader.nodeListConsumer(document.getElementsByTagName(&quot;claimCounter&quot;), lNode -&gt; {</span>
+<span class="fc" id="L1092">                Map&lt;String, String&gt; nAttributes = XMLConfigurationReader.attributes(lNode);</span>
+<span class="fc" id="L1093">                ClaimStatistic.Counter counter = ClaimStatistic.Counter.valueOf(nAttributes.get(&quot;name&quot;));</span>
+<span class="fc" id="L1094">                claimValidator.setMin(counter, Integer.parseInt(nAttributes.get(&quot;min&quot;)));</span>
+<span class="fc" id="L1095">                claimValidator.setMax(counter, Integer.parseInt(nAttributes.get(&quot;max&quot;)));</span>
+<span class="fc" id="L1096">            });</span>
+<span class="fc" id="L1097">        }</span>
     }
 
     /**
      * A record that identifies a deserialized reportable. Deserialized reportables are not executable.
      * @param name the name of the reportable.
      */
-<span class="fc" id="L1081">    private record DeserializedReportable(DocumentName name) implements Reportable {</span>
+<span class="fc" id="L1104">    private record DeserializedReportable(DocumentName name) implements Reportable {</span>
         @Override
         public void run(final RatReport report) throws RatException {
-<span class="nc" id="L1084">            throw new RatException(&quot;Attempt to run a deserialized reportable&quot;);</span>
+<span class="nc" id="L1107">            throw new RatException(&quot;Attempt to run a deserialized reportable&quot;);</span>
         }
     }
 }

@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html","k":"18"},{"p":"org.apache.creadur.whisker.plugin.maven","l":"GenerateMojo"},{"p":"org.apache.creadur.whisker.apache_whisker_maven_plugin","l":"HelpMojo"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.apache.creadur.whisker.plugin.maven","l":"GenerateMojo"},{"p":"org.apache.creadur.whisker.apache_whisker_maven_plugin","l":"HelpMojo"}];updateSearchResults();

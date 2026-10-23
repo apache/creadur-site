@@ -5,7 +5,7 @@
 <link type="text/css" rel="stylesheet" href="../../../../../../stylesheet.css" />
 </head>
 <body>
-<div id="overview"><a href="../../../../../../../apidocs/org/apache/rat/config/exclusion/fileProcessors/HgIgnoreBuilder.html">View Javadoc</a></div><pre>
+<div id="overview"><a href="../../../../../../../apidocs/org/apache/rat/config/exclusion/fileprocessors/HgIgnoreBuilder.html">View Javadoc</a></div><pre>
 <a class="jxr_linenumber" name="L1" href="#L1">1</a>   <em class="jxr_comment">/*</em>
 <a class="jxr_linenumber" name="L2" href="#L2">2</a>   <em class="jxr_comment"> * Licensed to the Apache Software Foundation (ASF) under one</em>
 <a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_comment"> * or more contributor license agreements.  See the NOTICE file</em>
@@ -24,7 +24,7 @@
 <a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_comment"> * specific language governing permissions and limitations</em>
 <a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_comment"> * under the License.</em>
 <a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_comment"> */</em>
-<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">package</strong> org.apache.rat.config.exclusion.fileProcessors;
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <strong class="jxr_keyword">package</strong> org.apache.rat.config.exclusion.fileprocessors;
 <a class="jxr_linenumber" name="L20" href="#L20">20</a>  
 <a class="jxr_linenumber" name="L21" href="#L21">21</a>  <strong class="jxr_keyword">import</strong> java.util.Locale;
 <a class="jxr_linenumber" name="L22" href="#L22">22</a>  <strong class="jxr_keyword">import</strong> java.util.Optional;
@@ -42,7 +42,7 @@
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <em class="jxr_javadoccomment"> * @see &lt;a href="<a href="https://wiki.mercurial-scm.org/.hgignore" target="alexandria_uri">https://wiki.mercurial-scm.org/.hgignore</a>"&gt;Mecurial how to ignore files&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <em class="jxr_javadoccomment"> * @see &lt;a href="<a href="https://www.selenic.com/mercurial/hgignore.5.html" target="alexandria_uri">https://www.selenic.com/mercurial/hgignore.5.html</a>"&gt;syntax for Mercurial ignore files&lt;/a&gt;</em>
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong>  <a name="HgIgnoreBuilder" href="../../../../../../org/apache/rat/config/exclusion/fileProcessors/HgIgnoreBuilder.html#HgIgnoreBuilder">HgIgnoreBuilder</a> <strong class="jxr_keyword">extends</strong> <a name="AbstractFileProcessorBuilder" href="../../../../../../org/apache/rat/config/exclusion/fileProcessors/AbstractFileProcessorBuilder.html#AbstractFileProcessorBuilder">AbstractFileProcessorBuilder</a> {
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">class</strong>  <a name="HgIgnoreBuilder" href="../../../../../../org/apache/rat/config/exclusion/fileprocessors/HgIgnoreBuilder.html#HgIgnoreBuilder">HgIgnoreBuilder</a> <strong class="jxr_keyword">extends</strong> <a name="AbstractFileProcessorBuilder" href="../../../../../../org/apache/rat/config/exclusion/fileprocessors/AbstractFileProcessorBuilder.html#AbstractFileProcessorBuilder">AbstractFileProcessorBuilder</a> {
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     * The state enumeration for the processor. When processing the file the processor changes</em>
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     * syntax state depending on the input.</em>
@@ -62,7 +62,7 @@
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L55" href="#L55">55</a>  <em class="jxr_javadoccomment">     * Constructs the {@code .hgignore} processor.</em>
 <a class="jxr_linenumber" name="L56" href="#L56">56</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">public</strong> <a name="HgIgnoreBuilder" href="../../../../../../org/apache/rat/config/exclusion/fileProcessors/HgIgnoreBuilder.html#HgIgnoreBuilder">HgIgnoreBuilder</a>() {
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>      <strong class="jxr_keyword">public</strong> <a name="HgIgnoreBuilder" href="../../../../../../org/apache/rat/config/exclusion/fileprocessors/HgIgnoreBuilder.html#HgIgnoreBuilder">HgIgnoreBuilder</a>() {
 <a class="jxr_linenumber" name="L58" href="#L58">58</a>          <strong class="jxr_keyword">super</strong>(<span class="jxr_string">".hgignore"</span>, <span class="jxr_string">"#"</span>, <strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="L59" href="#L59">59</a>          state = Syntax.REGEXP;
 <a class="jxr_linenumber" name="L60" href="#L60">60</a>      }

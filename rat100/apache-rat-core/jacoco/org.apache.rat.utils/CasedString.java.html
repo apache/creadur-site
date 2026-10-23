@@ -45,26 +45,28 @@ public final class CasedString {
 <span class="fc bfc" id="L45" title="All 2 branches covered.">        Arrays.stream(strings).map(s -&gt; s == null ? &quot;&quot; : s).forEach(token -&gt; sb.append(WordUtils.capitalize(token.toLowerCase(Locale.ROOT))));</span>
 <span class="fc" id="L46">        return sb.toString();</span>
     };
+    /** A null cased string. */
+<span class="fc" id="L49">    public static final CasedString NULL = new CasedString(StringCase.KEBAB, CasedString.StringCase.NULL_SEGMENT);</span>
 
     /**
      * Creates a cased string by parsing the string argument for the specific case.
      * @param stringCase the case of the string being parsed.
      * @param string the string to parse.
      */
-<span class="fc" id="L54">    public CasedString(final StringCase stringCase, final String string) {</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">        this.segments = string == null ? CasedString.StringCase.NULL_SEGMENT : stringCase.getSegments(string.trim());</span>
-<span class="fc" id="L56">        this.stringCase = stringCase;</span>
-<span class="fc" id="L57">    }</span>
+<span class="fc" id="L56">    public CasedString(final StringCase stringCase, final String string) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        this.segments = string == null ? CasedString.StringCase.NULL_SEGMENT : stringCase.getSegments(string.trim());</span>
+<span class="fc" id="L58">        this.stringCase = stringCase;</span>
+<span class="fc" id="L59">    }</span>
 
     /**
      * Creates a cased string of the specified case and segments
      * @param stringCase the case of the string.
      * @param segments the segments of the string.
      */
-<span class="fc" id="L64">    public CasedString(final StringCase stringCase, final String[] segments) {</span>
-<span class="fc" id="L65">        this.segments = segments;</span>
-<span class="fc" id="L66">        this.stringCase = stringCase;</span>
-<span class="fc" id="L67">    }</span>
+<span class="fc" id="L66">    public CasedString(final StringCase stringCase, final String[] segments) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        this.segments = segments.length == 0 ? StringCase.NULL_SEGMENT : segments;</span>
+<span class="fc" id="L68">        this.stringCase = stringCase;</span>
+<span class="fc" id="L69">    }</span>
 
     /**
      * Converts this cased string into another format.
@@ -72,7 +74,15 @@ public final class CasedString {
      * @return the new CasedString.
      */
     public CasedString as(final StringCase stringCase) {
-<span class="fc bfc" id="L75" title="All 2 branches covered.">        return stringCase.name.equals(this.stringCase.name) ? this : new CasedString(stringCase, Arrays.copyOf(this.segments, this.segments.length));</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return stringCase.name.equals(this.stringCase.name) ? this : new CasedString(stringCase, copySegments());</span>
+    }
+
+    private String[] copySegments() {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        return this.segments.length == 0 ? StringCase.NULL_SEGMENT : Arrays.copyOf(this.segments, this.segments.length);</span>
+    }
+
+    public boolean isNull() {
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        return segments.length == 0;</span>
     }
 
     /**
@@ -80,7 +90,7 @@ public final class CasedString {
      * @return the segments of this cased string.
      */
     public String[] getSegments() {
-<span class="fc" id="L83">        return this.segments;</span>
+<span class="fc" id="L93">        return this.segments;</span>
     }
 
     /**
@@ -89,26 +99,26 @@ public final class CasedString {
      * @return this cased string in the desired case.
      */
     public String toCase(final StringCase stringCase) {
-<span class="fc bfc" id="L92" title="All 2 branches covered.">        return this.segments == CasedString.StringCase.NULL_SEGMENT ? null : stringCase.assemble(this.getSegments());</span>
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        return this.segments == CasedString.StringCase.NULL_SEGMENT ? null : stringCase.assemble(this.getSegments());</span>
     }
 
     @Override
     public String toString() {
-<span class="fc" id="L97">        return this.toCase(this.stringCase);</span>
+<span class="fc" id="L107">        return this.toCase(this.stringCase);</span>
     }
 
     @Override
     public boolean equals(final Object o) {
-<span class="pc bpc" id="L102" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
-<span class="nc" id="L103">            return false;</span>
+<span class="pc bpc" id="L112" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L113">            return false;</span>
         }
-<span class="fc" id="L105">        CasedString that = (CasedString) o;</span>
-<span class="fc bfc" id="L106" title="All 4 branches covered.">        return Objects.deepEquals(getSegments(), that.getSegments()) &amp;&amp; Objects.equals(stringCase, that.stringCase);</span>
+<span class="fc" id="L115">        CasedString that = (CasedString) o;</span>
+<span class="fc bfc" id="L116" title="All 4 branches covered.">        return Objects.equals(stringCase, that.stringCase) &amp;&amp; Objects.deepEquals(getSegments(), that.getSegments());</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L111">        return Arrays.hashCode(getSegments());</span>
+<span class="fc" id="L121">        return Arrays.hashCode(getSegments());</span>
     }
 
     /**
@@ -158,8 +168,8 @@ public final class CasedString {
          * @param joiner the joiner to assemble the String from the segments.
          */
         public StringCase(final String name, final Predicate&lt;Character&gt; splitter, final boolean preserveSplit, final Function&lt;String[], String&gt; joiner) {
-<span class="fc" id="L161">            this(name, splitter, preserveSplit, joiner, UnaryOperator.identity());</span>
-<span class="fc" id="L162">        }</span>
+<span class="fc" id="L171">            this(name, splitter, preserveSplit, joiner, UnaryOperator.identity());</span>
+<span class="fc" id="L172">        }</span>
 
         /**
          * Constructs a String case for the common cases where the delimiter is not preserved in the segments.
@@ -167,8 +177,8 @@ public final class CasedString {
          * @param delimiter the delimiter between segments.
          */
         public StringCase(final String name, final char delimiter) {
-<span class="fc bfc" id="L170" title="All 2 branches covered.">            this(name, c -&gt; c == delimiter, false, simpleJoiner(delimiter));</span>
-<span class="fc" id="L171">        }</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            this(name, c -&gt; c == delimiter, false, simpleJoiner(delimiter));</span>
+<span class="fc" id="L181">        }</span>
 
         /**
          * Constructs a StingCase.
@@ -179,13 +189,13 @@ public final class CasedString {
          * @param postProcess the post-process applied to the segments after the splitter has created them.
          */
         public StringCase(final String name, final Predicate&lt;Character&gt; splitter, final boolean preserveSplit, final Function&lt;String[], String&gt; joiner,
-<span class="fc" id="L182">                          final UnaryOperator&lt;String&gt; postProcess) {</span>
-<span class="fc" id="L183">            this.name = name;</span>
-<span class="fc" id="L184">            this.splitter = splitter;</span>
-<span class="fc" id="L185">            this.preserveSplit = preserveSplit;</span>
-<span class="fc" id="L186">            this.joiner = joiner;</span>
-<span class="fc" id="L187">            this.postProcess = postProcess;</span>
-<span class="fc" id="L188">        }</span>
+<span class="fc" id="L192">                          final UnaryOperator&lt;String&gt; postProcess) {</span>
+<span class="fc" id="L193">            this.name = name;</span>
+<span class="fc" id="L194">            this.splitter = splitter;</span>
+<span class="fc" id="L195">            this.preserveSplit = preserveSplit;</span>
+<span class="fc" id="L196">            this.joiner = joiner;</span>
+<span class="fc" id="L197">            this.postProcess = postProcess;</span>
+<span class="fc" id="L198">        }</span>
 
         /**
          * A simple joiner that assembles a String from a collection of segments.
@@ -194,12 +204,12 @@ public final class CasedString {
          * @return the assembled string.
          */
         public static Function&lt;String[], String&gt; simpleJoiner(final char delimiter) {
-<span class="fc" id="L197">            return s -&gt; String.join(String.valueOf(delimiter), Arrays.stream(s).filter(Objects::nonNull).toArray(String[]::new));</span>
+<span class="fc" id="L207">            return s -&gt; String.join(String.valueOf(delimiter), Arrays.stream(s).filter(Objects::nonNull).toArray(String[]::new));</span>
         }
 
         @Override
         public String toString() {
-<span class="fc" id="L202">            return this.name;</span>
+<span class="fc" id="L212">            return this.name;</span>
         }
 
         /**
@@ -208,7 +218,7 @@ public final class CasedString {
          * @return the complete String.
          */
         public String assemble(final String[] segments) {
-<span class="fc" id="L211">            return this.joiner.apply(segments);</span>
+<span class="fc" id="L221">            return this.joiner.apply(segments);</span>
         }
 
         /**
@@ -217,46 +227,46 @@ public final class CasedString {
          * @return the segments from the string.
          */
         public String[] getSegments(final String string) {
-<span class="pc bpc" id="L220" title="1 of 2 branches missed.">            if (string == null) {</span>
-<span class="nc" id="L221">                return NULL_SEGMENT;</span>
-<span class="fc bfc" id="L222" title="All 2 branches covered.">            } else if (string.isEmpty()) {</span>
-<span class="fc" id="L223">                return EMPTY_SEGMENT;</span>
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">            if (string == null) {</span>
+<span class="nc" id="L231">                return NULL_SEGMENT;</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            } else if (string.isEmpty()) {</span>
+<span class="fc" id="L233">                return EMPTY_SEGMENT;</span>
             } else {
-<span class="fc" id="L225">                List&lt;String&gt; lst = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L226">                StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L235">                List&lt;String&gt; lst = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L236">                StringBuilder sb = new StringBuilder();</span>
 
-<span class="fc bfc" id="L228" title="All 2 branches covered.">                for (char c : string.toCharArray()) {</span>
-<span class="fc bfc" id="L229" title="All 2 branches covered.">                    if (this.splitter.test(c)) {</span>
-<span class="fc" id="L230">                        lst.add(sb.toString());</span>
-<span class="fc" id="L231">                        sb.setLength(0);</span>
-<span class="fc bfc" id="L232" title="All 2 branches covered.">                        if (this.preserveSplit) {</span>
-<span class="fc" id="L233">                            sb.append(c);</span>
+<span class="fc bfc" id="L238" title="All 2 branches covered.">                for (char c : string.toCharArray()) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">                    if (this.splitter.test(c)) {</span>
+<span class="fc" id="L240">                        lst.add(sb.toString());</span>
+<span class="fc" id="L241">                        sb.setLength(0);</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">                        if (this.preserveSplit) {</span>
+<span class="fc" id="L243">                            sb.append(c);</span>
                         }
                     } else {
-<span class="fc" id="L236">                        sb.append(c);</span>
+<span class="fc" id="L246">                        sb.append(c);</span>
                     }
                 }
 
-<span class="pc bpc" id="L240" title="1 of 2 branches missed.">                if (!sb.isEmpty()) {</span>
-<span class="fc" id="L241">                    lst.add(sb.toString());</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">                if (!sb.isEmpty()) {</span>
+<span class="fc" id="L251">                    lst.add(sb.toString());</span>
                 }
 
-<span class="fc" id="L244">                return lst.stream().map(this.postProcess).filter(Objects::nonNull).toArray(String[]::new);</span>
+<span class="fc" id="L254">                return lst.stream().map(this.postProcess).filter(Objects::nonNull).toArray(String[]::new);</span>
             }
         }
         static {
-<span class="fc" id="L248">            CAMEL = new StringCase(&quot;CAMEL&quot;, Character::isUpperCase, true, CasedString.CAMEL_JOINER,</span>
-<span class="fc" id="L249">                    x -&gt; (String) StringUtils.defaultIfEmpty(x, (CharSequence) null));</span>
-<span class="fc" id="L250">            PASCAL = new StringCase(&quot;PASCAL&quot;, Character::isUpperCase, true, CasedString.CAMEL_JOINER.andThen(WordUtils::uncapitalize),</span>
-<span class="fc" id="L251">                    x -&gt; (String) StringUtils.defaultIfEmpty(x, (CharSequence) null));</span>
-<span class="fc" id="L252">            SNAKE = new StringCase(&quot;SNAKE&quot;, '_');</span>
-<span class="fc" id="L253">            KEBAB = new StringCase(&quot;KEBAB&quot;, '-');</span>
-<span class="fc" id="L254">            PHRASE = new StringCase(&quot;PHRASE&quot;, Character::isWhitespace, false, simpleJoiner(' '));</span>
-<span class="fc" id="L255">            DOT = new StringCase(&quot;DOT&quot;, '.');</span>
-<span class="fc" id="L256">            SLASH = new StringCase(&quot;SLASH&quot;, '/');</span>
-<span class="fc" id="L257">            NULL_SEGMENT = new String[0];</span>
-<span class="fc" id="L258">            EMPTY_SEGMENT = new String[]{&quot;&quot;};</span>
-<span class="fc" id="L259">        }</span>
+<span class="fc" id="L258">            CAMEL = new StringCase(&quot;CAMEL&quot;, Character::isUpperCase, true, CasedString.CAMEL_JOINER,</span>
+<span class="fc" id="L259">                    x -&gt; (String) StringUtils.defaultIfEmpty(x, (CharSequence) null));</span>
+<span class="fc" id="L260">            PASCAL = new StringCase(&quot;PASCAL&quot;, Character::isUpperCase, true, CasedString.CAMEL_JOINER.andThen(WordUtils::uncapitalize),</span>
+<span class="fc" id="L261">                    x -&gt; (String) StringUtils.defaultIfEmpty(x, (CharSequence) null));</span>
+<span class="fc" id="L262">            SNAKE = new StringCase(&quot;SNAKE&quot;, '_');</span>
+<span class="fc" id="L263">            KEBAB = new StringCase(&quot;KEBAB&quot;, '-');</span>
+<span class="fc" id="L264">            PHRASE = new StringCase(&quot;PHRASE&quot;, Character::isWhitespace, false, simpleJoiner(' '));</span>
+<span class="fc" id="L265">            DOT = new StringCase(&quot;DOT&quot;, '.');</span>
+<span class="fc" id="L266">            SLASH = new StringCase(&quot;SLASH&quot;, '/');</span>
+<span class="fc" id="L267">            NULL_SEGMENT = new String[0];</span>
+<span class="fc" id="L268">            EMPTY_SEGMENT = new String[]{&quot;&quot;};</span>
+<span class="fc" id="L269">        }</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

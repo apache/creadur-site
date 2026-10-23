@@ -53,32 +53,34 @@
 <a class="jxr_linenumber" name="L45" href="#L45">45</a>  
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>      @BeforeEach
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      <strong class="jxr_keyword">void</strong> setup(@TempDir(cleanup = CleanupMode.NEVER) Path path) {
-<a class="jxr_linenumber" name="L48" href="#L48">48</a>          optionCollection = AntOptionCollection.INSTANCE;
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          optionCollection = <strong class="jxr_keyword">new</strong> AntOptionCollection();
 <a class="jxr_linenumber" name="L49" href="#L49">49</a>          testPath = path;
 <a class="jxr_linenumber" name="L50" href="#L50">50</a>          underTest = <strong class="jxr_keyword">new</strong> AntDocumentation(path.toFile());
 <a class="jxr_linenumber" name="L51" href="#L51">51</a>      }
 <a class="jxr_linenumber" name="L52" href="#L52">52</a>  
 <a class="jxr_linenumber" name="L53" href="#L53">53</a>      @Test
 <a class="jxr_linenumber" name="L54" href="#L54">54</a>      <strong class="jxr_keyword">void</strong> writeAttributes() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L55" href="#L55">55</a>          List&lt;AntOption&gt; antOptions = options.getOptions().stream().map(opt -&gt; <strong class="jxr_keyword">new</strong> AntOption(optionCollection, opt)).toList();
-<a class="jxr_linenumber" name="L56" href="#L56">56</a>          underTest.writeAttributes(antOptions);
-<a class="jxr_linenumber" name="L57" href="#L57">57</a>          File result = <strong class="jxr_keyword">new</strong> File(testPath.toFile(), <span class="jxr_string">"report_attributes.txt"</span>);
-<a class="jxr_linenumber" name="L58" href="#L58">58</a>          assertThat(result).exists();
-<a class="jxr_linenumber" name="L59" href="#L59">59</a>          List&lt;String&gt; lines = IOUtils.readLines(<strong class="jxr_keyword">new</strong> FileInputStream(result), StandardCharsets.UTF_8);
-<a class="jxr_linenumber" name="L60" href="#L60">60</a>          assertThat(lines).contains(<span class="jxr_string">"| one | first option | boolean | false |"</span>, <span class="jxr_string">"| two | hasOption | Arg | false |"</span>)
-<a class="jxr_linenumber" name="L61" href="#L61">61</a>                  .doesNotContainSubsequence(<span class="jxr_string">"three"</span>);
-<a class="jxr_linenumber" name="L62" href="#L62">62</a>      }
-<a class="jxr_linenumber" name="L63" href="#L63">63</a>  
-<a class="jxr_linenumber" name="L64" href="#L64">64</a>      @Test
-<a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">void</strong> writeElements() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L66" href="#L66">66</a>          List&lt;AntOption&gt; antOptions = options.getOptions().stream().map(opt -&gt; <strong class="jxr_keyword">new</strong> AntOption(optionCollection, opt)).toList();
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>          underTest.writeElements(antOptions);
-<a class="jxr_linenumber" name="L68" href="#L68">68</a>          File result = <strong class="jxr_keyword">new</strong> File(testPath.toFile(), <span class="jxr_string">"report_elements.txt"</span>);
-<a class="jxr_linenumber" name="L69" href="#L69">69</a>          assertThat(result).exists();
-<a class="jxr_linenumber" name="L70" href="#L70">70</a>          List&lt;String&gt; lines = IOUtils.readLines(<strong class="jxr_keyword">new</strong> FileInputStream(result), StandardCharsets.UTF_8);
-<a class="jxr_linenumber" name="L71" href="#L71">71</a>          assertThat(lines).contains(<span class="jxr_string">"| threes | third option | Arg | false |"</span>).doesNotContainSubsequence(<span class="jxr_string">"one"</span>, <span class="jxr_string">"two"</span>);
-<a class="jxr_linenumber" name="L72" href="#L72">72</a>      }
-<a class="jxr_linenumber" name="L73" href="#L73">73</a>  }
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>          AntOption.AntOptionBuilder builder = <strong class="jxr_keyword">new</strong> AntOption.AntOptionBuilder().optionCollection(optionCollection);
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>          List&lt;AntOption&gt; antOptions = options.getOptions().stream().map(opt -&gt; builder.option(opt).build()).toList();
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>          underTest.writeAttributes(antOptions);
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>          File result = <strong class="jxr_keyword">new</strong> File(testPath.toFile(), <span class="jxr_string">"report_attributes.txt"</span>);
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>          assertThat(result).exists();
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>          List&lt;String&gt; lines = IOUtils.readLines(<strong class="jxr_keyword">new</strong> FileInputStream(result), StandardCharsets.UTF_8);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>          assertThat(lines).contains(<span class="jxr_string">"| one | first option | boolean | false |"</span>, <span class="jxr_string">"| two | hasOption | Arg | false |"</span>)
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                  .doesNotContainSubsequence(<span class="jxr_string">"three"</span>);
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>      }
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>  
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>      @Test
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>      <strong class="jxr_keyword">void</strong> writeElements() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>          AntOption.AntOptionBuilder builder = <strong class="jxr_keyword">new</strong> AntOption.AntOptionBuilder().optionCollection(optionCollection);
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>          List&lt;AntOption&gt; antOptions = options.getOptions().stream().map(opt -&gt; builder.option(opt).build()).toList();
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>          underTest.writeElements(antOptions);
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>          File result = <strong class="jxr_keyword">new</strong> File(testPath.toFile(), <span class="jxr_string">"report_elements.txt"</span>);
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>          assertThat(result).exists();
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>          List&lt;String&gt; lines = IOUtils.readLines(<strong class="jxr_keyword">new</strong> FileInputStream(result), StandardCharsets.UTF_8);
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>          assertThat(lines).contains(<span class="jxr_string">"| threes | third option | Arg | false |"</span>).doesNotContainSubsequence(<span class="jxr_string">"one"</span>, <span class="jxr_string">"two"</span>);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>      }
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>  }
 </pre>
 <hr/>
 <div id="footer">© 2006–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>

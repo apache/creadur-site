@@ -48,6 +48,7 @@ import org.apache.rat.documentation.options.MavenOptionCollection;
 import org.apache.rat.help.AbstractHelp;
 import org.apache.rat.license.ILicense;
 import org.apache.rat.license.LicenseSetFactory;
+import org.apache.rat.ui.UIOption;
 import org.apache.velocity.tools.config.DefaultKey;
 import org.apache.velocity.tools.config.ValidScope;
 
@@ -64,43 +65,61 @@ public class RatTool {
 
     // TODO remove this when velocity-tools 3.3 is available // NOSONAR
     private static String[] charParser(final String charText) {
-<span class="fc" id="L67">        char[] chars = charText.toCharArray();</span>
-<span class="fc" id="L68">        String[] result = new String[chars.length];</span>
-<span class="fc bfc" id="L69" title="All 2 branches covered.">        for (int i = 0; i &lt; chars.length; i++) {</span>
-<span class="fc" id="L70">            result[i] = String.valueOf(chars[i]);</span>
+<span class="fc" id="L68">        char[] chars = charText.toCharArray();</span>
+<span class="fc" id="L69">        String[] result = new String[chars.length];</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        for (int i = 0; i &lt; chars.length; i++) {</span>
+<span class="fc" id="L71">            result[i] = String.valueOf(chars[i]);</span>
         }
-<span class="fc" id="L72">        return result;</span>
+<span class="fc" id="L73">        return result;</span>
     }
 
     /**
      * The characters to escape for Markdown.
      */
     // TODO remove this when velocity-tools 3.3 is available // NOSONAR
-<span class="fc" id="L79">    private static final String[] MARKDOWN_CHARS = charParser(&quot;\\`*_{}[]&lt;&gt;()#+-.!|&quot;);</span>
+<span class="fc" id="L80">    private static final String[] MARKDOWN_CHARS = charParser(&quot;\\`*_{}[]&lt;&gt;()#+-.!|&quot;);</span>
     /**
      * The characters to escape for APT (Almost Plain Text).
      */
     // TODO remove this when velocity-tools 3.3 is available // NOSONAR
-<span class="fc" id="L84">    private static final String[] APT_CHARS = charParser(&quot;\\~=-+*[]&lt;&gt;{}&quot;);</span>
+<span class="fc" id="L85">    private static final String[] APT_CHARS = charParser(&quot;\\~=-+*[]&lt;&gt;{}&quot;);</span>
 
-    /** The license factory this tool uses. */
+    /**
+     * The license factory this tool uses.
+     */
     private final LicenseSetFactory licenseSetFactory;
+
+    /**
+     * The client option instance.
+     */
+    // visible for testing
+<span class="fc" id="L96">    private final CLIOptionCollection cliOptions = new CLIOptionCollection();</span>
+
+    /**
+     * The Ant option instance.
+     */
+<span class="fc" id="L101">    private final AntOptionCollection antOptions = new AntOptionCollection();</span>
+
+    /**
+     * The Maven option instance.
+     */
+<span class="fc" id="L106">    private final MavenOptionCollection mavenOptions = new MavenOptionCollection();</span>
 
     /**
      * Constructor.
      */
-<span class="fc" id="L92">    public RatTool() {</span>
-<span class="fc" id="L93">        Defaults defaults = Defaults.builder().build();</span>
-<span class="fc" id="L94">        licenseSetFactory = defaults.getLicenseSetFactory();</span>
-<span class="fc" id="L95">    }</span>
+<span class="fc" id="L111">    public RatTool() {</span>
+<span class="fc" id="L112">        Defaults defaults = Defaults.builder().build();</span>
+<span class="fc" id="L113">        licenseSetFactory = defaults.getLicenseSetFactory();</span>
+<span class="fc" id="L114">    }</span>
 
     /**
      * Gets the list of command line options.
      * @return the list of command line options.
      */
     public List&lt;Option&gt; options() {
-<span class="fc" id="L102">        return CLIOptionCollection.INSTANCE.getMappedOptions()</span>
-<span class="fc" id="L103">        .map(CLIOption::getOption).toList();</span>
+<span class="fc" id="L121">        return cliOptions.getMappedOptions()</span>
+<span class="fc" id="L122">        .map(UIOption::getOption).toList();</span>
     }
 
     /**
@@ -108,7 +127,7 @@ public class RatTool {
      * @return a map client option name to Ant Option.
      */
     public Map&lt;String, AntOption&gt; antOptions() {
-<span class="fc" id="L111">        return AntOptionCollection.INSTANCE.getOptionMap();</span>
+<span class="fc" id="L130">        return antOptions.getOptionMap();</span>
     }
 
     /**
@@ -116,7 +135,7 @@ public class RatTool {
      * @return a map client option name to CLI Option.
      */
     public Map&lt;String, CLIOption&gt; cliOptions() {
-<span class="fc" id="L119">        return CLIOptionCollection.INSTANCE.getOptionMap();</span>
+<span class="fc" id="L138">        return cliOptions.getOptionMap();</span>
     }
 
     /**
@@ -124,7 +143,7 @@ public class RatTool {
      * @return a map client option name to Maven Option.
      */
     public Map&lt;String, MavenOption&gt; mvnOptions() {
-<span class="fc" id="L127">        return MavenOptionCollection.INSTANCE.getOptionMap();</span>
+<span class="fc" id="L146">        return mavenOptions.getOptionMap();</span>
     }
 
     /**
@@ -134,14 +153,14 @@ public class RatTool {
      * @return the escaped string.
      */
     private String escape(final String text, final String[] chars) {
-<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        if (text == null) {</span>
-<span class="nc" id="L138">            return &quot;&quot;;</span>
+<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (text == null) {</span>
+<span class="nc" id="L157">            return &quot;&quot;;</span>
         }
-<span class="fc" id="L140">        String result = text;</span>
-<span class="fc bfc" id="L141" title="All 2 branches covered.">        for (String c : chars) {</span>
-<span class="fc" id="L142">            result = result.replace(c, &quot;\\&quot; + c);</span>
+<span class="fc" id="L159">        String result = text;</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        for (String c : chars) {</span>
+<span class="fc" id="L161">            result = result.replace(c, &quot;\\&quot; + c);</span>
         }
-<span class="fc" id="L144">        return result;</span>
+<span class="fc" id="L163">        return result;</span>
     }
 
     /**
@@ -150,7 +169,7 @@ public class RatTool {
      * @return the text with the Markdown specific characters escaped.
      */
     public String markdownEscape(final String text) {
-<span class="fc" id="L153">        return escape(text, MARKDOWN_CHARS);</span>
+<span class="fc" id="L172">        return escape(text, MARKDOWN_CHARS);</span>
     }
 
     /**
@@ -159,7 +178,7 @@ public class RatTool {
      * @return the text with the APT specific characters escaped.
      */
     public String aptEscape(final String text) {
-<span class="fc" id="L162">        return escape(text, APT_CHARS);</span>
+<span class="fc" id="L181">        return escape(text, APT_CHARS);</span>
     }
 
     /**
@@ -167,9 +186,9 @@ public class RatTool {
      * @return a list of argument types.
      */
     public List&lt;OptionCollection.ArgumentType&gt; argumentTypes() {
-<span class="fc bfc" id="L170" title="All 2 branches covered.">        return Arrays.stream(OptionCollection.ArgumentType.values()).filter(t -&gt; t != OptionCollection.ArgumentType.NONE)</span>
-<span class="fc" id="L171">                .sorted(Comparator.comparing(OptionCollection.ArgumentType::getDisplayName))</span>
-<span class="fc" id="L172">                .collect(Collectors.toList());</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        return Arrays.stream(OptionCollection.ArgumentType.values()).filter(t -&gt; t != OptionCollection.ArgumentType.NONE)</span>
+<span class="fc" id="L190">                .sorted(Comparator.comparing(OptionCollection.ArgumentType::getDisplayName))</span>
+<span class="fc" id="L191">                .collect(Collectors.toList());</span>
     }
 
     /**
@@ -177,22 +196,22 @@ public class RatTool {
      * @return a list of environment variables.
      */
     public List&lt;EnvVar&gt; environmentVariables() {
-<span class="fc" id="L180">        return Arrays.stream(EnvVar.values())</span>
-<span class="fc" id="L181">                .sorted(Comparator.comparing(EnvVar::name))</span>
-<span class="fc" id="L182">                .collect(Collectors.toList());</span>
+<span class="fc" id="L199">        return Arrays.stream(EnvVar.values())</span>
+<span class="fc" id="L200">                .sorted(Comparator.comparing(EnvVar::name))</span>
+<span class="fc" id="L201">                .collect(Collectors.toList());</span>
     }
 
     /**
-     * Gets the set of Matchers.
-     * @return the set of Matchers.
+     * Gets the set of matchers.
+     * @return the set of matchers.
      */
     public Set&lt;Matcher&gt; matchers() {
-<span class="fc" id="L190">        Set&lt;Matcher&gt; documentationSet = new TreeSet&lt;&gt;(Comparator.comparing(Matcher::getName));</span>
-<span class="fc bfc" id="L191" title="All 2 branches covered.">        for (Class&lt;?&gt; clazz : MatcherBuilderTracker.instance().getClasses()) {</span>
-<span class="fc" id="L192">            Description desc = DescriptionBuilder.buildMap(clazz);</span>
-<span class="fc" id="L193">            documentationSet.add(new Matcher(desc, null));</span>
-<span class="fc" id="L194">        }</span>
-<span class="fc" id="L195">        return documentationSet;</span>
+<span class="fc" id="L209">        Set&lt;Matcher&gt; documentationSet = new TreeSet&lt;&gt;(Comparator.comparing(Matcher::getName));</span>
+<span class="fc bfc" id="L210" title="All 2 branches covered.">        for (Class&lt;?&gt; clazz : MatcherBuilderTracker.instance().getClasses()) {</span>
+<span class="fc" id="L211">            Description desc = DescriptionBuilder.buildMap(clazz);</span>
+<span class="fc" id="L212">            documentationSet.add(new Matcher(desc, null));</span>
+<span class="fc" id="L213">        }</span>
+<span class="fc" id="L214">        return documentationSet;</span>
     }
 
     /**
@@ -200,9 +219,9 @@ public class RatTool {
      * @return the list of standard collections.
      */
     public List&lt;StandardCollection&gt; standardCollections() {
-<span class="fc" id="L203">        return Arrays.stream(org.apache.rat.config.exclusion.StandardCollection.values())</span>
-<span class="fc" id="L204">                .sorted(Comparator.comparing(Enum::name))</span>
-<span class="fc" id="L205">                .collect(Collectors.toList());</span>
+<span class="fc" id="L222">        return Arrays.stream(org.apache.rat.config.exclusion.StandardCollection.values())</span>
+<span class="fc" id="L223">                .sorted(Comparator.comparing(Enum::name))</span>
+<span class="fc" id="L224">                .collect(Collectors.toList());</span>
     }
 
     /**
@@ -210,9 +229,9 @@ public class RatTool {
      * @return the list of stylesheets.
      */
     public List&lt;StyleSheets&gt; styleSheets() {
-<span class="fc" id="L213">        return Arrays.stream(StyleSheets.values())</span>
-<span class="fc" id="L214">                .sorted(Comparator.comparing(StyleSheets::arg))</span>
-<span class="fc" id="L215">                .collect(Collectors.toList());</span>
+<span class="fc" id="L232">        return Arrays.stream(StyleSheets.values())</span>
+<span class="fc" id="L233">                .sorted(Comparator.comparing(StyleSheets::arg))</span>
+<span class="fc" id="L234">                .collect(Collectors.toList());</span>
     }
 
     /**
@@ -221,7 +240,7 @@ public class RatTool {
      * @see org.apache.commons.lang3.StringUtils
      */
     public StringUtils stringUtils() {
-<span class="nc" id="L224">        return new StringUtils();</span>
+<span class="nc" id="L243">        return new StringUtils();</span>
     }
 
     /**
@@ -229,7 +248,7 @@ public class RatTool {
      * @return the tab character.
      */
     public String tab() {
-<span class="nc" id="L232">        return &quot;\t&quot;;</span>
+<span class="nc" id="L251">        return &quot;\t&quot;;</span>
     }
 
     /**
@@ -237,7 +256,7 @@ public class RatTool {
      * @return a string containing two new lines.
      */
     public String doubleLine() {
-<span class="nc" id="L240">        return &quot;\n\n&quot;;</span>
+<span class="nc" id="L259">        return &quot;\n\n&quot;;</span>
     }
 
     /**
@@ -245,11 +264,11 @@ public class RatTool {
      * @return a list of license property descriptions.
      */
     public List&lt;Description&gt; licenseProperties() {
-<span class="fc" id="L248">        UnmodifiableSortedSet&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
-<span class="fc" id="L249">        Description licenseDescription = DescriptionBuilder.build(licenses.first());</span>
-<span class="fc bfc" id="L250" title="All 2 branches covered.">        List&lt;Description&gt; descriptions = new ArrayList&lt;&gt;(licenseDescription.filterChildren(d -&gt; d.getType() == ComponentType.PARAMETER));</span>
-<span class="fc" id="L251">        descriptions.sort(Comparator.comparing(Description::getCommonName));</span>
-<span class="fc" id="L252">        return descriptions;</span>
+<span class="fc" id="L267">        UnmodifiableSortedSet&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
+<span class="fc" id="L268">        Description licenseDescription = DescriptionBuilder.build(licenses.first());</span>
+<span class="fc bfc" id="L269" title="All 2 branches covered.">        List&lt;Description&gt; descriptions = new ArrayList&lt;&gt;(licenseDescription.filterChildren(d -&gt; d.getType() == ComponentType.PARAMETER));</span>
+<span class="fc" id="L270">        descriptions.sort(Comparator.comparing(Description::getCommonName));</span>
+<span class="fc" id="L271">        return descriptions;</span>
     }
 
     /**
@@ -257,8 +276,8 @@ public class RatTool {
      * @return the list of defined licenses.
      */
     public List&lt;License&gt; licenses() {
-<span class="fc" id="L260">        UnmodifiableSortedSet&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
-<span class="fc" id="L261">        return licenses.stream().map(License::new).collect(Collectors.toList());</span>
+<span class="fc" id="L279">        UnmodifiableSortedSet&lt;ILicense&gt; licenses = licenseSetFactory.getLicenses(LicenseSetFactory.LicenseFilter.ALL);</span>
+<span class="fc" id="L280">        return licenses.stream().map(License::new).collect(Collectors.toList());</span>
     }
 
     /**
@@ -267,7 +286,7 @@ public class RatTool {
      * @return a string of spaces of the specified length.
      */
     public String pad(final int length) {
-<span class="nc" id="L270">        return AbstractHelp.createPadding(length);</span>
+<span class="nc" id="L289">        return AbstractHelp.createPadding(length);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
