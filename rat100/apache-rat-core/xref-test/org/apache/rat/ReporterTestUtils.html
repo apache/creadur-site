@@ -80,7 +80,7 @@
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>  <em class="jxr_javadoccomment">     * @param error {@code True} if the counter does exceed a minimum or maximum value.</em>
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>  <em class="jxr_javadoccomment">     * @return the report contents of the given counter.</em>
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String counterText(ClaimStatistic.Counter counter, <strong class="jxr_keyword">int</strong> count, <strong class="jxr_keyword">boolean</strong> error) {
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String counterText(<strong class="jxr_keyword">final</strong> ClaimStatistic.Counter counter, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> count, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">boolean</strong> error) {
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"^%s %s:&#92;&#92;s*%s "</span>, error ? <span class="jxr_string">"!"</span> : <span class="jxr_string">" "</span>, counter.displayName(), count);
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      }
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>  
@@ -89,7 +89,7 @@
 <a class="jxr_linenumber" name="L81" href="#L81">81</a>  <em class="jxr_javadoccomment">     * @param count The expected number of occurrences of the license.</em>
 <a class="jxr_linenumber" name="L82" href="#L82">82</a>  <em class="jxr_javadoccomment">     * @return Report contents for Apache 2.0 licenses in the report.</em>
 <a class="jxr_linenumber" name="L83" href="#L83">83</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L84" href="#L84">84</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String apacheLicenseVersion2(<strong class="jxr_keyword">int</strong> count) {
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String apacheLicenseVersion2(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> count) {
 <a class="jxr_linenumber" name="L85" href="#L85">85</a>          <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"^Apache License 2.0: %s "</span>, count);
 <a class="jxr_linenumber" name="L86" href="#L86">86</a>      }
 <a class="jxr_linenumber" name="L87" href="#L87">87</a>  
@@ -98,7 +98,7 @@
 <a class="jxr_linenumber" name="L90" href="#L90">90</a>  <em class="jxr_javadoccomment">     * @param count The expected number of occurrences of the license.</em>
 <a class="jxr_linenumber" name="L91" href="#L91">91</a>  <em class="jxr_javadoccomment">     * @return Report contents for unknown licenses in the report.</em>
 <a class="jxr_linenumber" name="L92" href="#L92">92</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L93" href="#L93">93</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String unknownLicense(<strong class="jxr_keyword">int</strong> count) {
+<a class="jxr_linenumber" name="L93" href="#L93">93</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String unknownLicense(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> count) {
 <a class="jxr_linenumber" name="L94" href="#L94">94</a>          <strong class="jxr_keyword">return</strong> String.format(<span class="jxr_string">"^Unknown license: %s "</span>, count);
 <a class="jxr_linenumber" name="L95" href="#L95">95</a>      }
 <a class="jxr_linenumber" name="L96" href="#L96">96</a>  }

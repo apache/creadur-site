@@ -41,8 +41,8 @@
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> javax.xml.xpath.XPath;
-<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> javax.xml.xpath.XPathFactory;
-<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.FileUtils;
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.io.FileUtils;
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.xml.secure.SecureXPathFactory;
 <a class="jxr_linenumber" name="L38" href="#L38">38</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration;
 <a class="jxr_linenumber" name="L39" href="#L39">39</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfigurationTest;
 <a class="jxr_linenumber" name="L40" href="#L40">40</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReporterTestUtils;
@@ -72,7 +72,7 @@
 <a class="jxr_linenumber" name="L64" href="#L64">64</a>      @TempDir(cleanup = CleanupMode.NEVER)
 <a class="jxr_linenumber" name="L65" href="#L65">65</a>      <strong class="jxr_keyword">static</strong> Path tempDir;
 <a class="jxr_linenumber" name="L66" href="#L66">66</a>  
-<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">static</strong> XPath xPath = XPathFactory.newInstance().newXPath();
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">static</strong> XPath xPath = SecureXPathFactory.newInstance().newXPath();
 <a class="jxr_linenumber" name="L68" href="#L68">68</a>  
 <a class="jxr_linenumber" name="L69" href="#L69">69</a>      @AfterAll
 <a class="jxr_linenumber" name="L70" href="#L70">70</a>      <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> preserveData() {
@@ -148,7 +148,7 @@
 <a class="jxr_linenumber" name="L140" href="#L140">140</a>         data.put(ClaimStatistic.Counter.UNKNOWN, <span class="jxr_string">"0"</span>);
 <a class="jxr_linenumber" name="L141" href="#L141">141</a> 
 <a class="jxr_linenumber" name="L142" href="#L142">142</a>         org.w3c.dom.Document document = XmlUtils.toDom(Files.newInputStream(ratTxtFile.toPath()));
-<a class="jxr_linenumber" name="L143" href="#L143">143</a>         XPath xPath = XPathFactory.newInstance().newXPath();
+<a class="jxr_linenumber" name="L143" href="#L143">143</a>         XPath xPath = SecureXPathFactory.newInstance().newXPath();
 <a class="jxr_linenumber" name="L144" href="#L144">144</a> 
 <a class="jxr_linenumber" name="L145" href="#L145">145</a>         <strong class="jxr_keyword">for</strong> (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {
 <a class="jxr_linenumber" name="L146" href="#L146">146</a>             String xpath = String.format(<span class="jxr_string">"/rat-report/statistics/statistic[@name='%s']"</span>, counter.displayName());
@@ -161,7 +161,7 @@
 <a class="jxr_linenumber" name="L153" href="#L153">153</a>                 mapOf(<span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"application/octet-stream"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"IGNORED"</span>));
 <a class="jxr_linenumber" name="L154" href="#L154">154</a> 
 <a class="jxr_linenumber" name="L155" href="#L155">155</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/pom.xml']"</span>,
-<a class="jxr_linenumber" name="L156" href="#L156">156</a>                 mapOf(<span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"application/xml"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>, <span class="jxr_string">"encoding"</span>, <span class="jxr_string">"ISO-8859-1"</span>));
+<a class="jxr_linenumber" name="L156" href="#L156">156</a>                 mapOf(<span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"application/xml"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>, <span class="jxr_string">"encoding"</span>, <span class="jxr_string">"windows-1252"</span>));
 <a class="jxr_linenumber" name="L157" href="#L157">157</a>     }
 <a class="jxr_linenumber" name="L158" href="#L158">158</a> 
 <a class="jxr_linenumber" name="L159" href="#L159">159</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Map&lt;String, String&gt; mapOf(String... parts) {
@@ -221,22 +221,22 @@
 <a class="jxr_linenumber" name="L213" href="#L213">213</a>         mojo.execute();
 <a class="jxr_linenumber" name="L214" href="#L214">214</a>         org.w3c.dom.Document document = XmlUtils.toDom(Files.newInputStream(ratTxtFile.toPath()));
 <a class="jxr_linenumber" name="L215" href="#L215">215</a> 
-<a class="jxr_linenumber" name="L216" href="#L216">216</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/pom.xml']"</span>, <span class="jxr_string">"type"</span>,
-<a class="jxr_linenumber" name="L217" href="#L217">217</a>                 <span class="jxr_string">"STANDARD"</span>);
-<a class="jxr_linenumber" name="L218" href="#L218">218</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/src.apt']"</span>, <span class="jxr_string">"type"</span>,
-<a class="jxr_linenumber" name="L219" href="#L219">219</a>                 <span class="jxr_string">"STANDARD"</span>);
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/pom.xml']"</span>,
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>                 XmlUtils.mapOf(<span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>));
+<a class="jxr_linenumber" name="L218" href="#L218">218</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/src.apt']"</span>,
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>                 XmlUtils.mapOf(<span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>));
 <a class="jxr_linenumber" name="L220" href="#L220">220</a>         XmlUtils.assertIsPresent(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/src.apt']/license[@approval='false']"</span>);
 <a class="jxr_linenumber" name="L221" href="#L221">221</a> 
-<a class="jxr_linenumber" name="L222" href="#L222">222</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/src.apt']"</span>, <span class="jxr_string">"type"</span>,
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>                 <span class="jxr_string">"STANDARD"</span>);
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/src.apt']"</span>,
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>                 XmlUtils.mapOf(<span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>));
 <a class="jxr_linenumber" name="L224" href="#L224">224</a> 
 <a class="jxr_linenumber" name="L225" href="#L225">225</a>         <strong class="jxr_keyword">for</strong> (Document.Type type : Document.Type.values()) {
 <a class="jxr_linenumber" name="L226" href="#L226">226</a>             <strong class="jxr_keyword">if</strong> (type == Document.Type.STANDARD) {
-<a class="jxr_linenumber" name="L227" href="#L227">227</a>                 XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/statistics/documentType[@name='STANDARD']"</span>, <span class="jxr_string">"count"</span>,
-<a class="jxr_linenumber" name="L228" href="#L228">228</a>                         <span class="jxr_string">"2"</span>);
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>                 XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/statistics/documentType[@name='STANDARD']"</span>,
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>                         XmlUtils.mapOf(<span class="jxr_string">"count"</span>, <span class="jxr_string">"2"</span>));
 <a class="jxr_linenumber" name="L229" href="#L229">229</a>             } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (type == Document.Type.IGNORED) {
-<a class="jxr_linenumber" name="L230" href="#L230">230</a>                 XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/statistics/documentType[@name='IGNORED']"</span>, <span class="jxr_string">"count"</span>,
-<a class="jxr_linenumber" name="L231" href="#L231">231</a>                         <span class="jxr_string">"1"</span>);
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>                 XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/statistics/documentType[@name='IGNORED']"</span>,
+<a class="jxr_linenumber" name="L231" href="#L231">231</a>                         XmlUtils.mapOf(<span class="jxr_string">"count"</span>, <span class="jxr_string">"1"</span>));
 <a class="jxr_linenumber" name="L232" href="#L232">232</a>             } <strong class="jxr_keyword">else</strong> {
 <a class="jxr_linenumber" name="L233" href="#L233">233</a>                 XmlUtils.assertIsNotPresent(document, xPath, format(<span class="jxr_string">"/rat-report/statistics/documentType[@name='%s']"</span>, type));
 <a class="jxr_linenumber" name="L234" href="#L234">234</a>             }
@@ -255,7 +255,7 @@
 <a class="jxr_linenumber" name="L247" href="#L247">247</a>         assertThat(config.isAddingLicenses()).as(<span class="jxr_string">"Should not be adding licenses"</span>).isFalse();
 <a class="jxr_linenumber" name="L248" href="#L248">248</a>         assertThat(config.isAddingLicensesForced()).as(<span class="jxr_string">"Should not be forcing licenses"</span>).isFalse();
 <a class="jxr_linenumber" name="L249" href="#L249">249</a> 
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>         ReportConfigurationTest.validateDefaultApprovedLicenses(config, 1);
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>         ReportConfigurationTest.validateDefaultApprovedLicenses(config, <span class="jxr_string">"CC-BY-NC-ND"</span>);
 <a class="jxr_linenumber" name="L251" href="#L251">251</a>         assertThat(config.getLicenseCategories(LicenseFilter.APPROVED)).doesNotContain(ILicenseFamily.makeCategory(<span class="jxr_string">"YAL"</span>))
 <a class="jxr_linenumber" name="L252" href="#L252">252</a>                 .contains(ILicenseFamily.makeCategory(<span class="jxr_string">"CC"</span>));
 <a class="jxr_linenumber" name="L253" href="#L253">253</a>         ReportConfigurationTest.validateDefaultLicenseFamilies(config, <span class="jxr_string">"YAL"</span>, <span class="jxr_string">"CC"</span>);
@@ -283,7 +283,7 @@
 <a class="jxr_linenumber" name="L275" href="#L275">275</a>         data.put(ClaimStatistic.Counter.UNKNOWN, <span class="jxr_string">"0"</span>);
 <a class="jxr_linenumber" name="L276" href="#L276">276</a> 
 <a class="jxr_linenumber" name="L277" href="#L277">277</a>         org.w3c.dom.Document document = XmlUtils.toDom(Files.newInputStream(ratTxtFile.toPath()));
-<a class="jxr_linenumber" name="L278" href="#L278">278</a>         XPath xPath = XPathFactory.newInstance().newXPath();
+<a class="jxr_linenumber" name="L278" href="#L278">278</a>         XPath xPath = SecureXPathFactory.newInstance().newXPath();
 <a class="jxr_linenumber" name="L279" href="#L279">279</a> 
 <a class="jxr_linenumber" name="L280" href="#L280">280</a>         <strong class="jxr_keyword">for</strong> (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {
 <a class="jxr_linenumber" name="L281" href="#L281">281</a>             String xpath = String.format(<span class="jxr_string">"/rat-report/statistics/statistic[@name='%s']"</span>, counter.displayName());
@@ -295,20 +295,20 @@
 <a class="jxr_linenumber" name="L287" href="#L287">287</a>         }
 <a class="jxr_linenumber" name="L288" href="#L288">288</a> 
 <a class="jxr_linenumber" name="L289" href="#L289">289</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/.rat']"</span>,
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>                 <span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"application/octet-stream"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"IGNORED"</span>, <span class="jxr_string">"isDirectory"</span>, <span class="jxr_string">"true"</span>);
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>                 XmlUtils.mapOf(<span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"application/octet-stream"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"IGNORED"</span>, <span class="jxr_string">"isDirectory"</span>, <span class="jxr_string">"true"</span>));
 <a class="jxr_linenumber" name="L291" href="#L291">291</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/pom.xml']"</span>,
-<a class="jxr_linenumber" name="L292" href="#L292">292</a>                 <span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"application/xml"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"IGNORED"</span>, <span class="jxr_string">"isDirectory"</span>, <span class="jxr_string">"false"</span>);
+<a class="jxr_linenumber" name="L292" href="#L292">292</a>                 XmlUtils.mapOf(<span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"application/xml"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"IGNORED"</span>, <span class="jxr_string">"isDirectory"</span>, <span class="jxr_string">"false"</span>));
 <a class="jxr_linenumber" name="L293" href="#L293">293</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/src/main/java/nl/basjes/something/Something.java']"</span>,
-<a class="jxr_linenumber" name="L294" href="#L294">294</a>                 <span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"text/x-java-source"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>, <span class="jxr_string">"encoding"</span>, <span class="jxr_string">"ISO-8859-1"</span>);
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>                 XmlUtils.mapOf(<span class="jxr_string">"mediaType"</span>, <span class="jxr_string">"text/x-java-source"</span>, <span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>, <span class="jxr_string">"encoding"</span>, <span class="jxr_string">"windows-1252"</span>));
 <a class="jxr_linenumber" name="L295" href="#L295">295</a>         XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/src/main/java/nl/basjes/something/Something.java']/license"</span>,
-<a class="jxr_linenumber" name="L296" href="#L296">296</a>                 <span class="jxr_string">"approval"</span>, <span class="jxr_string">"true"</span>, <span class="jxr_string">"family"</span>, ILicenseFamily.makeCategory(<span class="jxr_string">"CC"</span>), <span class="jxr_string">"id"</span>, <span class="jxr_string">"CC-BY-NC-ND"</span>, <span class="jxr_string">"name"</span>,
-<a class="jxr_linenumber" name="L297" href="#L297">297</a>                 <span class="jxr_string">"Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International"</span>);
+<a class="jxr_linenumber" name="L296" href="#L296">296</a>                 XmlUtils.mapOf(<span class="jxr_string">"approval"</span>, <span class="jxr_string">"true"</span>, <span class="jxr_string">"family"</span>, ILicenseFamily.makeCategory(<span class="jxr_string">"CC"</span>), <span class="jxr_string">"id"</span>, <span class="jxr_string">"CC-BY-NC-ND"</span>, <span class="jxr_string">"name"</span>,
+<a class="jxr_linenumber" name="L297" href="#L297">297</a>                 <span class="jxr_string">"Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International"</span>));
 <a class="jxr_linenumber" name="L298" href="#L298">298</a>     }
 <a class="jxr_linenumber" name="L299" href="#L299">299</a> 
 <a class="jxr_linenumber" name="L300" href="#L300">300</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L301" href="#L301">301</a> <em class="jxr_javadoccomment">     * Runs a check, which should expose no problems.</em>
 <a class="jxr_linenumber" name="L302" href="#L302">302</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L303" href="#L303">303</a> <em class="jxr_javadoccomment">     * @throws Exception The test failed.</em>
+<a class="jxr_linenumber" name="L303" href="#L303">303</a> <em class="jxr_javadoccomment">     * @throws Exception if the test failed.</em>
 <a class="jxr_linenumber" name="L304" href="#L304">304</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L305" href="#L305">305</a>     @Test
 <a class="jxr_linenumber" name="L306" href="#L306">306</a>     <strong class="jxr_keyword">void</strong> rat343() <strong class="jxr_keyword">throws</strong> Exception {
@@ -340,7 +340,7 @@
 <a class="jxr_linenumber" name="L332" href="#L332">332</a>         assertThat(config.getCopyrightMessage()).isNull();
 <a class="jxr_linenumber" name="L333" href="#L333">333</a>         assertThat(config.getStyleSheet()).withFailMessage(<span class="jxr_string">"Stylesheet should not be null"</span>).isNotNull();
 <a class="jxr_linenumber" name="L334" href="#L334">334</a> 
-<a class="jxr_linenumber" name="L335" href="#L335">335</a>         ReportConfigurationTest.validateDefaultApprovedLicenses(config, 1);
+<a class="jxr_linenumber" name="L335" href="#L335">335</a>         ReportConfigurationTest.validateDefaultApprovedLicenses(config, <span class="jxr_string">"BSD"</span>);
 <a class="jxr_linenumber" name="L336" href="#L336">336</a>         ReportConfigurationTest.validateDefaultLicenseFamilies(config, <span class="jxr_string">"BSD"</span>, <span class="jxr_string">"CC BY"</span>);
 <a class="jxr_linenumber" name="L337" href="#L337">337</a>         ReportConfigurationTest.validateDefaultLicenses(config, <span class="jxr_string">"BSD"</span>, <span class="jxr_string">"CC BY"</span>);
 <a class="jxr_linenumber" name="L338" href="#L338">338</a> 
@@ -452,12 +452,12 @@
 <a class="jxr_linenumber" name="L444" href="#L444">444</a>             org.w3c.dom.Document document = XmlUtils.toDom(Files.newInputStream(ratTxtFile.toPath()));
 <a class="jxr_linenumber" name="L445" href="#L445">445</a>             <em class="jxr_comment">// Document types</em>
 <a class="jxr_linenumber" name="L446" href="#L446">446</a>             XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/statistics/documentType[@name='IGNORED']"</span>,
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>                     <span class="jxr_string">"count"</span>, <span class="jxr_string">"3"</span>);
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>                     XmlUtils.mapOf(<span class="jxr_string">"count"</span>, <span class="jxr_string">"3"</span>));
 <a class="jxr_linenumber" name="L448" href="#L448">448</a> 
 <a class="jxr_linenumber" name="L449" href="#L449">449</a>             XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/bar.md']"</span>,
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>                     <span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>);
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>                     XmlUtils.mapOf(<span class="jxr_string">"type"</span>, <span class="jxr_string">"STANDARD"</span>));
 <a class="jxr_linenumber" name="L451" href="#L451">451</a>             XmlUtils.assertAttributes(document, xPath, <span class="jxr_string">"/rat-report/resource[@name='/foo.md']"</span>,
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>                     <span class="jxr_string">"type"</span>, <span class="jxr_string">"IGNORED"</span>);
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>                     XmlUtils.mapOf(<span class="jxr_string">"type"</span>, <span class="jxr_string">"IGNORED"</span>));
 <a class="jxr_linenumber" name="L453" href="#L453">453</a>         }
 <a class="jxr_linenumber" name="L454" href="#L454">454</a>     }
 <a class="jxr_linenumber" name="L455" href="#L455">455</a> 

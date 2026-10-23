@@ -38,8 +38,8 @@
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.license.LicenseSetFactory;
 <a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.ClaimStatistic;
 <a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.report.claim.ClaimStatisticTest;
-<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.test.utils.Resources;
-<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.testhelpers.FileUtils;
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.FileUtils;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.test.utils.Resources;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.StandardXmlFactory;
 <a class="jxr_linenumber" name="L36" href="#L36">36</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.utils.StandardXmlFactoryTest;
 <a class="jxr_linenumber" name="L37" href="#L37">37</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.walker.DirectoryWalker;
@@ -171,7 +171,7 @@
 <a class="jxr_linenumber" name="L163" href="#L163">163</a>         underTest.setArchiveProcessing(ReportConfiguration.Processing.NOTIFICATION);
 <a class="jxr_linenumber" name="L164" href="#L164">164</a>         underTest.setStandardProcessing(ReportConfiguration.Processing.ABSENCE);
 <a class="jxr_linenumber" name="L165" href="#L165">165</a>         underTest.setStyleSheet(StyleSheets.MISSING_HEADERS.getStyleSheet());
-<a class="jxr_linenumber" name="L166" href="#L166">166</a>         underTest.setOut(<strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/some/file/somewhere"</span>));
+<a class="jxr_linenumber" name="L166" href="#L166">166</a>         underTest.setOutput(<strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/some/file/somewhere"</span>));
 <a class="jxr_linenumber" name="L167" href="#L167">167</a>         underTest.setCopyrightMessage(<span class="jxr_string">"the copyright message"</span>);
 <a class="jxr_linenumber" name="L168" href="#L168">168</a>         underTest.addSource(<strong class="jxr_keyword">new</strong> File(<span class="jxr_string">"/my/file"</span>));
 <a class="jxr_linenumber" name="L169" href="#L169">169</a>         underTest.addSource(<strong class="jxr_keyword">new</strong> ReportConfigurationTest.TestingReportable());
@@ -219,7 +219,7 @@
 <a class="jxr_linenumber" name="L211" href="#L211">211</a>     <strong class="jxr_keyword">void</strong> listLicensesReportTest() <strong class="jxr_keyword">throws</strong> Exception {
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>         ByteArrayOutputStream out = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
 <a class="jxr_linenumber" name="L213" href="#L213">213</a>         ReportConfiguration configuration = initializeConfiguration();
-<a class="jxr_linenumber" name="L214" href="#L214">214</a>         configuration.setOut(<strong class="jxr_keyword">new</strong> ReportConfiguration.IODescriptor&lt;&gt;(<span class="jxr_string">"listLicensesReportTest"</span>, () -&gt; out));
+<a class="jxr_linenumber" name="L214" href="#L214">214</a>         configuration.setOutput(<strong class="jxr_keyword">new</strong> ReportConfiguration.IODescriptor&lt;&gt;(<span class="jxr_string">"listLicensesReportTest"</span>, () -&gt; out));
 <a class="jxr_linenumber" name="L215" href="#L215">215</a>         configuration.setStyleSheet(StyleSheets.UNAPPROVED_LICENSES.getStyleSheet());
 <a class="jxr_linenumber" name="L216" href="#L216">216</a>         Reporter.Output output = Reporter.Output.builder()
 <a class="jxr_linenumber" name="L217" href="#L217">217</a>                 .statistic(<strong class="jxr_keyword">new</strong> ClaimStatistic())

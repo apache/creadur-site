@@ -147,9 +147,8 @@ public final class ClaimValidator {
 <span class="fc" id="L147">        min.compute(counter, (k, v) -&gt;</span>
 <span class="fc bfc" id="L148" title="All 2 branches covered.">            v == null ? new MutableInt(value) : newValue(v, value));</span>
 <span class="fc" id="L149">        max.compute(counter, (k, v) -&gt;</span>
-<span class="fc bfc" id="L150" title="All 2 branches covered.">                v == null ? setMaxValue(new MutableInt(k.getDefaultMaxValue()), value) :</span>
-<span class="fc" id="L151">                setMaxValue(v, value));</span>
-<span class="fc" id="L152">    }</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">                setMaxValue(v == null ? new MutableInt(k.getDefaultMaxValue()) : v, value));</span>
+<span class="fc" id="L151">    }</span>
 
     /**
      * Gets the max limit for the specific counter.
@@ -157,11 +156,11 @@ public final class ClaimValidator {
      * @return the limit for the counter or 0 if not set.
      */
     public int getMax(final ClaimStatistic.Counter counter) {
-<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (counter == null) {</span>
-<span class="fc" id="L161">            DefaultLog.getInstance().warn(&quot;`null` passed as argument to getMax() -- returning 0&quot;);</span>
-<span class="fc" id="L162">            return 0;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (counter == null) {</span>
+<span class="fc" id="L160">            DefaultLog.getInstance().warn(&quot;`null` passed as argument to getMax() -- returning 0&quot;);</span>
+<span class="fc" id="L161">            return 0;</span>
         }
-<span class="fc" id="L164">        return max.get(counter).intValue();</span>
+<span class="fc" id="L163">        return max.get(counter).intValue();</span>
     }
 
     /**
@@ -170,11 +169,11 @@ public final class ClaimValidator {
      * @return the limit for the counter or zero if not set.
      */
     public int getMin(final ClaimStatistic.Counter counter) {
-<span class="fc bfc" id="L173" title="All 2 branches covered.">        if (counter == null) {</span>
-<span class="fc" id="L174">            DefaultLog.getInstance().warn(&quot;`null` passed as argument to getMin() -- returning 0&quot;);</span>
-<span class="fc" id="L175">            return 0;</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (counter == null) {</span>
+<span class="fc" id="L173">            DefaultLog.getInstance().warn(&quot;`null` passed as argument to getMin() -- returning 0&quot;);</span>
+<span class="fc" id="L174">            return 0;</span>
         }
-<span class="fc" id="L177">        return min.get(counter).intValue();</span>
+<span class="fc" id="L176">        return min.get(counter).intValue();</span>
     }
 
     /**
@@ -185,10 +184,10 @@ public final class ClaimValidator {
      * @throws NullPointerException if counter is {@code null}.
      */
     public boolean isValid(final ClaimStatistic.Counter counter, final int count) {
-<span class="fc" id="L188">        Objects.requireNonNull(counter, &quot;counter must not be null.&quot;);</span>
-<span class="fc bfc" id="L189" title="All 4 branches covered.">        boolean result = max.get(counter).intValue() &gt;= count &amp;&amp; min.get(counter).intValue() &lt;= count;</span>
-<span class="fc bfc" id="L190" title="All 2 branches covered.">        hasErrors |= !result;</span>
-<span class="fc" id="L191">        return result;</span>
+<span class="fc" id="L187">        Objects.requireNonNull(counter, &quot;counter must not be null.&quot;);</span>
+<span class="fc bfc" id="L188" title="All 4 branches covered.">        boolean result = max.get(counter).intValue() &gt;= count &amp;&amp; min.get(counter).intValue() &lt;= count;</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        hasErrors |= !result;</span>
+<span class="fc" id="L190">        return result;</span>
     }
 
     /**
@@ -197,16 +196,16 @@ public final class ClaimValidator {
      * @throws NullPointerException if statistic is {@code null}.
      */
     public void logIssues(final ClaimStatistic statistic) {
-<span class="fc" id="L200">        Objects.requireNonNull(statistic, &quot;statistic must not be null.&quot;);</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">        for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
-<span class="fc bfc" id="L202" title="All 2 branches covered.">            if (!isValid(counter, statistic.getCounter(counter))) {</span>
-<span class="fc" id="L203">                DefaultLog.getInstance().error(format(&quot;Unexpected count for %s, limit is [%s,%s].  Count: %s&quot;, counter,</span>
-<span class="fc" id="L204">                        min.get(counter), max.get(counter), statistic.getCounter(counter)));</span>
-<span class="fc" id="L205">                DefaultLog.getInstance().debug(format(&quot;%s (%s) is %s&quot;, counter, counter.displayName(),</span>
-<span class="fc" id="L206">                        StringUtils.uncapitalize(counter.getDescription())));</span>
+<span class="fc" id="L199">        Objects.requireNonNull(statistic, &quot;statistic must not be null.&quot;);</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">            if (!isValid(counter, statistic.getCounter(counter))) {</span>
+<span class="fc" id="L202">                DefaultLog.getInstance().error(format(&quot;Unexpected count for %s, limit is [%s,%s].  Count: %s&quot;, counter,</span>
+<span class="fc" id="L203">                        min.get(counter), max.get(counter), statistic.getCounter(counter)));</span>
+<span class="fc" id="L204">                DefaultLog.getInstance().debug(format(&quot;%s (%s) is %s&quot;, counter, counter.displayName(),</span>
+<span class="fc" id="L205">                        StringUtils.uncapitalize(counter.getDescription())));</span>
             }
         }
-<span class="fc" id="L209">    }</span>
+<span class="fc" id="L208">    }</span>
 
     /**
      * Creates a list of items that have issues.
@@ -215,14 +214,14 @@ public final class ClaimValidator {
      * @throws NullPointerException if statistic is {@code null}.
      */
     public List&lt;String&gt; listIssues(final ClaimStatistic statistic) {
-<span class="fc" id="L218">        Objects.requireNonNull(statistic, &quot;statistic must not be null.&quot;);</span>
-<span class="fc" id="L219">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L220" title="All 2 branches covered.">        for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
-<span class="fc bfc" id="L221" title="All 2 branches covered.">            if (!isValid(counter, statistic.getCounter(counter))) {</span>
-<span class="fc" id="L222">                result.add(counter.toString());</span>
+<span class="fc" id="L217">        Objects.requireNonNull(statistic, &quot;statistic must not be null.&quot;);</span>
+<span class="fc" id="L218">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L219" title="All 2 branches covered.">        for (ClaimStatistic.Counter counter : ClaimStatistic.Counter.values()) {</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">            if (!isValid(counter, statistic.getCounter(counter))) {</span>
+<span class="fc" id="L221">                result.add(counter.toString());</span>
             }
         }
-<span class="fc" id="L225">        return result;</span>
+<span class="fc" id="L224">        return result;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

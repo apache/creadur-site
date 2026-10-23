@@ -21,36 +21,38 @@ package org.apache.rat.commandline;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Objects;
 
 import org.apache.rat.ConfigurationException;
 import org.apache.rat.ReportConfiguration;
+import org.apache.rat.document.DocumentName;
 
 import static java.lang.String.format;
 
 /**
  * The enumeration of system defined stylesheets.
  */
-<span class="fc" id="L36">public enum StyleSheets {</span>
+<span class="fc" id="L35">public enum StyleSheets {</span>
     /**
      * The plain style sheet. The current default.
      */
-<span class="fc" id="L40">    PLAIN(&quot;plain-rat&quot;, &quot;The default style.&quot;),</span>
+<span class="fc" id="L39">    PLAIN(&quot;plain-rat&quot;, &quot;The default style.&quot;),</span>
     /**
      * The missing header report style sheet.
      */
-<span class="fc" id="L44">    MISSING_HEADERS(&quot;missing-headers&quot;, &quot;Produces a report of files that are missing headers.&quot;),</span>
+<span class="fc" id="L43">    MISSING_HEADERS(&quot;missing-headers&quot;, &quot;Produces a report of files that are missing headers.&quot;),</span>
     /**
      * The unapproved licenses report.
      */
-<span class="fc" id="L48">    UNAPPROVED_LICENSES(&quot;unapproved-licenses&quot;, &quot;Produces a report of the files with unapproved licenses.&quot;),</span>
+<span class="fc" id="L47">    UNAPPROVED_LICENSES(&quot;unapproved-licenses&quot;, &quot;Produces a report of the files with unapproved licenses.&quot;),</span>
     /**
      * The pretty-printed XML style sheet.
      */
-<span class="fc" id="L52">    XML(&quot;xml&quot;, &quot;Produces output in pretty-printed XML.&quot;);</span>
-
+<span class="fc" id="L51">    XML(&quot;xml&quot;, &quot;Produces output in pretty-printed XML.&quot;),</span>
+    /**
+     * Official HTML5 stylesheet.
+     */
+<span class="fc" id="L55">    XHTML5(&quot;xhtml5&quot;, &quot;Produces a HTML5 report.&quot;);</span>
     /**
      * The name of the style sheet. Must map to bundled resource XSLT file
      */
@@ -65,36 +67,39 @@ import static java.lang.String.format;
      * @param name the name of the XSLT file.
      * @param description what this XSLT produces.
      */
-<span class="fc" id="L68">    StyleSheets(final String name, final String description) {</span>
-<span class="fc" id="L69">        this.name = name;</span>
-<span class="fc" id="L70">        this.desc = description;</span>
-<span class="fc" id="L71">    }</span>
+<span class="fc" id="L70">    StyleSheets(final String name, final String description) {</span>
+<span class="fc" id="L71">        this.name = name;</span>
+<span class="fc" id="L72">        this.desc = description;</span>
+<span class="fc" id="L73">    }</span>
 
     /**
      * Gets the IODescriptor for a style sheet.
      * @return an IODescriptor for the sheet.
+     * @throws NullPointerException if the name can not be resolved.
      */
     public ReportConfiguration.IODescriptor&lt;InputStream&gt; getStyleSheet() {
-<span class="fc" id="L78">        URL url = StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name));</span>
-<span class="fc" id="L79">        Objects.requireNonNull(url, &quot;missing stylesheet: &quot; + name);</span>
-<span class="fc" id="L80">        return new ReportConfiguration.IODescriptor&lt;&gt;(name, url::openStream);</span>
+<span class="fc" id="L81">        URL url = StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name));</span>
+<span class="fc" id="L82">        Objects.requireNonNull(url, &quot;missing stylesheet: &quot; + name);</span>
+<span class="fc" id="L83">        return new ReportConfiguration.IODescriptor&lt;&gt;(name, url::openStream);</span>
     }
 
     /**
      * Gets the IODescriptor for a style sheet.
      * @param name the short name for or the path to a style sheet.
+     * @param workingDirectory the working directory to resolve the name against.
      * @return the IODescriptor for the style sheet.
+     * @throws ConfigurationException if the style sheet can not be found.
      */
-    public static ReportConfiguration.IODescriptor&lt;InputStream&gt; getStyleSheet(final String name) {
-<span class="fc" id="L89">        URL url = StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name));</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (url != null) {</span>
-<span class="fc" id="L91">            return new ReportConfiguration.IODescriptor&lt;&gt;(name, url::openStream);</span>
+    public static ReportConfiguration.IODescriptor&lt;InputStream&gt; getStyleSheet(final String name, final DocumentName workingDirectory) {
+<span class="fc" id="L94">        URL url = StyleSheets.class.getClassLoader().getResource(format(&quot;org/apache/rat/%s.xsl&quot;, name));</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">        if (url != null) {</span>
+<span class="fc" id="L96">            return new ReportConfiguration.IODescriptor&lt;&gt;(name, url::openStream);</span>
         }
-<span class="fc" id="L93">        Path p = Paths.get(name);</span>
-<span class="pc bpc" id="L94" title="1 of 2 branches missed.">        if (p.toFile().exists()) {</span>
-<span class="fc" id="L95">            return new ReportConfiguration.IODescriptor&lt;&gt;(name, () -&gt; Files.newInputStream(p));</span>
+<span class="fc" id="L98">        DocumentName xslt = workingDirectory.resolve(name);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (xslt.asFile().exists()) {</span>
+<span class="fc" id="L100">            return new ReportConfiguration.IODescriptor&lt;&gt;(xslt.toString(), () -&gt; Files.newInputStream(xslt.asFile().toPath()));</span>
         }
-<span class="nc" id="L97">        throw new ConfigurationException(format(&quot;Stylesheet file '%s' not found&quot;, name));</span>
+<span class="fc" id="L102">        throw new ConfigurationException(format(&quot;Stylesheet file '%s' not found: %s&quot;, name, xslt.getName()));</span>
     }
 
     /**
@@ -102,7 +107,7 @@ import static java.lang.String.format;
      * @return the name of the XSLT file, without the extension.
      */
     public String arg() {
-<span class="fc" id="L105">        return name;</span>
+<span class="fc" id="L110">        return name;</span>
     }
 
     /**
@@ -110,7 +115,7 @@ import static java.lang.String.format;
      * @return the description of the XSLT file.
      */
     public String desc() {
-<span class="fc" id="L113">        return desc;</span>
+<span class="fc" id="L118">        return desc;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

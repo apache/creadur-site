@@ -180,135 +180,134 @@
 <a class="jxr_linenumber" name="L172" href="#L172">172</a>         String resolveName2 = fsInfo.roots()[0] + fsInfo.mkPath(<span class="jxr_string">"dir"</span>, fsInfo.toString(), <span class="jxr_string">"thing"</span>);
 <a class="jxr_linenumber" name="L173" href="#L173">173</a>         assertThat(base.resolve(resolveName2).getName())
 <a class="jxr_linenumber" name="L174" href="#L174">174</a>                 .isEqualTo(resolveName2);
-<a class="jxr_linenumber" name="L175" href="#L175">175</a> 
-<a class="jxr_linenumber" name="L176" href="#L176">176</a>     }
-<a class="jxr_linenumber" name="L177" href="#L177">177</a> 
-<a class="jxr_linenumber" name="L178" href="#L178">178</a>     <strong class="jxr_keyword">void</strong> testNoRootSpecified() {
-<a class="jxr_linenumber" name="L179" href="#L179">179</a>         <em class="jxr_comment">// no root specified</em>
-<a class="jxr_linenumber" name="L180" href="#L180">180</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X:/candidate"</span>, <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L181" href="#L181">181</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X:/candidate"</span>, <span class="jxr_string">""</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L182" href="#L182">182</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X;/candidate"</span>, <span class="jxr_string">"  "</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L183" href="#L183">183</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"/candidate"</span>, <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"/"</span>)).isTrue();
-<a class="jxr_linenumber" name="L184" href="#L184">184</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"/candidate"</span>, <span class="jxr_string">""</span>, <span class="jxr_string">"/"</span>)).isTrue();
-<a class="jxr_linenumber" name="L185" href="#L185">185</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"/candidate"</span>, <span class="jxr_string">"  "</span>, <span class="jxr_string">"/"</span>)).isTrue();
-<a class="jxr_linenumber" name="L186" href="#L186">186</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"candidate"</span>, <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L187" href="#L187">187</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"candidate"</span>, <span class="jxr_string">""</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L188" href="#L188">188</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"candidate"</span>, <span class="jxr_string">"  "</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L189" href="#L189">189</a>     }
-<a class="jxr_linenumber" name="L190" href="#L190">190</a> 
-<a class="jxr_linenumber" name="L191" href="#L191">191</a>     @Test
-<a class="jxr_linenumber" name="L192" href="#L192">192</a>     <strong class="jxr_keyword">void</strong> startsWithRootOrSeparatorTest() {
-<a class="jxr_linenumber" name="L193" href="#L193">193</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X:/candidate"</span>, <span class="jxr_string">"X:/"</span>, <span class="jxr_string">"/"</span>)).isTrue();
-<a class="jxr_linenumber" name="L194" href="#L194">194</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X:/candidate"</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L195" href="#L195">195</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"/candidate"</span>, <span class="jxr_string">"X:/"</span>, <span class="jxr_string">"/"</span>)).isTrue();
-<a class="jxr_linenumber" name="L196" href="#L196">196</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"&#92;&#92;candidate"</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L197" href="#L197">197</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"candidate"</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L198" href="#L198">198</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"Y:candidate"</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L199" href="#L199">199</a>         assertThat(DocumentName.startsWithRootOrSeparator(<strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L200" href="#L200">200</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">""</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L201" href="#L201">201</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"  "</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
-<a class="jxr_linenumber" name="L202" href="#L202">202</a> 
-<a class="jxr_linenumber" name="L203" href="#L203">203</a>         testNoRootSpecified();
-<a class="jxr_linenumber" name="L204" href="#L204">204</a>     }
-<a class="jxr_linenumber" name="L205" href="#L205">205</a> 
-<a class="jxr_linenumber" name="L206" href="#L206">206</a>     @ParameterizedTest
-<a class="jxr_linenumber" name="L207" href="#L207">207</a>     @FieldSource(<span class="jxr_string">"TEST_SUITE"</span>)
-<a class="jxr_linenumber" name="L208" href="#L208">208</a>     <strong class="jxr_keyword">void</strong> localizeTest(FSInfo fsInfo) {
-<a class="jxr_linenumber" name="L209" href="#L209">209</a>         DocumentName documentName = DocumentName.builder(fsInfo).setName(
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>                 fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>))
-<a class="jxr_linenumber" name="L211" href="#L211">211</a>                 .setBaseName(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>)).build();
-<a class="jxr_linenumber" name="L212" href="#L212">212</a> 
-<a class="jxr_linenumber" name="L213" href="#L213">213</a>         assertThat(documentName.localized()).isEqualTo(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>));
-<a class="jxr_linenumber" name="L214" href="#L214">214</a>         assertThat(documentName.localized(<span class="jxr_string">"-"</span>)).isEqualTo(<span class="jxr_string">"-b-c"</span>);
-<a class="jxr_linenumber" name="L215" href="#L215">215</a> 
-<a class="jxr_linenumber" name="L216" href="#L216">216</a>         documentName = DocumentName.builder(fsInfo).setName(
-<a class="jxr_linenumber" name="L217" href="#L217">217</a>                         fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>))
-<a class="jxr_linenumber" name="L218" href="#L218">218</a>                 .setBaseName(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"z"</span>)).build();
-<a class="jxr_linenumber" name="L219" href="#L219">219</a> 
-<a class="jxr_linenumber" name="L220" href="#L220">220</a>         assertThat(documentName.localized()).isEqualTo(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>));
-<a class="jxr_linenumber" name="L221" href="#L221">221</a> 
-<a class="jxr_linenumber" name="L222" href="#L222">222</a>         <strong class="jxr_keyword">if</strong> (fsInfo.roots().length &gt; 1) {
-<a class="jxr_linenumber" name="L223" href="#L223">223</a>             documentName = DocumentName.builder(fsInfo).setName(
-<a class="jxr_linenumber" name="L224" href="#L224">224</a>                             fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>))
-<a class="jxr_linenumber" name="L225" href="#L225">225</a>                     .setBaseName(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"z"</span>))
-<a class="jxr_linenumber" name="L226" href="#L226">226</a>                     .setRoot(fsInfo.roots()[1]).build();
-<a class="jxr_linenumber" name="L227" href="#L227">227</a>             assertThat(documentName.localized()).isEqualTo(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>));
-<a class="jxr_linenumber" name="L228" href="#L228">228</a>         }
-<a class="jxr_linenumber" name="L229" href="#L229">229</a>     }
-<a class="jxr_linenumber" name="L230" href="#L230">230</a> 
-<a class="jxr_linenumber" name="L231" href="#L231">231</a>     @Test
-<a class="jxr_linenumber" name="L232" href="#L232">232</a>     <strong class="jxr_keyword">void</strong> asFileTest() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L233" href="#L233">233</a>         File expected = File.createTempFile(<span class="jxr_string">"docNameTest"</span>, <span class="jxr_string">".txt"</span>);
-<a class="jxr_linenumber" name="L234" href="#L234">234</a>         <strong class="jxr_keyword">try</strong> (FileWriter fw = <strong class="jxr_keyword">new</strong> FileWriter(expected, StandardCharsets.UTF_8)) {
-<a class="jxr_linenumber" name="L235" href="#L235">235</a>             fw.write(<span class="jxr_string">"Hello world"</span>);
-<a class="jxr_linenumber" name="L236" href="#L236">236</a>         }
-<a class="jxr_linenumber" name="L237" href="#L237">237</a>         DocumentName underTest = DocumentName.builder(expected).build();
-<a class="jxr_linenumber" name="L238" href="#L238">238</a>         File actual = underTest.asFile();
-<a class="jxr_linenumber" name="L239" href="#L239">239</a>         <strong class="jxr_keyword">try</strong> (FileReader fr = <strong class="jxr_keyword">new</strong> FileReader(actual, StandardCharsets.UTF_8);
-<a class="jxr_linenumber" name="L240" href="#L240">240</a>         BufferedReader br = <strong class="jxr_keyword">new</strong> BufferedReader(fr)) {
-<a class="jxr_linenumber" name="L241" href="#L241">241</a>             assertThat(br.readLine()).isEqualTo(<span class="jxr_string">"Hello world"</span>);
-<a class="jxr_linenumber" name="L242" href="#L242">242</a>         }
-<a class="jxr_linenumber" name="L243" href="#L243">243</a>     }
-<a class="jxr_linenumber" name="L244" href="#L244">244</a> 
-<a class="jxr_linenumber" name="L245" href="#L245">245</a>     @Test
-<a class="jxr_linenumber" name="L246" href="#L246">246</a>     <strong class="jxr_keyword">void</strong> asPathTest() <strong class="jxr_keyword">throws</strong> IOException {
-<a class="jxr_linenumber" name="L247" href="#L247">247</a>         File expected = File.createTempFile(<span class="jxr_string">"docNameTest"</span>, <span class="jxr_string">".txt"</span>);
-<a class="jxr_linenumber" name="L248" href="#L248">248</a>         <strong class="jxr_keyword">try</strong> (FileWriter fw = <strong class="jxr_keyword">new</strong> FileWriter(expected, StandardCharsets.UTF_8)) {
-<a class="jxr_linenumber" name="L249" href="#L249">249</a>             fw.write(<span class="jxr_string">"Hello world"</span>);
-<a class="jxr_linenumber" name="L250" href="#L250">250</a>         }
-<a class="jxr_linenumber" name="L251" href="#L251">251</a>         DocumentName underTest = DocumentName.builder(expected).build();
-<a class="jxr_linenumber" name="L252" href="#L252">252</a>         Path actual = underTest.asPath();
-<a class="jxr_linenumber" name="L253" href="#L253">253</a>         Path root = Path.of(underTest.getRoot());
-<a class="jxr_linenumber" name="L254" href="#L254">254</a>         File file = root.resolve(actual).toFile();
-<a class="jxr_linenumber" name="L255" href="#L255">255</a>         <strong class="jxr_keyword">try</strong> (FileReader fr = <strong class="jxr_keyword">new</strong> FileReader(file, StandardCharsets.UTF_8);
-<a class="jxr_linenumber" name="L256" href="#L256">256</a>              BufferedReader br = <strong class="jxr_keyword">new</strong> BufferedReader(fr)) {
-<a class="jxr_linenumber" name="L257" href="#L257">257</a>             assertThat(br.readLine()).isEqualTo(<span class="jxr_string">"Hello world"</span>);
-<a class="jxr_linenumber" name="L258" href="#L258">258</a>         }
-<a class="jxr_linenumber" name="L259" href="#L259">259</a>     }
-<a class="jxr_linenumber" name="L260" href="#L260">260</a> 
-<a class="jxr_linenumber" name="L261" href="#L261">261</a> 
-<a class="jxr_linenumber" name="L262" href="#L262">262</a>     @ParameterizedTest(name = <span class="jxr_string">"{index} {0} {1}"</span>)
-<a class="jxr_linenumber" name="L263" href="#L263">263</a>     @MethodSource(<span class="jxr_string">"archiveEntryTestData"</span>)
-<a class="jxr_linenumber" name="L264" href="#L264">264</a>     <strong class="jxr_keyword">void</strong> archiveEntryNameTest(String os, String testName, DocumentName archiveName, String root, String separator, String baseName,
-<a class="jxr_linenumber" name="L265" href="#L265">265</a>                               String localizedName) {
-<a class="jxr_linenumber" name="L266" href="#L266">266</a>         assertThat(archiveName.getRoot()).as(<span class="jxr_string">"root"</span>).isEqualTo(root);
-<a class="jxr_linenumber" name="L267" href="#L267">267</a>         assertThat(archiveName.getDirectorySeparator()).as(<span class="jxr_string">"separator"</span>).isEqualTo(separator);
-<a class="jxr_linenumber" name="L268" href="#L268">268</a>         assertThat(archiveName.getBaseName()).as(<span class="jxr_string">"baseName"</span>).isEqualTo(baseName);
-<a class="jxr_linenumber" name="L269" href="#L269">269</a>         assertThat(archiveName.localized()).as(<span class="jxr_string">"localized"</span>).isEqualTo(localizedName);
-<a class="jxr_linenumber" name="L270" href="#L270">270</a>         assertThat(archiveName.getName()).as(<span class="jxr_string">"name"</span>).isEqualTo(baseName + localizedName);
-<a class="jxr_linenumber" name="L271" href="#L271">271</a>         <strong class="jxr_keyword">if</strong> (!separator.equals(archiveName.fsInfo().dirSeparator()))
-<a class="jxr_linenumber" name="L272" href="#L272">272</a>         {
-<a class="jxr_linenumber" name="L273" href="#L273">273</a>             String newBaseName = separator.equals(<span class="jxr_string">"/"</span>) ? baseName.replace('&#92;&#92;', '/') : baseName.replace('/', '&#92;&#92;');
-<a class="jxr_linenumber" name="L274" href="#L274">274</a>             assertThat(archiveName.localized(separator)).as(<span class="jxr_string">"localized(x)"</span>).isEqualTo(newBaseName + localizedName);
-<a class="jxr_linenumber" name="L275" href="#L275">275</a>         }
-<a class="jxr_linenumber" name="L276" href="#L276">276</a>     }
-<a class="jxr_linenumber" name="L277" href="#L277">277</a> 
-<a class="jxr_linenumber" name="L278" href="#L278">278</a>     <strong class="jxr_keyword">static</strong> List&lt;Arguments&gt; archiveEntryTestData() {
-<a class="jxr_linenumber" name="L279" href="#L279">279</a>         List&lt;Arguments&gt; lst = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
-<a class="jxr_linenumber" name="L280" href="#L280">280</a> 
-<a class="jxr_linenumber" name="L281" href="#L281">281</a>         <strong class="jxr_keyword">for</strong> (FSInfo fsInfo :  FSInfoTest.TEST_SUITE) {
-<a class="jxr_linenumber" name="L282" href="#L282">282</a>             String os = fsInfo.toString();
-<a class="jxr_linenumber" name="L283" href="#L283">283</a>             String root = fsInfo.roots()[0];
-<a class="jxr_linenumber" name="L284" href="#L284">284</a>             String baseName = String.format(String.format(<span class="jxr_string">"%sarchives"</span>, root));
-<a class="jxr_linenumber" name="L285" href="#L285">285</a>             String simpleName = String.format(<span class="jxr_string">"%sanArchive.zip"</span>, fsInfo.dirSeparator());
-<a class="jxr_linenumber" name="L286" href="#L286">286</a>             String entryName = <span class="jxr_string">"./anArchiveEntry.txt"</span>;
-<a class="jxr_linenumber" name="L287" href="#L287">287</a>             DocumentName archiveName = DocumentName.builder(fsInfo).setName(baseName + simpleName).setBaseName(baseName).build();
-<a class="jxr_linenumber" name="L288" href="#L288">288</a>             lst.add(Arguments.of(os, <span class="jxr_string">"archive name"</span>, archiveName, root, fsInfo.dirSeparator(), baseName, simpleName));
-<a class="jxr_linenumber" name="L289" href="#L289">289</a> 
-<a class="jxr_linenumber" name="L290" href="#L290">290</a>             ArchiveEntryName archiveEntryName = <strong class="jxr_keyword">new</strong> ArchiveEntryName(archiveName, entryName);
-<a class="jxr_linenumber" name="L291" href="#L291">291</a>             baseName = archiveName.getName() + <span class="jxr_string">"#"</span>;
-<a class="jxr_linenumber" name="L292" href="#L292">292</a>             root = baseName + <span class="jxr_string">"/"</span>;
-<a class="jxr_linenumber" name="L293" href="#L293">293</a>             lst.add(Arguments.of(os, <span class="jxr_string">"archive entry name"</span>, archiveEntryName, root, <span class="jxr_string">"/"</span>, baseName, <span class="jxr_string">"/anArchiveEntry.txt"</span>));
-<a class="jxr_linenumber" name="L294" href="#L294">294</a> 
-<a class="jxr_linenumber" name="L295" href="#L295">295</a>             <em class="jxr_comment">// test with directory</em>
-<a class="jxr_linenumber" name="L296" href="#L296">296</a>             entryName = <span class="jxr_string">"./someDir/anArchiveEntry.txt"</span>;
-<a class="jxr_linenumber" name="L297" href="#L297">297</a>             archiveEntryName = <strong class="jxr_keyword">new</strong> ArchiveEntryName(archiveName, entryName);
-<a class="jxr_linenumber" name="L298" href="#L298">298</a> 
-<a class="jxr_linenumber" name="L299" href="#L299">299</a>             lst.add(Arguments.of(os, <span class="jxr_string">"archive entry with directory"</span>, archiveEntryName, root, <span class="jxr_string">"/"</span>, baseName, <span class="jxr_string">"/someDir/anArchiveEntry.txt"</span>));
-<a class="jxr_linenumber" name="L300" href="#L300">300</a>         }
-<a class="jxr_linenumber" name="L301" href="#L301">301</a>         <strong class="jxr_keyword">return</strong> lst;
-<a class="jxr_linenumber" name="L302" href="#L302">302</a>     }
-<a class="jxr_linenumber" name="L303" href="#L303">303</a> }
+<a class="jxr_linenumber" name="L175" href="#L175">175</a>     }
+<a class="jxr_linenumber" name="L176" href="#L176">176</a> 
+<a class="jxr_linenumber" name="L177" href="#L177">177</a>     <strong class="jxr_keyword">void</strong> testNoRootSpecified() {
+<a class="jxr_linenumber" name="L178" href="#L178">178</a>         <em class="jxr_comment">// no root specified</em>
+<a class="jxr_linenumber" name="L179" href="#L179">179</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X:/candidate"</span>, <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L180" href="#L180">180</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X:/candidate"</span>, <span class="jxr_string">""</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L181" href="#L181">181</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X;/candidate"</span>, <span class="jxr_string">"  "</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L182" href="#L182">182</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"/candidate"</span>, <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"/"</span>)).isTrue();
+<a class="jxr_linenumber" name="L183" href="#L183">183</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"/candidate"</span>, <span class="jxr_string">""</span>, <span class="jxr_string">"/"</span>)).isTrue();
+<a class="jxr_linenumber" name="L184" href="#L184">184</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"/candidate"</span>, <span class="jxr_string">"  "</span>, <span class="jxr_string">"/"</span>)).isTrue();
+<a class="jxr_linenumber" name="L185" href="#L185">185</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"candidate"</span>, <strong class="jxr_keyword">null</strong>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L186" href="#L186">186</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"candidate"</span>, <span class="jxr_string">""</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L187" href="#L187">187</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"candidate"</span>, <span class="jxr_string">"  "</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L188" href="#L188">188</a>     }
+<a class="jxr_linenumber" name="L189" href="#L189">189</a> 
+<a class="jxr_linenumber" name="L190" href="#L190">190</a>     @Test
+<a class="jxr_linenumber" name="L191" href="#L191">191</a>     <strong class="jxr_keyword">void</strong> startsWithRootOrSeparatorTest() {
+<a class="jxr_linenumber" name="L192" href="#L192">192</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X:/candidate"</span>, <span class="jxr_string">"X:/"</span>, <span class="jxr_string">"/"</span>)).isTrue();
+<a class="jxr_linenumber" name="L193" href="#L193">193</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"X:/candidate"</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L194" href="#L194">194</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"/candidate"</span>, <span class="jxr_string">"X:/"</span>, <span class="jxr_string">"/"</span>)).isTrue();
+<a class="jxr_linenumber" name="L195" href="#L195">195</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"&#92;&#92;candidate"</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L196" href="#L196">196</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"candidate"</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L197" href="#L197">197</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"Y:candidate"</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L198" href="#L198">198</a>         assertThat(DocumentName.startsWithRootOrSeparator(<strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L199" href="#L199">199</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">""</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L200" href="#L200">200</a>         assertThat(DocumentName.startsWithRootOrSeparator(<span class="jxr_string">"  "</span>, <span class="jxr_string">"Y:/"</span>, <span class="jxr_string">"/"</span>)).isFalse();
+<a class="jxr_linenumber" name="L201" href="#L201">201</a> 
+<a class="jxr_linenumber" name="L202" href="#L202">202</a>         testNoRootSpecified();
+<a class="jxr_linenumber" name="L203" href="#L203">203</a>     }
+<a class="jxr_linenumber" name="L204" href="#L204">204</a> 
+<a class="jxr_linenumber" name="L205" href="#L205">205</a>     @ParameterizedTest
+<a class="jxr_linenumber" name="L206" href="#L206">206</a>     @FieldSource(<span class="jxr_string">"TEST_SUITE"</span>)
+<a class="jxr_linenumber" name="L207" href="#L207">207</a>     <strong class="jxr_keyword">void</strong> localizeTest(FSInfo fsInfo) {
+<a class="jxr_linenumber" name="L208" href="#L208">208</a>         DocumentName documentName = DocumentName.builder(fsInfo).setName(
+<a class="jxr_linenumber" name="L209" href="#L209">209</a>                 fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>))
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>                 .setBaseName(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>)).build();
+<a class="jxr_linenumber" name="L211" href="#L211">211</a> 
+<a class="jxr_linenumber" name="L212" href="#L212">212</a>         assertThat(documentName.localized()).isEqualTo(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>));
+<a class="jxr_linenumber" name="L213" href="#L213">213</a>         assertThat(documentName.localized(<span class="jxr_string">"-"</span>)).isEqualTo(<span class="jxr_string">"-b-c"</span>);
+<a class="jxr_linenumber" name="L214" href="#L214">214</a> 
+<a class="jxr_linenumber" name="L215" href="#L215">215</a>         documentName = DocumentName.builder(fsInfo).setName(
+<a class="jxr_linenumber" name="L216" href="#L216">216</a>                         fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>))
+<a class="jxr_linenumber" name="L217" href="#L217">217</a>                 .setBaseName(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"z"</span>)).build();
+<a class="jxr_linenumber" name="L218" href="#L218">218</a> 
+<a class="jxr_linenumber" name="L219" href="#L219">219</a>         assertThat(documentName.localized()).isEqualTo(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>));
+<a class="jxr_linenumber" name="L220" href="#L220">220</a> 
+<a class="jxr_linenumber" name="L221" href="#L221">221</a>         <strong class="jxr_keyword">if</strong> (fsInfo.roots().length &gt; 1) {
+<a class="jxr_linenumber" name="L222" href="#L222">222</a>             documentName = DocumentName.builder(fsInfo).setName(
+<a class="jxr_linenumber" name="L223" href="#L223">223</a>                             fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>))
+<a class="jxr_linenumber" name="L224" href="#L224">224</a>                     .setBaseName(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"z"</span>))
+<a class="jxr_linenumber" name="L225" href="#L225">225</a>                     .setRoot(fsInfo.roots()[1]).build();
+<a class="jxr_linenumber" name="L226" href="#L226">226</a>             assertThat(documentName.localized()).isEqualTo(fsInfo.mkPath(<span class="jxr_string">""</span>, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>, <span class="jxr_string">"c"</span>));
+<a class="jxr_linenumber" name="L227" href="#L227">227</a>         }
+<a class="jxr_linenumber" name="L228" href="#L228">228</a>     }
+<a class="jxr_linenumber" name="L229" href="#L229">229</a> 
+<a class="jxr_linenumber" name="L230" href="#L230">230</a>     @Test
+<a class="jxr_linenumber" name="L231" href="#L231">231</a>     <strong class="jxr_keyword">void</strong> asFileTest() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L232" href="#L232">232</a>         File expected = File.createTempFile(<span class="jxr_string">"docNameTest"</span>, <span class="jxr_string">".txt"</span>);
+<a class="jxr_linenumber" name="L233" href="#L233">233</a>         <strong class="jxr_keyword">try</strong> (FileWriter fw = <strong class="jxr_keyword">new</strong> FileWriter(expected, StandardCharsets.UTF_8)) {
+<a class="jxr_linenumber" name="L234" href="#L234">234</a>             fw.write(<span class="jxr_string">"Hello world"</span>);
+<a class="jxr_linenumber" name="L235" href="#L235">235</a>         }
+<a class="jxr_linenumber" name="L236" href="#L236">236</a>         DocumentName underTest = DocumentName.builder(expected).build();
+<a class="jxr_linenumber" name="L237" href="#L237">237</a>         File actual = underTest.asFile();
+<a class="jxr_linenumber" name="L238" href="#L238">238</a>         <strong class="jxr_keyword">try</strong> (FileReader fr = <strong class="jxr_keyword">new</strong> FileReader(actual, StandardCharsets.UTF_8);
+<a class="jxr_linenumber" name="L239" href="#L239">239</a>         BufferedReader br = <strong class="jxr_keyword">new</strong> BufferedReader(fr)) {
+<a class="jxr_linenumber" name="L240" href="#L240">240</a>             assertThat(br.readLine()).isEqualTo(<span class="jxr_string">"Hello world"</span>);
+<a class="jxr_linenumber" name="L241" href="#L241">241</a>         }
+<a class="jxr_linenumber" name="L242" href="#L242">242</a>     }
+<a class="jxr_linenumber" name="L243" href="#L243">243</a> 
+<a class="jxr_linenumber" name="L244" href="#L244">244</a>     @Test
+<a class="jxr_linenumber" name="L245" href="#L245">245</a>     <strong class="jxr_keyword">void</strong> asPathTest() <strong class="jxr_keyword">throws</strong> IOException {
+<a class="jxr_linenumber" name="L246" href="#L246">246</a>         File expected = File.createTempFile(<span class="jxr_string">"docNameTest"</span>, <span class="jxr_string">".txt"</span>);
+<a class="jxr_linenumber" name="L247" href="#L247">247</a>         <strong class="jxr_keyword">try</strong> (FileWriter fw = <strong class="jxr_keyword">new</strong> FileWriter(expected, StandardCharsets.UTF_8)) {
+<a class="jxr_linenumber" name="L248" href="#L248">248</a>             fw.write(<span class="jxr_string">"Hello world"</span>);
+<a class="jxr_linenumber" name="L249" href="#L249">249</a>         }
+<a class="jxr_linenumber" name="L250" href="#L250">250</a>         DocumentName underTest = DocumentName.builder(expected).build();
+<a class="jxr_linenumber" name="L251" href="#L251">251</a>         Path actual = underTest.asPath();
+<a class="jxr_linenumber" name="L252" href="#L252">252</a>         Path root = Path.of(underTest.getRoot());
+<a class="jxr_linenumber" name="L253" href="#L253">253</a>         File file = root.resolve(actual).toFile();
+<a class="jxr_linenumber" name="L254" href="#L254">254</a>         <strong class="jxr_keyword">try</strong> (FileReader fr = <strong class="jxr_keyword">new</strong> FileReader(file, StandardCharsets.UTF_8);
+<a class="jxr_linenumber" name="L255" href="#L255">255</a>              BufferedReader br = <strong class="jxr_keyword">new</strong> BufferedReader(fr)) {
+<a class="jxr_linenumber" name="L256" href="#L256">256</a>             assertThat(br.readLine()).isEqualTo(<span class="jxr_string">"Hello world"</span>);
+<a class="jxr_linenumber" name="L257" href="#L257">257</a>         }
+<a class="jxr_linenumber" name="L258" href="#L258">258</a>     }
+<a class="jxr_linenumber" name="L259" href="#L259">259</a> 
+<a class="jxr_linenumber" name="L260" href="#L260">260</a>     @ParameterizedTest(name = <span class="jxr_string">"{index} {0} {1}"</span>)
+<a class="jxr_linenumber" name="L261" href="#L261">261</a>     @MethodSource(<span class="jxr_string">"archiveEntryTestData"</span>)
+<a class="jxr_linenumber" name="L262" href="#L262">262</a>     <strong class="jxr_keyword">void</strong> archiveEntryNameTest(String os, String testName, DocumentName archiveName, String root, String separator, String baseName,
+<a class="jxr_linenumber" name="L263" href="#L263">263</a>                               String localizedName) {
+<a class="jxr_linenumber" name="L264" href="#L264">264</a>         assertThat(archiveName.getRoot()).as(<span class="jxr_string">"root"</span>).isEqualTo(root);
+<a class="jxr_linenumber" name="L265" href="#L265">265</a>         assertThat(archiveName.getDirectorySeparator()).as(<span class="jxr_string">"separator"</span>).isEqualTo(separator);
+<a class="jxr_linenumber" name="L266" href="#L266">266</a>         assertThat(archiveName.getBaseName()).as(<span class="jxr_string">"baseName"</span>).isEqualTo(baseName);
+<a class="jxr_linenumber" name="L267" href="#L267">267</a>         assertThat(archiveName.localized()).as(<span class="jxr_string">"localized"</span>).isEqualTo(localizedName);
+<a class="jxr_linenumber" name="L268" href="#L268">268</a>         assertThat(archiveName.getName()).as(<span class="jxr_string">"name"</span>).isEqualTo(baseName + localizedName);
+<a class="jxr_linenumber" name="L269" href="#L269">269</a>         <strong class="jxr_keyword">if</strong> (!separator.equals(archiveName.fsInfo().dirSeparator()))
+<a class="jxr_linenumber" name="L270" href="#L270">270</a>         {
+<a class="jxr_linenumber" name="L271" href="#L271">271</a>             String newBaseName = separator.equals(<span class="jxr_string">"/"</span>) ? baseName.replace('&#92;&#92;', '/') : baseName.replace('/', '&#92;&#92;');
+<a class="jxr_linenumber" name="L272" href="#L272">272</a>             assertThat(archiveName.localized(separator)).as(<span class="jxr_string">"localized(x)"</span>).isEqualTo(newBaseName + localizedName);
+<a class="jxr_linenumber" name="L273" href="#L273">273</a>         }
+<a class="jxr_linenumber" name="L274" href="#L274">274</a>     }
+<a class="jxr_linenumber" name="L275" href="#L275">275</a> 
+<a class="jxr_linenumber" name="L276" href="#L276">276</a>     <strong class="jxr_keyword">static</strong> List&lt;Arguments&gt; archiveEntryTestData() {
+<a class="jxr_linenumber" name="L277" href="#L277">277</a>         List&lt;Arguments&gt; lst = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L278" href="#L278">278</a> 
+<a class="jxr_linenumber" name="L279" href="#L279">279</a>         <strong class="jxr_keyword">for</strong> (FSInfo fsInfo :  FSInfoTest.TEST_SUITE) {
+<a class="jxr_linenumber" name="L280" href="#L280">280</a>             String os = fsInfo.toString();
+<a class="jxr_linenumber" name="L281" href="#L281">281</a>             String root = fsInfo.roots()[0];
+<a class="jxr_linenumber" name="L282" href="#L282">282</a>             String baseName = String.format(String.format(<span class="jxr_string">"%sarchives"</span>, root));
+<a class="jxr_linenumber" name="L283" href="#L283">283</a>             String simpleName = String.format(<span class="jxr_string">"%sanArchive.zip"</span>, fsInfo.dirSeparator());
+<a class="jxr_linenumber" name="L284" href="#L284">284</a>             String entryName = <span class="jxr_string">"./anArchiveEntry.txt"</span>;
+<a class="jxr_linenumber" name="L285" href="#L285">285</a>             DocumentName archiveName = DocumentName.builder(fsInfo).setName(baseName + simpleName).setBaseName(baseName).build();
+<a class="jxr_linenumber" name="L286" href="#L286">286</a>             lst.add(Arguments.of(os, <span class="jxr_string">"archive name"</span>, archiveName, root, fsInfo.dirSeparator(), baseName, simpleName));
+<a class="jxr_linenumber" name="L287" href="#L287">287</a> 
+<a class="jxr_linenumber" name="L288" href="#L288">288</a>             ArchiveEntryName archiveEntryName = <strong class="jxr_keyword">new</strong> ArchiveEntryName(archiveName, entryName);
+<a class="jxr_linenumber" name="L289" href="#L289">289</a>             baseName = archiveName.getName() + <span class="jxr_string">"#"</span>;
+<a class="jxr_linenumber" name="L290" href="#L290">290</a>             root = baseName + <span class="jxr_string">"/"</span>;
+<a class="jxr_linenumber" name="L291" href="#L291">291</a>             lst.add(Arguments.of(os, <span class="jxr_string">"archive entry name"</span>, archiveEntryName, root, <span class="jxr_string">"/"</span>, baseName, <span class="jxr_string">"/anArchiveEntry.txt"</span>));
+<a class="jxr_linenumber" name="L292" href="#L292">292</a> 
+<a class="jxr_linenumber" name="L293" href="#L293">293</a>             <em class="jxr_comment">// test with directory</em>
+<a class="jxr_linenumber" name="L294" href="#L294">294</a>             entryName = <span class="jxr_string">"./someDir/anArchiveEntry.txt"</span>;
+<a class="jxr_linenumber" name="L295" href="#L295">295</a>             archiveEntryName = <strong class="jxr_keyword">new</strong> ArchiveEntryName(archiveName, entryName);
+<a class="jxr_linenumber" name="L296" href="#L296">296</a> 
+<a class="jxr_linenumber" name="L297" href="#L297">297</a>             lst.add(Arguments.of(os, <span class="jxr_string">"archive entry with directory"</span>, archiveEntryName, root, <span class="jxr_string">"/"</span>, baseName, <span class="jxr_string">"/someDir/anArchiveEntry.txt"</span>));
+<a class="jxr_linenumber" name="L298" href="#L298">298</a>         }
+<a class="jxr_linenumber" name="L299" href="#L299">299</a>         <strong class="jxr_keyword">return</strong> lst;
+<a class="jxr_linenumber" name="L300" href="#L300">300</a>     }
+<a class="jxr_linenumber" name="L301" href="#L301">301</a> 
+<a class="jxr_linenumber" name="L302" href="#L302">302</a> }
 </pre>
 <hr/>
 <div id="footer">© 2006–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>

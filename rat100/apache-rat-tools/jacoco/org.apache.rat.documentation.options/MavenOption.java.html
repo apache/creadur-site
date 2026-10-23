@@ -18,35 +18,39 @@
  */
 package org.apache.rat.documentation.options;
 
+import java.util.function.Function;
+
 import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.WordUtils;
+import org.apache.rat.ConfigurationException;
 import org.apache.rat.ui.UIOption;
-import org.apache.rat.ui.UIOptionCollection;
 import org.apache.rat.utils.CasedString;
 
 import static java.lang.String.format;
 
 /**
- * A representation of a Maven option based on a CLI option.
+ * A representation of a Maven option based on an option.
  */
 public final class MavenOption extends UIOption&lt;MavenOption&gt; {
 
-    /** The format to start an XML entity */
+    /**
+     * The format to start an XML entity.
+     */
     private static final String XML_FMT = &quot;&lt;%s&gt;&quot;;
 
     /**
      * Constructor.
      *
-     * @param option The CLI option
+     * @param builder The MavenOption builder.
      */
-    MavenOption(final UIOptionCollection&lt;MavenOption&gt; collection, final Option option) {
-<span class="fc" id="L44">        super(collection, option, MavenOptionCollection.createName(option));</span>
-<span class="fc" id="L45">    }</span>
+    private MavenOption(final MavenOptionBuilder builder) {
+<span class="fc" id="L48">        super(builder);</span>
+<span class="fc" id="L49">    }</span>
 
     @Override
     public String toString() {
-<span class="nc" id="L49">        return getName();</span>
+<span class="nc" id="L53">        return getName();</span>
     }
 
     /**
@@ -54,29 +58,30 @@ public final class MavenOption extends UIOption&lt;MavenOption&gt; {
      * @return the method name for this option.
      */
     public String getMethodName() {
-<span class="nc" id="L57">        return &quot;set&quot; + name.toCase(CasedString.StringCase.PASCAL);</span>
+<span class="nc" id="L61">        return &quot;set&quot; + name.toCase(CasedString.StringCase.PASCAL);</span>
     }
 
     @Override
     protected String cleanupName(final Option option) {
         // only parse the option if we need to.
-<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        return option == this.option ? format(XML_FMT, this.name) : format(XML_FMT, MavenOptionCollection.createName(option));</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">        return format(XML_FMT, option == this.option ? this.name :</span>
+<span class="fc" id="L68">                MavenOptionBuilder.createName(optionCollection.rename(option)));</span>
     }
 
     @Override
     public String getText() {
-<span class="nc" id="L68">        return cleanupName(option);</span>
+<span class="nc" id="L73">        return cleanupName(option);</span>
     }
 
     @Override
     public String getExample() {
-<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (hasArgs()) {</span>
-<span class="fc" id="L74">            return getExample(getArgName() + &quot;1&quot;, getArgName() + &quot;2&quot;);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (hasArgs()) {</span>
+<span class="fc" id="L79">            return getExample(getArgName() + &quot;1&quot;, getArgName() + &quot;2&quot;);</span>
         }
-<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (hasArg()) {</span>
-<span class="fc" id="L77">            return getExample(getArgName());</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (hasArg()) {</span>
+<span class="fc" id="L82">            return getExample(getArgName());</span>
         }
-<span class="fc" id="L79">            return getExample(&quot;&quot;);</span>
+<span class="fc" id="L84">            return getExample(&quot;&quot;);</span>
     }
 
     /**
@@ -85,58 +90,98 @@ public final class MavenOption extends UIOption&lt;MavenOption&gt; {
      * @return a formatted option.
      */
     public String getExample(final String... args) {
-<span class="fc" id="L88">        StringBuilder sb = new StringBuilder(String.format(XML_FMT, getName()));</span>
-<span class="fc bfc" id="L89" title="All 2 branches covered.">        if (hasArg()) {</span>
-<span class="fc bfc" id="L90" title="All 2 branches covered.">            if (hasArgs()) {</span>
-<span class="fc" id="L91">                sb.append(System.lineSeparator());</span>
-<span class="fc bfc" id="L92" title="All 2 branches covered.">                for (String arg : args) {</span>
-<span class="fc" id="L93">                    sb.append(String.format(&quot;  &lt;%1$s&gt;%2$s&lt;/%1$s&gt;%n&quot;, WordUtils.uncapitalize(getArgName()), arg));</span>
+<span class="fc" id="L93">        StringBuilder sb = new StringBuilder(String.format(XML_FMT, getName()));</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (hasArg()) {</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            if (hasArgs()) {</span>
+<span class="fc" id="L96">                sb.append(System.lineSeparator());</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                for (String arg : args) {</span>
+<span class="fc" id="L98">                    sb.append(String.format(&quot;  &lt;%1$s&gt;%2$s&lt;/%1$s&gt;%n&quot;, WordUtils.uncapitalize(getArgName()), arg));</span>
                 }
             } else {
-<span class="fc" id="L96">                sb.append(args[0]);</span>
+<span class="fc" id="L101">                sb.append(args[0]);</span>
             }
         } else {
-<span class="fc" id="L99">            sb.append(Boolean.TRUE);</span>
+<span class="fc" id="L104">            sb.append(Boolean.TRUE);</span>
         }
-<span class="fc" id="L101">        sb.append(&quot;&lt;/&quot;).append(getName()).append(&quot;&gt;&quot;);</span>
-<span class="fc" id="L102">        return sb.toString();</span>
+<span class="fc" id="L106">        sb.append(&quot;&lt;/&quot;).append(getName()).append(&quot;&gt;&quot;);</span>
+<span class="fc" id="L107">        return sb.toString();</span>
     }
 
+    /**
+     * Gets the Maven Mojo method signature for this Option.
+     * @param indent the number of spaces to indent the text.
+     * @param multiple {@code true} if this option takes multiple arguments.
+     * @return the method signature for this Option.
+     */
     public String getMethodSignature(final String indent, final boolean multiple) {
-<span class="fc" id="L106">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc bfc" id="L107" title="All 2 branches covered.">        if (isDeprecated()) {</span>
-<span class="fc" id="L108">            sb.append(format(&quot;%s@Deprecated%n&quot;, indent));</span>
+<span class="fc" id="L117">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (isDeprecated()) {</span>
+<span class="fc" id="L119">            sb.append(format(&quot;%s@Deprecated%n&quot;, indent));</span>
         }
-<span class="fc" id="L110">        String fname = name.toCase(CasedString.StringCase.CAMEL);</span>
-<span class="fc bfc" id="L111" title="All 2 branches covered.">        String args = option.hasArg() ? &quot;String&quot; : &quot;boolean&quot;;</span>
-<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (multiple) {</span>
-<span class="pc bpc" id="L113" title="2 of 6 branches missed.">            if (!(fname.endsWith(&quot;s&quot;) || fname.endsWith(&quot;Approved&quot;) || fname.endsWith(&quot;Denied&quot;))) {</span>
-<span class="fc" id="L114">                fname = fname + &quot;s&quot;;</span>
+        // the camel case name for this option.
+<span class="fc" id="L122">        String camelName = name.toCase(CasedString.StringCase.CAMEL);</span>
+<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        if (camelName == null) {</span>
+<span class="nc" id="L124">            throw new ConfigurationException(&quot;Name must not be null&quot;);</span>
+        }
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        String args = option.hasArg() ? &quot;String&quot; : &quot;boolean&quot;;</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        if (multiple) {</span>
+<span class="pc bpc" id="L128" title="2 of 6 branches missed.">            if (!(camelName.endsWith(&quot;s&quot;) || camelName.endsWith(&quot;Approved&quot;) || camelName.endsWith(&quot;Denied&quot;))) {</span>
+<span class="fc" id="L129">                camelName = camelName + &quot;s&quot;;</span>
             }
-<span class="fc" id="L116">            args = args + &quot;[]&quot;;</span>
+<span class="fc" id="L131">            args = args + &quot;[]&quot;;</span>
         }
 
-<span class="fc" id="L119">        return sb.append(format(&quot;%1$s%5$s%n%1$spublic void set%3$s(%4$s %2$s)&quot;,</span>
-<span class="fc" id="L120">                        indent, name, fname, args, getPropertyAnnotation(fname)))</span>
-<span class="fc" id="L121">                .toString();</span>
+<span class="fc" id="L134">        return sb.append(format(&quot;%1$s%5$s%n%1$spublic void set%3$s(%4$s %2$s)&quot;,</span>
+<span class="fc" id="L135">                        indent, name, camelName, args, getParameterAnnotation(camelName)))</span>
+<span class="fc" id="L136">                .toString();</span>
     }
 
-
-    public String getPropertyAnnotation(final String fname) {
-<span class="fc" id="L126">        StringBuilder sb = new StringBuilder(&quot;@Parameter&quot;);</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">        String property = option.hasArgs() ? null : format(&quot;property = \&quot;rat.%s\&quot;&quot;, fname);</span>
-<span class="fc bfc" id="L128" title="All 2 branches covered.">        String defaultValue = option.isDeprecated() ? null : getDefaultValue();</span>
-<span class="pc bpc" id="L129" title="1 of 4 branches missed.">        if (property != null || defaultValue != null) {</span>
-<span class="fc" id="L130">            sb.append(&quot;(&quot;);</span>
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">            if (property != null) {</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">                sb.append(property).append(defaultValue != null ? &quot;, &quot; : StringUtils.EMPTY);</span>
+    /**
+     * Creates the {@code @Parameter} annotation for this option.
+     * @param camelName the camel cased name for this option.
+     * @return the string that is the parameter annotation.
+     */
+    public String getParameterAnnotation(final String camelName) {
+<span class="fc" id="L145">        StringBuilder sb = new StringBuilder(&quot;@Parameter&quot;);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        String property = option.hasArgs() ? null : format(&quot;property = \&quot;rat.%s\&quot;&quot;, camelName);</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        String defaultValue = option.isDeprecated() ? null : getDefaultValue();</span>
+<span class="pc bpc" id="L148" title="1 of 4 branches missed.">        if (property != null || defaultValue != null) {</span>
+<span class="fc" id="L149">            sb.append(&quot;(&quot;);</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">            if (property != null) {</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">                sb.append(property).append(defaultValue != null ? &quot;, &quot; : StringUtils.EMPTY);</span>
             }
-<span class="fc bfc" id="L134" title="All 2 branches covered.">            if (defaultValue != null) {</span>
-<span class="fc" id="L135">                sb.append(format(&quot;defaultValue = \&quot;%s\&quot;&quot;, defaultValue));</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">            if (defaultValue != null) {</span>
+<span class="fc" id="L154">                sb.append(format(&quot;defaultValue = \&quot;%s\&quot;&quot;, defaultValue));</span>
             }
-<span class="fc" id="L137">            sb.append(&quot;)&quot;);</span>
+<span class="fc" id="L156">            sb.append(&quot;)&quot;);</span>
         }
-<span class="fc" id="L139">        return sb.toString();</span>
+<span class="fc" id="L158">        return sb.toString();</span>
+    }
+
+    /**
+     * The builder for the MavenOptions.
+     */
+<span class="fc" id="L164">    public static class MavenOptionBuilder extends UIOption.Builder&lt;MavenOption, MavenOptionBuilder&gt; {</span>
+
+        @Override
+        protected Function&lt;Option, CasedString&gt; getNameFactory() {
+<span class="fc" id="L168">            return o -&gt; createName(optionCollection().rename(o));</span>
+        }
+
+        @Override
+        protected MavenOption doBuild() {
+<span class="fc" id="L173">            return new MavenOption(this);</span>
+        }
+
+        /**
+         * Create the cased name
+         * @param key the renamed key from the collection.
+         * @return the name for the key.
+         * @see MavenOptionCollection#rename(Option)
+         */
+        static CasedString createName(final String key) {
+<span class="fc" id="L183">            return new CasedString(CasedString.StringCase.KEBAB, key).as(CasedString.StringCase.PASCAL);</span>
+        }
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

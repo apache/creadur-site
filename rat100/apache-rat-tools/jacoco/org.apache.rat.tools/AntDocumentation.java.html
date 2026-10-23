@@ -49,6 +49,11 @@ public final class AntDocumentation {
     private final File outputDir;
 
     /**
+     * THe Ant Option collection instance.
+     */
+<span class="fc" id="L54">    private final AntOptionCollection antOptions = new AntOptionCollection();</span>
+
+    /**
      * Creates APT documentation files for Ant.
      * Requires 1 argument:
      * &lt;ol&gt;
@@ -57,110 +62,110 @@ public final class AntDocumentation {
      * @param args the arguments.
      */
     public static void main(final String[] args) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">        if (args.length == 0) {</span>
-<span class="nc" id="L61">            System.err.println(&quot;Output directory must be specified&quot;);</span>
-<span class="nc" id="L62">            System.exit(1);</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (args.length == 0) {</span>
+<span class="nc" id="L66">            System.err.println(&quot;Output directory must be specified&quot;);</span>
+<span class="nc" id="L67">            System.exit(1);</span>
         }
 
-<span class="nc" id="L65">        File outputDir = new File(args[0]);</span>
-<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (outputDir.exists()) {</span>
-<span class="nc bnc" id="L67" title="All 2 branches missed.">            if (!outputDir.isDirectory()) {</span>
-<span class="nc" id="L68">                DefaultLog.getInstance().error(format(&quot;%s is not a directory&quot;, args[0]));</span>
-<span class="nc" id="L69">                System.exit(1);</span>
-            }
-        } else {
-<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (!outputDir.mkdirs()) {</span>
-<span class="nc" id="L73">                DefaultLog.getInstance().error(format(&quot;Can not create directory %s&quot;, args[0]));</span>
+<span class="nc" id="L70">        File outputDir = new File(args[0]);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">        if (outputDir.exists()) {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            if (!outputDir.isDirectory()) {</span>
+<span class="nc" id="L73">                DefaultLog.getInstance().error(format(&quot;%s is not a directory&quot;, args[0]));</span>
 <span class="nc" id="L74">                System.exit(1);</span>
             }
+        } else {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">            if (!outputDir.mkdirs()) {</span>
+<span class="nc" id="L78">                DefaultLog.getInstance().error(format(&quot;Can not create directory %s&quot;, args[0]));</span>
+<span class="nc" id="L79">                System.exit(1);</span>
+            }
         }
-<span class="nc" id="L77">        new AntDocumentation(outputDir).execute();</span>
-<span class="nc" id="L78">    }</span>
+<span class="nc" id="L82">        new AntDocumentation(outputDir).execute();</span>
+<span class="nc" id="L83">    }</span>
 
     /* Visible for testing */
-<span class="fc" id="L81">    AntDocumentation(final File outputDir) {</span>
-<span class="fc" id="L82">        this.outputDir = outputDir;</span>
-<span class="fc" id="L83">    }</span>
+<span class="fc" id="L86">    AntDocumentation(final File outputDir) {</span>
+<span class="fc" id="L87">        this.outputDir = outputDir;</span>
+<span class="fc" id="L88">    }</span>
 
     public void execute() {
-<span class="nc" id="L86">        List&lt;AntOption&gt; options = AntOptionCollection.INSTANCE.getMappedOptions().toList();</span>
-<span class="nc" id="L87">        writeAttributes(options);</span>
-<span class="nc" id="L88">        writeElements(options);</span>
-<span class="nc" id="L89">        printValueTypes();</span>
-<span class="nc" id="L90">    }</span>
+<span class="nc" id="L91">        List&lt;AntOption&gt; options = antOptions.getMappedOptions().toList();</span>
+<span class="nc" id="L92">        writeAttributes(options);</span>
+<span class="nc" id="L93">        writeElements(options);</span>
+<span class="nc" id="L94">        printValueTypes();</span>
+<span class="nc" id="L95">    }</span>
 
     public void writeAttributes(final List&lt;AntOption&gt; options) {
-<span class="fc" id="L93">        File f = new File(outputDir, &quot;report_attributes.txt&quot;);</span>
-<span class="fc" id="L94">        try (Writer out = new OutputStreamWriter(Files.newOutputStream(f.toPath()), StandardCharsets.UTF_8)) {</span>
-<span class="fc" id="L95">            printOptions(out, options, AntOption::isAttribute,</span>
+<span class="fc" id="L98">        File f = new File(outputDir, &quot;report_attributes.txt&quot;);</span>
+<span class="fc" id="L99">        try (Writer out = new OutputStreamWriter(Files.newOutputStream(f.toPath()), StandardCharsets.UTF_8)) {</span>
+<span class="fc" id="L100">            printOptions(out, options, AntOption::isAttribute,</span>
                     &quot;The attribute value types are listed in a table at the bottom of this page.&quot;);
-<span class="nc" id="L97">        } catch (IOException e) {</span>
-<span class="nc" id="L98">            throw new RuntimeException(e);</span>
-<span class="fc" id="L99">        }</span>
-<span class="fc" id="L100">    }</span>
+<span class="nc" id="L102">        } catch (IOException e) {</span>
+<span class="nc" id="L103">            throw new RuntimeException(e);</span>
+<span class="fc" id="L104">        }</span>
+<span class="fc" id="L105">    }</span>
 
     public void writeElements(final List&lt;AntOption&gt; options) {
-<span class="fc" id="L103">        File f = new File(outputDir, &quot;report_elements.txt&quot;);</span>
-<span class="fc" id="L104">        try (Writer out = new OutputStreamWriter(Files.newOutputStream(f.toPath()), StandardCharsets.UTF_8)) {</span>
-<span class="fc" id="L105">            printOptions(out, options, AntOption::isElement,</span>
+<span class="fc" id="L108">        File f = new File(outputDir, &quot;report_elements.txt&quot;);</span>
+<span class="fc" id="L109">        try (Writer out = new OutputStreamWriter(Files.newOutputStream(f.toPath()), StandardCharsets.UTF_8)) {</span>
+<span class="fc" id="L110">            printOptions(out, options, AntOption::isElement,</span>
                     &quot;The element value types are listed in a table at the bottom of this page.&quot;);
-<span class="nc" id="L107">        } catch (IOException e) {</span>
-<span class="nc" id="L108">            throw new RuntimeException(e);</span>
-<span class="fc" id="L109">        }</span>
-<span class="fc" id="L110">    }</span>
+<span class="nc" id="L112">        } catch (IOException e) {</span>
+<span class="nc" id="L113">            throw new RuntimeException(e);</span>
+<span class="fc" id="L114">        }</span>
+<span class="fc" id="L115">    }</span>
 
     /* package private for testing */
     void printOptions(final Writer out, final List&lt;AntOption&gt; options,
                               final Predicate&lt;AntOption&gt; typeFilter, final String tableCaption) throws IOException {
-<span class="fc" id="L115">        boolean hasDeprecated = options.stream().anyMatch(typeFilter.and(AntOption::isDeprecated));</span>
+<span class="fc" id="L120">        boolean hasDeprecated = options.stream().anyMatch(typeFilter.and(AntOption::isDeprecated));</span>
 
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        if (hasDeprecated) {</span>
-<span class="nc" id="L118">            AptFormat.writeHeader(out, 2, &quot;Current&quot;);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        if (hasDeprecated) {</span>
+<span class="nc" id="L123">            AptFormat.writeHeader(out, 2, &quot;Current&quot;);</span>
         }
 
-<span class="fc" id="L121">        List&lt;List&lt;String&gt;&gt; table = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L122">        table.add(Arrays.asList(&quot;Name&quot;, &quot;Description&quot;, &quot;Value Type&quot;, &quot;Required&quot;));</span>
-<span class="pc bpc" id="L123" title="1 of 2 branches missed.">        options.stream().filter(typeFilter.and(o -&gt; !o.isDeprecated()))</span>
-<span class="fc" id="L124">                .map(o -&gt; Arrays.asList(o.getName(), o.getDescription(),</span>
-<span class="fc bfc" id="L125" title="All 2 branches covered.">                        o.hasArg() ? StringUtils.defaultIfEmpty(o.getArgName(), &quot;String&quot;) : &quot;boolean&quot;,</span>
-<span class="fc" id="L126">                        Boolean.toString(o.isRequired())))</span>
-<span class="fc" id="L127">                .forEach(table::add);</span>
+<span class="fc" id="L126">        List&lt;List&lt;String&gt;&gt; table = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L127">        table.add(Arrays.asList(&quot;Name&quot;, &quot;Description&quot;, &quot;Value Type&quot;, &quot;Required&quot;));</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">        options.stream().filter(typeFilter.and(o -&gt; !o.isDeprecated()))</span>
+<span class="fc" id="L129">                .map(o -&gt; Arrays.asList(o.getName(), o.getDescription(),</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">                        o.hasArg() ? StringUtils.defaultIfEmpty(o.getArgName(), &quot;String&quot;) : &quot;boolean&quot;,</span>
+<span class="fc" id="L131">                        Boolean.toString(o.isRequired())))</span>
+<span class="fc" id="L132">                .forEach(table::add);</span>
 
-<span class="fc" id="L129">        AptFormat.writeTable(out, table, &quot;*--+--+--+--+&quot;, tableCaption);</span>
+<span class="fc" id="L134">        AptFormat.writeTable(out, table, &quot;*--+--+--+--+&quot;, tableCaption);</span>
 
-<span class="pc bpc" id="L131" title="1 of 2 branches missed.">        if (hasDeprecated) {</span>
-<span class="nc" id="L132">            AptFormat.writeHeader(out, 2, &quot;Deprecated &quot;);</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">        if (hasDeprecated) {</span>
+<span class="nc" id="L137">            AptFormat.writeHeader(out, 2, &quot;Deprecated &quot;);</span>
 
-<span class="nc" id="L134">            table.clear();</span>
-<span class="nc" id="L135">            table.add(Arrays.asList(&quot;Name&quot;, &quot;Description&quot;, &quot;Argument Type&quot;, &quot;Deprecated&quot;));</span>
+<span class="nc" id="L139">            table.clear();</span>
+<span class="nc" id="L140">            table.add(Arrays.asList(&quot;Name&quot;, &quot;Description&quot;, &quot;Argument Type&quot;, &quot;Deprecated&quot;));</span>
 
-<span class="nc" id="L137">            options.stream().filter(typeFilter.and(AntOption::isDeprecated))</span>
-<span class="nc" id="L138">                    .map(o -&gt; Arrays.asList(o.getName(), o.getDescription(),</span>
-<span class="nc bnc" id="L139" title="All 2 branches missed.">                            o.hasArg() ? StringUtils.defaultIfEmpty(o.getArgName(), &quot;String&quot;) : &quot;boolean&quot;,</span>
-<span class="nc" id="L140">                            o.getDeprecated()))</span>
-<span class="nc" id="L141">                    .forEach(table::add);</span>
+<span class="nc" id="L142">            options.stream().filter(typeFilter.and(AntOption::isDeprecated))</span>
+<span class="nc" id="L143">                    .map(o -&gt; Arrays.asList(o.getName(), o.getDescription(),</span>
+<span class="nc bnc" id="L144" title="All 2 branches missed.">                            o.hasArg() ? StringUtils.defaultIfEmpty(o.getArgName(), &quot;String&quot;) : &quot;boolean&quot;,</span>
+<span class="nc" id="L145">                            o.getDeprecated()))</span>
+<span class="nc" id="L146">                    .forEach(table::add);</span>
 
-<span class="nc" id="L143">            AptFormat.writeTable(out, table, &quot;*--+--+--+--+&quot;, tableCaption);</span>
+<span class="nc" id="L148">            AptFormat.writeTable(out, table, &quot;*--+--+--+--+&quot;, tableCaption);</span>
         }
-<span class="fc" id="L145">    }</span>
+<span class="fc" id="L150">    }</span>
 
     private void printValueTypes() {
-<span class="nc" id="L148">        File f = new File(outputDir, &quot;report_arg_types.txt&quot;);</span>
-<span class="nc" id="L149">        try (Writer writer = new OutputStreamWriter(Files.newOutputStream(f.toPath()), StandardCharsets.UTF_8)) {</span>
+<span class="nc" id="L153">        File f = new File(outputDir, &quot;report_arg_types.txt&quot;);</span>
+<span class="nc" id="L154">        try (Writer writer = new OutputStreamWriter(Files.newOutputStream(f.toPath()), StandardCharsets.UTF_8)) {</span>
 
-<span class="nc" id="L151">        List&lt;List&lt;String&gt;&gt; table = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L152">        table.add(Arrays.asList(&quot;Value Type&quot;, &quot;Description&quot;));</span>
+<span class="nc" id="L156">        List&lt;List&lt;String&gt;&gt; table = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L157">        table.add(Arrays.asList(&quot;Value Type&quot;, &quot;Description&quot;));</span>
 
-<span class="nc" id="L154">        AntOptionCollection.INSTANCE.getMappedOptions()</span>
-<span class="nc" id="L155">                .map(antOption -&gt; Arrays.asList(antOption.getName(), antOption.getDescription()))</span>
-<span class="nc" id="L156">                .forEach(table::add);</span>
+<span class="nc" id="L159">        antOptions.getMappedOptions()</span>
+<span class="nc" id="L160">                .map(antOption -&gt; Arrays.asList(antOption.getName(), antOption.getDescription()))</span>
+<span class="nc" id="L161">                .forEach(table::add);</span>
 
-<span class="nc" id="L158">        AptFormat.writeTable(writer, table, &quot;*--+--+&quot;);</span>
+<span class="nc" id="L163">        AptFormat.writeTable(writer, table, &quot;*--+--+&quot;);</span>
 
-<span class="nc" id="L160">        } catch (IOException e) {</span>
-<span class="nc" id="L161">            throw new RuntimeException(e);</span>
-<span class="nc" id="L162">        }</span>
-<span class="nc" id="L163">    }</span>
+<span class="nc" id="L165">        } catch (IOException e) {</span>
+<span class="nc" id="L166">            throw new RuntimeException(e);</span>
+<span class="nc" id="L167">        }</span>
+<span class="nc" id="L168">    }</span>
 
     /**
      * A class to write APT formatted text.
@@ -173,13 +178,13 @@ public final class AntDocumentation {
          * @throws IOException on error.
          */
         public static void writeLicense(final Writer writer) throws IOException {
-<span class="nc" id="L176">            try (InputStream in = AntDocumentation.class.getResourceAsStream(&quot;/license.apt&quot;)) {</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">                if (in == null) {</span>
-<span class="nc" id="L178">                    throw new FileNotFoundException(&quot;Could not find license.apt&quot;);</span>
+<span class="nc" id="L181">            try (InputStream in = AntDocumentation.class.getResourceAsStream(&quot;/license.apt&quot;)) {</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">                if (in == null) {</span>
+<span class="nc" id="L183">                    throw new FileNotFoundException(&quot;Could not find license.apt&quot;);</span>
                 }
-<span class="nc" id="L180">                IOUtils.copy(in, writer, StandardCharsets.UTF_8);</span>
+<span class="nc" id="L185">                IOUtils.copy(in, writer, StandardCharsets.UTF_8);</span>
             }
-<span class="nc" id="L182">        }</span>
+<span class="nc" id="L187">        }</span>
 
         /**
          * Write a title.
@@ -188,8 +193,8 @@ public final class AntDocumentation {
          * @throws IOException on error.
          */
         public static void writeTitle(final Writer writer, final String title) throws IOException {
-<span class="nc" id="L191">            writer.write(format(&quot;        -----%n        %1$s%n        -----%n%n%1$s%n%n&quot;, title));</span>
-<span class="nc" id="L192">        }</span>
+<span class="nc" id="L196">            writer.write(format(&quot;        -----%n        %1$s%n        -----%n%n%1$s%n%n&quot;, title));</span>
+<span class="nc" id="L197">        }</span>
 
         /**
          * Write a paragraph.
@@ -198,8 +203,8 @@ public final class AntDocumentation {
          * @throws IOException on error.
          */
         public static void writePara(final Writer writer, final String paragraph) throws IOException {
-<span class="nc" id="L201">            writer.write(format(&quot;  %s%n%n&quot;, paragraph));</span>
-<span class="nc" id="L202">        }</span>
+<span class="nc" id="L206">            writer.write(format(&quot;  %s%n%n&quot;, paragraph));</span>
+<span class="nc" id="L207">        }</span>
 
         /**
          * Write a header.
@@ -209,12 +214,12 @@ public final class AntDocumentation {
          * @throws IOException on error.
          */
         public static void writeHeader(final Writer writer, final int level, final String text) throws IOException {
-<span class="nc" id="L212">            writer.write(System.lineSeparator());</span>
-<span class="nc bnc" id="L213" title="All 2 branches missed.">            for (int i = 0; i &lt; level; i++) {</span>
-<span class="nc" id="L214">                writer.write(&quot;*&quot;);</span>
+<span class="nc" id="L217">            writer.write(System.lineSeparator());</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">            for (int i = 0; i &lt; level; i++) {</span>
+<span class="nc" id="L219">                writer.write(&quot;*&quot;);</span>
             }
-<span class="nc" id="L216">            writer.write(format(&quot; %s%n%n&quot;, text));</span>
-<span class="nc" id="L217">        }</span>
+<span class="nc" id="L221">            writer.write(format(&quot; %s%n%n&quot;, text));</span>
+<span class="nc" id="L222">        }</span>
 
         /**
          * Write a list.
@@ -223,11 +228,11 @@ public final class AntDocumentation {
          * @throws IOException on error.
          */
         public static void writeList(final Writer writer, final Collection&lt;String&gt; list) throws IOException {
-<span class="nc bnc" id="L226" title="All 2 branches missed.">            for (String s : list) {</span>
-<span class="nc" id="L227">                writer.write(format(&quot;    * %s%n&quot;, s));</span>
-<span class="nc" id="L228">            }</span>
-<span class="nc" id="L229">            writer.write(System.lineSeparator());</span>
-<span class="nc" id="L230">        }</span>
+<span class="nc bnc" id="L231" title="All 2 branches missed.">            for (String s : list) {</span>
+<span class="nc" id="L232">                writer.write(format(&quot;    * %s%n&quot;, s));</span>
+<span class="nc" id="L233">            }</span>
+<span class="nc" id="L234">            writer.write(System.lineSeparator());</span>
+<span class="nc" id="L235">        }</span>
 
         /**
          * Write a table.
@@ -239,18 +244,18 @@ public final class AntDocumentation {
          */
         public static void writeTable(final Writer writer, final Collection&lt;? extends Collection&lt;String&gt;&gt; table,
                                       final String pattern, final String caption) throws IOException {
-<span class="fc" id="L242">            writer.write(format(&quot;%s%n&quot;, pattern));</span>
-<span class="fc bfc" id="L243" title="All 2 branches covered.">            for (Collection&lt;String&gt; row : table) {</span>
-<span class="fc bfc" id="L244" title="All 2 branches covered.">                for (String cell : row) {</span>
-<span class="fc" id="L245">                    writer.write(format(&quot;| %s &quot;, cell));</span>
-<span class="fc" id="L246">                }</span>
-<span class="fc" id="L247">                writer.write(format(&quot;|%n%s%n&quot;, pattern));</span>
-<span class="fc" id="L248">            }</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">            if (caption != null) {</span>
-<span class="fc" id="L250">                writer.write(caption);</span>
+<span class="fc" id="L247">            writer.write(format(&quot;%s%n&quot;, pattern));</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">            for (Collection&lt;String&gt; row : table) {</span>
+<span class="fc bfc" id="L249" title="All 2 branches covered.">                for (String cell : row) {</span>
+<span class="fc" id="L250">                    writer.write(format(&quot;| %s &quot;, cell));</span>
+<span class="fc" id="L251">                }</span>
+<span class="fc" id="L252">                writer.write(format(&quot;|%n%s%n&quot;, pattern));</span>
+<span class="fc" id="L253">            }</span>
+<span class="pc bpc" id="L254" title="1 of 2 branches missed.">            if (caption != null) {</span>
+<span class="fc" id="L255">                writer.write(caption);</span>
             }
-<span class="fc" id="L252">            writer.write(System.lineSeparator());</span>
-<span class="fc" id="L253">        }</span>
+<span class="fc" id="L257">            writer.write(System.lineSeparator());</span>
+<span class="fc" id="L258">        }</span>
 
         /**
          * Write a table entry without caption.
@@ -261,8 +266,8 @@ public final class AntDocumentation {
          */
         public static void writeTable(final Writer writer, final Collection&lt;? extends Collection&lt;String&gt;&gt; table,
                                       final String pattern) throws IOException {
-<span class="nc" id="L264">            writeTable(writer, table, pattern, null);</span>
-<span class="nc" id="L265">        }</span>
+<span class="nc" id="L269">            writeTable(writer, table, pattern, null);</span>
+<span class="nc" id="L270">        }</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

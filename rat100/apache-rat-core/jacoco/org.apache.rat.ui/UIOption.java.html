@@ -21,7 +21,9 @@ package org.apache.rat.ui;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,51 +40,76 @@ import static java.lang.String.format;
  * @param &lt;T&gt; the concrete implementation of AbstractOption.
  */
 public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
-    /** The pattern to match CLI options in text */
-<span class="fc" id="L42">    protected static final Pattern PATTERN = Pattern.compile(&quot;-?-([A-Za-z0-9]+-?)+&quot;); // NOSONAR</span>
-    /** The actual UI-specific name for the option */
+    /**
+     * The pattern to match CLI options in text
+     */
+<span class="fc" id="L46">    protected static final Pattern PATTERN = Pattern.compile(&quot;-?-([A-Za-z0-9]+-?)+&quot;); // NOSONAR</span>
+    /**
+     * The actual UI-specific name for the option
+     */
     protected final Option option;
-    /** The name for the option */
+    /**
+     * The name for the option
+     */
     protected final CasedString name;
-    /** The argument type for this option */
+    /**
+     * The argument type for this option
+     */
     protected final OptionCollection.ArgumentType argumentType;
-    /** The AbstractOptionCollection associated with this AbstractOption */
+    /**
+     * The AbstractOptionCollection associated with this AbstractOption
+     */
     protected final UIOptionCollection&lt;T&gt; optionCollection;
 
     /**
      * Constructor.
      *
-     * @param option The CLI option
-     * @param name the UI-specific name for the option
+     * @param builder UIOption builder.
      */
-<span class="fc" id="L58">    protected &lt;C extends UIOptionCollection&lt;T&gt;&gt; UIOption(final C optionCollection, final Option option, final CasedString name) {</span>
-<span class="fc" id="L59">        this.optionCollection = optionCollection;</span>
-<span class="fc" id="L60">        this.option = option;</span>
-<span class="fc" id="L61">        this.name = name;</span>
+<span class="fc" id="L69">    protected UIOption(final Builder&lt;T, ?&gt; builder) {</span>
+<span class="fc" id="L70">        this.optionCollection = builder.optionCollection;</span>
+<span class="fc" id="L71">        this.option = builder.option;</span>
+<span class="fc" id="L72">        this.name = builder.name;</span>
+
         OptionCollection.ArgumentType argType;
-<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (option.hasArg()) {</span>
-<span class="fc bfc" id="L64" title="All 2 branches covered.">            if (option.getArgName() == null) {</span>
-<span class="fc" id="L65">                argType = OptionCollection.ArgumentType.ARG;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (option.hasArg()) {</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (option.getArgName() == null) {</span>
+<span class="fc" id="L77">                argType = OptionCollection.ArgumentType.ARG;</span>
             } else {
                 // extract the name of the argument type.
                 try {
-<span class="fc" id="L69">                    argType = OptionCollection.ArgumentType.valueOf(option.getArgName().toUpperCase(Locale.ROOT));</span>
-<span class="fc" id="L70">                } catch (IllegalArgumentException e) {</span>
-<span class="fc" id="L71">                    argType = OptionCollection.ArgumentType.ARG;</span>
-<span class="fc" id="L72">                }</span>
+<span class="fc" id="L81">                    argType = OptionCollection.ArgumentType.valueOf(option.getArgName().toUpperCase(Locale.ROOT));</span>
+<span class="fc" id="L82">                } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L83">                    argType = OptionCollection.ArgumentType.ARG;</span>
+<span class="fc" id="L84">                }</span>
             }
         } else {
-<span class="fc" id="L75">            argType = OptionCollection.ArgumentType.NONE;</span>
+<span class="fc" id="L87">            argType = OptionCollection.ArgumentType.NONE;</span>
         }
-<span class="fc" id="L77">        this.argumentType = argType;</span>
-<span class="fc" id="L78">    }</span>
+<span class="fc" id="L89">        this.argumentType = argType;</span>
+<span class="fc" id="L90">    }</span>
+
+    @Override
+    public boolean equals(final Object o) {
+<span class="pc bpc" id="L94" title="1 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="fc" id="L95">            return false;</span>
+        }
+<span class="fc" id="L97">        UIOption&lt;?&gt; uiOption = (UIOption&lt;?&gt;) o;</span>
+<span class="pc bpc" id="L98" title="1 of 6 branches missed.">        return getOption().equals(uiOption.getOption()) &amp;&amp; name.equals(uiOption.name) &amp;&amp; argumentType == uiOption.argumentType;</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L103">        return name.hashCode();</span>
+    }
 
     /**
      * Gets the AbstractOptionCollection that this option is a member of.
      * @return the AbstractOptionCollection that this option is a member of.
+     * @param &lt;X&gt; The collection type to return.
      */
     public final &lt;X extends UIOptionCollection&lt;T&gt;&gt; X getOptionCollection() {
-<span class="fc" id="L85">        return (X) optionCollection;</span>
+<span class="fc" id="L112">        return (X) optionCollection;</span>
     }
 
     /**
@@ -90,7 +117,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the original Option.
      */
     public final Option getOption() {
-<span class="fc" id="L93">        return option;</span>
+<span class="fc" id="L120">        return option;</span>
     }
 
     /**
@@ -98,7 +125,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return default value or {@code null} if no argument given.
      */
     public final String getDefaultValue() {
-<span class="nc" id="L101">        return optionCollection.defaultValue(option);</span>
+<span class="fc" id="L128">        return optionCollection.defaultValue(option);</span>
     }
 
     /**
@@ -120,22 +147,22 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the string with CLI names replaced with implementation specific names.
      */
     public String cleanup(final String str) {
-<span class="fc" id="L123">        String workingStr = str;</span>
-<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (StringUtils.isNotBlank(workingStr)) {</span>
-<span class="fc" id="L125">            Map&lt;String, String&gt; maps = new HashMap&lt;&gt;();</span>
-<span class="fc" id="L126">            Matcher matcher = PATTERN.matcher(workingStr);</span>
-<span class="fc bfc" id="L127" title="All 2 branches covered.">            while (matcher.find()) {</span>
-<span class="fc" id="L128">                String key = matcher.group();</span>
-<span class="fc bfc" id="L129" title="All 2 branches covered.">                String optKey = (1 == key.indexOf('-', 1)) ?  key.substring(2) : key.substring(1);</span>
-<span class="fc" id="L130">                Optional&lt;Option&gt; maybeResult = getOptionCollection().getOptions().getOptions().stream()</span>
-<span class="fc bfc" id="L131" title="All 4 branches covered.">                                .filter(o -&gt; optKey.equals(o.getOpt()) || optKey.equals(o.getLongOpt())).findFirst();</span>
-<span class="fc" id="L132">                maybeResult.ifPresent(value -&gt; maps.put(key, cleanupName(value)));</span>
-<span class="fc" id="L133">            }</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">            for (Map.Entry&lt;String, String&gt; entry : maps.entrySet()) {</span>
-<span class="fc" id="L135">                workingStr = workingStr.replaceAll(Pattern.quote(format(&quot;%s&quot;, entry.getKey())), entry.getValue());</span>
-<span class="fc" id="L136">            }</span>
+<span class="fc" id="L150">        String workingStr = str;</span>
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        if (StringUtils.isNotBlank(workingStr)) {</span>
+<span class="fc" id="L152">            Map&lt;String, String&gt; maps = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L153">            Matcher matcher = PATTERN.matcher(workingStr);</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">            while (matcher.find()) {</span>
+<span class="fc" id="L155">                String key = matcher.group();</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">                String optKey = key.substring(1 == key.indexOf('-', 1) ?  2 : 1);</span>
+<span class="fc" id="L157">                Optional&lt;Option&gt; maybeResult = getOptionCollection().getOptions().getOptions().stream()</span>
+<span class="fc bfc" id="L158" title="All 4 branches covered.">                                .filter(o -&gt; optKey.equals(o.getOpt()) || optKey.equals(o.getLongOpt())).findFirst();</span>
+<span class="fc" id="L159">                maybeResult.ifPresent(value -&gt; maps.put(key, cleanupName(value)));</span>
+<span class="fc" id="L160">            }</span>
+<span class="fc bfc" id="L161" title="All 2 branches covered.">            for (Map.Entry&lt;String, String&gt; entry : maps.entrySet()) {</span>
+<span class="fc" id="L162">                workingStr = workingStr.replaceAll(Pattern.quote(format(&quot;%s&quot;, entry.getKey())), entry.getValue());</span>
+<span class="fc" id="L163">            }</span>
         }
-<span class="fc" id="L138">        return workingStr;</span>
+<span class="fc" id="L165">        return workingStr;</span>
     }
 
     /**
@@ -143,7 +170,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return The implementation specific name for the native UI.
      */
     public final String getName() {
-<span class="fc" id="L146">        return name.toString();</span>
+<span class="fc" id="L173">        return name.toString();</span>
     }
 
     /**
@@ -151,7 +178,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the CasedString version of the name for the native UI.
      */
     public final CasedString getCasedName() {
-<span class="nc" id="L154">        return name;</span>
+<span class="fc" id="L181">        return name;</span>
     }
 
     /**
@@ -167,7 +194,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the description or an empty string.
      */
     public final String getDescription() {
-<span class="nc" id="L170">        return cleanup(option.getDescription());</span>
+<span class="fc" id="L197">        return cleanup(option.getDescription());</span>
     }
 
     /**
@@ -176,7 +203,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the simple class name for the type.
      */
     public final Class&lt;?&gt; getType() {
-<span class="nc bnc" id="L179" title="All 2 branches missed.">        return option.hasArg() ? ((Class&lt;?&gt;) option.getType()) : boolean.class;</span>
+<span class="nc bnc" id="L206" title="All 2 branches missed.">        return option.hasArg() ? ((Class&lt;?&gt;) option.getType()) : boolean.class;</span>
     }
 
     /**
@@ -184,7 +211,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the Argument name
      */
     public final String getArgName() {
-<span class="nc" id="L187">        return argumentType.getDisplayName();</span>
+<span class="fc" id="L214">        return argumentType.getDisplayName();</span>
     }
 
     /**
@@ -192,7 +219,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the Argument name
      */
     public final OptionCollection.ArgumentType getArgType() {
-<span class="nc" id="L195">        return argumentType;</span>
+<span class="fc" id="L222">        return argumentType;</span>
     }
 
     /**
@@ -200,7 +227,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return {@code true} if the option is deprecated
      */
     public final boolean isDeprecated() {
-<span class="fc" id="L203">        return option.isDeprecated();</span>
+<span class="fc" id="L230">        return option.isDeprecated();</span>
     }
 
     /**
@@ -208,7 +235,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return {@code true} if the option is required.
      */
     public final boolean isRequired() {
-<span class="nc" id="L211">        return option.isRequired();</span>
+<span class="fc" id="L238">        return option.isRequired();</span>
     }
 
     /**
@@ -216,7 +243,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return {@code true} if the enclosed option expects at least one argument.
      */
     public final boolean hasArg() {
-<span class="nc" id="L219">        return option.hasArg();</span>
+<span class="fc" id="L246">        return option.hasArg();</span>
     }
 
     /**
@@ -224,7 +251,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return {@code true} if the option has multiple arguments.
      */
     public final boolean hasArgs() {
-<span class="nc" id="L227">        return option.hasArgs();</span>
+<span class="fc" id="L254">        return option.hasArgs();</span>
     }
 
     /**
@@ -232,7 +259,7 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the key value for the CLI argument map.
      */
     public final String keyValue() {
-<span class="fc" id="L235">        return StringUtils.defaultIfEmpty(option.getLongOpt(), option.getOpt());</span>
+<span class="fc" id="L262">        return StringUtils.defaultIfEmpty(option.getLongOpt(), option.getOpt());</span>
     }
 
     /**
@@ -240,7 +267,109 @@ public abstract class UIOption&lt;T extends UIOption&lt;T&gt;&gt; {
      * @return the deprecated string if the option is deprecated, or an empty string otherwise.
      */
     public final String getDeprecated() {
-<span class="pc bpc" id="L243" title="1 of 2 branches missed.">        return  option.isDeprecated() ? cleanup(StringUtils.defaultIfEmpty(option.getDeprecated().toString(), StringUtils.EMPTY)) : StringUtils.EMPTY;</span>
+<span class="fc bfc" id="L270" title="All 2 branches covered.">        return option.isDeprecated() ? cleanup(StringUtils.defaultIfEmpty(option.getDeprecated().toString(), StringUtils.EMPTY)) : StringUtils.EMPTY;</span>
+    }
+
+    /**
+     * The abstract UIOption Builder.
+     * @param &lt;T&gt; the concrete type of the UIOption this builder produces.
+     * @param &lt;B&gt; the concrete type of this builder.
+     */
+    public abstract static class Builder&lt;T extends UIOption&lt;T&gt;, B extends Builder&lt;T, B&gt;&gt; {
+        /**
+         * The collection to add the new UI Option to.
+         */
+        private UIOptionCollection&lt;T&gt; optionCollection;
+        /**
+         * THe base option that is being mapped.
+         */
+        private Option option;
+        /**
+         * The UI name of this option.
+         */
+<span class="fc" id="L290">        private CasedString name = CasedString.NULL;</span>
+        /**
+         * Constructor.
+         */
+<span class="fc" id="L294">        protected Builder() {</span>
+<span class="fc" id="L295">        }</span>
+
+        /**
+         * Returns a function to convert an Option to a CasedString that is the native name for the option.
+         * @return a function to convert an Option to a CasedString that is the native name for the option.
+         */
+        protected abstract Function&lt;Option, CasedString&gt; getNameFactory();
+
+        /**
+         * Gets the option.
+         * @return the option or {@code null} if the option is not set.
+         */
+        protected final Option option() {
+<span class="fc" id="L308">            return option;</span>
+        }
+
+        /**
+         * Gets the UIOptionCollection that the options will be added to.
+         * @return UIOptionCollection that the options will be added to.
+         */
+        protected final UIOptionCollection&lt;T&gt; optionCollection() {
+<span class="nc" id="L316">            return optionCollection;</span>
+        }
+
+        /**
+         * Returns this builder cast to the builder type.
+         * Useful for implementing fluent builders.
+         * @return this builder.
+         */
+        protected final B self() {
+<span class="fc" id="L325">            return (B) this;</span>
+        }
+
+        /**
+         * Sets the UIOptionCollection that the UIOptions will be added to.
+         * @param optionCollection the UIOptionCollection that the UIOptions will be added to.
+         * @return this
+         */
+        public B optionCollection(final UIOptionCollection&lt;T&gt; optionCollection) {
+<span class="fc" id="L334">            this.optionCollection = optionCollection;</span>
+<span class="fc" id="L335">            return self();</span>
+        }
+
+        /**
+         * Sets the Option that the UIOption will be generated from.
+         * @param option to build the UIOption from.
+         * @return this
+         */
+        public B option(final Option option) {
+<span class="fc" id="L344">            Objects.requireNonNull(option, &quot;Option may not be null&quot;);</span>
+<span class="fc" id="L345">            this.option = option;</span>
+<span class="fc" id="L346">            this.name = getNameFactory().apply(option);</span>
+<span class="pc bpc" id="L347" title="2 of 4 branches missed.">            if (this.name == null || this.name.isNull()) {</span>
+<span class="nc" id="L348">                throw new IllegalArgumentException(&quot;name for &quot; + option + &quot; may not be null or contain a null value&quot;);</span>
+            }
+<span class="fc" id="L350">            return self();</span>
+        }
+
+        /**
+         * Executes the final build.
+         * @return An instance of the UIOption.
+         * @throws IllegalArgumentException if values are not set correctly.
+         */
+        protected abstract T doBuild() throws IllegalArgumentException;
+
+        /**
+         * Builds the UIOption.
+         * @return the UIOption.
+         * @throws IllegalArgumentException if values are not set correctly.
+         */
+        public final T build() throws IllegalArgumentException {
+<span class="fc" id="L366">            Objects.requireNonNull(optionCollection, &quot;OptionCollection may not be null&quot;);</span>
+<span class="fc" id="L367">            Objects.requireNonNull(option, &quot;Option may not be null&quot;);</span>
+<span class="pc bpc" id="L368" title="2 of 4 branches missed.">            if (name == null || name.isNull()) {</span>
+<span class="nc" id="L369">                throw new IllegalArgumentException(&quot;name must not be null or contain a null value&quot;);</span>
+            }
+<span class="fc" id="L371">            return doBuild();</span>
+        }
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

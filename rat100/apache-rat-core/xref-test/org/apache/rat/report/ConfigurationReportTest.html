@@ -36,8 +36,8 @@
 <a class="jxr_linenumber" name="L28" href="#L28">28</a>  <strong class="jxr_keyword">import</strong> java.util.List;
 <a class="jxr_linenumber" name="L29" href="#L29">29</a>  
 <a class="jxr_linenumber" name="L30" href="#L30">30</a>  <strong class="jxr_keyword">import</strong> javax.xml.xpath.XPath;
-<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <strong class="jxr_keyword">import</strong> javax.xml.xpath.XPathFactory;
-<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <strong class="jxr_keyword">import</strong> org.apache.commons.xml.secure.SecureXPathFactory;
 <a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.Defaults;
 <a class="jxr_linenumber" name="L34" href="#L34">34</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.ReportConfiguration;
 <a class="jxr_linenumber" name="L35" href="#L35">35</a>  <strong class="jxr_keyword">import</strong> org.apache.rat.configuration.MatcherBuilderTracker;
@@ -80,7 +80,7 @@
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          String result = executeReport();
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>          assertTrue(XmlUtils.isWellFormedXml(result), <span class="jxr_string">"Is well formed"</span>);
 <a class="jxr_linenumber" name="L74" href="#L74">74</a>  
-<a class="jxr_linenumber" name="L75" href="#L75">75</a>          XPath xPath = XPathFactory.newInstance().newXPath();
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>          XPath xPath = SecureXPathFactory.newInstance().newXPath();
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          Document doc = XmlUtils.toDom(<strong class="jxr_keyword">new</strong> ByteArrayInputStream(result.getBytes(StandardCharsets.UTF_8)));
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>  
 <a class="jxr_linenumber" name="L78" href="#L78">78</a>          <em class="jxr_comment">// verify that all the families are there</em>

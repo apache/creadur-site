@@ -124,161 +124,162 @@ public final class AntGenerator {
 <span class="fc" id="L124">            System.err.println(&quot;At least three arguments are required: package, simple class name, target directory.&quot;);</span>
 <span class="fc" id="L125">            return;</span>
         }
+<span class="fc" id="L127">        final AntOptionCollection antOptions = new AntOptionCollection();</span>
 
-<span class="fc" id="L128">        String packageName = args[0];</span>
-<span class="fc" id="L129">        String className = args[1];</span>
-<span class="fc" id="L130">        String destDir = args[2];</span>
+<span class="fc" id="L129">        String packageName = args[0];</span>
+<span class="fc" id="L130">        String className = args[1];</span>
+<span class="fc" id="L131">        String destDir = args[2];</span>
 
-<span class="fc" id="L132">        List&lt;AntOption&gt; options = AntOptionCollection.INSTANCE.getMappedOptions().toList();</span>
+<span class="fc" id="L133">        List&lt;AntOption&gt; options = antOptions.getMappedOptions().toList();</span>
 
-<span class="fc" id="L134">        String pkgName = String.join(File.separator, new CasedString(StringCase.DOT, packageName).getSegments());</span>
-<span class="fc" id="L135">        File file = new File(new File(new File(destDir), pkgName), className + &quot;.java&quot;);</span>
-<span class="fc" id="L136">        file.getParentFile().mkdirs();</span>
-<span class="fc" id="L137">        try (InputStream template = AntGenerator.class.getResourceAsStream(&quot;/Ant.tpl&quot;);</span>
-<span class="fc" id="L138">             FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8);</span>
-<span class="fc" id="L139">             ByteArrayOutputStream bos = new ByteArrayOutputStream();</span>
-<span class="fc" id="L140">             OutputStreamWriter customClasses = new OutputStreamWriter(bos, StandardCharsets.UTF_8)) {</span>
-<span class="pc bpc" id="L141" title="1 of 2 branches missed.">            if (template == null) {</span>
-<span class="nc" id="L142">                throw new RuntimeException(&quot;Template /Ant.tpl not found&quot;);</span>
+<span class="fc" id="L135">        String pkgName = String.join(File.separator, new CasedString(StringCase.DOT, packageName).getSegments());</span>
+<span class="fc" id="L136">        File file = new File(new File(new File(destDir), pkgName), className + &quot;.java&quot;);</span>
+<span class="fc" id="L137">        file.getParentFile().mkdirs();</span>
+<span class="fc" id="L138">        try (InputStream template = AntGenerator.class.getResourceAsStream(&quot;/Ant.tpl&quot;);</span>
+<span class="fc" id="L139">             FileWriter writer = new FileWriter(file, StandardCharsets.UTF_8);</span>
+<span class="fc" id="L140">             ByteArrayOutputStream bos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L141">             OutputStreamWriter customClasses = new OutputStreamWriter(bos, StandardCharsets.UTF_8)) {</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">            if (template == null) {</span>
+<span class="nc" id="L143">                throw new RuntimeException(&quot;Template /Ant.tpl not found&quot;);</span>
             }
-<span class="fc" id="L144">            LineIterator iter = IOUtils.lineIterator(new InputStreamReader(template, StandardCharsets.UTF_8));</span>
-<span class="fc bfc" id="L145" title="All 2 branches covered.">            while (iter.hasNext()) {</span>
-<span class="fc" id="L146">                String line = iter.next();</span>
-<span class="fc bfc" id="L147" title="All 8 branches covered.">                switch (line.trim()) {</span>
+<span class="fc" id="L145">            LineIterator iter = IOUtils.lineIterator(new InputStreamReader(template, StandardCharsets.UTF_8));</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">            while (iter.hasNext()) {</span>
+<span class="fc" id="L147">                String line = iter.next();</span>
+<span class="fc bfc" id="L148" title="All 8 branches covered.">                switch (line.trim()) {</span>
                     case &quot;${static}&quot;:
-<span class="fc bfc" id="L149" title="All 2 branches covered.">                        for (Map.Entry&lt;?, ?&gt; entry : AntOptionCollection.getRenameMap().entrySet()) {</span>
-<span class="fc" id="L150">                            writer.append(format(&quot;        xlateName.put(\&quot;%s\&quot;, \&quot;%s\&quot;);%n&quot;, entry.getKey(), entry.getValue()));</span>
-<span class="fc" id="L151">                        }</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">                        for (Map.Entry&lt;?, ?&gt; entry : AntOptionCollection.getRenameMap().entrySet()) {</span>
+<span class="fc" id="L151">                            writer.append(format(&quot;        xlateName.put(\&quot;%s\&quot;, \&quot;%s\&quot;);%n&quot;, entry.getKey(), entry.getValue()));</span>
+<span class="fc" id="L152">                        }</span>
 
-<span class="fc bfc" id="L153" title="All 2 branches covered.">                        for (Option option : AntOptionCollection.INSTANCE.getUnsupportedOptions()</span>
-<span class="fc" id="L154">                                .getOptions()) {</span>
-<span class="fc" id="L155">                            writer.append(format(&quot;        unsupportedArgs.add(\&quot;%s\&quot;);%n&quot;, argsKey(option)));</span>
-<span class="fc" id="L156">                        }</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">                        for (Option option : antOptions.getUnsupportedOptions()</span>
+<span class="fc" id="L155">                                .getOptions()) {</span>
+<span class="fc" id="L156">                            writer.append(format(&quot;        unsupportedArgs.add(\&quot;%s\&quot;);%n&quot;, argsKey(option)));</span>
+<span class="fc" id="L157">                        }</span>
 
-<span class="fc bfc" id="L158" title="All 2 branches covered.">                        for (AntOption option : AntOptionCollection.INSTANCE.getMappedOptions().filter(AntOption::isDeprecated).toList()) {</span>
-<span class="fc" id="L159">                            writer.append(format(&quot;        deprecatedArgs.put(\&quot;%s\&quot;, \&quot;%s\&quot;);%n&quot;, argsKey(option.getOption()),</span>
-<span class="fc" id="L160">                                    format(&quot;Use of deprecated option '%s'. %s&quot;, option.getName(), option.getDeprecated())));</span>
-<span class="fc" id="L161">                        }</span>
-<span class="fc" id="L162">                        break;</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">                        for (AntOption option : antOptions.getMappedOptions().filter(AntOption::isDeprecated).toList()) {</span>
+<span class="fc" id="L160">                            writer.append(format(&quot;        deprecatedArgs.put(\&quot;%s\&quot;, \&quot;%s\&quot;);%n&quot;, argsKey(option.getOption()),</span>
+<span class="fc" id="L161">                                    format(&quot;Use of deprecated option '%s'. %s&quot;, option.getName(), option.getDeprecated())));</span>
+<span class="fc" id="L162">                        }</span>
+<span class="fc" id="L163">                        break;</span>
                     case &quot;${methods}&quot;:
-<span class="fc" id="L164">                        writeMethods(writer, options, customClasses);</span>
-<span class="fc" id="L165">                        break;</span>
+<span class="fc" id="L165">                        writeMethods(writer, options, customClasses);</span>
+<span class="fc" id="L166">                        break;</span>
                     case &quot;${package}&quot;:
-<span class="fc" id="L167">                        writer.append(format(&quot;package %s;%n&quot;, packageName));</span>
-<span class="fc" id="L168">                        break;</span>
+<span class="fc" id="L168">                        writer.append(format(&quot;package %s;%n&quot;, packageName));</span>
+<span class="fc" id="L169">                        break;</span>
                     case &quot;${constructor}&quot;:
-<span class="fc" id="L170">                        writer.append(format(&quot;&quot;&quot;</span>
+<span class="fc" id="L171">                        writer.append(format(&quot;&quot;&quot;</span>
                                     protected %s() {
                                         setDeprecationReporter();
                                     }%n&quot;&quot;&quot;, className));
-<span class="fc" id="L174">                        break;</span>
+<span class="fc" id="L175">                        break;</span>
                     case &quot;${class}&quot;:
-<span class="fc" id="L176">                        writer.append(format(&quot;public abstract class %s extends Task {%n&quot;, className));</span>
-<span class="fc" id="L177">                        break;</span>
+<span class="fc" id="L177">                        writer.append(format(&quot;public abstract class %s extends Task {%n&quot;, className));</span>
+<span class="fc" id="L178">                        break;</span>
                     case &quot;${classes}&quot;:
-<span class="fc" id="L179">                        customClasses.flush();</span>
-<span class="fc" id="L180">                        customClasses.close();</span>
-<span class="fc" id="L181">                        writer.write(bos.toString(StandardCharsets.UTF_8));</span>
-<span class="fc" id="L182">                        break;</span>
+<span class="fc" id="L180">                        customClasses.flush();</span>
+<span class="fc" id="L181">                        customClasses.close();</span>
+<span class="fc" id="L182">                        writer.write(bos.toString(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L183">                        break;</span>
                     case &quot;${commonArgs}&quot;:
-<span class="fc" id="L184">                        try (InputStream argsTpl = MavenGenerator.class.getResourceAsStream(&quot;/Args.tpl&quot;)) {</span>
-<span class="pc bpc" id="L185" title="1 of 2 branches missed.">                            if (argsTpl == null) {</span>
-<span class="nc" id="L186">                                throw new RuntimeException(&quot;Args.tpl not found&quot;);</span>
+<span class="fc" id="L185">                        try (InputStream argsTpl = MavenGenerator.class.getResourceAsStream(&quot;/Args.tpl&quot;)) {</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">                            if (argsTpl == null) {</span>
+<span class="nc" id="L187">                                throw new RuntimeException(&quot;Args.tpl not found&quot;);</span>
                             }
-<span class="fc" id="L188">                            IOUtils.copy(argsTpl, writer, StandardCharsets.UTF_8);</span>
+<span class="fc" id="L189">                            IOUtils.copy(argsTpl, writer, StandardCharsets.UTF_8);</span>
                         }
-<span class="fc" id="L190">                        break;</span>
+<span class="fc" id="L191">                        break;</span>
                     default:
-<span class="fc" id="L192">                        writer.append(line).append(System.lineSeparator());</span>
+<span class="fc" id="L193">                        writer.append(line).append(System.lineSeparator());</span>
                         break;
                 }
-<span class="fc" id="L195">            }</span>
+<span class="fc" id="L196">            }</span>
         }
-<span class="fc" id="L197">    }</span>
+<span class="fc" id="L198">    }</span>
 
     private static void writeMethods(final FileWriter writer, final List&lt;AntOption&gt; options, final Writer customClasses) throws IOException {
-<span class="fc bfc" id="L200" title="All 2 branches covered.">        for (AntOption antOption : options) {</span>
-<span class="fc bfc" id="L201" title="All 2 branches covered.">            if (antOption.isAttribute()) {</span>
-<span class="fc" id="L202">                writer.append(getComment(antOption, true));</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">                if (antOption.isDeprecated()) {</span>
-<span class="fc" id="L204">                    writer.append(&quot;    @Deprecated\n&quot;);</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        for (AntOption antOption : options) {</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">            if (antOption.isAttribute()) {</span>
+<span class="fc" id="L203">                writer.append(getComment(antOption, true));</span>
+<span class="fc bfc" id="L204" title="All 2 branches covered.">                if (antOption.isDeprecated()) {</span>
+<span class="fc" id="L205">                    writer.append(&quot;    @Deprecated\n&quot;);</span>
                 }
-<span class="fc" id="L206">                writer.append(format(&quot;    public void %s {%n%s%n    }%n%n&quot;, getAttributeFunctionName(antOption), getAttributeBody(antOption)));</span>
+<span class="fc" id="L207">                writer.append(format(&quot;    public void %s {%n%s%n    }%n%n&quot;, getAttributeFunctionName(antOption), getAttributeBody(antOption)));</span>
             } else {
-<span class="fc" id="L208">                customClasses.append(getComment(antOption, false));</span>
-<span class="fc" id="L209">                customClasses.append(format(&quot;    public %1$s create%1$s() {%n        return new %1$s();%n    }%n%n&quot;,</span>
-<span class="fc" id="L210">                        antOption.getCasedName().toCase(StringCase.CAMEL)));</span>
-<span class="fc" id="L211">                customClasses.append(getElementClass(antOption));</span>
+<span class="fc" id="L209">                customClasses.append(getComment(antOption, false));</span>
+<span class="fc" id="L210">                customClasses.append(format(&quot;    public %1$s create%1$s() {%n        return new %1$s();%n    }%n%n&quot;,</span>
+<span class="fc" id="L211">                        antOption.getCasedName().toCase(StringCase.CAMEL)));</span>
+<span class="fc" id="L212">                customClasses.append(getElementClass(antOption));</span>
             }
-<span class="fc" id="L213">        }</span>
-<span class="fc" id="L214">    }</span>
+<span class="fc" id="L214">        }</span>
+<span class="fc" id="L215">    }</span>
 
     private static String getAttributeBody(final AntOption option) {
-<span class="fc bfc" id="L217" title="All 2 branches covered.">        return option.hasArg() ? format(&quot;        setArg(\&quot;%s\&quot;, %s);%n&quot;, option.keyValue(), option.getName())</span>
-<span class="fc" id="L218">            : format(&quot;        if (%1$s) { setArg(\&quot;%2$s\&quot;, null); } else { removeArg(\&quot;%2$s\&quot;); }&quot;, option.getName(), option.keyValue());</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">        return option.hasArg() ? format(&quot;        setArg(\&quot;%s\&quot;, %s);%n&quot;, option.keyValue(), option.getName())</span>
+<span class="fc" id="L219">            : format(&quot;        if (%1$s) { setArg(\&quot;%2$s\&quot;, null); } else { removeArg(\&quot;%2$s\&quot;); }&quot;, option.getName(), option.keyValue());</span>
     }
 
     private static String getElementClass(final AntOption option) {
-<span class="fc" id="L222">        String elementConstructor =</span>
+<span class="fc" id="L223">        String elementConstructor =</span>
                 &quot;&quot;&quot;
                             public class %1$s {
                                 %1$s() { }%n&quot;&quot;&quot;;
 
-<span class="fc" id="L227">        String funcName = WordUtils.capitalize(option.getName());</span>
-<span class="fc" id="L228">        StringBuilder result = new StringBuilder(format(elementConstructor, funcName));</span>
-<span class="fc" id="L229">        Set&lt;AntOption&gt; implementedOptions = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L230">        implementedOptions.add(option);</span>
-<span class="fc" id="L231">        implementedOptions.addAll(option.convertedFrom());</span>
-<span class="fc" id="L232">        implementedOptions.forEach(antOption -&gt; result.append(getGenerateType(antOption).getMethod(antOption)));</span>
-<span class="fc" id="L233">        result.append(format(&quot;    }%n&quot;));</span>
+<span class="fc" id="L228">        String funcName = WordUtils.capitalize(option.getName());</span>
+<span class="fc" id="L229">        StringBuilder result = new StringBuilder(format(elementConstructor, funcName));</span>
+<span class="fc" id="L230">        Set&lt;AntOption&gt; implementedOptions = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L231">        implementedOptions.add(option);</span>
+<span class="fc" id="L232">        implementedOptions.addAll(option.convertedFrom());</span>
+<span class="fc" id="L233">        implementedOptions.forEach(antOption -&gt; result.append(getGenerateType(antOption).getMethod(antOption)));</span>
+<span class="fc" id="L234">        result.append(format(&quot;    }%n&quot;));</span>
 
-<span class="fc" id="L235">        return result.toString();</span>
+<span class="fc" id="L236">        return result.toString();</span>
     }
 
     public static class GenerateType {
         /** The inner class name text. */
         protected final String innerClass;
 
-<span class="fc" id="L242">        GenerateType(final String innerClass) {</span>
-<span class="fc" id="L243">            this.innerClass = innerClass;</span>
-<span class="fc" id="L244">        }</span>
+<span class="fc" id="L243">        GenerateType(final String innerClass) {</span>
+<span class="fc" id="L244">            this.innerClass = innerClass;</span>
+<span class="fc" id="L245">        }</span>
 
         public String getMethod(final AntOption antOption) {
-<span class="fc" id="L247">            String variableName = WordUtils.uncapitalize(antOption.getArgName());</span>
-<span class="fc" id="L248">            return String.format(&quot;&quot;&quot;</span>
+<span class="fc" id="L248">            String variableName = WordUtils.uncapitalize(antOption.getArgName());</span>
+<span class="fc" id="L249">            return String.format(&quot;&quot;&quot;</span>
                             public void addConfigured%1$s(%1$s %2$s) {
                                addArg(&quot;%3$s&quot;, %2$s.value);
-<span class="fc" id="L251">                            }%n&quot;&quot;&quot;, innerClass, variableName, antOption.keyValue());</span>
+<span class="fc" id="L252">                            }%n&quot;&quot;&quot;, innerClass, variableName, antOption.keyValue());</span>
         }
 
         public String getPattern(final AntOption delegateOption, final AntOption antOption) {
-<span class="nc bnc" id="L255" title="All 2 branches missed.">            if (delegateOption.isAttribute()) {</span>
-<span class="nc" id="L256">                String fmt = &quot;&lt;rat:report %s='%s' /&gt;&quot;;</span>
-<span class="nc bnc" id="L257" title="All 2 branches missed.">                return format(fmt, delegateOption.getName(), antOption.hasArg() ? antOption.getArgName() : &quot;true&quot;);</span>
+<span class="nc bnc" id="L256" title="All 2 branches missed.">            if (delegateOption.isAttribute()) {</span>
+<span class="nc" id="L257">                String fmt = &quot;&lt;rat:report %s='%s' /&gt;&quot;;</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">                return format(fmt, delegateOption.getName(), antOption.hasArg() ? antOption.getArgName() : &quot;true&quot;);</span>
             } else {
-<span class="nc" id="L259">                String fmt = &quot;&quot;&quot;</span>
+<span class="nc" id="L260">                String fmt = &quot;&quot;&quot;</span>
                     &lt;rat:report&gt;
                       &lt;%1$s&gt;
                         &lt;%2$s&gt;%3$s&lt;/%2$s&gt;
                       &lt;/%1$s&gt;
                     &lt;/rat:report&gt;
                     &quot;&quot;&quot;;
-<span class="nc" id="L266">                return format(fmt, delegateOption.getName(), innerClass, antOption.getArgName());</span>
+<span class="nc" id="L267">                return format(fmt, delegateOption.getName(), innerClass, antOption.getArgName());</span>
             }
         }
     }
 
     private static String maybeAddParamDescription(final AntOption antOption, final String desc) {
-<span class="pc bpc" id="L272" title="1 of 2 branches missed.">        if (antOption.getArgName() != null) {</span>
-<span class="fc" id="L273">            Supplier&lt;String&gt; sup = OptionCollection.ArgumentType.forDisplayName(antOption.getArgName()).map(OptionCollection.ArgumentType::description)</span>
-<span class="fc" id="L274">                    .orElse(null);</span>
-<span class="pc bpc" id="L275" title="1 of 2 branches missed.">            if (sup == null) {</span>
-<span class="nc" id="L276">                throw new IllegalStateException(format(&quot;Argument type %s must be in OptionCollection.ARGUMENT_TYPES&quot;, antOption.getArgName()));</span>
+<span class="pc bpc" id="L273" title="1 of 2 branches missed.">        if (antOption.getArgName() != null) {</span>
+<span class="fc" id="L274">            Supplier&lt;String&gt; sup = OptionCollection.ArgumentType.forDisplayName(antOption.getArgName()).map(OptionCollection.ArgumentType::description)</span>
+<span class="fc" id="L275">                    .orElse(null);</span>
+<span class="pc bpc" id="L276" title="1 of 2 branches missed.">            if (sup == null) {</span>
+<span class="nc" id="L277">                throw new IllegalStateException(format(&quot;Argument type %s must be in OptionCollection.ARGUMENT_TYPES&quot;, antOption.getArgName()));</span>
             }
-<span class="pc bpc" id="L278" title="1 of 2 branches missed.">            return format(&quot;%s Argument%s should be %s%s. (See Argument Types for clarification)&quot;, desc, antOption.hasArgs() ? &quot;s&quot; : &quot;&quot;,</span>
-<span class="pc bpc" id="L279" title="1 of 2 branches missed.">                    antOption.hasArgs() ? &quot;&quot; : &quot;a &quot;, antOption.getArgName());</span>
+<span class="pc bpc" id="L279" title="1 of 2 branches missed.">            return format(&quot;%s Argument%s should be %s%s. (See Argument Types for clarification)&quot;, desc, antOption.hasArgs() ? &quot;s&quot; : &quot;&quot;,</span>
+<span class="pc bpc" id="L280" title="1 of 2 branches missed.">                    antOption.hasArgs() ? &quot;&quot; : &quot;a &quot;, antOption.getArgName());</span>
         }
-<span class="nc" id="L281">        return desc;</span>
+<span class="nc" id="L282">        return desc;</span>
     }
 
     /**
@@ -288,32 +289,32 @@ public final class AntGenerator {
      * @return the Comment block for the function.
      */
     private static String getComment(final AntOption antOption, final boolean addParam) {
-<span class="fc" id="L291">        StringBuilder sb = new StringBuilder();</span>
-<span class="fc" id="L292">        String desc = antOption.getDescription();</span>
-<span class="pc bpc" id="L293" title="1 of 2 branches missed.">        if (desc == null) {</span>
-<span class="nc" id="L294">            throw new IllegalStateException(format(&quot;Description for %s may not be null&quot;, antOption.getName()));</span>
+<span class="fc" id="L292">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc" id="L293">        String desc = antOption.getDescription();</span>
+<span class="pc bpc" id="L294" title="1 of 2 branches missed.">        if (desc == null) {</span>
+<span class="nc" id="L295">            throw new IllegalStateException(format(&quot;Description for %s may not be null&quot;, antOption.getName()));</span>
         }
-<span class="pc bpc" id="L296" title="1 of 2 branches missed.">        if (!desc.contains(&quot;.&quot;)) {</span>
-<span class="nc" id="L297">            throw new IllegalStateException(format(&quot;First sentence of description for %s must end with a '.'&quot;, antOption.getName()));</span>
+<span class="pc bpc" id="L297" title="1 of 2 branches missed.">        if (!desc.contains(&quot;.&quot;)) {</span>
+<span class="nc" id="L298">            throw new IllegalStateException(format(&quot;First sentence of description for %s must end with a '.'&quot;, antOption.getName()));</span>
         }
-<span class="fc bfc" id="L299" title="All 2 branches covered.">        if (addParam) {</span>
+<span class="fc bfc" id="L300" title="All 2 branches covered.">        if (addParam) {</span>
             String arg;
-<span class="fc bfc" id="L301" title="All 2 branches covered.">            if (antOption.hasArg()) {</span>
-<span class="fc" id="L302">                arg = desc.substring(desc.indexOf(&quot; &quot;) + 1, desc.indexOf(&quot;.&quot;) + 1);</span>
-<span class="fc" id="L303">                arg = WordUtils.capitalize(arg.substring(0, 1)) + arg.substring(1);</span>
+<span class="fc bfc" id="L302" title="All 2 branches covered.">            if (antOption.hasArg()) {</span>
+<span class="fc" id="L303">                arg = desc.substring(desc.indexOf(&quot; &quot;) + 1, desc.indexOf(&quot;.&quot;) + 1);</span>
+<span class="fc" id="L304">                arg = WordUtils.capitalize(arg.substring(0, 1)) + arg.substring(1);</span>
             } else {
-<span class="fc" id="L305">                arg = &quot;The state&quot;;</span>
+<span class="fc" id="L306">                arg = &quot;The state&quot;;</span>
             }
-<span class="fc" id="L307">            desc = maybeAddParamDescription(antOption, desc);</span>
-<span class="fc" id="L308">            sb.append(format(&quot;    /**%n     * %s%n     * @param %s %s%n&quot;, StringEscapeUtils.escapeHtml4(desc), antOption.getName(),</span>
-<span class="fc" id="L309">                    StringEscapeUtils.escapeHtml4(arg)));</span>
-<span class="fc" id="L310">        } else {</span>
-<span class="fc" id="L311">            sb.append(format(&quot;    /**%n     * %s%n&quot;, StringEscapeUtils.escapeHtml4(desc)));</span>
+<span class="fc" id="L308">            desc = maybeAddParamDescription(antOption, desc);</span>
+<span class="fc" id="L309">            sb.append(format(&quot;    /**%n     * %s%n     * @param %s %s%n&quot;, StringEscapeUtils.escapeHtml4(desc), antOption.getName(),</span>
+<span class="fc" id="L310">                    StringEscapeUtils.escapeHtml4(arg)));</span>
+<span class="fc" id="L311">        } else {</span>
+<span class="fc" id="L312">            sb.append(format(&quot;    /**%n     * %s%n&quot;, StringEscapeUtils.escapeHtml4(desc)));</span>
         }
-<span class="fc bfc" id="L313" title="All 2 branches covered.">        if (antOption.isDeprecated()) {</span>
-<span class="fc" id="L314">            sb.append(format(&quot;     * @deprecated %s%n&quot;, StringEscapeUtils.escapeHtml4(antOption.getDeprecated())));</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">        if (antOption.isDeprecated()) {</span>
+<span class="fc" id="L315">            sb.append(format(&quot;     * @deprecated %s%n&quot;, StringEscapeUtils.escapeHtml4(antOption.getDeprecated())));</span>
         }
-<span class="fc" id="L316">        return sb.append(format(&quot;     */%n&quot;)).toString();</span>
+<span class="fc" id="L317">        return sb.append(format(&quot;     */%n&quot;)).toString();</span>
     }
 
     /**
@@ -322,10 +323,10 @@ public final class AntGenerator {
      * @return the signature of the attribute function.
      */
     public static String getAttributeFunctionName(final AntOption antOption) {
-<span class="fc" id="L325">        return &quot;set&quot; +</span>
-<span class="fc" id="L326">                WordUtils.capitalize(antOption.getName()) +</span>
-<span class="fc bfc" id="L327" title="All 2 branches covered.">                (antOption.hasArg() ? &quot;(String &quot; : &quot;(boolean &quot;) +</span>
-<span class="fc" id="L328">                antOption.getName() +</span>
+<span class="fc" id="L326">        return &quot;set&quot; +</span>
+<span class="fc" id="L327">                WordUtils.capitalize(antOption.getName()) +</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">                (antOption.hasArg() ? &quot;(String &quot; : &quot;(boolean &quot;) +</span>
+<span class="fc" id="L329">                antOption.getName() +</span>
                 &quot;)&quot;;
     }
 }

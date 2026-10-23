@@ -42,7 +42,7 @@ import org.apache.rat.config.parameters.MatcherBuilder;
      * its own matcher map and per-document match state ({@code lastMatch},
      * {@code checked}).
      */
-<span class="fc" id="L45">    private static final ThreadLocal&lt;SPDXMatcherFactory&gt; FACTORY = ThreadLocal.withInitial(SPDXMatcherFactory::newInstance);</span>
+<span class="fc" id="L45">    private static final ThreadLocal&lt;SPDXMatcherFactory&gt; FACTORY = ThreadLocal.withInitial(SPDXMatcherFactory::newInstance); // NOSONAR</span>
 
     /** The SPDX name */
     private String name;
@@ -71,7 +71,7 @@ import org.apache.rat.config.parameters.MatcherBuilder;
     public AbstractBuilder setId(final String id) {
 <span class="pc bpc" id="L72" title="1 of 2 branches missed.">        if (StringUtils.isNotBlank(id)) {</span>
 <span class="fc" id="L73">            throw new ConfigurationException(&quot;'id' is not supported for SPDX matchers. &quot;</span>
-                    + &quot;SPXD matchers always have 'SPDX:&lt;name&gt;' as their id&quot;);
+                    + &quot;SPXD matchers always have 'SPDX:&lt;name&gt;' as their id.&quot;);
         }
 <span class="nc" id="L76">        return this;</span>
     }

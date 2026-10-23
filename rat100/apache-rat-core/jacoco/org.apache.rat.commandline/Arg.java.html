@@ -21,7 +21,6 @@ package org.apache.rat.commandline;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -31,12 +30,10 @@ import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
 import org.apache.commons.cli.AlreadySelectedException;
-import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DeprecatedAttributes;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionGroup;
 import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.rat.ConfigurationException;
@@ -67,58 +64,58 @@ import static java.lang.String.format;
  * the {@code ArgumentContext.configuration}.&lt;/li&gt;
  * &lt;/ul&gt;
  */
-<span class="fc" id="L70">public enum Arg {</span>
+<span class="fc" id="L67">public enum Arg {</span>
     ///////////////////////// EDIT OPTIONS
     /**
      * Defines options to add copyright to files.
      */
-<span class="fc" id="L75">    EDIT_COPYRIGHT(new OptionGroup()</span>
-<span class="fc" id="L76">            .addOption(Option.builder(&quot;c&quot;)</span>
-<span class="fc" id="L77">                    .longOpt(&quot;copyright&quot;).hasArg()</span>
-<span class="fc" id="L78">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L79">                            .setDescription(StdMsgs.useMsg(&quot;--edit-copyright&quot;)).get())</span>
-<span class="fc" id="L80">                    .desc(&quot;The copyright message to use in the license headers.&quot;)</span>
-<span class="fc" id="L81">                    .build())</span>
-<span class="fc" id="L82">            .addOption(Option.builder().longOpt(&quot;edit-copyright&quot;).hasArg()</span>
-<span class="fc" id="L83">                    .desc(&quot;The copyright message to use in the license headers. Usually in the form of \&quot;Copyright 2008 Foo\&quot;.  &quot;</span>
+<span class="fc" id="L72">    EDIT_COPYRIGHT(new OptionGroup()</span>
+<span class="fc" id="L73">            .addOption(Option.builder(&quot;c&quot;)</span>
+<span class="fc" id="L74">                    .longOpt(&quot;copyright&quot;).hasArg()</span>
+<span class="fc" id="L75">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L76">                            .setDescription(StdMsgs.useMsg(&quot;--edit-copyright&quot;)).get())</span>
+<span class="fc" id="L77">                    .desc(&quot;The copyright message to use in the license headers.&quot;)</span>
+<span class="fc" id="L78">                    .build())</span>
+<span class="fc" id="L79">            .addOption(Option.builder().longOpt(&quot;edit-copyright&quot;).hasArg()</span>
+<span class="fc" id="L80">                    .desc(&quot;The copyright message to use in the license headers. Usually in the form of \&quot;Copyright 2008 Foo\&quot;.  &quot;</span>
                             + &quot;Only valid with --edit-license&quot;)
-<span class="fc" id="L85">                    .build()),</span>
+<span class="fc" id="L82">                    .build()),</span>
     Arg::doNotExecute
     ),
 
     /**
      * Causes file updates to overwrite existing files.
      */
-<span class="fc" id="L92">    EDIT_OVERWRITE(new OptionGroup()</span>
-<span class="fc" id="L93">            .addOption(Option.builder(&quot;f&quot;).longOpt(&quot;force&quot;)</span>
-<span class="fc" id="L94">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L95">                            .setDescription(StdMsgs.useMsg(&quot;--edit-overwrite&quot;)).get())</span>
-<span class="fc" id="L96">                    .desc(&quot;Forces any changes in files to be written directly to the source files so that new files are not created.&quot;)</span>
-<span class="fc" id="L97">                    .build())</span>
-<span class="fc" id="L98">            .addOption(Option.builder().longOpt(&quot;edit-overwrite&quot;)</span>
-<span class="fc" id="L99">                    .desc(&quot;Forces any changes in files to be written directly to the source files so that new files are not created. &quot;</span>
+<span class="fc" id="L89">    EDIT_OVERWRITE(new OptionGroup()</span>
+<span class="fc" id="L90">            .addOption(Option.builder(&quot;f&quot;).longOpt(&quot;force&quot;)</span>
+<span class="fc" id="L91">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L92">                            .setDescription(StdMsgs.useMsg(&quot;--edit-overwrite&quot;)).get())</span>
+<span class="fc" id="L93">                    .desc(&quot;Forces any changes in files to be written directly to the source files so that new files are not created.&quot;)</span>
+<span class="fc" id="L94">                    .build())</span>
+<span class="fc" id="L95">            .addOption(Option.builder().longOpt(&quot;edit-overwrite&quot;)</span>
+<span class="fc" id="L96">                    .desc(&quot;Forces any changes in files to be written directly to the source files so that new files are not created. &quot;</span>
                             + &quot;Only valid with --edit-license.&quot;)
-<span class="fc" id="L101">                    .build()),</span>
+<span class="fc" id="L98">                    .build()),</span>
             Arg::doNotExecute
     ),
 
     /**
      * Defines options to add licenses to files.
      */
-<span class="fc" id="L108">    EDIT_ADD(new OptionGroup()</span>
-<span class="fc" id="L109">            .addOption(Option.builder(&quot;a&quot;)</span>
-<span class="fc" id="L110">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L111">                            .setDescription(StdMsgs.useMsg(&quot;--edit-license&quot;)).get())</span>
-<span class="fc" id="L112">                    .build())</span>
-<span class="fc" id="L113">            .addOption(Option.builder(&quot;A&quot;).longOpt(&quot;addLicense&quot;)</span>
-<span class="fc" id="L114">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L115">                            .setDescription(StdMsgs.useMsg(&quot;--edit-license&quot;)).get())</span>
-<span class="fc" id="L116">                    .desc(&quot;Add the Apache-2.0 license header to any file with an unknown license that is not in the exclusion list.&quot;)</span>
-<span class="fc" id="L117">                    .build())</span>
-<span class="fc" id="L118">            .addOption(Option.builder().longOpt(&quot;edit-license&quot;).desc(</span>
+<span class="fc" id="L105">    EDIT_ADD(new OptionGroup()</span>
+<span class="fc" id="L106">            .addOption(Option.builder(&quot;a&quot;)</span>
+<span class="fc" id="L107">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L108">                            .setDescription(StdMsgs.useMsg(&quot;--edit-license&quot;)).get())</span>
+<span class="fc" id="L109">                    .build())</span>
+<span class="fc" id="L110">            .addOption(Option.builder(&quot;A&quot;).longOpt(&quot;addLicense&quot;)</span>
+<span class="fc" id="L111">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L112">                            .setDescription(StdMsgs.useMsg(&quot;--edit-license&quot;)).get())</span>
+<span class="fc" id="L113">                    .desc(&quot;Add the Apache-2.0 license header to any file with an unknown license that is not in the exclusion list.&quot;)</span>
+<span class="fc" id="L114">                    .build())</span>
+<span class="fc" id="L115">            .addOption(Option.builder().longOpt(&quot;edit-license&quot;).desc(</span>
                     &quot;Add the Apache-2.0 license header to any file with an unknown license that is not in the exclusion list. &quot;
                             + &quot;By default new files will be created with the license header, &quot;
-<span class="fc" id="L121">                            + &quot;to force the modification of existing files use the --edit-overwrite option.&quot;).build()</span>
+<span class="fc" id="L118">                            + &quot;to force the modification of existing files use the --edit-overwrite option.&quot;).build()</span>
             ),
             Arg::doNotExecute
     ),
@@ -127,368 +124,368 @@ import static java.lang.String.format;
     /**
      * Group of options that read a configuration file.
      */
-<span class="fc" id="L130">    CONFIGURATION(new OptionGroup()</span>
-<span class="fc" id="L131">            .addOption(Option.builder().longOpt(&quot;config&quot;).hasArgs().argName(&quot;File&quot;)</span>
-<span class="fc" id="L132">                    .desc(&quot;File names for system configuration.&quot;)</span>
-<span class="fc" id="L133">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L134">                    .type(DocumentName.class)</span>
-<span class="fc" id="L135">                    .build())</span>
-<span class="fc" id="L136">            .addOption(Option.builder().longOpt(&quot;licenses&quot;).hasArgs().argName(&quot;File&quot;)</span>
-<span class="fc" id="L137">                    .desc(&quot;File names for system configuration.&quot;)</span>
-<span class="fc" id="L138">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--config&quot;)).get())</span>
-<span class="fc" id="L139">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L140">                    .type(DocumentName.class)</span>
-<span class="fc" id="L141">                    .build()),</span>
+<span class="fc" id="L127">    CONFIGURATION(new OptionGroup()</span>
+<span class="fc" id="L128">            .addOption(Option.builder().longOpt(&quot;config&quot;).hasArgs().argName(&quot;File&quot;)</span>
+<span class="fc" id="L129">                    .desc(&quot;File names for system configuration.&quot;)</span>
+<span class="fc" id="L130">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L131">                    .type(DocumentName.class)</span>
+<span class="fc" id="L132">                    .build())</span>
+<span class="fc" id="L133">            .addOption(Option.builder().longOpt(&quot;licenses&quot;).hasArgs().argName(&quot;File&quot;)</span>
+<span class="fc" id="L134">                    .desc(&quot;File names for system configuration.&quot;)</span>
+<span class="fc" id="L135">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--config&quot;)).get())</span>
+<span class="fc" id="L136">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L137">                    .type(DocumentName.class)</span>
+<span class="fc" id="L138">                    .build()),</span>
             Arg::doNotExecute
     ),
 
     /**
      * Group of options that skip the default configuration file.
      */
-<span class="fc" id="L148">    CONFIGURATION_NO_DEFAULTS(new OptionGroup()</span>
-<span class="fc" id="L149">            .addOption(Option.builder().longOpt(&quot;configuration-no-defaults&quot;)</span>
-<span class="fc" id="L150">                    .desc(&quot;Ignore default configuration.&quot;).build())</span>
-<span class="fc" id="L151">            .addOption(Option.builder().longOpt(&quot;no-default-licenses&quot;)</span>
-<span class="fc" id="L152">                    .deprecated(DeprecatedAttributes.builder()</span>
-<span class="fc" id="L153">                            .setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L154">                            .setForRemoval(true)</span>
-<span class="fc" id="L155">                            .setDescription(StdMsgs.useMsg(&quot;--configuration-no-defaults&quot;)).get())</span>
-<span class="fc" id="L156">                    .desc(&quot;Ignore default configuration.&quot;)</span>
-<span class="fc" id="L157">                    .build()),</span>
+<span class="fc" id="L145">    CONFIGURATION_NO_DEFAULTS(new OptionGroup()</span>
+<span class="fc" id="L146">            .addOption(Option.builder().longOpt(&quot;configuration-no-defaults&quot;)</span>
+<span class="fc" id="L147">                    .desc(&quot;Ignore default configuration.&quot;).build())</span>
+<span class="fc" id="L148">            .addOption(Option.builder().longOpt(&quot;no-default-licenses&quot;)</span>
+<span class="fc" id="L149">                    .deprecated(DeprecatedAttributes.builder()</span>
+<span class="fc" id="L150">                            .setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L151">                            .setForRemoval(true)</span>
+<span class="fc" id="L152">                            .setDescription(StdMsgs.useMsg(&quot;--configuration-no-defaults&quot;)).get())</span>
+<span class="fc" id="L153">                    .desc(&quot;Ignore default configuration.&quot;)</span>
+<span class="fc" id="L154">                    .build()),</span>
             Arg::doNotExecute
     ),
 
     /**
      * Option that adds approved licenses to the list.
      */
-<span class="fc" id="L164">    LICENSES_APPROVED(new OptionGroup().addOption(Option.builder().longOpt(&quot;licenses-approved&quot;).hasArg().argName(&quot;LicenseID&quot;)</span>
-<span class="fc" id="L165">            .desc(&quot;A comma separated list of approved License IDs. These licenses will be added to the list of approved licenses.&quot;)</span>
-<span class="fc" id="L166">            .converter(Converters.TEXT_LIST_CONVERTER)</span>
-<span class="fc" id="L167">            .type(String[].class)</span>
-<span class="fc" id="L168">            .build()),</span>
+<span class="fc" id="L161">    LICENSES_APPROVED(new OptionGroup().addOption(Option.builder().longOpt(&quot;licenses-approved&quot;).hasArg().argName(&quot;LicenseID&quot;)</span>
+<span class="fc" id="L162">            .desc(&quot;A comma separated list of approved License IDs. These licenses will be added to the list of approved licenses.&quot;)</span>
+<span class="fc" id="L163">            .converter(Converters.TEXT_LIST_CONVERTER)</span>
+<span class="fc" id="L164">            .type(String[].class)</span>
+<span class="fc" id="L165">            .build()),</span>
             (context, selected) -&gt;
-<span class="fc" id="L170">                context.getConfiguration().addApprovedLicenseIds(processArrayArg(context, selected))</span>
+<span class="fc" id="L167">                  context.getConfiguration().addApprovedLicenseIds(context.getParsedOptionValue(selected))</span>
     ),
 
     /**
      * Option that adds approved licenses from a file.
      */
-<span class="fc" id="L176">    LICENSES_APPROVED_FILE(new OptionGroup().addOption(Option.builder().longOpt(&quot;licenses-approved-file&quot;).hasArg().argName(&quot;File&quot;)</span>
-<span class="fc" id="L177">            .desc(&quot;Name of file containing comma separated lists of approved License IDs.&quot;)</span>
-<span class="fc" id="L178">            .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L179">            .type(DocumentName.class)</span>
-<span class="fc" id="L180">            .build()),</span>
+<span class="fc" id="L173">    LICENSES_APPROVED_FILE(new OptionGroup().addOption(Option.builder().longOpt(&quot;licenses-approved-file&quot;).hasArg().argName(&quot;File&quot;)</span>
+<span class="fc" id="L174">            .desc(&quot;Name of file containing comma separated lists of approved License IDs.&quot;)</span>
+<span class="fc" id="L175">            .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L176">            .type(DocumentName.class)</span>
+<span class="fc" id="L177">            .build()),</span>
             (context, selected) -&gt;
-<span class="fc" id="L182">                    context.getConfiguration().addApprovedLicenseIds(processArrayFile(context, selected))),</span>
+<span class="fc" id="L179">                    context.getConfiguration().addApprovedLicenseIds(processArrayFile(context, selected))),</span>
 
     /**
      * Option that specifies approved license families.
      */
-<span class="fc" id="L187">    FAMILIES_APPROVED(new OptionGroup().addOption(Option.builder().longOpt(&quot;license-families-approved&quot;).hasArg().argName(&quot;FamilyID&quot;)</span>
-<span class="fc" id="L188">            .desc(&quot;A comma separated list of approved license family IDs. These license families will be added to the list of approved license families.&quot;)</span>
-<span class="fc" id="L189">            .converter(Converters.TEXT_LIST_CONVERTER)</span>
-<span class="fc" id="L190">            .type(String[].class)</span>
-<span class="fc" id="L191">            .build()),</span>
-<span class="fc" id="L192">            (context, selected) -&gt; context.getConfiguration().addApprovedLicenseCategories(processArrayArg(context, selected))),</span>
+<span class="fc" id="L184">    FAMILIES_APPROVED(new OptionGroup().addOption(Option.builder().longOpt(&quot;license-families-approved&quot;).hasArg().argName(&quot;FamilyID&quot;)</span>
+<span class="fc" id="L185">            .desc(&quot;A comma separated list of approved license family IDs. These license families will be added to the list of approved license families.&quot;)</span>
+<span class="fc" id="L186">            .converter(Converters.TEXT_LIST_CONVERTER)</span>
+<span class="fc" id="L187">            .type(String[].class)</span>
+<span class="fc" id="L188">            .build()),</span>
+<span class="fc" id="L189">            (context, selected) -&gt; context.getConfiguration().addApprovedLicenseCategories(context.getParsedOptionValue(selected))),</span>
 
     /**
      * Option that specifies approved license families from a file.
      */
-<span class="fc" id="L197">    FAMILIES_APPROVED_FILE(new OptionGroup().addOption(Option.builder().longOpt(&quot;license-families-approved-file&quot;).hasArg().argName(&quot;File&quot;)</span>
-<span class="fc" id="L198">            .desc(&quot;Name of file containing comma separated lists of approved family IDs.&quot;)</span>
-<span class="fc" id="L199">            .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L200">            .type(DocumentName.class)</span>
-<span class="fc" id="L201">            .build()),</span>
-<span class="fc" id="L202">            (context, selected) -&gt; context.getConfiguration().addApprovedLicenseCategories(processArrayFile(context, selected))</span>
+<span class="fc" id="L194">    FAMILIES_APPROVED_FILE(new OptionGroup().addOption(Option.builder().longOpt(&quot;license-families-approved-file&quot;).hasArg().argName(&quot;File&quot;)</span>
+<span class="fc" id="L195">            .desc(&quot;Name of file containing comma separated lists of approved family IDs.&quot;)</span>
+<span class="fc" id="L196">            .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L197">            .type(DocumentName.class)</span>
+<span class="fc" id="L198">            .build()),</span>
+<span class="fc" id="L199">            (context, selected) -&gt; context.getConfiguration().addApprovedLicenseCategories(processArrayFile(context, selected))</span>
     ),
 
     /**
      * Option to remove licenses from the approved list.
      */
-<span class="fc" id="L208">    LICENSES_DENIED(new OptionGroup().addOption(Option.builder().longOpt(&quot;licenses-denied&quot;).hasArg().argName(&quot;LicenseID&quot;)</span>
-<span class="fc" id="L209">            .desc(&quot;A comma separated list of denied License IDs. &quot; +</span>
+<span class="fc" id="L205">    LICENSES_DENIED(new OptionGroup().addOption(Option.builder().longOpt(&quot;licenses-denied&quot;).hasArg().argName(&quot;LicenseID&quot;)</span>
+<span class="fc" id="L206">            .desc(&quot;A comma separated list of denied License IDs. &quot; +</span>
                     &quot;These licenses will be removed from the list of approved licenses. &quot; +
                     &quot;Once licenses are removed they can not be added back.&quot;)
-<span class="fc" id="L212">            .converter(Converters.TEXT_LIST_CONVERTER)</span>
-<span class="fc" id="L213">            .type(String[].class)</span>
-<span class="fc" id="L214">            .build()),</span>
-<span class="fc" id="L215">            (context, selected) -&gt; context.getConfiguration().removeApprovedLicenseIds(processArrayArg(context, selected))),</span>
+<span class="fc" id="L209">            .converter(Converters.TEXT_LIST_CONVERTER)</span>
+<span class="fc" id="L210">            .type(String[].class)</span>
+<span class="fc" id="L211">            .build()),</span>
+<span class="fc" id="L212">            (context, selected) -&gt; context.getConfiguration().removeApprovedLicenseIds(context.getParsedOptionValue(selected))),</span>
 
     /**
      * Option to read a file licenses to be removed from the approved list.
      */
-<span class="fc" id="L220">    LICENSES_DENIED_FILE(new OptionGroup().addOption(Option.builder().longOpt(&quot;licenses-denied-file&quot;)</span>
-<span class="fc" id="L221">            .hasArg().argName(&quot;File&quot;).type(File.class)</span>
-<span class="fc" id="L222">            .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L223">            .desc(&quot;Name of file containing comma separated lists of the denied license IDs. &quot; +</span>
+<span class="fc" id="L217">    LICENSES_DENIED_FILE(new OptionGroup().addOption(Option.builder().longOpt(&quot;licenses-denied-file&quot;)</span>
+<span class="fc" id="L218">            .hasArg().argName(&quot;File&quot;).type(File.class)</span>
+<span class="fc" id="L219">            .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L220">            .desc(&quot;Name of file containing comma separated lists of the denied license IDs. &quot; +</span>
                     &quot;These licenses will be removed from the list of approved licenses. &quot; +
                     &quot;Once licenses are removed they can not be added back.&quot;)
-<span class="fc" id="L226">            .build()),</span>
-<span class="fc" id="L227">            (context, selected) -&gt; context.getConfiguration().removeApprovedLicenseIds(processArrayFile(context, selected))),</span>
+<span class="fc" id="L223">            .build()),</span>
+<span class="fc" id="L224">            (context, selected) -&gt; context.getConfiguration().removeApprovedLicenseIds(processArrayFile(context, selected))),</span>
 
     /**
      * Option to list license families to remove from the approved list.
      */
-<span class="fc" id="L232">    FAMILIES_DENIED(new OptionGroup().addOption(Option.builder().longOpt(&quot;license-families-denied&quot;)</span>
-<span class="fc" id="L233">            .hasArg().argName(&quot;FamilyID&quot;)</span>
-<span class="fc" id="L234">            .desc(&quot;A comma separated list of denied License family IDs. &quot; +</span>
+<span class="fc" id="L229">    FAMILIES_DENIED(new OptionGroup().addOption(Option.builder().longOpt(&quot;license-families-denied&quot;)</span>
+<span class="fc" id="L230">            .hasArg().argName(&quot;FamilyID&quot;)</span>
+<span class="fc" id="L231">            .desc(&quot;A comma separated list of denied License family IDs. &quot; +</span>
                     &quot;These license families will be removed from the list of approved licenses. &quot; +
                     &quot;Once license families are removed they can not be added back.&quot;)
-<span class="fc" id="L237">            .converter(Converters.TEXT_LIST_CONVERTER)</span>
-<span class="fc" id="L238">            .type(String[].class)</span>
-<span class="fc" id="L239">            .build()),</span>
-<span class="fc" id="L240">            (context, selected) -&gt; context.getConfiguration().removeApprovedLicenseCategories(processArrayArg(context, selected))),</span>
+<span class="fc" id="L234">            .converter(Converters.TEXT_LIST_CONVERTER)</span>
+<span class="fc" id="L235">            .type(String[].class)</span>
+<span class="fc" id="L236">            .build()),</span>
+<span class="fc" id="L237">            (context, selected) -&gt; context.getConfiguration().removeApprovedLicenseCategories(context.getParsedOptionValue(selected))),</span>
 
     /**
      * Option to read a list of license families to remove from the approved list.
      */
-<span class="fc" id="L245">    FAMILIES_DENIED_FILE(new OptionGroup().addOption(Option.builder().longOpt(&quot;license-families-denied-file&quot;).hasArg().argName(&quot;File&quot;)</span>
-<span class="fc" id="L246">            .desc(&quot;Name of file containing comma separated lists of denied license IDs. &quot; +</span>
+<span class="fc" id="L242">    FAMILIES_DENIED_FILE(new OptionGroup().addOption(Option.builder().longOpt(&quot;license-families-denied-file&quot;).hasArg().argName(&quot;File&quot;)</span>
+<span class="fc" id="L243">            .desc(&quot;Name of file containing comma separated lists of denied license IDs. &quot; +</span>
                     &quot;These license families will be removed from the list of approved licenses. &quot; +
                     &quot;Once license families are removed they can not be added back.&quot;)
-<span class="fc" id="L249">            .type(DocumentName.class)</span>
-<span class="fc" id="L250">            .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L251">            .build()),</span>
-<span class="fc" id="L252">            (context, selected) -&gt; context.getConfiguration().removeApprovedLicenseCategories(processArrayFile(context, selected))),</span>
+<span class="fc" id="L246">            .type(DocumentName.class)</span>
+<span class="fc" id="L247">            .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L248">            .build()),</span>
+<span class="fc" id="L249">            (context, selected) -&gt; context.getConfiguration().removeApprovedLicenseCategories(processArrayFile(context, selected))),</span>
 
     /**
      * Option to specify an acceptable number of various counters.
      */
-<span class="fc" id="L257">    COUNTER_MAX(new OptionGroup().addOption(Option.builder().longOpt(&quot;counter-max&quot;).hasArgs().argName(&quot;CounterPattern&quot;)</span>
-<span class="fc" id="L258">            .desc(&quot;The acceptable maximum number for the specified counter. A value of '-1' specifies an unlimited number.&quot;)</span>
-<span class="fc" id="L259">            .converter(Converters.COUNTER_CONVERTER)</span>
-<span class="fc" id="L260">            .type(Pair.class)</span>
-<span class="fc" id="L261">            .build()),</span>
+<span class="fc" id="L254">    COUNTER_MAX(new OptionGroup().addOption(Option.builder().longOpt(&quot;counter-max&quot;).hasArgs().argName(&quot;CounterPattern&quot;)</span>
+<span class="fc" id="L255">            .desc(&quot;The acceptable maximum number for the specified counter. A value of '-1' specifies an unlimited number.&quot;)</span>
+<span class="fc" id="L256">            .converter(Converters.COUNTER_CONVERTER)</span>
+<span class="fc" id="L257">            .type(Pair.class)</span>
+<span class="fc" id="L258">            .build()),</span>
             (context, selected) -&gt; {
-<span class="fc bfc" id="L263" title="All 2 branches covered.">                for (String arg : context.getCommandLine().getOptionValues(selected)) {</span>
-<span class="fc" id="L264">                    Pair&lt;Counter, Integer&gt; pair = Converters.COUNTER_CONVERTER.apply(arg);</span>
-<span class="fc" id="L265">                    int limit = pair.getValue();</span>
-<span class="fc bfc" id="L266" title="All 2 branches covered.">                    context.getConfiguration().getClaimValidator().setMax(pair.getKey(), limit &lt; 0 ? Integer.MAX_VALUE : limit);</span>
-                }
-<span class="fc" id="L268">            }),</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">                for (String arg : context.getOptionValues(selected)) {</span>
+<span class="fc" id="L261">                    Pair&lt;Counter, Integer&gt; pair = Converters.COUNTER_CONVERTER.apply(arg);</span>
+<span class="fc" id="L262">                    int limit = pair.getValue();</span>
+<span class="fc bfc" id="L263" title="All 2 branches covered.">                    context.getConfiguration().getClaimValidator().setMax(pair.getKey(), limit &lt; 0 ? Integer.MAX_VALUE : limit);</span>
+<span class="fc" id="L264">                }</span>
+<span class="fc" id="L265">            }),</span>
 
     /**
      * Option to specify an acceptable number of various counters.
      */
-<span class="fc" id="L273">    COUNTER_MIN(new OptionGroup().addOption(Option.builder().longOpt(&quot;counter-min&quot;).hasArgs().argName(&quot;CounterPattern&quot;)</span>
-<span class="fc" id="L274">            .desc(&quot;The minimum number for the specified counter.&quot;)</span>
-<span class="fc" id="L275">            .converter(Converters.COUNTER_CONVERTER)</span>
-<span class="fc" id="L276">            .type(Pair.class)</span>
-<span class="fc" id="L277">            .build()),</span>
+<span class="fc" id="L270">    COUNTER_MIN(new OptionGroup().addOption(Option.builder().longOpt(&quot;counter-min&quot;).hasArgs().argName(&quot;CounterPattern&quot;)</span>
+<span class="fc" id="L271">            .desc(&quot;The minimum number for the specified counter.&quot;)</span>
+<span class="fc" id="L272">            .converter(Converters.COUNTER_CONVERTER)</span>
+<span class="fc" id="L273">            .type(Pair.class)</span>
+<span class="fc" id="L274">            .build()),</span>
             (context, selected) -&gt; {
-<span class="fc bfc" id="L279" title="All 2 branches covered.">                for (String arg : context.getCommandLine().getOptionValues(selected)) {</span>
-<span class="fc" id="L280">                    Pair&lt;Counter, Integer&gt; pair = Converters.COUNTER_CONVERTER.apply(arg);</span>
-<span class="fc" id="L281">                    context.getConfiguration().getClaimValidator().setMin(pair.getKey(), pair.getValue());</span>
-                }
-<span class="fc" id="L283">            }),</span>
+<span class="fc bfc" id="L276" title="All 2 branches covered.">                for (String arg : context.getOptionValues(selected)) {</span>
+<span class="fc" id="L277">                    Pair&lt;Counter, Integer&gt; pair = Converters.COUNTER_CONVERTER.apply(arg);</span>
+<span class="fc" id="L278">                    context.getConfiguration().getClaimValidator().setMin(pair.getKey(), pair.getValue());</span>
+<span class="fc" id="L279">                }</span>
+<span class="fc" id="L280">            }),</span>
 
 ////////////////// INPUT OPTIONS
     /**
      * Reads files to test from a file.
      */
-<span class="fc" id="L289">    SOURCE(new OptionGroup()</span>
-<span class="fc" id="L290">            .addOption(Option.builder().longOpt(&quot;input-source&quot;).hasArgs().argName(&quot;File&quot;)</span>
-<span class="fc" id="L291">                    .desc(&quot;A file containing file names to process. &quot; +</span>
+<span class="fc" id="L286">    SOURCE(new OptionGroup()</span>
+<span class="fc" id="L287">            .addOption(Option.builder().longOpt(&quot;input-source&quot;).hasArgs().argName(&quot;File&quot;)</span>
+<span class="fc" id="L288">                    .desc(&quot;A file containing file names to process. &quot; +</span>
                             &quot;File names must use linux directory separator ('/') or none at all. &quot; +
                             &quot;File names that do not start with '/' are relative to the directory where the &quot; +
                             &quot;argument is located.&quot;)
-<span class="fc" id="L295">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L296">                    .type(DocumentName.class)</span>
-<span class="fc" id="L297">                    .build()),</span>
+<span class="fc" id="L292">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L293">                    .type(DocumentName.class)</span>
+<span class="fc" id="L294">                    .build()),</span>
             (context, selected) -&gt; {
-<span class="fc" id="L299">                DocumentName[] documentNames = getParsedOptionValues(selected, context.getCommandLine());</span>
-<span class="fc bfc" id="L300" title="All 2 branches covered.">                for (DocumentName documentName : documentNames) {</span>
-<span class="fc" id="L301">                    context.getConfiguration().addSource(documentName.asFile());</span>
-                }
-<span class="fc" id="L303">            }),</span>
+<span class="fc" id="L296">                List&lt;DocumentName&gt; documentNames = context.getParsedOptionValues(selected);</span>
+<span class="fc bfc" id="L297" title="All 2 branches covered.">                for (DocumentName documentName : documentNames) {</span>
+<span class="fc" id="L298">                    context.getConfiguration().addSource(documentName.asFile());</span>
+<span class="fc" id="L299">                }</span>
+<span class="fc" id="L300">            }),</span>
 
     /**
      * Excludes files by expression.
      */
-<span class="fc" id="L308">    EXCLUDE(new OptionGroup()</span>
-<span class="fc" id="L309">            .addOption(Option.builder(&quot;e&quot;).longOpt(&quot;exclude&quot;).hasArgs().argName(&quot;Expression&quot;)</span>
-<span class="fc" id="L310">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L311">                            .setDescription(StdMsgs.useMsg(&quot;--input-exclude&quot;)).get())</span>
+<span class="fc" id="L305">    EXCLUDE(new OptionGroup()</span>
+<span class="fc" id="L306">            .addOption(Option.builder(&quot;e&quot;).longOpt(&quot;exclude&quot;).hasArgs().argName(&quot;Expression&quot;)</span>
+<span class="fc" id="L307">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L308">                            .setDescription(StdMsgs.useMsg(&quot;--input-exclude&quot;)).get())</span>
+<span class="fc" id="L309">                    .desc(&quot;Excludes files matching &lt;Expression&gt;.&quot;)</span>
+<span class="fc" id="L310">                    .build())</span>
+<span class="fc" id="L311">            .addOption(Option.builder().longOpt(&quot;input-exclude&quot;).hasArgs().argName(&quot;Expression&quot;)</span>
 <span class="fc" id="L312">                    .desc(&quot;Excludes files matching &lt;Expression&gt;.&quot;)</span>
-<span class="fc" id="L313">                    .build())</span>
-<span class="fc" id="L314">            .addOption(Option.builder().longOpt(&quot;input-exclude&quot;).hasArgs().argName(&quot;Expression&quot;)</span>
-<span class="fc" id="L315">                    .desc(&quot;Excludes files matching &lt;Expression&gt;.&quot;)</span>
-<span class="fc" id="L316">                    .build()),</span>
+<span class="fc" id="L313">                    .build()),</span>
             (context, selected) -&gt; {
-<span class="fc" id="L318">                String[] excludes = context.getCommandLine().getOptionValues(selected);</span>
-<span class="pc bpc" id="L319" title="1 of 2 branches missed.">                if (excludes != null) {</span>
-<span class="fc" id="L320">                    context.getConfiguration().addExcludedPatterns(Arrays.asList(excludes));</span>
+<span class="fc" id="L315">                List&lt;String&gt; excludes = context.getOptionValues(selected);</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">                if (!excludes.isEmpty()) {</span>
+<span class="fc" id="L317">                    context.getConfiguration().addExcludedPatterns(excludes);</span>
                 }
-<span class="fc" id="L322">            }),</span>
+<span class="fc" id="L319">            }),</span>
 
     /**
      * Excludes files based on the contents of a file.
      */
-<span class="fc" id="L327">    EXCLUDE_FILE(new OptionGroup()</span>
-<span class="fc" id="L328">            .addOption(Option.builder(&quot;E&quot;).longOpt(&quot;exclude-file&quot;)</span>
-<span class="fc" id="L329">                    .argName(&quot;File&quot;).hasArg().type(File.class)</span>
-<span class="fc" id="L330">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L331">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L332">                            .setDescription(StdMsgs.useMsg(&quot;--input-exclude-file&quot;)).get())</span>
-<span class="fc" id="L333">                    .desc(&quot;Reads &lt;Expression&gt; entries from a file. Entries will be excluded from processing.&quot;)</span>
-<span class="fc" id="L334">                    .build())</span>
-<span class="fc" id="L335">            .addOption(Option.builder().longOpt(&quot;input-exclude-file&quot;)</span>
-<span class="fc" id="L336">                    .argName(&quot;File&quot;).hasArg().type(File.class)</span>
-<span class="fc" id="L337">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L338">                    .desc(&quot;Reads &lt;Expression&gt; entries from a file. Entries will be excluded from processing.&quot;)</span>
-<span class="fc" id="L339">                    .build()),</span>
+<span class="fc" id="L324">    EXCLUDE_FILE(new OptionGroup()</span>
+<span class="fc" id="L325">            .addOption(Option.builder(&quot;E&quot;).longOpt(&quot;exclude-file&quot;)</span>
+<span class="fc" id="L326">                    .argName(&quot;File&quot;).hasArg().type(File.class)</span>
+<span class="fc" id="L327">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L328">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L329">                            .setDescription(StdMsgs.useMsg(&quot;--input-exclude-file&quot;)).get())</span>
+<span class="fc" id="L330">                    .desc(&quot;Reads &lt;Expression&gt; entries from a file. Entries will be excluded from processing.&quot;)</span>
+<span class="fc" id="L331">                    .build())</span>
+<span class="fc" id="L332">            .addOption(Option.builder().longOpt(&quot;input-exclude-file&quot;)</span>
+<span class="fc" id="L333">                    .argName(&quot;File&quot;).hasArg().type(File.class)</span>
+<span class="fc" id="L334">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L335">                    .desc(&quot;Reads &lt;Expression&gt; entries from a file. Entries will be excluded from processing.&quot;)</span>
+<span class="fc" id="L336">                    .build()),</span>
             (context, selected) -&gt; {
                 try {
-<span class="fc" id="L342">                    DocumentName excludeFileName = context.getCommandLine().getParsedOptionValue(selected);</span>
-<span class="pc bpc" id="L343" title="1 of 2 branches missed.">                    if (excludeFileName != null) {</span>
-<span class="fc" id="L344">                        context.getConfiguration().addExcludedPatterns(ExclusionUtils.asIterable(excludeFileName.asFile(), &quot;#&quot;));</span>
+<span class="fc" id="L339">                    DocumentName excludeFileName = context.getParsedOptionValue(selected);</span>
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">                    if (excludeFileName != null) {</span>
+<span class="fc" id="L341">                        context.getConfiguration().addExcludedPatterns(ExclusionUtils.asIterable(excludeFileName.asFile(), &quot;#&quot;));</span>
                     }
-<span class="nc" id="L346">                } catch (Exception e) {</span>
-<span class="nc" id="L347">                    throw ConfigurationException.from(e);</span>
-<span class="fc" id="L348">                }</span>
-<span class="fc" id="L349">            }),</span>
+<span class="nc" id="L343">                } catch (Exception e) {</span>
+<span class="nc" id="L344">                    throw ConfigurationException.from(e);</span>
+<span class="fc" id="L345">                }</span>
+<span class="fc" id="L346">            }),</span>
     /**
      * Excludes files based on standard groupings.
      */
-<span class="fc" id="L353">    EXCLUDE_STD(new OptionGroup()</span>
-<span class="fc" id="L354">            .addOption(Option.builder().longOpt(&quot;input-exclude-std&quot;).argName(&quot;StandardCollection&quot;)</span>
-<span class="pc" id="L355">                    .hasArgs().converter(s -&gt; StandardCollection.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L356">                    .desc(&quot;Excludes files defined in standard collections based on commonly occurring groups. &quot; +</span>
+<span class="fc" id="L350">    EXCLUDE_STD(new OptionGroup()</span>
+<span class="fc" id="L351">            .addOption(Option.builder().longOpt(&quot;input-exclude-std&quot;).argName(&quot;StandardCollection&quot;)</span>
+<span class="pc" id="L352">                    .hasArgs().converter(s -&gt; StandardCollection.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L353">                    .desc(&quot;Excludes files defined in standard collections based on commonly occurring groups. &quot; +</span>
                             &quot;Excludes any path matcher actions but DOES NOT exclude any file processor actions.&quot;)
-<span class="fc" id="L358">                    .type(StandardCollection.class)</span>
-<span class="fc" id="L359">                    .build()),</span>
+<span class="fc" id="L355">                    .type(StandardCollection.class)</span>
+<span class="fc" id="L356">                    .build()),</span>
             (context, selected) -&gt; {
-<span class="fc bfc" id="L361" title="All 2 branches covered.">                for (String s : context.getCommandLine().getOptionValues(selected)) {</span>
-<span class="fc" id="L362">                    context.getConfiguration().addExcludedCollection(StandardCollection.valueOf(s));</span>
-                }
-<span class="fc" id="L364">            }),</span>
+<span class="fc bfc" id="L358" title="All 2 branches covered.">                for (String s : context.getOptionValues(selected)) {</span>
+<span class="fc" id="L359">                    context.getConfiguration().addExcludedCollection(StandardCollection.valueOf(s));</span>
+<span class="fc" id="L360">                }</span>
+<span class="fc" id="L361">            }),</span>
 
     /**
      * Excludes files if they are smaller than the given threshold.
      */
-<span class="fc" id="L369">    EXCLUDE_SIZE(new OptionGroup()</span>
-<span class="fc" id="L370">            .addOption(Option.builder().longOpt(&quot;input-exclude-size&quot;).argName(&quot;Integer&quot;)</span>
-<span class="fc" id="L371">                    .hasArg().type(Integer.class)</span>
-<span class="fc" id="L372">                    .desc(&quot;Excludes files with sizes less than the number of bytes specified.&quot;)</span>
-<span class="fc" id="L373">                    .build()),</span>
+<span class="fc" id="L366">    EXCLUDE_SIZE(new OptionGroup()</span>
+<span class="fc" id="L367">            .addOption(Option.builder().longOpt(&quot;input-exclude-size&quot;).argName(&quot;Integer&quot;)</span>
+<span class="fc" id="L368">                    .hasArg().type(Integer.class)</span>
+<span class="fc" id="L369">                    .desc(&quot;Excludes files with sizes less than the number of bytes specified.&quot;)</span>
+<span class="fc" id="L370">                    .build()),</span>
             (context, selected) -&gt; {
                 try {
-<span class="fc" id="L376">                    final int maxSize = context.getCommandLine().getParsedOptionValue(selected);</span>
-<span class="fc" id="L377">                    DocumentNameMatcher matcher = new DocumentNameMatcher(String.format(&quot;File size &lt; %s bytes&quot;, maxSize),</span>
+<span class="fc" id="L373">                    final int maxSize = context.getParsedOptionValue(selected);</span>
+<span class="fc" id="L374">                    DocumentNameMatcher matcher = new DocumentNameMatcher(String.format(&quot;File size &lt; %s bytes&quot;, maxSize),</span>
                             (Predicate&lt;DocumentName&gt;) documentName -&gt; {
-<span class="fc" id="L379">                                File f = new File(documentName.getName());</span>
-<span class="fc bfc" id="L380" title="All 4 branches covered.">                                return f.isFile() &amp;&amp; f.length() &lt; maxSize;</span>
+<span class="fc" id="L376">                                File f = new File(documentName.getName());</span>
+<span class="fc bfc" id="L377" title="All 4 branches covered.">                                return f.isFile() &amp;&amp; f.length() &lt; maxSize;</span>
                             });
-<span class="fc" id="L382">                    context.getConfiguration().addExcludedMatcher(matcher);</span>
-<span class="nc" id="L383">                } catch (Exception e) {</span>
-<span class="nc" id="L384">                    throw ConfigurationException.from(e);</span>
-<span class="fc" id="L385">                }</span>
-<span class="fc" id="L386">            }),</span>
+<span class="fc" id="L379">                    context.getConfiguration().addExcludedMatcher(matcher);</span>
+<span class="nc" id="L380">                } catch (Exception e) {</span>
+<span class="nc" id="L381">                    throw ConfigurationException.from(e);</span>
+<span class="fc" id="L382">                }</span>
+<span class="fc" id="L383">            }),</span>
     /**
      * Excludes files by expression.
      */
-<span class="fc" id="L390">    INCLUDE(new OptionGroup()</span>
-<span class="fc" id="L391">            .addOption(Option.builder().longOpt(&quot;input-include&quot;).hasArgs().argName(&quot;Expression&quot;)</span>
+<span class="fc" id="L387">    INCLUDE(new OptionGroup()</span>
+<span class="fc" id="L388">            .addOption(Option.builder().longOpt(&quot;input-include&quot;).hasArgs().argName(&quot;Expression&quot;)</span>
+<span class="fc" id="L389">                    .desc(&quot;Includes files matching &lt;Expression&gt;. Will override excluded files.&quot;)</span>
+<span class="fc" id="L390">                    .build())</span>
+<span class="fc" id="L391">            .addOption(Option.builder().longOpt(&quot;include&quot;).hasArgs().argName(&quot;Expression&quot;)</span>
 <span class="fc" id="L392">                    .desc(&quot;Includes files matching &lt;Expression&gt;. Will override excluded files.&quot;)</span>
-<span class="fc" id="L393">                    .build())</span>
-<span class="fc" id="L394">            .addOption(Option.builder().longOpt(&quot;include&quot;).hasArgs().argName(&quot;Expression&quot;)</span>
-<span class="fc" id="L395">                    .desc(&quot;Includes files matching &lt;Expression&gt;. Will override excluded files.&quot;)</span>
-<span class="fc" id="L396">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L397">                            .setDescription(StdMsgs.useMsg(&quot;--input-include&quot;)).get())</span>
-<span class="fc" id="L398">                    .build()),</span>
+<span class="fc" id="L393">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L394">                            .setDescription(StdMsgs.useMsg(&quot;--input-include&quot;)).get())</span>
+<span class="fc" id="L395">                    .build()),</span>
             (context, selected) -&gt; {
-<span class="fc" id="L400">                String[] includes = context.getCommandLine().getOptionValues(selected);</span>
-<span class="pc bpc" id="L401" title="1 of 2 branches missed.">                if (includes != null) {</span>
-<span class="fc" id="L402">                    context.getConfiguration().addIncludedPatterns(Arrays.asList(includes));</span>
+<span class="fc" id="L397">                List&lt;String&gt; includes = context.getOptionValues(selected);</span>
+<span class="pc bpc" id="L398" title="1 of 2 branches missed.">                if (!includes.isEmpty()) {</span>
+<span class="fc" id="L399">                    context.getConfiguration().addIncludedPatterns(includes);</span>
                 }
-<span class="fc" id="L404">            }),</span>
+<span class="fc" id="L401">            }),</span>
 
     /**
      * Includes files based on the contents of a file.
      */
-<span class="fc" id="L409">    INCLUDE_FILE(new OptionGroup()</span>
-<span class="fc" id="L410">            .addOption(Option.builder().longOpt(&quot;input-include-file&quot;)</span>
-<span class="fc" id="L411">                    .argName(&quot;File&quot;).hasArg().type(File.class)</span>
-<span class="fc" id="L412">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L413">                    .desc(&quot;Reads &lt;Expression&gt; entries from a file. Entries will override excluded files.&quot;)</span>
-<span class="fc" id="L414">                    .build())</span>
-<span class="fc" id="L415">            .addOption(Option.builder().longOpt(&quot;includes-file&quot;)</span>
-<span class="fc" id="L416">                    .argName(&quot;File&quot;).hasArg().type(File.class)</span>
-<span class="fc" id="L417">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L418">                    .desc(&quot;Reads &lt;Expression&gt; entries from a file. Entries will override excluded files.&quot;)</span>
-<span class="fc" id="L419">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L420">                            .setDescription(StdMsgs.useMsg(&quot;--input-include-file&quot;)).get())</span>
-<span class="fc" id="L421">                    .build()),</span>
+<span class="fc" id="L406">    INCLUDE_FILE(new OptionGroup()</span>
+<span class="fc" id="L407">            .addOption(Option.builder().longOpt(&quot;input-include-file&quot;)</span>
+<span class="fc" id="L408">                    .argName(&quot;File&quot;).hasArg().type(File.class)</span>
+<span class="fc" id="L409">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L410">                    .desc(&quot;Reads &lt;Expression&gt; entries from a file. Entries will override excluded files.&quot;)</span>
+<span class="fc" id="L411">                    .build())</span>
+<span class="fc" id="L412">            .addOption(Option.builder().longOpt(&quot;includes-file&quot;)</span>
+<span class="fc" id="L413">                    .argName(&quot;File&quot;).hasArg().type(File.class)</span>
+<span class="fc" id="L414">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L415">                    .desc(&quot;Reads &lt;Expression&gt; entries from a file. Entries will override excluded files.&quot;)</span>
+<span class="fc" id="L416">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L417">                            .setDescription(StdMsgs.useMsg(&quot;--input-include-file&quot;)).get())</span>
+<span class="fc" id="L418">                    .build()),</span>
             (context, selected) -&gt; {
                 try {
-<span class="fc" id="L424">                    DocumentName includeFileName = context.getCommandLine().getParsedOptionValue(selected);</span>
-<span class="pc bpc" id="L425" title="1 of 2 branches missed.">                    if (includeFileName != null) {</span>
-<span class="fc" id="L426">                        context.getConfiguration().addIncludedPatterns(ExclusionUtils.asIterable(includeFileName.asFile(), &quot;#&quot;));</span>
+<span class="fc" id="L421">                    DocumentName includeFileName = context.getParsedOptionValue(selected);</span>
+<span class="pc bpc" id="L422" title="1 of 2 branches missed.">                    if (includeFileName != null) {</span>
+<span class="fc" id="L423">                        context.getConfiguration().addIncludedPatterns(ExclusionUtils.asIterable(includeFileName.asFile(), &quot;#&quot;));</span>
                     }
-<span class="nc" id="L428">                } catch (Exception e) {</span>
-<span class="nc" id="L429">                    throw ConfigurationException.from(e);</span>
-<span class="fc" id="L430">                }</span>
-<span class="fc" id="L431">            }),</span>
+<span class="nc" id="L425">                } catch (Exception e) {</span>
+<span class="nc" id="L426">                    throw ConfigurationException.from(e);</span>
+<span class="fc" id="L427">                }</span>
+<span class="fc" id="L428">            }),</span>
 
     /**
      * Includes files based on standard groups.
      */
-<span class="fc" id="L436">    INCLUDE_STD(new OptionGroup()</span>
-<span class="fc" id="L437">            .addOption(Option.builder().longOpt(&quot;input-include-std&quot;).argName(&quot;StandardCollection&quot;)</span>
-<span class="pc" id="L438">                    .hasArgs().converter(s -&gt; StandardCollection.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L439">                    .desc(&quot;Includes files defined in standard collections based on commonly occurring groups. &quot; +</span>
+<span class="fc" id="L433">    INCLUDE_STD(new OptionGroup()</span>
+<span class="fc" id="L434">            .addOption(Option.builder().longOpt(&quot;input-include-std&quot;).argName(&quot;StandardCollection&quot;)</span>
+<span class="pc" id="L435">                    .hasArgs().converter(s -&gt; StandardCollection.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L436">                    .desc(&quot;Includes files defined in standard collections based on commonly occurring groups. &quot; +</span>
                             &quot;Includes any path matcher actions but DOES NOT include any file processor actions.&quot;)
-<span class="fc" id="L441">                    .type(StandardCollection.class)</span>
-<span class="fc" id="L442">                    .build())</span>
-<span class="fc" id="L443">            .addOption(Option.builder().longOpt(&quot;scan-hidden-directories&quot;)</span>
-<span class="fc" id="L444">                    .desc(&quot;Scans hidden directories.&quot;)</span>
-<span class="fc" id="L445">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L446">                            .setDescription(StdMsgs.useMsg(&quot;--input-include-std with 'HIDDEN_DIR' argument&quot;)).get()).build()</span>
+<span class="fc" id="L438">                    .type(StandardCollection.class)</span>
+<span class="fc" id="L439">                    .build())</span>
+<span class="fc" id="L440">            .addOption(Option.builder().longOpt(&quot;scan-hidden-directories&quot;)</span>
+<span class="fc" id="L441">                    .desc(&quot;Scans hidden directories.&quot;)</span>
+<span class="fc" id="L442">                    .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L443">                            .setDescription(StdMsgs.useMsg(&quot;--input-include-std with 'HIDDEN_DIR' argument&quot;)).get()).build()</span>
             ),
             (context, selected) -&gt; {
                 // display deprecation log if needed.
-<span class="fc bfc" id="L450" title="All 2 branches covered.">                if (context.getCommandLine().hasOption(&quot;scan-hidden-directories&quot;)) {</span>
-<span class="fc" id="L451">                    context.getConfiguration().addIncludedCollection(StandardCollection.HIDDEN_DIR);</span>
+<span class="fc bfc" id="L447" title="All 2 branches covered.">                if (context.hasOption(&quot;scan-hidden-directories&quot;)) {</span>
+<span class="fc" id="L448">                    context.getConfiguration().addIncludedCollection(StandardCollection.HIDDEN_DIR);</span>
                 } else {
-<span class="fc bfc" id="L453" title="All 2 branches covered.">                    for (String s : context.getCommandLine().getOptionValues(selected)) {</span>
-<span class="fc" id="L454">                        context.getConfiguration().addIncludedCollection(StandardCollection.valueOf(s));</span>
-                    }
+<span class="fc bfc" id="L450" title="All 2 branches covered.">                    for (String s : context.getOptionValues(selected)) {</span>
+<span class="fc" id="L451">                        context.getConfiguration().addIncludedCollection(StandardCollection.valueOf(s));</span>
+<span class="fc" id="L452">                    }</span>
                 }
-<span class="fc" id="L457">            }),</span>
+<span class="fc" id="L454">            }),</span>
 
     /**
      * Excludes files based on SCM exclusion file processing.
      */
-<span class="fc" id="L462">    EXCLUDE_PARSE_SCM(new OptionGroup()</span>
-<span class="fc" id="L463">            .addOption(Option.builder().longOpt(&quot;input-exclude-parsed-scm&quot;)</span>
-<span class="fc" id="L464">                    .argName(&quot;StandardCollection&quot;)</span>
-<span class="fc" id="L465">                    .hasArgs().converter(s -&gt; StandardCollection.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L466">                    .desc(&quot;Parse SCM based exclusion files to exclude specified files and directories. &quot; +</span>
+<span class="fc" id="L459">    EXCLUDE_PARSE_SCM(new OptionGroup()</span>
+<span class="fc" id="L460">            .addOption(Option.builder().longOpt(&quot;input-exclude-parsed-scm&quot;)</span>
+<span class="fc" id="L461">                    .argName(&quot;StandardCollection&quot;)</span>
+<span class="fc" id="L462">                    .hasArgs().converter(s -&gt; StandardCollection.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L463">                    .desc(&quot;Parse SCM based exclusion files to exclude specified files and directories. &quot; +</span>
                             &quot;This action can apply to any standard collection that implements a file processor.&quot;)
-<span class="fc" id="L468">                    .type(StandardCollection.class)</span>
-<span class="fc" id="L469">                    .build()),</span>
+<span class="fc" id="L465">                    .type(StandardCollection.class)</span>
+<span class="fc" id="L466">                    .build()),</span>
             (context, selected) -&gt; {
-<span class="fc" id="L471">                StandardCollection[] collections = getParsedOptionValues(selected, context.getCommandLine());</span>
-<span class="fc" id="L472">                final ReportConfiguration configuration = context.getConfiguration();</span>
-<span class="fc bfc" id="L473" title="All 2 branches covered.">                for (StandardCollection collection : collections) {</span>
-<span class="pc bpc" id="L474" title="1 of 2 branches missed.">                    if (collection == StandardCollection.ALL) {</span>
-<span class="nc" id="L475">                        Arrays.asList(StandardCollection.values()).forEach(configuration::addExcludedFileProcessor);</span>
-<span class="nc" id="L476">                        Arrays.asList(StandardCollection.values()).forEach(configuration::addExcludedCollection);</span>
+<span class="fc" id="L468">                List&lt;StandardCollection&gt; collections = context.getParsedOptionValues(selected);</span>
+<span class="fc" id="L469">                final ReportConfiguration configuration = context.getConfiguration();</span>
+<span class="fc bfc" id="L470" title="All 2 branches covered.">                for (StandardCollection collection : collections) {</span>
+<span class="pc bpc" id="L471" title="1 of 2 branches missed.">                    if (collection == StandardCollection.ALL) {</span>
+<span class="nc" id="L472">                        Arrays.asList(StandardCollection.values()).forEach(configuration::addExcludedFileProcessor);</span>
+<span class="nc" id="L473">                        Arrays.asList(StandardCollection.values()).forEach(configuration::addExcludedCollection);</span>
                     } else {
-<span class="fc" id="L478">                        configuration.addExcludedFileProcessor(collection);</span>
-<span class="fc" id="L479">                        configuration.addExcludedCollection(collection);</span>
+<span class="fc" id="L475">                        configuration.addExcludedFileProcessor(collection);</span>
+<span class="fc" id="L476">                        configuration.addExcludedCollection(collection);</span>
                     }
-                }
-<span class="fc" id="L482">            }),</span>
+<span class="fc" id="L478">                }</span>
+<span class="fc" id="L479">            }),</span>
 
     /**
      * Stop processing an input stream and declare an input file.
      */
-<span class="fc" id="L487">    DIR(new OptionGroup().addOption(Option.builder().option(&quot;d&quot;).longOpt(&quot;dir&quot;).hasArg()</span>
-<span class="fc" id="L488">            .type(File.class)</span>
-<span class="fc" id="L489">            .desc(&quot;Used to indicate end of list when using options that take multiple arguments.&quot;).argName(&quot;DirOrArchive&quot;)</span>
-<span class="fc" id="L490">            .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L491">                    .setDescription(&quot;Use the standard '--' to signal the end of arguments.&quot;).get()).build()),</span>
+<span class="fc" id="L484">    DIR(new OptionGroup().addOption(Option.builder().option(&quot;d&quot;).longOpt(&quot;dir&quot;).hasArg()</span>
+<span class="fc" id="L485">            .type(File.class)</span>
+<span class="fc" id="L486">            .desc(&quot;Used to indicate end of list when using options that take multiple arguments.&quot;).argName(&quot;DirOrArchive&quot;)</span>
+<span class="fc" id="L487">            .deprecated(DeprecatedAttributes.builder().setForRemoval(true).setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L488">                    .setDescription(&quot;Use the standard '--' to signal the end of arguments.&quot;).get()).build()),</span>
             Arg::doNotExecute
     ),
 
@@ -496,177 +493,150 @@ import static java.lang.String.format;
     /**
      * Defines the stylesheet to use.
      */
-<span class="fc" id="L499">    OUTPUT_STYLE(new OptionGroup()</span>
-<span class="fc" id="L500">            .addOption(Option.builder().longOpt(&quot;output-style&quot;).hasArg().argName(&quot;StyleSheet&quot;)</span>
-<span class="fc" id="L501">                    .desc(&quot;XSLT stylesheet to use when creating the report. &quot;</span>
+<span class="fc" id="L496">    OUTPUT_STYLE(new OptionGroup()</span>
+<span class="fc" id="L497">            .addOption(Option.builder().longOpt(&quot;output-style&quot;).hasArg().argName(&quot;StyleSheet&quot;)</span>
+<span class="fc" id="L498">                    .desc(&quot;XSLT stylesheet to use when creating the report. &quot;</span>
                             + &quot;Either an external xsl file may be specified or one of the internal named sheets.&quot;)
-<span class="fc" id="L503">                    .build())</span>
-<span class="fc" id="L504">            .addOption(Option.builder(&quot;s&quot;).longOpt(&quot;stylesheet&quot;).hasArg().argName(&quot;StyleSheet&quot;)</span>
-<span class="fc" id="L505">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--output-style&quot;)).get())</span>
-<span class="fc" id="L506">                    .desc(&quot;XSLT stylesheet to use when creating the report.&quot;)</span>
-<span class="fc" id="L507">                    .build())</span>
-<span class="fc" id="L508">            .addOption(Option.builder(&quot;x&quot;).longOpt(&quot;xml&quot;)</span>
-<span class="fc" id="L509">                    .deprecated(DeprecatedAttributes.builder()</span>
-<span class="fc" id="L510">                            .setSince(&quot;0.17&quot;)</span>
-<span class="fc" id="L511">                            .setForRemoval(true)</span>
-<span class="fc" id="L512">                            .setDescription(StdMsgs.useMsg(&quot;--output-style with the 'xml' argument&quot;)).get())</span>
-<span class="fc" id="L513">                    .desc(&quot;forces XML output rather than the textual report.&quot;)</span>
-<span class="fc" id="L514">                    .build()),</span>
+<span class="fc" id="L500">                    .build())</span>
+<span class="fc" id="L501">            .addOption(Option.builder(&quot;s&quot;).longOpt(&quot;stylesheet&quot;).hasArg().argName(&quot;StyleSheet&quot;)</span>
+<span class="fc" id="L502">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--output-style&quot;)).get())</span>
+<span class="fc" id="L503">                    .desc(&quot;XSLT stylesheet to use when creating the report.&quot;)</span>
+<span class="fc" id="L504">                    .build())</span>
+<span class="fc" id="L505">            .addOption(Option.builder(&quot;x&quot;).longOpt(&quot;xml&quot;)</span>
+<span class="fc" id="L506">                    .deprecated(DeprecatedAttributes.builder()</span>
+<span class="fc" id="L507">                            .setSince(&quot;0.17&quot;)</span>
+<span class="fc" id="L508">                            .setForRemoval(true)</span>
+<span class="fc" id="L509">                            .setDescription(StdMsgs.useMsg(&quot;--output-style with the 'xml' argument&quot;)).get())</span>
+<span class="fc" id="L510">                    .desc(&quot;forces XML output rather than the textual report.&quot;)</span>
+<span class="fc" id="L511">                    .build()),</span>
             (context, selected) -&gt; {
-<span class="fc" id="L516">                String key = selected.getKey(); // is not null due to above isSelected()-call</span>
-<span class="fc bfc" id="L517" title="All 2 branches covered.">                if (&quot;x&quot;.equals(key)) {</span>
+<span class="fc" id="L513">                String key = selected.getKey(); // is not null due to above isSelected()-call</span>
+<span class="fc bfc" id="L514" title="All 2 branches covered.">                if (&quot;x&quot;.equals(key)) {</span>
                     // display deprecated message.
-<span class="fc" id="L519">                    context.getCommandLine().hasOption(&quot;x&quot;);</span>
-<span class="fc" id="L520">                    context.getConfiguration().setStyleSheet(StyleSheets.getStyleSheet(&quot;xml&quot;));</span>
+<span class="fc" id="L516">                    context.hasOption(&quot;x&quot;);</span>
+<span class="fc" id="L517">                    context.getConfiguration().setStyleSheet(StyleSheets.getStyleSheet(&quot;xml&quot;, context.getWorkingDirectory()));</span>
                 } else {
-<span class="fc" id="L522">                    String[] style = context.getCommandLine().getOptionValues(selected);</span>
-<span class="pc bpc" id="L523" title="1 of 2 branches missed.">                    if (style.length != 1) {</span>
-<span class="nc" id="L524">                        DefaultLog.getInstance().error(&quot;Please specify a single stylesheet&quot;);</span>
-<span class="nc" id="L525">                        throw new ConfigurationException(&quot;Please specify a single stylesheet&quot;);</span>
+<span class="fc" id="L519">                    List&lt;String&gt; style = context.getOptionValues(selected);</span>
+<span class="pc bpc" id="L520" title="1 of 2 branches missed.">                    if (style.size() != 1) {</span>
+<span class="nc" id="L521">                        DefaultLog.getInstance().error(&quot;Please specify a single stylesheet&quot;);</span>
+<span class="nc" id="L522">                        throw new ConfigurationException(&quot;Please specify a single stylesheet&quot;);</span>
                     }
-<span class="fc" id="L527">                    context.getConfiguration().setStyleSheet(StyleSheets.getStyleSheet(style[0]));</span>
+<span class="fc" id="L524">                    context.getConfiguration().setStyleSheet(StyleSheets.getStyleSheet(style.get(0), context.getWorkingDirectory()));</span>
                 }
-<span class="fc" id="L529">            }),</span>
+<span class="fc" id="L526">            }),</span>
 
     /**
      * Specifies the license definitions that should be included in the output.
      */
-<span class="fc" id="L534">    OUTPUT_LICENSES(new OptionGroup()</span>
-<span class="fc" id="L535">            .addOption(Option.builder().longOpt(&quot;output-licenses&quot;).hasArg().argName(&quot;LicenseFilter&quot;)</span>
-<span class="fc" id="L536">                    .desc(&quot;List the defined licenses.&quot;)</span>
-<span class="fc" id="L537">                    .converter(s -&gt; LicenseSetFactory.LicenseFilter.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L538">                    .build())</span>
-<span class="fc" id="L539">            .addOption(Option.builder().longOpt(&quot;list-licenses&quot;).hasArg().argName(&quot;LicenseFilter&quot;)</span>
-<span class="fc" id="L540">                    .desc(&quot;List the defined licenses.&quot;)</span>
-<span class="fc" id="L541">                    .converter(s -&gt; LicenseSetFactory.LicenseFilter.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L542">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--output-licenses&quot;)).get())</span>
-<span class="fc" id="L543">                    .build()),</span>
-            (context, selected) -&gt; {
-                try {
-<span class="fc" id="L546">                    context.getConfiguration().listLicenses(context.getCommandLine().getParsedOptionValue(selected));</span>
-<span class="nc" id="L547">                } catch (ParseException e) {</span>
-<span class="nc" id="L548">                    context.logParseException(e, selected, Defaults.LIST_LICENSES);</span>
-<span class="fc" id="L549">                }</span>
-<span class="fc" id="L550">            }),</span>
+<span class="fc" id="L531">    OUTPUT_LICENSES(new OptionGroup()</span>
+<span class="fc" id="L532">            .addOption(Option.builder().longOpt(&quot;output-licenses&quot;).hasArg().argName(&quot;LicenseFilter&quot;)</span>
+<span class="fc" id="L533">                    .desc(&quot;List the defined licenses.&quot;)</span>
+<span class="fc" id="L534">                    .converter(s -&gt; LicenseSetFactory.LicenseFilter.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L535">                    .build())</span>
+<span class="fc" id="L536">            .addOption(Option.builder().longOpt(&quot;list-licenses&quot;).hasArg().argName(&quot;LicenseFilter&quot;)</span>
+<span class="fc" id="L537">                    .desc(&quot;List the defined licenses.&quot;)</span>
+<span class="fc" id="L538">                    .converter(s -&gt; LicenseSetFactory.LicenseFilter.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L539">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--output-licenses&quot;)).get())</span>
+<span class="fc" id="L540">                    .build()),</span>
+<span class="pc" id="L541">            (context, selected) -&gt; context.getConfiguration().listLicenses(context.getParsedOptionValue(selected, () -&gt; Defaults.LIST_LICENSES))),</span>
 
     /**
      * Specifies the license families that should be included in the output.
      */
-<span class="fc" id="L555">    OUTPUT_FAMILIES(new OptionGroup()</span>
-<span class="fc" id="L556">            .addOption(Option.builder().longOpt(&quot;output-families&quot;).hasArg().argName(&quot;LicenseFilter&quot;)</span>
-<span class="fc" id="L557">                    .desc(&quot;List the defined license families.&quot;)</span>
-<span class="fc" id="L558">                    .converter(s -&gt; LicenseSetFactory.LicenseFilter.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L559">                    .build())</span>
-<span class="fc" id="L560">            .addOption(Option.builder().longOpt(&quot;list-families&quot;).hasArg().argName(&quot;LicenseFilter&quot;)</span>
-<span class="fc" id="L561">                    .desc(&quot;List the defined license families.&quot;)</span>
-<span class="fc" id="L562">                    .converter(s -&gt; LicenseSetFactory.LicenseFilter.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L563">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--output-families&quot;)).get())</span>
-<span class="fc" id="L564">                    .build()),</span>
-            (context, selected) -&gt; {
-                try {
-<span class="fc" id="L567">                    context.getConfiguration().listFamilies(context.getCommandLine().getParsedOptionValue(selected));</span>
-<span class="nc" id="L568">                } catch (ParseException e) {</span>
-<span class="nc" id="L569">                    context.logParseException(e, selected, Defaults.LIST_FAMILIES);</span>
-<span class="fc" id="L570">                }</span>
-<span class="fc" id="L571">            }),</span>
+<span class="fc" id="L546">    OUTPUT_FAMILIES(new OptionGroup()</span>
+<span class="fc" id="L547">            .addOption(Option.builder().longOpt(&quot;output-families&quot;).hasArg().argName(&quot;LicenseFilter&quot;)</span>
+<span class="fc" id="L548">                    .desc(&quot;List the defined license families.&quot;)</span>
+<span class="fc" id="L549">                    .converter(s -&gt; LicenseSetFactory.LicenseFilter.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L550">                    .build())</span>
+<span class="fc" id="L551">            .addOption(Option.builder().longOpt(&quot;list-families&quot;).hasArg().argName(&quot;LicenseFilter&quot;)</span>
+<span class="fc" id="L552">                    .desc(&quot;List the defined license families.&quot;)</span>
+<span class="fc" id="L553">                    .converter(s -&gt; LicenseSetFactory.LicenseFilter.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L554">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--output-families&quot;)).get())</span>
+<span class="fc" id="L555">                    .build()),</span>
+<span class="pc" id="L556">            (context, selected) -&gt; context.getConfiguration().listFamilies(context.getParsedOptionValue(selected, () -&gt; Defaults.LIST_FAMILIES))),</span>
 
     /**
      * Specifies the log level to log messages at.
      */
-<span class="fc" id="L576">    LOG_LEVEL(new OptionGroup().addOption(Option.builder().longOpt(&quot;log-level&quot;)</span>
-<span class="fc" id="L577">            .hasArg().argName(&quot;LogLevel&quot;)</span>
-<span class="fc" id="L578">            .desc(&quot;Sets the log level.&quot;)</span>
-<span class="fc" id="L579">            .converter(s -&gt; Log.Level.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L580">            .build()),</span>
+<span class="fc" id="L561">    LOG_LEVEL(new OptionGroup().addOption(Option.builder().longOpt(&quot;log-level&quot;)</span>
+<span class="fc" id="L562">            .hasArg().argName(&quot;LogLevel&quot;)</span>
+<span class="fc" id="L563">            .desc(&quot;Sets the log level.&quot;)</span>
+<span class="fc" id="L564">            .converter(s -&gt; Log.Level.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L565">            .build()),</span>
             (context, selected) -&gt; {
-<span class="fc" id="L582">                Log dLog = DefaultLog.getInstance();</span>
-                try {
-<span class="fc" id="L584">                    dLog.setLevel(context.getCommandLine().getParsedOptionValue(selected));</span>
-<span class="nc" id="L585">                } catch (ParseException e) {</span>
-<span class="nc" id="L586">                    logParseException(DefaultLog.getInstance(), e, selected, context.getCommandLine(), dLog.getLevel());</span>
-<span class="fc" id="L587">                }</span>
-<span class="fc" id="L588">            }),</span>
+<span class="fc" id="L567">                Log dLog = DefaultLog.getInstance();</span>
+<span class="fc" id="L568">                Log.Level ll = dLog.getLevel();</span>
+<span class="pc" id="L569">                dLog.setLevel(context.getParsedOptionValue(selected, () -&gt; ll));</span>
+<span class="fc" id="L570">            }),</span>
 
     /**
      * Specifies that the run should not perform any updates to files.
      */
-<span class="fc" id="L593">    DRY_RUN(new OptionGroup().addOption(Option.builder().longOpt(&quot;dry-run&quot;)</span>
-<span class="fc" id="L594">            .desc(&quot;If set do not update the files but generate the reports.&quot;)</span>
-<span class="fc" id="L595">            .build()),</span>
+<span class="fc" id="L575">    DRY_RUN(new OptionGroup().addOption(Option.builder().longOpt(&quot;dry-run&quot;)</span>
+<span class="fc" id="L576">            .desc(&quot;If set do not update the files but generate the reports.&quot;)</span>
+<span class="fc" id="L577">            .build()),</span>
             (context, selected) -&gt;
-<span class="fc" id="L597">                    context.getConfiguration().setDryRun(true)</span>
+<span class="fc" id="L579">                    context.getConfiguration().setDryRun(true)</span>
     ),
 
     /**
      * Specifies where the output should be written.
      */
-<span class="fc" id="L603">    OUTPUT_FILE(new OptionGroup()</span>
-<span class="fc" id="L604">            .addOption(Option.builder().option(&quot;o&quot;).longOpt(&quot;out&quot;).hasArg().argName(&quot;File&quot;)</span>
-<span class="fc" id="L605">                    .desc(&quot;Define the output file where to write a report to.&quot;)</span>
-<span class="fc" id="L606">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--output-file&quot;)).get())</span>
-<span class="fc" id="L607">                    .type(DocumentName.class)</span>
-<span class="fc" id="L608">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L609">                    .build())</span>
-<span class="fc" id="L610">            .addOption(Option.builder().longOpt(&quot;output-file&quot;).hasArg().argName(&quot;File&quot;)</span>
-<span class="fc" id="L611">                    .desc(&quot;Define the output file where to write a report to.&quot;)</span>
-<span class="fc" id="L612">                    .type(DocumentName.class)</span>
-<span class="fc" id="L613">                    .converter(Converters.FILE_CONVERTER)</span>
-<span class="fc" id="L614">                    .build()),</span>
+<span class="fc" id="L585">    OUTPUT_FILE(new OptionGroup()</span>
+<span class="fc" id="L586">            .addOption(Option.builder().option(&quot;o&quot;).longOpt(&quot;out&quot;).hasArg().argName(&quot;File&quot;)</span>
+<span class="fc" id="L587">                    .desc(&quot;Define the output file where to write a report to.&quot;)</span>
+<span class="fc" id="L588">                    .deprecated(DeprecatedAttributes.builder().setSince(&quot;0.17&quot;).setForRemoval(true).setDescription(StdMsgs.useMsg(&quot;--output-file&quot;)).get())</span>
+<span class="fc" id="L589">                    .type(DocumentName.class)</span>
+<span class="fc" id="L590">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L591">                    .build())</span>
+<span class="fc" id="L592">            .addOption(Option.builder().longOpt(&quot;output-file&quot;).hasArg().argName(&quot;File&quot;)</span>
+<span class="fc" id="L593">                    .desc(&quot;Define the output file where to write a report to.&quot;)</span>
+<span class="fc" id="L594">                    .type(DocumentName.class)</span>
+<span class="fc" id="L595">                    .converter(Converters.FILE_CONVERTER)</span>
+<span class="fc" id="L596">                    .build()),</span>
             (context, selected) -&gt; {
-                try {
-<span class="fc" id="L617">                    DocumentName documentName = context.getCommandLine().getParsedOptionValue(selected);</span>
-<span class="fc" id="L618">                    File document = documentName.asFile();</span>
-<span class="fc" id="L619">                    File parent = document.getParentFile();</span>
-<span class="pc bpc" id="L620" title="2 of 4 branches missed.">                    if (!parent.mkdirs() &amp;&amp; !parent.isDirectory()) {</span>
-<span class="nc" id="L621">                        DefaultLog.getInstance().error(&quot;Could not create report parent directory &quot; + documentName);</span>
+<span class="fc" id="L598">                DocumentName documentName = context.getParsedOptionValue(selected, () -&gt; {</span>
+<span class="nc" id="L599">                    context.getConfiguration().setOutput(ReportConfiguration.SYSTEM_OUT);</span>
+<span class="nc" id="L600">                    return null;</span>
+                });
+<span class="pc bpc" id="L602" title="1 of 2 branches missed.">                if (documentName != null) {</span>
+<span class="fc" id="L603">                    File document = documentName.asFile();</span>
+<span class="fc" id="L604">                    File parent = document.getParentFile();</span>
+<span class="pc bpc" id="L605" title="2 of 4 branches missed.">                    if (!parent.mkdirs() &amp;&amp; !parent.isDirectory()) {</span>
+<span class="nc" id="L606">                        DefaultLog.getInstance().error(&quot;Could not create report parent directory &quot; + documentName);</span>
                     }
-<span class="fc" id="L623">                    context.getConfiguration().setOut(document);</span>
-<span class="nc" id="L624">                } catch (ParseException e) {</span>
-                    // we write to system out by default.
-<span class="nc" id="L626">                    context.logParseException(e, selected, &quot;System.out&quot;);</span>
-<span class="nc" id="L627">                    context.getConfiguration().setOut(ReportConfiguration.SYSTEM_OUT);</span>
-<span class="fc" id="L628">                }</span>
-<span class="fc" id="L629">            }),</span>
+<span class="fc" id="L608">                    context.getConfiguration().setOutput(document);</span>
+                }
+<span class="fc" id="L610">            }),</span>
 
     /**
      * Specifies the level of reporting detail for archive files.
      */
-<span class="fc" id="L634">    OUTPUT_ARCHIVE(new OptionGroup()</span>
-<span class="fc" id="L635">            .addOption(Option.builder().longOpt(&quot;output-archive&quot;).hasArg().argName(&quot;ProcessingType&quot;)</span>
-<span class="fc" id="L636">                    .desc(&quot;Specifies the level of detail in ARCHIVE file reporting.&quot;)</span>
-<span class="fc" id="L637">                    .converter(s -&gt; ReportConfiguration.Processing.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L638">                    .build()),</span>
-            (context, selected) -&gt; {
-                try {
-<span class="fc" id="L641">                    context.getConfiguration().setArchiveProcessing(context.getCommandLine().getParsedOptionValue(selected));</span>
-<span class="nc" id="L642">                } catch (ParseException e) {</span>
-<span class="nc" id="L643">                    context.logParseException(e, selected, Defaults.ARCHIVE_PROCESSING);</span>
-<span class="fc" id="L644">                }</span>
-<span class="fc" id="L645">            }</span>
+<span class="fc" id="L615">    OUTPUT_ARCHIVE(new OptionGroup()</span>
+<span class="fc" id="L616">            .addOption(Option.builder().longOpt(&quot;output-archive&quot;).hasArg().argName(&quot;ProcessingType&quot;)</span>
+<span class="fc" id="L617">                    .desc(&quot;Specifies the level of detail in ARCHIVE file reporting.&quot;)</span>
+<span class="fc" id="L618">                    .converter(s -&gt; ReportConfiguration.Processing.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L619">                    .build()),</span>
+<span class="pc" id="L620">            (context, selected) -&gt; context.getConfiguration().setArchiveProcessing(context.getParsedOptionValue(selected, () -&gt; Defaults.ARCHIVE_PROCESSING))</span>
     ),
 
     /**
      * Specifies the level of reporting detail for standard files.
      */
-<span class="fc" id="L651">    OUTPUT_STANDARD(new OptionGroup()</span>
-<span class="fc" id="L652">            .addOption(Option.builder().longOpt(&quot;output-standard&quot;).hasArg().argName(&quot;ProcessingType&quot;)</span>
-<span class="fc" id="L653">                    .desc(&quot;Specifies the level of detail in STANDARD file reporting.&quot;)</span>
-<span class="fc" id="L654">                    .converter(s -&gt; ReportConfiguration.Processing.valueOf(s.toUpperCase()))</span>
-<span class="fc" id="L655">                    .build()),</span>
-            (context, selected) -&gt; {
-                try {
-<span class="fc" id="L658">                    context.getConfiguration().setStandardProcessing(context.getCommandLine().getParsedOptionValue(selected));</span>
-<span class="nc" id="L659">                } catch (ParseException e) {</span>
-<span class="nc" id="L660">                    context.logParseException(e, selected, Defaults.STANDARD_PROCESSING);</span>
-<span class="fc" id="L661">                }</span>
-<span class="fc" id="L662">            }),</span>
+<span class="fc" id="L626">    OUTPUT_STANDARD(new OptionGroup()</span>
+<span class="fc" id="L627">            .addOption(Option.builder().longOpt(&quot;output-standard&quot;).hasArg().argName(&quot;ProcessingType&quot;)</span>
+<span class="fc" id="L628">                    .desc(&quot;Specifies the level of detail in STANDARD file reporting.&quot;)</span>
+<span class="fc" id="L629">                    .converter(s -&gt; ReportConfiguration.Processing.valueOf(s.toUpperCase()))</span>
+<span class="fc" id="L630">                    .build()),</span>
+            (context, selected) -&gt;
+<span class="pc" id="L632">                    context.getConfiguration().setStandardProcessing(context.getParsedOptionValue(selected, () -&gt; Defaults.STANDARD_PROCESSING))),</span>
 
     /**
      * Provide license definition listing of registered licenses.
      */
-<span class="fc" id="L667">    HELP_LICENSES(new OptionGroup()</span>
-<span class="fc" id="L668">            .addOption(Option.builder().longOpt(&quot;help-licenses&quot;) //</span>
-<span class="fc" id="L669">                    .desc(&quot;Print information about registered licenses.&quot;).build()),</span>
+<span class="fc" id="L637">    HELP_LICENSES(new OptionGroup()</span>
+<span class="fc" id="L638">            .addOption(Option.builder().longOpt(&quot;help-licenses&quot;) //</span>
+<span class="fc" id="L639">                    .desc(&quot;Print information about registered licenses.&quot;).build()),</span>
             Arg::doNotExecute
     );
 
@@ -690,7 +660,7 @@ import static java.lang.String.format;
      * @param selected the selected option.
      */
     private static void doNotExecute(final ArgumentContext context, final Option selected) {
-<span class="nc" id="L693">        throw new ImplementationException(String.format(&quot;'%s' should not be executed directly&quot;, selected));</span>
+<span class="nc" id="L663">        throw new ImplementationException(String.format(&quot;'%s' should not be executed directly&quot;, selected));</span>
     }
 
     /**
@@ -700,10 +670,10 @@ import static java.lang.String.format;
      * @param process The BiConsumer that executes the argument. Generally these processes apply the argument to the configuration or
      *                other component of the ArgumentContext.
      */
-<span class="fc" id="L703">    Arg(final OptionGroup group, final BiConsumer&lt;ArgumentContext, Option&gt; process) {</span>
-<span class="fc" id="L704">        this.group = group;</span>
-<span class="fc" id="L705">        this.process = process;</span>
-<span class="fc" id="L706">    }</span>
+<span class="fc" id="L673">    Arg(final OptionGroup group, final BiConsumer&lt;ArgumentContext, Option&gt; process) {</span>
+<span class="fc" id="L674">        this.group = group;</span>
+<span class="fc" id="L675">        this.process = process;</span>
+<span class="fc" id="L676">    }</span>
 
     /**
      * Executes the process associated with this Arg if the collection has an Option from this group selected.
@@ -711,9 +681,9 @@ import static java.lang.String.format;
      * @param optionCollection the OptionCollection that is available.
      */
     private void execute(final ArgumentContext context, final UIOptionCollection&lt;?&gt; optionCollection) {
-<span class="fc" id="L714">        optionCollection.getSelected(this)</span>
-<span class="fc" id="L715">                .ifPresent(selected -&gt; this.process.accept(context, selected));</span>
-<span class="fc" id="L716">    }</span>
+<span class="fc" id="L684">        optionCollection.getSelected(this)</span>
+<span class="fc" id="L685">                .ifPresent(selected -&gt; this.process.accept(context, selected));</span>
+<span class="fc" id="L686">    }</span>
 
     /**
      * Determines if all the options have been removed from this argument.
@@ -721,7 +691,7 @@ import static java.lang.String.format;
      * @return {@code true} if all the options have been removed from this argument.
      */
     public boolean isEmpty() {
-<span class="nc" id="L724">        return this.group().getOptions().isEmpty();</span>
+<span class="fc" id="L694">        return this.group().getOptions().isEmpty();</span>
     }
 
     /**
@@ -732,12 +702,12 @@ import static java.lang.String.format;
      * @throws IllegalArgumentException if the key can not be found.
      */
     public Option find(final String key) {
-<span class="pc bpc" id="L735" title="1 of 2 branches missed.">        for (Option result : group.getOptions()) {</span>
-<span class="fc bfc" id="L736" title="All 4 branches covered.">            if (key.equals(result.getKey()) || key.equals(result.getLongOpt())) {</span>
-<span class="fc" id="L737">                return result;</span>
+<span class="pc bpc" id="L705" title="1 of 2 branches missed.">        for (Option result : group.getOptions()) {</span>
+<span class="fc bfc" id="L706" title="All 4 branches covered.">            if (key.equals(result.getKey()) || key.equals(result.getLongOpt())) {</span>
+<span class="fc" id="L707">                return result;</span>
             }
-<span class="fc" id="L739">        }</span>
-<span class="nc" id="L740">        throw new IllegalArgumentException(&quot;Can not find &quot; + key);</span>
+<span class="fc" id="L709">        }</span>
+<span class="nc" id="L710">        throw new IllegalArgumentException(&quot;Can not find &quot; + key);</span>
     }
 
     /**
@@ -746,7 +716,7 @@ import static java.lang.String.format;
      * @return the option group for this arg.
      */
     public OptionGroup group() {
-<span class="fc" id="L749">        return group;</span>
+<span class="fc" id="L719">        return group;</span>
     }
 
     /**
@@ -755,16 +725,16 @@ import static java.lang.String.format;
      * @return the first non-deprecated option or, if no non-deprecated option is available, the first option.
      */
     public Option option() {
-<span class="fc" id="L758">        Option first = null;</span>
-<span class="pc bpc" id="L759" title="1 of 2 branches missed.">        for (Option result : group.getOptions()) {</span>
-<span class="fc bfc" id="L760" title="All 2 branches covered.">            if (first == null) {</span>
-<span class="fc" id="L761">                first = result;</span>
+<span class="fc" id="L728">        Option first = null;</span>
+<span class="pc bpc" id="L729" title="1 of 2 branches missed.">        for (Option result : group.getOptions()) {</span>
+<span class="fc bfc" id="L730" title="All 2 branches covered.">            if (first == null) {</span>
+<span class="fc" id="L731">                first = result;</span>
             }
-<span class="fc bfc" id="L763" title="All 2 branches covered.">            if (!result.isDeprecated()) {</span>
-<span class="fc" id="L764">                return result;</span>
+<span class="fc bfc" id="L733" title="All 2 branches covered.">            if (!result.isDeprecated()) {</span>
+<span class="fc" id="L734">                return result;</span>
             }
-<span class="fc" id="L766">        }</span>
-<span class="nc" id="L767">        return first;</span>
+<span class="fc" id="L736">        }</span>
+<span class="nc" id="L737">        return first;</span>
     }
 
     /**
@@ -773,11 +743,11 @@ import static java.lang.String.format;
      * @return the full set of options for this Arg.
      */
     public static Options getOptions() {
-<span class="fc" id="L776">        Options options = new Options();</span>
-<span class="fc bfc" id="L777" title="All 2 branches covered.">        for (Arg arg : Arg.values()) {</span>
-<span class="fc" id="L778">            options.addOptionGroup(arg.group);</span>
+<span class="fc" id="L746">        Options options = new Options();</span>
+<span class="fc bfc" id="L747" title="All 2 branches covered.">        for (Arg arg : Arg.values()) {</span>
+<span class="fc" id="L748">            options.addOptionGroup(arg.group);</span>
         }
-<span class="fc" id="L780">        return options;</span>
+<span class="fc" id="L750">        return options;</span>
     }
 
     /**
@@ -786,33 +756,19 @@ import static java.lang.String.format;
      * @param context the context to work with.
      */
     private static void processEditArgs(final ArgumentContext context, final UIOptionCollection&lt;?&gt; optionCollection) {
-<span class="fc" id="L789">        optionCollection.getSelected(EDIT_ADD).ifPresent(option -&gt; {</span>
+<span class="fc" id="L759">        optionCollection.getSelected(EDIT_ADD).ifPresent(option -&gt; {</span>
             // prints deprecation
-<span class="fc" id="L791">            context.getCommandLine().hasOption(option);</span>
-<span class="fc" id="L792">            boolean force = optionCollection.isSelected(EDIT_OVERWRITE);</span>
-<span class="fc bfc" id="L793" title="All 2 branches covered.">            if (force) {</span>
+<span class="fc" id="L761">            context.hasOption(option);</span>
+<span class="fc" id="L762">            boolean force = optionCollection.isSelected(EDIT_OVERWRITE);</span>
+<span class="fc bfc" id="L763" title="All 2 branches covered.">            if (force) {</span>
                 // prints deprecation
-<span class="fc" id="L795">                optionCollection.getSelected(EDIT_OVERWRITE).ifPresent(context.getCommandLine()::hasOption);</span>
+<span class="fc" id="L765">                optionCollection.getSelected(EDIT_OVERWRITE).ifPresent(context::hasOption);</span>
             }
-<span class="fc bfc" id="L797" title="All 2 branches covered.">            context.getConfiguration().setAddLicenseHeaders(force ? AddLicenseHeaders.FORCED : AddLicenseHeaders.TRUE);</span>
-<span class="fc" id="L798">            optionCollection.getSelected(EDIT_COPYRIGHT).</span>
-<span class="fc" id="L799">                    ifPresent(editOption -&gt; context.getConfiguration().setCopyrightMessage(context.getCommandLine().getOptionValue(editOption)));</span>
-<span class="fc" id="L800">        });</span>
-<span class="fc" id="L801">    }</span>
-
-    /**
-     * Gets the list of Strings that are arguments for the option.
-     * @param context the ArgumentContext containing the command line.
-     * @param selected the selected option.
-     * @return the list of Strings that are arguments.
-     */
-    private static List&lt;String&gt; processArrayArg(final ArgumentContext context, final Option selected) {
-        try {
-<span class="fc" id="L811">            return Arrays.asList(context.getCommandLine().getParsedOptionValue(selected));</span>
-<span class="nc" id="L812">        } catch (ParseException e) {</span>
-<span class="nc" id="L813">            throw new ConfigurationException(e);</span>
-        }
-    }
+<span class="fc bfc" id="L767" title="All 2 branches covered.">            context.getConfiguration().setAddLicenseHeaders(force ? AddLicenseHeaders.FORCED : AddLicenseHeaders.TRUE);</span>
+<span class="fc" id="L768">            optionCollection.getSelected(EDIT_COPYRIGHT).</span>
+<span class="fc" id="L769">                    ifPresent(editOption -&gt; context.getConfiguration().setCopyrightMessage(context.getOptionValue(editOption)));</span>
+<span class="fc" id="L770">        });</span>
+<span class="fc" id="L771">    }</span>
 
     /**
      * Parses the option as a file.
@@ -820,9 +776,9 @@ import static java.lang.String.format;
      * @param selected the selected option.
      * @return Option as a file.
      */
-    private static File commandLineFile(final ArgumentContext context, final Option selected) throws ParseException {
-<span class="fc" id="L824">        DocumentName documentName = context.getCommandLine().getParsedOptionValue(selected);</span>
-<span class="fc" id="L825">        return documentName.asFile();</span>
+    private static File commandLineFile(final ArgumentContext context, final Option selected) {
+<span class="fc" id="L780">        DocumentName documentName = context.getParsedOptionValue(selected);</span>
+<span class="fc" id="L781">        return documentName.asFile();</span>
     }
 
     /**
@@ -832,19 +788,16 @@ import static java.lang.String.format;
      * @return the list of strings parsed from the file.
      */
     private static List&lt;String&gt; processArrayFile(final ArgumentContext context, final Option selected) {
-<span class="fc" id="L835">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L836">        try (InputStream in = Files.newInputStream(commandLineFile(context, selected)</span>
-<span class="fc" id="L837">                .toPath())) {</span>
-<span class="fc bfc" id="L838" title="All 2 branches covered.">            for (String line : IOUtils.readLines(in, StandardCharsets.UTF_8)) {</span>
-<span class="fc" id="L839">                String[] ids = Converters.TEXT_LIST_CONVERTER.apply(line);</span>
-<span class="fc" id="L840">                result.addAll(Arrays.asList(ids));</span>
-<span class="fc" id="L841">            }</span>
-<span class="fc" id="L842">            return result;</span>
-<span class="nc" id="L843">        } catch (IOException e) {</span>
-<span class="nc" id="L844">            throw new ConfigurationException(e);</span>
-
-<span class="nc" id="L846">        } catch (ParseException e) {</span>
-<span class="nc" id="L847">            throw ConfigurationException.from(e);</span>
+<span class="fc" id="L791">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L792">        try (InputStream in = Files.newInputStream(commandLineFile(context, selected)</span>
+<span class="fc" id="L793">                .toPath())) {</span>
+<span class="fc bfc" id="L794" title="All 2 branches covered.">            for (String line : IOUtils.readLines(in, StandardCharsets.UTF_8)) {</span>
+<span class="fc" id="L795">                List&lt;String&gt; ids = Converters.TEXT_LIST_CONVERTER.apply(line);</span>
+<span class="fc" id="L796">                result.addAll(ids);</span>
+<span class="fc" id="L797">            }</span>
+<span class="fc" id="L798">            return result;</span>
+<span class="nc" id="L799">        } catch (IOException e) {</span>
+<span class="nc" id="L800">            throw new ConfigurationException(e);</span>
         }
     }
 
@@ -856,28 +809,28 @@ import static java.lang.String.format;
      */
     private static void processConfigurationArgs(final ArgumentContext context, final UIOptionCollection&lt;?&gt; optionCollection) throws ConfigurationException {
 
-<span class="fc" id="L859">        Defaults.Builder defaultBuilder = Defaults.builder();</span>
+<span class="fc" id="L812">        Defaults.Builder defaultBuilder = Defaults.builder();</span>
 
-<span class="fc" id="L861">        optionCollection.getSelected(CONFIGURATION).ifPresent(</span>
+<span class="fc" id="L814">        optionCollection.getSelected(CONFIGURATION).ifPresent(</span>
                 selected -&gt; {
-<span class="fc" id="L863">                    DocumentName[] documentNames = getParsedOptionValues(selected, context.getCommandLine());</span>
-<span class="fc bfc" id="L864" title="All 2 branches covered.">                    for (DocumentName documentName : documentNames) {</span>
-<span class="fc" id="L865">                        defaultBuilder.add(documentName.asFile());</span>
-                    }
-<span class="fc" id="L867">                });</span>
-<span class="fc" id="L868">        optionCollection.getSelected(CONFIGURATION_NO_DEFAULTS).ifPresent(selected -&gt; {</span>
+<span class="fc" id="L816">                    List&lt;DocumentName&gt; documentNames = context.getParsedOptionValues(selected);</span>
+<span class="fc bfc" id="L817" title="All 2 branches covered.">                    for (DocumentName documentName : documentNames) {</span>
+<span class="fc" id="L818">                        defaultBuilder.add(documentName.asFile());</span>
+<span class="fc" id="L819">                    }</span>
+<span class="fc" id="L820">                });</span>
+<span class="fc" id="L821">        optionCollection.getSelected(CONFIGURATION_NO_DEFAULTS).ifPresent(selected -&gt; {</span>
             // display deprecation log if needed.
-<span class="fc" id="L870">            context.getCommandLine().hasOption(selected);</span>
-<span class="fc" id="L871">            defaultBuilder.noDefault();</span>
-<span class="fc" id="L872">        });</span>
-<span class="fc" id="L873">        context.getConfiguration().setFrom(defaultBuilder.build());</span>
+<span class="fc" id="L823">            context.hasOption(selected);</span>
+<span class="fc" id="L824">            defaultBuilder.noDefault();</span>
+<span class="fc" id="L825">        });</span>
+<span class="fc" id="L826">        context.getConfiguration().setFrom(defaultBuilder.build());</span>
 
-<span class="fc bfc" id="L875" title="All 2 branches covered.">        for (Arg arg : List.of(FAMILIES_APPROVED, FAMILIES_APPROVED_FILE, FAMILIES_DENIED, FAMILIES_DENIED_FILE,</span>
+<span class="fc bfc" id="L828" title="All 2 branches covered.">        for (Arg arg : List.of(FAMILIES_APPROVED, FAMILIES_APPROVED_FILE, FAMILIES_DENIED, FAMILIES_DENIED_FILE,</span>
                 LICENSES_APPROVED, LICENSES_APPROVED_FILE, LICENSES_DENIED, LICENSES_DENIED_FILE,
                 COUNTER_MAX, COUNTER_MIN)) {
-<span class="fc" id="L878">            arg.execute(context, optionCollection);</span>
-<span class="fc" id="L879">        }</span>
-<span class="fc" id="L880">    }</span>
+<span class="fc" id="L831">            arg.execute(context, optionCollection);</span>
+<span class="fc" id="L832">        }</span>
+<span class="fc" id="L833">    }</span>
 
     /**
      * Process the input setup.
@@ -886,26 +839,11 @@ import static java.lang.String.format;
      * @throws ConfigurationException if an exclude file can not be read.
      */
     private static void processInputArgs(final ArgumentContext context, final UIOptionCollection&lt;?&gt; optionCollection) throws ConfigurationException {
-<span class="fc bfc" id="L889" title="All 2 branches covered.">        for (Arg arg : List.of(SOURCE, EXCLUDE, EXCLUDE_FILE, EXCLUDE_STD, EXCLUDE_PARSE_SCM, EXCLUDE_SIZE,</span>
+<span class="fc bfc" id="L842" title="All 2 branches covered.">        for (Arg arg : List.of(SOURCE, EXCLUDE, EXCLUDE_FILE, EXCLUDE_STD, EXCLUDE_PARSE_SCM, EXCLUDE_SIZE,</span>
                 INCLUDE, INCLUDE_FILE, INCLUDE_STD)) {
-<span class="fc" id="L891">            arg.execute(context, optionCollection);</span>
-<span class="fc" id="L892">        }</span>
-<span class="fc" id="L893">    }</span>
-
-    /**
-     * Logs a ParseException as a warning.
-     *
-     * @param log the Log to write to
-     * @param exception the parse exception to log
-     * @param opt the option being processed
-     * @param cl the command line being processed
-     * @param defaultValue The default value the option is being set to.
-     */
-    private static void logParseException(final Log log, final ParseException exception, final Option opt, final CommandLine cl, final Object defaultValue) {
-<span class="nc" id="L905">        log.warn(format(&quot;Invalid %s specified: %s &quot;, opt.getOpt(), cl.getOptionValue(opt)));</span>
-<span class="nc" id="L906">        log.warn(format(&quot;%s set to: %s&quot;, opt.getOpt(), defaultValue));</span>
-<span class="nc" id="L907">        log.debug(exception);</span>
-<span class="nc" id="L908">    }</span>
+<span class="fc" id="L844">            arg.execute(context, optionCollection);</span>
+<span class="fc" id="L845">        }</span>
+<span class="fc" id="L846">    }</span>
 
     /**
      * Process the log level setting.
@@ -913,8 +851,8 @@ import static java.lang.String.format;
      * @param context The argument context
      */
     public static void processLogLevel(final ArgumentContext context, final UIOptionCollection&lt;?&gt; optionCollection) throws ConfigurationException {
-<span class="fc" id="L916">        LOG_LEVEL.execute(context, optionCollection);</span>
-<span class="fc" id="L917">    }</span>
+<span class="fc" id="L854">        LOG_LEVEL.execute(context, optionCollection);</span>
+<span class="fc" id="L855">    }</span>
 
     /**
      * Process the arguments.
@@ -923,12 +861,12 @@ import static java.lang.String.format;
      * @throws ConfigurationException on error
      */
     public static void processArgs(final ArgumentContext context, final UIOptionCollection&lt;?&gt; optionCollection) throws ConfigurationException {
-<span class="fc" id="L926">        Converters.FILE_CONVERTER.setWorkingDirectory(context.getWorkingDirectory());</span>
-<span class="fc" id="L927">        processOutputArgs(context, optionCollection);</span>
-<span class="fc" id="L928">        processEditArgs(context, optionCollection);</span>
-<span class="fc" id="L929">        processInputArgs(context, optionCollection);</span>
-<span class="fc" id="L930">        processConfigurationArgs(context, optionCollection);</span>
-<span class="fc" id="L931">    }</span>
+<span class="fc" id="L864">        Converters.FILE_CONVERTER.setWorkingDirectory(context.getWorkingDirectory());</span>
+<span class="fc" id="L865">        processOutputArgs(context, optionCollection);</span>
+<span class="fc" id="L866">        processEditArgs(context, optionCollection);</span>
+<span class="fc" id="L867">        processInputArgs(context, optionCollection);</span>
+<span class="fc" id="L868">        processConfigurationArgs(context, optionCollection);</span>
+<span class="fc" id="L869">    }</span>
 
     /**
      * Process the arguments that can be processed together.
@@ -936,23 +874,23 @@ import static java.lang.String.format;
      * @param context the context in which to process the args.
      */
     private static void processOutputArgs(final ArgumentContext context, final UIOptionCollection&lt;?&gt; optionCollection) throws ConfigurationException {
-<span class="fc bfc" id="L939" title="All 2 branches covered.">        for (Arg arg : List.of(DRY_RUN, OUTPUT_FAMILIES, OUTPUT_LICENSES, OUTPUT_ARCHIVE, OUTPUT_STANDARD, OUTPUT_FILE, OUTPUT_STYLE)) {</span>
-<span class="fc" id="L940">            arg.execute(context, optionCollection);</span>
-<span class="fc" id="L941">        }</span>
-<span class="fc" id="L942">    }</span>
+<span class="fc bfc" id="L877" title="All 2 branches covered.">        for (Arg arg : List.of(DRY_RUN, OUTPUT_FAMILIES, OUTPUT_LICENSES, OUTPUT_ARCHIVE, OUTPUT_STANDARD, OUTPUT_FILE, OUTPUT_STYLE)) {</span>
+<span class="fc" id="L878">            arg.execute(context, optionCollection);</span>
+<span class="fc" id="L879">        }</span>
+<span class="fc" id="L880">    }</span>
 
     /**
      * Resets the groups in the Args so that they are unused and ready to detect the next set of arguments.
      */
     public static void reset() {
-<span class="nc bnc" id="L948" title="All 2 branches missed.">        for (Arg a : Arg.values()) {</span>
+<span class="fc bfc" id="L886" title="All 2 branches covered.">        for (Arg a : Arg.values()) {</span>
             try {
-<span class="nc" id="L950">                a.group.setSelected(null);</span>
-<span class="nc" id="L951">            } catch (AlreadySelectedException e) {</span>
-<span class="nc" id="L952">                throw new RuntimeException(&quot;Should not happen&quot;, e);</span>
-<span class="nc" id="L953">            }</span>
+<span class="fc" id="L888">                a.group.setSelected(null);</span>
+<span class="nc" id="L889">            } catch (AlreadySelectedException e) {</span>
+<span class="nc" id="L890">                throw new RuntimeException(&quot;Should not happen&quot;, e);</span>
+<span class="fc" id="L891">            }</span>
         }
-<span class="nc" id="L955">    }</span>
+<span class="fc" id="L893">    }</span>
 
     /**
      * Finds the Arg that contains an Option with the specified key.
@@ -961,31 +899,16 @@ import static java.lang.String.format;
      * @return The Arg or {@code null} if no Arg is found.
      */
     public static Arg findArg(final String key) {
-<span class="pc bpc" id="L964" title="1 of 2 branches missed.">        if (key != null) {</span>
-<span class="fc bfc" id="L965" title="All 2 branches covered.">            for (Arg arg : Arg.values()) {</span>
-<span class="fc bfc" id="L966" title="All 2 branches covered.">                for (Option candidate : arg.group.getOptions()) {</span>
-<span class="pc bpc" id="L967" title="1 of 4 branches missed.">                    if (key.equals(candidate.getKey()) || key.equals(candidate.getLongOpt())) {</span>
-<span class="fc" id="L968">                        return arg;</span>
+<span class="pc bpc" id="L902" title="1 of 2 branches missed.">        if (key != null) {</span>
+<span class="fc bfc" id="L903" title="All 2 branches covered.">            for (Arg arg : Arg.values()) {</span>
+<span class="fc bfc" id="L904" title="All 2 branches covered.">                for (Option candidate : arg.group.getOptions()) {</span>
+<span class="pc bpc" id="L905" title="1 of 4 branches missed.">                    if (key.equals(candidate.getKey()) || key.equals(candidate.getLongOpt())) {</span>
+<span class="fc" id="L906">                        return arg;</span>
                     }
-<span class="fc" id="L970">                }</span>
+<span class="fc" id="L908">                }</span>
             }
         }
-<span class="fc" id="L973">        return null;</span>
-    }
-
-    private static &lt;T&gt; T[] getParsedOptionValues(final Option selected, final CommandLine commandLine) {
-        try {
-<span class="fc" id="L978">            Class&lt;? extends T&gt; clazz = (Class&lt;? extends T&gt;) selected.getType();</span>
-<span class="fc" id="L979">            String[] values = commandLine.getOptionValues(selected);</span>
-<span class="fc" id="L980">            T[] result = (T[]) Array.newInstance(clazz, values.length);</span>
-<span class="fc bfc" id="L981" title="All 2 branches covered.">            for (int i = 0; i &lt; values.length; i++) {</span>
-<span class="fc" id="L982">                result[i] = clazz.cast(selected.getConverter().apply(values[i]));</span>
-            }
-<span class="fc" id="L984">            return result;</span>
-<span class="nc" id="L985">        } catch (Throwable t) {</span>
-<span class="nc" id="L986">            throw new ConfigurationException(format(&quot;'%s' converter for %s '%s' does not produce a class of type %s&quot;, selected,</span>
-<span class="nc" id="L987">                    selected.getKey(), selected.getConverter().getClass().getName(), selected.getType()), t);</span>
-        }
+<span class="fc" id="L911">        return null;</span>
     }
 
     /**
@@ -1003,7 +926,7 @@ import static java.lang.String.format;
          * @return combined &quot;use instead&quot; message.
          */
         public static String useMsg(final String name) {
-<span class="fc" id="L1006">            return format(&quot;Use %s instead.&quot;, name);</span>
+<span class="fc" id="L929">            return format(&quot;Use %s instead.&quot;, name);</span>
         }
     }
 }

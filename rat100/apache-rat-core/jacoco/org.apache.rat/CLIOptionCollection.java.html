@@ -21,21 +21,24 @@ package org.apache.rat;
 import org.apache.commons.cli.Option;
 import org.apache.rat.ui.UIOptionCollection;
 
+/**
+ * The collection of CLI Options.
+ */
 public final class CLIOptionCollection extends UIOptionCollection&lt;CLIOption&gt; {
     /** The Help option */
-<span class="fc" id="L26">    static final Option HELP = new Option(&quot;?&quot;, &quot;help&quot;, false, &quot;Print help for the RAT command line interface and exit.&quot;);</span>
+<span class="fc" id="L29">    static final Option HELP = new Option(&quot;?&quot;, &quot;help&quot;, false, &quot;Print help for the RAT command line interface and exit.&quot;);</span>
 
-    /** The instance of the collection */
-<span class="fc" id="L29">    public static final CLIOptionCollection INSTANCE = new CLIOptionCollection();</span>
-
-    private CLIOptionCollection() {
-<span class="fc" id="L32">        super(new Builder().uiOption(HELP));</span>
-<span class="fc" id="L33">    }</span>
+    /**
+     * Constructs the CLIOption collection.
+     */
+    public CLIOptionCollection() {
+<span class="fc" id="L35">        super(new Builder().uiOption(HELP));</span>
+<span class="fc" id="L36">    }</span>
 
     private static final class Builder extends UIOptionCollection.Builder&lt;CLIOption, Builder&gt; {
         private Builder() {
-<span class="fc" id="L37">            super(CLIOption::new);</span>
-<span class="fc" id="L38">        }</span>
+<span class="fc" id="L40">            super(CLIOption.CLIBuilder::new);</span>
+<span class="fc" id="L41">        }</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

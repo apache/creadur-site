@@ -19,9 +19,12 @@
 package org.apache.rat.anttasks;
 
 import org.apache.rat.ReportConfiguration;
+import org.apache.rat.api.Document;
 import org.apache.rat.api.RatException;
 import org.apache.rat.document.DocumentName;
+import org.apache.rat.document.DocumentNameMatcher;
 import org.apache.rat.document.FileDocument;
+import org.apache.rat.document.IgnoredDocument;
 import org.apache.rat.report.RatReport;
 import org.apache.rat.report.Reportable;
 import org.apache.tools.ant.types.Resource;
@@ -40,27 +43,33 @@ class ResourceCollectionContainer implements Reportable {
     /** The document name. */
     private final DocumentName name;
 
-<span class="fc" id="L43">    ResourceCollectionContainer(final DocumentName name, final ReportConfiguration configuration, final ResourceCollection resources) {</span>
-<span class="fc" id="L44">        this.resources = resources;</span>
-<span class="fc" id="L45">        this.configuration = configuration;</span>
-<span class="fc" id="L46">        this.name = name;</span>
-<span class="fc" id="L47">    }</span>
+<span class="fc" id="L46">    ResourceCollectionContainer(final DocumentName name, final ReportConfiguration configuration, final ResourceCollection resources) {</span>
+<span class="fc" id="L47">        this.resources = resources;</span>
+<span class="fc" id="L48">        this.configuration = configuration;</span>
+<span class="fc" id="L49">        this.name = name;</span>
+<span class="fc" id="L50">    }</span>
 
     @Override
     public void run(final RatReport report) throws RatException {
-<span class="fc bfc" id="L51" title="All 2 branches covered.">        for (Resource r : resources) {</span>
-<span class="pc bpc" id="L52" title="1 of 2 branches missed.">            if (r.isFilesystemOnly()) {</span>
-<span class="fc" id="L53">                FileResource fr = (FileResource) r;</span>
-<span class="fc" id="L54">                DocumentName dirName = DocumentName.builder(fr.getFile()).setBaseName(fr.getProject().getBaseDir()).build();</span>
-<span class="fc" id="L55">                FileDocument document = new FileDocument(dirName, fr.getFile(), configuration.getDocumentExcluder(dirName));</span>
-<span class="fc" id="L56">                report.report(document);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        for (Resource r : resources) {</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">            if (r.isFilesystemOnly()) {</span>
+<span class="fc" id="L56">                FileResource fr = (FileResource) r;</span>
+<span class="fc" id="L57">                DocumentName dirName = DocumentName.builder(fr.getFile()).setBaseName(fr.getProject().getBaseDir()).build();</span>
+<span class="fc" id="L58">                DocumentNameMatcher excluder = configuration.getDocumentExcluder(dirName);</span>
+                // unlike a directory walk, where DirectoryWalker#listChildren() applies the excluder to every
+                // child it finds, a resource collection hands RAT files it already resolved itself, so nothing
+                // else ever checks them against the excluder (RAT-569); do it here, before reporting.
+<span class="fc bfc" id="L62" title="All 2 branches covered.">                Document document = excluder.matches(dirName)</span>
+<span class="fc" id="L63">                        ? new FileDocument(dirName, fr.getFile(), excluder)</span>
+<span class="fc" id="L64">                        : new IgnoredDocument(dirName, fr.getFile(), excluder);</span>
+<span class="fc" id="L65">                report.report(document);</span>
             }
-<span class="fc" id="L58">        }</span>
-<span class="fc" id="L59">    }</span>
+<span class="fc" id="L67">        }</span>
+<span class="fc" id="L68">    }</span>
 
     @Override
     public DocumentName name() {
-<span class="nc" id="L63">        return name;</span>
+<span class="nc" id="L72">        return name;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

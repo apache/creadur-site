@@ -55,20 +55,25 @@ public abstract class AbstractHelp {
     protected final VersionInfo versionInfo;
 
     /**
+     * The collection of client options.
+     */
+<span class="fc" id="L60">    protected final CLIOptionCollection cliOptionCollection = new CLIOptionCollection();</span>
+
+    /**
      * Base class to perform help output.
      */
-<span class="fc" id="L60">    protected AbstractHelp() {</span>
-<span class="fc" id="L61">        helpFormatter = new RatHelpFormatter();</span>
-<span class="fc" id="L62">        versionInfo = new VersionInfo();</span>
-<span class="fc" id="L63">    }</span>
+<span class="fc" id="L65">    protected AbstractHelp() {</span>
+<span class="fc" id="L66">        helpFormatter = new RatHelpFormatter();</span>
+<span class="fc" id="L67">        versionInfo = new VersionInfo();</span>
+<span class="fc" id="L68">    }</span>
 
     /** Function to format deprecated display */
-<span class="fc" id="L66">    public static final Function&lt;Option, String&gt; DEPRECATED_MSG = o -&gt; {</span>
-<span class="fc" id="L67">        StringBuilder sb = new StringBuilder(&quot;[&quot;).append(o.getDeprecated().toString()).append(&quot;]&quot;);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">        if (o.getDescription() != null) {</span>
-<span class="fc" id="L69">            sb.append(&quot; &quot;).append(o.getDescription());</span>
+<span class="fc" id="L71">    public static final Function&lt;Option, String&gt; DEPRECATED_MSG = o -&gt; {</span>
+<span class="fc" id="L72">        StringBuilder sb = new StringBuilder(&quot;[&quot;).append(o.getDeprecated().toString()).append(&quot;]&quot;);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (o.getDescription() != null) {</span>
+<span class="fc" id="L74">            sb.append(&quot; &quot;).append(o.getDescription());</span>
         }
-<span class="fc" id="L71">        return sb.toString();</span>
+<span class="fc" id="L76">        return sb.toString();</span>
     };
 
     /**
@@ -77,9 +82,9 @@ public abstract class AbstractHelp {
      * @return a string with len blanks.
      */
     public static String createPadding(final int len) {
-<span class="fc" id="L80">        char[] padding = new char[len];</span>
-<span class="fc" id="L81">        Arrays.fill(padding, ' ');</span>
-<span class="fc" id="L82">        return new String(padding);</span>
+<span class="fc" id="L85">        char[] padding = new char[len];</span>
+<span class="fc" id="L86">        Arrays.fill(padding, ' ');</span>
+<span class="fc" id="L87">        return new String(padding);</span>
     }
 
     /**
@@ -88,7 +93,7 @@ public abstract class AbstractHelp {
      * @return the Header string.
      */
     public static String header(final String txt) {
-<span class="fc" id="L91">        return String.format(&quot;%n====== %s ======%n&quot;, WordUtils.capitalizeFully(txt));</span>
+<span class="fc" id="L96">        return String.format(&quot;%n====== %s ======%n&quot;, WordUtils.capitalizeFully(txt));</span>
     }
 
     /**
@@ -99,11 +104,11 @@ public abstract class AbstractHelp {
         /**
          * Constructor
          */
-<span class="fc" id="L102">        RatHelpFormatter() {</span>
-<span class="fc" id="L103">            super();</span>
-<span class="fc" id="L104">            this.optionComparator = OptionCollection.OPTION_COMPARATOR;</span>
-<span class="fc" id="L105">            this.setWidth(HELP_WIDTH);</span>
-<span class="fc" id="L106">        }</span>
+<span class="fc" id="L107">        RatHelpFormatter() {</span>
+<span class="fc" id="L108">            super();</span>
+<span class="fc" id="L109">            this.optionComparator = OptionCollection.OPTION_COMPARATOR;</span>
+<span class="fc" id="L110">            this.setWidth(HELP_WIDTH);</span>
+<span class="fc" id="L111">        }</span>
 
         /**
          * Prints the help text.
@@ -114,87 +119,87 @@ public abstract class AbstractHelp {
          * @param footer Additional information to follow the Options descriptions.
          */
         public void printHelp(final PrintWriter writer, final String cmdLineSyntax, final String header, final Options options, final String footer) {
-<span class="pc bpc" id="L117" title="1 of 2 branches missed.">            if (StringUtils.isEmpty(cmdLineSyntax)) {</span>
-<span class="nc" id="L118">                throw new IllegalArgumentException(&quot;cmdLineSyntax not provided&quot;);</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">            if (StringUtils.isEmpty(cmdLineSyntax)) {</span>
+<span class="nc" id="L123">                throw new IllegalArgumentException(&quot;cmdLineSyntax not provided&quot;);</span>
             }
 
-<span class="fc" id="L121">            helpFormatter.printUsage(writer, HELP_WIDTH, cmdLineSyntax);</span>
+<span class="fc" id="L126">            helpFormatter.printUsage(writer, HELP_WIDTH, cmdLineSyntax);</span>
 
-<span class="pc bpc" id="L123" title="2 of 4 branches missed.">            if (header != null &amp;&amp; !header.isEmpty()) {</span>
-<span class="fc" id="L124">                helpFormatter.printWrapped(writer, HELP_WIDTH, header);</span>
+<span class="pc bpc" id="L128" title="2 of 4 branches missed.">            if (header != null &amp;&amp; !header.isEmpty()) {</span>
+<span class="fc" id="L129">                helpFormatter.printWrapped(writer, HELP_WIDTH, header);</span>
             }
-<span class="fc" id="L126">            printOptions(writer, HELP_WIDTH, options, helpFormatter.getLeftPadding(), helpFormatter.getDescPadding());</span>
-<span class="pc bpc" id="L127" title="2 of 4 branches missed.">            if (footer != null &amp;&amp; !footer.isEmpty()) {</span>
-<span class="fc" id="L128">                helpFormatter.printWrapped(writer, helpFormatter.getWidth(), footer);</span>
+<span class="fc" id="L131">            printOptions(writer, HELP_WIDTH, options, helpFormatter.getLeftPadding(), helpFormatter.getDescPadding());</span>
+<span class="pc bpc" id="L132" title="2 of 4 branches missed.">            if (footer != null &amp;&amp; !footer.isEmpty()) {</span>
+<span class="fc" id="L133">                helpFormatter.printWrapped(writer, helpFormatter.getWidth(), footer);</span>
             }
-<span class="fc" id="L130">        }</span>
+<span class="fc" id="L135">        }</span>
 
         @Override
         protected StringBuffer renderOptions(final StringBuffer sb, final int width, final Options options, final int leftPad, final int descPad) {
-<span class="fc" id="L134">            final String lpad = createPadding(leftPad);</span>
-<span class="fc" id="L135">            final String dpad = createPadding(descPad);</span>
+<span class="fc" id="L139">            final String lpad = createPadding(leftPad);</span>
+<span class="fc" id="L140">            final String dpad = createPadding(descPad);</span>
             // first create list containing only &lt;lpad&gt;-a,--aaa where
             // -a is option and --aaa is long option; in parallel look for
             // the longest option string; this list will then be used to
             // sort options ascending
-<span class="fc" id="L140">            int max = 0;</span>
-<span class="fc" id="L141">            final List&lt;StringBuffer&gt; prefixList = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L142">            final List&lt;Option&gt; optList = new ArrayList&lt;&gt;(options.getOptions());</span>
-<span class="fc" id="L143">            optList.sort(helpFormatter.getOptionComparator());</span>
+<span class="fc" id="L145">            int max = 0;</span>
+<span class="fc" id="L146">            final List&lt;StringBuffer&gt; prefixList = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L147">            final List&lt;Option&gt; optList = new ArrayList&lt;&gt;(options.getOptions());</span>
+<span class="fc" id="L148">            optList.sort(helpFormatter.getOptionComparator());</span>
 
-<span class="fc bfc" id="L145" title="All 2 branches covered.">            for (final Option option : optList) {</span>
-<span class="fc" id="L146">                final StringBuffer optBuf = new StringBuffer();</span>
-<span class="fc bfc" id="L147" title="All 2 branches covered.">                if (option.getOpt() == null) {</span>
-<span class="fc" id="L148">                    optBuf.append(lpad).append(&quot;   &quot;).append(getLongOptPrefix()).append(option.getLongOpt());</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">            for (final Option option : optList) {</span>
+<span class="fc" id="L151">                final StringBuffer optBuf = new StringBuffer();</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">                if (option.getOpt() == null) {</span>
+<span class="fc" id="L153">                    optBuf.append(lpad).append(&quot;   &quot;).append(getLongOptPrefix()).append(option.getLongOpt());</span>
                 } else {
-<span class="fc" id="L150">                    optBuf.append(lpad).append(getOptPrefix()).append(option.getOpt());</span>
-<span class="fc bfc" id="L151" title="All 2 branches covered.">                    if (option.hasLongOpt()) {</span>
-<span class="fc" id="L152">                        optBuf.append(',').append(getLongOptPrefix()).append(option.getLongOpt());</span>
+<span class="fc" id="L155">                    optBuf.append(lpad).append(getOptPrefix()).append(option.getOpt());</span>
+<span class="fc bfc" id="L156" title="All 2 branches covered.">                    if (option.hasLongOpt()) {</span>
+<span class="fc" id="L157">                        optBuf.append(',').append(getLongOptPrefix()).append(option.getLongOpt());</span>
                     }
                 }
-<span class="fc bfc" id="L155" title="All 2 branches covered.">                if (option.hasArg()) {</span>
-<span class="fc" id="L156">                    final String argName = option.getArgName();</span>
-<span class="pc bpc" id="L157" title="1 of 4 branches missed.">                    if (argName != null &amp;&amp; argName.isEmpty()) {</span>
-                        // if the option has a blank argname
-<span class="nc" id="L159">                        optBuf.append(' ');</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">                if (option.hasArg()) {</span>
+<span class="fc" id="L161">                    final String argName = option.getArgName();</span>
+<span class="pc bpc" id="L162" title="1 of 4 branches missed.">                    if (argName != null &amp;&amp; argName.isEmpty()) {</span>
+                        // if the option has a blank argName
+<span class="nc" id="L164">                        optBuf.append(' ');</span>
                     } else {
-<span class="pc bpc" id="L161" title="1 of 2 branches missed.">                        optBuf.append(option.hasLongOpt() ? helpFormatter.getLongOptSeparator() : &quot; &quot;);</span>
-<span class="fc bfc" id="L162" title="All 2 branches covered.">                        optBuf.append(&quot;&lt;&quot;).append(argName != null ? option.getArgName() : getArgName()).append(&quot;&gt;&quot;);</span>
+<span class="pc bpc" id="L166" title="1 of 2 branches missed.">                        optBuf.append(option.hasLongOpt() ? helpFormatter.getLongOptSeparator() : &quot; &quot;);</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">                        optBuf.append(&quot;&lt;&quot;).append(argName != null ? option.getArgName() : getArgName()).append(&quot;&gt;&quot;);</span>
                     }
                 }
-<span class="fc" id="L165">                prefixList.add(optBuf);</span>
-<span class="fc" id="L166">                max = Math.max(optBuf.length(), max);</span>
-<span class="fc" id="L167">            }</span>
-<span class="fc" id="L168">            int x = 0;</span>
-<span class="fc bfc" id="L169" title="All 2 branches covered.">            for (final Iterator&lt;Option&gt; it = optList.iterator(); it.hasNext();) {</span>
-<span class="fc" id="L170">                final Option option = it.next();</span>
-<span class="fc" id="L171">                final StringBuilder optBuf = new StringBuilder(prefixList.get(x++).toString());</span>
-<span class="fc bfc" id="L172" title="All 2 branches covered.">                if (optBuf.length() &lt; max) {</span>
-<span class="fc" id="L173">                    optBuf.append(createPadding(max - optBuf.length()));</span>
+<span class="fc" id="L170">                prefixList.add(optBuf);</span>
+<span class="fc" id="L171">                max = Math.max(optBuf.length(), max);</span>
+<span class="fc" id="L172">            }</span>
+<span class="fc" id="L173">            int x = 0;</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">            for (final Iterator&lt;Option&gt; it = optList.iterator(); it.hasNext();) {</span>
+<span class="fc" id="L175">                final Option option = it.next();</span>
+<span class="fc" id="L176">                final StringBuilder optBuf = new StringBuilder(prefixList.get(x++).toString());</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">                if (optBuf.length() &lt; max) {</span>
+<span class="fc" id="L178">                    optBuf.append(createPadding(max - optBuf.length()));</span>
                 }
-<span class="fc" id="L175">                optBuf.append(dpad);</span>
-<span class="fc" id="L176">                final int nextLineTabStop = max + descPad;</span>
+<span class="fc" id="L180">                optBuf.append(dpad);</span>
+<span class="fc" id="L181">                final int nextLineTabStop = max + descPad;</span>
                 // check for deprecation
-<span class="fc bfc" id="L178" title="All 2 branches covered.">                if (option.isDeprecated()) {</span>
-<span class="fc" id="L179">                    optBuf.append(DEPRECATED_MSG.apply(option).trim());</span>
-<span class="pc bpc" id="L180" title="1 of 2 branches missed.">                } else if (option.getDescription() != null) {</span>
-<span class="fc" id="L181">                    optBuf.append(option.getDescription());</span>
+<span class="fc bfc" id="L183" title="All 2 branches covered.">                if (option.isDeprecated()) {</span>
+<span class="fc" id="L184">                    optBuf.append(DEPRECATED_MSG.apply(option).trim());</span>
+<span class="pc bpc" id="L185" title="1 of 2 branches missed.">                } else if (option.getDescription() != null) {</span>
+<span class="fc" id="L186">                    optBuf.append(option.getDescription());</span>
                 }
                 // check for multiple values
-<span class="fc bfc" id="L184" title="All 2 branches covered.">                if (option.hasArgs()) {</span>
-<span class="fc" id="L185">                    optBuf.append(END_OF_OPTION_MSG);</span>
+<span class="fc bfc" id="L189" title="All 2 branches covered.">                if (option.hasArgs()) {</span>
+<span class="fc" id="L190">                    optBuf.append(END_OF_OPTION_MSG);</span>
                 }
                 // check for default value
-<span class="fc" id="L188">                String defaultValue = CLIOptionCollection.INSTANCE.defaultValue(option);</span>
-<span class="fc bfc" id="L189" title="All 2 branches covered.">                if (defaultValue != null) {</span>
-<span class="fc" id="L190">                    optBuf.append(format(&quot; (Default value = %s)&quot;, defaultValue));</span>
+<span class="fc" id="L193">                String defaultValue = cliOptionCollection.defaultValue(option);</span>
+<span class="fc bfc" id="L194" title="All 2 branches covered.">                if (defaultValue != null) {</span>
+<span class="fc" id="L195">                    optBuf.append(format(&quot; (Default value = %s)&quot;, defaultValue));</span>
                 }
-<span class="fc" id="L192">                renderWrappedText(sb, width, nextLineTabStop, optBuf.toString());</span>
-<span class="fc bfc" id="L193" title="All 2 branches covered.">                if (it.hasNext()) {</span>
-<span class="fc" id="L194">                    sb.append(getNewLine());</span>
+<span class="fc" id="L197">                renderWrappedText(sb, width, nextLineTabStop, optBuf.toString());</span>
+<span class="fc bfc" id="L198" title="All 2 branches covered.">                if (it.hasNext()) {</span>
+<span class="fc" id="L199">                    sb.append(getNewLine());</span>
                 }
-<span class="fc" id="L196">            }</span>
-<span class="fc" id="L197">            return sb;</span>
+<span class="fc" id="L201">            }</span>
+<span class="fc" id="L202">            return sb;</span>
         }
     }
 }

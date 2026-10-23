@@ -48,7 +48,7 @@ public final class UpdatableOptionGroup extends OptionGroup {
 
     /**
      * Disable an option in the group.
-     * @param option The option to disable.
+     * @param option the option to disable.
      */
     public void disableOption(final Option option) {
 <span class="fc" id="L54">        disabledOptions.add(option);</span>
@@ -65,22 +65,23 @@ public final class UpdatableOptionGroup extends OptionGroup {
     public Stream&lt;Option&gt; getDisableOptions() {
 <span class="fc" id="L66">        return disabledOptions.stream();</span>
     }
+
     /**
      * Reset the group so that all disabled options are re-enabled.
      */
     public void reset() {
-<span class="nc" id="L72">        disabledOptions.clear();</span>
-<span class="nc" id="L73">    }</span>
+<span class="nc" id="L73">        disabledOptions.clear();</span>
+<span class="nc" id="L74">    }</span>
 
     @Override
     public Collection&lt;Option&gt; getOptions() {
-<span class="fc bfc" id="L77" title="All 2 branches covered.">        return super.getOptions().stream().filter(opt -&gt; !disabledOptions.contains(opt)).toList();</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        return super.getOptions().stream().filter(opt -&gt; !disabledOptions.contains(opt)).toList();</span>
     }
 
     @Override
     public UpdatableOptionGroup addOption(final Option option) {
-<span class="nc" id="L82">        super.addOption(option);</span>
-<span class="nc" id="L83">        return this;</span>
+<span class="nc" id="L83">        super.addOption(option);</span>
+<span class="nc" id="L84">        return this;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

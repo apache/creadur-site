@@ -123,13 +123,13 @@
 <a class="jxr_linenumber" name="L115" href="#L115">115</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L116" href="#L116">116</a> <em class="jxr_javadoccomment">     * SiteTool.</em>
 <a class="jxr_linenumber" name="L117" href="#L117">117</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L118" href="#L118">118</a>     @Inject
+<a class="jxr_linenumber" name="L118" href="#L118">118</a>     @Inject <em class="jxr_comment">// NOSONAR intentionally injected here</em>
 <a class="jxr_linenumber" name="L119" href="#L119">119</a>     <strong class="jxr_keyword">protected</strong> SiteTool siteTool;
 <a class="jxr_linenumber" name="L120" href="#L120">120</a> 
 <a class="jxr_linenumber" name="L121" href="#L121">121</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L122" href="#L122">122</a> <em class="jxr_javadoccomment">     * Doxia Site Renderer component.</em>
 <a class="jxr_linenumber" name="L123" href="#L123">123</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L124" href="#L124">124</a>     @Inject
+<a class="jxr_linenumber" name="L124" href="#L124">124</a>     @Inject <em class="jxr_comment">// NOSONAR intentionally injected here</em>
 <a class="jxr_linenumber" name="L125" href="#L125">125</a>     <strong class="jxr_keyword">protected</strong> SiteRenderer siteRenderer;
 <a class="jxr_linenumber" name="L126" href="#L126">126</a> 
 <a class="jxr_linenumber" name="L127" href="#L127">127</a>     <em class="jxr_javadoccomment">/**</em>
@@ -215,7 +215,7 @@
 <a class="jxr_linenumber" name="L207" href="#L207">207</a> 
 <a class="jxr_linenumber" name="L208" href="#L208">208</a>         <strong class="jxr_keyword">if</strong> (siteSkin == <strong class="jxr_keyword">null</strong> || siteSkin.getGroupId() == <strong class="jxr_keyword">null</strong>
 <a class="jxr_linenumber" name="L209" href="#L209">209</a>                 || siteSkin.getArtifactId() == <strong class="jxr_keyword">null</strong> || siteSkin.getVersion() == <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="L210" href="#L210">210</a>             getLog().debug(<span class="jxr_string">"No skin configuration found in site.xml. Using default Maven skin configuration."</span>);
+<a class="jxr_linenumber" name="L210" href="#L210">210</a>             getLog().debug(<span class="jxr_string">"No skin configuration found in your site.xml. Using default Maven skin configuration."</span>);
 <a class="jxr_linenumber" name="L211" href="#L211">211</a> 
 <a class="jxr_linenumber" name="L212" href="#L212">212</a>             <em class="jxr_comment">// Create a minimal default skin configuration</em>
 <a class="jxr_linenumber" name="L213" href="#L213">213</a>             siteSkin = <strong class="jxr_keyword">new</strong> org.apache.maven.doxia.site.Skin();
@@ -254,7 +254,7 @@
 <a class="jxr_linenumber" name="L246" href="#L246">246</a> <em class="jxr_javadoccomment">     * @param sink the sink to use for the generation.</em>
 <a class="jxr_linenumber" name="L247" href="#L247">247</a> <em class="jxr_javadoccomment">     * @param sinkFactory the sink factory to use for the generation.</em>
 <a class="jxr_linenumber" name="L248" href="#L248">248</a> <em class="jxr_javadoccomment">     * @param locale the wanted locale to generate the report, could be {@code null}.</em>
-<a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">     * @throws MavenReportException if any</em>
+<a class="jxr_linenumber" name="L249" href="#L249">249</a> <em class="jxr_javadoccomment">     * @throws MavenReportException if any.</em>
 <a class="jxr_linenumber" name="L250" href="#L250">250</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L251" href="#L251">251</a>     @Override
 <a class="jxr_linenumber" name="L252" href="#L252">252</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> generate(<strong class="jxr_keyword">final</strong> Sink sink, <strong class="jxr_keyword">final</strong> SinkFactory sinkFactory, <strong class="jxr_keyword">final</strong> Locale locale) <strong class="jxr_keyword">throws</strong> MavenReportException {
@@ -355,7 +355,7 @@
 <a class="jxr_linenumber" name="L347" href="#L347">347</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L348" href="#L348">348</a> <em class="jxr_javadoccomment">     * Gets the input files encoding.</em>
 <a class="jxr_linenumber" name="L349" href="#L349">349</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L350" href="#L350">350</a> <em class="jxr_javadoccomment">     * @return The input files encoding, never &lt;code&gt;null&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L350" href="#L350">350</a> <em class="jxr_javadoccomment">     * @return The input files encoding, never {@code null}.</em>
 <a class="jxr_linenumber" name="L351" href="#L351">351</a> <em class="jxr_javadoccomment">     */</em>
 <a class="jxr_linenumber" name="L352" href="#L352">352</a>     <strong class="jxr_keyword">protected</strong> String getInputEncoding() {
 <a class="jxr_linenumber" name="L353" href="#L353">353</a>         <strong class="jxr_keyword">return</strong> (inputEncoding == <strong class="jxr_keyword">null</strong>) ? ReaderFactory.FILE_ENCODING : inputEncoding;
@@ -364,146 +364,144 @@
 <a class="jxr_linenumber" name="L356" href="#L356">356</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="L357" href="#L357">357</a> <em class="jxr_javadoccomment">     * Gets the effective reporting output files encoding.</em>
 <a class="jxr_linenumber" name="L358" href="#L358">358</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L359" href="#L359">359</a> <em class="jxr_javadoccomment">     * @return The effective reporting output file encoding, never</em>
-<a class="jxr_linenumber" name="L360" href="#L360">360</a> <em class="jxr_javadoccomment">     * &lt;code&gt;null&lt;/code&gt;.</em>
-<a class="jxr_linenumber" name="L361" href="#L361">361</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L362" href="#L362">362</a>     <strong class="jxr_keyword">protected</strong> String getOutputEncoding() {
-<a class="jxr_linenumber" name="L363" href="#L363">363</a>         <strong class="jxr_keyword">return</strong> (outputEncoding == <strong class="jxr_keyword">null</strong>) ? StandardCharsets.UTF_8.toString() : outputEncoding;
-<a class="jxr_linenumber" name="L364" href="#L364">364</a>     }
-<a class="jxr_linenumber" name="L365" href="#L365">365</a> 
-<a class="jxr_linenumber" name="L366" href="#L366">366</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L367" href="#L367">367</a> <em class="jxr_javadoccomment">     * Actions when closing the report.</em>
-<a class="jxr_linenumber" name="L368" href="#L368">368</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L369" href="#L369">369</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> closeReport() {
-<a class="jxr_linenumber" name="L370" href="#L370">370</a>         getSink().close();
-<a class="jxr_linenumber" name="L371" href="#L371">371</a>     }
-<a class="jxr_linenumber" name="L372" href="#L372">372</a> 
-<a class="jxr_linenumber" name="L373" href="#L373">373</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L374" href="#L374">374</a> <em class="jxr_javadoccomment">     * @return the sink used</em>
-<a class="jxr_linenumber" name="L375" href="#L375">375</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L376" href="#L376">376</a>     <strong class="jxr_keyword">public</strong> Sink getSink() {
-<a class="jxr_linenumber" name="L377" href="#L377">377</a>         <strong class="jxr_keyword">return</strong> sink;
-<a class="jxr_linenumber" name="L378" href="#L378">378</a>     }
-<a class="jxr_linenumber" name="L379" href="#L379">379</a> 
-<a class="jxr_linenumber" name="L380" href="#L380">380</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L381" href="#L381">381</a> <em class="jxr_javadoccomment">     * @return {@code false} by default.</em>
-<a class="jxr_linenumber" name="L382" href="#L382">382</a> <em class="jxr_javadoccomment">     * @see org.apache.maven.reporting.MavenReport#isExternalReport()</em>
-<a class="jxr_linenumber" name="L383" href="#L383">383</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L384" href="#L384">384</a>     @Override
-<a class="jxr_linenumber" name="L385" href="#L385">385</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isExternalReport() {
-<a class="jxr_linenumber" name="L386" href="#L386">386</a>         <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="L387" href="#L387">387</a>     }
-<a class="jxr_linenumber" name="L388" href="#L388">388</a> 
-<a class="jxr_linenumber" name="L389" href="#L389">389</a>     @Override
-<a class="jxr_linenumber" name="L390" href="#L390">390</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canGenerateReport() {
-<a class="jxr_linenumber" name="L391" href="#L391">391</a>         <strong class="jxr_keyword">return</strong> !skip;
-<a class="jxr_linenumber" name="L392" href="#L392">392</a>     }
-<a class="jxr_linenumber" name="L393" href="#L393">393</a> 
-<a class="jxr_linenumber" name="L394" href="#L394">394</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L395" href="#L395">395</a> <em class="jxr_javadoccomment">     * Writes the report to the Doxia sink.</em>
-<a class="jxr_linenumber" name="L396" href="#L396">396</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L397" href="#L397">397</a> <em class="jxr_javadoccomment">     * @param locale The locale to use for writing the report.</em>
-<a class="jxr_linenumber" name="L398" href="#L398">398</a> <em class="jxr_javadoccomment">     * @throws MavenReportException Writing the report failed.</em>
-<a class="jxr_linenumber" name="L399" href="#L399">399</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L400" href="#L400">400</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> executeReport(<strong class="jxr_keyword">final</strong> Locale locale) <strong class="jxr_keyword">throws</strong> MavenReportException {
-<a class="jxr_linenumber" name="L401" href="#L401">401</a>         ResourceBundle bundle = getBundle(locale);
-<a class="jxr_linenumber" name="L402" href="#L402">402</a>         <strong class="jxr_keyword">final</strong> String title = bundle.getString(<span class="jxr_string">"report.rat.title"</span>);
-<a class="jxr_linenumber" name="L403" href="#L403">403</a>         sink.head();
-<a class="jxr_linenumber" name="L404" href="#L404">404</a>         sink.title();
-<a class="jxr_linenumber" name="L405" href="#L405">405</a>         sink.text(title);
-<a class="jxr_linenumber" name="L406" href="#L406">406</a>         sink.title_();
-<a class="jxr_linenumber" name="L407" href="#L407">407</a>         sink.head_();
-<a class="jxr_linenumber" name="L408" href="#L408">408</a> 
-<a class="jxr_linenumber" name="L409" href="#L409">409</a>         sink.body();
-<a class="jxr_linenumber" name="L410" href="#L410">410</a> 
-<a class="jxr_linenumber" name="L411" href="#L411">411</a>         sink.section1();
-<a class="jxr_linenumber" name="L412" href="#L412">412</a>         sink.sectionTitle1();
-<a class="jxr_linenumber" name="L413" href="#L413">413</a>         sink.text(title);
-<a class="jxr_linenumber" name="L414" href="#L414">414</a>         sink.sectionTitle1_();
-<a class="jxr_linenumber" name="L415" href="#L415">415</a> 
-<a class="jxr_linenumber" name="L416" href="#L416">416</a>         sink.paragraph();
-<a class="jxr_linenumber" name="L417" href="#L417">417</a>         sink.text(bundle.getString(<span class="jxr_string">"report.rat.link"</span>) + <span class="jxr_string">" "</span>);
-<a class="jxr_linenumber" name="L418" href="#L418">418</a>         sink.link(bundle.getString(<span class="jxr_string">"report.rat.url"</span>));
-<a class="jxr_linenumber" name="L419" href="#L419">419</a>         sink.text(bundle.getString(<span class="jxr_string">"report.rat.fullName"</span>));
-<a class="jxr_linenumber" name="L420" href="#L420">420</a>         sink.link_();
-<a class="jxr_linenumber" name="L421" href="#L421">421</a>         sink.text(<span class="jxr_string">" "</span> + <strong class="jxr_keyword">new</strong> VersionInfo(RatReportMojo.<strong class="jxr_keyword">class</strong>));
-<a class="jxr_linenumber" name="L422" href="#L422">422</a>         sink.text(<span class="jxr_string">"."</span>);
-<a class="jxr_linenumber" name="L423" href="#L423">423</a>         sink.paragraph_();
-<a class="jxr_linenumber" name="L424" href="#L424">424</a> 
-<a class="jxr_linenumber" name="L425" href="#L425">425</a>         sink.paragraph();
-<a class="jxr_linenumber" name="L426" href="#L426">426</a>         sink.verbatim(<strong class="jxr_keyword">new</strong> SinkEventAttributeSet());
-<a class="jxr_linenumber" name="L427" href="#L427">427</a>         <strong class="jxr_keyword">try</strong> (Writer logWriter = DefaultLog.getInstance().asWriter()) {
-<a class="jxr_linenumber" name="L428" href="#L428">428</a>             <strong class="jxr_keyword">try</strong> {
-<a class="jxr_linenumber" name="L429" href="#L429">429</a>                 ReportConfiguration config = getConfiguration();
-<a class="jxr_linenumber" name="L430" href="#L430">430</a>                 config.setFrom(getDefaultsBuilder().build());
-<a class="jxr_linenumber" name="L431" href="#L431">431</a>                 logLicenses(config.getLicenses(LicenseFilter.ALL));
-<a class="jxr_linenumber" name="L432" href="#L432">432</a>                 <strong class="jxr_keyword">if</strong> (verbose) {
-<a class="jxr_linenumber" name="L433" href="#L433">433</a>                     config.reportExclusions(logWriter);
-<a class="jxr_linenumber" name="L434" href="#L434">434</a>                 }
-<a class="jxr_linenumber" name="L435" href="#L435">435</a>                 ByteArrayOutputStream baos = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
-<a class="jxr_linenumber" name="L436" href="#L436">436</a>                 config.setOut(<strong class="jxr_keyword">new</strong> ReportConfiguration.IODescriptor&lt;&gt;(<span class="jxr_string">"RAT output"</span>, () -&gt; baos));
-<a class="jxr_linenumber" name="L437" href="#L437">437</a>                 Reporter reporter = <strong class="jxr_keyword">new</strong> Reporter(config);
-<a class="jxr_linenumber" name="L438" href="#L438">438</a>                 Reporter.Output output = reporter.execute();
-<a class="jxr_linenumber" name="L439" href="#L439">439</a>                 <strong class="jxr_keyword">if</strong> (verbose) {
-<a class="jxr_linenumber" name="L440" href="#L440">440</a>                     output.writeSummary(logWriter);
-<a class="jxr_linenumber" name="L441" href="#L441">441</a>                 }
-<a class="jxr_linenumber" name="L442" href="#L442">442</a>                 output.format(config);
-<a class="jxr_linenumber" name="L443" href="#L443">443</a>                 sink.text(baos.toString(StandardCharsets.UTF_8));
-<a class="jxr_linenumber" name="L444" href="#L444">444</a>             } <strong class="jxr_keyword">catch</strong> (IOException | MojoExecutionException | RatException e) {
-<a class="jxr_linenumber" name="L445" href="#L445">445</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MavenReportException(e.getMessage(), e);
-<a class="jxr_linenumber" name="L446" href="#L446">446</a>             }
-<a class="jxr_linenumber" name="L447" href="#L447">447</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
-<a class="jxr_linenumber" name="L448" href="#L448">448</a>             DefaultLog.getInstance().warn(<span class="jxr_string">"Unable to close log writer"</span>, e);
-<a class="jxr_linenumber" name="L449" href="#L449">449</a>         }
-<a class="jxr_linenumber" name="L450" href="#L450">450</a>         sink.verbatim_();
-<a class="jxr_linenumber" name="L451" href="#L451">451</a>         sink.paragraph_();
-<a class="jxr_linenumber" name="L452" href="#L452">452</a>         sink.section1_();
-<a class="jxr_linenumber" name="L453" href="#L453">453</a>         sink.body_();
-<a class="jxr_linenumber" name="L454" href="#L454">454</a>     }
-<a class="jxr_linenumber" name="L455" href="#L455">455</a> 
-<a class="jxr_linenumber" name="L456" href="#L456">456</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L457" href="#L457">457</a> <em class="jxr_javadoccomment">     * Returns the reports bundle.</em>
-<a class="jxr_linenumber" name="L458" href="#L458">458</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L459" href="#L459">459</a> <em class="jxr_javadoccomment">     * @param locale Requested locale of the bundle.</em>
-<a class="jxr_linenumber" name="L460" href="#L460">460</a> <em class="jxr_javadoccomment">     * @return The bundle, which is used to read localized strings.</em>
-<a class="jxr_linenumber" name="L461" href="#L461">461</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L462" href="#L462">462</a>     <strong class="jxr_keyword">private</strong> ResourceBundle getBundle(<strong class="jxr_keyword">final</strong> Locale locale) {
-<a class="jxr_linenumber" name="L463" href="#L463">463</a>         <strong class="jxr_keyword">return</strong> ResourceBundle.getBundle(<span class="jxr_string">"org/apache/rat/mp/rat-report"</span>, locale, getClass().getClassLoader());
-<a class="jxr_linenumber" name="L464" href="#L464">464</a>     }
-<a class="jxr_linenumber" name="L465" href="#L465">465</a> 
-<a class="jxr_linenumber" name="L466" href="#L466">466</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L467" href="#L467">467</a> <em class="jxr_javadoccomment">     * Returns the reports description.</em>
-<a class="jxr_linenumber" name="L468" href="#L468">468</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L469" href="#L469">469</a> <em class="jxr_javadoccomment">     * @param locale Requested locale of the bundle</em>
-<a class="jxr_linenumber" name="L470" href="#L470">470</a> <em class="jxr_javadoccomment">     * @return Report description, as given by the key "report.rat.description" in</em>
-<a class="jxr_linenumber" name="L471" href="#L471">471</a> <em class="jxr_javadoccomment">     * the bundle.</em>
-<a class="jxr_linenumber" name="L472" href="#L472">472</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L473" href="#L473">473</a>     @Override
-<a class="jxr_linenumber" name="L474" href="#L474">474</a>     <strong class="jxr_keyword">public</strong> String getDescription(<strong class="jxr_keyword">final</strong> Locale locale) {
-<a class="jxr_linenumber" name="L475" href="#L475">475</a>         <strong class="jxr_keyword">return</strong> getBundle(locale).getString(<span class="jxr_string">"report.rat.description"</span>);
-<a class="jxr_linenumber" name="L476" href="#L476">476</a>     }
-<a class="jxr_linenumber" name="L477" href="#L477">477</a> 
-<a class="jxr_linenumber" name="L478" href="#L478">478</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L479" href="#L479">479</a> <em class="jxr_javadoccomment">     * Returns the reports name.</em>
-<a class="jxr_linenumber" name="L480" href="#L480">480</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L481" href="#L481">481</a> <em class="jxr_javadoccomment">     * @param locale Requested locale of the bundle.</em>
-<a class="jxr_linenumber" name="L482" href="#L482">482</a> <em class="jxr_javadoccomment">     * @return Report name, as given by the key "report.rat.name" in the bundle.</em>
-<a class="jxr_linenumber" name="L483" href="#L483">483</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L484" href="#L484">484</a>     @Override
-<a class="jxr_linenumber" name="L485" href="#L485">485</a>     <strong class="jxr_keyword">public</strong> String getName(<strong class="jxr_keyword">final</strong> Locale locale) {
-<a class="jxr_linenumber" name="L486" href="#L486">486</a>         <strong class="jxr_keyword">return</strong> getBundle(locale).getString(<span class="jxr_string">"report.rat.name"</span>);
-<a class="jxr_linenumber" name="L487" href="#L487">487</a>     }
-<a class="jxr_linenumber" name="L488" href="#L488">488</a> 
-<a class="jxr_linenumber" name="L489" href="#L489">489</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="L490" href="#L490">490</a> <em class="jxr_javadoccomment">     * Returns the reports file name.</em>
-<a class="jxr_linenumber" name="L491" href="#L491">491</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="L492" href="#L492">492</a> <em class="jxr_javadoccomment">     * @return "rat-report"</em>
-<a class="jxr_linenumber" name="L493" href="#L493">493</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L494" href="#L494">494</a>     @Override
-<a class="jxr_linenumber" name="L495" href="#L495">495</a>     <strong class="jxr_keyword">public</strong> String getOutputName() {
-<a class="jxr_linenumber" name="L496" href="#L496">496</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"rat-report"</span>;
-<a class="jxr_linenumber" name="L497" href="#L497">497</a>     }
-<a class="jxr_linenumber" name="L498" href="#L498">498</a> }
+<a class="jxr_linenumber" name="L359" href="#L359">359</a> <em class="jxr_javadoccomment">     * @return The effective reporting output file encoding, never {@code null}.</em>
+<a class="jxr_linenumber" name="L360" href="#L360">360</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L361" href="#L361">361</a>     <strong class="jxr_keyword">protected</strong> String getOutputEncoding() {
+<a class="jxr_linenumber" name="L362" href="#L362">362</a>         <strong class="jxr_keyword">return</strong> (outputEncoding == <strong class="jxr_keyword">null</strong>) ? StandardCharsets.UTF_8.toString() : outputEncoding;
+<a class="jxr_linenumber" name="L363" href="#L363">363</a>     }
+<a class="jxr_linenumber" name="L364" href="#L364">364</a> 
+<a class="jxr_linenumber" name="L365" href="#L365">365</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L366" href="#L366">366</a> <em class="jxr_javadoccomment">     * Actions when closing the report.</em>
+<a class="jxr_linenumber" name="L367" href="#L367">367</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L368" href="#L368">368</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> closeReport() {
+<a class="jxr_linenumber" name="L369" href="#L369">369</a>         getSink().close();
+<a class="jxr_linenumber" name="L370" href="#L370">370</a>     }
+<a class="jxr_linenumber" name="L371" href="#L371">371</a> 
+<a class="jxr_linenumber" name="L372" href="#L372">372</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L373" href="#L373">373</a> <em class="jxr_javadoccomment">     * @return the sink used</em>
+<a class="jxr_linenumber" name="L374" href="#L374">374</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L375" href="#L375">375</a>     <strong class="jxr_keyword">public</strong> Sink getSink() {
+<a class="jxr_linenumber" name="L376" href="#L376">376</a>         <strong class="jxr_keyword">return</strong> sink;
+<a class="jxr_linenumber" name="L377" href="#L377">377</a>     }
+<a class="jxr_linenumber" name="L378" href="#L378">378</a> 
+<a class="jxr_linenumber" name="L379" href="#L379">379</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L380" href="#L380">380</a> <em class="jxr_javadoccomment">     * @return {@code false} by default.</em>
+<a class="jxr_linenumber" name="L381" href="#L381">381</a> <em class="jxr_javadoccomment">     * @see org.apache.maven.reporting.MavenReport#isExternalReport()</em>
+<a class="jxr_linenumber" name="L382" href="#L382">382</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L383" href="#L383">383</a>     @Override
+<a class="jxr_linenumber" name="L384" href="#L384">384</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isExternalReport() {
+<a class="jxr_linenumber" name="L385" href="#L385">385</a>         <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="L386" href="#L386">386</a>     }
+<a class="jxr_linenumber" name="L387" href="#L387">387</a> 
+<a class="jxr_linenumber" name="L388" href="#L388">388</a>     @Override
+<a class="jxr_linenumber" name="L389" href="#L389">389</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canGenerateReport() {
+<a class="jxr_linenumber" name="L390" href="#L390">390</a>         <strong class="jxr_keyword">return</strong> !skip;
+<a class="jxr_linenumber" name="L391" href="#L391">391</a>     }
+<a class="jxr_linenumber" name="L392" href="#L392">392</a> 
+<a class="jxr_linenumber" name="L393" href="#L393">393</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L394" href="#L394">394</a> <em class="jxr_javadoccomment">     * Writes the report to the Doxia sink.</em>
+<a class="jxr_linenumber" name="L395" href="#L395">395</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L396" href="#L396">396</a> <em class="jxr_javadoccomment">     * @param locale the locale to use for writing the report.</em>
+<a class="jxr_linenumber" name="L397" href="#L397">397</a> <em class="jxr_javadoccomment">     * @throws MavenReportException if writing the report failed.</em>
+<a class="jxr_linenumber" name="L398" href="#L398">398</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L399" href="#L399">399</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> executeReport(<strong class="jxr_keyword">final</strong> Locale locale) <strong class="jxr_keyword">throws</strong> MavenReportException {
+<a class="jxr_linenumber" name="L400" href="#L400">400</a>         ResourceBundle bundle = getBundle(locale);
+<a class="jxr_linenumber" name="L401" href="#L401">401</a>         <strong class="jxr_keyword">final</strong> String title = bundle.getString(<span class="jxr_string">"report.rat.title"</span>);
+<a class="jxr_linenumber" name="L402" href="#L402">402</a>         sink.head();
+<a class="jxr_linenumber" name="L403" href="#L403">403</a>         sink.title();
+<a class="jxr_linenumber" name="L404" href="#L404">404</a>         sink.text(title);
+<a class="jxr_linenumber" name="L405" href="#L405">405</a>         sink.title_();
+<a class="jxr_linenumber" name="L406" href="#L406">406</a>         sink.head_();
+<a class="jxr_linenumber" name="L407" href="#L407">407</a> 
+<a class="jxr_linenumber" name="L408" href="#L408">408</a>         sink.body();
+<a class="jxr_linenumber" name="L409" href="#L409">409</a> 
+<a class="jxr_linenumber" name="L410" href="#L410">410</a>         sink.section1();
+<a class="jxr_linenumber" name="L411" href="#L411">411</a>         sink.sectionTitle1();
+<a class="jxr_linenumber" name="L412" href="#L412">412</a>         sink.text(title);
+<a class="jxr_linenumber" name="L413" href="#L413">413</a>         sink.sectionTitle1_();
+<a class="jxr_linenumber" name="L414" href="#L414">414</a> 
+<a class="jxr_linenumber" name="L415" href="#L415">415</a>         sink.paragraph();
+<a class="jxr_linenumber" name="L416" href="#L416">416</a>         sink.text(bundle.getString(<span class="jxr_string">"report.rat.link"</span>) + <span class="jxr_string">" "</span>);
+<a class="jxr_linenumber" name="L417" href="#L417">417</a>         sink.link(bundle.getString(<span class="jxr_string">"report.rat.url"</span>));
+<a class="jxr_linenumber" name="L418" href="#L418">418</a>         sink.text(bundle.getString(<span class="jxr_string">"report.rat.fullName"</span>));
+<a class="jxr_linenumber" name="L419" href="#L419">419</a>         sink.link_();
+<a class="jxr_linenumber" name="L420" href="#L420">420</a>         sink.text(<span class="jxr_string">" "</span> + <strong class="jxr_keyword">new</strong> VersionInfo(RatReportMojo.<strong class="jxr_keyword">class</strong>));
+<a class="jxr_linenumber" name="L421" href="#L421">421</a>         sink.text(<span class="jxr_string">"."</span>);
+<a class="jxr_linenumber" name="L422" href="#L422">422</a>         sink.paragraph_();
+<a class="jxr_linenumber" name="L423" href="#L423">423</a> 
+<a class="jxr_linenumber" name="L424" href="#L424">424</a>         sink.paragraph();
+<a class="jxr_linenumber" name="L425" href="#L425">425</a>         sink.verbatim(<strong class="jxr_keyword">new</strong> SinkEventAttributeSet());
+<a class="jxr_linenumber" name="L426" href="#L426">426</a>         <strong class="jxr_keyword">try</strong> (Writer logWriter = DefaultLog.getInstance().asWriter()) {
+<a class="jxr_linenumber" name="L427" href="#L427">427</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="L428" href="#L428">428</a>                 ReportConfiguration config = getConfiguration();
+<a class="jxr_linenumber" name="L429" href="#L429">429</a>                 config.setFrom(getDefaultsBuilder().build());
+<a class="jxr_linenumber" name="L430" href="#L430">430</a>                 logLicenses(config.getLicenses(LicenseFilter.ALL));
+<a class="jxr_linenumber" name="L431" href="#L431">431</a>                 <strong class="jxr_keyword">if</strong> (verbose) {
+<a class="jxr_linenumber" name="L432" href="#L432">432</a>                     config.reportExclusions(logWriter);
+<a class="jxr_linenumber" name="L433" href="#L433">433</a>                 }
+<a class="jxr_linenumber" name="L434" href="#L434">434</a>                 ByteArrayOutputStream baos = <strong class="jxr_keyword">new</strong> ByteArrayOutputStream();
+<a class="jxr_linenumber" name="L435" href="#L435">435</a>                 config.setOutput(<strong class="jxr_keyword">new</strong> ReportConfiguration.IODescriptor&lt;&gt;(<span class="jxr_string">"RAT output"</span>, () -&gt; baos));
+<a class="jxr_linenumber" name="L436" href="#L436">436</a>                 Reporter reporter = <strong class="jxr_keyword">new</strong> Reporter(config);
+<a class="jxr_linenumber" name="L437" href="#L437">437</a>                 Reporter.Output output = reporter.execute();
+<a class="jxr_linenumber" name="L438" href="#L438">438</a>                 <strong class="jxr_keyword">if</strong> (verbose) {
+<a class="jxr_linenumber" name="L439" href="#L439">439</a>                     output.writeSummary(logWriter);
+<a class="jxr_linenumber" name="L440" href="#L440">440</a>                 }
+<a class="jxr_linenumber" name="L441" href="#L441">441</a>                 output.format(config);
+<a class="jxr_linenumber" name="L442" href="#L442">442</a>                 sink.text(baos.toString(StandardCharsets.UTF_8));
+<a class="jxr_linenumber" name="L443" href="#L443">443</a>             } <strong class="jxr_keyword">catch</strong> (IOException | MojoExecutionException | RatException e) {
+<a class="jxr_linenumber" name="L444" href="#L444">444</a>                 <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> MavenReportException(e.getMessage(), e);
+<a class="jxr_linenumber" name="L445" href="#L445">445</a>             }
+<a class="jxr_linenumber" name="L446" href="#L446">446</a>         } <strong class="jxr_keyword">catch</strong> (IOException e) {
+<a class="jxr_linenumber" name="L447" href="#L447">447</a>             DefaultLog.getInstance().warn(<span class="jxr_string">"Unable to close log writer"</span>, e);
+<a class="jxr_linenumber" name="L448" href="#L448">448</a>         }
+<a class="jxr_linenumber" name="L449" href="#L449">449</a>         sink.verbatim_();
+<a class="jxr_linenumber" name="L450" href="#L450">450</a>         sink.paragraph_();
+<a class="jxr_linenumber" name="L451" href="#L451">451</a>         sink.section1_();
+<a class="jxr_linenumber" name="L452" href="#L452">452</a>         sink.body_();
+<a class="jxr_linenumber" name="L453" href="#L453">453</a>     }
+<a class="jxr_linenumber" name="L454" href="#L454">454</a> 
+<a class="jxr_linenumber" name="L455" href="#L455">455</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L456" href="#L456">456</a> <em class="jxr_javadoccomment">     * Returns the reports bundle.</em>
+<a class="jxr_linenumber" name="L457" href="#L457">457</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L458" href="#L458">458</a> <em class="jxr_javadoccomment">     * @param locale requested locale of the bundle.</em>
+<a class="jxr_linenumber" name="L459" href="#L459">459</a> <em class="jxr_javadoccomment">     * @return The bundle, which is used to read localized strings.</em>
+<a class="jxr_linenumber" name="L460" href="#L460">460</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L461" href="#L461">461</a>     <strong class="jxr_keyword">private</strong> ResourceBundle getBundle(<strong class="jxr_keyword">final</strong> Locale locale) {
+<a class="jxr_linenumber" name="L462" href="#L462">462</a>         <strong class="jxr_keyword">return</strong> ResourceBundle.getBundle(<span class="jxr_string">"org/apache/rat/mp/rat-report"</span>, locale, getClass().getClassLoader());
+<a class="jxr_linenumber" name="L463" href="#L463">463</a>     }
+<a class="jxr_linenumber" name="L464" href="#L464">464</a> 
+<a class="jxr_linenumber" name="L465" href="#L465">465</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L466" href="#L466">466</a> <em class="jxr_javadoccomment">     * Returns the reports description.</em>
+<a class="jxr_linenumber" name="L467" href="#L467">467</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L468" href="#L468">468</a> <em class="jxr_javadoccomment">     * @param locale requested locale of the bundle</em>
+<a class="jxr_linenumber" name="L469" href="#L469">469</a> <em class="jxr_javadoccomment">     * @return Report description, as given by the key {@code "report.rat.description"} in the bundle.</em>
+<a class="jxr_linenumber" name="L470" href="#L470">470</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L471" href="#L471">471</a>     @Override
+<a class="jxr_linenumber" name="L472" href="#L472">472</a>     <strong class="jxr_keyword">public</strong> String getDescription(<strong class="jxr_keyword">final</strong> Locale locale) {
+<a class="jxr_linenumber" name="L473" href="#L473">473</a>         <strong class="jxr_keyword">return</strong> getBundle(locale).getString(<span class="jxr_string">"report.rat.description"</span>);
+<a class="jxr_linenumber" name="L474" href="#L474">474</a>     }
+<a class="jxr_linenumber" name="L475" href="#L475">475</a> 
+<a class="jxr_linenumber" name="L476" href="#L476">476</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L477" href="#L477">477</a> <em class="jxr_javadoccomment">     * Returns the reports name.</em>
+<a class="jxr_linenumber" name="L478" href="#L478">478</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L479" href="#L479">479</a> <em class="jxr_javadoccomment">     * @param locale requested locale of the bundle.</em>
+<a class="jxr_linenumber" name="L480" href="#L480">480</a> <em class="jxr_javadoccomment">     * @return Report name, as given by the key {@code "report.rat.name"} in the bundle.</em>
+<a class="jxr_linenumber" name="L481" href="#L481">481</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L482" href="#L482">482</a>     @Override
+<a class="jxr_linenumber" name="L483" href="#L483">483</a>     <strong class="jxr_keyword">public</strong> String getName(<strong class="jxr_keyword">final</strong> Locale locale) {
+<a class="jxr_linenumber" name="L484" href="#L484">484</a>         <strong class="jxr_keyword">return</strong> getBundle(locale).getString(<span class="jxr_string">"report.rat.name"</span>);
+<a class="jxr_linenumber" name="L485" href="#L485">485</a>     }
+<a class="jxr_linenumber" name="L486" href="#L486">486</a> 
+<a class="jxr_linenumber" name="L487" href="#L487">487</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L488" href="#L488">488</a> <em class="jxr_javadoccomment">     * Returns the reports file name.</em>
+<a class="jxr_linenumber" name="L489" href="#L489">489</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="L490" href="#L490">490</a> <em class="jxr_javadoccomment">     * @return "rat-report"</em>
+<a class="jxr_linenumber" name="L491" href="#L491">491</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L492" href="#L492">492</a>     @Override
+<a class="jxr_linenumber" name="L493" href="#L493">493</a>     <strong class="jxr_keyword">public</strong> String getOutputName() {
+<a class="jxr_linenumber" name="L494" href="#L494">494</a>         <strong class="jxr_keyword">return</strong> <span class="jxr_string">"rat-report"</span>;
+<a class="jxr_linenumber" name="L495" href="#L495">495</a>     }
+<a class="jxr_linenumber" name="L496" href="#L496">496</a> }
 </pre>
 <hr/>
 <div id="footer">© 2007–2026 <a href="https://www.apache.org">Apache Software Foundation</a></div>

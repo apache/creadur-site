@@ -546,16 +546,16 @@ public class InputIncludes {
 public void addConfiguredExpr(Expr expression) {
 <span class="fc" id="L547">   addArg(&quot;input-include&quot;, expression.value);</span>
 <span class="fc" id="L548">}</span>
-public void addConfiguredStd(Std standardCollection) {
-<span class="fc" id="L550">   addArg(&quot;input-include-std&quot;, standardCollection.value);</span>
-<span class="fc" id="L551">}</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="fc bfc" id="L553" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
-<span class="pc bpc" id="L554" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="fc" id="L555">                    addArg(&quot;input-include-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L550" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L551" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L552">                    addArg(&quot;input-include-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="fc" id="L557">            }</span>
-<span class="fc" id="L558">        }</span>
+<span class="fc" id="L554">            }</span>
+<span class="fc" id="L555">        }</span>
+public void addConfiguredStd(Std standardCollection) {
+<span class="fc" id="L557">   addArg(&quot;input-include-std&quot;, standardCollection.value);</span>
+<span class="fc" id="L558">}</span>
     }
     /**
      * File names for system configuration.
@@ -627,17 +627,17 @@ public void addConfiguredExpr(Expr expression) {
     }
 
 public class LicenseFamiliesDenied {
-<span class="nc" id="L630">    LicenseFamiliesDenied() { }</span>
-public void addConfiguredLst(Lst familyID) {
-<span class="nc" id="L632">   addArg(&quot;license-families-denied&quot;, familyID.value);</span>
-<span class="nc" id="L633">}</span>
+<span class="fc" id="L630">    LicenseFamiliesDenied() { }</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="nc bnc" id="L635" title="All 2 branches missed.">            for (Resource resource : fileSet) {</span>
-<span class="nc bnc" id="L636" title="All 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="nc" id="L637">                    addArg(&quot;license-families-denied-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L632" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L633" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L634">                    addArg(&quot;license-families-denied-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="nc" id="L639">            }</span>
-<span class="nc" id="L640">        }</span>
+<span class="fc" id="L636">            }</span>
+<span class="fc" id="L637">        }</span>
+public void addConfiguredLst(Lst familyID) {
+<span class="fc" id="L639">   addArg(&quot;license-families-denied&quot;, familyID.value);</span>
+<span class="fc" id="L640">}</span>
     }
     /**
      * Includes files defined in standard collections based on commonly occurring groups. Includes any path matcher actions but DOES NOT include any file processor actions.
@@ -674,19 +674,19 @@ public void addConfiguredCntr(Cntr counterPattern) {
 
 public class InputExcludes {
 <span class="fc" id="L676">    InputExcludes() { }</span>
-public void addConfiguredStd(Std standardCollection) {
-<span class="fc" id="L678">   addArg(&quot;input-exclude-std&quot;, standardCollection.value);</span>
-<span class="fc" id="L679">}</span>
-public void addConfiguredExpr(Expr expression) {
-<span class="fc" id="L681">   addArg(&quot;input-exclude&quot;, expression.value);</span>
-<span class="fc" id="L682">}</span>
         public void addConfiguredFileset(FileSet fileSet) {
-<span class="fc bfc" id="L684" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
-<span class="pc bpc" id="L685" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
-<span class="fc" id="L686">                    addArg(&quot;input-exclude-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
+<span class="fc bfc" id="L678" title="All 2 branches covered.">            for (Resource resource : fileSet) {</span>
+<span class="pc bpc" id="L679" title="1 of 2 branches missed.">                if (resource.isFilesystemOnly()) {</span>
+<span class="fc" id="L680">                    addArg(&quot;input-exclude-file&quot;, ((FileResource) resource).getFile().getAbsolutePath());</span>
                 }
-<span class="fc" id="L688">            }</span>
-<span class="fc" id="L689">        }</span>
+<span class="fc" id="L682">            }</span>
+<span class="fc" id="L683">        }</span>
+public void addConfiguredExpr(Expr expression) {
+<span class="fc" id="L685">   addArg(&quot;input-exclude&quot;, expression.value);</span>
+<span class="fc" id="L686">}</span>
+public void addConfiguredStd(Std standardCollection) {
+<span class="fc" id="L688">   addArg(&quot;input-exclude-std&quot;, standardCollection.value);</span>
+<span class="fc" id="L689">}</span>
     }
     /**
      * A comma separated list of approved license family IDs. These license families will be added to the list of approved license families.

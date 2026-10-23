@@ -50,7 +50,7 @@
 <a class="jxr_linenumber" name="L42" href="#L42">42</a>  <em class="jxr_javadoccomment">     * its own matcher map and per-document match state ({@code lastMatch},</em>
 <a class="jxr_linenumber" name="L43" href="#L43">43</a>  <em class="jxr_javadoccomment">     * {@code checked}).</em>
 <a class="jxr_linenumber" name="L44" href="#L44">44</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> ThreadLocal&lt;SPDXMatcherFactory&gt; FACTORY = ThreadLocal.withInitial(SPDXMatcherFactory::newInstance);
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> ThreadLocal&lt;SPDXMatcherFactory&gt; FACTORY = ThreadLocal.withInitial(SPDXMatcherFactory::newInstance); <em class="jxr_comment">// NOSONAR</em>
 <a class="jxr_linenumber" name="L46" href="#L46">46</a>  
 <a class="jxr_linenumber" name="L47" href="#L47">47</a>      <em class="jxr_javadoccomment">/** The SPDX name */</em>
 <a class="jxr_linenumber" name="L48" href="#L48">48</a>      <strong class="jxr_keyword">private</strong> String name;
@@ -79,7 +79,7 @@
 <a class="jxr_linenumber" name="L71" href="#L71">71</a>      <strong class="jxr_keyword">public</strong> <a name="AbstractBuilder" href="../../../../../org/apache/rat/configuration/builders/AbstractBuilder.html#AbstractBuilder">AbstractBuilder</a> setId(<strong class="jxr_keyword">final</strong> String id) {
 <a class="jxr_linenumber" name="L72" href="#L72">72</a>          <strong class="jxr_keyword">if</strong> (StringUtils.isNotBlank(id)) {
 <a class="jxr_linenumber" name="L73" href="#L73">73</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> <a name="ConfigurationException" href="../../../../../org/apache/rat/ConfigurationException.html#ConfigurationException">ConfigurationException</a>(<span class="jxr_string">"'id' is not supported for SPDX matchers. "</span>
-<a class="jxr_linenumber" name="L74" href="#L74">74</a>                      + <span class="jxr_string">"SPXD matchers always have 'SPDX:&lt;name&gt;' as their id"</span>);
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>                      + <span class="jxr_string">"SPXD matchers always have 'SPDX:&lt;name&gt;' as their id."</span>);
 <a class="jxr_linenumber" name="L75" href="#L75">75</a>          }
 <a class="jxr_linenumber" name="L76" href="#L76">76</a>          <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>;
 <a class="jxr_linenumber" name="L77" href="#L77">77</a>      }
