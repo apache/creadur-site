@@ -23,6 +23,7 @@ import static org.apache.creadur.tentacles.RepositoryType.LOCAL_FILE_SYSTEM;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -48,7 +49,7 @@ public class Main {
     }
         */
 
-<span class="nc" id="L51">    private static final Logger log = LogManager.getLogger(Main.class);</span>
+<span class="nc" id="L52">    private static final Logger log = LogManager.getLogger(Main.class);</span>
     private static final String CRAWL_PATTERN = &quot;.*\\.(jar|zip|war|ear|rar|tar.gz)&quot;;
 
     private final Reports reports;
@@ -62,341 +63,328 @@ public class Main {
     private final TentaclesResources tentaclesResources;
     private final Templates templates;
 
-    public Main(final String... args) throws Exception {
-<span class="nc" id="L66">        this(new Configuration(args), Platform.aPlatform());</span>
-<span class="nc" id="L67">    }</span>
+    public Main(final String... args) throws IOException, URISyntaxException {
+<span class="nc" id="L67">        this(new Configuration(args), Platform.aPlatform());</span>
+<span class="nc" id="L68">    }</span>
 
     public Main(final Configuration configuration, final Platform platform)
-            throws Exception {
-<span class="nc" id="L71">        this(configuration, platform, new Templates(platform), new Layout(</span>
+            throws IOException {
+<span class="nc" id="L72">        this(configuration, platform, new Templates(platform), new Layout(</span>
                 platform, configuration));
-<span class="nc" id="L73">    }</span>
+<span class="nc" id="L74">    }</span>
 
     public Main(final Configuration configuration, final Platform platform,
-<span class="nc" id="L76">            final Templates templates, final Layout layout) throws Exception {</span>
-<span class="nc" id="L77">        this.platform = platform;</span>
-<span class="nc" id="L78">        this.configuration = configuration;</span>
-<span class="nc" id="L79">        this.layout = layout;</span>
-<span class="nc" id="L80">        this.fileSystem = platform.fileSystem();</span>
-<span class="nc" id="L81">        this.ioSystem = platform.ioSystem();</span>
-<span class="nc" id="L82">        this.tentaclesResources = platform.tentaclesResources();</span>
-<span class="nc" id="L83">        this.templates = templates;</span>
+<span class="nc" id="L77">            final Templates templates, final Layout layout) throws IOException {</span>
+<span class="nc" id="L78">        this.platform = platform;</span>
+<span class="nc" id="L79">        this.configuration = configuration;</span>
+<span class="nc" id="L80">        this.layout = layout;</span>
+<span class="nc" id="L81">        this.fileSystem = platform.fileSystem();</span>
+<span class="nc" id="L82">        this.ioSystem = platform.ioSystem();</span>
+<span class="nc" id="L83">        this.tentaclesResources = platform.tentaclesResources();</span>
+<span class="nc" id="L84">        this.templates = templates;</span>
 
-<span class="nc" id="L85">        this.reports = new Reports();</span>
+<span class="nc" id="L86">        this.reports = new Reports();</span>
 
-<span class="nc" id="L87">        log.info(&quot;Remote repository: {}&quot;, this.configuration.getStagingRepositoryURI());</span>
-<span class="nc" id="L88">        log.info(&quot;Local root directory: {}&quot;, this.layout.getLocalRootDirectory());</span>
+<span class="nc" id="L88">        log.info(&quot;Remote repository: {}&quot;, this.configuration.getStagingRepositoryURI());</span>
+<span class="nc" id="L89">        log.info(&quot;Local root directory: {}&quot;, this.layout.getLocalRootDirectory());</span>
 
-<span class="nc" id="L90">        this.tentaclesResources.copyTo(&quot;legal/style.css&quot;,</span>
-<span class="nc" id="L91">                new File(this.layout.getOutputDirectory(), &quot;style.css&quot;));</span>
+<span class="nc" id="L91">        this.tentaclesResources.copyTo(&quot;legal/style.css&quot;,</span>
+<span class="nc" id="L92">                new File(this.layout.getOutputDirectory(), &quot;style.css&quot;));</span>
 
-<span class="nc" id="L93">        this.licenses = loadLicensesFrom(platform);</span>
-<span class="nc" id="L94">    }</span>
+<span class="nc" id="L94">        this.licenses = loadLicensesFrom(platform);</span>
+<span class="nc" id="L95">    }</span>
 
     public static void main(final String[] args) throws Exception {
     	
-<span class="nc" id="L98">    	log.info(&quot;Launching Apache Tentacles ...&quot;);</span>
+<span class="nc" id="L99">    	log.info(&quot;Launching Apache Tentacles ...&quot;);</span>
     	
-<span class="nc bnc" id="L100" title="All 4 branches missed.">    	if(args == null || args.length &lt; 1) {</span>
-<span class="nc" id="L101">    		log.error(&quot;Error: Input parameter missing - you did not specify any component to run Apache Tentacles on.&quot;);</span>
-<span class="nc" id="L102">    		log.error(&quot;Please launch Apache Tentacles with an URI to work on such as 'https://repository.apache.org/content/repositories/orgapachecreadur-1000/'.&quot;);</span>
+<span class="nc bnc" id="L101" title="All 4 branches missed.">    	if(args == null || args.length &lt; 1) {</span>
+<span class="nc" id="L102">    		log.error(&quot;Error: Input parameter missing - you did not specify any component to run Apache Tentacles on.&quot;);</span>
+<span class="nc" id="L103">    		log.error(&quot;Please launch Apache Tentacles with an URI to work on such as 'https://repository.apache.org/content/repositories/orgapachecreadur-1000/'.&quot;);</span>
     	} else {
-<span class="nc" id="L104">            new Main(args).run();</span>
+<span class="nc" id="L105">            new Main(args).run();</span>
     	}
     	
-<span class="nc" id="L107">    }</span>
+<span class="nc" id="L108">    }</span>
 
     private void run() throws Exception {
-<span class="nc" id="L110">        unpackContents(mirrorRepositoryFrom(this.configuration));</span>
-<span class="nc" id="L111">        reportOn(archivesIn(this.layout.getRepositoryDirectory()));</span>
-<span class="nc" id="L112">    }</span>
+<span class="nc" id="L111">        unpackContents(mirrorRepositoryFrom(this.configuration));</span>
+<span class="nc" id="L112">        reportOn(archivesIn(this.layout.getRepositoryDirectory()));</span>
+<span class="nc" id="L113">    }</span>
 
     private List&lt;Archive&gt; archivesIn(final File repository) throws IOException {
-<span class="nc" id="L115">        final List&lt;File&gt; jars = this.fileSystem.documentsFrom(repository);</span>
+<span class="nc" id="L116">        final List&lt;File&gt; jars = this.fileSystem.documentsFrom(repository);</span>
 
-<span class="nc" id="L117">        final List&lt;Archive&gt; archives = new ArrayList&lt;&gt;();</span>
-<span class="nc bnc" id="L118" title="All 2 branches missed.">        for (final File file : jars) {</span>
-<span class="nc" id="L119">            final Archive archive =</span>
+<span class="nc" id="L118">        final List&lt;Archive&gt; archives = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (final File file : jars) {</span>
+<span class="nc" id="L120">            final Archive archive =</span>
                     new Archive(file, this.fileSystem, this.layout);
-<span class="nc" id="L121">            archives.add(archive);</span>
-<span class="nc" id="L122">        }</span>
-<span class="nc" id="L123">        return archives;</span>
+<span class="nc" id="L122">            archives.add(archive);</span>
+<span class="nc" id="L123">        }</span>
+<span class="nc" id="L124">        return archives;</span>
     }
 
     private void reportOn(final List&lt;Archive&gt; archives) throws IOException {
-<span class="nc" id="L127">        this.templates</span>
-<span class="nc" id="L128">                .template(&quot;legal/archives.vm&quot;)</span>
-<span class="nc" id="L129">                .add(&quot;archives&quot;, archives)</span>
-<span class="nc" id="L130">                .add(&quot;reports&quot;, this.reports)</span>
-<span class="nc" id="L131">                .write(new File(this.layout.getOutputDirectory(),</span>
+<span class="nc" id="L128">        this.templates</span>
+<span class="nc" id="L129">                .template(&quot;legal/archives.vm&quot;)</span>
+<span class="nc" id="L130">                .add(&quot;archives&quot;, archives)</span>
+<span class="nc" id="L131">                .add(&quot;reports&quot;, this.reports)</span>
+<span class="nc" id="L132">                .write(new File(this.layout.getOutputDirectory(),</span>
                         &quot;archives.html&quot;));
 
-<span class="nc" id="L134">        reportLicenses(archives);</span>
-<span class="nc" id="L135">        reportNotices(archives);</span>
-<span class="nc" id="L136">        reportDeclaredLicenses(archives);</span>
-<span class="nc" id="L137">        reportDeclaredNotices(archives);</span>
-<span class="nc" id="L138">    }</span>
+<span class="nc" id="L135">        reportLicenses(archives);</span>
+<span class="nc" id="L136">        reportNotices(archives);</span>
+<span class="nc" id="L137">        reportDeclaredLicenses(archives);</span>
+<span class="nc" id="L138">        reportDeclaredNotices(archives);</span>
+<span class="nc" id="L139">    }</span>
 
     private void reportLicenses(final List&lt;Archive&gt; archives)
             throws IOException {
-<span class="nc" id="L142">        initLicenses(archives);</span>
+<span class="nc" id="L143">        initLicenses(archives);</span>
 
-<span class="nc" id="L144">        this.templates</span>
-<span class="nc" id="L145">                .template(&quot;legal/licenses.vm&quot;)</span>
-<span class="nc" id="L146">                .add(&quot;licenses&quot;, getLicenses(archives))</span>
-<span class="nc" id="L147">                .add(&quot;reports&quot;, this.reports)</span>
-<span class="nc" id="L148">                .write(new File(this.layout.getOutputDirectory(),</span>
+<span class="nc" id="L145">        this.templates</span>
+<span class="nc" id="L146">                .template(&quot;legal/licenses.vm&quot;)</span>
+<span class="nc" id="L147">                .add(&quot;licenses&quot;, getLicenses(archives))</span>
+<span class="nc" id="L148">                .add(&quot;reports&quot;, this.reports)</span>
+<span class="nc" id="L149">                .write(new File(this.layout.getOutputDirectory(),</span>
                         &quot;licenses.html&quot;));
-<span class="nc" id="L150">    }</span>
+<span class="nc" id="L151">    }</span>
 
     private void initLicenses(final List&lt;Archive&gt; archives) throws IOException {
-<span class="nc" id="L153">        final Map&lt;License, License&gt; licenses = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L154">        final Map&lt;License, License&gt; licenses = new HashMap&lt;&gt;();</span>
 
-<span class="nc bnc" id="L155" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
-<span class="nc" id="L156">            final List&lt;File&gt; files =</span>
-<span class="nc" id="L157">                    this.fileSystem.licensesFrom(archive.contentsDirectory());</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">            for (final File file : files) {</span>
-<span class="nc" id="L159">                final License license = this.licenses.from(file);</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
+<span class="nc" id="L157">            final List&lt;File&gt; files =</span>
+<span class="nc" id="L158">                    this.fileSystem.licensesFrom(archive.contentsDirectory());</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">            for (final File file : files) {</span>
+<span class="nc" id="L160">                final License license = this.licenses.from(file);</span>
+<span class="nc" id="L161">                License existing = licenses.computeIfAbsent(license, key -&gt; key);</span>
 
-<span class="nc" id="L161">                License existing = licenses.get(license);</span>
-<span class="nc bnc" id="L162" title="All 2 branches missed.">                if (existing == null) {</span>
-<span class="nc" id="L163">                    licenses.put(license, license);</span>
-<span class="nc" id="L164">                    existing = license;</span>
-                }
-
-<span class="nc" id="L167">                existing.getLocations().add(file);</span>
-<span class="nc" id="L168">                existing.getArchives().add(archive);</span>
-<span class="nc" id="L169">                archive.getLicenses().add(existing);</span>
-<span class="nc" id="L170">            }</span>
-<span class="nc" id="L171">        }</span>
-<span class="nc" id="L172">    }</span>
+<span class="nc" id="L163">                existing.getLocations().add(file);</span>
+<span class="nc" id="L164">                existing.getArchives().add(archive);</span>
+<span class="nc" id="L165">                archive.getLicenses().add(existing);</span>
+<span class="nc" id="L166">            }</span>
+<span class="nc" id="L167">        }</span>
+<span class="nc" id="L168">    }</span>
 
     private Collection&lt;License&gt; getLicenses(final List&lt;Archive&gt; archives) {
-<span class="nc" id="L175">        final Set&lt;License&gt; licenses = new LinkedHashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L176" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
-<span class="nc" id="L177">            licenses.addAll(archive.getLicenses());</span>
-<span class="nc" id="L178">        }</span>
-<span class="nc" id="L179">        return licenses;</span>
+<span class="nc" id="L171">        final Set&lt;License&gt; licenses = new LinkedHashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L172" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
+<span class="nc" id="L173">            licenses.addAll(archive.getLicenses());</span>
+<span class="nc" id="L174">        }</span>
+<span class="nc" id="L175">        return licenses;</span>
     }
 
     private void reportDeclaredLicenses(final List&lt;Archive&gt; archives)
             throws IOException {
 
+<span class="nc bnc" id="L181" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
+
+<span class="nc" id="L183">            classifyLicenses(archive);</span>
+<span class="nc" id="L184">        }</span>
 <span class="nc bnc" id="L185" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
 
-<span class="nc" id="L187">            classifyLicenses(archive);</span>
-<span class="nc" id="L188">        }</span>
-<span class="nc bnc" id="L189" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
+<span class="nc" id="L187">            this.templates</span>
+<span class="nc" id="L188">                    .template(&quot;legal/archive-licenses.vm&quot;)</span>
+<span class="nc" id="L189">                    .add(&quot;archive&quot;, archive)</span>
+<span class="nc" id="L190">                    .add(&quot;reports&quot;, this.reports)</span>
+<span class="nc" id="L191">                    .write(new File(this.layout.getOutputDirectory(),</span>
+<span class="nc" id="L192">                            this.reports.licenses(archive)));</span>
+<span class="nc" id="L193">        }</span>
 
-<span class="nc" id="L191">            this.templates</span>
-<span class="nc" id="L192">                    .template(&quot;legal/archive-licenses.vm&quot;)</span>
-<span class="nc" id="L193">                    .add(&quot;archive&quot;, archive)</span>
-<span class="nc" id="L194">                    .add(&quot;reports&quot;, this.reports)</span>
-<span class="nc" id="L195">                    .write(new File(this.layout.getOutputDirectory(),</span>
-<span class="nc" id="L196">                            this.reports.licenses(archive)));</span>
-<span class="nc" id="L197">        }</span>
-
-<span class="nc" id="L199">    }</span>
+<span class="nc" id="L195">    }</span>
 
     private void classifyLicenses(final Archive archive) throws IOException {
-<span class="nc" id="L202">        final Set&lt;License&gt; undeclared =</span>
-<span class="nc" id="L203">                new HashSet&lt;&gt;(archive.getLicenses());</span>
+<span class="nc" id="L198">        final Set&lt;License&gt; undeclared =</span>
+<span class="nc" id="L199">                new HashSet&lt;&gt;(archive.getLicenses());</span>
 
-<span class="nc" id="L205">        final File contents = archive.contentsDirectory();</span>
-<span class="nc" id="L206">        final List&lt;File&gt; files = this.fileSystem.licensesDeclaredIn(contents);</span>
+<span class="nc" id="L201">        final File contents = archive.contentsDirectory();</span>
+<span class="nc" id="L202">        final List&lt;File&gt; files = this.fileSystem.licensesDeclaredIn(contents);</span>
 
-<span class="nc bnc" id="L208" title="All 2 branches missed.">        for (final File file : files) {</span>
-<span class="nc" id="L209">            undeclared.remove(this.licenses.from(file));</span>
-<span class="nc" id="L210">        }</span>
+<span class="nc bnc" id="L204" title="All 2 branches missed.">        for (final File file : files) {</span>
+<span class="nc" id="L205">            undeclared.remove(this.licenses.from(file));</span>
+<span class="nc" id="L206">        }</span>
 
-<span class="nc" id="L212">        archive.getOtherLicenses().addAll(undeclared);</span>
+<span class="nc" id="L208">        archive.getOtherLicenses().addAll(undeclared);</span>
 
-<span class="nc" id="L214">        final Set&lt;License&gt; declared =</span>
-<span class="nc" id="L215">                new HashSet&lt;&gt;(archive.getLicenses());</span>
-<span class="nc" id="L216">        declared.removeAll(undeclared);</span>
-<span class="nc" id="L217">        archive.getDeclaredLicenses().addAll(declared);</span>
+<span class="nc" id="L210">        final Set&lt;License&gt; declared =</span>
+<span class="nc" id="L211">                new HashSet&lt;&gt;(archive.getLicenses());</span>
+<span class="nc" id="L212">        declared.removeAll(undeclared);</span>
+<span class="nc" id="L213">        archive.getDeclaredLicenses().addAll(declared);</span>
 
-<span class="nc bnc" id="L219" title="All 2 branches missed.">        for (final License license : undeclared) {</span>
-<span class="nc bnc" id="L220" title="All 2 branches missed.">            for (final License declare : declared) {</span>
-<span class="nc bnc" id="L221" title="All 2 branches missed.">                if (license.implies(declare)) {</span>
-<span class="nc" id="L222">                    archive.getOtherLicenses().remove(license);</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        for (final License license : undeclared) {</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">            for (final License declare : declared) {</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">                if (license.implies(declare)) {</span>
+<span class="nc" id="L218">                    archive.getOtherLicenses().remove(license);</span>
                 }
-<span class="nc" id="L224">            }</span>
-<span class="nc" id="L225">        }</span>
-<span class="nc" id="L226">    }</span>
+<span class="nc" id="L220">            }</span>
+<span class="nc" id="L221">        }</span>
+<span class="nc" id="L222">    }</span>
 
     private void reportDeclaredNotices(final List&lt;Archive&gt; archives)
             throws IOException {
 
-<span class="nc bnc" id="L231" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
-<span class="nc" id="L232">            final Set&lt;Notice&gt; undeclared =</span>
-<span class="nc" id="L233">                    new HashSet&lt;&gt;(archive.getNotices());</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
+<span class="nc" id="L228">            final Set&lt;Notice&gt; undeclared =</span>
+<span class="nc" id="L229">                    new HashSet&lt;&gt;(archive.getNotices());</span>
 
-<span class="nc" id="L235">            final File contents = archive.contentsDirectory();</span>
-<span class="nc" id="L236">            final List&lt;File&gt; files =</span>
-<span class="nc" id="L237">                    this.fileSystem.noticesDeclaredIn(contents);</span>
+<span class="nc" id="L231">            final File contents = archive.contentsDirectory();</span>
+<span class="nc" id="L232">            final List&lt;File&gt; files =</span>
+<span class="nc" id="L233">                    this.fileSystem.noticesDeclaredIn(contents);</span>
 
-<span class="nc bnc" id="L239" title="All 2 branches missed.">            for (final File file : files) {</span>
+<span class="nc bnc" id="L235" title="All 2 branches missed.">            for (final File file : files) {</span>
+<span class="nc" id="L236">                final Notice notice = new Notice(this.ioSystem.slurp(file));</span>
+<span class="nc" id="L237">                undeclared.remove(notice);</span>
+<span class="nc" id="L238">            }</span>
 
-<span class="nc" id="L241">                final Notice notice = new Notice(this.ioSystem.slurp(file));</span>
+<span class="nc" id="L240">            archive.getOtherNotices().addAll(undeclared);</span>
 
-<span class="nc" id="L243">                undeclared.remove(notice);</span>
-<span class="nc" id="L244">            }</span>
+<span class="nc" id="L242">            final Set&lt;Notice&gt; declared =</span>
+<span class="nc" id="L243">                    new HashSet&lt;&gt;(archive.getNotices());</span>
+<span class="nc" id="L244">            declared.removeAll(undeclared);</span>
+<span class="nc" id="L245">            archive.getDeclaredNotices().addAll(declared);</span>
 
-<span class="nc" id="L246">            archive.getOtherNotices().addAll(undeclared);</span>
-
-<span class="nc" id="L248">            final Set&lt;Notice&gt; declared =</span>
-<span class="nc" id="L249">                    new HashSet&lt;&gt;(archive.getNotices());</span>
-<span class="nc" id="L250">            declared.removeAll(undeclared);</span>
-<span class="nc" id="L251">            archive.getDeclaredNotices().addAll(declared);</span>
-
-<span class="nc bnc" id="L253" title="All 2 branches missed.">            for (final Notice notice : undeclared) {</span>
-
-<span class="nc bnc" id="L255" title="All 2 branches missed.">                for (final Notice declare : declared) {</span>
-<span class="nc bnc" id="L256" title="All 2 branches missed.">                    if (notice.implies(declare)) {</span>
-<span class="nc" id="L257">                        archive.getOtherLicenses().remove(notice);</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">            for (final Notice notice : undeclared) {</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">                for (final Notice declare : declared) {</span>
+<span class="nc bnc" id="L249" title="All 2 branches missed.">                    if (notice.implies(declare)) {</span>
+<span class="nc" id="L250">                        archive.getOtherLicenses().remove(notice); // NOSONAR</span>
                     }
-<span class="nc" id="L259">                }</span>
-<span class="nc" id="L260">            }</span>
+<span class="nc" id="L252">                }</span>
+<span class="nc" id="L253">            }</span>
 
-<span class="nc" id="L262">            this.templates</span>
-<span class="nc" id="L263">                    .template(&quot;legal/archive-notices.vm&quot;)</span>
-<span class="nc" id="L264">                    .add(&quot;archive&quot;, archive)</span>
-<span class="nc" id="L265">                    .add(&quot;reports&quot;, this.reports)</span>
-<span class="nc" id="L266">                    .write(new File(this.layout.getOutputDirectory(),</span>
-<span class="nc" id="L267">                            this.reports.notices(archive)));</span>
-<span class="nc" id="L268">        }</span>
-<span class="nc" id="L269">    }</span>
+<span class="nc" id="L255">            this.templates</span>
+<span class="nc" id="L256">                    .template(&quot;legal/archive-notices.vm&quot;)</span>
+<span class="nc" id="L257">                    .add(&quot;archive&quot;, archive)</span>
+<span class="nc" id="L258">                    .add(&quot;reports&quot;, this.reports)</span>
+<span class="nc" id="L259">                    .write(new File(this.layout.getOutputDirectory(),</span>
+<span class="nc" id="L260">                            this.reports.notices(archive)));</span>
+<span class="nc" id="L261">        }</span>
+<span class="nc" id="L262">    }</span>
 
     private void reportNotices(final List&lt;Archive&gt; archives) throws IOException {
-<span class="nc" id="L272">        final Map&lt;Notice, Notice&gt; notices = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L265">        final Map&lt;Notice, Notice&gt; notices = new HashMap&lt;&gt;();</span>
 
-<span class="nc bnc" id="L274" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
-<span class="nc" id="L275">            final List&lt;File&gt; noticeDocuments =</span>
-<span class="nc" id="L276">                    this.fileSystem.noticesOnly(archive.contentsDirectory());</span>
-<span class="nc bnc" id="L277" title="All 2 branches missed.">            for (final File file : noticeDocuments) {</span>
-<span class="nc" id="L278">                final Notice notice = new Notice(this.ioSystem.slurp(file));</span>
+<span class="nc bnc" id="L267" title="All 2 branches missed.">        for (final Archive archive : archives) {</span>
+<span class="nc" id="L268">            final List&lt;File&gt; noticeDocuments =</span>
+<span class="nc" id="L269">                    this.fileSystem.noticesOnly(archive.contentsDirectory());</span>
+<span class="nc bnc" id="L270" title="All 2 branches missed.">            for (final File file : noticeDocuments) {</span>
+<span class="nc" id="L271">                final Notice notice = new Notice(this.ioSystem.slurp(file));</span>
+<span class="nc" id="L272">                Notice existing = notices.computeIfAbsent(notice, key -&gt; key);</span>
 
-<span class="nc" id="L280">                Notice existing = notices.get(notice);</span>
-<span class="nc bnc" id="L281" title="All 2 branches missed.">                if (existing == null) {</span>
-<span class="nc" id="L282">                    notices.put(notice, notice);</span>
-<span class="nc" id="L283">                    existing = notice;</span>
-                }
+<span class="nc" id="L274">                existing.getLocations().add(file);</span>
+<span class="nc" id="L275">                existing.getArchives().add(archive);</span>
+<span class="nc" id="L276">                archive.getNotices().add(existing);</span>
+<span class="nc" id="L277">            }</span>
+<span class="nc" id="L278">        }</span>
 
-<span class="nc" id="L286">                existing.getLocations().add(file);</span>
-<span class="nc" id="L287">                existing.getArchives().add(archive);</span>
-<span class="nc" id="L288">                archive.getNotices().add(existing);</span>
-<span class="nc" id="L289">            }</span>
-<span class="nc" id="L290">        }</span>
-
-<span class="nc" id="L292">        this.templates</span>
-<span class="nc" id="L293">                .template(&quot;legal/notices.vm&quot;)</span>
-<span class="nc" id="L294">                .add(&quot;notices&quot;, notices.values())</span>
-<span class="nc" id="L295">                .add(&quot;reports&quot;, this.reports)</span>
-<span class="nc" id="L296">                .write(new File(this.layout.getOutputDirectory(),</span>
+<span class="nc" id="L280">        this.templates</span>
+<span class="nc" id="L281">                .template(&quot;legal/notices.vm&quot;)</span>
+<span class="nc" id="L282">                .add(&quot;notices&quot;, notices.values())</span>
+<span class="nc" id="L283">                .add(&quot;reports&quot;, this.reports)</span>
+<span class="nc" id="L284">                .write(new File(this.layout.getOutputDirectory(),</span>
                         &quot;notices.html&quot;));
-<span class="nc" id="L298">    }</span>
+<span class="nc" id="L286">    }</span>
 
-    private void unpackContents(final Set&lt;File&gt; files) throws IOException {
-<span class="nc bnc" id="L301" title="All 2 branches missed.">        for (final File file : files) {</span>
-<span class="nc" id="L302">            unpack(file);</span>
-<span class="nc" id="L303">        }</span>
-<span class="nc" id="L304">    }</span>
+    private void unpackContents(final Set&lt;File&gt; files) {
+<span class="nc bnc" id="L289" title="All 2 branches missed.">        for (final File file : files) {</span>
+<span class="nc" id="L290">            unpack(file);</span>
+<span class="nc" id="L291">        }</span>
+<span class="nc" id="L292">    }</span>
 
     private Set&lt;File&gt; mirrorRepositoryFrom(final Configuration configuration)
             throws IOException {
-<span class="nc" id="L308">        final Set&lt;File&gt; files = new HashSet&lt;&gt;();</span>
-<span class="nc bnc" id="L309" title="All 2 branches missed.">        if (HTTP.isRepositoryFor(configuration)) {</span>
-<span class="nc" id="L310">            final NexusClient client = new NexusClient(this.platform);</span>
-<span class="nc" id="L311">            final Set&lt;URI&gt; resources =</span>
-<span class="nc" id="L312">                    client.crawl(configuration.getStagingRepositoryURI());</span>
+<span class="nc" id="L296">        final Set&lt;File&gt; files = new HashSet&lt;&gt;();</span>
+<span class="nc bnc" id="L297" title="All 2 branches missed.">        if (HTTP.isRepositoryFor(configuration)) {</span>
+<span class="nc" id="L298">            final NexusClient client = new NexusClient(this.platform);</span>
+<span class="nc" id="L299">            final Set&lt;URI&gt; resources =</span>
+<span class="nc" id="L300">                    client.crawl(configuration.getStagingRepositoryURI());</span>
 
-<span class="nc bnc" id="L314" title="All 2 branches missed.">            for (final URI uri : resources) {</span>
-<span class="nc bnc" id="L315" title="All 2 branches missed.">                if (!uri.getPath().matches(CRAWL_PATTERN)) {</span>
-<span class="nc" id="L316">                    continue;</span>
+<span class="nc bnc" id="L302" title="All 2 branches missed.">            for (final URI uri : resources) {</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">                if (!uri.getPath().matches(CRAWL_PATTERN)) {</span>
+<span class="nc" id="L304">                    continue;</span>
                 }
-<span class="nc" id="L318">                files.add(client.download(uri, mirroredFrom(uri)));</span>
-<span class="nc" id="L319">            }</span>
-<span class="nc bnc" id="L320" title="All 2 branches missed.">        } else if (LOCAL_FILE_SYSTEM.isRepositoryFor(configuration)) {</span>
-<span class="nc" id="L321">            final File file = new File(configuration.getStagingRepositoryURI());</span>
-<span class="nc" id="L322">            final List&lt;File&gt; collect =</span>
-<span class="nc" id="L323">                    this.platform.fileSystem().archivesInPath(file,</span>
-<span class="nc" id="L324">                            configuration.getFileRepositoryPathNameFilter());</span>
+<span class="nc" id="L306">                files.add(client.download(uri, mirroredFrom(uri)));</span>
+<span class="nc" id="L307">            }</span>
+<span class="nc bnc" id="L308" title="All 2 branches missed.">        } else if (LOCAL_FILE_SYSTEM.isRepositoryFor(configuration)) {</span>
+<span class="nc" id="L309">            final File file = new File(configuration.getStagingRepositoryURI());</span>
+<span class="nc" id="L310">            final List&lt;File&gt; collect =</span>
+<span class="nc" id="L311">                    this.platform.fileSystem().archivesInPath(file,</span>
+<span class="nc" id="L312">                            configuration.getFileRepositoryPathNameFilter());</span>
 
-<span class="nc bnc" id="L326" title="All 2 branches missed.">            for (final File f : collect) {</span>
-<span class="nc" id="L327">                files.add(copyToMirror(f));</span>
-<span class="nc" id="L328">            }</span>
+<span class="nc bnc" id="L314" title="All 2 branches missed.">            for (final File f : collect) {</span>
+<span class="nc" id="L315">                files.add(copyToMirror(f));</span>
+<span class="nc" id="L316">            }</span>
         }
-<span class="nc" id="L330">        return files;</span>
+<span class="nc" id="L318">        return files;</span>
     }
 
     private void unpack(final File archive) {
-<span class="nc" id="L334">        log.info(&quot;Unpack {}&quot;, archive);</span>
+<span class="nc" id="L322">        log.info(&quot;Unpack {}&quot;, archive);</span>
 
         try {
-<span class="nc" id="L337">            final ZipInputStream zip = this.ioSystem.unzip(archive);</span>
+<span class="nc" id="L325">            final ZipInputStream zip = this.ioSystem.unzip(archive);</span>
 
-<span class="nc" id="L339">            final File contents =</span>
+<span class="nc" id="L327">            final File contents =</span>
                     new Archive(archive, this.fileSystem, this.layout)
-<span class="nc" id="L341">                            .contentsDirectory();</span>
+<span class="nc" id="L329">                            .contentsDirectory();</span>
 
             try {
-<span class="nc" id="L344">                ZipEntry entry = null;</span>
+                ZipEntry entry;
 
-<span class="nc bnc" id="L346" title="All 2 branches missed.">                while ((entry = zip.getNextEntry()) != null) {</span>
+<span class="nc bnc" id="L334" title="All 2 branches missed.">                while ((entry = zip.getNextEntry()) != null) {</span>
 
-<span class="nc bnc" id="L348" title="All 2 branches missed.">                    if (entry.isDirectory()) {</span>
-<span class="nc" id="L349">                        continue;</span>
+<span class="nc bnc" id="L336" title="All 2 branches missed.">                    if (entry.isDirectory()) {</span>
+<span class="nc" id="L337">                        continue;</span>
                     }
 
                     // check if entry has suspicious path traversal elements
-<span class="nc" id="L353">                    final String path = entry.getName();</span>
-<span class="nc" id="L354">                    final Path target = contents.toPath().toAbsolutePath().normalize();</span>
-<span class="nc" id="L355">                    final Path resolved = target.resolve(path).normalize();</span>
+<span class="nc" id="L341">                    final String path = entry.getName();</span>
+<span class="nc" id="L342">                    final Path target = contents.toPath().toAbsolutePath().normalize();</span>
+<span class="nc" id="L343">                    final Path resolved = target.resolve(path).normalize();</span>
 
-<span class="nc bnc" id="L357" title="All 2 branches missed.">                    if(!resolved.startsWith(target)) {</span>
-<span class="nc" id="L358">                        throw new IOException(&quot;Invalid archive entry: &quot; + path);</span>
+<span class="nc bnc" id="L345" title="All 2 branches missed.">                    if(!resolved.startsWith(target)) {</span>
+<span class="nc" id="L346">                        throw new IOException(&quot;Invalid archive entry: &quot; + path);</span>
                     }
 
-<span class="nc" id="L361">                    final File fileEntry = new File(contents, path); // NOSONAR</span>
-<span class="nc" id="L362">                    this.fileSystem.mkparent(fileEntry);</span>
+<span class="nc" id="L349">                    final File fileEntry = new File(contents, path); // NOSONAR</span>
+<span class="nc" id="L350">                    this.fileSystem.mkparent(fileEntry);</span>
 
                     // Open the output file
-<span class="nc" id="L365">                    this.ioSystem.copy(zip, fileEntry);</span>
+<span class="nc" id="L353">                    this.ioSystem.copy(zip, fileEntry);</span>
 
-<span class="nc bnc" id="L367" title="All 2 branches missed.">                    if (fileEntry.getName().endsWith(&quot;.jar&quot;)) {</span>
-<span class="nc" id="L368">                        unpack(fileEntry);</span>
+<span class="nc bnc" id="L355" title="All 2 branches missed.">                    if (fileEntry.getName().endsWith(&quot;.jar&quot;)) {</span>
+<span class="nc" id="L356">                        unpack(fileEntry);</span>
                     }
-<span class="nc" id="L370">                }</span>
+<span class="nc" id="L358">                }</span>
             } finally {
-<span class="nc" id="L372">                this.ioSystem.close(zip);</span>
+<span class="nc" id="L360">                this.ioSystem.close(zip);</span>
             }
-<span class="nc" id="L374">        } catch (final IOException e) {</span>
-<span class="nc" id="L375">            log.error(&quot;Not a zip {}&quot;, archive);</span>
-<span class="nc" id="L376">        }</span>
-<span class="nc" id="L377">    }</span>
+<span class="nc" id="L362">        } catch (final IOException e) {</span>
+<span class="nc" id="L363">            log.error(&quot;Not a zip {}&quot;, archive);</span>
+<span class="nc" id="L364">        }</span>
+<span class="nc" id="L365">    }</span>
 
     private File copyToMirror(final File src) throws IOException {
-<span class="nc" id="L380">        final URI uri = src.toURI();</span>
+<span class="nc" id="L368">        final URI uri = src.toURI();</span>
 
-<span class="nc" id="L382">        final File file = mirroredFrom(uri);</span>
+<span class="nc" id="L370">        final File file = mirroredFrom(uri);</span>
 
-<span class="nc" id="L384">        log.info(&quot;Copy {}&quot;, uri);</span>
+<span class="nc" id="L372">        log.info(&quot;Copy {}&quot;, uri);</span>
 
-<span class="nc" id="L386">        this.fileSystem.mkparent(file);</span>
+<span class="nc" id="L374">        this.fileSystem.mkparent(file);</span>
 
-<span class="nc" id="L388">        this.ioSystem.copy(this.ioSystem.read(src), file);</span>
+<span class="nc" id="L376">        this.ioSystem.copy(this.ioSystem.read(src), file);</span>
 
-<span class="nc" id="L390">        return file;</span>
+<span class="nc" id="L378">        return file;</span>
     }
 
     private File mirroredFrom(final URI uri) {
-<span class="nc" id="L394">        final String name =</span>
-<span class="nc" id="L395">                uri.toString()</span>
-<span class="nc" id="L396">                        .replace(</span>
-<span class="nc" id="L397">                                this.configuration.getStagingRepositoryURI()</span>
-<span class="nc" id="L398">                                        .toString(), &quot;&quot;).replaceFirst(&quot;^/&quot;, &quot;&quot;);</span>
-<span class="nc" id="L399">        return new File(this.layout.getRepositoryDirectory(), name);</span>
+<span class="nc" id="L382">        final String name =</span>
+<span class="nc" id="L383">                uri.toString()</span>
+<span class="nc" id="L384">                        .replace(</span>
+<span class="nc" id="L385">                                this.configuration.getStagingRepositoryURI()</span>
+<span class="nc" id="L386">                                        .toString(), &quot;&quot;).replaceFirst(&quot;^/&quot;, &quot;&quot;);</span>
+<span class="nc" id="L387">        return new File(this.layout.getRepositoryDirectory(), name);</span>
     }
 
 }

@@ -115,7 +115,7 @@ public class NexusClient {
 <span class="nc" id="L115">                    Thread.interrupted();</span>
 <span class="nc" id="L116">                    throw new IOException(&quot;Interrupted&quot;, ie);</span>
 <span class="nc" id="L117">                }</span>
-<span class="nc" id="L118">                return get(request, tries--);</span>
+<span class="nc" id="L118">                return get(request, tries--); // NOSONAR</span>
             } else {
 <span class="nc" id="L120">                throw e;</span>
             }
