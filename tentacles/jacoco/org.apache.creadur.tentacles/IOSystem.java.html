@@ -39,84 +39,77 @@ import java.util.zip.ZipInputStream;
 	}
 
 	public void writeString(final File file, final String string) throws IOException {
-<span class="nc" id="L42">		final FileWriter out = new FileWriter(file);</span>
-		try {
-<span class="nc" id="L44">			final BufferedWriter bufferedWriter = new BufferedWriter(out);</span>
-			try {
-<span class="nc" id="L46">				bufferedWriter.write(string);</span>
-<span class="nc" id="L47">				bufferedWriter.newLine();</span>
-			} finally {
-<span class="nc" id="L49">				close(bufferedWriter);</span>
-			}
-		} finally {
-<span class="nc" id="L52">			close(out);</span>
+<span class="nc" id="L42">		try (FileWriter out = new FileWriter(file);</span>
+<span class="nc" id="L43">			 final BufferedWriter bufferedWriter = new BufferedWriter(out)) {</span>
+<span class="nc" id="L44">				bufferedWriter.write(string);</span>
+<span class="nc" id="L45">				bufferedWriter.newLine();</span>
 		}
-<span class="nc" id="L54">	}</span>
+<span class="nc" id="L47">	}</span>
 
 	private void copy(final File from, final OutputStream to) throws IOException {
-<span class="nc" id="L57">		final InputStream read = read(from);</span>
+<span class="nc" id="L50">		final InputStream read = read(from);</span>
 		try {
-<span class="nc" id="L59">			copy(read, to);</span>
+<span class="nc" id="L52">			copy(read, to);</span>
 		} finally {
-<span class="nc" id="L61">			close(read);</span>
+<span class="nc" id="L54">			close(read);</span>
 		}
-<span class="nc" id="L63">	}</span>
+<span class="nc" id="L56">	}</span>
 
 	public void copy(final InputStream from, final File to) throws IOException {
-<span class="nc" id="L66">		final OutputStream write = write(to);</span>
+<span class="nc" id="L59">		final OutputStream write = write(to);</span>
 		try {
-<span class="nc" id="L68">			copy(from, write);</span>
+<span class="nc" id="L61">			copy(from, write);</span>
 		} finally {
-<span class="nc" id="L70">			close(write);</span>
+<span class="nc" id="L63">			close(write);</span>
 		}
-<span class="nc" id="L72">	}</span>
+<span class="nc" id="L65">	}</span>
 
 	private void copy(final InputStream from, final OutputStream to) throws IOException {
-<span class="nc" id="L75">		IOUtils.copy(from, to);</span>
-<span class="nc" id="L76">	}</span>
+<span class="nc" id="L68">		IOUtils.copy(from, to);</span>
+<span class="nc" id="L69">	}</span>
 
 	public void copy(final byte[] from, final File to) throws IOException {
-<span class="nc" id="L79">		copy(new ByteArrayInputStream(from), to);</span>
-<span class="nc" id="L80">	}</span>
+<span class="nc" id="L72">		copy(new ByteArrayInputStream(from), to);</span>
+<span class="nc" id="L73">	}</span>
 
 	public ZipInputStream unzip(final File file) throws IOException {
-<span class="nc" id="L83">		final InputStream read = read(file);</span>
-<span class="nc" id="L84">		return new ZipInputStream(read);</span>
+<span class="nc" id="L76">		final InputStream read = read(file);</span>
+<span class="nc" id="L77">		return new ZipInputStream(read);</span>
 	}
 
 	public void close(final Closeable closeable) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (closeable == null) {</span>
-<span class="nc" id="L89">			return;</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (closeable == null) {</span>
+<span class="nc" id="L82">			return;</span>
 		}
 		try {
-<span class="nc bnc" id="L92" title="All 2 branches missed.">			if (closeable instanceof Flushable) {</span>
-<span class="nc" id="L93">				((Flushable) closeable).flush();</span>
+<span class="nc bnc" id="L85" title="All 2 branches missed.">			if (closeable instanceof Flushable flushable) {</span>
+<span class="nc" id="L86">				flushable.flush();</span>
 			}
-<span class="nc" id="L95">		} catch (final IOException e) {</span>
-<span class="nc" id="L96">            LOG.trace(&quot;Error when trying to flush before closing {}&quot;, closeable, e);</span>
-<span class="nc" id="L97">		}</span>
+<span class="nc" id="L88">		} catch (final IOException e) {</span>
+<span class="nc" id="L89">            LOG.trace(&quot;Error when trying to flush before closing {}&quot;, closeable, e);</span>
+<span class="nc" id="L90">		}</span>
 		try {
-<span class="nc" id="L99">			closeable.close();</span>
-<span class="nc" id="L100">		} catch (final IOException e) {</span>
-<span class="nc" id="L101">            LOG.trace(&quot;Error when trying to close {}&quot;, closeable, e);</span>
-<span class="nc" id="L102">		}</span>
-<span class="nc" id="L103">	}</span>
+<span class="nc" id="L92">			closeable.close();</span>
+<span class="nc" id="L93">		} catch (final IOException e) {</span>
+<span class="nc" id="L94">            LOG.trace(&quot;Error when trying to close {}&quot;, closeable, e);</span>
+<span class="nc" id="L95">		}</span>
+<span class="nc" id="L96">	}</span>
 
 	private OutputStream write(final File destination) throws IOException {
-<span class="nc" id="L106">		final OutputStream out = Files.newOutputStream(destination.toPath());</span>
-<span class="nc" id="L107">		return new BufferedOutputStream(out, 32768);</span>
+<span class="nc" id="L99">		final OutputStream out = Files.newOutputStream(destination.toPath());</span>
+<span class="nc" id="L100">		return new BufferedOutputStream(out, 32768);</span>
 	}
 
 	public InputStream read(final File source) throws IOException {
-<span class="nc" id="L111">		final InputStream in = Files.newInputStream(source.toPath());</span>
-<span class="nc" id="L112">		return new BufferedInputStream(in, 32768);</span>
+<span class="nc" id="L104">		final InputStream in = Files.newInputStream(source.toPath());</span>
+<span class="nc" id="L105">		return new BufferedInputStream(in, 32768);</span>
 	}
 
 	public byte[] read(final InputStream in) throws IOException {
-<span class="nc" id="L116">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
-<span class="nc" id="L117">		copy(in, out);</span>
-<span class="nc" id="L118">		out.close();</span>
-<span class="nc" id="L119">		return out.toByteArray();</span>
+<span class="nc" id="L109">		final ByteArrayOutputStream out = new ByteArrayOutputStream();</span>
+<span class="nc" id="L110">		copy(in, out);</span>
+<span class="nc" id="L111">		out.close();</span>
+<span class="nc" id="L112">		return out.toByteArray();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
