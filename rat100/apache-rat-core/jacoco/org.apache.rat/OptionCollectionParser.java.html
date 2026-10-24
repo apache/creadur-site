@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OptionCollectionParser.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat</a> &gt; <span class="el_source">OptionCollectionParser.java</span></div><h1>OptionCollectionParser.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.rat.api.RatException;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.commandline.ArgumentContext;
+import org.apache.rat.help.Licenses;
+import org.apache.rat.report.Reportable;
+import org.apache.rat.ui.UIOption;
+import org.apache.rat.ui.UIOptionCollection;
+import org.apache.rat.utils.DefaultLog;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+/**
+ * Uses the AbstractOptionCollection to parse the command line options.
+ * Contains utility methods to ReportConfiguration from the options and an array of arguments.
+ *
+ * @param &lt;T&gt; The UIOption type that this parser is handling.
+ */
+@SuppressFBWarnings(&quot;EI_EXPOSE_REP2&quot;)
+public final class OptionCollectionParser&lt;T extends UIOption&lt;T&gt;&gt; {
+    /**
+     * The OptionCollection that we are working with.
+     */
+    private final UIOptionCollection&lt;T&gt; uiOptionCollection;
+
+    /**
+     * Constructor.
+     * @param optionCollection the option collection to use for.
+     */
+<span class="fc" id="L58">    public OptionCollectionParser(final UIOptionCollection&lt;T&gt; optionCollection) {</span>
+<span class="fc" id="L59">        this.uiOptionCollection = optionCollection;</span>
+<span class="fc" id="L60">    }</span>
+
+    /**
+     * Parses the standard options to create a ReportConfiguration.
+     *
+     * @param workingDirectory the directory to resolve relative file names against.
+     * @param args the arguments to parse.
+     * @return the ArgumentContext for the process.
+     * @throws RatException on error.
+     */
+    public ArgumentContext parseCommands(final File workingDirectory, final String[] args)
+            throws RatException {
+<span class="fc" id="L72">        return parseCommands(workingDirectory, args, uiOptionCollection.getOptions());</span>
+    }
+
+    /**
+     * Parse the options into the command line.
+     * @param opts the option definitions.
+     * @param args the argument to apply the definitions to.
+     * @return the CommandLine
+     * @throws ParseException on option parsing error.
+     */
+    public static CommandLine parseCommandLine(final Options opts, final String[] args) throws ParseException {
+        try {
+<span class="fc" id="L84">            return DefaultParser.builder().setDeprecatedHandler(DeprecationReporter.getLogReporter())</span>
+<span class="fc" id="L85">                    .setAllowPartialMatching(true).build().parse(opts, args);</span>
+<span class="fc" id="L86">        } catch (ParseException e) {</span>
+<span class="fc" id="L87">            DefaultLog.getInstance().error(e.getMessage());</span>
+<span class="fc" id="L88">            DefaultLog.getInstance().error(&quot;Please use the \&quot;--help\&quot; option to see a list of valid commands and options.&quot;, e);</span>
+<span class="fc" id="L89">            throw e;</span>
+        }
+    }
+
+    // visible for testing
+    void printHelp(final ArgumentContext argumentContext) throws RatException {
+        try {
+<span class="fc" id="L96">            new Licenses(argumentContext.getConfiguration(),</span>
+<span class="fc" id="L97">                    new PrintWriter(argumentContext.getConfiguration().getOutput().get(),</span>
+<span class="fc" id="L98">                            false, StandardCharsets.UTF_8)).printHelp();</span>
+<span class="fc" id="L99">        } catch (IOException e) {</span>
+<span class="fc" id="L100">            throw new RatException(&quot;Unable to print help: &quot; + e.getMessage(), e);</span>
+<span class="fc" id="L101">        }</span>
+<span class="fc" id="L102">    }</span>
+
+    /**
+     * Parses the standard options to create a ReportConfiguration.
+     *
+     * @param workingDirectory The directory to resolve relative file names against.
+     * @param args the arguments to parse.
+     * @param options an Options object containing Apache command line options.
+     * @return the ArgumentContext for the process.
+     * @throws RatException on error.
+     */
+    // visible for testing
+    ArgumentContext parseCommands(final File workingDirectory, final String[] args,
+                                                                       final Options options) throws RatException {
+        try {
+<span class="fc" id="L117">            uiOptionCollection.resetSelected();</span>
+<span class="fc" id="L118">            ArgumentContext argumentContext = new ArgumentContext(workingDirectory, options, args);</span>
+<span class="fc" id="L119">            Arg.processLogLevel(argumentContext, uiOptionCollection);</span>
+<span class="fc" id="L120">            populateConfiguration(argumentContext);</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">            if (uiOptionCollection.isSelected(Arg.HELP_LICENSES)) {</span>
+<span class="fc" id="L122">                printHelp(argumentContext);</span>
+            }
+<span class="fc" id="L124">            return argumentContext;</span>
+<span class="nc" id="L125">        } catch (ParseException e) {</span>
+<span class="nc" id="L126">            throw new RatException(&quot;Unable to parse command line: &quot; + e.getMessage(), e);</span>
+        }
+    }
+
+    /**
+     * Create the report configuration.
+     * Note: this method is package private for testing.
+     * You probably want one of the {@code parseCommands(..)} methods.
+     * @param argumentContext The context to execute in.
+     * @return a ReportConfiguration
+     */
+    private ReportConfiguration populateConfiguration(final ArgumentContext argumentContext) {
+<span class="fc" id="L138">        argumentContext.processArgs(uiOptionCollection);</span>
+<span class="fc" id="L139">        final ReportConfiguration configuration = argumentContext.getConfiguration();</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        if (!configuration.hasSource()) {</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">            for (String s : argumentContext.getArgs()) {</span>
+<span class="fc" id="L142">                Reportable reportable = OptionCollection.getReportable(new File(s), configuration);</span>
+<span class="fc bfc" id="L143" title="All 2 branches covered.">                if (reportable != null) {</span>
+<span class="fc" id="L144">                    configuration.addSource(reportable);</span>
+                }
+<span class="fc" id="L146">            }</span>
+        }
+<span class="fc" id="L148">        return configuration;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

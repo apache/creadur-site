@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Help.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.help</a> &gt; <span class="el_source">Help.java</span></div><h1>Help.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat.help;
+
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import org.apache.commons.cli.Options;
+import org.apache.rat.OptionCollection;
+import org.apache.rat.config.exclusion.StandardCollection;
+
+import static java.lang.String.format;
+
+/**
+ * The help output for the command line client.
+ */
+public class Help extends AbstractHelp {
+
+    /**
+     * An array of notes to go at the bottom of the help output
+     */
+<span class="fc" id="L41">    protected static final List&lt;String&gt; NOTES = List.of(</span>
+            &quot;RAT highlights possible issues.&quot;,
+            &quot;RAT reports require interpretation.&quot;,
+            &quot;RAT often requires some tuning before it runs well against a project.&quot;,
+            &quot;RAT relies on heuristics: it may miss issues&quot;);
+
+    /** The writer this instance writes to */
+    protected final PrintWriter writer;
+
+    /**
+     * Creates a Help instance to write to the specified writer.
+     * @param writer the writer to write to.
+     */
+    public Help(final Writer writer) {
+<span class="fc" id="L55">        super();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        this.writer = writer instanceof PrintWriter ? (PrintWriter) writer : new PrintWriter(writer);</span>
+<span class="fc" id="L57">    }</span>
+
+    /**
+     * Creates a Help instance to print to the specified stream.
+     * @param stream the PrintStream to write to.
+     */
+    public Help(final PrintStream stream) {
+<span class="fc" id="L64">        this(new PrintWriter(stream, false, StandardCharsets.UTF_8));</span>
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * Print the usage to the specific PrintWriter.
+     * @param opts The defined options.
+     */
+    public void printUsage(final Options opts) {
+<span class="fc" id="L72">        String syntax = format(&quot;java -jar apache-rat/target/apache-rat-%s.jar [options] [DIR|ARCHIVE]&quot;, versionInfo.getVersion());</span>
+<span class="fc" id="L73">        helpFormatter.printHelp(writer, syntax, header(&quot;Available options&quot;), opts, header(&quot;Argument Types&quot;));</span>
+
+<span class="fc" id="L75">        String argumentPadding = printArgumentTypes();</span>
+
+<span class="fc" id="L77">        writer.println(header(&quot;Standard Collections&quot;));</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        for (StandardCollection sc : StandardCollection.values()) {</span>
+<span class="fc" id="L79">            writer.format(&quot;%n&lt;%s&gt;%n&quot;, sc.name());</span>
+<span class="fc" id="L80">            helpFormatter.printWrapped(writer, helpFormatter.getWidth(), helpFormatter.getLeftPadding() + HELP_PADDING + HELP_PADDING,</span>
+<span class="fc" id="L81">                    argumentPadding + sc.desc());</span>
+<span class="fc" id="L82">            helpFormatter.printWrapped(writer, helpFormatter.getWidth(), helpFormatter.getLeftPadding() + HELP_PADDING + HELP_PADDING,</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">                    argumentPadding + &quot;File patterns: &quot; + (sc.patterns().isEmpty() ? &quot;&lt;none&gt;&quot; : String.join(&quot;, &quot;, sc.patterns())));</span>
+<span class="fc" id="L84">            helpFormatter.printWrapped(writer, helpFormatter.getWidth(), helpFormatter.getLeftPadding() + HELP_PADDING + HELP_PADDING,</span>
+<span class="fc" id="L85">                    argumentPadding + &quot;Provides a path matcher: &quot; + sc.hasStaticDocumentNameMatcher());</span>
+<span class="fc" id="L86">            helpFormatter.printWrapped(writer, helpFormatter.getWidth(), helpFormatter.getLeftPadding() + HELP_PADDING + HELP_PADDING,</span>
+<span class="fc" id="L87">                    argumentPadding + &quot;Provides a file processor: &quot; + sc.fileProcessorBuilder().hasNext());</span>
+        }
+<span class="fc" id="L89">        writer.println(&quot;\nA path matcher will match specific information about the file.&quot;);</span>
+<span class="fc" id="L90">        writer.println(&quot;\nA file processor will process the associated \&quot;ignore\&quot; file for include and exclude directives&quot;);</span>
+
+<span class="fc" id="L92">        writer.println(header(&quot;Notes&quot;));</span>
+<span class="fc" id="L93">        int idx = 1;</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        for (String note : NOTES) {</span>
+<span class="fc" id="L95">            writer.format(&quot;%d. %s%n&quot;, idx++, note);</span>
+<span class="fc" id="L96">        }</span>
+
+<span class="fc" id="L98">        writer.flush();</span>
+<span class="fc" id="L99">    }</span>
+
+    /**
+     * Prints the list of argument types to the writer.
+     * @return returns the padding for the arguments.
+     */
+    public String printArgumentTypes() {
+<span class="fc" id="L106">        String argumentPadding = createPadding(helpFormatter.getLeftPadding() + HELP_PADDING);</span>
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        for (OptionCollection.ArgumentType argType : OptionCollection.ArgumentType.values()) {</span>
+<span class="fc bfc" id="L109" title="All 2 branches covered.">            if (argType != OptionCollection.ArgumentType.NONE) {</span>
+<span class="fc" id="L110">                writer.format(&quot;%n&lt;%s&gt;%n&quot;, argType.getDisplayName());</span>
+<span class="fc" id="L111">                helpFormatter.printWrapped(writer, helpFormatter.getWidth(), helpFormatter.getLeftPadding() + HELP_PADDING + HELP_PADDING,</span>
+<span class="fc" id="L112">                        argumentPadding + argType.description().get());</span>
+            }
+        }
+<span class="fc" id="L115">        return argumentPadding;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

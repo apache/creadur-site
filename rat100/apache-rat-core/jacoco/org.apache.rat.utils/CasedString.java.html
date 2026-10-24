@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CasedString.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.utils</a> &gt; <span class="el_source">CasedString.java</span></div><h1>CasedString.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package org.apache.rat.utils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.UnaryOperator;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
+
+/**
+ * Handles converting from one string case to another (e.g. camel case to snake case).
+ * @since 0.17
+ */
+public final class CasedString {
+    /** The segments of the cased string. */
+    private final String[] segments;
+    /** The case of the string as parsed. */
+    private final StringCase stringCase;
+    /** A joiner used for the pascal and camel cases. */
+<span class="fc" id="L43">    private static final Function&lt;String[], String&gt; CAMEL_JOINER = strings -&gt; {</span>
+<span class="fc" id="L44">        StringBuilder sb = new StringBuilder();</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        Arrays.stream(strings).map(s -&gt; s == null ? &quot;&quot; : s).forEach(token -&gt; sb.append(WordUtils.capitalize(token.toLowerCase(Locale.ROOT))));</span>
+<span class="fc" id="L46">        return sb.toString();</span>
+    };
+    /** A null cased string. */
+<span class="fc" id="L49">    public static final CasedString NULL = new CasedString(StringCase.KEBAB, CasedString.StringCase.NULL_SEGMENT);</span>
+
+    /**
+     * Creates a cased string by parsing the string argument for the specific case.
+     * @param stringCase the case of the string being parsed.
+     * @param string the string to parse.
+     */
+<span class="fc" id="L56">    public CasedString(final StringCase stringCase, final String string) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        this.segments = string == null ? CasedString.StringCase.NULL_SEGMENT : stringCase.getSegments(string.trim());</span>
+<span class="fc" id="L58">        this.stringCase = stringCase;</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Creates a cased string of the specified case and segments
+     * @param stringCase the case of the string.
+     * @param segments the segments of the string.
+     */
+<span class="fc" id="L66">    public CasedString(final StringCase stringCase, final String[] segments) {</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        this.segments = segments.length == 0 ? StringCase.NULL_SEGMENT : segments;</span>
+<span class="fc" id="L68">        this.stringCase = stringCase;</span>
+<span class="fc" id="L69">    }</span>
+
+    /**
+     * Converts this cased string into another format.
+     * @param stringCase the desired format.
+     * @return the new CasedString.
+     */
+    public CasedString as(final StringCase stringCase) {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        return stringCase.name.equals(this.stringCase.name) ? this : new CasedString(stringCase, copySegments());</span>
+    }
+
+    private String[] copySegments() {
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        return this.segments.length == 0 ? StringCase.NULL_SEGMENT : Arrays.copyOf(this.segments, this.segments.length);</span>
+    }
+
+    public boolean isNull() {
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        return segments.length == 0;</span>
+    }
+
+    /**
+     * Gets the segments of this cased string.
+     * @return the segments of this cased string.
+     */
+    public String[] getSegments() {
+<span class="fc" id="L93">        return this.segments;</span>
+    }
+
+    /**
+     * Generates a string from this cased string but with the desired case.
+     * @param stringCase the desired case.
+     * @return this cased string in the desired case.
+     */
+    public String toCase(final StringCase stringCase) {
+<span class="fc bfc" id="L102" title="All 2 branches covered.">        return this.segments == CasedString.StringCase.NULL_SEGMENT ? null : stringCase.assemble(this.getSegments());</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L107">        return this.toCase(this.stringCase);</span>
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+<span class="pc bpc" id="L112" title="2 of 4 branches missed.">        if (o == null || getClass() != o.getClass()) {</span>
+<span class="nc" id="L113">            return false;</span>
+        }
+<span class="fc" id="L115">        CasedString that = (CasedString) o;</span>
+<span class="fc bfc" id="L116" title="All 4 branches covered.">        return Objects.equals(stringCase, that.stringCase) &amp;&amp; Objects.deepEquals(getSegments(), that.getSegments());</span>
+    }
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L121">        return Arrays.hashCode(getSegments());</span>
+    }
+
+    /**
+     * The definition of a String case.
+     */
+    public static final class StringCase {
+        /** The camel case. Example: &quot;HelloWorld&quot;*/
+        public static final StringCase CAMEL;
+        /** The pascal case. Example: &quot;helloWorld&quot; */
+        public static final StringCase PASCAL;
+        /** The Snake case. Example: &quot;hello_world&quot; */
+        public static final StringCase SNAKE;
+        /** The Kebab case. Example: &quot;hello-world&quot; */
+        public static final StringCase KEBAB;
+        /** The phrase case. Example: &quot;hello world&quot; */
+        public static final StringCase PHRASE;
+        /** The dot case. Example: &quot;hello.world&quot; */
+        public static final StringCase DOT;
+        /** The slash case. Example: &quot;hello/world&quot; */
+        public static final StringCase SLASH;
+        /** A marker for the parsing of a NULL string. */
+        static final String[] NULL_SEGMENT;
+        /** An empty segment marker. */
+        static final String[] EMPTY_SEGMENT;
+        /** The name of this case. */
+        private final String name;
+        /**
+         * The predicate that determines if a character is a spliter character. A splitter character
+         * is the character that signals the start of a new segment.
+         */
+        private final Predicate&lt;Character&gt; splitter;
+        /**
+         * If {@code true} the spliter character is preserved as part of the subsequent section otherwise,
+         * the spliter character is discarded.
+         */
+        private final boolean preserveSplit;
+        /** The function that converts segments into the String representation */
+        private final Function&lt;String[], String&gt; joiner;
+        /** A function to provide post-processing on the joined string */
+        private final UnaryOperator&lt;String&gt; postProcess;
+
+        /**
+         * Constructs a StringCase
+         * @param name the name of the case.
+         * @param splitter the splitter to determine when to split a string.
+         * @param preserveSplit the preserveSplit flag.
+         * @param joiner the joiner to assemble the String from the segments.
+         */
+        public StringCase(final String name, final Predicate&lt;Character&gt; splitter, final boolean preserveSplit, final Function&lt;String[], String&gt; joiner) {
+<span class="fc" id="L171">            this(name, splitter, preserveSplit, joiner, UnaryOperator.identity());</span>
+<span class="fc" id="L172">        }</span>
+
+        /**
+         * Constructs a String case for the common cases where the delimiter is not preserved in the segments.
+         * @param name the name of the case.
+         * @param delimiter the delimiter between segments.
+         */
+        public StringCase(final String name, final char delimiter) {
+<span class="fc bfc" id="L180" title="All 2 branches covered.">            this(name, c -&gt; c == delimiter, false, simpleJoiner(delimiter));</span>
+<span class="fc" id="L181">        }</span>
+
+        /**
+         * Constructs a StingCase.
+         * @param name the name of the string case.
+         * @param splitter the splitter to detect segments.
+         * @param preserveSplit the flag to preserve the splitter character.
+         * @param joiner the joiner to assemble a String from segments.
+         * @param postProcess the post-process applied to the segments after the splitter has created them.
+         */
+        public StringCase(final String name, final Predicate&lt;Character&gt; splitter, final boolean preserveSplit, final Function&lt;String[], String&gt; joiner,
+<span class="fc" id="L192">                          final UnaryOperator&lt;String&gt; postProcess) {</span>
+<span class="fc" id="L193">            this.name = name;</span>
+<span class="fc" id="L194">            this.splitter = splitter;</span>
+<span class="fc" id="L195">            this.preserveSplit = preserveSplit;</span>
+<span class="fc" id="L196">            this.joiner = joiner;</span>
+<span class="fc" id="L197">            this.postProcess = postProcess;</span>
+<span class="fc" id="L198">        }</span>
+
+        /**
+         * A simple joiner that assembles a String from a collection of segments.
+         * Correctly handles the case where there are zero length segments.
+         * @param delimiter the delimiter to use between the segments.
+         * @return the assembled string.
+         */
+        public static Function&lt;String[], String&gt; simpleJoiner(final char delimiter) {
+<span class="fc" id="L207">            return s -&gt; String.join(String.valueOf(delimiter), Arrays.stream(s).filter(Objects::nonNull).toArray(String[]::new));</span>
+        }
+
+        @Override
+        public String toString() {
+<span class="fc" id="L212">            return this.name;</span>
+        }
+
+        /**
+         * Assembles segments into a String.
+         * @param segments the segments to assemble.
+         * @return the complete String.
+         */
+        public String assemble(final String[] segments) {
+<span class="fc" id="L221">            return this.joiner.apply(segments);</span>
+        }
+
+        /**
+         * Parses a String into segments.
+         * @param string the string to parse
+         * @return the segments from the string.
+         */
+        public String[] getSegments(final String string) {
+<span class="pc bpc" id="L230" title="1 of 2 branches missed.">            if (string == null) {</span>
+<span class="nc" id="L231">                return NULL_SEGMENT;</span>
+<span class="fc bfc" id="L232" title="All 2 branches covered.">            } else if (string.isEmpty()) {</span>
+<span class="fc" id="L233">                return EMPTY_SEGMENT;</span>
+            } else {
+<span class="fc" id="L235">                List&lt;String&gt; lst = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L236">                StringBuilder sb = new StringBuilder();</span>
+
+<span class="fc bfc" id="L238" title="All 2 branches covered.">                for (char c : string.toCharArray()) {</span>
+<span class="fc bfc" id="L239" title="All 2 branches covered.">                    if (this.splitter.test(c)) {</span>
+<span class="fc" id="L240">                        lst.add(sb.toString());</span>
+<span class="fc" id="L241">                        sb.setLength(0);</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">                        if (this.preserveSplit) {</span>
+<span class="fc" id="L243">                            sb.append(c);</span>
+                        }
+                    } else {
+<span class="fc" id="L246">                        sb.append(c);</span>
+                    }
+                }
+
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">                if (!sb.isEmpty()) {</span>
+<span class="fc" id="L251">                    lst.add(sb.toString());</span>
+                }
+
+<span class="fc" id="L254">                return lst.stream().map(this.postProcess).filter(Objects::nonNull).toArray(String[]::new);</span>
+            }
+        }
+        static {
+<span class="fc" id="L258">            CAMEL = new StringCase(&quot;CAMEL&quot;, Character::isUpperCase, true, CasedString.CAMEL_JOINER,</span>
+<span class="fc" id="L259">                    x -&gt; (String) StringUtils.defaultIfEmpty(x, (CharSequence) null));</span>
+<span class="fc" id="L260">            PASCAL = new StringCase(&quot;PASCAL&quot;, Character::isUpperCase, true, CasedString.CAMEL_JOINER.andThen(WordUtils::uncapitalize),</span>
+<span class="fc" id="L261">                    x -&gt; (String) StringUtils.defaultIfEmpty(x, (CharSequence) null));</span>
+<span class="fc" id="L262">            SNAKE = new StringCase(&quot;SNAKE&quot;, '_');</span>
+<span class="fc" id="L263">            KEBAB = new StringCase(&quot;KEBAB&quot;, '-');</span>
+<span class="fc" id="L264">            PHRASE = new StringCase(&quot;PHRASE&quot;, Character::isWhitespace, false, simpleJoiner(' '));</span>
+<span class="fc" id="L265">            DOT = new StringCase(&quot;DOT&quot;, '.');</span>
+<span class="fc" id="L266">            SLASH = new StringCase(&quot;SLASH&quot;, '/');</span>
+<span class="fc" id="L267">            NULL_SEGMENT = new String[0];</span>
+<span class="fc" id="L268">            EMPTY_SEGMENT = new String[]{&quot;&quot;};</span>
+<span class="fc" id="L269">        }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

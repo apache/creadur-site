@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OptionCollection.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat</a> &gt; <span class="el_source">OptionCollection.java</span></div><h1>OptionCollection.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serial;
+import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.rat.api.Document;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.commandline.ArgumentContext;
+import org.apache.rat.commandline.StyleSheets;
+import org.apache.rat.config.exclusion.StandardCollection;
+import org.apache.rat.document.DocumentName;
+import org.apache.rat.document.DocumentNameMatcher;
+import org.apache.rat.document.FileDocument;
+import org.apache.rat.help.Licenses;
+import org.apache.rat.license.LicenseSetFactory;
+import org.apache.rat.report.Reportable;
+import org.apache.rat.report.claim.ClaimStatistic;
+import org.apache.rat.ui.ArgumentTracker;
+import org.apache.rat.ui.UIOption;
+import org.apache.rat.ui.UIOptionCollection;
+import org.apache.rat.utils.DefaultLog;
+import org.apache.rat.utils.Log.Level;
+import org.apache.rat.walker.ArchiveWalker;
+import org.apache.rat.walker.DirectoryWalker;
+
+import static java.lang.String.format;
+
+/**
+ * The collection of standard options for the CLI as well as utility methods to manage them and methods to create the
+ * ReportConfiguration from the options and an array of arguments.
+ */
+public final class OptionCollection {
+
+    private OptionCollection() {
+        // do not instantiate
+    }
+
+    /**
+     * The collection of UI Options.
+     */
+<span class="fc" id="L76">    private static final UIOptionCollection&lt;? extends UIOption&lt;?&gt;&gt; BASE_OPTION_COLLECTION = new CLIOptionCollection();</span>
+
+    /**
+     * The Option comparator to sort the help.
+     */
+<span class="fc" id="L81">    public static final Comparator&lt;Option&gt; OPTION_COMPARATOR = new OptionComparator();</span>
+
+    /** The Help option */
+<span class="fc" id="L84">    public static final Option HELP = new Option(&quot;?&quot;, &quot;help&quot;, false, &quot;Print help for the RAT command line interface and exit.&quot;);</span>
+
+    /** A mapping of {@code argName(value)} values to a description of those values. */
+    @Deprecated
+    private static final Map&lt;String, Supplier&lt;String&gt;&gt; ARGUMENT_TYPES;
+    static {
+<span class="fc" id="L90">        ARGUMENT_TYPES = new TreeMap&lt;&gt;();</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">        for (ArgumentType argType : ArgumentType.values()) {</span>
+<span class="fc" id="L92">            ARGUMENT_TYPES.put(argType.getDisplayName(), argType.description);</span>
+        }
+<span class="fc" id="L94">    }</span>
+
+    /**
+     * Gets the mapping of {@code argName(value)} values to a description of those values.
+     * @return the mapping of {@code argName(value)} values to a description of those values.
+     * @deprecated use {@link ArgumentType}
+     */
+    @Deprecated
+    public static Map&lt;String, Supplier&lt;String&gt;&gt; getArgumentTypes() {
+<span class="nc" id="L103">        return Collections.unmodifiableMap(ARGUMENT_TYPES);</span>
+    }
+
+    /**
+     * Join a collection of objects together as a comma separated list of their string values.
+     * @param args the objects to join together.
+     * @return the comma separated string.
+     */
+    private static String asString(final Object[] args) {
+<span class="fc" id="L112">        return Arrays.stream(args).map(Object::toString).collect(Collectors.joining(&quot;, &quot;));</span>
+    }
+
+    /**
+     * Parses the standard options to create a ReportConfiguration.
+     *
+     * @param workingDirectory The directory to resolve relative file names against.
+     * @param args the arguments to parse
+     * @param helpCmd the help command to run when necessary.
+     * @return a ReportConfiguration or {@code null} if Help was printed.
+     * @throws IOException on error.
+     */
+    public static ReportConfiguration parseCommands(final File workingDirectory, final String[] args, final Consumer&lt;Options&gt; helpCmd) throws IOException {
+<span class="fc" id="L125">        return parseCommands(workingDirectory, args, helpCmd, false);</span>
+    }
+
+    /**
+     * Parses the standard options to create a ReportConfiguration.
+     * &lt;p&gt;
+     * This method is {@code synchronized} because it uses shared mutable state:
+     * the {@link #BASE_OPTION_COLLECTION}'s {@code OptionGroup} instances (whose {@code selected}
+     * field is mutated by {@link DefaultParser#parse(Options, String[])}), and
+     * {@link org.apache.rat.commandline.Converters#FILE_CONVERTER} (whose
+     * {@code workingDirectory} field is set during argument processing).
+     * Without synchronization, parallel Maven reactor threads (e.g. {@code mvn -T4})
+     * corrupt each other's parse state, causing options like {@code --input-exclude}
+     * to be silently skipped.
+     * &lt;/p&gt;
+     *
+     * @param workingDirectory The directory to resolve relative file names against.
+     * @param args the arguments to parse.
+     * @param helpCmd the help command to run when necessary.
+     * @param noArgs If {@code true} then the commands do not need extra arguments.
+     * @return a ReportConfiguration or {@code null} if Help was printed.
+     * @throws IOException on error.
+     */
+    public static synchronized ReportConfiguration parseCommands(final File workingDirectory, final String[] args,
+                                                    final Consumer&lt;Options&gt; helpCmd, final boolean noArgs) throws IOException {
+<span class="fc" id="L150">        Options opts = buildOptions();</span>
+        ArgumentContext argumentContext;
+        try {
+<span class="fc" id="L153">            argumentContext = new ArgumentContext(workingDirectory, opts, args);</span>
+<span class="nc" id="L154">        } catch (ParseException e) {</span>
+<span class="nc" id="L155">            System.exit(1);</span>
+<span class="nc" id="L156">            return null; // dummy return (won't be reached) to avoid Eclipse complaint about possible NPE</span>
+            // for &quot;commandLine&quot;
+<span class="fc" id="L158">        }</span>
+<span class="fc" id="L159">        Arg.processLogLevel(argumentContext, BASE_OPTION_COLLECTION);</span>
+
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (argumentContext.hasOption(HELP)) {</span>
+<span class="fc" id="L162">            helpCmd.accept(opts);</span>
+<span class="fc" id="L163">            return null;</span>
+        }
+
+<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (argumentContext.hasOption(Arg.HELP_LICENSES.option())) {</span>
+<span class="fc" id="L167">            new Licenses(createConfiguration(argumentContext), new PrintWriter(System.out, false, StandardCharsets.UTF_8)).printHelp();</span>
+<span class="fc" id="L168">            return null;</span>
+        }
+
+<span class="fc" id="L171">        ReportConfiguration configuration = createConfiguration(argumentContext);</span>
+<span class="fc bfc" id="L172" title="All 4 branches covered.">        if (!noArgs &amp;&amp; !configuration.hasSource()) {</span>
+<span class="fc" id="L173">            String msg = &quot;No directories or files specified for scanning. Did you forget to close a multi-argument option?&quot;;</span>
+<span class="fc" id="L174">            DefaultLog.getInstance().error(msg);</span>
+<span class="fc" id="L175">            helpCmd.accept(opts);</span>
+<span class="fc" id="L176">            return null;</span>
+        }
+
+<span class="fc" id="L179">        return configuration;</span>
+    }
+
+    /**
+     * Create the report configuration.
+     * Note: this method is visible for testing.
+     * You probably want one of the {@code parseCommands(...)} methods instead.
+     * @param argumentContext The context to execute in.
+     * @return a ReportConfiguration
+     * @see #parseCommands(File, String[], Consumer)
+     * @see #parseCommands(File, String[], Consumer, boolean)
+     */
+    public static ReportConfiguration createConfiguration(final ArgumentContext argumentContext) {
+        try {
+<span class="fc" id="L193">            argumentContext.processArgs(BASE_OPTION_COLLECTION);</span>
+<span class="fc" id="L194">            final ReportConfiguration configuration = argumentContext.getConfiguration();</span>
+<span class="fc" id="L195">            Optional&lt;Option&gt; dirOpt = BASE_OPTION_COLLECTION.getSelected(Arg.DIR);</span>
+<span class="fc" id="L196">            dirOpt.ifPresent(opt -&gt; {</span>
+<span class="fc" id="L197">                    File directoryName = argumentContext.getParsedOptionValue(opt);</span>
+<span class="fc" id="L198">                    configuration.addSource(getReportable(directoryName, configuration));</span>
+<span class="fc" id="L199">            });</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">            for (String s : argumentContext.getArgs()) {</span>
+<span class="fc" id="L201">                Reportable reportable = getReportable(new File(s), configuration);</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">                if (reportable != null) {</span>
+<span class="fc" id="L203">                    configuration.addSource(reportable);</span>
+                }
+<span class="fc" id="L205">            }</span>
+<span class="fc" id="L206">            return configuration;</span>
+<span class="nc" id="L207">        } catch (RuntimeException e) {</span>
+<span class="nc" id="L208">            try (PrintWriter pw = new PrintWriter(DefaultLog.getInstance().asWriter(Level.ERROR))) {</span>
+<span class="nc" id="L209">                pw.println(&quot;Unable to create configuration: &quot; + e.getMessage());</span>
+<span class="nc" id="L210">                pw.println(&quot;=== Command line options ===&quot;);</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">                for (Option opt : argumentContext.getOptions()) {</span>
+<span class="nc" id="L212">                    String[] values = opt.getValues();</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">                    pw.printf(&quot;   %s: %s%n&quot;, ArgumentTracker.extractKey(opt), values == null ? &quot;&quot; : String.join(&quot;, &quot;, values));</span>
+                }
+            }
+<span class="nc" id="L216">            throw new ConfigurationException(&quot;Unable to create configuration&quot;, e);</span>
+        }
+
+    }
+
+    /**
+     * Create an {@code Options} object from the list of defined Options.
+     * Mutually exclusive options must be listed in an OptionGroup.
+     * @return the Options comprised of the Options defined in this class.
+     */
+    public static Options buildOptions() {
+<span class="fc" id="L227">        BASE_OPTION_COLLECTION.resetSelected();</span>
+<span class="fc" id="L228">        return BASE_OPTION_COLLECTION.getOptions();</span>
+    }
+
+    /**
+     * Creates a Reportable object from the directory name and ReportConfiguration
+     * object.
+     *
+     * @param base the directory that contains the files to report on.
+     * @param config the ReportConfiguration.
+     * @return the Reportable instance containing the files.
+     */
+    public static Reportable getReportable(final File base, final ReportConfiguration config) {
+<span class="fc" id="L240">        File absBase = base.getAbsoluteFile();</span>
+<span class="fc" id="L241">        DocumentName documentName = DocumentName.builder(absBase).build();</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        if (!absBase.exists()) {</span>
+<span class="fc" id="L243">            DefaultLog.getInstance().error(&quot;Directory '&quot; + documentName + &quot;' does not exist.&quot;);</span>
+<span class="fc" id="L244">            return null;</span>
+        }
+<span class="fc" id="L246">        DocumentNameMatcher documentExcluder = config.getDocumentExcluder(documentName);</span>
+
+<span class="fc" id="L248">        Document doc = new FileDocument(documentName, absBase, documentExcluder);</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">        if (!documentExcluder.matches(doc.getName())) {</span>
+<span class="nc" id="L250">            DefaultLog.getInstance().error(&quot;Directory '&quot; + documentName + &quot;' is in excluded list.&quot;);</span>
+<span class="nc" id="L251">            return null;</span>
+        }
+
+<span class="fc bfc" id="L254" title="All 2 branches covered.">        if (absBase.isDirectory()) {</span>
+<span class="fc" id="L255">            return new DirectoryWalker(doc);</span>
+        }
+
+<span class="fc" id="L258">        return new ArchiveWalker(doc);</span>
+    }
+
+    /**
+     * This class implements the {@code Comparator} interface for comparing Options.
+     */
+    private static final class OptionComparator implements Comparator&lt;Option&gt;, Serializable {
+        /** The serial version UID.  */
+        @Serial
+        private static final long serialVersionUID = 5305467873966684014L;
+
+        private String getKey(final Option opt) {
+<span class="fc" id="L270">            String key = opt.getOpt();</span>
+<span class="fc bfc" id="L271" title="All 2 branches covered.">            key = key == null ? opt.getLongOpt() : key;</span>
+<span class="fc" id="L272">            return key;</span>
+        }
+
+        /**
+         * Compares its two arguments for order. Returns a negative integer, zero, or a
+         * positive integer as the first argument is less than, equal to, or greater
+         * than the second.
+         *
+         * @param opt1 The first Option to be compared.
+         * @param opt2 The second Option to be compared.
+         * @return a negative integer, zero, or a positive integer as the first argument
+         * is less than, equal to, or greater than the second.
+         */
+        @Override
+        public int compare(final Option opt1, final Option opt2) {
+<span class="fc" id="L287">            return getKey(opt1).compareToIgnoreCase(getKey(opt2));</span>
+        }
+    }
+
+<span class="fc" id="L291">    public enum ArgumentType {</span>
+        /**
+         * A plain file.
+         */
+<span class="fc" id="L295">        FILE(&quot;File&quot;, () -&gt; &quot;A file name.&quot;),</span>
+        /**
+         * An Integer.
+         */
+<span class="fc" id="L299">        INTEGER(&quot;Integer&quot;, () -&gt; &quot;An integer value.&quot;),</span>
+        /**
+         * A directory or archive.
+         */
+<span class="fc" id="L303">        DIRORARCHIVE(&quot;DirOrArchive&quot;, () -&gt; &quot;A directory or archive file to scan.&quot;),</span>
+        /**
+         * A matching expression.
+         */
+<span class="fc" id="L307">        EXPRESSION(&quot;Expression&quot;, () -&gt; &quot;A file matching pattern usually of the form used in Ant build files and &quot; +</span>
+                &quot;'.gitignore' files (see https://ant.apache.org/manual/dirtasks.html#patterns for examples). &quot; +
+                &quot;Regular expression patterns may be specified by surrounding the pattern with '%regex[' and ']'. &quot; +
+                &quot;For example '%regex[[A-Z].*]' would match files and directories that start with uppercase Latin letters.&quot;),
+        /**
+         * A license filter.
+         */
+<span class="fc" id="L314">        LICENSEFILTER(&quot;LicenseFilter&quot;, () -&gt; format(&quot;A defined filter for the licenses to include. Valid values: %s.&quot;,</span>
+<span class="fc" id="L315">                asString(LicenseSetFactory.LicenseFilter.values()))),</span>
+        /**
+         * A log level.
+         */
+<span class="fc" id="L319">        LOGLEVEL(&quot;LogLevel&quot;, () -&gt; format(&quot;The log level to use. Valid values %s.&quot;, asString(Level.values()))),</span>
+        /**
+         * A processing type.
+         */
+<span class="fc" id="L323">        PROCESSINGTYPE(&quot;ProcessingType&quot;, () -&gt; format(&quot;Specifies how to process file types. Valid values are: %s%n&quot;,</span>
+<span class="fc" id="L324">                Arrays.stream(ReportConfiguration.Processing.values())</span>
+<span class="fc" id="L325">                        .map(v -&gt; format(&quot;\t%s: %s&quot;, v.name(), v.desc()))</span>
+<span class="fc" id="L326">                        .collect(Collectors.joining(System.lineSeparator())))),</span>
+        /**
+         * A style sheet.
+         */
+<span class="fc" id="L330">        STYLESHEET(&quot;StyleSheet&quot;, () -&gt; format(&quot;Either an external xsl file or one of the internal named sheets. Internal sheets are: %n%s&quot;,</span>
+<span class="fc" id="L331">                Arrays.stream(StyleSheets.values())</span>
+<span class="fc" id="L332">                        .map(v -&gt; format(&quot;\t%s: %s%n&quot;, v.arg(), v.desc()))</span>
+<span class="fc" id="L333">                        .collect(Collectors.joining(System.lineSeparator())))),</span>
+        /**
+         * A license id.
+         */
+<span class="fc" id="L337">        LICENSEID(&quot;LicenseID&quot;, () -&gt; &quot;The ID for a license.&quot;),</span>
+        /**
+         * A license family id.
+         */
+<span class="fc" id="L341">        FAMILYID(&quot;FamilyID&quot;, () -&gt; &quot;The ID for a license family.&quot;),</span>
+        /**
+         * A standard collection name.
+         */
+<span class="fc" id="L345">        STANDARDCOLLECTION(&quot;StandardCollection&quot;, () -&gt; format(&quot;Defines standard expression patterns (see above). Valid values are: %n%s%n&quot;,</span>
+<span class="fc" id="L346">                Arrays.stream(StandardCollection.values())</span>
+<span class="fc" id="L347">                        .map(v -&gt; format(&quot;\t%s: %s%n&quot;, v.name(), v.desc()))</span>
+<span class="fc" id="L348">                        .collect(Collectors.joining(System.lineSeparator())))),</span>
+        /**
+         * A Counter pattern name
+         */
+<span class="fc" id="L352">        COUNTERPATTERN(&quot;CounterPattern&quot;, () -&gt; format(&quot;A pattern comprising one of the following prefixes followed by &quot; +</span>
+                        &quot;a colon and a count (e.g. %s:5).  Prefixes are %n%s.&quot;, ClaimStatistic.Counter.UNAPPROVED,
+<span class="fc" id="L354">                Arrays.stream(ClaimStatistic.Counter.values())</span>
+<span class="fc" id="L355">                        .map(v -&gt; format(&quot;\t%s: %s Default range [%s, %s]%n&quot;, v.name(), v.getDescription(),</span>
+<span class="fc" id="L356">                                v.getDefaultMinValue(),</span>
+<span class="fc bfc" id="L357" title="All 2 branches covered.">                                v.getDefaultMaxValue() == -1 ? &quot;unlimited&quot; : v.getDefaultMaxValue()))</span>
+<span class="fc" id="L358">                        .collect(Collectors.joining(System.lineSeparator())))),</span>
+        /**
+         * A generic argument.
+         */
+<span class="fc" id="L362">        ARG(&quot;Arg&quot;, () -&gt; &quot;A string&quot;),</span>
+        /**
+         * No argument.
+         */
+<span class="pc" id="L366">        NONE(&quot;&quot;, () -&gt; &quot;&quot;);</span>
+
+        /**
+         * The display name
+         */
+        private final String displayName;
+        /**
+         * A supplier of the description
+         */
+        private final Supplier&lt;String&gt; description;
+
+        ArgumentType(final String name,
+<span class="fc" id="L378">                     final Supplier&lt;String&gt; description) {</span>
+<span class="fc" id="L379">            this.displayName = name;</span>
+<span class="fc" id="L380">            this.description = description;</span>
+<span class="fc" id="L381">        }</span>
+
+        /**
+         * Gets the display name.
+         * @return the display name.
+         */
+        public String getDisplayName() {
+<span class="fc" id="L388">            return displayName;</span>
+        }
+
+        /**
+         * Gets the description.
+         * @return the description.
+         */
+        public Supplier&lt;String&gt; description() {
+<span class="fc" id="L396">            return description;</span>
+        }
+
+        /**
+         * Get the matching Argument type.
+         * @param displayName the display name for the desired type.
+         * @return An optional with the ArgumentType or an empty optional if none exists.
+         */
+        public static Optional&lt;ArgumentType&gt; forDisplayName(final String displayName) {
+<span class="nc" id="L405">            return Arrays.stream(ArgumentType.values()).filter(argType -&gt; argType.displayName.equals(displayName))</span>
+<span class="nc" id="L406">                    .findAny();</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
