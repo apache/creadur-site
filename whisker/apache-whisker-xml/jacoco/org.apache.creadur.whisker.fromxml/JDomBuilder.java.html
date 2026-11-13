@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JDomBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::XML</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.fromxml</a> &gt; <span class="el_source">JDomBuilder.java</span></div><h1>JDomBuilder.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JDomBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::XML</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.fromxml</a> &gt; <span class="el_source">JDomBuilder.java</span></div><h1>JDomBuilder.java</h1><pre class="source lang-java linenums">/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -19,12 +19,18 @@
 package org.apache.creadur.whisker.fromxml;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.xml.secure.SecureSAXParserFactory;
 import org.apache.creadur.whisker.model.*;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.input.sax.XMLReaderJDOMFactory;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
@@ -32,7 +38,7 @@ import java.util.*;
 /**
  * Builds a model from xml using JDOM.
  */
-<span class="fc" id="L35">public class JDomBuilder {</span>
+<span class="fc" id="L41">public class JDomBuilder {</span>
 
 	private static final String COPYRIGHT_NOTICE_NAME = &quot;copyright-notice&quot;;
 	/**
@@ -49,6 +55,33 @@ import java.util.*;
 	private static final String RESOURCE_ELEMENT_NAME = &quot;resource&quot;;
 
 	/**
+	 * Provide a safely configured way to parse XML files:
+	 * do not fetch external DTDs,
+	 * do not resolve external entities and
+	 * bounded entity expansion.
+	 *
+	 * @return XML parser with secure defaults.
+	 */
+	private static XMLReaderJDOMFactory secureXmlReaderFactory() {
+<span class="nc" id="L66">		return new XMLReaderJDOMFactory() {</span>
+			@Override
+			public XMLReader createXMLReader() throws JDOMException {
+				try {
+<span class="nc" id="L70">					SAXParser parser = SecureSAXParserFactory.newNSInstance().newSAXParser();</span>
+<span class="nc" id="L71">					return parser.getXMLReader();</span>
+<span class="nc" id="L72">				} catch (ParserConfigurationException | SAXException e) {</span>
+<span class="nc" id="L73">					throw new JDOMException(&quot;Unable to create secure XML parser&quot;, e);</span>
+				}
+			}
+
+			@Override
+			public boolean isValidating() {
+<span class="nc" id="L79">				return false;</span>
+			}
+		};
+	}
+
+	/**
 	 * Builds a resource.
 	 * 
 	 * @param element
@@ -58,13 +91,13 @@ import java.util.*;
 	 *             when element is not named 'resource'
 	 */
 	public Resource resource(Element element) throws UnexpectedElementException {
-<span class="fc bfc" id="L61" title="All 2 branches covered.">		if (RESOURCE_ELEMENT_NAME.equals(element.getName())) {</span>
-<span class="fc" id="L62">			return new Resource(StringUtils.trim(element</span>
-<span class="fc" id="L63">					.getAttributeValue(&quot;name&quot;)), StringUtils.trim(element</span>
-<span class="fc" id="L64">					.getAttributeValue(&quot;notice&quot;)), StringUtils.trim(element</span>
-<span class="fc" id="L65">					.getAttributeValue(&quot;source&quot;)));</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">		if (RESOURCE_ELEMENT_NAME.equals(element.getName())) {</span>
+<span class="fc" id="L95">			return new Resource(StringUtils.trim(element</span>
+<span class="fc" id="L96">					.getAttributeValue(&quot;name&quot;)), StringUtils.trim(element</span>
+<span class="fc" id="L97">					.getAttributeValue(&quot;notice&quot;)), StringUtils.trim(element</span>
+<span class="fc" id="L98">					.getAttributeValue(&quot;source&quot;)));</span>
 		} else {
-<span class="fc" id="L67">			throw unexpectedElementException(element, RESOURCE_ELEMENT_NAME);</span>
+<span class="fc" id="L100">			throw unexpectedElementException(element, RESOURCE_ELEMENT_NAME);</span>
 		}
 	}
 
@@ -79,8 +112,8 @@ import java.util.*;
 	 */
 	private UnexpectedElementException unexpectedElementException(
 			Element element, final String expectedElement) {
-<span class="fc" id="L82">		return new UnexpectedElementException(expectedElement,</span>
-<span class="fc" id="L83">				element.getName());</span>
+<span class="fc" id="L115">		return new UnexpectedElementException(expectedElement,</span>
+<span class="fc" id="L116">				element.getName());</span>
 	}
 
 	/**
@@ -94,12 +127,12 @@ import java.util.*;
 	 */
 	public Organisation organisation(Element element)
 			throws UnexpectedElementException {
-<span class="fc bfc" id="L97" title="All 2 branches covered.">		if (ORGANISATION_ELEMENT_NAME.equals(element.getName())) {</span>
-<span class="fc" id="L98">			return new Organisation(element.getAttributeValue(&quot;id&quot;),</span>
-<span class="fc" id="L99">					element.getAttributeValue(&quot;name&quot;),</span>
-<span class="fc" id="L100">					element.getAttributeValue(&quot;url&quot;));</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">		if (ORGANISATION_ELEMENT_NAME.equals(element.getName())) {</span>
+<span class="fc" id="L131">			return new Organisation(element.getAttributeValue(&quot;id&quot;),</span>
+<span class="fc" id="L132">					element.getAttributeValue(&quot;name&quot;),</span>
+<span class="fc" id="L133">					element.getAttributeValue(&quot;url&quot;));</span>
 		} else {
-<span class="fc" id="L102">			throw unexpectedElementException(element, ORGANISATION_ELEMENT_NAME);</span>
+<span class="fc" id="L135">			throw unexpectedElementException(element, ORGANISATION_ELEMENT_NAME);</span>
 		}
 	}
 
@@ -108,14 +141,12 @@ import java.util.*;
 	 *            JDOM element to collect.
 	 * @return collected resources.
 	 */
-	@SuppressWarnings(&quot;unchecked&quot;)
 	public Collection&lt;Resource&gt; collectResources(Element element) {
-<span class="fc" id="L113">		final Collection&lt;Resource&gt; resources = new TreeSet&lt;Resource&gt;();</span>
-<span class="fc bfc" id="L114" title="All 2 branches covered.">		for (Element resourceElement : (List&lt;Element&gt;) element</span>
-<span class="fc" id="L115">				.getChildren(&quot;resource&quot;)) {</span>
-<span class="fc" id="L116">			resources.add(new JDomBuilder().resource(resourceElement));</span>
-<span class="fc" id="L117">		}</span>
-<span class="fc" id="L118">		return Collections.unmodifiableCollection(resources);</span>
+<span class="fc" id="L145">		final Collection&lt;Resource&gt; resources = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">		for (Element resourceElement : element.getChildren(&quot;resource&quot;)) {</span>
+<span class="fc" id="L147">			resources.add(new JDomBuilder().resource(resourceElement));</span>
+<span class="fc" id="L148">		}</span>
+<span class="fc" id="L149">		return Collections.unmodifiableCollection(resources);</span>
 	}
 
 	/**
@@ -130,12 +161,12 @@ import java.util.*;
 	public Organisation organisation(final Element element,
 			final Map&lt;String, Organisation&gt; organisationsById)
 			throws MissingIDException {
-<span class="fc" id="L133">		final String id = element.getAttributeValue(&quot;id&quot;);</span>
-<span class="fc bfc" id="L134" title="All 2 branches covered.">		if (organisationsById.containsKey(id)) {</span>
-<span class="fc" id="L135">			return organisationsById.get(id);</span>
+<span class="fc" id="L164">		final String id = element.getAttributeValue(&quot;id&quot;);</span>
+<span class="fc bfc" id="L165" title="All 2 branches covered.">		if (organisationsById.containsKey(id)) {</span>
+<span class="fc" id="L166">			return organisationsById.get(id);</span>
 		} else {
-<span class="fc" id="L137">			throw new MissingIDException(ORGANISATION_ELEMENT_NAME,</span>
-<span class="fc" id="L138">					element.getName(), id);</span>
+<span class="fc" id="L168">			throw new MissingIDException(ORGANISATION_ELEMENT_NAME,</span>
+<span class="fc" id="L169">					element.getName(), id);</span>
 		}
 	}
 
@@ -150,7 +181,7 @@ import java.util.*;
 	 */
 	public ByOrganisation byOrganisation(final Element element,
 			final Organisation organisation) {
-<span class="fc" id="L153">		return new ByOrganisation(organisation, collectResources(element));</span>
+<span class="fc" id="L184">		return new ByOrganisation(organisation, collectResources(element));</span>
 	}
 
 	/**
@@ -167,8 +198,8 @@ import java.util.*;
 	public ByOrganisation byOrganisation(final Element byOrganisation,
 			final Map&lt;String, Organisation&gt; organisationsById)
 			throws MissingIDException {
-<span class="fc" id="L170">		return byOrganisation(byOrganisation,</span>
-<span class="fc" id="L171">				organisation(byOrganisation, organisationsById));</span>
+<span class="fc" id="L201">		return byOrganisation(byOrganisation,</span>
+<span class="fc" id="L202">				organisation(byOrganisation, organisationsById));</span>
 	}
 
 	/**
@@ -180,17 +211,15 @@ import java.util.*;
 	 *            not null
 	 * @return unmodifiable set sort by natural order, not null
 	 */
-	@SuppressWarnings(&quot;unchecked&quot;)
 	public SortedSet&lt;ByOrganisation&gt; collectByOrganisations(
 			final Element parent, final Map&lt;String, Organisation&gt; map) {
-<span class="fc" id="L186">		final SortedSet&lt;ByOrganisation&gt; results = new TreeSet&lt;ByOrganisation&gt;();</span>
-<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (parent != null) {</span>
-<span class="fc bfc" id="L188" title="All 2 branches covered.">			for (final Element byOrgElement : (List&lt;Element&gt;) parent</span>
-<span class="fc" id="L189">					.getChildren(&quot;by-organisation&quot;)) {</span>
-<span class="fc" id="L190">				results.add(byOrganisation(byOrgElement, map));</span>
-<span class="fc" id="L191">			}</span>
+<span class="fc" id="L216">		final SortedSet&lt;ByOrganisation&gt; results = new TreeSet&lt;&gt;();</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (parent != null) {</span>
+<span class="fc bfc" id="L218" title="All 2 branches covered.">			for (final Element byOrgElement :  parent.getChildren(&quot;by-organisation&quot;)) {</span>
+<span class="fc" id="L219">				results.add(byOrganisation(byOrgElement, map));</span>
+<span class="fc" id="L220">			}</span>
 		}
-<span class="fc" id="L193">		return Collections.unmodifiableSortedSet(results);</span>
+<span class="fc" id="L222">		return Collections.unmodifiableSortedSet(results);</span>
 	}
 
 	/**
@@ -201,26 +230,24 @@ import java.util.*;
 	 * @return not null
 	 */
 	public License license(Element element) {
-<span class="fc" id="L204">		final Element text = element.getChild(&quot;text&quot;);</span>
-<span class="fc" id="L205">		return new License(&quot;yes&quot;.equalsIgnoreCase(element</span>
-<span class="fc bfc" id="L206" title="All 2 branches covered.">				.getAttributeValue(&quot;requires-source&quot;)), text == null ? &quot;&quot;</span>
-<span class="fc" id="L207">				: text.getText(), expectedParameters(element),</span>
-<span class="fc" id="L208">				element.getAttributeValue(&quot;id&quot;),</span>
-<span class="fc" id="L209">				element.getAttributeValue(&quot;url&quot;),</span>
-<span class="fc" id="L210">				element.getAttributeValue(&quot;name&quot;));</span>
+<span class="fc" id="L233">		final Element text = element.getChild(&quot;text&quot;);</span>
+<span class="fc" id="L234">		return new License(&quot;yes&quot;.equalsIgnoreCase(element</span>
+<span class="fc bfc" id="L235" title="All 2 branches covered.">				.getAttributeValue(&quot;requires-source&quot;)), text == null ? &quot;&quot;</span>
+<span class="fc" id="L236">				: text.getText(), expectedParameters(element),</span>
+<span class="fc" id="L237">				element.getAttributeValue(&quot;id&quot;),</span>
+<span class="fc" id="L238">				element.getAttributeValue(&quot;url&quot;),</span>
+<span class="fc" id="L239">				element.getAttributeValue(&quot;name&quot;));</span>
 	}
 
-	@SuppressWarnings(&quot;unchecked&quot;)
 	private Collection&lt;String&gt; expectedParameters(final Element element) {
-<span class="fc" id="L215">		final Collection&lt;String&gt; results = new HashSet&lt;String&gt;();</span>
-<span class="fc" id="L216">		final Element templateElement = element.getChild(&quot;template&quot;);</span>
-<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (templateElement != null) {</span>
-<span class="fc bfc" id="L218" title="All 2 branches covered.">			for (Element parameterNameElement : (List&lt;Element&gt;) templateElement</span>
-<span class="fc" id="L219">					.getChildren(&quot;parameter-name&quot;)) {</span>
-<span class="fc" id="L220">				results.add(parameterNameElement.getTextTrim());</span>
-<span class="fc" id="L221">			}</span>
+<span class="fc" id="L243">		final Collection&lt;String&gt; results = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L244">		final Element templateElement = element.getChild(&quot;template&quot;);</span>
+<span class="fc bfc" id="L245" title="All 2 branches covered.">		if (templateElement != null) {</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">			for (Element parameterNameElement : templateElement.getChildren(&quot;parameter-name&quot;)) {</span>
+<span class="fc" id="L247">				results.add(parameterNameElement.getTextTrim());</span>
+<span class="fc" id="L248">			}</span>
 		}
-<span class="fc" id="L223">		return results;</span>
+<span class="fc" id="L250">		return results;</span>
 	}
 
 	/**
@@ -236,17 +263,17 @@ import java.util.*;
 	 */
 	public License license(final Element element,
 			final Map&lt;String, License&gt; licenses) throws MissingIDException {
-<span class="fc" id="L239">		final String id = element.getAttributeValue(&quot;id&quot;);</span>
-<span class="fc bfc" id="L240" title="All 2 branches covered.">		if (licenses.containsKey(id)) {</span>
-<span class="fc" id="L241">			return licenses.get(id);</span>
+<span class="fc" id="L266">		final String id = element.getAttributeValue(&quot;id&quot;);</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">		if (licenses.containsKey(id)) {</span>
+<span class="fc" id="L268">			return licenses.get(id);</span>
 		} else {
-<span class="fc" id="L243">			throw new MissingIDException(LICENSE_ELEMENT_NAME,</span>
-<span class="fc" id="L244">					element.getName(), id);</span>
+<span class="fc" id="L270">			throw new MissingIDException(LICENSE_ELEMENT_NAME,</span>
+<span class="fc" id="L271">					element.getName(), id);</span>
 		}
 	}
 
 	/**
-	 * @return Builds a with-license model from xml.
+	 * @return Builds a with-license model from XML.
 	 * @param element
 	 *            not null
 	 * @param licenses
@@ -260,9 +287,9 @@ import java.util.*;
 	public WithLicense withLicense(Element element,
 			Map&lt;String, License&gt; licenses,
 			Map&lt;String, Organisation&gt; organisations) throws MissingIDException {
-<span class="fc" id="L263">		return new WithLicense(license(element, licenses),</span>
-<span class="fc" id="L264">				copyrightNotice(element), parameters(element),</span>
-<span class="fc" id="L265">				collectByOrganisations(element, organisations));</span>
+<span class="fc" id="L290">		return new WithLicense(license(element, licenses),</span>
+<span class="fc" id="L291">				copyrightNotice(element), parameters(element),</span>
+<span class="fc" id="L292">				collectByOrganisations(element, organisations));</span>
 	}
 
 	/**
@@ -274,14 +301,14 @@ import java.util.*;
 	 */
 	private String copyrightNotice(final Element element) {
 		final String result;
-<span class="fc" id="L277">		final Element copyrightNoticeElement = element</span>
-<span class="fc" id="L278">				.getChild(COPYRIGHT_NOTICE_NAME);</span>
-<span class="fc bfc" id="L279" title="All 2 branches covered.">		if (copyrightNoticeElement == null) {</span>
-<span class="fc" id="L280">			result = null;</span>
+<span class="fc" id="L304">		final Element copyrightNoticeElement = element</span>
+<span class="fc" id="L305">				.getChild(COPYRIGHT_NOTICE_NAME);</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">		if (copyrightNoticeElement == null) {</span>
+<span class="fc" id="L307">			result = null;</span>
 		} else {
-<span class="fc" id="L282">			result = copyrightNoticeElement.getTextTrim();</span>
+<span class="fc" id="L309">			result = copyrightNoticeElement.getTextTrim();</span>
 		}
-<span class="fc" id="L284">		return result;</span>
+<span class="fc" id="L311">		return result;</span>
 	}
 
 	/**
@@ -293,26 +320,23 @@ import java.util.*;
 	 * @throws DuplicateElementException
 	 *             when two parameters shared the same name
 	 */
-	@SuppressWarnings(&quot;unchecked&quot;)
 	public Map&lt;String, String&gt; parameters(Element element)
 			throws DuplicateElementException {
-<span class="fc" id="L299">		final Map&lt;String, String&gt; results = new HashMap&lt;String, String&gt;();</span>
-<span class="fc" id="L300">		final Element licenseParametersElement = element</span>
-<span class="fc" id="L301">				.getChild(&quot;license-parameters&quot;);</span>
-<span class="fc bfc" id="L302" title="All 2 branches covered.">		if (licenseParametersElement != null) {</span>
-<span class="fc bfc" id="L303" title="All 2 branches covered.">			for (Element parameterElement : (List&lt;Element&gt;) licenseParametersElement</span>
-<span class="fc" id="L304">					.getChildren(&quot;parameter&quot;)) {</span>
-<span class="fc" id="L305">				final String name = parameterElement.getChild(&quot;name&quot;)</span>
-<span class="fc" id="L306">						.getTextTrim();</span>
-<span class="fc bfc" id="L307" title="All 2 branches covered.">				if (results.containsKey(name)) {</span>
-<span class="fc" id="L308">					throw new DuplicateElementException(&quot;Duplicate parameter '&quot;</span>
+<span class="fc" id="L325">		final Map&lt;String, String&gt; results = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L326">		final Element licenseParametersElement = element.getChild(&quot;license-parameters&quot;);</span>
+<span class="fc bfc" id="L327" title="All 2 branches covered.">		if (licenseParametersElement != null) {</span>
+<span class="fc bfc" id="L328" title="All 2 branches covered.">			for (Element parameterElement : licenseParametersElement.getChildren(&quot;parameter&quot;)) {</span>
+<span class="fc" id="L329">				final String name = parameterElement.getChild(&quot;name&quot;)</span>
+<span class="fc" id="L330">						.getTextTrim();</span>
+<span class="fc bfc" id="L331" title="All 2 branches covered.">				if (results.containsKey(name)) {</span>
+<span class="fc" id="L332">					throw new DuplicateElementException(&quot;Duplicate parameter '&quot;</span>
 							+ name + &quot;'&quot;);
 				}
-<span class="fc" id="L311">				results.put(name, parameterElement.getChild(&quot;value&quot;)</span>
-<span class="fc" id="L312">						.getTextTrim());</span>
-<span class="fc" id="L313">			}</span>
+<span class="fc" id="L335">				results.put(name, parameterElement.getChild(&quot;value&quot;)</span>
+<span class="fc" id="L336">						.getTextTrim());</span>
+<span class="fc" id="L337">			}</span>
 		}
-<span class="fc" id="L315">		return results;</span>
+<span class="fc" id="L339">		return results;</span>
 	}
 
 	/**
@@ -326,17 +350,15 @@ import java.util.*;
 	 *            not null
 	 * @return not null, possibly empty
 	 */
-	@SuppressWarnings(&quot;unchecked&quot;)
 	public Collection&lt;WithLicense&gt; withLicenses(Map&lt;String, License&gt; licenses,
 			Map&lt;String, Organisation&gt; organisations, Element parent) {
-<span class="fc" id="L332">		final List&lt;WithLicense&gt; results = new ArrayList&lt;WithLicense&gt;();</span>
-<span class="fc bfc" id="L333" title="All 2 branches covered.">		for (Element withLicenseElement : (List&lt;Element&gt;) parent</span>
-<span class="fc" id="L334">				.getChildren(&quot;with-license&quot;)) {</span>
-<span class="fc" id="L335">			results.add(new JDomBuilder().withLicense(withLicenseElement,</span>
+<span class="fc" id="L355">		final List&lt;WithLicense&gt; results = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L356" title="All 2 branches covered.">		for (Element withLicenseElement : parent.getChildren(&quot;with-license&quot;)) {</span>
+<span class="fc" id="L357">			results.add(new JDomBuilder().withLicense(withLicenseElement,</span>
 					licenses, organisations));
-<span class="fc" id="L337">		}</span>
-<span class="fc" id="L338">		Collections.sort(results);</span>
-<span class="fc" id="L339">		return results;</span>
+<span class="fc" id="L359">		}</span>
+<span class="fc" id="L360">		Collections.sort(results);</span>
+<span class="fc" id="L361">		return results;</span>
 	}
 
 	/**
@@ -350,8 +372,8 @@ import java.util.*;
 	 */
 	public Collection&lt;ByOrganisation&gt; publicDomain(
 			final Map&lt;String, Organisation&gt; organisations, final Element parent) {
-<span class="fc" id="L353">		return new JDomBuilder().collectByOrganisations(</span>
-<span class="fc" id="L354">				parent.getChild(&quot;public-domain&quot;), organisations);</span>
+<span class="fc" id="L375">		return new JDomBuilder().collectByOrganisations(</span>
+<span class="fc" id="L376">				parent.getChild(&quot;public-domain&quot;), organisations);</span>
 	}
 
 	/**
@@ -368,8 +390,8 @@ import java.util.*;
 	public WithinDirectory withinDirectory(Element element,
 			Map&lt;String, License&gt; licenses,
 			Map&lt;String, Organisation&gt; organisations) {
-<span class="fc" id="L371">		return new WithinDirectory(element.getAttributeValue(&quot;dir&quot;),</span>
-<span class="fc" id="L372">				withLicenses(licenses, organisations, element), publicDomain(</span>
+<span class="fc" id="L393">		return new WithinDirectory(element.getAttributeValue(&quot;dir&quot;),</span>
+<span class="fc" id="L394">				withLicenses(licenses, organisations, element), publicDomain(</span>
 						organisations, element));
 	}
 
@@ -381,20 +403,18 @@ import java.util.*;
 	 * @return organisations indexed by id, not null possibly empty
 	 */
 	public Map&lt;String, Organisation&gt; mapOrganisations(Document document) {
-<span class="fc" id="L384">		final Map&lt;String, Organisation&gt; organisationsById = new HashMap&lt;String, Organisation&gt;();</span>
+<span class="fc" id="L406">		final Map&lt;String, Organisation&gt; organisationsById = new HashMap&lt;&gt;();</span>
 
-<span class="fc" id="L386">		final Element childOrganisations = document.getRootElement().getChild(</span>
+<span class="fc" id="L408">		final Element childOrganisations = document.getRootElement().getChild(</span>
 				&quot;organisations&quot;);
-<span class="fc bfc" id="L388" title="All 2 branches covered.">		if (childOrganisations != null) {</span>
-			@SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L390">			final List&lt;Element&gt; organisations = (List&lt;Element&gt;) childOrganisations</span>
-<span class="fc" id="L391">					.getChildren(&quot;organisation&quot;);</span>
-<span class="fc bfc" id="L392" title="All 2 branches covered.">			for (final Element element : organisations) {</span>
-<span class="fc" id="L393">				new JDomBuilder().organisation(element).storeIn(</span>
+<span class="fc bfc" id="L410" title="All 2 branches covered.">		if (childOrganisations != null) {</span>
+<span class="fc" id="L411">			final List&lt;Element&gt; organisations = childOrganisations.getChildren(&quot;organisation&quot;);</span>
+<span class="fc bfc" id="L412" title="All 2 branches covered.">			for (final Element element : organisations) {</span>
+<span class="fc" id="L413">				new JDomBuilder().organisation(element).storeIn(</span>
 						organisationsById);
-<span class="fc" id="L395">			}</span>
+<span class="fc" id="L415">			}</span>
 		}
-<span class="fc" id="L397">		return Collections.unmodifiableMap(organisationsById);</span>
+<span class="fc" id="L417">		return Collections.unmodifiableMap(organisationsById);</span>
 	}
 
 	/**
@@ -405,18 +425,16 @@ import java.util.*;
 	 * @return licenses, indexed by id, not null, possibly empty
 	 */
 	public Map&lt;String, License&gt; mapLicenses(Document document) {
-<span class="fc" id="L408">		final Map&lt;String, License&gt; results = new HashMap&lt;String, License&gt;();</span>
-<span class="fc" id="L409">		final Element licensesChild = document.getRootElement().getChild(</span>
+<span class="fc" id="L428">		final Map&lt;String, License&gt; results = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L429">		final Element licensesChild = document.getRootElement().getChild(</span>
 				&quot;licenses&quot;);
-<span class="fc bfc" id="L411" title="All 2 branches covered.">		if (licensesChild != null) {</span>
-			@SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L413">			final List&lt;Element&gt; children = (List&lt;Element&gt;) licensesChild</span>
-<span class="fc" id="L414">					.getChildren();</span>
-<span class="fc bfc" id="L415" title="All 2 branches covered.">			for (final Element element : children) {</span>
-<span class="fc" id="L416">				new JDomBuilder().license(element).storeIn(results);</span>
-<span class="fc" id="L417">			}</span>
+<span class="fc bfc" id="L431" title="All 2 branches covered.">		if (licensesChild != null) {</span>
+<span class="fc" id="L432">			final List&lt;Element&gt; children = licensesChild.getChildren();</span>
+<span class="fc bfc" id="L433" title="All 2 branches covered.">			for (final Element element : children) {</span>
+<span class="fc" id="L434">				new JDomBuilder().license(element).storeIn(results);</span>
+<span class="fc" id="L435">			}</span>
 		}
-<span class="fc" id="L419">		return Collections.unmodifiableMap(results);</span>
+<span class="fc" id="L437">		return Collections.unmodifiableMap(results);</span>
 
 	}
 
@@ -431,14 +449,14 @@ import java.util.*;
 	 */
 	public License primaryLicense(Document document,
 			Map&lt;String, License&gt; licenses) {
-<span class="fc" id="L434">		final String idAttributeValue = getPrimaryLicenseElement(document)</span>
-<span class="fc" id="L435">				.getAttributeValue(&quot;id&quot;);</span>
-<span class="fc" id="L436">		final License results = licenses.get(idAttributeValue);</span>
-<span class="fc bfc" id="L437" title="All 2 branches covered.">		if (results == null) {</span>
-<span class="fc" id="L438">			throw new MissingIDException(LICENSE_ELEMENT_NAME,</span>
+<span class="fc" id="L452">		final String idAttributeValue = getPrimaryLicenseElement(document)</span>
+<span class="fc" id="L453">				.getAttributeValue(&quot;id&quot;);</span>
+<span class="fc" id="L454">		final License results = licenses.get(idAttributeValue);</span>
+<span class="fc bfc" id="L455" title="All 2 branches covered.">		if (results == null) {</span>
+<span class="fc" id="L456">			throw new MissingIDException(LICENSE_ELEMENT_NAME,</span>
 					PRIMARY_LICENSE_NAME, idAttributeValue);
 		}
-<span class="fc" id="L441">		return results;</span>
+<span class="fc" id="L459">		return results;</span>
 	}
 
 	/**
@@ -449,7 +467,7 @@ import java.util.*;
 	 * @return not null
 	 */
 	private Element getPrimaryLicenseElement(final Document document) {
-<span class="fc" id="L452">		return document.getRootElement().getChild(PRIMARY_LICENSE_NAME);</span>
+<span class="fc" id="L470">		return document.getRootElement().getChild(PRIMARY_LICENSE_NAME);</span>
 	}
 
 	/**
@@ -461,14 +479,14 @@ import java.util.*;
 	 */
 	public String primaryCopyrightNotice(final Document document) {
 		final String result;
-<span class="fc" id="L464">		final Element copyrightElement = getPrimaryLicenseElement(document)</span>
-<span class="fc" id="L465">				.getChild(COPYRIGHT_NOTICE_NAME);</span>
-<span class="fc bfc" id="L466" title="All 2 branches covered.">		if (copyrightElement == null) {</span>
-<span class="fc" id="L467">			result = null;</span>
+<span class="fc" id="L482">		final Element copyrightElement = getPrimaryLicenseElement(document)</span>
+<span class="fc" id="L483">				.getChild(COPYRIGHT_NOTICE_NAME);</span>
+<span class="fc bfc" id="L484" title="All 2 branches covered.">		if (copyrightElement == null) {</span>
+<span class="fc" id="L485">			result = null;</span>
 		} else {
-<span class="fc" id="L469">			result = copyrightElement.getTextTrim();</span>
+<span class="fc" id="L487">			result = copyrightElement.getTextTrim();</span>
 		}
-<span class="fc" id="L471">		return result;</span>
+<span class="fc" id="L489">		return result;</span>
 	}
 
 	/**
@@ -479,19 +497,17 @@ import java.util.*;
 	 * @return notices indexed by id, immutable, not null, possibly empty
 	 */
 	public Map&lt;String, String&gt; mapNotices(Document document) {
-<span class="fc" id="L482">		final Map&lt;String, String&gt; results = new HashMap&lt;String, String&gt;();</span>
-<span class="fc" id="L483">		final Element noticesElement = document.getRootElement().getChild(</span>
+<span class="fc" id="L500">		final Map&lt;String, String&gt; results = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L501">		final Element noticesElement = document.getRootElement().getChild(</span>
 				&quot;notices&quot;);
-<span class="fc bfc" id="L485" title="All 2 branches covered.">		if (noticesElement != null) {</span>
-			@SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L487">			final List&lt;Element&gt; children = (List&lt;Element&gt;) noticesElement</span>
-<span class="fc" id="L488">					.getChildren();</span>
-<span class="fc bfc" id="L489" title="All 2 branches covered.">			for (final Element element : children) {</span>
-<span class="fc" id="L490">				results.put(element.getAttributeValue(&quot;id&quot;),</span>
-<span class="fc" id="L491">						element.getTextTrim());</span>
-<span class="fc" id="L492">			}</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">		if (noticesElement != null) {</span>
+<span class="fc" id="L504">			final List&lt;Element&gt; children = noticesElement.getChildren();</span>
+<span class="fc bfc" id="L505" title="All 2 branches covered.">			for (final Element element : children) {</span>
+<span class="fc" id="L506">				results.put(element.getAttributeValue(&quot;id&quot;),</span>
+<span class="fc" id="L507">						element.getTextTrim());</span>
+<span class="fc" id="L508">			}</span>
 		}
-<span class="fc" id="L494">		return Collections.unmodifiableMap(results);</span>
+<span class="fc" id="L510">		return Collections.unmodifiableMap(results);</span>
 
 	}
 
@@ -505,18 +521,18 @@ import java.util.*;
 	 */
 	public String primaryNotice(Document document) {
 		final String result;
-<span class="fc" id="L508">		final Element primaryNoticeElement = document.getRootElement()</span>
-<span class="fc" id="L509">				.getChild(&quot;primary-notice&quot;);</span>
-<span class="fc bfc" id="L510" title="All 2 branches covered.">		if (primaryNoticeElement == null) {</span>
-<span class="fc" id="L511">			result = null;</span>
+<span class="fc" id="L524">		final Element primaryNoticeElement = document.getRootElement()</span>
+<span class="fc" id="L525">				.getChild(&quot;primary-notice&quot;);</span>
+<span class="fc bfc" id="L526" title="All 2 branches covered.">		if (primaryNoticeElement == null) {</span>
+<span class="fc" id="L527">			result = null;</span>
 		} else {
-<span class="fc" id="L513">			result = primaryNoticeElement.getText()</span>
-<span class="fc" id="L514">					.replace(</span>
+<span class="fc" id="L529">			result = primaryNoticeElement.getText()</span>
+<span class="fc" id="L530">					.replace(</span>
 							&quot;${year}&quot;,
-<span class="fc" id="L516">							Integer.toString(Calendar.getInstance().get(</span>
+<span class="fc" id="L532">							Integer.toString(Calendar.getInstance().get(</span>
 									Calendar.YEAR)));
 		}
-<span class="fc" id="L519">		return result;</span>
+<span class="fc" id="L535">		return result;</span>
 	}
 
 	/**
@@ -528,20 +544,20 @@ import java.util.*;
 	 */
 	public String primaryOrganisationId(final Document document) {
 		final String result;
-<span class="fc" id="L531">		final Element primaryOrganisationElement = document.getRootElement()</span>
-<span class="fc" id="L532">				.getChild(&quot;primary-organisation&quot;);</span>
-<span class="fc bfc" id="L533" title="All 2 branches covered.">		if (primaryOrganisationElement == null) {</span>
-<span class="fc" id="L534">			result = null;</span>
+<span class="fc" id="L547">		final Element primaryOrganisationElement = document.getRootElement()</span>
+<span class="fc" id="L548">				.getChild(&quot;primary-organisation&quot;);</span>
+<span class="fc bfc" id="L549" title="All 2 branches covered.">		if (primaryOrganisationElement == null) {</span>
+<span class="fc" id="L550">			result = null;</span>
 		} else {
-<span class="fc" id="L536">			result = primaryOrganisationElement.getAttributeValue(&quot;id&quot;);</span>
+<span class="fc" id="L552">			result = primaryOrganisationElement.getAttributeValue(&quot;id&quot;);</span>
 		}
-<span class="fc" id="L538">		return result;</span>
+<span class="fc" id="L554">		return result;</span>
 	}
 
 	private WithinDirectory directory(final Element element,
 			final Map&lt;String, License&gt; licenses,
 			final Map&lt;String, Organisation&gt; organisations) {
-<span class="fc" id="L544">		return new JDomBuilder().withinDirectory(element, licenses,</span>
+<span class="fc" id="L560">		return new JDomBuilder().withinDirectory(element, licenses,</span>
 				organisations);
 	}
 
@@ -562,20 +578,19 @@ import java.util.*;
 			final Map&lt;String, License&gt; licenses,
 			final Map&lt;String, Organisation&gt; organisations)
 			throws DuplicateElementException {
-<span class="fc" id="L565">		final Collection&lt;WithinDirectory&gt; results = new TreeSet&lt;WithinDirectory&gt;();</span>
-		@SuppressWarnings(&quot;unchecked&quot;)
-<span class="fc" id="L567">		final List&lt;Element&gt; children = document.getRootElement().getChildren(</span>
+<span class="fc" id="L581">		final Collection&lt;WithinDirectory&gt; results = new TreeSet&lt;&gt;();</span>
+<span class="fc" id="L582">		final List&lt;Element&gt; children = document.getRootElement().getChildren(</span>
 				&quot;within&quot;);
-<span class="fc bfc" id="L569" title="All 2 branches covered.">		for (Element element : children) {</span>
-<span class="fc" id="L570">			boolean addedSuccessfully = results.add(directory(element,</span>
+<span class="fc bfc" id="L584" title="All 2 branches covered.">		for (Element element : children) {</span>
+<span class="fc" id="L585">			boolean addedSuccessfully = results.add(directory(element,</span>
 					licenses, organisations));
 
-<span class="fc bfc" id="L573" title="All 2 branches covered.">			if (!addedSuccessfully) {</span>
-<span class="fc" id="L574">				throw new DuplicateElementException(&quot;Duplicate parameter '&quot;</span>
-<span class="fc" id="L575">						+ element.getAttribute(&quot;dir&quot;).getValue() + &quot;'&quot;);</span>
+<span class="fc bfc" id="L588" title="All 2 branches covered.">			if (!addedSuccessfully) {</span>
+<span class="fc" id="L589">				throw new DuplicateElementException(&quot;Duplicate parameter '&quot;</span>
+<span class="fc" id="L590">						+ element.getAttribute(&quot;dir&quot;).getValue() + &quot;'&quot;);</span>
 			}
-<span class="fc" id="L577">		}</span>
-<span class="fc" id="L578">		return results;</span>
+<span class="fc" id="L592">		}</span>
+<span class="fc" id="L593">		return results;</span>
 	}
 
 	/**
@@ -586,23 +601,29 @@ import java.util.*;
 	 * @return not null
 	 */
 	public Descriptor build(final Document document) {
-<span class="fc" id="L589">		final Map&lt;String, Organisation&gt; organisations = mapOrganisations(document);</span>
-<span class="fc" id="L590">		final Map&lt;String, License&gt; licenses = mapLicenses(document);</span>
-<span class="fc" id="L591">		final Map&lt;String, String&gt; notices = mapNotices(document);</span>
-<span class="fc" id="L592">		final License primaryLicense = primaryLicense(document, licenses);</span>
-<span class="fc" id="L593">		final String primaryCopyrightNotice = primaryCopyrightNotice(document);</span>
-<span class="fc" id="L594">		final String primaryNotice = primaryNotice(document);</span>
-<span class="fc" id="L595">		final String primaryOrganisationId = primaryOrganisationId(document);</span>
-<span class="fc" id="L596">		final Collection&lt;WithinDirectory&gt; contents = collectContents(document,</span>
+<span class="fc" id="L604">		final Map&lt;String, Organisation&gt; organisations = mapOrganisations(document);</span>
+<span class="fc" id="L605">		final Map&lt;String, License&gt; licenses = mapLicenses(document);</span>
+<span class="fc" id="L606">		final Map&lt;String, String&gt; notices = mapNotices(document);</span>
+<span class="fc" id="L607">		final License primaryLicense = primaryLicense(document, licenses);</span>
+<span class="fc" id="L608">		final String primaryCopyrightNotice = primaryCopyrightNotice(document);</span>
+<span class="fc" id="L609">		final String primaryNotice = primaryNotice(document);</span>
+<span class="fc" id="L610">		final String primaryOrganisationId = primaryOrganisationId(document);</span>
+<span class="fc" id="L611">		final Collection&lt;WithinDirectory&gt; contents = collectContents(document,</span>
 				licenses, organisations);
-<span class="fc" id="L598">		return new Descriptor(primaryLicense, primaryCopyrightNotice,</span>
+<span class="fc" id="L613">		return new Descriptor(primaryLicense, primaryCopyrightNotice,</span>
 				primaryOrganisationId, primaryNotice, licenses, notices,
 				organisations, contents);
 	}
 
-	public Descriptor build(final InputStream xmlStream) throws JDOMException,
-			IOException {
-<span class="nc" id="L605">		return build(new SAXBuilder().build(xmlStream));</span>
+	/**
+	 * Builds from the given input stream configured via Apache Commons Secure XML.
+	 * @param xmlStream not null
+	 * @return not null
+	 * @throws JDOMException in case of XML errors.
+	 * @throws IOException in case of general I/O errors.
+	 */
+	public Descriptor build(final InputStream xmlStream) throws JDOMException, IOException {
+<span class="nc" id="L626">		return build(new SAXBuilder(secureXmlReaderFactory()).build(xmlStream)); // NOSONAR</span>
 	}
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.16.202610240946</span></div></body></html>

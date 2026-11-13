@@ -31,12 +31,10 @@ import org.apache.creadur.whisker.model.Descriptor;
 import org.apache.creadur.whisker.scan.Directory;
 import org.apache.creadur.whisker.scan.FromFileSystem;
 
-
 /**
  * High level application, configured as a bean.
  */
-<span class="fc" id="L38">public class Whisker {</span>
-
+<span class="fc" id="L37">public class Whisker {</span>
     /** Operation to be performed. */
     private Act act;
     /** The source on which the operation is to be performed. */
@@ -48,14 +46,14 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
     /** Pluggable templating. */
     private AbstractEngine engine;
     /** Configuration options for license rendering */
-<span class="fc" id="L51">    private LicenseConfiguration licenseConfiguration = DEFAULT_LICENSE_CONFIGURATION;</span>
+<span class="fc" id="L49">    private LicenseConfiguration licenseConfiguration = DEFAULT_LICENSE_CONFIGURATION;</span>
 
     /**
      * Gets the configuration options for license rendering.
      * @return not null
      */
     public LicenseConfiguration getLicenseConfiguration() {
-<span class="fc" id="L58">        return licenseConfiguration;</span>
+<span class="fc" id="L56">        return licenseConfiguration;</span>
     }
 
     /**
@@ -64,8 +62,8 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return this, not null
      */
     public Whisker setLicenseConfiguration(final LicenseConfiguration licenseConfiguration) {
-<span class="fc" id="L67">        this.licenseConfiguration = notNull(licenseConfiguration);</span>
-<span class="fc" id="L68">        return this;</span>
+<span class="fc" id="L65">        this.licenseConfiguration = notNull(licenseConfiguration);</span>
+<span class="fc" id="L66">        return this;</span>
     }
 
     /**
@@ -73,7 +71,7 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return factory
      */
     public final ResultWriterFactory getWriterFactory() {
-<span class="nc" id="L76">        return writerFactory;</span>
+<span class="nc" id="L74">        return writerFactory;</span>
     }
 
     /**
@@ -82,8 +80,8 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return this, not null
      */
     public final Whisker setWriterFactory(final ResultWriterFactory writerFactory) {
-<span class="nc" id="L85">        this.writerFactory = writerFactory;</span>
-<span class="nc" id="L86">        return this;</span>
+<span class="nc" id="L83">        this.writerFactory = writerFactory;</span>
+<span class="nc" id="L84">        return this;</span>
     }
 
     /**
@@ -91,7 +89,7 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return not null
      */
     public final AbstractEngine getEngine() {
-<span class="nc" id="L94">        return engine;</span>
+<span class="nc" id="L92">        return engine;</span>
     }
 
     /**
@@ -100,8 +98,8 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return this, not null
      */
     public final Whisker setEngine(final AbstractEngine engine) {
-<span class="nc" id="L103">        this.engine = engine;</span>
-<span class="nc" id="L104">        return this;</span>
+<span class="nc" id="L101">        this.engine = engine;</span>
+<span class="nc" id="L102">        return this;</span>
     }
 
     /**
@@ -109,7 +107,7 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return the base, not null
      */
     public final String getSource() {
-<span class="nc" id="L112">        return source;</span>
+<span class="nc" id="L110">        return source;</span>
     }
 
     /**
@@ -118,25 +116,25 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return this, not null
      */
     public final Whisker setSource(final String source) {
-<span class="nc" id="L121">        this.source = source;</span>
-<span class="nc" id="L122">        return this;</span>
+<span class="nc" id="L119">        this.source = source;</span>
+<span class="nc" id="L120">        return this;</span>
     }
 
     /**
      * @return the licenseDescriptor
      */
     public final StreamableResource getLicenseDescriptor() {
-<span class="nc" id="L129">        return licenseDescriptor;</span>
+<span class="nc" id="L127">        return licenseDescriptor;</span>
     }
 
     /**
-     * Sets meta-data describing the source licensing.
+     * Sets metadata describing the source licensing.
      * @param licenseDescriptor the licenseDescriptor to set
      * @return this, not null
      */
     public final Whisker setLicenseDescriptor(StreamableResource licenseDescriptor) {
-<span class="nc" id="L138">        this.licenseDescriptor = licenseDescriptor;</span>
-<span class="nc" id="L139">        return this;</span>
+<span class="nc" id="L136">        this.licenseDescriptor = licenseDescriptor;</span>
+<span class="nc" id="L137">        return this;</span>
     }
 
     /**
@@ -144,7 +142,7 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return the act
      */
     public final Act getAct() {
-<span class="nc" id="L147">        return act;</span>
+<span class="nc" id="L145">        return act;</span>
     }
 
     /**
@@ -153,8 +151,8 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return this, not null
      */
     public final Whisker setAct(Act act) {
-<span class="nc" id="L156">        this.act = act;</span>
-<span class="nc" id="L157">        return this;</span>
+<span class="nc" id="L154">        this.act = act;</span>
+<span class="nc" id="L155">        return this;</span>
     }
 
     /**
@@ -163,27 +161,27 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @throws Exception when the operation fails
      */
     public Whisker act() throws Exception {
-<span class="nc bnc" id="L166" title="All 4 branches missed.">        switch (act) {</span>
+<span class="nc bnc" id="L164" title="All 4 branches missed.">        switch (act) {</span>
             case REPORT:
-<span class="nc" id="L168">                return report();</span>
+<span class="nc" id="L166">                return report();</span>
             case AUDIT:
-<span class="nc" id="L170">                return validate();</span>
+<span class="nc" id="L168">                return validate();</span>
             case SKELETON:
-<span class="nc" id="L172">                return skeleton();</span>
+<span class="nc" id="L170">                return skeleton();</span>
             case GENERATE:
             default:
-<span class="nc" id="L175">                return generate();</span>
+<span class="nc" id="L173">                return generate();</span>
         }
     }
 
     /**
-     * Creates a template to help create meta-data.
+     * Creates a template to help create metadata.
      * @throws Exception when the report creation fails
      * @return this, not null
      */
     private Whisker skeleton() throws Exception {
-<span class="nc" id="L185">        engine.skeleton(directories(), getWriterFactory(), configuration());</span>
-<span class="nc" id="L186">        return this;</span>
+<span class="nc" id="L183">        engine.skeleton(directories(), getWriterFactory(), configuration());</span>
+<span class="nc" id="L184">        return this;</span>
     }
 
     /**
@@ -191,7 +189,7 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @return not null
      */
     public Configuration configuration() {
-<span class="fc" id="L194">        return aConfiguration().with(licenseConfiguration).build();</span>
+<span class="fc" id="L192">        return aConfiguration().with(licenseConfiguration).build();</span>
     }
 
     /**
@@ -200,8 +198,8 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @throws Exception when the report creation fails
      */
     private Whisker report() throws Exception {
-<span class="nc" id="L203">        engine.report(directories(), getWriterFactory(), configuration());</span>
-<span class="nc" id="L204">        return this;</span>
+<span class="nc" id="L201">        engine.report(directories(), getWriterFactory(), configuration());</span>
+<span class="nc" id="L202">        return this;</span>
     }
 
     /**
@@ -210,8 +208,8 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @throws Exception when the generation fails
      */
     private Whisker generate() throws Exception {
-<span class="nc" id="L213">        engine.generate(new LicenseAnalyst().validate(load(getLicenseDescriptor())), getWriterFactory(), configuration());</span>
-<span class="nc" id="L214">        return this;</span>
+<span class="nc" id="L211">        engine.generate(new LicenseAnalyst().validate(load(getLicenseDescriptor())), getWriterFactory(), configuration());</span>
+<span class="nc" id="L212">        return this;</span>
     }
 
     /**
@@ -220,8 +218,8 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @throws Exception when the validation fails
      */
     private Whisker validate() throws Exception {
-<span class="nc" id="L223">        engine.validate(new LicenseAnalyst(directories()).analyse(load(getLicenseDescriptor())), getWriterFactory(), configuration());</span>
-<span class="nc" id="L224">        return this;</span>
+<span class="nc" id="L221">        engine.validate(new LicenseAnalyst(directories()).analyse(load(getLicenseDescriptor())), getWriterFactory(), configuration());</span>
+<span class="nc" id="L222">        return this;</span>
     }
 
     /**
@@ -230,7 +228,7 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      * @throws IOException when reading the source fails
      */
     private Collection&lt;Directory&gt; directories() throws IOException {
-<span class="nc" id="L233">        return new FromFileSystem().withBase(getSource());</span>
+<span class="nc" id="L231">        return new FromFileSystem().withBase(getSource());</span>
     }
 
     /**
@@ -239,34 +237,28 @@ import org.apache.creadur.whisker.scan.FromFileSystem;
      */
     @Override
     public String toString() {
-<span class="nc" id="L242">        return &quot;Whisker [act=&quot; + act + &quot;, base=&quot; + source</span>
+<span class="nc" id="L240">        return &quot;Whisker [act=&quot; + act + &quot;, base=&quot; + source</span>
                 + &quot;, licenseDescriptor=&quot; + licenseDescriptor + &quot;]&quot;;
     }
-
 
     /**
      * Opens a resource as a stream.
      * @param resource not null
      * @return not null
-     * @throws IOException
+     * @throws IOException if resource cannot be opened.
      */
     private InputStream resourceAsStream(final StreamableResource resource) throws IOException {
-<span class="nc" id="L254">        return resource.open();</span>
+<span class="nc" id="L251">        return resource.open();</span>
     }
-
 
     /**
-     * Reads meta-data from the given source.
+     * Reads metadata from the given source.
      * @param resource not null
      * @return not null
-     * @throws Exception when meta-data cannot be loaded
+     * @throws Exception when metadata cannot be loaded.
      */
     private Descriptor load(final StreamableResource resource) throws Exception {
-<span class="nc" id="L265">        final InputStream resourceAsStream = resourceAsStream(resource);</span>
-<span class="nc bnc" id="L266" title="All 2 branches missed.">        if (resourceAsStream == null) {</span>
-<span class="nc" id="L267">            throw new IllegalArgumentException(&quot;Cannot load &quot; + resource);</span>
-        }
-<span class="nc" id="L269">        return new JDomBuilder().build(resourceAsStream);</span>
+<span class="nc" id="L261">        return new JDomBuilder().build(resourceAsStream(resource));</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.16.202610240946</span></div></body></html>
