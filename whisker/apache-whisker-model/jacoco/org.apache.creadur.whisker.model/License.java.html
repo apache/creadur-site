@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>License.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">License.java</span></div><h1>License.java</h1><pre class="source lang-java linenums">/**
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>License.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Whisker::Model</a> &gt; <a href="index.source.html" class="el_package">org.apache.creadur.whisker.model</a> &gt; <span class="el_source">License.java</span></div><h1>License.java</h1><pre class="source lang-java linenums">/*
  * Licensed to the Apache Software Foundation (ASF) under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
@@ -103,7 +103,7 @@ public class License implements Comparable&lt;License&gt; {
     
     /**
      * Gets parameters required by the template
-     * to generate a instance of this license family.
+     * to generate an instance of this license family.
      * @return not null, possibly empty
      */
     public Collection&lt;String&gt; getExpectedParameters() {
@@ -118,25 +118,24 @@ public class License implements Comparable&lt;License&gt; {
      * @throws LicenseTemplateException when the parameter
      * do not fulfill the expectations of the template
      */
-    @SuppressWarnings(&quot;unchecked&quot;)
     private Map&lt;String, String&gt; validate(final Map&lt;String, String&gt; parameters)
             throws LicenseTemplateException {
-<span class="nc bnc" id="L124" title="All 2 branches missed.">        if (parameters == null) {</span>
-<span class="nc" id="L125">            return validate(Collections.EMPTY_MAP);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (parameters == null) {</span>
+<span class="nc" id="L124">            return validate(Collections.emptyMap());</span>
         }
 
-<span class="nc bnc" id="L128" title="All 4 branches missed.">        if (this.expectedParameters.isEmpty() &amp;&amp; parameters != null</span>
-<span class="nc bnc" id="L129" title="All 2 branches missed.">                &amp;&amp; !parameters.isEmpty()) {</span>
-<span class="nc" id="L130">            throw LicenseTemplateException.notLicenseTemplate(parameters,</span>
-<span class="nc" id="L131">                    getName());</span>
+<span class="nc bnc" id="L127" title="All 4 branches missed.">        if (this.expectedParameters.isEmpty() &amp;&amp; parameters != null</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">                &amp;&amp; !parameters.isEmpty()) {</span>
+<span class="nc" id="L129">            throw LicenseTemplateException.notLicenseTemplate(parameters,</span>
+<span class="nc" id="L130">                    getName());</span>
         }
 
-<span class="nc bnc" id="L134" title="All 2 branches missed.">        if (!parametersMatch(parameters, this.expectedParameters)) {</span>
-<span class="nc" id="L135">            throw LicenseTemplateException.parameterMismatch(</span>
-<span class="nc" id="L136">                    this.expectedParameters, parameters.keySet(), getName());</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">        if (!parametersMatch(parameters, this.expectedParameters)) {</span>
+<span class="nc" id="L134">            throw LicenseTemplateException.parameterMismatch(</span>
+<span class="nc" id="L135">                    this.expectedParameters, parameters.keySet(), getName());</span>
         }
 
-<span class="nc" id="L139">        return parameters;</span>
+<span class="nc" id="L138">        return parameters;</span>
     }
 
     /**
@@ -148,9 +147,9 @@ public class License implements Comparable&lt;License&gt; {
      */
     private boolean parametersMatch(final Map&lt;String, String&gt; parameters,
             final Collection&lt;String&gt; expectedParameters) {
-<span class="nc" id="L151">        final Set&lt;String&gt; keySet = parameters.keySet();</span>
-<span class="nc bnc" id="L152" title="All 2 branches missed.">        return keySet.containsAll(expectedParameters) &amp;&amp; expectedParameters</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">                .containsAll(keySet);</span>
+<span class="nc" id="L150">        final Set&lt;String&gt; keySet = parameters.keySet();</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">        return keySet.containsAll(expectedParameters) &amp;&amp; expectedParameters</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">                .containsAll(keySet);</span>
     }
 
     /**
@@ -160,7 +159,7 @@ public class License implements Comparable&lt;License&gt; {
      * @return variable in template format, not null
      */
     private String variable(final String parameterName) {
-<span class="nc" id="L163">        return &quot;${&quot; + parameterName + &quot;}&quot;;</span>
+<span class="nc" id="L162">        return &quot;${&quot; + parameterName + &quot;}&quot;;</span>
     }
 
     /**
@@ -173,11 +172,11 @@ public class License implements Comparable&lt;License&gt; {
      */
     private String substituteInto(final Map&lt;String, String&gt; parameters,
             final String text) {
-<span class="nc" id="L176">        String result = text;</span>
-<span class="nc bnc" id="L177" title="All 2 branches missed.">        for (final Map.Entry&lt;String, String&gt; entry : parameters.entrySet()) {</span>
-<span class="nc" id="L178">            result = result.replace(variable(entry.getKey()), entry.getValue());</span>
-<span class="nc" id="L179">        }</span>
-<span class="nc" id="L180">        return result;</span>
+<span class="nc" id="L175">        String result = text;</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">        for (final Map.Entry&lt;String, String&gt; entry : parameters.entrySet()) {</span>
+<span class="nc" id="L177">            result = result.replace(variable(entry.getKey()), entry.getValue());</span>
+<span class="nc" id="L178">        }</span>
+<span class="nc" id="L179">        return result;</span>
     }
 
     /**
@@ -186,8 +185,8 @@ public class License implements Comparable&lt;License&gt; {
      * @return the license stored
      */
     public License storeIn(final Map&lt;String, License&gt; map) {
-<span class="fc" id="L189">        map.put(getId(), this);</span>
-<span class="fc" id="L190">        return this;</span>
+<span class="fc" id="L188">        map.put(getId(), this);</span>
+<span class="fc" id="L189">        return this;</span>
     }
 
     /**
@@ -195,7 +194,7 @@ public class License implements Comparable&lt;License&gt; {
      * @return not null
      */
     public String getId() {
-<span class="fc" id="L198">        return this.id;</span>
+<span class="fc" id="L197">        return this.id;</span>
     }
 
     /**
@@ -203,7 +202,7 @@ public class License implements Comparable&lt;License&gt; {
      * @return not null
      */
     public String getURL() {
-<span class="nc" id="L206">        return this.url;</span>
+<span class="nc" id="L205">        return this.url;</span>
     }
 
     /**
@@ -212,7 +211,7 @@ public class License implements Comparable&lt;License&gt; {
      * @return not null
      */
     public String getName() {
-<span class="fc" id="L215">        return this.name;</span>
+<span class="fc" id="L214">        return this.name;</span>
     }
 
     /**
@@ -220,7 +219,7 @@ public class License implements Comparable&lt;License&gt; {
      */
     @Override
     public int hashCode() {
-<span class="nc" id="L223">        return getId().hashCode();</span>
+<span class="nc" id="L222">        return getId().hashCode();</span>
     }
 
     /**
@@ -228,32 +227,32 @@ public class License implements Comparable&lt;License&gt; {
      */
     @Override
     public boolean equals(final Object obj) {
-<span class="nc bnc" id="L231" title="All 2 branches missed.">        if (this == obj) {</span>
-<span class="nc" id="L232">            return true;</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L231">            return true;</span>
         }
-<span class="nc bnc" id="L234" title="All 2 branches missed.">        if (obj == null) {</span>
-<span class="nc" id="L235">            return false;</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">        if (obj == null) {</span>
+<span class="nc" id="L234">            return false;</span>
         }
-<span class="nc bnc" id="L237" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
-<span class="nc" id="L238">            return false;</span>
+<span class="nc bnc" id="L236" title="All 2 branches missed.">        if (getClass() != obj.getClass()) {</span>
+<span class="nc" id="L237">            return false;</span>
         }
-<span class="nc" id="L240">        final License other = (License) obj;</span>
-<span class="nc" id="L241">        return getId().equals(other);</span>
+<span class="nc" id="L239">        final License other = (License) obj;</span>
+<span class="nc" id="L240">        return getId().equals(other.getId());</span>
     }
 
     /**
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     public int compareTo(final License other) {
-<span class="fc" id="L248">        final int nameDifference = getName().compareTo(other.getName());</span>
-<span class="pc bpc" id="L249" title="1 of 2 branches missed.">        return nameDifference == 0 ? getId().compareTo(other.getId())</span>
-<span class="nc" id="L250">                : nameDifference;</span>
+<span class="fc" id="L247">        final int nameDifference = getName().compareTo(other.getName());</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">        return nameDifference == 0 ? getId().compareTo(other.getId())</span>
+<span class="nc" id="L249">                : nameDifference;</span>
     }
 
     @Override
     public String toString() {
-<span class="nc" id="L255">        return &quot;License [id=&quot; + this.id + &quot;, name=&quot; + this.name + &quot;]&quot;;</span>
+<span class="nc" id="L254">        return &quot;License [id=&quot; + this.id + &quot;, name=&quot; + this.name + &quot;]&quot;;</span>
     }
 
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.16.202610240946</span></div></body></html>

@@ -108,7 +108,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/Descriptor.html" title="class in org.apache.creadur.whisker.model">Descriptor</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#build(java.io.InputStream)" class="member-name-link">build</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;xmlStream)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Builds from the given input stream configured via Apache Commons Secure XML.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../model/Descriptor.html" title="class in org.apache.creadur.whisker.model">Descriptor</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#build(org.jdom2.Document)" class="member-name-link">build</a><wbr>(org.jdom2.Document&nbsp;document)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -417,7 +419,7 @@ loadScripts(document, 'script');</script>
 <dd><code>licenses</code> - not null</dd>
 <dd><code>organisations</code> - not null</dd>
 <dt>Returns:</dt>
-<dd>Builds a with-license model from xml.</dd>
+<dd>Builds a with-license model from XML.</dd>
 <dt>Throws:</dt>
 <dd><code><a href="MissingIDException.html" title="class in org.apache.creadur.whisker.fromxml">MissingIDException</a></code> - when referenced license isn't found in the collection</dd>
 </dl>
@@ -621,10 +623,15 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../model/Descriptor.html" title="class in org.apache.creadur.whisker.model">Descriptor</a></span>&nbsp;<span class="element-name">build</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;xmlStream)</span>
                  throws <span class="exceptions">org.jdom2.JDOMException,
 <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Builds from the given input stream configured via Apache Commons Secure XML.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>xmlStream</code> - not null</dd>
+<dt>Returns:</dt>
+<dd>not null</dd>
 <dt>Throws:</dt>
-<dd><code>org.jdom2.JDOMException</code></dd>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code>org.jdom2.JDOMException</code> - in case of XML errors.</dd>
+<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - in case of general I/O errors.</dd>
 </dl>
 </section>
 </li>
