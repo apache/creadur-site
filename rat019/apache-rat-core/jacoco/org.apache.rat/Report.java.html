@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Report.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Core</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat</a> &gt; <span class="el_source">Report.java</span></div><h1>Report.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one   *
+ * or more contributor license agreements.  See the NOTICE file *
+ * distributed with this work for additional information        *
+ * regarding copyright ownership.  The ASF licenses this file   *
+ * to you under the Apache License, Version 2.0 (the            *
+ * &quot;License&quot;); you may not use this file except in compliance   *
+ * with the License.  You may obtain a copy of the License at   *
+ *                                                              *
+ *   http://www.apache.org/licenses/LICENSE-2.0                 *
+ *                                                              *
+ * Unless required by applicable law or agreed to in writing,   *
+ * software distributed under the License is distributed on an  *
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY       *
+ * KIND, either express or implied.  See the License for the    *
+ * specific language governing permissions and limitations      *
+ * under the License.                                           *
+ */
+package org.apache.rat;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
+import org.apache.commons.cli.Options;
+import org.apache.commons.io.function.IOSupplier;
+import org.apache.rat.commandline.ArgumentContext;
+import org.apache.rat.document.RatDocumentAnalysisException;
+import org.apache.rat.help.Help;
+import org.apache.rat.utils.DefaultLog;
+
+import static java.lang.String.format;
+
+/**
+ * The CLI based configuration object for report generation.
+ */
+public final class Report {
+    /**
+     * The option collection that this report is using.
+     */
+<span class="fc" id="L43">    private static final CLIOptionCollection OPTION_COLLECTION = new CLIOptionCollection();</span>
+
+    /**
+     * Processes the command line and builds a configuration and executes the
+     * report.
+     *
+     * @param args the arguments.
+     * @throws Exception on error.
+     */
+    public static void main(final String[] args) throws Exception {
+<span class="fc" id="L53">        DefaultLog.getInstance().info(new VersionInfo().toString());</span>
+
+<span class="pc bpc" id="L55" title="1 of 4 branches missed.">        if (args == null || args.length == 0) {</span>
+<span class="fc" id="L56">            DefaultLog.getInstance().info(&quot;Please use the \&quot;--help\&quot; option to see a &quot; +</span>
+                    &quot;list of valid commands and options, as you did not provide any arguments.&quot;);
+<span class="fc" id="L58">            return;</span>
+        }
+<span class="fc" id="L60">        OptionCollectionParser&lt;CLIOption&gt; cliOptionParser = new OptionCollectionParser&lt;&gt;(OPTION_COLLECTION);</span>
+<span class="fc" id="L61">        ArgumentContext argumentContext = cliOptionParser.parseCommands(new File(&quot;.&quot;), args);</span>
+<span class="fc" id="L62">        ReportConfiguration configuration = argumentContext.getConfiguration();</span>
+
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (argumentContext.hasOption(CLIOptionCollection.HELP)) {</span>
+<span class="fc" id="L65">            printUsage(OPTION_COLLECTION.getOptions(), configuration.getOutput());</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        } else if (!configuration.hasSource()) {</span>
+<span class="fc" id="L67">            String msg = &quot;No directories or files specified for scanning. Did you forget to close a multi-argument option?&quot;;</span>
+<span class="fc" id="L68">            DefaultLog.getInstance().error(msg);</span>
+<span class="fc" id="L69">            printUsage(OPTION_COLLECTION.getOptions(), configuration.getOutput());</span>
+<span class="fc" id="L70">        } else {</span>
+<span class="fc" id="L71">            configuration.validate(DefaultLog.getInstance()::error);</span>
+<span class="fc" id="L72">            Reporter.Output output = new Reporter(configuration).execute();</span>
+<span class="fc" id="L73">            output.format(argumentContext.getConfiguration());</span>
+<span class="fc" id="L74">            output.writeSummary(DefaultLog.getInstance().asWriter());</span>
+
+<span class="fc bfc" id="L76" title="All 2 branches covered.">            if (configuration.getClaimValidator().hasErrors()) {</span>
+<span class="fc" id="L77">                configuration.getClaimValidator().logIssues(output.getStatistic());</span>
+<span class="fc" id="L78">                throw new RatDocumentAnalysisException(format(&quot;Issues with %s&quot;,</span>
+<span class="fc" id="L79">                        String.join(&quot;, &quot;,</span>
+<span class="fc" id="L80">                                configuration.getClaimValidator().listIssues(output.getStatistic()))));</span>
+            }
+        }
+<span class="fc" id="L83">    }</span>
+
+    /**
+     * Prints the usage message on the output stream from {@code out}.
+     * @param opts the defined options.
+     * @param out a supplier of an OutputStream.
+     */
+    private static void printUsage(final Options opts, final IOSupplier&lt;OutputStream&gt; out) {
+<span class="fc" id="L91">        try (Writer writer = new OutputStreamWriter(out.get())) {</span>
+<span class="fc" id="L92">            new Help(OPTION_COLLECTION, writer).printUsage(opts);</span>
+<span class="nc" id="L93">        } catch (IOException e) {</span>
+<span class="nc" id="L94">            DefaultLog.getInstance().error(&quot;Unable to open output stream&quot;, e);</span>
+<span class="fc" id="L95">        }</span>
+<span class="fc" id="L96">    }</span>
+
+    private Report() {
+        // do not instantiate
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.16.202610240946</span></div></body></html>
