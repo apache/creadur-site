@@ -25,7 +25,7 @@ It is recommended to use JDK17 to generate the site as there are problems with s
 
 ## RAT - SNAPSHOT
 
-The current SNAPSHOT version of RAT can be found in [rat100](https://creadur.apache.org/rat100/) and is generated manually.
+The current SNAPSHOT version of RAT can be found in [rat019](https://creadur.apache.org/rat019/) and is generated manually.
 
 RAT uses [Jira](https://issues.apache.org/jira/secure/RapidBoard.jspa?rapidView=625&quickFilter=2851) to track issues of the currently planned release.
 
@@ -144,6 +144,7 @@ In order to prepare release documentation you may want to start the webpage loca
 ```
 $ linkchecker http://localhost:8888/rat
 $ linkchecker http://localhost:8888/rat100
+$ linkchecker http://localhost:8888/rat019
 $ linkchecker --check-extern https://creadur.apache.org/rat100/
 ```
 
