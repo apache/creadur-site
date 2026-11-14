@@ -1,0 +1,799 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang=""><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BaseRatMojo.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Apache Creadur RAT::Plugin4Maven</a> &gt; <a href="index.source.html" class="el_package">org.apache.rat.plugin</a> &gt; <span class="el_source">BaseRatMojo.java</span></div><h1>BaseRatMojo.java</h1><pre class="source lang-java linenums">/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * &quot;License&quot;); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * &quot;AS IS&quot; BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+package org.apache.rat.plugin;
+
+import org.apache.commons.cli.Option;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.rat.commandline.Arg;
+import org.apache.rat.DeprecationReporter;
+import org.apache.rat.utils.CasedString;
+import org.apache.rat.utils.DefaultLog;
+import org.apache.rat.utils.Log;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+/**
+ * Generated class to provide Maven support for standard RAT command line options
+ * DO NOT EDIT - GENERATED FILE
+ */
+public abstract class BaseRatMojo extends AbstractMojo {
+
+<span class="fc" id="L46">    private static final Map&lt;String, String&gt; xlateName = new HashMap&lt;&gt;();</span>
+
+<span class="fc" id="L48">    private static final List&lt;String&gt; unsupportedArgs = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L50">    private static final Map&lt;String, String&gt; deprecatedArgs = new HashMap&lt;&gt;();</span>
+
+    static {
+<span class="fc" id="L53">        xlateName.put(&quot;addLicense&quot;, &quot;add-license&quot;);</span>
+<span class="fc" id="L54">        unsupportedArgs.add(&quot;a&quot;);</span>
+<span class="fc" id="L55">        unsupportedArgs.add(&quot;dir&quot;);</span>
+<span class="fc" id="L56">        unsupportedArgs.add(&quot;log-level&quot;);</span>
+<span class="fc" id="L57">        deprecatedArgs.put(&quot;force&quot;, &quot;Use of deprecated option 'force'. Deprecated for removal since 0.17: Use &lt;editOverwrite&gt; instead.&quot;);</span>
+<span class="fc" id="L58">        deprecatedArgs.put(&quot;list-families&quot;, &quot;Use of deprecated option 'listFamilies'. Deprecated for removal since 0.17: Use &lt;outputFamilies&gt; instead.&quot;);</span>
+<span class="fc" id="L59">        deprecatedArgs.put(&quot;list-licenses&quot;, &quot;Use of deprecated option 'listLicenses'. Deprecated for removal since 0.17: Use &lt;outputLicenses&gt; instead.&quot;);</span>
+<span class="fc" id="L60">        deprecatedArgs.put(&quot;licenses&quot;, &quot;Use of deprecated option 'licenses'. Deprecated for removal since 0.17: Use &lt;config&gt; instead.&quot;);</span>
+<span class="fc" id="L61">        deprecatedArgs.put(&quot;copyright&quot;, &quot;Use of deprecated option 'copyright'. Deprecated for removal since 0.17: Use &lt;editCopyright&gt; instead.&quot;);</span>
+<span class="fc" id="L62">        deprecatedArgs.put(&quot;exclude&quot;, &quot;Use of deprecated option 'exclude'. Deprecated for removal since 0.17: Use &lt;inputExclude&gt; instead.&quot;);</span>
+<span class="fc" id="L63">        deprecatedArgs.put(&quot;out&quot;, &quot;Use of deprecated option 'out'. Deprecated for removal since 0.17: Use &lt;outputFile&gt; instead.&quot;);</span>
+<span class="fc" id="L64">        deprecatedArgs.put(&quot;includes-file&quot;, &quot;Use of deprecated option 'includesFile'. Deprecated for removal since 0.17: Use &lt;inputIncludeFile&gt; instead.&quot;);</span>
+<span class="fc" id="L65">        deprecatedArgs.put(&quot;exclude-file&quot;, &quot;Use of deprecated option 'excludeFile'. Deprecated for removal since 0.17: Use &lt;inputExcludeFile&gt; instead.&quot;);</span>
+<span class="fc" id="L66">        deprecatedArgs.put(&quot;addLicense&quot;, &quot;Use of deprecated option 'addLicense'. Deprecated for removal since 0.17: Use &lt;editLicense&gt; instead.&quot;);</span>
+<span class="fc" id="L67">        deprecatedArgs.put(&quot;stylesheet&quot;, &quot;Use of deprecated option 'stylesheet'. Deprecated for removal since 0.17: Use &lt;outputStyle&gt; instead.&quot;);</span>
+<span class="fc" id="L68">        deprecatedArgs.put(&quot;include&quot;, &quot;Use of deprecated option 'include'. Deprecated for removal since 0.17: Use &lt;inputInclude&gt; instead.&quot;);</span>
+<span class="fc" id="L69">        deprecatedArgs.put(&quot;scan-hidden-directories&quot;, &quot;Use of deprecated option 'scanHiddenDirectories'. Deprecated for removal since 0.17: Use &lt;inputIncludeStd&gt; with 'HIDDEN_DIR' argument instead.&quot;);</span>
+<span class="fc" id="L70">        deprecatedArgs.put(&quot;xml&quot;, &quot;Use of deprecated option 'xml'. Deprecated for removal since 0.17: Use &lt;outputStyle&gt; with the 'xml' argument instead.&quot;);</span>
+<span class="fc" id="L71">        deprecatedArgs.put(&quot;no-default-licenses&quot;, &quot;Use of deprecated option 'noDefaultLicenses'. Deprecated for removal since 0.17: Use &lt;configurationNoDefaults&gt; instead.&quot;);</span>
+<span class="fc" id="L72">    }</span>
+
+    /**
+     * Creates a Maven name from a long option.
+     * Will map excluded long options to null.
+     * @param longOpt the kebab name.
+     * @return The CamelCased name for Maven use.
+     */
+    public static String createName(String longOpt) {
+<span class="nc" id="L81">        String name = xlateName.get(longOpt);</span>
+<span class="nc bnc" id="L82" title="All 2 branches missed.">        return name != null ? name : new CasedString(CasedString.StringCase.KEBAB, longOpt).toCase(CasedString.StringCase.PASCAL);</span>
+    }
+
+    /**
+     * Creates a kebab case name from a camel case name.
+     * @param camelCase the camel case name to convert.
+     * @return the kebab format.
+     */
+    public static String toKebabForm(String camelCase) {
+<span class="nc" id="L91">        return new CasedString(CasedString.StringCase.CAMEL, camelCase).toCase(CasedString.StringCase.KEBAB);</span>
+    }
+
+    /**
+     * Returns the list of unsupported args.
+     * @return the list of kebab style names that are unsupported by the Maven UI.
+     */
+    public static List&lt;String&gt; unsupportedArgs() {
+<span class="nc" id="L99">        return Collections.unmodifiableList(unsupportedArgs);</span>
+    }
+    
+    ///////////////////////// Start common Arg manipulation code
+
+    /**
+     * Sets the deprecation report method.
+     */
+    private static void setDeprecationReporter() {
+<span class="fc" id="L108">        DeprecationReporter.setLogReporter(opt -&gt; {</span>
+<span class="fc" id="L109">            String msg = deprecatedArgs.get(argsKey(opt));</span>
+<span class="pc bpc" id="L110" title="1 of 2 branches missed.">            if (msg == null) {</span>
+<span class="nc" id="L111">                DeprecationReporter.getDefault().accept(opt);</span>
+            } else {
+<span class="fc" id="L113">                DefaultLog.getInstance().warn(msg);</span>
+            }
+<span class="fc" id="L115">        });</span>
+<span class="fc" id="L116">    }</span>
+
+    private static String argsKey(Option opt) {
+<span class="fc" id="L119">        return StringUtils.defaultIfEmpty(opt.getLongOpt(), opt.getKey());</span>
+    }
+
+    /**
+     * A map of CLI-based arguments to values.
+     */
+<span class="fc" id="L125">    protected final Map&lt;String, List&lt;String&gt;&gt; args = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Gets the list of arguments prepared for the CLI code to parse.
+     * @return the List of arguments for the CLI command line.
+     */
+    protected List&lt;String&gt; args() {
+<span class="fc" id="L132">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        for (Map.Entry&lt;String, List&lt;String&gt;&gt; entry : args.entrySet()) {</span>
+<span class="fc" id="L134">            result.add(&quot;--&quot; + entry.getKey());</span>
+<span class="fc" id="L135">            result.addAll(entry.getValue().stream().filter(Objects::nonNull).toList());</span>
+<span class="fc" id="L136">        }</span>
+<span class="fc" id="L137">        return result;</span>
+    }
+
+    private boolean validateSet(String key) {
+<span class="fc" id="L141">        Arg arg = Arg.findArg(key);</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (arg != null) {</span>
+<span class="fc" id="L143">            Option opt = arg.find(key);</span>
+<span class="fc" id="L144">            Option main = arg.option();</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">            if (opt.isDeprecated()) {</span>
+<span class="fc" id="L146">                args.remove(argsKey(main));</span>
+                // deprecated options must be explicitly set so let it go.
+<span class="fc" id="L148">                return true;</span>
+            }
+            // non-deprecated options may have default so ignore it if another option has already been set.
+<span class="fc bfc" id="L151" title="All 2 branches covered.">            for (Option o : arg.group().getOptions()) {</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">                if (!o.equals(main)) {</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">                    if (args.containsKey(argsKey(o))) {</span>
+<span class="nc" id="L154">                        return false;</span>
+                    }
+                }
+<span class="fc" id="L157">            }</span>
+<span class="fc" id="L158">            return true;</span>
+        }
+<span class="nc" id="L160">        return false;</span>
+    }
+
+    /**
+     * Set a key and value into the argument list.
+     * Replaces any existing value.
+     * @param key the key for the map.
+     * @param value the value to set.
+     */
+    protected void setArg(String key, String value) {
+<span class="pc bpc" id="L170" title="1 of 4 branches missed.">        if (value == null || StringUtils.isNotBlank(value)) {</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">            if (validateSet(key)) {</span>
+<span class="fc" id="L172">                List&lt;String&gt; values = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">                if (DefaultLog.getInstance().isEnabled(Log.Level.DEBUG)) {</span>
+<span class="nc" id="L174">                    DefaultLog.getInstance().debug(String.format(&quot;Setting %s to '%s'&quot;, key, value));</span>
+                }
+<span class="fc" id="L176">                values.add(value);</span>
+<span class="fc" id="L177">                args.put(key, values);</span>
+            }
+        }
+<span class="fc" id="L180">    }</span>
+
+    /**
+     * Get the list of values for a key.
+     * @param key the key for the map.
+     * @return the list of values for the key or {@code null} if not set.
+     */
+    public List&lt;String&gt; getArg(String key) {
+<span class="fc" id="L188">        return args.get(key);</span>
+    }
+
+    /**
+     * Add values to the key in the argument list.
+     * empty values are ignored. If no non-empty values are present no change is made.
+     * If the key does not exist, adds it.
+     * @param key the key for the map.
+     * @param value the array of values to set.
+     */
+    protected void addArg(String key, String[] value) {
+<span class="fc" id="L199">        List&lt;String&gt; newValues = Arrays.stream(value).filter(StringUtils::isNotBlank).toList();</span>
+<span class="fc bfc" id="L200" title="All 2 branches covered.">        if (!newValues.isEmpty()) {</span>
+<span class="pc bpc" id="L201" title="1 of 2 branches missed.">            if (validateSet(key)) {</span>
+<span class="pc bpc" id="L202" title="1 of 2 branches missed.">                if (DefaultLog.getInstance().isEnabled(Log.Level.DEBUG)) {</span>
+<span class="nc" id="L203">                    DefaultLog.getInstance().debug(String.format(&quot;Adding [%s] to %s&quot;, String.join(&quot;, &quot;, Arrays.asList(value)), key));</span>
+                }
+<span class="fc" id="L205">                List&lt;String&gt; values = args.computeIfAbsent(key, k -&gt; new ArrayList&lt;&gt;());</span>
+<span class="fc" id="L206">                values.addAll(newValues);</span>
+            }
+        }
+<span class="fc" id="L209">    }</span>
+
+    /**
+     * Add a value to the key in the argument list.
+     * If the key does not exist, adds it.
+     * @param key the key for the map.
+     * @param value the value to set.
+     */
+    protected void addArg(String key, String value) {
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">        if (StringUtils.isNotBlank(value)) {</span>
+<span class="pc bpc" id="L219" title="1 of 2 branches missed.">            if (validateSet(key)) {</span>
+<span class="fc" id="L220">                List&lt;String&gt; values = args.get(key);</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">                if (DefaultLog.getInstance().isEnabled(Log.Level.DEBUG)) {</span>
+<span class="nc" id="L222">                    DefaultLog.getInstance().debug(String.format(&quot;Adding [%s] to %s&quot;, String.join(&quot;, &quot;, Arrays.asList(value)), key));</span>
+                }
+<span class="fc bfc" id="L224" title="All 2 branches covered.">                if (values == null) {</span>
+<span class="fc" id="L225">                    values = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L226">                    args.put(key, values);</span>
+                }
+<span class="fc" id="L228">                values.add(value);</span>
+            }
+        }
+<span class="fc" id="L231">    }</span>
+
+    /**
+     * Remove a key from the argument list.
+     * @param key the key to remove from the map.
+     */
+    protected void removeArg(String key) {
+<span class="fc" id="L238">        args.remove(key);</span>
+<span class="fc" id="L239">    }</span>
+
+ ///////////////////////// End common Arg manipulation code
+
+<span class="fc" id="L243">protected BaseRatMojo() {</span>
+<span class="fc" id="L244">    setDeprecationReporter();</span>
+<span class="fc" id="L245">}</span>
+
+    /*  GENERATED METHODS */
+
+
+    /**
+     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will override excluded files. Argument should be a File. (See Argument Types for clarification)
+     * @param inputIncludeFile &amp;lt;Expression&amp;gt; entries from a file.
+     */
+    @Parameter(property = &quot;rat.InputIncludeFile&quot;)
+    public void setInputIncludeFile(String inputIncludeFile) {
+<span class="nc" id="L256">        setArg(&quot;input-include-file&quot;, inputIncludeFile);</span>
+<span class="nc" id="L257">    }</span>
+    /**
+     * Forces any changes in files to be written directly to the source files so that new files are not created.
+     * @param force The state
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;editOverwrite&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.Force&quot;)
+    public void setForce(boolean force) {
+<span class="nc bnc" id="L266" title="All 2 branches missed.">        if (force) {</span>
+<span class="nc" id="L267">            setArg(&quot;force&quot;, null);</span>
+        } else {
+<span class="nc" id="L269">            removeArg(&quot;force&quot;);</span>
+        }
+<span class="nc" id="L271">    }</span>
+    /**
+     * List the defined license families. Argument should be a LicenseFilter. (See Argument Types for clarification)
+     * @param listFamilies The defined license families.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;outputFamilies&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.ListFamilies&quot;)
+    public void setListFamilies(String listFamilies) {
+<span class="nc" id="L280">        setArg(&quot;list-families&quot;, listFamilies);</span>
+<span class="nc" id="L281">    }</span>
+    /**
+     * A file containing file names to process. File names must use linux directory separator ('/') or none at all. File names that do not start with '/' are relative to the directory where the argument is located. Arguments should be File. (See Argument Types for clarification)
+     * @param inputSource File containing file names to process.
+     */
+    @Parameter
+    public void setInputSources(String[] inputSource) {
+<span class="nc" id="L288">        addArg(&quot;input-source&quot;, inputSource);</span>
+<span class="nc" id="L289">    }</span>
+    /**
+     * A file containing file names to process. File names must use linux directory separator ('/') or none at all. File names that do not start with '/' are relative to the directory where the argument is located. Arguments should be File. (See Argument Types for clarification)
+     * @param inputSource File containing file names to process.
+     */
+    @Parameter
+    public void setInputSource(String inputSource) {
+<span class="nc" id="L296">        addArg(&quot;input-source&quot;, inputSource);</span>
+<span class="nc" id="L297">    }</span>
+    /**
+     * List the defined licenses. Argument should be a LicenseFilter. (See Argument Types for clarification)
+     * @param listLicenses The defined licenses.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;outputLicenses&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.ListLicenses&quot;)
+    public void setListLicenses(String listLicenses) {
+<span class="nc" id="L306">        setArg(&quot;list-licenses&quot;, listLicenses);</span>
+<span class="nc" id="L307">    }</span>
+    /**
+     * The minimum number for the specified counter. Arguments should be CounterPattern. (See Argument Types for clarification)
+     * @param counterMin Minimum number for the specified counter.
+     */
+    @Parameter
+    public void setCounterMins(String[] counterMin) {
+<span class="nc" id="L314">        addArg(&quot;counter-min&quot;, counterMin);</span>
+<span class="nc" id="L315">    }</span>
+    /**
+     * The minimum number for the specified counter. Arguments should be CounterPattern. (See Argument Types for clarification)
+     * @param counterMin Minimum number for the specified counter.
+     */
+    @Parameter
+    public void setCounterMin(String counterMin) {
+<span class="nc" id="L322">        addArg(&quot;counter-min&quot;, counterMin);</span>
+<span class="nc" id="L323">    }</span>
+    /**
+     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will be excluded from processing. Argument should be a File. (See Argument Types for clarification)
+     * @param inputExcludeFile &amp;lt;Expression&amp;gt; entries from a file.
+     */
+    @Parameter(property = &quot;rat.InputExcludeFile&quot;)
+    public void setInputExcludeFile(String inputExcludeFile) {
+<span class="nc" id="L330">        setArg(&quot;input-exclude-file&quot;, inputExcludeFile);</span>
+<span class="nc" id="L331">    }</span>
+    /**
+     * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files. Arguments should be Expression. (See Argument Types for clarification)
+     * @param inputInclude Files matching &amp;lt;Expression&amp;gt;.
+     */
+    @Parameter
+    public void setInputIncludes(String[] inputInclude) {
+<span class="nc" id="L338">        addArg(&quot;input-include&quot;, inputInclude);</span>
+<span class="nc" id="L339">    }</span>
+    /**
+     * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files. Arguments should be Expression. (See Argument Types for clarification)
+     * @param inputInclude Files matching &amp;lt;Expression&amp;gt;.
+     */
+    @Parameter
+    public void setInputInclude(String inputInclude) {
+<span class="nc" id="L346">        addArg(&quot;input-include&quot;, inputInclude);</span>
+<span class="nc" id="L347">    }</span>
+    /**
+     * File names for system configuration. Arguments should be File. (See Argument Types for clarification)
+     * @param config Names for system configuration.
+     */
+    @Parameter
+    public void setConfigs(String[] config) {
+<span class="fc" id="L354">        addArg(&quot;config&quot;, config);</span>
+<span class="fc" id="L355">    }</span>
+    /**
+     * File names for system configuration. Arguments should be File. (See Argument Types for clarification)
+     * @param config Names for system configuration.
+     */
+    @Parameter
+    public void setConfig(String config) {
+<span class="nc" id="L362">        addArg(&quot;config&quot;, config);</span>
+<span class="nc" id="L363">    }</span>
+    /**
+     * File names for system configuration. Arguments should be File. (See Argument Types for clarification)
+     * @param licenses Names for system configuration.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;config&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter
+    public void setLicenses(String[] licenses) {
+<span class="nc" id="L372">        addArg(&quot;licenses&quot;, licenses);</span>
+<span class="nc" id="L373">    }</span>
+    /**
+     * File names for system configuration. Arguments should be File. (See Argument Types for clarification)
+     * @param licenses Names for system configuration.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;config&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter
+    public void setLicenses(String licenses) {
+<span class="nc" id="L382">        addArg(&quot;licenses&quot;, licenses);</span>
+<span class="nc" id="L383">    }</span>
+    /**
+     * List the defined licenses. Argument should be a LicenseFilter. (See Argument Types for clarification)
+     * @param outputLicenses The defined licenses.
+     */
+    @Parameter(property = &quot;rat.OutputLicenses&quot;, defaultValue = &quot;NONE&quot;)
+    public void setOutputLicenses(String outputLicenses) {
+<span class="fc" id="L390">        setArg(&quot;output-licenses&quot;, outputLicenses);</span>
+<span class="fc" id="L391">    }</span>
+    /**
+     * Add the Apache-2.0 license header to any file with an unknown license that is not in the exclusion list. By default new files will be created with the license header, to force the modification of existing files use the &amp;lt;editOverwrite&amp;gt; option.
+     * @param editLicense The state
+     */
+    @Parameter(property = &quot;rat.EditLicense&quot;)
+    public void setEditLicense(boolean editLicense) {
+<span class="nc bnc" id="L398" title="All 2 branches missed.">        if (editLicense) {</span>
+<span class="nc" id="L399">            setArg(&quot;edit-license&quot;, null);</span>
+        } else {
+<span class="nc" id="L401">            removeArg(&quot;edit-license&quot;);</span>
+        }
+<span class="nc" id="L403">    }</span>
+    /**
+     * Excludes files defined in standard collections based on commonly occurring groups. Excludes any path matcher actions but DOES NOT exclude any file processor actions. Arguments should be StandardCollection. (See Argument Types for clarification)
+     * @param inputExcludeStd Files defined in standard collections based on commonly occurring groups.
+     */
+    @Parameter
+    public void setInputExcludeStds(String[] inputExcludeStd) {
+<span class="nc" id="L410">        addArg(&quot;input-exclude-std&quot;, inputExcludeStd);</span>
+<span class="nc" id="L411">    }</span>
+    /**
+     * Excludes files defined in standard collections based on commonly occurring groups. Excludes any path matcher actions but DOES NOT exclude any file processor actions. Arguments should be StandardCollection. (See Argument Types for clarification)
+     * @param inputExcludeStd Files defined in standard collections based on commonly occurring groups.
+     */
+    @Parameter
+    public void setInputExcludeStd(String inputExcludeStd) {
+<span class="fc" id="L418">        addArg(&quot;input-exclude-std&quot;, inputExcludeStd);</span>
+<span class="fc" id="L419">    }</span>
+    /**
+     * Excludes files with sizes less than the number of bytes specified. Argument should be a Integer. (See Argument Types for clarification)
+     * @param inputExcludeSize Files with sizes less than the number of bytes specified.
+     */
+    @Parameter(property = &quot;rat.InputExcludeSize&quot;)
+    public void setInputExcludeSize(String inputExcludeSize) {
+<span class="nc" id="L426">        setArg(&quot;input-exclude-size&quot;, inputExcludeSize);</span>
+<span class="nc" id="L427">    }</span>
+    /**
+     * The copyright message to use in the license headers. Argument should be a Arg. (See Argument Types for clarification)
+     * @param copyright Copyright message to use in the license headers.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;editCopyright&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.Copyright&quot;)
+    public void setCopyright(String copyright) {
+<span class="nc" id="L436">        setArg(&quot;copyright&quot;, copyright);</span>
+<span class="nc" id="L437">    }</span>
+    /**
+     * Specifies the level of detail in ARCHIVE file reporting. Argument should be a ProcessingType. (See Argument Types for clarification)
+     * @param outputArchive The level of detail in ARCHIVE file reporting.
+     */
+    @Parameter(property = &quot;rat.OutputArchive&quot;, defaultValue = &quot;NOTIFICATION&quot;)
+    public void setOutputArchive(String outputArchive) {
+<span class="fc" id="L444">        setArg(&quot;output-archive&quot;, outputArchive);</span>
+<span class="fc" id="L445">    }</span>
+    /**
+     * Forces any changes in files to be written directly to the source files so that new files are not created. Only valid with &amp;lt;editLicense&amp;gt;.
+     * @param editOverwrite The state
+     */
+    @Parameter(property = &quot;rat.EditOverwrite&quot;)
+    public void setEditOverwrite(boolean editOverwrite) {
+<span class="nc bnc" id="L452" title="All 2 branches missed.">        if (editOverwrite) {</span>
+<span class="nc" id="L453">            setArg(&quot;edit-overwrite&quot;, null);</span>
+        } else {
+<span class="nc" id="L455">            removeArg(&quot;edit-overwrite&quot;);</span>
+        }
+<span class="nc" id="L457">    }</span>
+    /**
+     * Ignore default configuration.
+     * @param configurationNoDefaults The state
+     */
+    @Parameter(property = &quot;rat.ConfigurationNoDefaults&quot;)
+    public void setConfigurationNoDefaults(boolean configurationNoDefaults) {
+<span class="nc bnc" id="L464" title="All 2 branches missed.">        if (configurationNoDefaults) {</span>
+<span class="nc" id="L465">            setArg(&quot;configuration-no-defaults&quot;, null);</span>
+        } else {
+<span class="nc" id="L467">            removeArg(&quot;configuration-no-defaults&quot;);</span>
+        }
+<span class="nc" id="L469">    }</span>
+    /**
+     * Excludes files matching &amp;lt;Expression&amp;gt;. Arguments should be Expression. (See Argument Types for clarification)
+     * @param exclude Files matching &amp;lt;Expression&amp;gt;.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;inputExclude&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter
+    public void setExcludes(String[] exclude) {
+<span class="fc" id="L478">        addArg(&quot;exclude&quot;, exclude);</span>
+<span class="fc" id="L479">    }</span>
+    /**
+     * Excludes files matching &amp;lt;Expression&amp;gt;. Arguments should be Expression. (See Argument Types for clarification)
+     * @param exclude Files matching &amp;lt;Expression&amp;gt;.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;inputExclude&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter
+    public void setExclude(String exclude) {
+<span class="nc" id="L488">        addArg(&quot;exclude&quot;, exclude);</span>
+<span class="nc" id="L489">    }</span>
+    /**
+     * Define the output file where to write a report to. Argument should be a File. (See Argument Types for clarification)
+     * @param out The output file where to write a report to.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;outputFile&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.Out&quot;)
+    public void setOut(String out) {
+<span class="nc" id="L498">        setArg(&quot;out&quot;, out);</span>
+<span class="nc" id="L499">    }</span>
+    /**
+     * A comma separated list of denied License family IDs. These license families will be removed from the list of approved licenses. Once license families are removed they can not be added back. Argument should be a FamilyID. (See Argument Types for clarification)
+     * @param licenseFamiliesDenied Comma separated list of denied License family IDs.
+     */
+    @Parameter(property = &quot;rat.LicenseFamiliesDenied&quot;)
+    public void setLicenseFamiliesDenied(String licenseFamiliesDenied) {
+<span class="nc" id="L506">        setArg(&quot;license-families-denied&quot;, licenseFamiliesDenied);</span>
+<span class="nc" id="L507">    }</span>
+    /**
+     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will override excluded files. Argument should be a File. (See Argument Types for clarification)
+     * @param includesFile &amp;lt;Expression&amp;gt; entries from a file.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;inputIncludeFile&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.IncludesFile&quot;)
+    public void setIncludesFile(String includesFile) {
+<span class="nc" id="L516">        setArg(&quot;includes-file&quot;, includesFile);</span>
+<span class="nc" id="L517">    }</span>
+    /**
+     * Name of file containing comma separated lists of the denied license IDs. These licenses will be removed from the list of approved licenses. Once licenses are removed they can not be added back. Argument should be a File. (See Argument Types for clarification)
+     * @param licensesDeniedFile Of file containing comma separated lists of the denied license IDs.
+     */
+    @Parameter(property = &quot;rat.LicensesDeniedFile&quot;)
+    public void setLicensesDeniedFile(String licensesDeniedFile) {
+<span class="nc" id="L524">        setArg(&quot;licenses-denied-file&quot;, licensesDeniedFile);</span>
+<span class="nc" id="L525">    }</span>
+    /**
+     * Reads &amp;lt;Expression&amp;gt; entries from a file. Entries will be excluded from processing. Argument should be a File. (See Argument Types for clarification)
+     * @param excludeFile &amp;lt;Expression&amp;gt; entries from a file.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;inputExcludeFile&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.ExcludeFile&quot;)
+    public void setExcludeFile(String excludeFile) {
+<span class="nc" id="L534">        setArg(&quot;exclude-file&quot;, excludeFile);</span>
+<span class="nc" id="L535">    }</span>
+    /**
+     * Name of file containing comma separated lists of approved License IDs. Argument should be a File. (See Argument Types for clarification)
+     * @param licensesApprovedFile Of file containing comma separated lists of approved License IDs.
+     */
+    @Parameter(property = &quot;rat.LicensesApprovedFile&quot;)
+    public void setLicensesApprovedFile(String licensesApprovedFile) {
+<span class="nc" id="L542">        setArg(&quot;licenses-approved-file&quot;, licensesApprovedFile);</span>
+<span class="nc" id="L543">    }</span>
+    /**
+     * Includes files defined in standard collections based on commonly occurring groups. Includes any path matcher actions but DOES NOT include any file processor actions. Arguments should be StandardCollection. (See Argument Types for clarification)
+     * @param inputIncludeStd Files defined in standard collections based on commonly occurring groups.
+     */
+    @Parameter
+    public void setInputIncludeStds(String[] inputIncludeStd) {
+<span class="nc" id="L550">        addArg(&quot;input-include-std&quot;, inputIncludeStd);</span>
+<span class="nc" id="L551">    }</span>
+    /**
+     * Includes files defined in standard collections based on commonly occurring groups. Includes any path matcher actions but DOES NOT include any file processor actions. Arguments should be StandardCollection. (See Argument Types for clarification)
+     * @param inputIncludeStd Files defined in standard collections based on commonly occurring groups.
+     */
+    @Parameter
+    public void setInputIncludeStd(String inputIncludeStd) {
+<span class="nc" id="L558">        addArg(&quot;input-include-std&quot;, inputIncludeStd);</span>
+<span class="nc" id="L559">    }</span>
+    /**
+     * XSLT stylesheet to use when creating the report. Either an external xsl file may be specified or one of the internal named sheets. Argument should be a StyleSheet. (See Argument Types for clarification)
+     * @param outputStyle Stylesheet to use when creating the report.
+     */
+    @Parameter(property = &quot;rat.OutputStyle&quot;)
+    public void setOutputStyle(String outputStyle) {
+<span class="fc" id="L566">        setArg(&quot;output-style&quot;, outputStyle);</span>
+<span class="fc" id="L567">    }</span>
+    /**
+     * If set do not update the files but generate the reports.
+     * @param dryRun The state
+     */
+    @Parameter(property = &quot;rat.DryRun&quot;)
+    public void setDryRun(boolean dryRun) {
+<span class="nc bnc" id="L574" title="All 2 branches missed.">        if (dryRun) {</span>
+<span class="nc" id="L575">            setArg(&quot;dry-run&quot;, null);</span>
+        } else {
+<span class="nc" id="L577">            removeArg(&quot;dry-run&quot;);</span>
+        }
+<span class="nc" id="L579">    }</span>
+    /**
+     * Define the output file where to write a report to. Argument should be a File. (See Argument Types for clarification)
+     * @param outputFile The output file where to write a report to.
+     */
+    @Parameter(property = &quot;rat.OutputFile&quot;)
+    public void setOutputFile(String outputFile) {
+<span class="fc" id="L586">        setArg(&quot;output-file&quot;, outputFile);</span>
+<span class="fc" id="L587">    }</span>
+    /**
+     * Specifies the level of detail in STANDARD file reporting. Argument should be a ProcessingType. (See Argument Types for clarification)
+     * @param outputStandard The level of detail in STANDARD file reporting.
+     */
+    @Parameter(property = &quot;rat.OutputStandard&quot;, defaultValue = &quot;ABSENCE&quot;)
+    public void setOutputStandard(String outputStandard) {
+<span class="fc" id="L594">        setArg(&quot;output-standard&quot;, outputStandard);</span>
+<span class="fc" id="L595">    }</span>
+    /**
+     * The acceptable maximum number for the specified counter. A value of '-1' specifies an unlimited number. Arguments should be CounterPattern. (See Argument Types for clarification)
+     * @param counterMax Acceptable maximum number for the specified counter.
+     */
+    @Parameter
+    public void setCounterMaxs(String[] counterMax) {
+<span class="nc" id="L602">        addArg(&quot;counter-max&quot;, counterMax);</span>
+<span class="nc" id="L603">    }</span>
+    /**
+     * The acceptable maximum number for the specified counter. A value of '-1' specifies an unlimited number. Arguments should be CounterPattern. (See Argument Types for clarification)
+     * @param counterMax Acceptable maximum number for the specified counter.
+     */
+    @Parameter
+    public void setCounterMax(String counterMax) {
+<span class="nc" id="L610">        addArg(&quot;counter-max&quot;, counterMax);</span>
+<span class="nc" id="L611">    }</span>
+    /**
+     * Excludes files matching &amp;lt;Expression&amp;gt;. Arguments should be Expression. (See Argument Types for clarification)
+     * @param inputExclude Files matching &amp;lt;Expression&amp;gt;.
+     */
+    @Parameter
+    public void setInputExcludes(String[] inputExclude) {
+<span class="fc" id="L618">        addArg(&quot;input-exclude&quot;, inputExclude);</span>
+<span class="fc" id="L619">    }</span>
+    /**
+     * Excludes files matching &amp;lt;Expression&amp;gt;. Arguments should be Expression. (See Argument Types for clarification)
+     * @param inputExclude Files matching &amp;lt;Expression&amp;gt;.
+     */
+    @Parameter
+    public void setInputExclude(String inputExclude) {
+<span class="nc" id="L626">        addArg(&quot;input-exclude&quot;, inputExclude);</span>
+<span class="nc" id="L627">    }</span>
+    /**
+     * A comma separated list of approved license family IDs. These license families will be added to the list of approved license families. Argument should be a FamilyID. (See Argument Types for clarification)
+     * @param licenseFamiliesApproved Comma separated list of approved license family IDs.
+     */
+    @Parameter(property = &quot;rat.LicenseFamiliesApproved&quot;)
+    public void setLicenseFamiliesApproved(String licenseFamiliesApproved) {
+<span class="nc" id="L634">        setArg(&quot;license-families-approved&quot;, licenseFamiliesApproved);</span>
+<span class="nc" id="L635">    }</span>
+    /**
+     * Name of file containing comma separated lists of approved family IDs. Argument should be a File. (See Argument Types for clarification)
+     * @param licenseFamiliesApprovedFile Of file containing comma separated lists of approved family IDs.
+     */
+    @Parameter(property = &quot;rat.LicenseFamiliesApprovedFile&quot;)
+    public void setLicenseFamiliesApprovedFile(String licenseFamiliesApprovedFile) {
+<span class="nc" id="L642">        setArg(&quot;license-families-approved-file&quot;, licenseFamiliesApprovedFile);</span>
+<span class="nc" id="L643">    }</span>
+    /**
+     * Add the Apache-2.0 license header to any file with an unknown license that is not in the exclusion list.
+     * @param addLicense The state
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;editLicense&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.AddLicense&quot;)
+    public void setAddLicense(boolean addLicense) {
+<span class="pc bpc" id="L652" title="1 of 2 branches missed.">        if (addLicense) {</span>
+<span class="fc" id="L653">            setArg(&quot;addLicense&quot;, null);</span>
+        } else {
+<span class="nc" id="L655">            removeArg(&quot;addLicense&quot;);</span>
+        }
+<span class="fc" id="L657">    }</span>
+    /**
+     * A comma separated list of denied License IDs. These licenses will be removed from the list of approved licenses. Once licenses are removed they can not be added back. Argument should be a LicenseID. (See Argument Types for clarification)
+     * @param licensesDenied Comma separated list of denied License IDs.
+     */
+    @Parameter(property = &quot;rat.LicensesDenied&quot;)
+    public void setLicensesDenied(String licensesDenied) {
+<span class="nc" id="L664">        setArg(&quot;licenses-denied&quot;, licensesDenied);</span>
+<span class="nc" id="L665">    }</span>
+    /**
+     * Parse SCM based exclusion files to exclude specified files and directories. This action can apply to any standard collection that implements a file processor. Arguments should be StandardCollection. (See Argument Types for clarification)
+     * @param inputExcludeParsedScm SCM based exclusion files to exclude specified files and directories.
+     */
+    @Parameter
+    public void setInputExcludeParsedScms(String[] inputExcludeParsedScm) {
+<span class="fc" id="L672">        addArg(&quot;input-exclude-parsed-scm&quot;, inputExcludeParsedScm);</span>
+<span class="fc" id="L673">    }</span>
+    /**
+     * Parse SCM based exclusion files to exclude specified files and directories. This action can apply to any standard collection that implements a file processor. Arguments should be StandardCollection. (See Argument Types for clarification)
+     * @param inputExcludeParsedScm SCM based exclusion files to exclude specified files and directories.
+     */
+    @Parameter
+    public void setInputExcludeParsedScm(String inputExcludeParsedScm) {
+<span class="fc" id="L680">        addArg(&quot;input-exclude-parsed-scm&quot;, inputExcludeParsedScm);</span>
+<span class="fc" id="L681">    }</span>
+    /**
+     * XSLT stylesheet to use when creating the report. Argument should be a StyleSheet. (See Argument Types for clarification)
+     * @param stylesheet Stylesheet to use when creating the report.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;outputStyle&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.Stylesheet&quot;)
+    public void setStylesheet(String stylesheet) {
+<span class="nc" id="L690">        setArg(&quot;stylesheet&quot;, stylesheet);</span>
+<span class="nc" id="L691">    }</span>
+    /**
+     * The copyright message to use in the license headers. Usually in the form of &amp;quot;Copyright 2008 Foo&amp;quot;.  Only valid with &amp;lt;editLicense&amp;gt; Argument should be a Arg. (See Argument Types for clarification)
+     * @param editCopyright Copyright message to use in the license headers.
+     */
+    @Parameter(property = &quot;rat.EditCopyright&quot;)
+    public void setEditCopyright(String editCopyright) {
+<span class="nc" id="L698">        setArg(&quot;edit-copyright&quot;, editCopyright);</span>
+<span class="nc" id="L699">    }</span>
+    /**
+     * A comma separated list of approved License IDs. These licenses will be added to the list of approved licenses. Argument should be a LicenseID. (See Argument Types for clarification)
+     * @param licensesApproved Comma separated list of approved License IDs.
+     */
+    @Parameter(property = &quot;rat.LicensesApproved&quot;)
+    public void setLicensesApproved(String licensesApproved) {
+<span class="nc" id="L706">        setArg(&quot;licenses-approved&quot;, licensesApproved);</span>
+<span class="nc" id="L707">    }</span>
+    /**
+     * List the defined license families. Argument should be a LicenseFilter. (See Argument Types for clarification)
+     * @param outputFamilies The defined license families.
+     */
+    @Parameter(property = &quot;rat.OutputFamilies&quot;, defaultValue = &quot;NONE&quot;)
+    public void setOutputFamilies(String outputFamilies) {
+<span class="fc" id="L714">        setArg(&quot;output-families&quot;, outputFamilies);</span>
+<span class="fc" id="L715">    }</span>
+    /**
+     * Print information about registered licenses.
+     * @param helpLicenses The state
+     */
+    @Parameter(property = &quot;rat.HelpLicenses&quot;)
+    public void setHelpLicenses(boolean helpLicenses) {
+<span class="nc bnc" id="L722" title="All 2 branches missed.">        if (helpLicenses) {</span>
+<span class="nc" id="L723">            setArg(&quot;help-licenses&quot;, null);</span>
+        } else {
+<span class="nc" id="L725">            removeArg(&quot;help-licenses&quot;);</span>
+        }
+<span class="nc" id="L727">    }</span>
+    /**
+     * Name of file containing comma separated lists of denied license IDs. These license families will be removed from the list of approved licenses. Once license families are removed they can not be added back. Argument should be a File. (See Argument Types for clarification)
+     * @param licenseFamiliesDeniedFile Of file containing comma separated lists of denied license IDs.
+     */
+    @Parameter(property = &quot;rat.LicenseFamiliesDeniedFile&quot;)
+    public void setLicenseFamiliesDeniedFile(String licenseFamiliesDeniedFile) {
+<span class="nc" id="L734">        setArg(&quot;license-families-denied-file&quot;, licenseFamiliesDeniedFile);</span>
+<span class="nc" id="L735">    }</span>
+    /**
+     * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files. Arguments should be Expression. (See Argument Types for clarification)
+     * @param include Files matching &amp;lt;Expression&amp;gt;.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;inputInclude&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter
+    public void setIncludes(String[] include) {
+<span class="nc" id="L744">        addArg(&quot;include&quot;, include);</span>
+<span class="nc" id="L745">    }</span>
+    /**
+     * Includes files matching &amp;lt;Expression&amp;gt;. Will override excluded files. Arguments should be Expression. (See Argument Types for clarification)
+     * @param include Files matching &amp;lt;Expression&amp;gt;.
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;inputInclude&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter
+    public void setInclude(String include) {
+<span class="nc" id="L754">        addArg(&quot;include&quot;, include);</span>
+<span class="nc" id="L755">    }</span>
+    /**
+     * Scans hidden directories.
+     * @param scanHiddenDirectories The state
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;inputIncludeStd&amp;gt; with 'HIDDEN_DIR' argument instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.ScanHiddenDirectories&quot;)
+    public void setScanHiddenDirectories(boolean scanHiddenDirectories) {
+<span class="nc bnc" id="L764" title="All 2 branches missed.">        if (scanHiddenDirectories) {</span>
+<span class="nc" id="L765">            setArg(&quot;scan-hidden-directories&quot;, null);</span>
+        } else {
+<span class="nc" id="L767">            removeArg(&quot;scan-hidden-directories&quot;);</span>
+        }
+<span class="nc" id="L769">    }</span>
+    /**
+     * forces XML output rather than the textual report.
+     * @param xml The state
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;outputStyle&amp;gt; with the 'xml' argument instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.Xml&quot;)
+    public void setXml(boolean xml) {
+<span class="nc bnc" id="L778" title="All 2 branches missed.">        if (xml) {</span>
+<span class="nc" id="L779">            setArg(&quot;xml&quot;, null);</span>
+        } else {
+<span class="nc" id="L781">            removeArg(&quot;xml&quot;);</span>
+        }
+<span class="nc" id="L783">    }</span>
+    /**
+     * Ignore default configuration.
+     * @param noDefaultLicenses The state
+     * @deprecated Deprecated for removal since 0.17: Use &amp;lt;configurationNoDefaults&amp;gt; instead.
+     */
+    @Deprecated
+    @Parameter(property = &quot;rat.NoDefaultLicenses&quot;)
+    public void setNoDefaultLicenses(boolean noDefaultLicenses) {
+<span class="nc bnc" id="L792" title="All 2 branches missed.">        if (noDefaultLicenses) {</span>
+<span class="nc" id="L793">            setArg(&quot;no-default-licenses&quot;, null);</span>
+        } else {
+<span class="nc" id="L795">            removeArg(&quot;no-default-licenses&quot;);</span>
+        }
+<span class="nc" id="L797">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.16.202610240946</span></div></body></html>

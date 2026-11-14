@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bom serialNumber="urn:uuid:3f95c30e-1179-3216-b6bb-97abc203aef6" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+  <metadata>
+    <lifecycles>
+      <lifecycle>
+        <phase>build</phase>
+      </lifecycle>
+    </lifecycles>
+    <tools>
+      <components>
+        <component type="library">
+          <author>OWASP Foundation</author>
+          <group>org.cyclonedx</group>
+          <name>cyclonedx-maven-plugin</name>
+          <version>2.9.3</version>
+          <description>CycloneDX Maven plugin</description>
+          <hashes>
+            <hash alg="MD5">e7c87ab327b65b23c681fc9dc8bb620b</hash>
+            <hash alg="SHA-1">fa3f0f04f4d5077b5e085d4d09aa2e68aeba5260</hash>
+            <hash alg="SHA-256">c452d5eebe28bc86bef2e7c72d129f04f60877bef843eac8120f01fb655be293</hash>
+            <hash alg="SHA-512">ec0344ed2ffe62d565aaf936a37140d04c7fffa8669a666be0366cd44eec3195232d79841cdec47030b79068216ac7e1a8c805255758e3d418dae32a4b9b9beb</hash>
+            <hash alg="SHA-384">3df26b2a00d87fe090851975ebcc30217f98634e7c47d07128e148f325ebfe3bc0790b2f52ad4591734b7b0de738f003</hash>
+            <hash alg="SHA3-384">470c1b4962379b5b6494c75bd1475da3519bbe2543999c95f26b4021164d3d05419b0c3f704443162fe5433a204250e9</hash>
+            <hash alg="SHA3-256">900e9c4edb18940ed3c4a4ba6946957fa613ef0d4b0c380551638f229206373c</hash>
+            <hash alg="SHA3-512">5e36433e18ae24f7460902da27818874df5d1d73df1a97e49e7369335f7cc61ca595466a2d37789fba7eaa7f7f251b29216c3d7a78910b2ec38e2ed68ea84876</hash>
+          </hashes>
+        </component>
+      </components>
+    </tools>
+    <component type="library" bom-ref="pkg:maven/org.apache.rat/apache-rat-project@0.19-SNAPSHOT?type=pom">
+      <publisher>Apache Software Foundation</publisher>
+      <group>org.apache.rat</group>
+      <name>apache-rat-project</name>
+      <version>0.19-SNAPSHOT</version>
+      <description>Apache RAT is a release audit tool. It improves accuracy and efficiency when checking
+releases. It is heuristic in nature: making guesses about possible problems. It
+will produce false positives and cannot find every possible issue with a release.
+Its reports require interpretation.
+
+In response to demands from project quality tool developers, RAT is available as a
+library suitable for inclusion in tools. This POM describes that library.
+Note that binary compatibility is not guaranteed between releases.
+
+Apache RAT is developed by the Apache Creadur project, a language and build
+agnostic home for software distribution comprehension and audit tools.</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+          <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+      </licenses>
+      <purl>pkg:maven/org.apache.rat/apache-rat-project@0.19-SNAPSHOT?type=pom</purl>
+      <externalReferences>
+        <reference type="website">
+          <url>https://creadur.apache.org/rat/</url>
+        </reference>
+        <reference type="build-system">
+          <url>https://ci-builds.apache.org/job/Creadur/job/Creadur-Rat/</url>
+        </reference>
+        <reference type="distribution-intake">
+          <url>https://repository.apache.org/service/local/staging/deploy/maven2</url>
+        </reference>
+        <reference type="issue-tracker">
+          <url>https://issues.apache.org/jira/browse/RAT</url>
+        </reference>
+        <reference type="mailing-list">
+          <url>https://mail-archives.apache.org/mod_mbox/creadur-dev/</url>
+        </reference>
+        <reference type="vcs">
+          <url>https://gitbox.apache.org/repos/asf?p=creadur-rat.git</url>
+        </reference>
+      </externalReferences>
+    </component>
+    <properties>
+      <property name="maven.goal">makeBom</property>
+      <property name="maven.scopes">compile,provided,runtime,system</property>
+      <property name="cdx:reproducible">enabled</property>
+    </properties>
+  </metadata>
+  <dependencies>
+    <dependency ref="pkg:maven/org.apache.rat/apache-rat-project@0.19-SNAPSHOT?type=pom"/>
+  </dependencies>
+</bom>
