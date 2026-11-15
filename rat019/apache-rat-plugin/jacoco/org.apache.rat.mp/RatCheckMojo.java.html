@@ -31,6 +31,7 @@ import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.project.MavenProject;
 import org.apache.rat.ReportConfiguration;
 import org.apache.rat.Reporter;
 import org.apache.rat.commandline.Arg;
@@ -51,7 +52,7 @@ import static java.lang.String.format;
  * &lt;/p&gt;
  */
 @Mojo(name = &quot;check&quot;, defaultPhase = LifecyclePhase.VALIDATE, threadSafe = true)
-<span class="fc" id="L54">public class RatCheckMojo extends AbstractRatMojo {</span>
+public class RatCheckMojo extends AbstractRatMojo {
 
     /**
      * The default output file if no other is specified.
@@ -74,11 +75,11 @@ import static java.lang.String.format;
     @Deprecated
     @Parameter
     public void setReportFile(final File reportFile) {
-<span class="nc bnc" id="L77" title="All 4 branches missed.">        if (!reportFile.getParentFile().exists() &amp;&amp; !reportFile.getParentFile().mkdirs()) {</span>
-<span class="nc" id="L78">            getLog().error(&quot;Unable to create directory &quot; + reportFile.getParentFile());</span>
+<span class="nc bnc" id="L78" title="All 4 branches missed.">        if (!reportFile.getParentFile().exists() &amp;&amp; !reportFile.getParentFile().mkdirs()) {</span>
+<span class="nc" id="L79">            getLog().error(&quot;Unable to create directory &quot; + reportFile.getParentFile());</span>
         }
-<span class="nc" id="L80">        setOutputFile(reportFile.getAbsolutePath());</span>
-<span class="nc" id="L81">    }</span>
+<span class="nc" id="L81">        setOutputFile(reportFile.getAbsolutePath());</span>
+<span class="nc" id="L82">    }</span>
 
     /**
      * Output style of the report. Use &quot;plain&quot; (the default) for a plain text report
@@ -90,14 +91,14 @@ import static java.lang.String.format;
     @Deprecated
     @Parameter(property = &quot;rat.outputStyle&quot;)
     public void setReportStyle(final String value) {
-<span class="nc bnc" id="L93" title="All 2 branches missed.">        if (value.equalsIgnoreCase(&quot;xml&quot;)) {</span>
-<span class="nc" id="L94">            setXml(true);</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">        } else if (value.equalsIgnoreCase(&quot;plain&quot;)) {</span>
-<span class="nc" id="L96">            setStylesheet(&quot;plain-rat&quot;);</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (value.equalsIgnoreCase(&quot;xml&quot;)) {</span>
+<span class="nc" id="L95">            setXml(true);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        } else if (value.equalsIgnoreCase(&quot;plain&quot;)) {</span>
+<span class="nc" id="L97">            setStylesheet(&quot;plain-rat&quot;);</span>
         } else {
-<span class="nc" id="L98">            setStylesheet(value);</span>
+<span class="nc" id="L99">            setStylesheet(value);</span>
         }
-<span class="nc" id="L100">    }</span>
+<span class="nc" id="L101">    }</span>
 
     /**
      * Maximum number of files with unapproved licenses.
@@ -115,21 +116,21 @@ import static java.lang.String.format;
     @Deprecated
     @Parameter(property = &quot;rat.addLicenseHeaders&quot;)
     public void setAddLicenseHeaders(final String addLicenseHeaders) {
-<span class="pc bpc" id="L118" title="3 of 4 branches missed.">        switch (addLicenseHeaders.trim().toUpperCase()) {</span>
+<span class="pc bpc" id="L119" title="3 of 4 branches missed.">        switch (addLicenseHeaders.trim().toUpperCase()) {</span>
             case &quot;FALSE&quot;:
                 // do nothing;
-<span class="nc" id="L121">                break;</span>
+<span class="nc" id="L122">                break;</span>
             case &quot;TRUE&quot;:
-<span class="fc" id="L123">                setAddLicense(true);</span>
-<span class="fc" id="L124">                break;</span>
+<span class="fc" id="L124">                setAddLicense(true);</span>
+<span class="fc" id="L125">                break;</span>
             case &quot;FORCED&quot;:
-<span class="nc" id="L126">                setAddLicense(true);</span>
-<span class="nc" id="L127">                setForce(true);</span>
-<span class="nc" id="L128">                break;</span>
+<span class="nc" id="L127">                setAddLicense(true);</span>
+<span class="nc" id="L128">                setForce(true);</span>
+<span class="nc" id="L129">                break;</span>
             default:
-<span class="nc" id="L130">                throw new IllegalArgumentException(&quot;Unknown addlicense header: &quot; + addLicenseHeaders);</span>
+<span class="nc" id="L131">                throw new IllegalArgumentException(&quot;Unknown addlicense header: &quot; + addLicenseHeaders);</span>
         }
-<span class="fc" id="L132">    }</span>
+<span class="fc" id="L133">    }</span>
 
     /**
      * Copyright message to add to license headers.
@@ -138,8 +139,8 @@ import static java.lang.String.format;
     @Deprecated
     @Parameter(property = &quot;rat.copyrightMessage&quot;)
     public void setCopyrightMessage(final String copyrightMessage) {
-<span class="nc" id="L141">        setCopyright(copyrightMessage);</span>
-<span class="nc" id="L142">    }</span>
+<span class="nc" id="L142">        setCopyright(copyrightMessage);</span>
+<span class="nc" id="L143">    }</span>
 
     /**
      * Will ignore RAT errors and display a log message if any. Its use is NOT
@@ -160,25 +161,34 @@ import static java.lang.String.format;
     @Parameter(property = &quot;rat.consoleOutput&quot;, defaultValue = &quot;true&quot;)
     private boolean consoleOutput;
 
+<span class="fc" id="L164">    RatCheckMojo() {</span>
+        // empty to allow object instantiation in tests
+<span class="fc" id="L166">    }</span>
+
+    // VISIBLE FOR TESTING
+<span class="fc" id="L169">    RatCheckMojo(final MavenProject project) {</span>
+<span class="fc" id="L170">        this.project = project;</span>
+<span class="fc" id="L171">    }</span>
+
     @Override
     protected ReportConfiguration getConfiguration() throws MojoExecutionException {
-<span class="fc" id="L165">        ReportConfiguration result = super.getConfiguration();</span>
-<span class="fc bfc" id="L166" title="All 2 branches covered.">        if (numUnapprovedLicenses &gt; 0) {</span>
-<span class="fc" id="L167">            result.getClaimValidator().setMax(ClaimStatistic.Counter.UNAPPROVED, numUnapprovedLicenses);</span>
+<span class="fc" id="L175">        ReportConfiguration result = super.getConfiguration();</span>
+<span class="fc bfc" id="L176" title="All 2 branches covered.">        if (numUnapprovedLicenses &gt; 0) {</span>
+<span class="fc" id="L177">            result.getClaimValidator().setMax(ClaimStatistic.Counter.UNAPPROVED, numUnapprovedLicenses);</span>
         }
-<span class="fc" id="L169">        result.addExcludedCollection(StandardCollection.MAVEN);</span>
-<span class="pc bpc" id="L170" title="1 of 2 branches missed.">        if (StandardCollection.MAVEN.fileProcessorBuilder().hasNext()) {</span>
-<span class="nc" id="L171">            result.addExcludedFileProcessor(StandardCollection.MAVEN);</span>
+<span class="fc" id="L179">        result.addExcludedCollection(StandardCollection.MAVEN);</span>
+<span class="pc bpc" id="L180" title="1 of 2 branches missed.">        if (StandardCollection.MAVEN.fileProcessorBuilder().hasNext()) {</span>
+<span class="nc" id="L181">            result.addExcludedFileProcessor(StandardCollection.MAVEN);</span>
         }
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (StandardCollection.MAVEN.hasStaticDocumentNameMatcher()) {</span>
-<span class="nc" id="L174">            StandardCollection.MAVEN.staticDocumentNameMatcher();</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        if (StandardCollection.MAVEN.hasStaticDocumentNameMatcher()) {</span>
+<span class="nc" id="L184">            StandardCollection.MAVEN.staticDocumentNameMatcher();</span>
         }
 
-<span class="fc" id="L177">        String buildDirAbsolutePath = new File(buildDirectory).getAbsolutePath();</span>
-<span class="pc" id="L178">        FileFilter buildFilter = f -&gt; f.getAbsolutePath().startsWith(buildDirAbsolutePath);</span>
-<span class="fc" id="L179">        result.addExcludedFilter(buildFilter);</span>
+<span class="fc" id="L187">        String buildDirAbsolutePath = new File(buildDirectory).getAbsolutePath();</span>
+<span class="pc" id="L188">        FileFilter buildFilter = f -&gt; f.getAbsolutePath().startsWith(buildDirAbsolutePath);</span>
+<span class="fc" id="L189">        result.addExcludedFilter(buildFilter);</span>
 
-<span class="fc" id="L181">        return result;</span>
+<span class="fc" id="L191">        return result;</span>
     }
 
         /**
@@ -191,74 +201,74 @@ import static java.lang.String.format;
          */
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
-<span class="pc bpc" id="L194" title="1 of 2 branches missed.">        if (skip) {</span>
-<span class="nc" id="L195">            getLog().info(&quot;RAT will not execute since it is configured to be skipped via system property 'rat.skip'.&quot;);</span>
-<span class="nc" id="L196">            return;</span>
+<span class="pc bpc" id="L204" title="1 of 2 branches missed.">        if (skip) {</span>
+<span class="nc" id="L205">            getLog().info(&quot;RAT will not execute since it is configured to be skipped via system property 'rat.skip'.&quot;);</span>
+<span class="nc" id="L206">            return;</span>
         }
 
-<span class="pc bpc" id="L199" title="1 of 2 branches missed.">        if (getValues(Arg.OUTPUT_FILE).isEmpty()) {</span>
-<span class="nc" id="L200">            setArg(Arg.OUTPUT_FILE.option().getLongOpt(), defaultReportFile.getAbsolutePath());</span>
+<span class="pc bpc" id="L209" title="1 of 2 branches missed.">        if (getValues(Arg.OUTPUT_FILE).isEmpty()) {</span>
+<span class="nc" id="L210">            setArg(Arg.OUTPUT_FILE.option().getLongOpt(), defaultReportFile.getAbsolutePath());</span>
         }
 
-<span class="fc" id="L203">        try (Writer logWriter = DefaultLog.getInstance().asWriter()) {</span>
-<span class="fc" id="L204">            ReportConfiguration config = getConfiguration();</span>
-<span class="fc" id="L205">            logLicenses(config.getLicenses(LicenseFilter.ALL));</span>
-<span class="pc bpc" id="L206" title="1 of 2 branches missed.">            if (verbose) {</span>
-<span class="nc" id="L207">                config.reportExclusions(logWriter);</span>
+<span class="fc" id="L213">        try (Writer logWriter = DefaultLog.getInstance().asWriter()) {</span>
+<span class="fc" id="L214">            ReportConfiguration config = getConfiguration();</span>
+<span class="fc" id="L215">            logLicenses(config.getLicenses(LicenseFilter.ALL));</span>
+<span class="pc bpc" id="L216" title="1 of 2 branches missed.">            if (verbose) {</span>
+<span class="nc" id="L217">                config.reportExclusions(logWriter);</span>
             }
             try {
-<span class="fc" id="L210">                Reporter.Output output = new Reporter(config).execute();</span>
-<span class="pc bpc" id="L211" title="1 of 2 branches missed.">                if (verbose) {</span>
-<span class="nc" id="L212">                    output.writeSummary(logWriter);</span>
+<span class="fc" id="L220">                Reporter.Output output = new Reporter(config).execute();</span>
+<span class="pc bpc" id="L221" title="1 of 2 branches missed.">                if (verbose) {</span>
+<span class="nc" id="L222">                    output.writeSummary(logWriter);</span>
                 }
-<span class="fc" id="L214">                output.format(config);</span>
-<span class="fc" id="L215">                check(output);</span>
-<span class="fc" id="L216">            } catch (MojoFailureException e) {</span>
-<span class="fc" id="L217">                throw e;</span>
-<span class="nc" id="L218">            } catch (Exception e) {</span>
-<span class="nc" id="L219">                throw new MojoExecutionException(e.getMessage(), e);</span>
-<span class="fc" id="L220">            }</span>
-<span class="nc" id="L221">        } catch (IOException e) {</span>
-<span class="nc" id="L222">            DefaultLog.getInstance().warn(&quot;Unable to close writable log.&quot;, e);</span>
-<span class="fc" id="L223">        }</span>
-<span class="fc" id="L224">    }</span>
+<span class="fc" id="L224">                output.format(config);</span>
+<span class="fc" id="L225">                check(output);</span>
+<span class="fc" id="L226">            } catch (MojoFailureException e) {</span>
+<span class="fc" id="L227">                throw e;</span>
+<span class="nc" id="L228">            } catch (Exception e) {</span>
+<span class="nc" id="L229">                throw new MojoExecutionException(e.getMessage(), e);</span>
+<span class="fc" id="L230">            }</span>
+<span class="nc" id="L231">        } catch (IOException e) {</span>
+<span class="nc" id="L232">            DefaultLog.getInstance().warn(&quot;Unable to close writable log.&quot;, e);</span>
+<span class="fc" id="L233">        }</span>
+<span class="fc" id="L234">    }</span>
 
     protected void check(final Reporter.Output output) throws MojoFailureException {
-<span class="fc" id="L227">        ClaimStatistic statistics = output.getStatistic();</span>
-<span class="fc" id="L228">        ClaimValidator validator = output.getConfiguration().getClaimValidator();</span>
+<span class="fc" id="L237">        ClaimStatistic statistics = output.getStatistic();</span>
+<span class="fc" id="L238">        ClaimValidator validator = output.getConfiguration().getClaimValidator();</span>
         try {
-<span class="fc" id="L230">           output.writeSummary(DefaultLog.getInstance().asWriter(Log.Level.DEBUG));</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">           if (validator.hasErrors()) {</span>
-<span class="fc" id="L232">               validator.logIssues(statistics);</span>
-<span class="pc bpc" id="L233" title="1 of 2 branches missed.">               if (consoleOutput &amp;&amp;</span>
-<span class="pc bpc" id="L234" title="1 of 2 branches missed.">                       !validator.isValid(ClaimStatistic.Counter.UNAPPROVED, statistics.getCounter(ClaimStatistic.Counter.UNAPPROVED))) {</span>
+<span class="fc" id="L240">           output.writeSummary(DefaultLog.getInstance().asWriter(Log.Level.DEBUG));</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">           if (validator.hasErrors()) {</span>
+<span class="fc" id="L242">               validator.logIssues(statistics);</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">               if (consoleOutput &amp;&amp;</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">                       !validator.isValid(ClaimStatistic.Counter.UNAPPROVED, statistics.getCounter(ClaimStatistic.Counter.UNAPPROVED))) {</span>
                    try {
-<span class="fc" id="L236">                       ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
-<span class="fc" id="L237">                       output.format(StyleSheets.UNAPPROVED_LICENSES.getStyleSheet().ioSupplier(), () -&gt; baos);</span>
-<span class="fc" id="L238">                       getLog().warn(baos.toString(StandardCharsets.UTF_8));</span>
-<span class="nc" id="L239">                   } catch (RuntimeException rte) {</span>
-<span class="nc" id="L240">                       throw rte;</span>
-<span class="nc" id="L241">                   } catch (Exception e) {</span>
-<span class="nc" id="L242">                       getLog().warn(&quot;Unable to print the files with unapproved licenses to the console.&quot;);</span>
-<span class="fc" id="L243">                   }</span>
+<span class="fc" id="L246">                       ByteArrayOutputStream baos = new ByteArrayOutputStream();</span>
+<span class="fc" id="L247">                       output.format(StyleSheets.UNAPPROVED_LICENSES.getStyleSheet().ioSupplier(), () -&gt; baos);</span>
+<span class="fc" id="L248">                       getLog().warn(baos.toString(StandardCharsets.UTF_8));</span>
+<span class="nc" id="L249">                   } catch (RuntimeException rte) {</span>
+<span class="nc" id="L250">                       throw rte;</span>
+<span class="nc" id="L251">                   } catch (Exception e) {</span>
+<span class="nc" id="L252">                       getLog().warn(&quot;Unable to print the files with unapproved licenses to the console.&quot;);</span>
+<span class="fc" id="L253">                   }</span>
                }
 
-<span class="fc" id="L246">               String msg = format(&quot;Counter(s) %s exceeded minimum or maximum values. See RAT report in: '%s'.&quot;,</span>
-<span class="fc" id="L247">                       String.join(&quot;, &quot;, validator.listIssues(statistics)),</span>
-<span class="fc" id="L248">                       getRatTxtFile());</span>
+<span class="fc" id="L256">               String msg = format(&quot;Counter(s) %s exceeded minimum or maximum values. See RAT report in: '%s'.&quot;,</span>
+<span class="fc" id="L257">                       String.join(&quot;, &quot;, validator.listIssues(statistics)),</span>
+<span class="fc" id="L258">                       getRatTxtFile());</span>
 
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">               if (!ignoreErrors) {</span>
-<span class="fc" id="L251">                   throw new RatCheckException(msg);</span>
+<span class="pc bpc" id="L260" title="1 of 2 branches missed.">               if (!ignoreErrors) {</span>
+<span class="fc" id="L261">                   throw new RatCheckException(msg);</span>
                } else {
-<span class="nc" id="L253">                   getLog().info(msg);</span>
+<span class="nc" id="L263">                   getLog().info(msg);</span>
                }
-<span class="nc" id="L255">           } else {</span>
-<span class="fc" id="L256">               DefaultLog.getInstance().info(&quot;No issues found.&quot;);</span>
+<span class="nc" id="L265">           } else {</span>
+<span class="fc" id="L266">               DefaultLog.getInstance().info(&quot;No issues found.&quot;);</span>
            }
-<span class="nc" id="L258">        } catch (IOException e) {</span>
-<span class="nc" id="L259">           throw new MojoFailureException(e);</span>
-<span class="fc" id="L260">       }</span>
-<span class="fc" id="L261">    }</span>
+<span class="nc" id="L268">        } catch (IOException e) {</span>
+<span class="nc" id="L269">           throw new MojoFailureException(e);</span>
+<span class="fc" id="L270">       }</span>
+<span class="fc" id="L271">    }</span>
 
     /**
      * Reads the location of the RAT text file from the Mojo.
@@ -267,11 +277,11 @@ import static java.lang.String.format;
      * @throws MojoFailureException If no output file was specified.
      */
     public File getRatTxtFile() throws MojoFailureException {
-<span class="fc" id="L270">        List&lt;String&gt; args = getValues(Arg.OUTPUT_FILE);</span>
-<span class="pc bpc" id="L271" title="1 of 2 branches missed.">        if (args != null) {</span>
-<span class="fc" id="L272">            return new File(args.get(0));</span>
+<span class="fc" id="L280">        List&lt;String&gt; args = getValues(Arg.OUTPUT_FILE);</span>
+<span class="pc bpc" id="L281" title="1 of 2 branches missed.">        if (args != null) {</span>
+<span class="fc" id="L282">            return new File(args.get(0));</span>
         }
-<span class="nc" id="L274">        throw new MojoFailureException(&quot;No output file specified&quot;);</span>
+<span class="nc" id="L284">        throw new MojoFailureException(&quot;No output file specified&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.16.202610240946</span></div></body></html>

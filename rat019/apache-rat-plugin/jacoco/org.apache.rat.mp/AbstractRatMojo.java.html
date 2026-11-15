@@ -35,6 +35,8 @@ import java.util.stream.Stream;
 
 import org.apache.commons.cli.Option;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.maven.model.Build;
+import org.apache.maven.model.Model;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
@@ -106,8 +108,8 @@ public abstract class AbstractRatMojo extends BaseRatMojo {
     @Deprecated
     @Parameter(property = &quot;rat.addDefaultLicenses&quot;, name = &quot;addDefaultLicenses&quot;)
     public void setAddDefaultLicenses(final boolean addDefaultLicenses) {
-<span class="nc bnc" id="L109" title="All 2 branches missed.">        setNoDefaultLicenses(!addDefaultLicenses);</span>
-<span class="nc" id="L110">    }</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        setNoDefaultLicenses(!addDefaultLicenses);</span>
+<span class="nc" id="L112">    }</span>
 
     /**
      * Whether to add the default list of license matchers.
@@ -262,66 +264,66 @@ public abstract class AbstractRatMojo extends BaseRatMojo {
     @Parameter(defaultValue = &quot;${project}&quot;, required = true, readonly = true)
     protected MavenProject project;
 
-<span class="fc" id="L265">    protected AbstractRatMojo() {</span>
-<span class="fc" id="L266">        DefaultLog.setInstance(makeLog());</span>
-<span class="fc" id="L267">    }</span>
+<span class="fc" id="L267">    protected AbstractRatMojo() {</span>
+<span class="fc" id="L268">        DefaultLog.setInstance(makeLog());</span>
+<span class="fc" id="L269">    }</span>
 
     /**
      * @return the Maven project.
      */
     protected MavenProject getProject() {
-<span class="fc" id="L273">        return project;</span>
+<span class="fc" id="L275">        return project;</span>
     }
 
     protected Defaults.Builder getDefaultsBuilder() {
-<span class="nc" id="L277">        Defaults.Builder result = Defaults.builder().noDefault();</span>
-<span class="nc bnc" id="L278" title="All 2 branches missed.">        if (defaultLicenseFiles != null) {</span>
-<span class="nc bnc" id="L279" title="All 2 branches missed.">            for (String defaultLicenseFile : defaultLicenseFiles) {</span>
-<span class="nc" id="L280">                result.add(defaultLicenseFile);</span>
+<span class="nc" id="L279">        Defaults.Builder result = Defaults.builder().noDefault();</span>
+<span class="nc bnc" id="L280" title="All 2 branches missed.">        if (defaultLicenseFiles != null) {</span>
+<span class="nc bnc" id="L281" title="All 2 branches missed.">            for (String defaultLicenseFile : defaultLicenseFiles) {</span>
+<span class="nc" id="L282">                result.add(defaultLicenseFile);</span>
             }
         }
-<span class="nc" id="L283">        return result;</span>
+<span class="nc" id="L285">        return result;</span>
     }
 
     @Deprecated // remove this for version 1.0
     private Stream&lt;License&gt; getLicenses() {
-<span class="pc bpc" id="L288" title="1 of 2 branches missed.">        if (licenses == null) {</span>
-<span class="nc" id="L289">            return Stream.empty();</span>
+<span class="pc bpc" id="L290" title="1 of 2 branches missed.">        if (licenses == null) {</span>
+<span class="nc" id="L291">            return Stream.empty();</span>
         }
-<span class="fc" id="L291">        return Arrays.stream(licenses).filter(s -&gt; s instanceof License).map(License.class::cast);</span>
+<span class="fc" id="L293">        return Arrays.stream(licenses).filter(s -&gt; s instanceof License).map(License.class::cast);</span>
     }
 
     @Deprecated // remove this for version 1.0
     private Stream&lt;DeprecatedConfig&gt; getDeprecatedConfigs() {
-<span class="fc bfc" id="L296" title="All 2 branches covered.">        if (licenses == null) {</span>
-<span class="fc" id="L297">            return Stream.empty();</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">        if (licenses == null) {</span>
+<span class="fc" id="L299">            return Stream.empty();</span>
         }
-<span class="fc" id="L299">        return Arrays.stream(licenses).filter(s -&gt; s instanceof DeprecatedConfig).map(DeprecatedConfig.class::cast);</span>
+<span class="fc" id="L301">        return Arrays.stream(licenses).filter(s -&gt; s instanceof DeprecatedConfig).map(DeprecatedConfig.class::cast);</span>
     }
 
     @Deprecated // remove this for version 1.0
     private void reportDeprecatedProcessing() {
-<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (getDeprecatedConfigs().findAny().isPresent()) {</span>
-<span class="fc" id="L305">            DefaultLog.getInstance().warn(&quot;Configuration uses deprecated configuration. You need to upgrade to v0.17 configuration options.&quot;);</span>
+<span class="fc bfc" id="L306" title="All 2 branches covered.">        if (getDeprecatedConfigs().findAny().isPresent()) {</span>
+<span class="fc" id="L307">            DefaultLog.getInstance().warn(&quot;Configuration uses deprecated configuration. You need to upgrade to v0.17 configuration options.&quot;);</span>
         }
-<span class="fc" id="L307">    }</span>
+<span class="fc" id="L309">    }</span>
 
     @Deprecated // remove this for version 1.0
     private void processLicenseFamilies(final ReportConfiguration config) {
-<span class="fc" id="L311">        List&lt;ILicenseFamily&gt; families = getDeprecatedConfigs().map(DeprecatedConfig::getLicenseFamily).filter(Objects::nonNull).collect(Collectors.toList());</span>
-<span class="fc bfc" id="L312" title="All 2 branches covered.">        if (licenseFamilies != null) {</span>
-<span class="fc bfc" id="L313" title="All 2 branches covered.">            for (SimpleLicenseFamily slf : licenseFamilies) {</span>
-<span class="pc bpc" id="L314" title="1 of 2 branches missed.">                if (StringUtils.isBlank(slf.getFamilyCategory())) {</span>
-<span class="fc" id="L315">                    families.stream().filter(f -&gt; f.getFamilyName().equalsIgnoreCase(slf.getFamilyName())).findFirst()</span>
-<span class="fc" id="L316">                    .ifPresent(config::addApprovedLicenseCategory);</span>
+<span class="fc" id="L313">        List&lt;ILicenseFamily&gt; families = getDeprecatedConfigs().map(DeprecatedConfig::getLicenseFamily).filter(Objects::nonNull).collect(Collectors.toList());</span>
+<span class="fc bfc" id="L314" title="All 2 branches covered.">        if (licenseFamilies != null) {</span>
+<span class="fc bfc" id="L315" title="All 2 branches covered.">            for (SimpleLicenseFamily slf : licenseFamilies) {</span>
+<span class="pc bpc" id="L316" title="1 of 2 branches missed.">                if (StringUtils.isBlank(slf.getFamilyCategory())) {</span>
+<span class="fc" id="L317">                    families.stream().filter(f -&gt; f.getFamilyName().equalsIgnoreCase(slf.getFamilyName())).findFirst()</span>
+<span class="fc" id="L318">                    .ifPresent(config::addApprovedLicenseCategory);</span>
                 } else {
-<span class="nc" id="L318">                    config.addApprovedLicenseCategory(ILicenseFamily.builder().setLicenseFamilyCategory(slf.getFamilyCategory())</span>
-<span class="nc" id="L319">                    .setLicenseFamilyName(StringUtils.defaultIfBlank(slf.getFamilyName(), slf.getFamilyCategory()))</span>
-<span class="nc" id="L320">                    .build());</span>
+<span class="nc" id="L320">                    config.addApprovedLicenseCategory(ILicenseFamily.builder().setLicenseFamilyCategory(slf.getFamilyCategory())</span>
+<span class="nc" id="L321">                    .setLicenseFamilyName(StringUtils.defaultIfBlank(slf.getFamilyName(), slf.getFamilyCategory()))</span>
+<span class="nc" id="L322">                    .build());</span>
                 }
             }
         }
-<span class="fc" id="L324">    }</span>
+<span class="fc" id="L326">    }</span>
 
     /**
      * Reads values for the Arg.
@@ -330,16 +332,16 @@ public abstract class AbstractRatMojo extends BaseRatMojo {
      * @return The list of values or an empty list.
      */
     protected List&lt;String&gt; getValues(final Arg arg) {
-<span class="fc" id="L333">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="fc bfc" id="L334" title="All 2 branches covered.">        for (Option option : arg.group().getOptions()) {</span>
-<span class="pc bpc" id="L335" title="1 of 2 branches missed.">            if (option.getLongOpt() != null) {</span>
-<span class="fc" id="L336">                List&lt;String&gt; args = getArg(option.getLongOpt());</span>
-<span class="fc bfc" id="L337" title="All 2 branches covered.">                if (args != null) {</span>
-<span class="fc" id="L338">                    result.addAll(args);</span>
+<span class="fc" id="L335">        List&lt;String&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L336" title="All 2 branches covered.">        for (Option option : arg.group().getOptions()) {</span>
+<span class="pc bpc" id="L337" title="1 of 2 branches missed.">            if (option.getLongOpt() != null) {</span>
+<span class="fc" id="L338">                List&lt;String&gt; args = getArg(option.getLongOpt());</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">                if (args != null) {</span>
+<span class="fc" id="L340">                    result.addAll(args);</span>
                 }
             }
-<span class="fc" id="L341">        }</span>
-<span class="fc" id="L342">        return result;</span>
+<span class="fc" id="L343">        }</span>
+<span class="fc" id="L344">        return result;</span>
     }
 
     /**
@@ -347,225 +349,256 @@ public abstract class AbstractRatMojo extends BaseRatMojo {
      * @param arg The arg to remove values for.
      */
     protected void removeKey(final Arg arg) {
-<span class="fc bfc" id="L350" title="All 2 branches covered.">        for (Option option : arg.group().getOptions()) {</span>
-<span class="pc bpc" id="L351" title="1 of 2 branches missed.">            if (option.getLongOpt() != null) {</span>
-<span class="fc" id="L352">                removeArg(option.getLongOpt());</span>
+<span class="fc bfc" id="L352" title="All 2 branches covered.">        for (Option option : arg.group().getOptions()) {</span>
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">            if (option.getLongOpt() != null) {</span>
+<span class="fc" id="L354">                removeArg(option.getLongOpt());</span>
             }
-<span class="fc" id="L354">        }</span>
-<span class="fc" id="L355">    }</span>
+<span class="fc" id="L356">        }</span>
+<span class="fc" id="L357">    }</span>
 
     private org.apache.rat.utils.Log makeLog() {
-<span class="fc" id="L358">        return new org.apache.rat.utils.Log() {</span>
+<span class="fc" id="L360">        return new org.apache.rat.utils.Log() {</span>
             @Override
             public Level getLevel() {
-<span class="fc" id="L361">                final org.apache.maven.plugin.logging.Log log = getLog();</span>
-<span class="pc bpc" id="L362" title="1 of 2 branches missed.">                if (log.isDebugEnabled()) {</span>
-<span class="nc" id="L363">                    return Level.DEBUG;</span>
+<span class="fc" id="L363">                final org.apache.maven.plugin.logging.Log log = getLog();</span>
+<span class="pc bpc" id="L364" title="1 of 2 branches missed.">                if (log.isDebugEnabled()) {</span>
+<span class="nc" id="L365">                    return Level.DEBUG;</span>
                 }
-<span class="pc bpc" id="L365" title="1 of 2 branches missed.">                if (log.isInfoEnabled()) {</span>
-<span class="fc" id="L366">                    return Level.INFO;</span>
+<span class="pc bpc" id="L367" title="1 of 2 branches missed.">                if (log.isInfoEnabled()) {</span>
+<span class="fc" id="L368">                    return Level.INFO;</span>
                 }
-<span class="nc bnc" id="L368" title="All 2 branches missed.">                if (log.isWarnEnabled()) {</span>
-<span class="nc" id="L369">                    return Level.WARN;</span>
+<span class="nc bnc" id="L370" title="All 2 branches missed.">                if (log.isWarnEnabled()) {</span>
+<span class="nc" id="L371">                    return Level.WARN;</span>
                 }
-<span class="nc bnc" id="L371" title="All 2 branches missed.">                if (log.isErrorEnabled()) {</span>
-<span class="nc" id="L372">                    return Level.ERROR;</span>
+<span class="nc bnc" id="L373" title="All 2 branches missed.">                if (log.isErrorEnabled()) {</span>
+<span class="nc" id="L374">                    return Level.ERROR;</span>
                 }
-<span class="nc" id="L374">                return Level.OFF;</span>
+<span class="nc" id="L376">                return Level.OFF;</span>
             }
 
             @Override
             public void log(final Level level, final String message, final Throwable throwable) {
-<span class="nc" id="L379">                final org.apache.maven.plugin.logging.Log log = getLog();</span>
-<span class="nc bnc" id="L380" title="All 5 branches missed.">                switch (level) {</span>
+<span class="nc" id="L381">                final org.apache.maven.plugin.logging.Log log = getLog();</span>
+<span class="nc bnc" id="L382" title="All 5 branches missed.">                switch (level) {</span>
                     case DEBUG:
-<span class="nc bnc" id="L382" title="All 2 branches missed.">                        if (throwable != null) {</span>
-<span class="nc" id="L383">                            log.debug(message, throwable);</span>
+<span class="nc bnc" id="L384" title="All 2 branches missed.">                        if (throwable != null) {</span>
+<span class="nc" id="L385">                            log.debug(message, throwable);</span>
                         } else {
-<span class="nc" id="L385">                            log.debug(message);</span>
+<span class="nc" id="L387">                            log.debug(message);</span>
                         }
-<span class="nc" id="L387">                        break;</span>
+<span class="nc" id="L389">                        break;</span>
                     case INFO:
-<span class="nc bnc" id="L389" title="All 2 branches missed.">                        if (throwable != null) {</span>
-<span class="nc" id="L390">                            log.info(message, throwable);</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">                        if (throwable != null) {</span>
+<span class="nc" id="L392">                            log.info(message, throwable);</span>
                         } else {
-<span class="nc" id="L392">                            log.info(message);</span>
+<span class="nc" id="L394">                            log.info(message);</span>
                         }
-<span class="nc" id="L394">                        break;</span>
+<span class="nc" id="L396">                        break;</span>
                     case WARN:
-<span class="nc bnc" id="L396" title="All 2 branches missed.">                        if (throwable != null) {</span>
-<span class="nc" id="L397">                            log.warn(message, throwable);</span>
+<span class="nc bnc" id="L398" title="All 2 branches missed.">                        if (throwable != null) {</span>
+<span class="nc" id="L399">                            log.warn(message, throwable);</span>
                         } else {
-<span class="nc" id="L399">                            log.warn(message);</span>
+<span class="nc" id="L401">                            log.warn(message);</span>
                         }
-<span class="nc" id="L401">                        break;</span>
+<span class="nc" id="L403">                        break;</span>
                     case ERROR:
-<span class="nc bnc" id="L403" title="All 2 branches missed.">                        if (throwable != null) {</span>
-<span class="nc" id="L404">                            log.error(message, throwable);</span>
+<span class="nc bnc" id="L405" title="All 2 branches missed.">                        if (throwable != null) {</span>
+<span class="nc" id="L406">                            log.error(message, throwable);</span>
                         } else {
-<span class="nc" id="L406">                            log.error(message);</span>
+<span class="nc" id="L408">                            log.error(message);</span>
                         }
-<span class="nc" id="L408">                        break;</span>
+<span class="nc" id="L410">                        break;</span>
                     case OFF:
                         break;
                 }
-<span class="nc" id="L412">            }</span>
+<span class="nc" id="L414">            }</span>
 
             @Override
             public void log(final Level level, final String msg) {
-<span class="fc" id="L416">                final org.apache.maven.plugin.logging.Log log = getLog();</span>
-<span class="pc bpc" id="L417" title="1 of 5 branches missed.">                switch (level) {</span>
+<span class="fc" id="L418">                final org.apache.maven.plugin.logging.Log log = getLog();</span>
+<span class="pc bpc" id="L419" title="1 of 5 branches missed.">                switch (level) {</span>
                     case DEBUG:
-<span class="fc" id="L419">                        log.debug(msg);</span>
-<span class="fc" id="L420">                        break;</span>
+<span class="fc" id="L421">                        log.debug(msg);</span>
+<span class="fc" id="L422">                        break;</span>
                     case INFO:
-<span class="fc" id="L422">                        log.info(msg);</span>
-<span class="fc" id="L423">                        break;</span>
+<span class="fc" id="L424">                        log.info(msg);</span>
+<span class="fc" id="L425">                        break;</span>
                     case WARN:
-<span class="fc" id="L425">                        log.warn(msg);</span>
-<span class="fc" id="L426">                        break;</span>
+<span class="fc" id="L427">                        log.warn(msg);</span>
+<span class="fc" id="L428">                        break;</span>
                     case ERROR:
-<span class="fc" id="L428">                        log.error(msg);</span>
-<span class="fc" id="L429">                        break;</span>
+<span class="fc" id="L430">                        log.error(msg);</span>
+<span class="fc" id="L431">                        break;</span>
                     case OFF:
                         break;
                 }
-<span class="fc" id="L433">            }</span>
+<span class="fc" id="L435">            }</span>
         };
     }
 
+    /**
+     * Determine if the RAT-plugin has been configured to disallow inheritance,
+     * which may create errors if RAT runs in subfolders/submodules.
+     * Checks configuration in {@code &lt;pluginManagement&gt;}- and {@code &lt;plugin&gt;}-section.
+     * @return {@code true} if the current Mojo is configured with {@code inheritance=false} set in the pom.xml.
+     */
+    // VISIBLE FOR TESTING
+    boolean isInheritanceDisabled() {
+<span class="fc" id="L447">        Model model = project.getOriginalModel();</span>
+<span class="fc" id="L448">        Build build = model.getBuild();</span>
+
+<span class="fc bfc" id="L450" title="All 2 branches covered.">        if (build == null) {</span>
+<span class="fc" id="L451">            return false;</span>
+        }
+
+        // DEVHINT: we do not work on the effective model here and may miss parent-pom defined inheritance.
+        // That is accepted here as we only issue an informational message for RAT users.
+<span class="fc" id="L456">        return Stream.concat(</span>
+<span class="fc" id="L457">                        build.getPlugins().stream(),</span>
+<span class="fc bfc" id="L458" title="All 2 branches covered.">                        build.getPluginManagement() == null</span>
+<span class="fc" id="L459">                                ? Stream.empty()</span>
+<span class="fc" id="L460">                                : build.getPluginManagement()</span>
+<span class="fc" id="L461">                                .getPlugins().stream()) // combine pluginManagement and plugin configuration</span>
+<span class="fc" id="L462">                .filter(plugin -&gt;</span>
+<span class="fc bfc" id="L463" title="All 2 branches covered.">                        &quot;org.apache.rat&quot;.equals(plugin.getGroupId())</span>
+<span class="pc bpc" id="L464" title="1 of 2 branches missed.">                                &amp;&amp; &quot;apache-rat-plugin&quot;.equals(plugin.getArtifactId()))</span>
+<span class="fc" id="L465">                .anyMatch(plugin -&gt;</span>
+<span class="fc" id="L466">                        &quot;false&quot;.equalsIgnoreCase(plugin.getInherited()));</span>
+    }
+
     private void setIncludeExclude() {
-
-<span class="pc bpc" id="L439" title="3 of 6 branches missed.">        if (excludeSubProjects &amp;&amp; project != null &amp;&amp; project.getModules() != null) {</span>
-<span class="fc" id="L440">            List&lt;String&gt; subModules = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L441">            project.getModules().forEach(s -&gt; subModules.add(format(&quot;%s/**&quot;, s)));</span>
-<span class="fc" id="L442">            setInputExcludes(subModules.toArray(new String[0]));</span>
+<span class="pc bpc" id="L470" title="3 of 6 branches missed.">        if (excludeSubProjects &amp;&amp; project != null &amp;&amp; project.getModules() != null) {</span>
+<span class="fc" id="L471">            List&lt;String&gt; subModules = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L472">            project.getModules().forEach(s -&gt; subModules.add(format(&quot;%s/**&quot;, s)));</span>
+<span class="fc" id="L473">            setInputExcludes(subModules.toArray(new String[0]));</span>
         }
 
-<span class="fc" id="L445">        List&lt;String&gt; values = getValues(Arg.EXCLUDE);</span>
-<span class="pc bpc" id="L446" title="1 of 4 branches missed.">        if (values.isEmpty() &amp;&amp; useDefaultExcludes) {</span>
-<span class="fc" id="L447">            DefaultLog.getInstance().debug(&quot;Adding plexus default exclusions...&quot;);</span>
-<span class="fc" id="L448">            setInputExcludes(StandardCollection.STANDARD_PATTERNS.patterns().toArray(new String[0]));</span>
-
-<span class="fc" id="L450">            DefaultLog.getInstance().debug(&quot;Adding SCM default exclusions...&quot;);</span>
-<span class="fc" id="L451">            setInputExcludes(StandardCollection.STANDARD_SCMS.patterns().toArray(new String[0]));</span>
+<span class="fc" id="L476">        List&lt;String&gt; values = getValues(Arg.EXCLUDE);</span>
+<span class="pc bpc" id="L477" title="1 of 4 branches missed.">        if (values.isEmpty() &amp;&amp; useDefaultExcludes) {</span>
+<span class="fc" id="L478">            setInputExcludes(StandardCollection.STANDARD_PATTERNS.patterns().toArray(new String[0]));</span>
+<span class="fc" id="L479">            setInputExcludes(StandardCollection.STANDARD_SCMS.patterns().toArray(new String[0]));</span>
         }
 
-<span class="fc bfc" id="L454" title="All 2 branches covered.">        if (useMavenDefaultExcludes) {</span>
-<span class="fc" id="L455">            setInputExcludeStd(StandardCollection.MAVEN.name());</span>
+<span class="fc bfc" id="L482" title="All 2 branches covered.">        if (useMavenDefaultExcludes) {</span>
+<span class="fc" id="L483">            setInputExcludeStd(StandardCollection.MAVEN.name());</span>
         }
-<span class="fc bfc" id="L457" title="All 2 branches covered.">        if (useEclipseDefaultExcludes) {</span>
-<span class="fc" id="L458">            setInputExcludeStd(StandardCollection.ECLIPSE.name());</span>
+<span class="fc bfc" id="L485" title="All 2 branches covered.">        if (useEclipseDefaultExcludes) {</span>
+<span class="fc" id="L486">            setInputExcludeStd(StandardCollection.ECLIPSE.name());</span>
         }
-<span class="fc bfc" id="L460" title="All 2 branches covered.">        if (useIdeaDefaultExcludes) {</span>
-<span class="fc" id="L461">            setInputExcludeStd(StandardCollection.IDEA.name());</span>
+<span class="fc bfc" id="L488" title="All 2 branches covered.">        if (useIdeaDefaultExcludes) {</span>
+<span class="fc" id="L489">            setInputExcludeStd(StandardCollection.IDEA.name());</span>
         }
 
-<span class="pc bpc" id="L464" title="1 of 2 branches missed.">        if (parseSCMIgnoresAsExcludes) {</span>
-<span class="fc" id="L465">            setInputExcludeParsedScm(StandardCollection.STANDARD_SCMS.name());</span>
+<span class="pc bpc" id="L492" title="1 of 2 branches missed.">        if (parseSCMIgnoresAsExcludes) {</span>
+<span class="fc" id="L493">            setInputExcludeParsedScm(StandardCollection.STANDARD_SCMS.name());</span>
         }
-<span class="fc" id="L467">    }</span>
+
+<span class="pc bpc" id="L496" title="1 of 2 branches missed.">        if (isInheritanceDisabled()) {</span>
+<span class="nc" id="L497">            DefaultLog.getInstance().info(&quot;You disabled plugin configuration inheritance in your pom.xml. &quot; +</span>
+                    &quot;This may have unintended consequences in a submodule as RAT's configuration is not applied.&quot;);
+        }
+<span class="fc" id="L500">    }</span>
 
     protected ReportConfiguration getConfiguration() throws MojoExecutionException {
-<span class="fc" id="L470">        Log log = DefaultLog.getInstance();</span>
-<span class="fc bfc" id="L471" title="All 2 branches covered.">        if (reportConfiguration == null) {</span>
+<span class="fc" id="L503">        Log log = DefaultLog.getInstance();</span>
+<span class="fc bfc" id="L504" title="All 2 branches covered.">        if (reportConfiguration == null) {</span>
             try {
-<span class="pc bpc" id="L473" title="1 of 2 branches missed.">                if (getLog().isDebugEnabled()) {</span>
-<span class="nc" id="L474">                    log.debug(&quot;Start BaseRatMojo Configuration options&quot;);</span>
-<span class="nc bnc" id="L475" title="All 2 branches missed.">                    for (Map.Entry&lt;String, List&lt;String&gt;&gt; entry : args.entrySet()) {</span>
-<span class="nc" id="L476">                        log.debug(format(&quot; * %s %s&quot;, entry.getKey(), String.join(&quot;, &quot;, entry.getValue())));</span>
-<span class="nc" id="L477">                    }</span>
-<span class="nc" id="L478">                    log.debug(&quot;End BaseRatMojo Configuration options&quot;);</span>
+<span class="pc bpc" id="L506" title="1 of 2 branches missed.">                if (getLog().isDebugEnabled()) {</span>
+<span class="nc" id="L507">                    log.debug(&quot;Start BaseRatMojo Configuration options&quot;);</span>
+<span class="nc bnc" id="L508" title="All 2 branches missed.">                    for (Map.Entry&lt;String, List&lt;String&gt;&gt; entry : args.entrySet()) {</span>
+<span class="nc" id="L509">                        log.debug(format(&quot; * %s %s&quot;, entry.getKey(), String.join(&quot;, &quot;, entry.getValue())));</span>
+<span class="nc" id="L510">                    }</span>
+<span class="nc" id="L511">                    log.debug(&quot;End BaseRatMojo Configuration options&quot;);</span>
                 }
 
-<span class="pc bpc" id="L481" title="1 of 2 branches missed.">                boolean helpLicenses = !getValues(Arg.HELP_LICENSES).isEmpty();</span>
-<span class="fc" id="L482">                removeKey(Arg.HELP_LICENSES);</span>
-<span class="fc" id="L483">                setIncludeExclude();</span>
+<span class="pc bpc" id="L514" title="1 of 2 branches missed.">                boolean helpLicenses = !getValues(Arg.HELP_LICENSES).isEmpty();</span>
+<span class="fc" id="L515">                removeKey(Arg.HELP_LICENSES);</span>
+<span class="fc" id="L516">                setIncludeExclude();</span>
 
-<span class="fc" id="L485">                getLog().debug(&quot;Basedir is : &quot; + basedir);</span>
-<span class="fc" id="L486">                ReportConfiguration config = OptionCollection.parseCommands(basedir, args().toArray(new String[0]),</span>
-<span class="nc" id="L487">                        o -&gt; getLog().warn(&quot;Help option not supported&quot;),</span>
+<span class="fc" id="L518">                getLog().debug(&quot;Basedir is : &quot; + basedir);</span>
+<span class="fc" id="L519">                ReportConfiguration config = OptionCollection.parseCommands(basedir, args().toArray(new String[0]),</span>
+<span class="nc" id="L520">                        o -&gt; getLog().warn(&quot;Help option not supported&quot;),</span>
                         true);
-<span class="fc" id="L489">                reportDeprecatedProcessing();</span>
+<span class="fc" id="L522">                reportDeprecatedProcessing();</span>
 
-<span class="pc bpc" id="L491" title="1 of 2 branches missed.">                if (additionalLicenseFiles != null) {</span>
-<span class="nc bnc" id="L492" title="All 2 branches missed.">                    for (String licenseFile : additionalLicenseFiles) {</span>
-<span class="nc" id="L493">                        URI uri = new File(licenseFile).toURI();</span>
-<span class="nc" id="L494">                        Format fmt = Format.from(licenseFile);</span>
-<span class="nc" id="L495">                        MatcherReader mReader = fmt.matcherReader();</span>
-<span class="nc bnc" id="L496" title="All 2 branches missed.">                        if (mReader != null) {</span>
-<span class="nc" id="L497">                            mReader.addMatchers(uri);</span>
+<span class="pc bpc" id="L524" title="1 of 2 branches missed.">                if (additionalLicenseFiles != null) {</span>
+<span class="nc bnc" id="L525" title="All 2 branches missed.">                    for (String licenseFile : additionalLicenseFiles) {</span>
+<span class="nc" id="L526">                        URI uri = new File(licenseFile).toURI();</span>
+<span class="nc" id="L527">                        Format fmt = Format.from(licenseFile);</span>
+<span class="nc" id="L528">                        MatcherReader mReader = fmt.matcherReader();</span>
+<span class="nc bnc" id="L529" title="All 2 branches missed.">                        if (mReader != null) {</span>
+<span class="nc" id="L530">                            mReader.addMatchers(uri);</span>
                         }
-<span class="nc" id="L499">                        LicenseReader lReader = fmt.licenseReader();</span>
-<span class="nc bnc" id="L500" title="All 2 branches missed.">                        if (lReader != null) {</span>
-<span class="nc" id="L501">                            lReader.addLicenses(uri);</span>
-<span class="nc" id="L502">                            config.addLicenses(lReader.readLicenses());</span>
-<span class="nc" id="L503">                            config.addApprovedLicenseCategories(lReader.approvedLicenseId());</span>
+<span class="nc" id="L532">                        LicenseReader lReader = fmt.licenseReader();</span>
+<span class="nc bnc" id="L533" title="All 2 branches missed.">                        if (lReader != null) {</span>
+<span class="nc" id="L534">                            lReader.addLicenses(uri);</span>
+<span class="nc" id="L535">                            config.addLicenses(lReader.readLicenses());</span>
+<span class="nc" id="L536">                            config.addApprovedLicenseCategories(lReader.approvedLicenseId());</span>
                         }
                     }
                 }
-<span class="pc bpc" id="L507" title="1 of 4 branches missed.">                if (families != null || getDeprecatedConfigs().findAny().isPresent()) {</span>
-<span class="pc bpc" id="L508" title="3 of 4 branches missed.">                    if (log.isEnabled(Log.Level.DEBUG) &amp;&amp; families != null) {</span>
-<span class="nc" id="L509">                        log.debug(format(&quot;%s license families loaded from pom&quot;, families.length));</span>
+<span class="pc bpc" id="L540" title="1 of 4 branches missed.">                if (families != null || getDeprecatedConfigs().findAny().isPresent()) {</span>
+<span class="pc bpc" id="L541" title="3 of 4 branches missed.">                    if (log.isEnabled(Log.Level.DEBUG) &amp;&amp; families != null) {</span>
+<span class="nc" id="L542">                        log.debug(format(&quot;%s license families loaded from pom&quot;, families.length));</span>
                     }
-<span class="pc bpc" id="L511" title="1 of 2 branches missed.">                    Consumer&lt;ILicenseFamily&gt; logger = super.getLog().isDebugEnabled() ? l -&gt; log.debug(format(&quot;Family: %s&quot;, l))</span>
-<span class="fc" id="L512">                            : l -&gt; {</span>
-<span class="fc" id="L513">                    };</span>
+<span class="pc bpc" id="L544" title="1 of 2 branches missed.">                    Consumer&lt;ILicenseFamily&gt; logger = super.getLog().isDebugEnabled() ? l -&gt; log.debug(format(&quot;Family: %s&quot;, l))</span>
+<span class="fc" id="L545">                            : l -&gt; {</span>
+<span class="fc" id="L546">                    };</span>
 
-<span class="fc" id="L515">                    Consumer&lt;ILicenseFamily&gt; process = logger.andThen(config::addFamily);</span>
-<span class="fc" id="L516">                    getDeprecatedConfigs().map(DeprecatedConfig::getLicenseFamily).filter(Objects::nonNull).forEach(process);</span>
-<span class="pc bpc" id="L517" title="1 of 2 branches missed.">                    if (families != null) { // TODO remove if check in v1.0</span>
-<span class="nc" id="L518">                        Arrays.stream(families).map(Family::build).forEach(process);</span>
+<span class="fc" id="L548">                    Consumer&lt;ILicenseFamily&gt; process = logger.andThen(config::addFamily);</span>
+<span class="fc" id="L549">                    getDeprecatedConfigs().map(DeprecatedConfig::getLicenseFamily).filter(Objects::nonNull).forEach(process);</span>
+<span class="pc bpc" id="L550" title="1 of 2 branches missed.">                    if (families != null) { // TODO remove if check in v1.0</span>
+<span class="nc" id="L551">                        Arrays.stream(families).map(Family::build).forEach(process);</span>
                     }
                 }
 
-<span class="fc" id="L522">                processLicenseFamilies(config);</span>
+<span class="fc" id="L555">                processLicenseFamilies(config);</span>
 
-<span class="pc bpc" id="L524" title="1 of 4 branches missed.">                if (approvedLicenses != null &amp;&amp; approvedLicenses.length &gt; 0) {</span>
-<span class="fc" id="L525">                    Arrays.stream(approvedLicenses).forEach(config::addApprovedLicenseCategory);</span>
+<span class="pc bpc" id="L557" title="1 of 4 branches missed.">                if (approvedLicenses != null &amp;&amp; approvedLicenses.length &gt; 0) {</span>
+<span class="fc" id="L558">                    Arrays.stream(approvedLicenses).forEach(config::addApprovedLicenseCategory);</span>
                 }
 
-<span class="fc bfc" id="L528" title="All 2 branches covered.">                if (licenses != null) {</span>
-<span class="pc bpc" id="L529" title="1 of 2 branches missed.">                    if (log.isEnabled(Log.Level.DEBUG)) {</span>
-<span class="nc" id="L530">                        log.debug(format(&quot;%s licenses loaded from pom&quot;, licenses.length));</span>
+<span class="fc bfc" id="L561" title="All 2 branches covered.">                if (licenses != null) {</span>
+<span class="pc bpc" id="L562" title="1 of 2 branches missed.">                    if (log.isEnabled(Log.Level.DEBUG)) {</span>
+<span class="nc" id="L563">                        log.debug(format(&quot;%s licenses loaded from pom&quot;, licenses.length));</span>
                     }
-<span class="pc bpc" id="L532" title="1 of 2 branches missed.">                    Consumer&lt;ILicense&gt; logger = log.isEnabled(Log.Level.DEBUG) ? l -&gt; log.debug(format(&quot;License: %s&quot;, l))</span>
-<span class="fc" id="L533">                            : l -&gt; {</span>
-<span class="fc" id="L534">                    };</span>
-<span class="pc bpc" id="L535" title="2 of 4 branches missed.">                    Consumer&lt;ILicense&gt; addApproved = (approvedLicenses == null || approvedLicenses.length == 0)</span>
-<span class="nc" id="L536">                            ? l -&gt; config.addApprovedLicenseCategory(l.getLicenseFamily())</span>
-<span class="fc" id="L537">                            : l -&gt; {</span>
-<span class="fc" id="L538">                    };</span>
+<span class="pc bpc" id="L565" title="1 of 2 branches missed.">                    Consumer&lt;ILicense&gt; logger = log.isEnabled(Log.Level.DEBUG) ? l -&gt; log.debug(format(&quot;License: %s&quot;, l))</span>
+<span class="fc" id="L566">                            : l -&gt; {</span>
+<span class="fc" id="L567">                    };</span>
+<span class="pc bpc" id="L568" title="2 of 4 branches missed.">                    Consumer&lt;ILicense&gt; addApproved = (approvedLicenses == null || approvedLicenses.length == 0)</span>
+<span class="nc" id="L569">                            ? l -&gt; config.addApprovedLicenseCategory(l.getLicenseFamily())</span>
+<span class="fc" id="L570">                            : l -&gt; {</span>
+<span class="fc" id="L571">                    };</span>
 
-<span class="fc" id="L540">                    Consumer&lt;ILicense&gt; process = logger.andThen(config::addLicense).andThen(addApproved);</span>
-<span class="fc" id="L541">                    SortedSet&lt;ILicenseFamily&gt; families = config.getLicenseFamilies(LicenseFilter.ALL);</span>
-<span class="fc" id="L542">                    getDeprecatedConfigs().map(DeprecatedConfig::getLicense).filter(Objects::nonNull)</span>
-<span class="fc" id="L543">                            .map(x -&gt; x.setLicenseFamilies(families).build()).forEach(process);</span>
-<span class="pc" id="L544">                    getLicenses().map(x -&gt; x.build(families)).forEach(process);</span>
+<span class="fc" id="L573">                    Consumer&lt;ILicense&gt; process = logger.andThen(config::addLicense).andThen(addApproved);</span>
+<span class="fc" id="L574">                    SortedSet&lt;ILicenseFamily&gt; families = config.getLicenseFamilies(LicenseFilter.ALL);</span>
+<span class="fc" id="L575">                    getDeprecatedConfigs().map(DeprecatedConfig::getLicense).filter(Objects::nonNull)</span>
+<span class="fc" id="L576">                            .map(x -&gt; x.setLicenseFamilies(families).build()).forEach(process);</span>
+<span class="pc" id="L577">                    getLicenses().map(x -&gt; x.build(families)).forEach(process);</span>
                 }
-<span class="fc" id="L546">                DocumentName dirName = DocumentName.builder(basedir).build();</span>
-<span class="fc" id="L547">                config.addSource(new DirectoryWalker(new FileDocument(dirName, basedir, config.getDocumentExcluder(dirName))));</span>
+<span class="fc" id="L579">                DocumentName dirName = DocumentName.builder(basedir).build();</span>
+<span class="fc" id="L580">                config.addSource(new DirectoryWalker(new FileDocument(dirName, basedir, config.getDocumentExcluder(dirName))));</span>
 
-<span class="pc bpc" id="L549" title="1 of 2 branches missed.">                if (helpLicenses) {</span>
-<span class="nc" id="L550">                    new org.apache.rat.help.Licenses(</span>
+<span class="pc bpc" id="L582" title="1 of 2 branches missed.">                if (helpLicenses) {</span>
+<span class="nc" id="L583">                    new org.apache.rat.help.Licenses(</span>
                             new MavenOptionCollection(),
-<span class="nc" id="L552">                            config, new PrintWriter(log.asWriter())).printHelp();</span>
+<span class="nc" id="L585">                            config, new PrintWriter(log.asWriter())).printHelp();</span>
                 }
-<span class="fc" id="L554">                reportConfiguration = config;</span>
-<span class="nc" id="L555">            } catch (IOException e) {</span>
-<span class="nc" id="L556">                throw new MojoExecutionException(e);</span>
-<span class="fc" id="L557">            }</span>
+<span class="fc" id="L587">                reportConfiguration = config;</span>
+<span class="nc" id="L588">            } catch (IOException e) {</span>
+<span class="nc" id="L589">                throw new MojoExecutionException(e);</span>
+<span class="fc" id="L590">            }</span>
         }
-<span class="fc" id="L559">        return reportConfiguration;</span>
+<span class="fc" id="L592">        return reportConfiguration;</span>
     }
 
     protected void logLicenses(final Collection&lt;ILicense&gt; licenses) {
-<span class="pc bpc" id="L563" title="1 of 2 branches missed.">        if (getLog().isDebugEnabled()) {</span>
-<span class="nc" id="L564">            getLog().debug(&quot;The following &quot; + licenses.size() + &quot; licenses are activated:&quot;);</span>
-<span class="nc bnc" id="L565" title="All 2 branches missed.">            for (ILicense license : licenses) {</span>
-<span class="nc" id="L566">                getLog().debug(&quot;* &quot; + license.toString());</span>
-<span class="nc" id="L567">            }</span>
+<span class="pc bpc" id="L596" title="1 of 2 branches missed.">        if (getLog().isDebugEnabled()) {</span>
+<span class="nc" id="L597">            getLog().debug(&quot;The following &quot; + licenses.size() + &quot; licenses are activated:&quot;);</span>
+<span class="nc bnc" id="L598" title="All 2 branches missed.">            for (ILicense license : licenses) {</span>
+<span class="nc" id="L599">                getLog().debug(&quot;* &quot; + license.toString());</span>
+<span class="nc" id="L600">            }</span>
         }
-<span class="fc" id="L569">    }</span>
+<span class="fc" id="L602">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.16.202610240946</span></div></body></html>

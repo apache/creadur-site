@@ -31,25 +31,49 @@ import org.apache.rat.utils.Log;
     /**
      * Ignore Git Global ignore file.
      */
-<span class="fc" id="L34">    RAT_NO_GIT_GLOBAL_IGNORE(&quot;Ignore global ignore file when processing GIT ignore files.&quot;),</span>
+<span class="fc" id="L34">    RAT_NO_GIT_GLOBAL_IGNORE(&quot;Ignore the global ignore file when processing GIT ignore files.&quot;),</span>
+    /**
+     * Controls how the global GIT ignore file is resolved for reproducible builds and audits.
+     * &lt;p&gt;
+     * This is a tri-state variable, not a plain boolean. The value may be one of the following.
+     * &lt;/p&gt;
+     * &lt;ul&gt;
+     *   &lt;li&gt;{@code false} - never read the machine global git ignore (equivalent to setting
+     *       {@link #RAT_NO_GIT_GLOBAL_IGNORE}).&lt;/li&gt;
+     *   &lt;li&gt;{@code true} (default) - resolve the global git ignore from the git configuration
+     *       ({@code core.excludesFile} / {@code GIT_CONFIG_GLOBAL} / XDG / HOME).&lt;/li&gt;
+     *   &lt;li&gt;a file path - always use that explicit global ignore file, so the scan result does not
+     *       depend on the machine the audit runs on.&lt;/li&gt;
+     * &lt;/ul&gt;
+     * Setting it to {@code false} or to an explicit path makes RAT scans reproducible across
+     * machines (recommended for CI/release builds). The legacy {@link #RAT_NO_GIT_GLOBAL_IGNORE}
+     * takes precedence over this variable.
+     */
+<span class="fc" id="L52">    RAT_GIT_GLOBAL_IGNORE(&quot;Controls how the global GIT ignore file is resolved: 'false' to disable it, 'true' to &quot;</span>
+            + &quot;resolve it from the git configuration, or a file path to always use an explicit global git ignore file.&quot;),
     /**
      * Log matcher decomposition when used.
      */
-<span class="fc" id="L38">    RAT_DECOMPOSE_MATCHER_ON_USE(&quot;Log the decomposition of matchers on use. Messages will be logged at the minimum log level currently enabled.&quot;),</span>
+<span class="fc" id="L57">    RAT_DECOMPOSE_MATCHER_ON_USE(&quot;Log the decomposition of matchers on use. Messages will be logged at the minimum log level currently enabled.&quot;),</span>
     /**
      * Defines the XDG home.
      */
-<span class="fc" id="L42">    XDG_CONFIG_HOME(&quot;Where user-specific configurations are written. Generally defaults to $HOME/.config. &quot; +</span>
+<span class="fc" id="L61">    XDG_CONFIG_HOME(&quot;Where user-specific configurations are written. Generally defaults to $HOME/.config. &quot; +</span>
             &quot;Only needs to be set if it has been changed on the system.&quot;),
     /**
      * Defines the user HOME.
      */
-<span class="fc" id="L47">    HOME(&quot;The current user's home directory.&quot;),</span>
+<span class="fc" id="L66">    HOME(&quot;The current user's home directory.&quot;),</span>
+    /**
+     * The location of the git global configuration file.
+     */
+<span class="fc" id="L70">    GIT_CONFIG_GLOBAL(&quot;Where the git global (user-level) configuration file is located. When set, only this file &quot; +</span>
+            &quot;is read for git's global configuration, ignoring $HOME/.gitconfig and $XDG_CONFIG_HOME/git/config.&quot;),
     /**
      * Sets the log level for the DefaultLog when it is constructed.
      */
-<span class="fc" id="L51">    RAT_DEFAULT_LOG_LEVEL(&quot;The default log level for the command line logger. Should be one of: &quot; +</span>
-<span class="fc" id="L52">            Arrays.stream(Log.Level.values()).map(Log.Level::name).collect(Collectors.joining(&quot;, &quot;)) + &quot;.&quot;);</span>
+<span class="fc" id="L75">    RAT_DEFAULT_LOG_LEVEL(&quot;The default log level for the command line logger. Should be one of: &quot; +</span>
+<span class="fc" id="L76">            Arrays.stream(Log.Level.values()).map(Log.Level::name).collect(Collectors.joining(&quot;, &quot;)) + &quot;.&quot;);</span>
     /**
      * The documentation for this EnvVar.
      */
@@ -59,16 +83,16 @@ import org.apache.rat.utils.Log;
      * Constructor.
      * @param documentation the documentation for the EnvVar.
      */
-<span class="fc" id="L62">    EnvVar(final String documentation) {</span>
-<span class="fc" id="L63">        this.documentation = documentation;</span>
-<span class="fc" id="L64">    }</span>
+<span class="fc" id="L86">    EnvVar(final String documentation) {</span>
+<span class="fc" id="L87">        this.documentation = documentation;</span>
+<span class="fc" id="L88">    }</span>
 
     /**
      * Gets the documentation for this EnvVar.
      * @return the documentation for this EnvVar.
      */
     public String documentation() {
-<span class="nc" id="L71">        return documentation;</span>
+<span class="nc" id="L95">        return documentation;</span>
     }
 
     /**
@@ -76,7 +100,7 @@ import org.apache.rat.utils.Log;
      * @return {@code true} if the EnvVar is set.
      */
     public boolean isSet() {
-<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        return getValue() != null;</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        return getValue() != null;</span>
     }
 
     /**
@@ -84,7 +108,7 @@ import org.apache.rat.utils.Log;
      * @return the value for this EnvVar or {@code null} if not set.
      */
     public String getValue() {
-<span class="fc" id="L87">        return System.getenv(name());</span>
+<span class="fc" id="L111">        return System.getenv(name());</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.16.202610240946</span></div></body></html>
