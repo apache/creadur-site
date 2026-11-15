@@ -18,21 +18,26 @@
  */
 package org.apache.rat.config.exclusion.fileprocessors;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.rat.api.EnvVar;
 import org.apache.rat.config.exclusion.ExclusionUtils;
 import org.apache.rat.config.exclusion.MatcherSet;
 import org.apache.rat.config.exclusion.plexus.MatchPatterns;
 import org.apache.rat.document.DocumentName;
+import org.apache.rat.document.DocumentName.FSInfo;
 import org.apache.rat.document.DocumentNameMatcher;
 
 import static org.apache.rat.config.exclusion.ExclusionUtils.NEGATION_PREFIX;
@@ -57,41 +62,41 @@ public class GitIgnoreBuilder extends AbstractFileProcessorBuilder {
      * Constructs a file processor that processes a {@code .gitignore} file and ignores any lines starting with {@value #COMMENT_PREFIX}.
      */
     public GitIgnoreBuilder() {
-<span class="fc" id="L60">        super(IGNORE_FILE, COMMENT_PREFIX, true);</span>
-<span class="fc" id="L61">    }</span>
+<span class="fc" id="L65">        super(IGNORE_FILE, COMMENT_PREFIX, true);</span>
+<span class="fc" id="L66">    }</span>
 
     private MatcherSet processGlobalIgnore(final Consumer&lt;MatcherSet&gt; matcherSetConsumer, final DocumentName root, final DocumentName globalGitIgnore) {
-<span class="fc" id="L64">        final MatcherSet.Builder matcherSetBuilder = new MatcherSet.Builder();</span>
-<span class="fc" id="L65">        final List&lt;String&gt; iterable = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L66">        ExclusionUtils.asIterator(globalGitIgnore.asFile(), commentFilter)</span>
-<span class="fc" id="L67">                .map(entry -&gt; modifyEntry(matcherSetConsumer, globalGitIgnore, entry).orElse(null))</span>
-<span class="fc" id="L68">                .filter(Objects::nonNull)</span>
-<span class="fc" id="L69">                .map(entry -&gt; ExclusionUtils.qualifyPattern(root, entry))</span>
-<span class="fc" id="L70">                .forEachRemaining(iterable::add);</span>
+<span class="fc" id="L69">        final MatcherSet.Builder matcherSetBuilder = new MatcherSet.Builder();</span>
+<span class="fc" id="L70">        final List&lt;String&gt; iterable = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L71">        ExclusionUtils.asIterator(globalGitIgnore.asFile(), commentFilter)</span>
+<span class="fc" id="L72">                .map(entry -&gt; modifyEntry(matcherSetConsumer, globalGitIgnore, entry).orElse(null))</span>
+<span class="fc" id="L73">                .filter(Objects::nonNull)</span>
+<span class="fc" id="L74">                .map(entry -&gt; ExclusionUtils.qualifyPattern(root, entry))</span>
+<span class="fc" id="L75">                .forEachRemaining(iterable::add);</span>
 
-<span class="fc" id="L72">        Set&lt;String&gt; included = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L73">        Set&lt;String&gt; excluded = new HashSet&lt;&gt;();</span>
-<span class="fc" id="L74">        MatcherSet.Builder.segregateList(excluded, included, iterable);</span>
-<span class="fc" id="L75">        DocumentName displayName = DocumentName.builder(root).setName(&quot;global gitignore&quot;).build();</span>
-<span class="fc" id="L76">        matcherSetBuilder.addExcluded(displayName, excluded);</span>
-<span class="fc" id="L77">        matcherSetBuilder.addIncluded(displayName, included);</span>
-<span class="fc" id="L78">        return matcherSetBuilder.build();</span>
+<span class="fc" id="L77">        Set&lt;String&gt; included = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L78">        Set&lt;String&gt; excluded = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L79">        MatcherSet.Builder.segregateList(excluded, included, iterable);</span>
+<span class="fc" id="L80">        DocumentName displayName = DocumentName.builder(root).setName(&quot;global gitignore&quot;).build();</span>
+<span class="fc" id="L81">        matcherSetBuilder.addExcluded(displayName, excluded);</span>
+<span class="fc" id="L82">        matcherSetBuilder.addIncluded(displayName, included);</span>
+<span class="fc" id="L83">        return matcherSetBuilder.build();</span>
     }
 
     @Override
     protected MatcherSet process(final Consumer&lt;MatcherSet&gt; matcherSetConsumer, final DocumentName root, final DocumentName documentName) {
-<span class="fc bfc" id="L83" title="All 2 branches covered.">      if (root.equals(documentName.getBaseDocumentName())) {</span>
-<span class="fc" id="L84">          Optional&lt;File&gt; globalGitIgnore = globalGitIgnore();</span>
-<span class="fc" id="L85">          List&lt;MatcherSet&gt; matcherSets = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L86">          matcherSets.add(super.process(matcherSetConsumer, root, documentName));</span>
-<span class="fc bfc" id="L87" title="All 2 branches covered.">          if (globalGitIgnore.isPresent()) {</span>
-<span class="fc" id="L88">              LevelBuilder levelBuilder = getLevelBuilder(Integer.MAX_VALUE);</span>
-<span class="fc" id="L89">              DocumentName ignore = DocumentName.builder(globalGitIgnore.get()).build();</span>
-<span class="fc" id="L90">              matcherSets.add(processGlobalIgnore(levelBuilder::add, root, ignore));</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">      if (root.equals(documentName.getBaseDocumentName())) {</span>
+<span class="fc" id="L89">          Optional&lt;File&gt; globalGitIgnore = globalGitIgnore();</span>
+<span class="fc" id="L90">          List&lt;MatcherSet&gt; matcherSets = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L91">          matcherSets.add(super.process(matcherSetConsumer, root, documentName));</span>
+<span class="fc bfc" id="L92" title="All 2 branches covered.">          if (globalGitIgnore.isPresent()) {</span>
+<span class="fc" id="L93">              LevelBuilder levelBuilder = getLevelBuilder(Integer.MAX_VALUE);</span>
+<span class="fc" id="L94">              DocumentName ignore = DocumentName.builder(globalGitIgnore.get()).build();</span>
+<span class="fc" id="L95">              matcherSets.add(processGlobalIgnore(levelBuilder::add, root, ignore));</span>
           }
-<span class="fc" id="L92">          return MatcherSet.merge(matcherSets);</span>
+<span class="fc" id="L97">          return MatcherSet.merge(matcherSets);</span>
       } else {
-<span class="fc" id="L94">          return super.process(matcherSetConsumer, root, documentName);</span>
+<span class="fc" id="L99">          return super.process(matcherSetConsumer, root, documentName);</span>
       }
     }
 
@@ -108,68 +113,540 @@ public class GitIgnoreBuilder extends AbstractFileProcessorBuilder {
     @Override
     protected Optional&lt;String&gt; modifyEntry(final Consumer&lt;MatcherSet&gt; matcherSetConsumer, final DocumentName documentName, final String entry) {
         // An optional prefix &quot;!&quot; which negates the pattern;
-<span class="fc" id="L111">        boolean prefix = entry.startsWith(NEGATION_PREFIX);</span>
-<span class="pc bpc" id="L112" title="1 of 6 branches missed.">        String pattern = prefix || entry.startsWith(ESCAPED_COMMENT) || entry.startsWith(ESCAPED_NEGATION) ?</span>
-<span class="fc" id="L113">                entry.substring(1) : entry;</span>
+<span class="fc" id="L116">        boolean prefix = entry.startsWith(NEGATION_PREFIX);</span>
+<span class="pc bpc" id="L117" title="1 of 6 branches missed.">        String pattern = prefix || entry.startsWith(ESCAPED_COMMENT) || entry.startsWith(ESCAPED_NEGATION) ?</span>
+<span class="fc" id="L118">                entry.substring(1) : entry;</span>
 
         // If there is a separator at the beginning or middle (or both) of the pattern, then
         // the pattern is relative to the directory level of the particular .gitignore file itself.
         // Otherwise, the pattern may also match at any level below the .gitignore level.
-<span class="fc" id="L118">        int slashPos = pattern.indexOf(SLASH);</span>
+<span class="fc" id="L123">        int slashPos = pattern.indexOf(SLASH);</span>
         // no slash or at end already
-<span class="fc bfc" id="L120" title="All 4 branches covered.">        if (slashPos == -1 || slashPos == pattern.length() - 1) {</span>
-<span class="fc" id="L121">            pattern = &quot;**/&quot; + pattern;</span>
+<span class="fc bfc" id="L125" title="All 4 branches covered.">        if (slashPos == -1 || slashPos == pattern.length() - 1) {</span>
+<span class="fc" id="L126">            pattern = &quot;**/&quot; + pattern;</span>
         }
-<span class="fc bfc" id="L123" title="All 2 branches covered.">        if (slashPos == 0) {</span>
-<span class="fc" id="L124">            pattern = pattern.substring(1);</span>
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (slashPos == 0) {</span>
+<span class="fc" id="L129">            pattern = pattern.substring(1);</span>
         }
         // If there is a separator at the end of the pattern then the pattern will only match directories,
         // otherwise the pattern can match both files and directories.
-<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (pattern.endsWith(SLASH)) {</span>
-<span class="fc" id="L129">            pattern = pattern.substring(0, pattern.length() - 1);</span>
-<span class="fc bfc" id="L130" title="All 2 branches covered.">            String name = prefix ? NEGATION_PREFIX + pattern : pattern;</span>
-<span class="fc" id="L131">            DocumentName matcherPattern = DocumentName.builder(documentName).setName(name.replace(SLASH, documentName.getDirectorySeparator()))</span>
-<span class="fc" id="L132">                    .build();</span>
-<span class="fc" id="L133">            DocumentNameMatcher matcher = DocumentNameMatcher.and(new DocumentNameMatcher(&quot;isDirectory&quot;, File::isDirectory),</span>
-<span class="fc" id="L134">                    new DocumentNameMatcher(name, MatchPatterns.from(matcherPattern.localized(documentName.getDirectorySeparator()))));</span>
+<span class="fc bfc" id="L133" title="All 2 branches covered.">        if (pattern.endsWith(SLASH)) {</span>
+<span class="fc" id="L134">            pattern = pattern.substring(0, pattern.length() - 1);</span>
+<span class="fc bfc" id="L135" title="All 2 branches covered.">            String name = prefix ? NEGATION_PREFIX + pattern : pattern;</span>
+<span class="fc" id="L136">            DocumentName matcherPattern = DocumentName.builder(documentName).setName(name.replace(SLASH, documentName.getDirectorySeparator()))</span>
+<span class="fc" id="L137">                    .build();</span>
+<span class="fc" id="L138">            DocumentNameMatcher matcher = DocumentNameMatcher.and(new DocumentNameMatcher(&quot;isDirectory&quot;, File::isDirectory),</span>
+<span class="fc" id="L139">                    new DocumentNameMatcher(name, MatchPatterns.from(matcherPattern.localized(documentName.getDirectorySeparator()))));</span>
 
-<span class="fc" id="L136">            MatcherSet.Builder builder = new MatcherSet.Builder();</span>
-<span class="fc bfc" id="L137" title="All 2 branches covered.">            if (prefix) {</span>
-<span class="fc" id="L138">                builder.addIncluded(matcher);</span>
+<span class="fc" id="L141">            MatcherSet.Builder builder = new MatcherSet.Builder();</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">            if (prefix) {</span>
+<span class="fc" id="L143">                builder.addIncluded(matcher);</span>
             } else {
-<span class="fc" id="L140">                builder.addExcluded(matcher);</span>
+<span class="fc" id="L145">                builder.addExcluded(matcher);</span>
             }
-<span class="fc" id="L142">            matcherSetConsumer.accept(builder.build());</span>
-<span class="fc" id="L143">            return Optional.empty();</span>
+<span class="fc" id="L147">            matcherSetConsumer.accept(builder.build());</span>
+<span class="fc" id="L148">            return Optional.empty();</span>
         }
-<span class="fc bfc" id="L145" title="All 2 branches covered.">        return Optional.of(prefix ? NEGATION_PREFIX + pattern : pattern);</span>
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        return Optional.of(prefix ? NEGATION_PREFIX + pattern : pattern);</span>
     }
 
     /**
      * The global gitignore file to process, based on the
-     * {@link EnvVar#RAT_NO_GIT_GLOBAL_IGNORE},
-     * {@link EnvVar#XDG_CONFIG_HOME} and
-     * {@link EnvVar#HOME} environment
-     * variables.
+     * {@link EnvVar#RAT_NO_GIT_GLOBAL_IGNORE} and {@link EnvVar#RAT_GIT_GLOBAL_IGNORE}
+     * environment variables, the git configuration ({@code core.excludesFile} including
+     * {@code [include] path} directives and {@code GIT_CONFIG_GLOBAL}) and the
+     * {@link EnvVar#XDG_CONFIG_HOME} environment variable.
+     * &lt;p&gt;
+     * The global ignore file is read exactly once, anchored at the scan {@code root}, and its
+     * relative {@code core.excludesFile} path is resolved against the process working directory.
+     * It is not re-resolved when the scan descends into subdirectories, matching git where
+     * patterns from {@code core.excludesFile} are treated as if specified at the root of the
+     * working tree.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * {@link EnvVar#RAT_NO_GIT_GLOBAL_IGNORE} takes precedence over {@link EnvVar#RAT_GIT_GLOBAL_IGNORE}.
+     * When {@link EnvVar#RAT_GIT_GLOBAL_IGNORE} is {@code false} or an explicit path, the scan result does
+     * not depend on the machine the audit runs on, which is recommended for reproducible CI/release builds.
+     * &lt;/p&gt;
      */
     protected Optional&lt;File&gt; globalGitIgnore() {
-<span class="pc bpc" id="L156" title="1 of 2 branches missed.">        if (EnvVar.RAT_NO_GIT_GLOBAL_IGNORE.isSet()) {</span>
-<span class="nc" id="L157">            return Optional.empty();</span>
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (EnvVar.RAT_NO_GIT_GLOBAL_IGNORE.isSet()) {</span>
+<span class="nc" id="L174">            return Optional.empty();</span>
+        }
+<span class="fc" id="L176">        return resolveGlobalGitIgnore(EnvVar.RAT_GIT_GLOBAL_IGNORE.getValue());</span>
+    }
+
+    /**
+     * Resolves the global ignore file honoring the {@code RAT_GIT_GLOBAL_IGNORE} override value.
+     * &lt;p&gt;
+     * The override is a three-state value: a {@code &quot;false&quot;} disables the global ignore, a
+     * {@code &quot;true&quot;} (or an unset variable) falls back to the git configuration resolution, and
+     * any other value is treated as an explicit global ignore path that, when it exists, is used
+     * as is so the scan result does not depend on the machine the audit runs on.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * Because the three states share the same string value, the value may not be both a boolean
+     * keyword and a file name: a file that literally is named {@code true} or {@code false}
+     * cannot be pinned with this variable.
+     * &lt;/p&gt;
+     * @param override the raw value of the {@code RAT_GIT_GLOBAL_IGNORE} environment variable or
+     *        {@code null} if it is not set.
+     * @return the resolved global ignore file or an empty Optional if none must be used.
+     */
+    static Optional&lt;File&gt; resolveGlobalGitIgnore(final String override) {
+<span class="fc bfc" id="L197" title="All 2 branches covered.">        if (override != null) {</span>
+<span class="fc" id="L198">            String value = override.strip();</span>
+<span class="fc bfc" id="L199" title="All 2 branches covered.">            if (&quot;false&quot;.equalsIgnoreCase(value)) {</span>
+<span class="fc" id="L200">                return Optional.empty();</span>
+            }
+<span class="fc bfc" id="L202" title="All 2 branches covered.">            if (!&quot;true&quot;.equalsIgnoreCase(value)) {</span>
+                // an explicit path always uses that file if it exists; no fall back to the git config
+<span class="fc" id="L204">                File file = new File(value);</span>
+<span class="fc bfc" id="L205" title="All 2 branches covered.">                return file.isFile() ? Optional.of(file) : Optional.empty();</span>
+            }
+        }
+        // a configured but missing file yields an empty ignore (no fall back to the default),
+        // matching git behavior
+<span class="fc" id="L210">        return new GitConfig().coreExcludesFile().filter(File::isFile);</span>
+    }
+
+    /**
+     * Reads the global git configuration files to resolve the file configured
+     * for {@code core.excludesFile}.
+     * &lt;p&gt;
+     * It is a {@code protected static} nested type so that it stays independently unit-testable
+     * while keeping the git-config reading logic co-located with the {@link GitIgnoreBuilder} that
+     * consumes it.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * The configuration files are read in git order: {@code $XDG_CONFIG_HOME/git/config}
+     * first and {@code ~/.gitconfig} second. The last value found for
+     * {@code core.excludesFile} wins.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * {@code [include] path} directives are supported and the included files are expanded
+     * in place, recursively. The relative paths of included files are resolved against the
+     * directory of the including file, {@code ~/} (or {@code ~\}) is expanded to the home
+     * directory and a depth limit of {@value #MAX_INCLUDE_DEPTH} is enforced like git does.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * {@code includeIf} directives, the system configuration ({@code /etc/gitconfig}), the
+     * {@code GIT_CONFIG_SYSTEM} variable and the repository configuration ({@code .git/config}) are
+     * not supported. The {@code GIT_CONFIG_GLOBAL} variable, when set, replaces the
+     * {@code $HOME/.gitconfig} and {@code $XDG_CONFIG_HOME/git/config} files.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * The home directory used for {@code ~} expansion is resolved from the {@code user.home} system
+     * property. On modern JVMs this matches the operating system home directory on every platform,
+     * so no platform specific environment variable lookup is needed.
+     * &lt;/p&gt;
+     * &lt;p&gt;
+     * When {@code core.excludesFile} is not configured the default location next to the XDG
+     * configuration ({@code $XDG_CONFIG_HOME/git/ignore} or {@code $HOME/.config/git/ignore})
+     * is used.
+     * &lt;/p&gt;
+     */
+    protected static final class GitConfig {
+        /** The name of the 'core' section. */
+        private static final String CORE_SECTION = &quot;core&quot;;
+        /** The name of the 'include' section. */
+        private static final String INCLUDE_SECTION = &quot;include&quot;;
+        /** The key of the core section holding the global ignore file. */
+        private static final String EXCLUDES_FILE_KEY = &quot;excludesfile&quot;;
+        /** The key of the include section holding the file to include. */
+        private static final String INCLUDE_PATH_KEY = &quot;path&quot;;
+        /** The maximum depth of nested includes, matching the git limit. */
+        private static final int MAX_INCLUDE_DEPTH = 10;
+        /** The comment marker for a full line comment. */
+        private static final String COMMENT_PREFIX = &quot;#&quot;;
+        /** The alternate comment marker for a full line comment. */
+        private static final String SEMICOLON_COMMENT_PREFIX = &quot;;&quot;;
+        /** The opening quote of a quoted value. */
+        private static final String QUOTE = &quot;\&quot;&quot;;
+        /** The escape character of a quoted value. */
+        private static final String ESCAPE = &quot;\\&quot;;
+
+        /** The XDG configuration file. */
+        private final File xdgConfig;
+        /** The user configuration file. */
+        private final File userConfig;
+        /** The home directory or {@code null} when not defined. */
+        private final String home;
+        /** The directory against which relative paths are resolved. */
+        private final File cwd;
+        /** The default global ignore file, next to the XDG configuration or {@code null}. */
+        private final File defaultIgnore;
+        /** The file configured by the {@code GIT_CONFIG_GLOBAL} environment variable or {@code null}. */
+        private final File globalConfig;
+        /** The file system info of the default file system used to build paths. */
+<span class="fc" id="L282">        private final FSInfo fsInfo = FSInfo.getDefault();</span>
+        /** The home directory prefix for this file system (e.g. {@code ~/} on Unix, {@code ~\} on Windows). */
+<span class="fc" id="L284">        private final String homePrefix = &quot;~&quot; + fsInfo.dirSeparator();</span>
+        /** The alternate home directory prefix using the other separator, for portable git configs. */
+<span class="pc bpc" id="L286" title="1 of 2 branches missed.">        private final String homeAlternatePrefix = &quot;~&quot; + (fsInfo.dirSeparator().equals(&quot;/&quot;) ? &quot;\\&quot; : &quot;/&quot;);</span>
+
+        /**
+         * Creates a GitConfig reading the configuration files from the environment.
+         */
+        public GitConfig() {
+<span class="fc" id="L292">            this(gitConfigGlobalFile(), xdgConfigFile(), userConfigFile(), homeDir(),</span>
+<span class="fc" id="L293">                    new File(System.getProperty(&quot;user.dir&quot;)));</span>
+<span class="fc" id="L294">        }</span>
+
+        /**
+         * Creates a GitConfig reading the given configuration files.
+         * @param xdgConfig the XDG configuration file or {@code null} if there is none.
+         * @param userConfig the user configuration file or {@code null} if there is none.
+         * @param home the home directory used for {@code ~} expansion.
+         */
+        GitConfig(final File xdgConfig, final File userConfig, final String home) {
+<span class="fc" id="L303">            this(null, xdgConfig, userConfig, home, new File(System.getProperty(&quot;user.dir&quot;)));</span>
+<span class="fc" id="L304">        }</span>
+
+        /**
+         * Creates a GitConfig reading the given configuration files.
+         * @param xdgConfig the XDG configuration file or {@code null} if there is none.
+         * @param userConfig the user configuration file or {@code null} if there is none.
+         * @param home the home directory used for {@code ~} expansion.
+         * @param cwd the directory against which relative paths are resolved.
+         */
+        GitConfig(final File xdgConfig, final File userConfig, final String home, final File cwd) {
+<span class="fc" id="L314">            this(null, xdgConfig, userConfig, home, cwd);</span>
+<span class="fc" id="L315">        }</span>
+
+        /**
+         * Creates a GitConfig reading the given configuration files.
+         * @param globalConfig the effective global config file (from {@code GIT_CONFIG_GLOBAL})
+         *        or {@code null} to use the XDG and user configuration files.
+         * @param xdgConfig the XDG configuration file or {@code null} if there is none.
+         * @param userConfig the user configuration file or {@code null} if there is none.
+         * @param home the home directory used for {@code ~} expansion.
+         * @param cwd the directory against which relative paths are resolved.
+         */
+<span class="fc" id="L326">        GitConfig(final File globalConfig, final File xdgConfig, final File userConfig, final String home, final File cwd) {</span>
+<span class="fc" id="L327">            this.globalConfig = globalConfig;</span>
+<span class="fc" id="L328">            this.xdgConfig = xdgConfig;</span>
+<span class="fc" id="L329">            this.userConfig = userConfig;</span>
+<span class="fc" id="L330">            this.home = home;</span>
+<span class="fc" id="L331">            this.cwd = cwd;</span>
+<span class="fc bfc" id="L332" title="All 2 branches covered.">            File parent = xdgConfig == null ? null : xdgConfig.getAbsoluteFile().getParentFile();</span>
+<span class="fc bfc" id="L333" title="All 2 branches covered.">            this.defaultIgnore = parent == null ? null : new File(parent, &quot;ignore&quot;);</span>
+<span class="fc" id="L334">        }</span>
+
+        /**
+         * Resolves the global git ignore file.
+         * &lt;p&gt;
+         * If {@code core.excludesFile} is configured in one of the git configuration files the configured
+         * file is returned - even if it does not exist, matching git behavior where a configured file
+         * disables the default location. Otherwise the default location is returned if it exists.
+         * &lt;/p&gt;
+         * @return the configured or default global git ignore file or an empty Optional if neither exists.
+         */
+        public Optional&lt;File&gt; coreExcludesFile() {
+<span class="fc" id="L346">            List&lt;String&gt; configured = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L347">            Set&lt;File&gt; includeChain = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L348" title="All 2 branches covered.">            if (globalConfig != null) {</span>
+                // when GIT_CONFIG_GLOBAL is set, neither ~/.gitconfig nor $XDG_CONFIG_HOME/git/config are read
+<span class="fc" id="L350">                parseFile(globalConfig, configured, includeChain, 0);</span>
+            } else {
+<span class="fc" id="L352">                parseFile(xdgConfig, configured, includeChain, 0);</span>
+<span class="fc" id="L353">                parseFile(userConfig, configured, includeChain, 0);</span>
+            }
+<span class="fc bfc" id="L355" title="All 2 branches covered.">            if (!configured.isEmpty()) {</span>
+<span class="fc" id="L356">                String value = configured.get(configured.size() - 1);</span>
+<span class="fc" id="L357">                return resolveExcludesFile(value);</span>
+            }
+<span class="fc bfc" id="L359" title="All 4 branches covered.">            return defaultIgnore != null &amp;&amp; defaultIgnore.isFile() ? Optional.of(defaultIgnore) : Optional.empty();</span>
         }
 
-<span class="fc" id="L160">        String xdgConfigHome = EnvVar.XDG_CONFIG_HOME.getValue();</span>
-        String filename;
-<span class="pc bpc" id="L162" title="3 of 4 branches missed.">        if (xdgConfigHome != null &amp;&amp; !xdgConfigHome.isEmpty()) {</span>
-<span class="nc" id="L163">            filename = xdgConfigHome + File.separator + &quot;git&quot; + File.separator + &quot;ignore&quot;;</span>
-        } else {
-<span class="fc" id="L165">            String home = StringUtils.defaultIfEmpty(EnvVar.HOME.getValue(), &quot;&quot;);</span>
-<span class="fc" id="L166">            filename = home + File.separator + &quot;.config&quot; + File.separator + &quot;git&quot; + File.separator + &quot;ignore&quot;;</span>
+        /**
+         * Parses a configuration file, expanding {@code [include] path} directives in place.
+         * @param file the file to parse or {@code null} if there is none.
+         * @param excludesFileValues the collected raw {@code core.excludesFile} values in order.
+         * @param includeChain the canonical files of the current include chain to detect cycles.
+         * @param depth the current include depth.
+         */
+        private void parseFile(final File file, final List&lt;String&gt; excludesFileValues, final Set&lt;File&gt; includeChain, final int depth) {
+<span class="pc bpc" id="L370" title="1 of 4 branches missed.">            if (file == null || depth &gt; MAX_INCLUDE_DEPTH) {</span>
+<span class="fc" id="L371">                return;</span>
+            }
+<span class="fc" id="L373">            final File canonical = canonical(file);</span>
+<span class="fc bfc" id="L374" title="All 4 branches covered.">            if (!canonical.isFile() || !includeChain.add(canonical)) {</span>
+<span class="fc" id="L375">                return;</span>
+            }
+<span class="fc" id="L377">            try (BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8)) {</span>
+<span class="fc" id="L378">                String section = &quot;&quot;;</span>
+<span class="fc" id="L379">                String subsection = null;</span>
+<span class="fc" id="L380">                String pending = null;</span>
+                String line;
+<span class="fc bfc" id="L382" title="All 2 branches covered.">                while ((line = reader.readLine()) != null) {</span>
+<span class="pc bpc" id="L383" title="1 of 2 branches missed.">                    String current = pending == null ? line : pending + line;</span>
+<span class="pc bpc" id="L384" title="1 of 2 branches missed.">                    if ((trailingBackslashes(current) &amp; 1) == 1) {</span>
+<span class="nc" id="L385">                        pending = current.substring(0, current.length() - 1);</span>
+<span class="nc" id="L386">                        continue;</span>
+                    }
+<span class="fc" id="L388">                    pending = null;</span>
+<span class="fc" id="L389">                    current = current.strip();</span>
+<span class="pc bpc" id="L390" title="1 of 6 branches missed.">                    if (current.isEmpty() || current.startsWith(COMMENT_PREFIX) || current.startsWith(SEMICOLON_COMMENT_PREFIX)) {</span>
+<span class="fc" id="L391">                        continue;</span>
+                    }
+<span class="fc bfc" id="L393" title="All 2 branches covered.">                    if (current.startsWith(&quot;[&quot;)) {</span>
+<span class="fc" id="L394">                        Section parsedSection = parseSection(current);</span>
+<span class="pc bpc" id="L395" title="1 of 2 branches missed.">                        if (parsedSection != null) {</span>
+<span class="fc" id="L396">                            section = parsedSection.name();</span>
+<span class="fc" id="L397">                            subsection = parsedSection.subsection();</span>
+                        }
+                        continue;
+                    }
+<span class="fc" id="L401">                    int separator = current.indexOf('=');</span>
+<span class="pc bpc" id="L402" title="1 of 2 branches missed.">                    if (separator &lt; 0) {</span>
+<span class="nc" id="L403">                        continue;</span>
+                    }
+<span class="fc" id="L405">                    String key = current.substring(0, separator).strip().toLowerCase(Locale.ROOT);</span>
+<span class="fc" id="L406">                    String value = current.substring(separator + 1).strip();</span>
+<span class="pc bpc" id="L407" title="2 of 4 branches missed.">                    if (key.isEmpty() || value.isEmpty()) {</span>
+<span class="nc" id="L408">                        continue;</span>
+                    }
+<span class="fc" id="L410">                    String unquoted = unquote(value);</span>
+<span class="fc bfc" id="L411" title="All 6 branches covered.">                    if (CORE_SECTION.equals(section) &amp;&amp; subsection == null &amp;&amp; EXCLUDES_FILE_KEY.equals(key)) {</span>
+<span class="fc" id="L412">                        excludesFileValues.add(unquoted);</span>
+<span class="pc bpc" id="L413" title="2 of 6 branches missed.">                    } else if (INCLUDE_SECTION.equals(section) &amp;&amp; subsection == null &amp;&amp; INCLUDE_PATH_KEY.equals(key)) {</span>
+<span class="fc" id="L414">                        resolveInclude(unquoted, file).ifPresent(included -&gt; parseFile(included, excludesFileValues, includeChain, depth + 1));</span>
+                    }
+<span class="fc" id="L416">                }</span>
+<span class="nc" id="L417">            } catch (IOException e) {</span>
+                // unreadable configuration files are ignored like git does
+            } finally {
+<span class="fc" id="L420">                includeChain.remove(canonical);</span>
+            }
+<span class="fc" id="L422">        }</span>
+
+        /**
+         * Parses a section header.
+         * @param line the line starting with '['.
+         * @return the parsed section or {@code null} if the line is not a valid section header.
+         */
+        private Section parseSection(final String line) {
+<span class="fc" id="L430">            int end = line.indexOf(']');</span>
+<span class="pc bpc" id="L431" title="1 of 2 branches missed.">            if (end &lt; 0) {</span>
+<span class="nc" id="L432">                return null;</span>
+            }
+<span class="fc" id="L434">            String inner = line.substring(1, end).strip();</span>
+<span class="fc" id="L435">            int quote = inner.indexOf(QUOTE);</span>
+            String name;
+<span class="fc" id="L437">            String subsection = null;</span>
+<span class="fc bfc" id="L438" title="All 2 branches covered.">            if (quote &gt;= 0) {</span>
+<span class="fc" id="L439">                name = inner.substring(0, quote).strip();</span>
+<span class="fc" id="L440">                int close = inner.indexOf(QUOTE, quote + 1);</span>
+<span class="pc bpc" id="L441" title="1 of 2 branches missed.">                if (close &gt;= 0) {</span>
+<span class="fc" id="L442">                    subsection = inner.substring(quote + 1, close);</span>
+                }
+<span class="fc" id="L444">            } else {</span>
+<span class="fc" id="L445">                int dot = inner.indexOf('.');</span>
+<span class="pc bpc" id="L446" title="1 of 2 branches missed.">                if (dot &gt;= 0) {</span>
+<span class="nc" id="L447">                    name = inner.substring(0, dot).strip();</span>
+<span class="nc" id="L448">                    subsection = inner.substring(dot + 1).strip();</span>
+                } else {
+<span class="fc" id="L450">                    name = inner;</span>
+                }
+            }
+<span class="pc bpc" id="L453" title="1 of 2 branches missed.">            return name.isEmpty() ? null : new Section(name.toLowerCase(Locale.ROOT), subsection);</span>
         }
-<span class="fc" id="L168">        File file = new File(filename);</span>
-<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (file.exists()) {</span>
-<span class="nc" id="L170">            return Optional.of(file);</span>
-        } else {
-<span class="fc" id="L172">            return Optional.empty();</span>
+
+        /**
+         * Resolves an include path relative to the directory of the including file.
+         * @param value the raw value of the {@code include.path} key.
+         * @param includingFile the file that contains the include directive.
+         * @return the file to include or an empty Optional if it can not be resolved.
+         */
+        private Optional&lt;File&gt; resolveInclude(final String value, final File includingFile) {
+<span class="pc bpc" id="L463" title="1 of 2 branches missed.">            File base = includingFile == null ? null : includingFile.getParentFile();</span>
+<span class="fc" id="L464">            return resolve(value, base);</span>
+        }
+
+        /**
+         * Resolves a {@code core.excludesFile} value against the current working directory.
+         * @param value the raw value of the {@code core.excludesFile} key.
+         * @return the configured file or an empty Optional if it can not be resolved.
+         */
+        private Optional&lt;File&gt; resolveExcludesFile(final String value) {
+<span class="fc" id="L473">            return resolve(value, cwd);</span>
+        }
+
+        /**
+         * Resolves a path value, expanding a leading {@code ~} followed by a separator against the
+         * home directory and otherwise resolving relative paths against the given base directory.
+         * &lt;p&gt;
+         * Both a forward slash and a back slash are accepted after the {@code ~} because git
+         * configuration files are portable: the same {@code ~/.gitconfig} may use either separator
+         * regardless of the host operating system.
+         * &lt;/p&gt;
+         * @param value the raw configured value.
+         * @param base the directory against which a relative (non-tilde) path is resolved, or
+         *        {@code null} if relative paths must be left as-is.
+         * @return the resolved file or an empty Optional if the value can not be resolved.
+         */
+        private Optional&lt;File&gt; resolve(final String value, final File base) {
+<span class="fc bfc" id="L490" title="All 2 branches covered.">            if (isHomePrefixed(value)) {</span>
+<span class="fc" id="L491">                return expandHome(value);</span>
+            }
+<span class="pc bpc" id="L493" title="1 of 2 branches missed.">            if (value.startsWith(&quot;~&quot;)) {</span>
+<span class="nc" id="L494">                return Optional.empty();</span>
+            }
+<span class="fc" id="L496">            File path = new File(value);</span>
+<span class="pc bpc" id="L497" title="1 of 4 branches missed.">            if (!path.isAbsolute() &amp;&amp; base != null) {</span>
+<span class="fc" id="L498">                path = new File(base, value);</span>
+            }
+<span class="fc" id="L500">            return Optional.of(path);</span>
+        }
+
+        /**
+         * Determines if the value starts with a home directory prefix for this file system or the
+         * alternate separator, so portable git configuration files resolve on any host.
+         * @param value the value to check.
+         * @return {@code true} if the value starts with a home directory prefix.
+         */
+        private boolean isHomePrefixed(final String value) {
+<span class="fc bfc" id="L510" title="All 4 branches covered.">            return value.startsWith(homePrefix) || value.startsWith(homeAlternatePrefix);</span>
+        }
+
+        /**
+         * Expands a home directory prefixed value ({@code ~} followed by a separator) against the
+         * home directory.
+         * @param value the value to expand.
+         * @return the expanded file or an empty Optional if no home directory is defined.
+         */
+        private Optional&lt;File&gt; expandHome(final String value) {
+<span class="pc bpc" id="L520" title="2 of 4 branches missed.">            if (home == null || home.isEmpty()) {</span>
+<span class="nc" id="L521">                return Optional.empty();</span>
+            }
+<span class="fc bfc" id="L523" title="All 2 branches covered.">            String rest = value.startsWith(homePrefix) ? value.substring(homePrefix.length())</span>
+<span class="fc" id="L524">                    : value.substring(homeAlternatePrefix.length());</span>
+<span class="fc" id="L525">            return Optional.of(new File(home, rest));</span>
+        }
+
+        /**
+         * Counts the number of trailing backslashes of a line.
+         * @param line the line to check.
+         * @return the number of trailing backslashes.
+         */
+        private int trailingBackslashes(final String line) {
+<span class="fc" id="L534">            int count = 0;</span>
+<span class="pc bpc" id="L535" title="2 of 4 branches missed.">            for (int i = line.length() - 1; i &gt;= 0 &amp;&amp; line.charAt(i) == '\\'; i--) {</span>
+<span class="nc" id="L536">                count++;</span>
+            }
+<span class="fc" id="L538">            return count;</span>
+        }
+
+        /**
+         * Unquotes a value if it is quoted, resolving the git escape sequences.
+         * @param value the raw value.
+         * @return the unquoted value.
+         */
+        private String unquote(final String value) {
+<span class="pc bpc" id="L547" title="1 of 4 branches missed.">            if (!value.startsWith(QUOTE) || value.length() &lt; 2) {</span>
+<span class="fc" id="L548">                return value;</span>
+            }
+<span class="fc" id="L550">            StringBuilder result = new StringBuilder(value.length() - 2);</span>
+<span class="fc" id="L551">            int i = 1;</span>
+<span class="pc bpc" id="L552" title="1 of 2 branches missed.">            while (i &lt; value.length()) {</span>
+<span class="fc" id="L553">                char c = value.charAt(i);</span>
+<span class="pc bpc" id="L554" title="1 of 4 branches missed.">                if (c == ESCAPE.charAt(0) &amp;&amp; i + 1 &lt; value.length()) {</span>
+<span class="fc" id="L555">                    i++;</span>
+<span class="fc" id="L556">                    char escaped = value.charAt(i);</span>
+<span class="pc bpc" id="L557" title="5 of 6 branches missed.">                    switch (escaped) {</span>
+                        case 'n':
+<span class="nc" id="L559">                            result.append('\n');</span>
+<span class="nc" id="L560">                            break;</span>
+                        case 't':
+<span class="nc" id="L562">                            result.append('\t');</span>
+<span class="nc" id="L563">                            break;</span>
+                        case 'b':
+<span class="nc" id="L565">                            result.append('\b');</span>
+<span class="nc" id="L566">                            break;</span>
+                        case '&quot;':
+<span class="nc" id="L568">                            result.append('&quot;');</span>
+<span class="nc" id="L569">                            break;</span>
+                        case '\\':
+<span class="nc" id="L571">                            result.append('\\');</span>
+<span class="nc" id="L572">                            break;</span>
+                        default:
+                            // git keeps the backslash for unknown escape sequences
+<span class="fc" id="L575">                            result.append('\\').append(escaped);</span>
+                            break;
+                    }
+<span class="fc bfc" id="L578" title="All 2 branches covered.">                } else if (c == '&quot;') {</span>
+<span class="fc" id="L579">                    break;</span>
+                } else {
+<span class="fc" id="L581">                    result.append(c);</span>
+                }
+<span class="fc" id="L583">                i++;</span>
+<span class="fc" id="L584">            }</span>
+<span class="fc" id="L585">            return result.toString();</span>
+        }
+
+        /**
+         * Gets the canonical file.
+         * @param file the file to canonicalize.
+         * @return the canonical file or the absolute file if canonicalization failed.
+         */
+        private File canonical(final File file) {
+            try {
+<span class="fc" id="L595">                return file.getCanonicalFile();</span>
+<span class="nc" id="L596">            } catch (IOException e) {</span>
+<span class="nc" id="L597">                return file.getAbsoluteFile();</span>
+            }
+        }
+
+        /**
+         * Gets the XDG configuration file from the environment.
+         * @return the XDG configuration file.
+         */
+        private static File xdgConfigFile() {
+<span class="fc" id="L606">            String xdgConfigHome = EnvVar.XDG_CONFIG_HOME.getValue();</span>
+<span class="fc" id="L607">            String home = homeDir();</span>
+<span class="pc bpc" id="L608" title="3 of 4 branches missed.">            File base = xdgConfigHome != null &amp;&amp; !xdgConfigHome.isEmpty()</span>
+<span class="nc" id="L609">                    ? new File(xdgConfigHome)</span>
+<span class="pc bpc" id="L610" title="1 of 2 branches missed.">                    : new File(home == null ? &quot;&quot; : home, &quot;.config&quot;);</span>
+<span class="fc" id="L611">            return new File(new File(base, &quot;git&quot;), &quot;config&quot;);</span>
+        }
+
+        /**
+         * Gets the user configuration file from the environment.
+         * @return the user configuration file.
+         */
+        private static File userConfigFile() {
+<span class="fc" id="L619">            String home = homeDir();</span>
+<span class="pc bpc" id="L620" title="1 of 2 branches missed.">            return new File(home == null ? &quot;&quot; : home, &quot;.gitconfig&quot;);</span>
+        }
+
+        /**
+         * Gets the file configured by the {@code GIT_CONFIG_GLOBAL} environment variable.
+         * &lt;p&gt;When set, neither {@code $HOME/.gitconfig} nor {@code $XDG_CONFIG_HOME/git/config} are
+         * read (matching git). Git treats the value as a single file path.&lt;/p&gt;
+         * @return the global config file or {@code null} if the variable is not set.
+         */
+        private static File gitConfigGlobalFile() {
+<span class="fc" id="L630">            String value = EnvVar.GIT_CONFIG_GLOBAL.getValue();</span>
+<span class="pc bpc" id="L631" title="3 of 4 branches missed.">            return value == null || value.isEmpty() ? null : new File(value);</span>
+        }
+
+        /**
+         * Resolves the user home directory from the {@code user.home} system property.
+         * &lt;p&gt;On modern JVMs this equals the operating system home directory on every platform,
+         * so no platform specific environment variable lookup is needed.&lt;/p&gt;
+         * @return the home directory or {@code null} if not defined.
+         */
+        private static String homeDir() {
+<span class="fc" id="L641">            return System.getProperty(&quot;user.home&quot;);</span>
+        }
+
+        /**
+         * A parsed section header.
+         * @param name the lower cased section name.
+         * @param subsection the subsection name or {@code null}.
+         */
+<span class="fc" id="L649">        private record Section(String name, String subsection) {</span>
         }
     }
 }
